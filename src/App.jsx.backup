@@ -1,0 +1,131 @@
+import React, { useState, useEffect, Suspense } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Web3Provider } from './contexts/Web3Context';
+import ErrorBoundary from './ErrorBoundary';
+import PWAInstallPrompt from './components/PWAInstallPrompt';
+import MobileNavigation from './components/MobileNavigation';
+import FinalUnifiedDashboard from './components/FinalUnifiedDashboard';
+import DashboardController from './components/DashboardController';
+import './App.css';
+
+// Lazy load heavy components
+const GenealogyTreeIntegration = React.lazy(() => import('./components/GenealogyTreeIntegration'));
+const NetworkVisualization = React.lazy(() => import('./components/NetworkVisualization'));
+const MatrixDashboard = React.lazy(() => import('./components/MatrixDashboard'));
+
+const App = () => {
+  const [isPWAInstalled, setIsPWAInstalled] = useState(false);
+  const [showInstallPrompt, setShowInstallPrompt] = useState(false);
+  const [currentTab, setCurrentTab] = useState('dashboard');
+  const [alerts, setAlerts] = useState([]);
+  const navigate = useNavigate();
+
+  // Check if PWA is already installed
+  useEffect(() => {
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      setIsPWAInstalled(true);
+    }
+  }, []);
+
+  // Handle PWA installation
+  const handleInstall = async () => {
+    try {
+      const deferredPrompt = window.deferredPrompt;
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          setIsPWAInstalled(true);
+          setShowInstallPrompt(false);
+        }
+      }
+    } catch (error) {
+      console.error('Error installing PWA:', error);
+    }
+  };
+
+  // Handle alerts
+  const handleAlert = (alert) => {
+    setAlerts(prev => [...prev, { ...alert, id: Date.now() }]);
+  };
+
+  const clearAlert = (id) => {
+    setAlerts(prev => prev.filter(alert => alert.id !== id));
+  };
+
+  return (
+    <ErrorBoundary>
+      <Web3Provider>
+        <div className="app-container">
+          {/* PWA Install Prompt */}
+          {!isPWAInstalled && showInstallPrompt && (
+            <PWAInstallPrompt
+              onInstall={handleInstall}
+              onDismiss={() => setShowInstallPrompt(false)}
+            />
+          )}
+
+          {/* Mobile Navigation */}
+          <MobileNavigation
+            currentTab={currentTab}
+            onTabChange={setCurrentTab}
+            alerts={alerts}
+            onClearAlert={clearAlert}
+          />
+
+          {/* Main Content */}
+          <main className="main-content">
+            <Suspense fallback={<div className="loading">Loading...</div>}>
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <DashboardController
+                      currentTab={currentTab}
+                      onTabChange={setCurrentTab}
+                      onAlert={handleAlert}
+                    />
+                  }
+                />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <FinalUnifiedDashboard
+                      onAlert={handleAlert}
+                    />
+                  }
+                />
+                <Route
+                  path="/genealogy"
+                  element={
+                    <GenealogyTreeIntegration
+                      onAlert={handleAlert}
+                    />
+                  }
+                />
+                <Route
+                  path="/network"
+                  element={
+                    <NetworkVisualization
+                      onAlert={handleAlert}
+                    />
+                  }
+                />
+                <Route
+                  path="/matrix"
+                  element={
+                    <MatrixDashboard
+                      onAlert={handleAlert}
+                    />
+                  }
+                />
+              </Routes>
+            </Suspense>
+          </main>
+        </div>
+      </Web3Provider>
+    </ErrorBoundary>
+  );
+};
+
+export default App;

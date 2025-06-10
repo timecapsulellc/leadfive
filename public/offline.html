@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrphiChain - Offline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0B1426 0%, #1a2332 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .offline-container {
+            max-width: 500px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .offline-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #00D4FF;
+            animation: pulse 2s infinite;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #00D4FF;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .message {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .features {
+            text-align: left;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #00D4FF;
+        }
+
+        .features h3 {
+            color: #00D4FF;
+            margin-bottom: 15px;
+        }
+
+        .features ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .features li {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #00FF88;
+            font-weight: bold;
+        }
+
+        .retry-btn {
+            background: linear-gradient(45deg, #00D4FF, #7B2CBF);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .retry-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .status-indicator {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .offline {
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid #FF6B6B;
+            color: #FF6B6B;
+        }
+
+        .online {
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid #00FF88;
+            color: #00FF88;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @media (max-width: 480px) {
+            .offline-container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .offline-icon {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">📱</div>
+        <h1>You're Offline</h1>
+        <p class="message">
+            No internet connection detected. Don't worry - OrphiChain works offline too!
+        </p>
+
+        <div class="features">
+            <h3>Available Offline Features:</h3>
+            <ul>
+                <li>View cached dashboard data</li>
+                <li>Browse your transaction history</li>
+                <li>Access user guides and documentation</li>
+                <li>Prepare withdrawal requests (will sync when online)</li>
+                <li>Review team analytics and genealogy data</li>
+            </ul>
+        </div>
+
+        <button class="retry-btn" onclick="checkConnection()">
+            Check Connection
+        </button>
+
+        <div id="status" class="status-indicator offline">
+            🔴 Offline Mode Active
+        </div>
+    </div>
+
+    <script>
+        function checkConnection() {
+            const statusEl = document.getElementById('status');
+            
+            if (navigator.onLine) {
+                statusEl.className = 'status-indicator online';
+                statusEl.innerHTML = '🟢 Connection Restored';
+                
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 1500);
+            } else {
+                statusEl.className = 'status-indicator offline';
+                statusEl.innerHTML = '🔴 Still Offline - Will retry automatically';
+                
+                // Auto-retry in 5 seconds
+                setTimeout(checkConnection, 5000);
+            }
+        }
+
+        // Listen for online events
+        window.addEventListener('online', () => {
+            checkConnection();
+        });
+
+        // Auto-check every 10 seconds
+        setInterval(checkConnection, 10000);
+
+        // Try to load cached content
+        window.addEventListener('load', () => {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.ready.then(registration => {
+                    console.log('Service Worker ready in offline page');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

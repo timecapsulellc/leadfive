@@ -1,0 +1,59 @@
+.orphi-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.orphi-logo svg {
+  filter: drop-shadow(0 4px 8px rgba(0, 212, 255, 0.2));
+  transition: transform 0.3s ease;
+}
+
+.orphi-logo:hover svg {
+  transform: scale(1.05);
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #00D4FF 0%, #7B2CBF 50%, #FF6B35 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.5px;
+}
+
+/* Animation for the logo */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.orphi-logo svg circle,
+.orphi-logo svg path,
+.orphi-logo svg line {
+  transition: all 0.3s ease;
+}
+
+.orphi-logo:hover svg circle {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.orphi-logo:hover svg path {
+  stroke-width: 2.5;
+}
+
+.orphi-logo:hover svg line {
+  stroke-width: 1.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .logo-text {
+    font-size: 1.2rem;
+  }
+} 

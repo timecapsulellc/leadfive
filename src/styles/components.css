@@ -1,0 +1,255 @@
+/* Club Pool Styles */
+.club-pool-container {
+  padding: 2rem;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.club-pool-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.info-card {
+  background: var(--bg-primary);
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.info-card:hover {
+  transform: translateY(-2px);
+}
+
+.info-card h3 {
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.info-card p {
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.join-button {
+  width: 100%;
+  padding: 1rem;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.join-button:hover:not(:disabled) {
+  background: var(--accent-color-dark);
+}
+
+.join-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.admin-controls {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.distribute-button {
+  width: 100%;
+  padding: 1rem;
+  background: var(--success-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 1.5rem;
+}
+
+.distribute-button:hover:not(:disabled) {
+  background: var(--success-color-dark);
+}
+
+.remove-member {
+  display: flex;
+  gap: 1rem;
+}
+
+.remove-member input {
+  flex: 1;
+  padding: 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.remove-member button {
+  padding: 0.8rem 1.5rem;
+  background: var(--error-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.remove-member button:hover:not(:disabled) {
+  background: var(--error-color-dark);
+}
+
+/* Emergency Controls Styles */
+.emergency-controls-container {
+  padding: 2rem;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.emergency-status {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.status-card {
+  background: var(--bg-primary);
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.status-card:hover {
+  transform: translateY(-2px);
+}
+
+.status-card h3 {
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.status-card p {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.status-card p.active {
+  color: var(--error-color);
+}
+
+.status-card p.inactive {
+  color: var(--success-color);
+}
+
+.emergency-withdraw-button {
+  width: 100%;
+  padding: 1rem;
+  background: var(--error-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 2rem;
+}
+
+.emergency-withdraw-button:hover:not(:disabled) {
+  background: var(--error-color-dark);
+}
+
+.toggle-emergency-button {
+  width: 100%;
+  padding: 1rem;
+  background: var(--warning-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 1.5rem;
+}
+
+.toggle-emergency-button:hover:not(:disabled) {
+  background: var(--warning-color-dark);
+}
+
+.fee-control,
+.limit-control {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.fee-control input,
+.limit-control input {
+  flex: 1;
+  padding: 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.fee-control button,
+.limit-control button {
+  padding: 0.8rem 1.5rem;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.fee-control button:hover:not(:disabled),
+.limit-control button:hover:not(:disabled) {
+  background: var(--accent-color-dark);
+}
+
+/* Loading State */
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .club-pool-info,
+  .emergency-status {
+    grid-template-columns: 1fr;
+  }
+
+  .remove-member,
+  .fee-control,
+  .limit-control {
+    flex-direction: column;
+  }
+
+  .remove-member button,
+  .fee-control button,
+  .limit-control button {
+    width: 100%;
+  }
+} 

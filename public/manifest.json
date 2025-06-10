@@ -1,0 +1,19 @@
+{
+  "short_name": "OrphiChain",
+  "name": "OrphiChain Dashboard",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#00D4FF",
+  "background_color": "#0a0a0a",
+  "orientation": "portrait",
+  "description": "OrphiChain Dashboard - Your Web3 Dashboard",
+  "dir": "ltr",
+  "lang": "en-US"
+}

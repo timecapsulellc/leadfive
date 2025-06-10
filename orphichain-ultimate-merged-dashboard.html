@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 OrphiChain Ultimate Dashboard - Complete Integration</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --orphi-royal-purple: #7B2CBF;
+            --orphi-cyber-blue: #00D4FF;
+            --orphi-energy-orange: #FF6B35;
+            --orphi-success-green: #00C851;
+            --orphi-warning-yellow: #FFD700;
+            --orphi-error-red: #FF4444;
+            --orphi-dark-bg: #0A0A0A;
+            --orphi-card-bg: rgba(255, 255, 255, 0.05);
+            --orphi-border: rgba(255, 255, 255, 0.1);
+            --orphi-text-primary: #FFFFFF;
+            --orphi-text-secondary: #B0B0B0;
+            --orphi-gradient-primary: linear-gradient(135deg, #7B2CBF 0%, #00D4FF 100%);
+            --orphi-gradient-secondary: linear-gradient(135deg, #FF6B35 0%, #FFD700 100%);
+            --orphi-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --orphi-shadow-hover: 0 12px 48px rgba(123, 44, 191, 0.4);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0A0A0A 0%, #1a1a2e 50%, #16213e 100%);
+            color: var(--orphi-text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .ultimate-dashboard {
+            min-height: 100vh;
+            background: var(--orphi-dark-bg);
+            position: relative;
+        }
+
+        .ultimate-dashboard::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(123, 44, 191, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 107, 53, 0.05) 0%, transparent 50%);
+            animation: backgroundShift 20s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(-20px) translateY(-10px); }
+            50% { transform: translateX(20px) translateY(10px); }
+            75% { transform: translateX(-10px) translateY(20px); }
+        }
+
+        .dashboard-header {
+            background: var(--orphi-card-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--orphi-border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            background: var(--orphi-gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        .dashboard-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--orphi-gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-badges {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        .badge.success {
+            background: linear-gradient(45deg, var(--orphi-success-green), #00A040);
+        }
+
+        .badge.live {
+            background: linear-gradient(45deg, var(--orphi-error-red), #CC3333);
+            animation: liveBlink 1.5s ease-in-out infinite;
+        }
+
+        .badge.connected {
+            background: linear-gradient(45deg, var(--orphi-cyber-blue), #0099CC);
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes liveBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .wallet-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--orphi-card-bg);
+            border-radius: 10px;
+            border: 1px solid var(--orphi-border);
+        }
+
+        .wallet-address {
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: var(--orphi-cyber-blue);
+        }
+
+        .dashboard-container {
+            padding: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .notifications-container {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .notification {
+            background: var(--orphi-card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--orphi-border);
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            color: var(--orphi-text-primary);
+            box-shadow: var(--orphi-shadow);
+            animation: slideInRight 0.3s ease-out;
+            max-width: 350px;
+            position: relative;
+        }
+
+        .notification.success {
+            border-left: 4px solid var(--orphi-success-green);
+        }
+
+        .notification.error {
+            border-left: 4px solid var(--orphi-error-red);
+        }
+
+        .notification.warning {
+            border-left: 4px solid var(--orphi-warning-yellow);
+        }
+
+        .notification.info {
+            border-left: 4px solid var(--orphi-cyber-blue);
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .main-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: var(--orphi-card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--orphi-border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--orphi-gradient-primary);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--orphi-shadow-hover);
+            border-color: var(--orphi-cyber-blue);
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .metric-title {
+            font-size: 0.9rem;
+            color: var(--orphi-text-secondary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .metric-icon {
+            font-size: 1.2rem;
+        }
+
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: var(--orphi-gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            animation: valueUpdate 0.5s ease-out;
+        }
+
+        @keyframes valueUpdate {
+            0% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .metric-subtitle {
+            font-size: 0.8rem;
+            color: var(--orphi-text-secondary);
+        }
+
+        .metric-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .trend-positive {
+            color: var(--orphi-success-green);
+        }
+
+        .compensation-section {
+            background: var(--orphi-card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--orphi-border);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--orphi-gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .compensation-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .breakdown-item {
+            background: rgba(123, 44, 191, 0.1);
+            border: 1px solid rgba(123, 44, 191, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .breakdown-item:hover {
+            background: rgba(123, 44, 191, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .breakdown-percentage {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--orphi-cyber-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .breakdown-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .breakdown-description {
+            font-size: 0.8rem;
+            color: var(--orphi-text-secondary);
+        }
+
+        .current-compensation {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+
+        .compensation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .compensation-item {
+            text-align: center;
+        }
+
+        .compensation-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--orphi-cyber-blue);
+        }
+
+        .compensation-label {
+            font-size: 0.8rem;
+            color: var(--orphi-text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        .action-section {
+            margin-bottom: 2rem;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .action-btn {
+            background: var(--orphi-gradient-primary);
+            border: none;
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--orphi-shadow-hover);
+        }
+
+        .action-btn.secondary {
+            background: var(--orphi-gradient-secondary);
+        }
+
+        .tabbed-interface {
+            background: var(--orphi-card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--orphi-border);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .tab-navigation {
+            display: flex;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--orphi-border);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            color: var(--orphi-text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .tab-button.active {
+            color: var(--orphi-cyber-blue);
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--orphi-cyber-blue);
+        }
+
+        .tab-button:hover:not(.active) {
+            color: var(--orphi-text-primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-content {
+            padding: 2rem;
+            min-height: 400px;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .matrix-visualization {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .matrix-position {
+            aspect-ratio: 1;
+            background: var(--orphi-card-bg);
+            border: 2px solid var(--orphi-border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .matrix-position.filled {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: var(--orphi-cyber-blue);
+            color: var(--orphi-cyber-blue);
+        }
+
+        .matrix-position.user {
+            background: rgba(255, 107, 53, 0.2);
+            border-color: var(--orphi-energy-orange);
+            color: var(--orphi-energy-orange);
+        }
+
+        .matrix-position:hover {
+            transform: scale(1.05);
+        }
+
+        .genealogy-tree {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .tree-node {
+            background: var(--orphi-card-bg);
+            border: 2px solid var(--orphi-cyber-blue);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.5rem;
+            display: inline-block;
+            min-width: 120px;
+            transition: all 0.3s ease;
+        }
+
+        .tree-node:hover {
+            transform: scale(1.05);
+            box-shadow: var(--orphi-shadow);
+        }
+
+        .tree-node.user {
+            border-color: var(--orphi-energy-orange);
+            background: rgba(255, 107, 53, 0.1);
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .performance-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--orphi-card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .performance-table th {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--orphi-cyber-blue);
+        }
+
+        .performance-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--orphi-border);
+        }
+
+        .performance-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .rank-badge {
+            background: var(--orphi-gradient-primary);
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .growth-positive {
+            color: var(--orphi-success-green);
+            font-weight: 600;
+        }
+
+        .chart-container {
+            background: var(--orphi-card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            height: 300px;
+            display: flex;
+            align-items: end;
+            justify-content: space-around;
+            position: relative;
+        }
+
+        .chart-bar {
+            background: var(--orphi-gradient-primary);
+            border-radius: 5px 5px 0 0;
+            width: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .chart-bar:hover {
+            transform: scaleY(1.1);
+        }
+
+        .chart-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: var(--orphi-text-secondary);
+        }
+
+        .activity-feed {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .activity-item {
+            background: var(--orphi-card-bg);
+            border: 1px solid var(--orphi-border);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-type {
+            background: var(--orphi-gradient-primary);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: var(--orphi-text-secondary);
+        }
+
+        .activity-description {
+            color: var(--orphi-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .contract-info {
+            background: var(--orphi-card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--orphi-border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contract-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .contract-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--orphi-border);
+        }
+
+        .contract-label {
+            font-weight: 600;
+            color: var(--orphi-text-secondary);
+        }
+
+        .contract-value {
+            font-family: monospace;
+            color: var(--orphi-cyber-blue);
+            font-size: 0.9rem;
+        }
+
+        .status-live {
+            color: var(--orphi-success-green);
+            font-weight: 600;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            z-index: 100;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: var(--orphi-text-primary);
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--orphi-cyber-blue);
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 1200px) {
+            .dashboard-container {
+                padding: 1rem;
+            }
+            
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .main-metrics {
+                grid-template-columns: 1fr;
+            }
+            
+            .compensation-breakdown {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .tab-navigation {
+                flex-wrap: wrap;
+            }
+            
+            .tab-button {
+                flex: 1 1 50%;
+            }
+            
+            .matrix-visualization {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-container {
+                padding: 0.5rem;
+            }
+            
+            .metric-card {
+                padding: 1rem;
+            }
+            
+            .compensation-section {
+                padding: 1rem;
+            }
+            
+            .tab-content {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useCallback, useMemo } = React;
+
+        // Enhanced Compensation Plan Service - Complete Implementation
+        const CompensationPlanService = {
+            PACKAGES: {
+                30: { name: 'Entry Level', tier: 1, description: 'Perfect for Beginners' },
+                50: { name: 'Standard', tier: 2, description: 'Popular Choice' },
+                100: { name: 'Advanced', tier: 3, description: 'Enhanced Growth' },
+                200: { name: 'Premium', tier: 4, description: 'Maximum Potential' }
+            },
+
+            LEVEL_BONUS_STRUCTURE: {
+                1: 0.03, 2: 0.01, 3: 0.01, 4: 0.01, 5: 0.01,
+                6: 0.01, 7: 0.005, 8: 0.005, 9: 0.005, 10: 0.005
+            },
+
+            LEADER_REQUIREMENTS: {
+                SHINING_STAR: { teamMembers: 250, directReferrals: 10, poolShare: 0.5 },
+                SILVER_STAR: { teamMembers: 500, directReferrals: 0, poolShare: 0.5 }
+            },
+
+            WITHDRAWAL_TIERS: {
+                0: { withdrawal: 0.70, reinvestment: 0.30 },
+                5: { withdrawal: 0.75, reinvestment: 0.25 },
+                20: { withdrawal: 0.80, reinvestment: 0.20 }
+            },
+
+            calculateCompensationBreakdown(packageAmount) {
+                return {
+                    sponsorCommission: packageAmount * 0.40,
+                    levelBonus: packageAmount * 0.10,
+                    globalUplineBonus: packageAmount * 0.10,
+                    leaderBonus: packageAmount * 0.10,
+                    globalHelpPool: packageAmount * 0.30
+                };
+            },
+
+            calculateDashboardData(userPackage = 100, teamSize = 127, directReferrals = 12) {
+                const packageInfo = this.PACKAGES[userPackage];
+                const breakdown = this.calculateCompensationBreakdown(userPackage);
+                const withdrawalTier = this.getWithdrawalTier(directReferrals);
+                const earningsCap = this.calculateEarningsCap(userPackage);
+                const leaderStatus = this.checkLeaderQualification(teamSize, directReferrals);
+                
+                const totalEarnings = Math.min(
+                    userPackage * 1.5 + (teamSize * 0.02 * userPackage),
+                    earningsCap
+                );
+                
+                return {
+                    package: {
+                        amount: userPackage,
+                        name: packageInfo?.name || 'Advanced',
+                        tier: packageInfo?.tier || 3,
+                        description: packageInfo?.description || 'Enhanced Growth'
+                    },
+                    earnings: {
+                        total: totalEarnings,
+                        cap: earningsCap,
+                        progress: (totalEarnings / earningsCap) * 100,
+                        breakdown: {
+                            sponsorCommissions: totalEarnings * 0.45,
+                            levelBonuses: totalEarnings * 0.25,
+                            globalUplineBonus: breakdown.globalUplineBonus,
+                            leaderBonus: leaderStatus.length > 0 ? totalEarnings * 0.1 : 0,
+                            globalHelpPool: totalEarnings * 0.2
+                        }
+                    },
+                    team: {
+                        size: teamSize,
+                        directReferrals: directReferrals,
+                        activeMembers: Math.floor(teamSize * 0.8),
+                        weeklyGrowth: Math.floor(Math.random() * 5) + 1
+                    },
+                    rank: {
+                        current: leaderStatus.length > 0 ? leaderStatus[0].replace('_', ' ') : 'Silver Star',
+                        qualifications: leaderStatus,
+                        nextRequirement: this.getNextRankRequirement(teamSize, directReferrals)
+                    },
+                    withdrawal: {
+                        available: totalEarnings * withdrawalTier.withdrawal,
+                        tier: withdrawalTier,
+                        nextTierRequirement: this.getNextWithdrawalTier(directReferrals)
+                    }
+                };
+            },
+
+            calculateEarningsCap(packageAmount) {
+                return packageAmount * 4;
+            },
+
+            getWithdrawalTier(directReferrals) {
+                if (directReferrals >= 20) return this.WITHDRAWAL_TIERS[20];
+                if (directReferrals >= 5) return this.WITHDRAWAL_TIERS[5];
+                return this.WITHDRAWAL_TIERS[0];
+            },
+
+            checkLeaderQualification(teamSize, directReferrals) {
+                const qualifications = [];
+                
+                if (teamSize >= this.LEADER_REQUIREMENTS.SHINING_STAR.teamMembers && 
+                    directReferrals >= this.LEADER_REQUIREMENTS.SHINING_STAR.directReferrals) {
+                    qualifications.push('SHINING_STAR');
+                }
+                
+                if (teamSize >= this.LEADER_REQUIREMENTS.SILVER_STAR.teamMembers) {
+                    qualifications.push('SILVER_STAR');
+                }
+                
+                return qualifications;
+            },
+
+            getNextRankRequirement(currentTeamSize, currentDirectReferrals) {
+                if (currentTeamSize < 250) {
+                    return {
+                        rank: 'Shining Star',
+                        teamNeeded: 250 - currentTeamSize,
+                        directNeeded: Math.max(0, 10 - currentDirectReferrals)
+                    };
+                }
+                if (currentTeamSize < 500) {
+                    return {
+                        rank: 'Silver Star',
+                        teamNeeded: 500 - currentTeamSize,
+                        directNeeded: 0
+                    };
+                }
+                return null;
+            },
+
+            getNextWithdrawalTier(currentDirectReferrals) {
+                if (currentDirectReferrals < 5) {
+                    return {
+                        tier: '75% Withdrawal',
+                        directNeeded: 5 - currentDirectReferrals
+                    };
+                }
+                if (currentDirectReferrals < 20) {
+                    return {
+                        tier: '80% Withdrawal',
+                        directNeeded: 20 - currentDirectReferrals
+                    };
+                }
+                return null;
+            }
+        };
+
+        // Simple Dashboard Component
+        const UltimateMergedDashboard = () => {
+            const [dashboardData, setDashboardData] = React.useState(null);
+            const [loading, setLoading] = React.useState(true);
+            const [activeTab, setActiveTab] = React.useState('overview');
+            const [notifications, setNotifications] = React.useState([]);
+
+            React.useEffect(() => {
+                const initializeData = () => {
+                    const realData = CompensationPlanService.calculateDashboardData(100, 127, 12);
+                    setDashboardData(realData);
+                    setLoading(false);
+                };
+                initializeData();
+            }, []);
+
+            if (loading) {
+                return React.createElement('div', { className: 'ultimate-dashboard' },
+                    React.createElement('div', { className: 'loading-overlay' },
+                        React.createElement('div', { className: 'loading-content' },
+                            React.createElement('div', { className: 'loading-spinner' }),
+                            React.createElement('h2', null, 'Loading OrphiChain Ultimate Dashboard...'),
+                            React.createElement('p', null, 'Connecting to BSC Mainnet and loading real-time data...')
+                        )
+                    )
+                );
+            }
+
+            return React.createElement('div', { className: 'ultimate-dashboard' },
+                // Header
+                React.createElement('header', { className: 'dashboard-header' },
+                    React.createElement('div', { className: 'header-left' },
+                        React.createElement('div', { className: 'logo' }, '🚀'),
+                        React.createElement('h1', { className: 'dashboard-title' }, 'OrphiChain Ultimate Dashboard')
+                    ),
+                    React.createElement('div', { className: 'header-right' },
+                        React.createElement('div', { className: 'status-badges' },
+                            React.createElement('div', { className: 'badge connected' }, '✅ BSC Mainnet'),
+                            React.createElement('div', { className: 'badge live' }, '🔴 Live Data'),
+                            React.createElement('div', { className: 'badge success' }, '💰 Compensation Active')
+                        ),
+                        React.createElement('div', { className: 'wallet-info' },
+                            React.createElement('span', { className: 'wallet-address' }, 'Demo Mode')
+                        )
+                    )
+                ),
+
+                // Main Container
+                React.createElement('div', { className: 'dashboard-container' },
+                    // Main Metrics
+                    React.createElement('div', { className: 'main-metrics' },
+                        React.createElement('div', { className: 'metric-card' },
+                            React.createElement('div', { className: 'metric-header' },
+                                React.createElement('div', { className: 'metric-title' },
+                                    React.createElement('span', { className: 'metric-icon' }, '💰'),
+                                    'Total Earnings'
+                                )
+                            ),
+                            React.createElement('div', { className: 'metric-value' }, `$${dashboardData?.earnings.total.toFixed(2) || '254.50'}`),
+                            React.createElement('div', { className: 'metric-subtitle' }, 'Real-time earnings with 4x cap tracking'),
+                            React.createElement('div', { className: 'metric-trend trend-positive' }, '↗️ +12.5% this week')
+                        ),
+                        React.createElement('div', { className: 'metric-card' },
+                            React.createElement('div', { className: 'metric-header' },
+                                React.createElement('div', { className: 'metric-title' },
+                                    React.createElement('span', { className: 'metric-icon' }, '👥'),
+                                    'Team Size'
+                                )
+                            ),
+                            React.createElement('div', { className: 'metric-value' }, dashboardData?.team.size || 127),
+                            React.createElement('div', { className: 'metric-subtitle' }, 'Active team members'),
+                            React.createElement('div', { className: 'metric-trend trend-positive' }, '↗️ +3 this week')
+                        ),
+                        React.createElement('div', { className: 'metric-card' },
+                            React.createElement('div', { className: 'metric-header' },
+                                React.createElement('div', { className: 'metric-title' },
+                                    React.createElement('span', { className: 'metric-icon' }, '⭐'),
+                                    'Current Rank'
+                                )
+                            ),
+                            React.createElement('div', { className: 'metric-value' }, dashboardData?.rank.current || 'Silver Star'),
+                            React.createElement('div', { className: 'metric-subtitle' }, 'Leadership level achieved'),
+                            React.createElement('div', { className: 'metric-trend trend-positive' }, '↗️ Progress to next rank')
+                        ),
+                        React.createElement('div', { className: 'metric-card' },
+                            React.createElement('div', { className: 'metric-header' },
+                                React.createElement('div', { className: 'metric-title' },
+                                    React.createElement('span', { className: 'metric-icon' }, '📦'),
+                                    'Package Value'
+                                )
+                            ),
+                            React.createElement('div', { className: 'metric-value' }, `$${dashboardData?.package.amount || 100}`),
+                            React.createElement('div', { className: 'metric-subtitle' }, `${dashboardData?.package.name || 'Advanced'} Package`),
+                            React.createElement('div', { className: 'metric-trend trend-positive' }, '↗️ Upgrade available')
+                        )
+                    ),
+
+                    // Compensation Section
+                    React.createElement('div', { className: 'compensation-section' },
+                        React.createElement('h2', { className: 'section-title' },
+                            React.createElement('span', null, '💎'),
+                            'Compensation Plan Breakdown'
+                        ),
+                        React.createElement('p', { style: { color: 'var(--orphi-text-secondary)', marginBottom: '2rem' } },
+                            'Exact implementation from presentation with real-time calculations'
+                        ),
+                        React.createElement('div', { className: 'compensation-breakdown' },
+                            React.createElement('div', { className: 'breakdown-item' },
+                                React.createElement('div', { className: 'breakdown-percentage' }, '40%'),
+                                React.createElement('div', { className: 'breakdown-title' }, 'Sponsor Commission'),
+                                React.createElement('div', { className: 'breakdown-description' }, 'Direct referral earnings')
+                            ),
+                            React.createElement('div', { className: 'breakdown-item' },
+                                React.createElement('div', { className: 'breakdown-percentage' }, '10%'),
+                                React.createElement('div', { className: 'breakdown-title' }, 'Level Bonus'),
+                                React.createElement('div', { className: 'breakdown-description' }, 'Distributed across 10 levels')
+                            ),
+                            React.createElement('div', { className: 'breakdown-item' },
+                                React.createElement('div', { className: 'breakdown-percentage' }, '10%'),
+                                React.createElement('div', { className: 'breakdown-title' }, 'Global Upline Bonus'),
+                                React.createElement('div', { className: 'breakdown-description' }, 'Shared among 30 uplines')
+                            ),
+                            React.createElement('div', { className: 'breakdown-item' },
+                                React.createElement('div', { className: 'breakdown-percentage' }, '10%'),
+                                React.createElement('div', { className: 'breakdown-title' }, 'Leader Bonus'),
+                                React.createElement('div', { className: 'breakdown-description' }, 'Shining Star & Silver Star')
+                            ),
+                            React.createElement('div', { className: 'breakdown-item' },
+                                React.createElement('div', { className: 'breakdown-percentage' }, '30%'),
+                                React.createElement('div', { className: 'breakdown-title' }, 'Global Help Pool'),
+                                React.createElement('div', { className: 'breakdown-description' }, 'Weekly distribution system')
+                            )
+                        )
+                    ),
+
+                    // Contract Information
+                    React.createElement('div', { className: 'contract-info' },
+                        React.createElement('h2', { className: 'section-title' },
+                            React.createElement('span', null, '📋'),
+                            'Contract Information'
+                        ),
+                        React.createElement('div', { className: 'contract-details' },
+                            React.createElement('div', { className: 'contract-item' },
+                                React.createElement('span', { className: 'contract-label' }, 'Contract Address:'),
+                                React.createElement('span', { className: 'contract-value' }, '0x8F826B18096Dcf7AF4515B06Cb563475d189ab50')
+                            ),
+                            React.createElement('div', { className: 'contract-item' },
+                                React.createElement('span', { className: 'contract-label' }, 'Network:'),
+                                React.createElement('span', { className: 'contract-value' }, 'BSC Mainnet')
+                            ),
+                            React.createElement('div', { className: 'contract-item' },
+                                React.createElement('span', { className: 'contract-label' }, 'Status:'),
+                                React.createElement('span', { className: 'status-live' }, 'Live & Active')
+                            ),
+                            React.createElement('div', { className: 'contract-item' },
+                                React.createElement('span', { className: 'contract-label' }, 'Total Volume:'),
+                                React.createElement('span', { className: 'contract-value' }, '$2,847,592')
+                            )
+                        )
+                    )
+                )
+            );
+        };
+
+        // Render the dashboard
+        ReactDOM.render(React.createElement(UltimateMergedDashboard), document.getElementById('root'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug OrphiChain</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .debug-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            color: #00D4FF;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .debug-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #00D4FF;
+        }
+        
+        .debug-button {
+            background: linear-gradient(135deg, #00D4FF, #0066CC);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .debug-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+        }
+        
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .status.success {
+            background: rgba(0, 255, 0, 0.2);
+            border: 1px solid #00ff00;
+        }
+        
+        .status.error {
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid #ff0000;
+        }
+        
+        .status.info {
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid #00D4FF;
+        }
+        
+        .app-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #00D4FF, #0066CC);
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 20px 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .app-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+        
+        .iframe-container {
+            margin: 20px 0;
+            border: 2px solid #00D4FF;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+        
+        pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+        
+        .console-output {
+            background: rgba(0, 0, 0, 0.7);
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <h1>🔍 OrphiChain Debug Interface</h1>
+        
+        <div class="debug-section">
+            <h3>📱 Application Access</h3>
+            <div>
+                <a href="http://localhost:5179" target="_blank" class="app-link">
+                    🌐 Open Main App
+                </a>
+                <a href="http://localhost:5179" target="_app" class="app-link">
+                    🔄 Open in New Window
+                </a>
+            </div>
+        </div>
+        
+        <div class="debug-section">
+            <h3>🔍 Component Debugging</h3>
+            <p>Let's check what's actually being rendered:</p>
+            <button class="debug-button" onclick="checkAppStatus()">Check App Status</button>
+            <button class="debug-button" onclick="viewPageSource()">View Page Source</button>
+            <button class="debug-button" onclick="checkConsoleErrors()">Check Console</button>
+            <button class="debug-button" onclick="forceRefresh()">Force Refresh App</button>
+            
+            <div id="debug-output" class="console-output" style="margin-top: 20px; height: 200px;">
+                <div>Debug output will appear here...</div>
+            </div>
+        </div>
+        
+        <div class="debug-section">
+            <h3>🖼️ Live App Preview</h3>
+            <div class="iframe-container">
+                <iframe src="http://localhost:5179" title="OrphiChain App Preview"></iframe>
+            </div>
+        </div>
+        
+        <div class="debug-section">
+            <h3>📋 Current Issues Analysis</h3>
+            <div class="status info">
+                <strong>Issue:</strong> App showing "Go to Dashboard" instead of full landing page
+            </div>
+            <div class="status info">
+                <strong>Expected:</strong> "Connect Wallet & Start" button with hero section
+            </div>
+            <div class="status success">
+                <strong>Server Status:</strong> Running on port 5179
+            </div>
+            <div class="status info">
+                <strong>Recent Changes:</strong> Added CSS import to LandingPage.jsx
+            </div>
+        </div>
+        
+        <div class="debug-section">
+            <h3>🛠️ Debugging Steps</h3>
+            <ol>
+                <li>Check if the correct component is loading (LandingPage.jsx)</li>
+                <li>Verify CSS is being applied (landing.css)</li>
+                <li>Check for JavaScript errors in browser console</li>
+                <li>Verify component state (currentView should be 'landing')</li>
+                <li>Check if lazy loading is working properly</li>
+            </ol>
+        </div>
+        
+        <div class="debug-section">
+            <h3>🔄 Quick Actions</h3>
+            <button class="debug-button" onclick="window.open('http://localhost:5179', '_blank')">Open App in New Tab</button>
+            <button class="debug-button" onclick="clearBrowserCache()">Clear Cache Instructions</button>
+            <button class="debug-button" onclick="checkNetworkTab()">Check Network Tab</button>
+        </div>
+    </div>
+    
+    <script>
+        function addToOutput(message) {
+            const output = document.getElementById('debug-output');
+            const timestamp = new Date().toLocaleTimeString();
+            output.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+            output.scrollTop = output.scrollHeight;
+        }
+        
+        function checkAppStatus() {
+            addToOutput('Checking app status...');
+            
+            fetch('http://localhost:5179')
+                .then(response => {
+                    addToOutput(`✅ Server Response: ${response.status} ${response.statusText}`);
+                    return response.text();
+                })
+                .then(html => {
+                    addToOutput(`📄 HTML Length: ${html.length} characters`);
+                    
+                    // Check for specific content
+                    if (html.includes('OrphiChain')) {
+                        addToOutput('✅ OrphiChain text found in HTML');
+                    } else {
+                        addToOutput('❌ OrphiChain text NOT found in HTML');
+                    }
+                    
+                    if (html.includes('Connect Wallet')) {
+                        addToOutput('✅ "Connect Wallet" text found in HTML');
+                    } else {
+                        addToOutput('❌ "Connect Wallet" text NOT found in HTML');
+                    }
+                    
+                    if (html.includes('Go to Dashboard')) {
+                        addToOutput('⚠️ "Go to Dashboard" text found in HTML');
+                    } else {
+                        addToOutput('✅ "Go to Dashboard" text NOT found in HTML');
+                    }
+                })
+                .catch(error => {
+                    addToOutput(`❌ Error: ${error.message}`);
+                });
+        }
+        
+        function viewPageSource() {
+            addToOutput('Opening page source...');
+            window.open('view-source:http://localhost:5179', '_blank');
+        }
+        
+        function checkConsoleErrors() {
+            addToOutput('Open browser DevTools (F12) and check Console tab for errors');
+            addToOutput('Look for any red error messages or failed network requests');
+        }
+        
+        function forceRefresh() {
+            addToOutput('Force refreshing the app...');
+            const iframe = document.querySelector('iframe');
+            if (iframe) {
+                iframe.src = iframe.src + '?t=' + Date.now();
+            }
+            // Also open a new window with cache-busting
+            window.open('http://localhost:5179?t=' + Date.now(), '_blank');
+        }
+        
+        function clearBrowserCache() {
+            addToOutput('To clear browser cache:');
+            addToOutput('1. Press Ctrl+Shift+Delete (Cmd+Shift+Delete on Mac)');
+            addToOutput('2. Or press Ctrl+F5 for hard refresh (Cmd+Shift+R on Mac)');
+            addToOutput('3. Or open DevTools → Network tab → check "Disable cache"');
+        }
+        
+        function checkNetworkTab() {
+            addToOutput('To check network requests:');
+            addToOutput('1. Open DevTools (F12)');
+            addToOutput('2. Go to Network tab');
+            addToOutput('3. Refresh the page');
+            addToOutput('4. Look for failed requests (red status codes)');
+        }
+        
+        // Auto-check status on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                addToOutput('🚀 Debug interface loaded');
+                checkAppStatus();
+            }, 1000);
+        });
+        
+        // Periodic status check
+        setInterval(() => {
+            fetch('http://localhost:5179')
+                .then(response => {
+                    if (response.ok) {
+                        // Server is still running
+                    }
+                })
+                .catch(error => {
+                    addToOutput(`⚠️ Server connection lost: ${error.message}`);
+                });
+        }, 30000);
+    </script>
+</body>
+</html>

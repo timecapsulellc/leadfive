@@ -1,0 +1,4 @@
+// TODO: Add contract addresses and ABIs here
+export const CONTRACT_ADDRESS = '0x8F826B18096Dcf7AF4515B06Cb563475d189ab50';
+export const USDT_ADDRESS = '0x55d398326f99059fF775485246999027B3197955';
+export const CONTRACT_ABI = [];

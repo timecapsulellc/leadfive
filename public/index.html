@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 OrphiChain - Decentralized Crowdfunding Platform</title>
+    <meta name="description" content="OrphiChain - Revolutionary blockchain-based crowdfunding platform with 5-pool compensation system on BSC Mainnet">
+    <meta name="keywords" content="blockchain, crowdfunding, BSC, DeFi, compensation plan, OrphiChain">
+    <meta name="author" content="OrphiChain">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://orphichain.vercel.app/">
+    <meta property="og:title" content="OrphiChain - Decentralized Crowdfunding Platform">
+    <meta property="og:description" content="Revolutionary blockchain-based crowdfunding platform with 5-pool compensation system">
+    <meta property="og:image" content="https://orphichain.vercel.app/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://orphichain.vercel.app/">
+    <meta property="twitter:title" content="OrphiChain - Decentralized Crowdfunding Platform">
+    <meta property="twitter:description" content="Revolutionary blockchain-based crowdfunding platform with 5-pool compensation system">
+    <meta property="twitter:image" content="https://orphichain.vercel.app/og-image.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://unpkg.com/react@18/umd/react.production.min.js" as="script">
+    <link rel="preload" href="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" as="script">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js" as="script">
+    
+    <!-- React and dependencies -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --orphi-royal-purple: #7B2CBF;
+            --orphi-cyber-blue: #00D4FF;
+            --orphi-energy-orange: #FF6B35;
+            --orphi-success-green: #00C851;
+            --orphi-warning-yellow: #FFD700;
+            --orphi-error-red: #FF4444;
+            --orphi-dark-bg: #0A0A0A;
+            --orphi-card-bg: rgba(255, 255, 255, 0.05);
+            --orphi-border: rgba(255, 255, 255, 0.1);
+            --orphi-text-primary: #FFFFFF;
+            --orphi-text-secondary: #B0B0B0;
+            --orphi-gradient-primary: linear-gradient(135deg, #7B2CBF 0%, #00D4FF 100%);
+            --orphi-gradient-secondary: linear-gradient(135deg, #FF6B35 0%, #FFD700 100%);
+            --orphi-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --orphi-shadow-hover: 0 12px 48px rgba(123, 44, 191, 0.4);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0A0A0A 0%, #1a1a2e 50%, #16213e 100%);
+            color: var(--orphi-text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--orphi-dark-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-content {
+            text-align: center;
+            color: var(--orphi-text-primary);
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--orphi-cyber-blue);
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 2rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--orphi-gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .loading-subtitle {
+            color: var(--orphi-text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Hide loading screen when app loads */
+        .app-loaded .loading-screen {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h1 class="loading-title">🚀 OrphiChain</h1>
+            <p class="loading-subtitle">Loading Decentralized Platform...</p>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="root"></div>
+
+    <!-- Load the main application -->
+    <script type="text/babel" src="/js/contracts.js"></script>
+    <script type="text/babel" src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+.mobile-nav-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+/* Alerts */
+.alert {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--background-dark);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 90%;
+  z-index: 1001;
+}
+
+.alert.success {
+  border-left: 4px solid var(--success-color);
+}
+
+.alert.error {
+  border-left: 4px solid var(--error-color);
+}
+
+.alert.warning {
+  border-left: 4px solid var(--warning-color);
+}
+
+.alert-icon {
+  font-size: 1.2rem;
+}
+
+.alert-message {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.alert-close {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.alert-close:hover {
+  color: var(--text-primary);
+}
+
+/* Navigation */
+.mobile-nav {
+  background: var(--background-dark);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-around;
+  padding: 0.5rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.nav-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-tab.active {
+  color: var(--primary-color);
+}
+
+.nav-tab::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.nav-tab.active::after {
+  width: 20px;
+}
+
+.tab-icon {
+  font-size: 1.5rem;
+}
+
+.tab-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .alert {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .alert-message {
+    font-size: 0.8rem;
+  }
+
+  .nav-tab {
+    padding: 0.4rem;
+  }
+
+  .tab-icon {
+    font-size: 1.2rem;
+  }
+
+  .tab-label {
+    font-size: 0.7rem;
+  }
+} 
