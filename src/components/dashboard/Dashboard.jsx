@@ -9,8 +9,7 @@ import useWallet from '../../hooks/useWallet';
 import useContract from '../../hooks/useContract';
 import OrphiChainLogo from '../OrphiChainLogo';
 import '../../styles/dashboard.css';
-import './components.css';
-import './global.css';
+import '../../styles/global.css';
 
 const Dashboard = () => {
   // Web3 wallet and contract hooks
