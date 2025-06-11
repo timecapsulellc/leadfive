@@ -1,3 +1,5 @@
+import React from 'react';
+
 // TODO: Implement wallet connection logic (MetaMask, etc.)
 const useWallet = () => {
   const [account, setAccount] = React.useState(null);
