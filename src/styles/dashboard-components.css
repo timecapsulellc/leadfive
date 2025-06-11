@@ -27,11 +27,20 @@
 
 .dashboard-title {
   text-align: center;
-  color: var(--accent-color, #00d4ff);
+  background: var(--brand-gradient, linear-gradient(45deg, #00D4FF, #7B2CBF, #FF6B35));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-size: 2.5rem;
   margin: 20px 0 40px 0;
   font-weight: 700;
   text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.3)); }
+  to { filter: drop-shadow(0 0 30px rgba(123, 44, 191, 0.5)); }
 }
 
 .dashboard-grid {
@@ -129,11 +138,11 @@
   border-left: 4px solid;
 }
 
-.pool-item.sponsor { border-left-color: #2E86AB; }
-.pool-item.level { border-left-color: #3FA7D6; }
-.pool-item.global { border-left-color: #59CD90; }
-.pool-item.leader { border-left-color: #7ED321; }
-.pool-item.help { border-left-color: #A23B72; }
+.pool-item.sponsor { border-left-color: var(--cyber-blue, #00D4FF); }
+.pool-item.level { border-left-color: var(--royal-purple, #7B2CBF); }
+.pool-item.global { border-left-color: var(--success-green, #00FF88); }
+.pool-item.leader { border-left-color: var(--premium-gold, #FFD700); }
+.pool-item.help { border-left-color: var(--energy-orange, #FF6B35); }
 
 /* Wallet Connection */
 .wallet-connection {
@@ -243,13 +252,13 @@
 }
 
 .user-node {
-  border-color: #00D4FF;
+  border-color: var(--cyber-blue, #00D4FF);
   background: rgba(0, 212, 255, 0.1);
 }
 
 .team-node {
-  border-color: #59CD90;
-  background: rgba(89, 205, 144, 0.1);
+  border-color: var(--success-green, #00FF88);
+  background: rgba(0, 255, 136, 0.1);
 }
 
 .node-id {

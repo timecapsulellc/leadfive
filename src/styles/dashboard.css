@@ -3,37 +3,59 @@
    UNIFIED DASHBOARD STYLES - COMPREHENSIVE
    ============================================ */
 
-/* CSS Variables for Theme Support */
+/* CSS Variables for OrphiChain Brand Colors */
 :root {
-  --primary-bg: #181a20;
-  --secondary-bg: #23263a;
-  --accent-bg: #2a2d3f;
-  --card-bg: #2c2f42;
-  --text-primary: #ffffff;
-  --text-secondary: #b0b3c1;
-  --text-muted: #6b7280;
-  --accent-color: #00d4ff;
-  --success-color: #00ff88;
-  --warning-color: #ffb547;
-  --error-color: #ff6b35;
-  --border-color: #333644;
-  --shadow-color: rgba(0, 0, 0, 0.2);
-  --logo-gradient: linear-gradient(135deg, #00d4ff, #00ff88);
-  --card-gradient: linear-gradient(135deg, #2c2f42, #23263a);
+  /* Primary Brand Colors */
+  --cyber-blue: #00D4FF;
+  --royal-purple: #7B2CBF;
+  --energy-orange: #FF6B35;
+  
+  /* Secondary Colors */
+  --deep-space: #1A1A2E;
+  --midnight-blue: #16213E;
+  --silver-mist: #B8C5D1;
+  
+  /* Accent Colors */
+  --success-green: #00FF88;
+  --alert-red: #FF4757;
+  --premium-gold: #FFD700;
+  
+  /* Neutral Colors */
+  --pure-white: #FFFFFF;
+  --charcoal-gray: #2D3748;
+  --true-black: #0A0A0A;
+  
+  /* Dashboard Layout Variables */
+  --primary-bg: var(--deep-space);
+  --secondary-bg: var(--midnight-blue);
+  --accent-bg: var(--charcoal-gray);
+  --card-bg: rgba(45, 55, 72, 0.8);
+  --text-primary: var(--pure-white);
+  --text-secondary: var(--silver-mist);
+  --text-muted: rgba(184, 197, 209, 0.7);
+  --accent-color: var(--cyber-blue);
+  --success-color: var(--success-green);
+  --warning-color: var(--premium-gold);
+  --error-color: var(--alert-red);
+  --border-color: rgba(123, 44, 191, 0.3);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --logo-gradient: linear-gradient(135deg, var(--cyber-blue), var(--royal-purple), var(--energy-orange));
+  --card-gradient: linear-gradient(135deg, var(--midnight-blue), var(--deep-space));
+  --brand-gradient: linear-gradient(45deg, var(--cyber-blue), var(--royal-purple), var(--energy-orange));
 }
 
-/* Light Theme Variables */
+/* Light Theme Variables (Optional Alternative) */
 .unified-dashboard-light {
-  --primary-bg: #f8fafc;
-  --secondary-bg: #ffffff;
-  --accent-bg: #f1f5f9;
-  --card-bg: #ffffff;
-  --text-primary: #1e293b;
-  --text-secondary: #475569;
-  --text-muted: #64748b;
-  --border-color: #e2e8f0;
-  --shadow-color: rgba(0, 0, 0, 0.1);
-  --card-gradient: linear-gradient(135deg, #ffffff, #f8fafc);
+  --primary-bg: var(--pure-white);
+  --secondary-bg: rgba(184, 197, 209, 0.1);
+  --accent-bg: rgba(0, 212, 255, 0.05);
+  --card-bg: var(--pure-white);
+  --text-primary: var(--true-black);
+  --text-secondary: var(--charcoal-gray);
+  --text-muted: var(--silver-mist);
+  --border-color: rgba(123, 44, 191, 0.2);
+  --shadow-color: rgba(0, 212, 255, 0.1);
+  --card-gradient: linear-gradient(135deg, var(--pure-white), rgba(0, 212, 255, 0.03));
 }
 
 /* ============================================

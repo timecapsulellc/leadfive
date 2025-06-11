@@ -8,50 +8,71 @@ export const APP_CONFIG = {
   DESCRIPTION: "Revolutionary blockchain-based crowdfunding platform with 5-pool compensation system"
 };
 
-// Branding Colors
+// OrphiChain Official Brand Colors
 export const BRAND_COLORS = {
+  // Primary Brand Colors
+  CYBER_BLUE: "#00D4FF",
+  ROYAL_PURPLE: "#7B2CBF",
+  ENERGY_ORANGE: "#FF6B35",
+  
+  // Secondary Colors
+  DEEP_SPACE: "#1A1A2E",
+  MIDNIGHT_BLUE: "#16213E",
+  SILVER_MIST: "#B8C5D1",
+  
+  // Accent Colors
+  SUCCESS_GREEN: "#00FF88",
+  ALERT_RED: "#FF4757",
+  PREMIUM_GOLD: "#FFD700",
+  
+  // Neutral Colors
+  PURE_WHITE: "#FFFFFF",
+  CHARCOAL_GRAY: "#2D3748",
+  TRUE_BLACK: "#0A0A0A",
+  
+  // Legacy mappings for compatibility
   PRIMARY: "#00D4FF",
-  SECONDARY: "#59CD90", 
-  ACCENT: "#2E86AB",
-  SUCCESS: "#7ED321",
+  SECONDARY: "#00FF88", 
+  ACCENT: "#7B2CBF",
+  SUCCESS: "#00FF88",
   ERROR: "#FF4757",
-  WARNING: "#FFA726",
+  WARNING: "#FFD700",
   BACKGROUND: "#1A1A2E",
-  CARD_BG: "#16213e",
+  CARD_BG: "#16213E",
   TEXT_PRIMARY: "#FFFFFF",
   TEXT_SECONDARY: "#B8C5D1"
 };
 
-// Compensation Pool Configuration
+// Compensation Pool Configuration with Brand Colors
 export const COMPENSATION_POOLS = [
   { 
     name: 'Sponsor Commission', 
     percentage: 40, 
-    color: BRAND_COLORS.ACCENT,
+    color: BRAND_COLORS.CYBER_BLUE,
     description: 'Direct referral commission' 
   },
   { 
     name: 'Level Bonus', 
     percentage: 10, 
-    color: '#3FA7D6',
+    color: BRAND_COLORS.ROYAL_PURPLE,
     description: 'Multi-level team bonus' 
   },
   { 
     name: 'Global Upline Bonus', 
     percentage: 10, 
-    color: BRAND_COLORS.SECONDARY,
+    color: BRAND_COLORS.SUCCESS_GREEN,
     description: 'Upline support bonus' 
   },
   { 
     name: 'Leader Bonus Pool', 
     percentage: 10, 
-    color: BRAND_COLORS.SUCCESS,
+    color: BRAND_COLORS.PREMIUM_GOLD,
     description: 'Leadership rewards' 
   },
   { 
     name: 'Global Help Pool', 
     percentage: 30, 
-    color: '#A23B72',
+    color: BRAND_COLORS.ENERGY_ORANGE,
     description: 'Community support fund' 
   }
 ];
