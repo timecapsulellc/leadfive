@@ -1,0 +1,600 @@
+{
+  "manifestVersion": "3.2",
+  "proxies": [
+    {
+      "address": "0x363D1A3844A61Eb17bBe67F53E461870d35cE5d1",
+      "txHash": "0x472974b8219acebb68ad5b45fc1c2776db7caff91fccee34d2ab0ada798d2d9f",
+      "kind": "uups"
+    },
+    {
+      "address": "0x8F826B18096Dcf7AF4515B06Cb563475d189ab50",
+      "txHash": "0x90a20fcd2cbcbdf818fd888ef697f1f16b015652f29fc06d502f1b05e4cbc9c3",
+      "kind": "uups"
+    }
+  ],
+  "impls": {
+    "b4884f0b39e0bd7b8687a16b9323eb508d0b3218db6bf4b768b5d98faa5ed10a": {
+      "address": "0xE9d76e821790c64d7563F6022b5F73eEAE57DB6C",
+      "txHash": "0xb35a732ec7a77e635da1ebe931d837cba4b885f916d5087b8adea5c4c00cf19a",
+      "layout": {
+        "solcVersion": "0.8.22",
+        "storage": [
+          {
+            "label": "storageLayoutHash",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_bytes32",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:132"
+          },
+          {
+            "label": "users",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_address,t_struct(User)2413_storage)",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:204"
+          },
+          {
+            "label": "userIdToAddress",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:205"
+          },
+          {
+            "label": "directReferrals",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:207"
+          },
+          {
+            "label": "uplineChain",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_address,t_array(t_address)30_storage)",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:208"
+          },
+          {
+            "label": "totalUsers",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_uint256",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:210"
+          },
+          {
+            "label": "totalVolume",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_uint256",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:212"
+          },
+          {
+            "label": "poolBalances",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_array(t_uint256)5_storage",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:212"
+          },
+          {
+            "label": "globalHelpPoolBalance",
+            "offset": 0,
+            "slot": "12",
+            "type": "t_uint256",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:213"
+          },
+          {
+            "label": "leaderBonusPoolBalance",
+            "offset": 0,
+            "slot": "13",
+            "type": "t_uint256",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:214"
+          },
+          {
+            "label": "lastGlobalHelpPoolDistribution",
+            "offset": 0,
+            "slot": "14",
+            "type": "t_uint256",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:215"
+          },
+          {
+            "label": "lastLeaderBonusDistribution",
+            "offset": 0,
+            "slot": "15",
+            "type": "t_uint256",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:217"
+          },
+          {
+            "label": "weeklyDistributionCount",
+            "offset": 0,
+            "slot": "16",
+            "type": "t_uint256",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:218"
+          },
+          {
+            "label": "totalDistributedAmount",
+            "offset": 0,
+            "slot": "17",
+            "type": "t_uint256",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:219"
+          },
+          {
+            "label": "usdtToken",
+            "offset": 0,
+            "slot": "18",
+            "type": "t_contract(IERC20)2283",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:219"
+          },
+          {
+            "label": "priceOracle",
+            "offset": 0,
+            "slot": "19",
+            "type": "t_contract(IPriceOracle)2311",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:221"
+          },
+          {
+            "label": "treasuryAddress",
+            "offset": 0,
+            "slot": "20",
+            "type": "t_address",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:223"
+          },
+          {
+            "label": "emergencyAddress",
+            "offset": 0,
+            "slot": "21",
+            "type": "t_address",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:223"
+          },
+          {
+            "label": "poolManagerAddress",
+            "offset": 0,
+            "slot": "22",
+            "type": "t_address",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:225"
+          },
+          {
+            "label": "packageAmounts",
+            "offset": 0,
+            "slot": "23",
+            "type": "t_array(t_uint256)4_storage",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:228"
+          },
+          {
+            "label": "levelBonusRates",
+            "offset": 0,
+            "slot": "27",
+            "type": "t_array(t_uint256)10_storage",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:251"
+          },
+          {
+            "label": "platformFeeRate",
+            "offset": 0,
+            "slot": "37",
+            "type": "t_uint256",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:287"
+          },
+          {
+            "label": "oracleEnabled",
+            "offset": 0,
+            "slot": "38",
+            "type": "t_bool",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:293"
+          },
+          {
+            "label": "maxPriceAge",
+            "offset": 0,
+            "slot": "39",
+            "type": "t_uint256",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:294"
+          },
+          {
+            "label": "priceDeviationThreshold",
+            "offset": 0,
+            "slot": "40",
+            "type": "t_uint256",
+            "contract": "OrphiCrowdFund",
+            "src": "contracts/OrphiCrowdFund.sol:295"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)24_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(AccessControlStorage)34_storage": {
+            "label": "struct AccessControlUpgradeable.AccessControlStorage",
+            "members": [
+              {
+                "label": "_roles",
+                "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(InitializableStorage)211_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(OwnableStorage)151_storage": {
+            "label": "struct OwnableUpgradeable.OwnableStorage",
+            "members": [
+              {
+                "label": "_owner",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(PausableStorage)362_storage": {
+            "label": "struct PausableUpgradeable.PausableStorage",
+            "members": [
+              {
+                "label": "_paused",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ReentrancyGuardStorage)426_storage": {
+            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
+            "members": [
+              {
+                "label": "_status",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(RoleData)24_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "hasRole",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_address)30_storage": {
+            "label": "address[30]",
+            "numberOfBytes": "960"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint128)5_storage": {
+            "label": "uint128[5]",
+            "numberOfBytes": "96"
+          },
+          "t_array(t_uint256)10_storage": {
+            "label": "uint256[10]",
+            "numberOfBytes": "320"
+          },
+          "t_array(t_uint256)4_storage": {
+            "label": "uint256[4]",
+            "numberOfBytes": "128"
+          },
+          "t_array(t_uint256)5_storage": {
+            "label": "uint256[5]",
+            "numberOfBytes": "160"
+          },
+          "t_contract(IERC20)2283": {
+            "label": "contract IERC20",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IPriceOracle)2311": {
+            "label": "contract IPriceOracle",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_array(t_address)30_storage)": {
+            "label": "mapping(address => address[30])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_array(t_address)dyn_storage)": {
+            "label": "mapping(address => address[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(User)2413_storage)": {
+            "label": "mapping(address => struct OrphiCrowdFund.User)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(User)2413_storage": {
+            "label": "struct OrphiCrowdFund.User",
+            "members": [
+              {
+                "label": "totalInvested",
+                "type": "t_uint128",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "registrationTime",
+                "type": "t_uint64",
+                "offset": 16,
+                "slot": "0"
+              },
+              {
+                "label": "teamSize",
+                "type": "t_uint32",
+                "offset": 24,
+                "slot": "0"
+              },
+              {
+                "label": "lastActivity",
+                "type": "t_uint32",
+                "offset": 28,
+                "slot": "0"
+              },
+              {
+                "label": "totalEarnings",
+                "type": "t_uint128",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "withdrawableAmount",
+                "type": "t_uint128",
+                "offset": 16,
+                "slot": "1"
+              },
+              {
+                "label": "packageTierValue",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "leaderRankValue",
+                "type": "t_uint32",
+                "offset": 8,
+                "slot": "2"
+              },
+              {
+                "label": "directReferrals",
+                "type": "t_uint32",
+                "offset": 12,
+                "slot": "2"
+              },
+              {
+                "label": "isCapped",
+                "type": "t_bool",
+                "offset": 16,
+                "slot": "2"
+              },
+              {
+                "label": "isActive",
+                "type": "t_bool",
+                "offset": 17,
+                "slot": "2"
+              },
+              {
+                "label": "sponsor",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "leftChild",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "rightChild",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "poolEarnings",
+                "type": "t_array(t_uint128)5_storage",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "currentLevel",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "9"
+              },
+              {
+                "label": "leftLegCount",
+                "type": "t_uint32",
+                "offset": 4,
+                "slot": "9"
+              },
+              {
+                "label": "rightLegCount",
+                "type": "t_uint32",
+                "offset": 8,
+                "slot": "9"
+              },
+              {
+                "label": "weeklyHelpPoolShares",
+                "type": "t_uint32",
+                "offset": 12,
+                "slot": "9"
+              },
+              {
+                "label": "totalWithdrawn",
+                "type": "t_uint128",
+                "offset": 16,
+                "slot": "9"
+              },
+              {
+                "label": "lastWithdrawal",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "10"
+              },
+              {
+                "label": "withdrawalCount",
+                "type": "t_uint32",
+                "offset": 8,
+                "slot": "10"
+              },
+              {
+                "label": "reinvestmentPercentage",
+                "type": "t_uint32",
+                "offset": 12,
+                "slot": "10"
+              }
+            ],
+            "numberOfBytes": "352"
+          },
+          "t_uint128": {
+            "label": "uint128",
+            "numberOfBytes": "16"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Pausable": [
+            {
+              "contract": "PausableUpgradeable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.ReentrancyGuard": [
+            {
+              "contract": "ReentrancyGuardUpgradeable",
+              "label": "_status",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:43",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.AccessControl": [
+            {
+              "contract": "AccessControlUpgradeable",
+              "label": "_roles",
+              "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
+              "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Ownable": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

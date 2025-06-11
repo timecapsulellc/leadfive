@@ -1,143 +1,24 @@
-# Dependencies
-node_modules/
+# Logs
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Build outputs
-artifacts/
-cache/
-typechain-types/
-dist/
-deployments/
-.vapid-keys.json
+node_modules
+dist
+dist-ssr
+*.local
 
-# Environment variables
-.env
-.env.local
-.env.development
-.env.test
-.env.production
-.env.mainnet
-.env.mainnet.production
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Coverage reports
-coverage/
-coverage.json
-
-# IDE
-.vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
-
-# OS
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
 .DS_Store
-Thumbs.db
-
-# Logs
-logs/
-*.log
-
-# Runtime data
-pids/
-*.pid
-*.seed
-*.pid.lock
-
-# Optional npm cache directory
-.npm
-
-# ESLint cache
-.eslintcache
-
-# Hardhat files
-/cache
-/artifacts
-
-# OpenZeppelin
-.openzeppelin/
-
-# Secret files - NEVER commit these!
-**/*_private_key*
-**/*_secret*
-**/*_mnemonic*
-wallet.json
-keys.json
-
-# Gas reports
-gas-report.txt
-
-# Additional sensitive deployment files
-deployment-output.txt
-mainnet-deployment-ready.sh
-PRODUCTION_COMMANDS.sh
-deployment-config.json
-
-# Build artifacts
-dist/
-build/
-
-# Contract deployment addresses (if they contain mainnet info)
-contract-addresses.json
-deployed-contracts.json
-
-# Specific sensitive files with private keys or test data
-derive-address.js
-scripts/get-wallet-address.js
-**/test-*.js
-**/debug-*.js
-**/add-test-data.js
-**/check-contract-*.js
-**/complete-dashboard-test.js
-
-# Server files that might contain sensitive data
-server/
-push-notification-server.js
-
-# Backup directories
-kyc-backup/
-standalone-*/
-
-# Large binary files and artifacts
-*.zip
-*.tar.gz
-*.rar
-*.7z
-*.pdf
-*.psd
-*.ai
-*.sketch
-*.xd
-*.fig
-*.mp4
-*.mov
-*.avi
-*.jpg
-*.jpeg
-*.png
-*.gif
-*.bmp
-*.ico
-*.icns
-
-# Temporary test files
-*-test-report-*.json
-*-test-report.json
-automated-test-report-*.json
-enhanced-test-report-*.json
-deployment-error-*.json
-*test-execution-results-*.md
-
-# More deployment/testing files
-*.min.js
-artifacts-v4ultra/build-info/
-cache-v4ultra/
-
-# Other potentially sensitive files
-*wallet*.js
-*private*.js
-*seed*.js
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
