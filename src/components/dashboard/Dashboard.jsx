@@ -8,7 +8,7 @@ import WalletConnection from '../web3/WalletConnection';
 import useWallet from '../../hooks/useWallet';
 import useContract from '../../hooks/useContract';
 import OrphiChainLogo from '../OrphiChainLogo';
-import './dashboard.css';
+import '../../styles/dashboard.css';
 import './components.css';
 import './global.css';
 
