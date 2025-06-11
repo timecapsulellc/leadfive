@@ -1,0 +1,204 @@
+
+/* Welcome Animation Styles */
+.welcome-animation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1A1A2E 0%, #16213e 50%, #0F172A 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-animation::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(89, 205, 144, 0.1) 0%, transparent 50%);
+  animation: backgroundShift 4s ease-in-out infinite alternate;
+}
+
+@keyframes backgroundShift {
+  0% { opacity: 0.5; }
+  100% { opacity: 0.8; }
+}
+
+.logo-container {
+  position: relative;
+  z-index: 2;
+  margin-bottom: 2rem;
+}
+
+.welcome-logo {
+  animation: logoEntrance 2s ease-out;
+  filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.3));
+}
+
+@keyframes logoEntrance {
+  0% { 
+    opacity: 0;
+    transform: rotate(0deg) scale(0.5);
+  }
+  50% { 
+    opacity: 0.7;
+    transform: rotate(180deg) scale(1.2);
+  }
+  100% { 
+    opacity: 1;
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+.fade-in-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: var(--primary-color, #00D4FF);
+  font-weight: 700;
+  text-align: center;
+  margin: 1rem 0;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+.fade-in-title.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in-subtitle {
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  color: var(--text-secondary, #B8C5D1);
+  text-align: center;
+  font-weight: 300;
+  margin: 0.5rem 0 2rem 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out 0.3s;
+  position: relative;
+  z-index: 2;
+  letter-spacing: 0.5px;
+}
+
+.fade-in-subtitle.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.loading-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  z-index: 2;
+  margin-top: 2rem;
+}
+
+.loading-bar {
+  width: 200px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.loading-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    var(--primary-color, #00D4FF), 
+    transparent
+  );
+  animation: loadingProgress 2s ease-in-out infinite;
+}
+
+@keyframes loadingProgress {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+.loading-indicator.complete .loading-bar::after {
+  animation: none;
+  left: 0;
+  width: 100%;
+  background: var(--success-color, #7ED321);
+}
+
+.loading-text {
+  color: var(--text-secondary, #B8C5D1);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.loading-indicator.complete .loading-text {
+  color: var(--success-color, #7ED321);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .welcome-animation {
+    padding: 2rem 1rem;
+  }
+  
+  .logo-container {
+    margin-bottom: 1.5rem;
+  }
+  
+  .fade-in-title {
+    font-size: 2.5rem;
+  }
+  
+  .fade-in-subtitle {
+    font-size: 1.2rem;
+    padding: 0 1rem;
+  }
+  
+  .loading-bar {
+    width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .fade-in-title {
+    font-size: 2rem;
+  }
+  
+  .fade-in-subtitle {
+    font-size: 1rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .welcome-logo,
+  .fade-in-title,
+  .fade-in-subtitle {
+    animation: none;
+    transition: none;
+  }
+  
+  .loading-bar::after {
+    animation: none;
+  }
+  
+  .welcome-animation::before {
+    animation: none;
+  }
+}

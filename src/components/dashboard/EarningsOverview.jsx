@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ProgressBar from '../common/ProgressBar';
 import LoadingSpinner from '../common/LoadingSpinner';
-import { PACKAGE_TIERS, LEADER_RANKS } from '../../contracts';
+import { COMPENSATION_POOLS } from '../../utils/constants';
 
 const EarningsOverview = ({ wallet, contract }) => {
 	const [earnings, setEarnings] = useState(null);
@@ -40,13 +40,11 @@ const EarningsOverview = ({ wallet, contract }) => {
 		fetchEarnings();
 	}, [wallet?.account, contract]);
 
-	const compensationPools = [
-		{ name: 'Sponsor Commission', percentage: 40, color: '#2E86AB', earnings: earnings * 0.4 || 0 },
-		{ name: 'Level Bonus', percentage: 10, color: '#3FA7D6', earnings: earnings * 0.1 || 0 },
-		{ name: 'Global Upline Bonus', percentage: 10, color: '#59CD90', earnings: earnings * 0.1 || 0 },
-		{ name: 'Leader Bonus Pool', percentage: 10, color: '#7ED321', earnings: earnings * 0.1 || 0 },
-		{ name: 'Global Help Pool', percentage: 30, color: '#A23B72', earnings: earnings * 0.3 || 0 }
-	];
+	// Use compensation pools from constants with calculated earnings
+	const compensationPools = COMPENSATION_POOLS.map(pool => ({
+		...pool,
+		earnings: earnings ? (earnings * pool.percentage / 100) : 0
+	}));
 
 	const capPercent = earnings && cap ? Math.min((earnings / cap) * 100, 100) : 0;
 

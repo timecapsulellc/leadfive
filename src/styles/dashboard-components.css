@@ -212,47 +212,96 @@
   text-align: center;
 }
 
-.matrix-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+.matrix-container {
   margin: 20px 0;
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
+}
+
+.matrix-level {
+  margin-bottom: 24px;
+}
+
+.matrix-level h4 {
+  color: var(--accent-color);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.matrix-nodes {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
 .matrix-node {
-  background: var(--accent-bg, #2a2d3f);
-  border-radius: 8px;
-  padding: 16px 8px;
+  background: var(--accent-bg);
+  border-radius: 12px;
+  padding: 12px;
+  min-width: 100px;
   text-align: center;
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
+  border: 2px solid;
 }
 
-.matrix-node.you {
-  background: var(--logo-gradient, linear-gradient(135deg, #00d4ff, #00ff88));
-  color: var(--primary-bg, #181a20);
-  font-weight: 600;
+.user-node {
+  border-color: #00D4FF;
+  background: rgba(0, 212, 255, 0.1);
 }
 
-.matrix-node.filled {
-  border-color: var(--success-color, #00ff88);
+.team-node {
+  border-color: #59CD90;
+  background: rgba(89, 205, 144, 0.1);
 }
 
-.matrix-node.empty {
-  border-color: var(--border-color, #333644);
-  opacity: 0.7;
+.node-id {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.node-earnings {
+  color: var(--accent-color);
+  font-size: 0.9em;
+}
+
+.node-position {
+  font-size: 0.8em;
+  color: var(--text-secondary);
+}
+
+.matrix-stats-panel {
+  margin-top: 24px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.stat-item {
+  background: var(--accent-bg);
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.stat-label {
+  color: var(--text-secondary);
+  font-size: 0.9em;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  color: var(--accent-color);
+  font-size: 1.5em;
+  font-weight: bold;
 }
 
 .matrix-legend {
-  margin-top: 16px;
+  background: var(--accent-bg);
   padding: 12px;
-  background: var(--accent-bg, #2a2d3f);
   border-radius: 8px;
-  font-size: 0.9rem;
-  color: var(--text-secondary, #b0b3c1);
+  text-align: center;
 }
 
 /* Withdrawal Panel */
