@@ -9,6 +9,7 @@ import useWallet from '../../hooks/useWallet';
 import useContract from '../../hooks/useContract';
 import OrphiChainLogo from '../OrphiChainLogo';
 import '../../styles/dashboard.css';
+import '../../styles/dashboard-components.css';
 import '../../styles/global.css';
 
 const Dashboard = () => {
@@ -16,25 +17,35 @@ const Dashboard = () => {
   const wallet = useWallet();
   const contract = useContract();
 
-  // You can pass wallet/contract state as props to children as needed
   return (
     <div className="unified-dashboard">
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
-        <OrphiChainLogo size="medium" autoRotate backgroundColor="transparent" />
-      </div>
-      <h1 className="dashboard-title">OrphiChain Ultimate Dashboard</h1>
-      <WalletConnection />
-      <div className="dashboard-grid">
-        <div>
-          <EarningsOverview wallet={wallet} contract={contract} />
-          <WithdrawalPanel wallet={wallet} contract={contract} />
+      {/* Header Section */}
+      <header className="dashboard-header">
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
+          <OrphiChainLogo size="medium" autoRotate backgroundColor="transparent" />
         </div>
-        <div>
-          <MatrixVisualization wallet={wallet} contract={contract} />
-          <ReferralManager wallet={wallet} contract={contract} />
-          <TeamOverview wallet={wallet} contract={contract} />
+        <h1 className="dashboard-title">OrphiChain Ultimate Dashboard</h1>
+      </header>
+
+      {/* Wallet Connection Section */}
+      <section className="wallet-section">
+        <WalletConnection />
+      </section>
+
+      {/* Main Dashboard Grid */}
+      <main className="dashboard-main">
+        <div className="dashboard-grid">
+          <div className="dashboard-column-left">
+            <EarningsOverview wallet={wallet} contract={contract} />
+            <WithdrawalPanel wallet={wallet} contract={contract} />
+          </div>
+          <div className="dashboard-column-right">
+            <MatrixVisualization wallet={wallet} contract={contract} />
+            <ReferralManager wallet={wallet} contract={contract} />
+            <TeamOverview wallet={wallet} contract={contract} />
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 };

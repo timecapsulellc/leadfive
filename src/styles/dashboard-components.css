@@ -1,0 +1,707 @@
+/* ============================================
+   DASHBOARD COMPONENT SPECIFIC STYLES
+   ============================================ */
+
+/* Loading Spinner Animations */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+/* Dashboard Layout */
+.unified-dashboard {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  background: var(--primary-bg, #181a20);
+  min-height: 100vh;
+  color: var(--text-primary, #ffffff);
+}
+
+.dashboard-title {
+  text-align: center;
+  color: var(--accent-color, #00d4ff);
+  font-size: 2.5rem;
+  margin: 20px 0 40px 0;
+  font-weight: 700;
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+  margin-top: 30px;
+}
+
+/* Card Components */
+.card {
+  background: var(--card-bg, #2c2f42);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border-color, #333644);
+  box-shadow: 0 8px 32px var(--shadow-color, rgba(0, 0, 0, 0.2));
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--logo-gradient, linear-gradient(135deg, #00d4ff, #00ff88));
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 48px var(--shadow-color, rgba(0, 0, 0, 0.3));
+}
+
+.card h2 {
+  color: var(--accent-color, #00d4ff);
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.card h3 {
+  color: var(--text-primary, #ffffff);
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+/* Earnings Overview */
+.earnings-overview .cap-tracker {
+  background: var(--accent-bg, #2a2d3f);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.earnings-overview .cap-tracker div {
+  font-size: 1.1rem;
+  color: var(--text-secondary, #b0b3c1);
+  margin-bottom: 8px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--accent-bg, #2a2d3f);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 12px 0;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--logo-gradient, linear-gradient(135deg, #00d4ff, #00ff88));
+  transition: width 0.5s ease;
+  border-radius: 4px;
+}
+
+.compensation-pools {
+  display: grid;
+  gap: 12px;
+}
+
+.pool-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--accent-bg, #2a2d3f);
+  border-radius: 8px;
+  border-left: 4px solid;
+}
+
+.pool-item.sponsor { border-left-color: #2E86AB; }
+.pool-item.level { border-left-color: #3FA7D6; }
+.pool-item.global { border-left-color: #59CD90; }
+.pool-item.leader { border-left-color: #7ED321; }
+.pool-item.help { border-left-color: #A23B72; }
+
+/* Wallet Connection */
+.wallet-connection {
+  background: var(--card-bg, #2c2f42);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 30px;
+  border: 1px solid var(--border-color, #333644);
+}
+
+.wallet-connection h2 {
+  color: var(--text-primary, #ffffff);
+  margin-bottom: 20px;
+}
+
+.wallet-connection .connected-info {
+  background: var(--accent-bg, #2a2d3f);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.wallet-connection .connected-info .address {
+  font-family: 'Monaco', 'Menlo', monospace;
+  font-size: 0.9rem;
+  color: var(--success-color, #00ff88);
+  word-break: break-all;
+}
+
+/* Buttons */
+.btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: var(--logo-gradient, linear-gradient(135deg, #00d4ff, #00ff88));
+  color: var(--primary-bg, #181a20);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 212, 255, 0.3);
+}
+
+.btn-secondary {
+  background: var(--accent-bg, #2a2d3f);
+  color: var(--text-primary, #ffffff);
+  border: 1px solid var(--border-color, #333644);
+}
+
+.btn-secondary:hover {
+  background: var(--card-bg, #2c2f42);
+  border-color: var(--accent-color, #00d4ff);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Matrix Visualization */
+.matrix-visualization {
+  text-align: center;
+}
+
+.matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 20px 0;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.matrix-node {
+  background: var(--accent-bg, #2a2d3f);
+  border-radius: 8px;
+  padding: 16px 8px;
+  text-align: center;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.matrix-node.you {
+  background: var(--logo-gradient, linear-gradient(135deg, #00d4ff, #00ff88));
+  color: var(--primary-bg, #181a20);
+  font-weight: 600;
+}
+
+.matrix-node.filled {
+  border-color: var(--success-color, #00ff88);
+}
+
+.matrix-node.empty {
+  border-color: var(--border-color, #333644);
+  opacity: 0.7;
+}
+
+.matrix-legend {
+  margin-top: 16px;
+  padding: 12px;
+  background: var(--accent-bg, #2a2d3f);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--text-secondary, #b0b3c1);
+}
+
+/* Withdrawal Panel */
+.withdrawal-amounts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.amount-display {
+  background: var(--accent-bg, #2a2d3f);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+
+.amount-display .label {
+  font-size: 0.9rem;
+  color: var(--text-secondary, #b0b3c1);
+  margin-bottom: 4px;
+}
+
+.amount-display .value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--success-color, #00ff88);
+}
+
+/* Referral Manager */
+.referral-section {
+  margin: 20px 0;
+}
+
+.qr-code-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.qr-placeholder {
+  width: 150px;
+  height: 150px;
+  background: var(--accent-bg, #2a2d3f);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px auto;
+  color: var(--text-secondary, #b0b3c1);
+  font-size: 1.2rem;
+}
+
+.copy-link-btn {
+  width: 100%;
+  margin-top: 16px;
+}
+
+/* Team Overview */
+.team-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.stat-item {
+  background: var(--accent-bg, #2a2d3f);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+
+.stat-item .label {
+  font-size: 0.9rem;
+  color: var(--text-secondary, #b0b3c1);
+  margin-bottom: 4px;
+}
+
+.stat-item .value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary, #ffffff);
+}
+
+.activity-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.activity-indicator.active {
+  background: var(--success-color, #00ff88);
+  box-shadow: 0 0 8px var(--success-color, #00ff88);
+}
+
+.activity-indicator.inactive {
+  background: var(--text-muted, #6b7280);
+}
+
+/* Enhanced component-specific styles */
+
+/* Earnings Overview Enhancements */
+.earnings-overview .cap-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.earnings-overview .cap-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary, #b0b3c1);
+}
+
+.earnings-overview .cap-value {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--success-color, #00ff88);
+}
+
+.earnings-overview .cap-progress-text {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: var(--text-secondary, #b0b3c1);
+}
+
+.earnings-overview .compensation-pools h3 {
+  margin: 24px 0 16px 0;
+  color: var(--text-primary, #ffffff);
+}
+
+.earnings-overview .pool-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.earnings-overview .pool-name {
+  font-weight: 500;
+  color: var(--text-primary, #ffffff);
+}
+
+.earnings-overview .pool-percentage {
+  font-size: 0.8rem;
+  color: var(--text-secondary, #b0b3c1);
+}
+
+.earnings-overview .pool-earnings {
+  font-weight: 600;
+  color: var(--success-color, #00ff88);
+}
+
+.earnings-overview .earnings-summary {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color, #333644);
+}
+
+.earnings-overview .summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.earnings-overview .summary-label {
+  color: var(--text-secondary, #b0b3c1);
+}
+
+.earnings-overview .summary-value {
+  font-weight: 600;
+  color: var(--text-primary, #ffffff);
+}
+
+/* Withdrawal Panel Enhancements */
+.withdrawal-panel .withdrawal-section {
+  margin-top: 16px;
+}
+
+.withdrawal-panel .withdrawal-rates {
+  margin: 20px 0;
+  padding: 16px;
+  background: var(--accent-bg, #2a2d3f);
+  border-radius: 8px;
+}
+
+.withdrawal-panel .withdrawal-rates h3 {
+  margin-bottom: 12px;
+  color: var(--text-primary, #ffffff);
+}
+
+.withdrawal-panel .rate-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.withdrawal-panel .rate-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.withdrawal-panel .rate-label {
+  color: var(--text-secondary, #b0b3c1);
+}
+
+.withdrawal-panel .rate-value {
+  font-weight: 600;
+  color: var(--accent-color, #00d4ff);
+}
+
+.withdrawal-panel .withdrawal-input {
+  margin: 20px 0;
+}
+
+.withdrawal-panel .withdrawal-input label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-primary, #ffffff);
+  font-weight: 500;
+}
+
+.withdrawal-panel .withdrawal-input-field {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--accent-bg, #2a2d3f);
+  border: 1px solid var(--border-color, #333644);
+  border-radius: 8px;
+  color: var(--text-primary, #ffffff);
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.withdrawal-panel .withdrawal-input-field:focus {
+  outline: none;
+  border-color: var(--accent-color, #00d4ff);
+}
+
+.withdrawal-panel .withdrawal-breakdown {
+  margin: 16px 0;
+  padding: 16px;
+  background: var(--accent-bg, #2a2d3f);
+  border-radius: 8px;
+}
+
+.withdrawal-panel .breakdown-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.withdrawal-panel .breakdown-value {
+  font-weight: 600;
+  color: var(--success-color, #00ff88);
+}
+
+.withdrawal-panel .withdrawal-btn {
+  width: 100%;
+  margin-top: 16px;
+}
+
+/* Referral Manager Enhancements */
+.referral-manager .referral-section {
+  margin-top: 16px;
+}
+
+.referral-manager .referral-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.referral-manager .referral-link-section {
+  margin: 20px 0;
+}
+
+.referral-manager .referral-link-section h3 {
+  margin-bottom: 12px;
+  color: var(--text-primary, #ffffff);
+}
+
+.referral-manager .link-container {
+  margin-bottom: 16px;
+}
+
+.referral-manager .referral-link-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--accent-bg, #2a2d3f);
+  border: 1px solid var(--border-color, #333644);
+  border-radius: 8px;
+  color: var(--text-secondary, #b0b3c1);
+  font-size: 0.9rem;
+  font-family: 'Monaco', 'Menlo', monospace;
+}
+
+.referral-manager .qr-code-container h3 {
+  margin-bottom: 16px;
+  color: var(--text-primary, #ffffff);
+}
+
+/* Team Overview Enhancements */
+.team-overview .team-section {
+  margin-top: 16px;
+}
+
+.team-overview .activity-section {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color, #333644);
+}
+
+.team-overview .activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.team-overview .activity-header h3 {
+  margin: 0;
+  color: var(--text-primary, #ffffff);
+}
+
+.team-overview .activity-indicator-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text-secondary, #b0b3c1);
+}
+
+.team-overview .activity-stats {
+  display: grid;
+  gap: 8px;
+}
+
+.team-overview .activity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.team-overview .activity-label {
+  color: var(--text-secondary, #b0b3c1);
+}
+
+.team-overview .activity-value {
+  font-weight: 600;
+  color: var(--text-primary, #ffffff);
+}
+
+/* Matrix Visualization Enhancements */
+.matrix-visualization .matrix-container {
+  text-align: center;
+}
+
+.matrix-visualization .matrix-stats {
+  margin-top: 16px;
+  display: grid;
+  gap: 8px;
+}
+
+.matrix-visualization .stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.matrix-visualization .stat-label {
+  color: var(--text-secondary, #b0b3c1);
+}
+
+.matrix-visualization .stat-value {
+  font-weight: 600;
+  color: var(--text-primary, #ffffff);
+}
+
+/* Error Message Styling */
+.error-message {
+  border-left: 4px solid var(--error-color, #ff6b35);
+}
+
+/* Animation for shimmer effect */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .unified-dashboard {
+    padding: 16px;
+  }
+  
+  .dashboard-title {
+    font-size: 2rem;
+  }
+  
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .card {
+    padding: 20px;
+  }
+  
+  .matrix-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .withdrawal-amounts {
+    grid-template-columns: 1fr;
+  }
+  
+  .team-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .withdrawal-panel .rate-info {
+    grid-template-columns: 1fr;
+  }
+  
+  .referral-manager .referral-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .team-overview .activity-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-title {
+    font-size: 1.8rem;
+  }
+  
+  .card {
+    padding: 16px;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}

@@ -12,7 +12,14 @@ const EarningsOverview = ({ wallet, contract }) => {
 
 	useEffect(() => {
 		const fetchEarnings = async () => {
-			if (!wallet?.account || !contract) return;
+			if (!wallet?.account || !contract) {
+				// Set demo data when wallet is not connected
+				setEarnings(0);
+				setInvestment(0);
+				setCap(0);
+				return;
+			}
+			
 			setLoading(true);
 			setError(null);
 			try {
@@ -21,7 +28,12 @@ const EarningsOverview = ({ wallet, contract }) => {
 				setInvestment(Number(info.totalInvested) / 1e18);
 				setCap(Number(info.totalInvested) * 4 / 1e18);
 			} catch (err) {
+				console.error('Error fetching earnings:', err);
 				setError('Failed to fetch earnings');
+				// Set demo data on error
+				setEarnings(0);
+				setInvestment(0);
+				setCap(0);
 			}
 			setLoading(false);
 		};
@@ -29,58 +41,70 @@ const EarningsOverview = ({ wallet, contract }) => {
 	}, [wallet?.account, contract]);
 
 	const compensationPools = [
-		{ name: 'Sponsor Commission', percentage: 40, color: '#2E86AB' },
-		{ name: 'Level Bonus', percentage: 10, color: '#3FA7D6' },
-		{ name: 'Global Upline Bonus', percentage: 10, color: '#59CD90' },
-		{ name: 'Leader Bonus Pool', percentage: 10, color: '#7ED321' },
-		{ name: 'Global Help Pool', percentage: 30, color: '#A23B72' }
+		{ name: 'Sponsor Commission', percentage: 40, color: '#2E86AB', earnings: earnings * 0.4 || 0 },
+		{ name: 'Level Bonus', percentage: 10, color: '#3FA7D6', earnings: earnings * 0.1 || 0 },
+		{ name: 'Global Upline Bonus', percentage: 10, color: '#59CD90', earnings: earnings * 0.1 || 0 },
+		{ name: 'Leader Bonus Pool', percentage: 10, color: '#7ED321', earnings: earnings * 0.1 || 0 },
+		{ name: 'Global Help Pool', percentage: 30, color: '#A23B72', earnings: earnings * 0.3 || 0 }
 	];
 
 	const capPercent = earnings && cap ? Math.min((earnings / cap) * 100, 100) : 0;
 
 	return (
 		<div className="earnings-overview card">
-			<h2>Earnings Overview</h2>
+			<h2>💰 Earnings Overview</h2>
 			{loading ? (
 				<LoadingSpinner size={32} />
 			) : error ? (
-				<div style={{ color: 'red' }}>{error}</div>
+				<div className="error-message" style={{ color: 'var(--error-color)', padding: '12px', background: 'var(--accent-bg)', borderRadius: '8px' }}>
+					{error}
+				</div>
 			) : (
 				<>
 					<div className="cap-tracker">
-						<div>4x Cap: ${cap ? cap.toLocaleString() : '--'}</div>
-						<ProgressBar value={capPercent} max={100} color="#00D4FF" />
-						<div
-							style={{
-								fontSize: 14,
-								color: capPercent >= 100 ? 'red' : '#00D4FF'
-							}}
-						>
-							{earnings && cap
-								? earnings >= cap
-									? 'Cap reached!'
-									: `${earnings.toLocaleString()} / ${cap.toLocaleString()} (${capPercent.toFixed(
-											1
-									  )}%)`
-								: '--'}
+						<div className="cap-info">
+							<div className="cap-label">Current Earnings</div>
+							<div className="cap-value">${earnings ? earnings.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</div>
+						</div>
+						<div className="cap-info">
+							<div className="cap-label">4x Earnings Cap</div>
+							<div className="cap-value">${cap ? cap.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</div>
+						</div>
+						<ProgressBar 
+							progress={capPercent} 
+							color="var(--success-color)"
+							height={8}
+							showPercentage={true}
+						/>
+						<div className="cap-progress-text">
+							{capPercent.toFixed(1)}% of earnings cap reached
 						</div>
 					</div>
-					<div className="pools-breakdown">
-						{compensationPools.map(pool => (
-							<div key={pool.name} className="pool-row">
-								<div style={{ width: 160 }}>{pool.name}</div>
-								<div style={{ width: 40, textAlign: 'right' }}>
-									{pool.percentage}%
+
+					<div className="compensation-pools">
+						<h3>💎 Compensation Breakdown</h3>
+						{compensationPools.map((pool, index) => (
+							<div key={index} className={`pool-item ${pool.name.toLowerCase().replace(/\s+/g, '-')}`}>
+								<div className="pool-info">
+									<div className="pool-name">{pool.name}</div>
+									<div className="pool-percentage">{pool.percentage}%</div>
 								</div>
-								<div style={{ flex: 1, marginLeft: 12 }}>
-									<ProgressBar
-										value={pool.percentage}
-										max={100}
-										color={pool.color}
-									/>
+								<div className="pool-earnings">
+									${pool.earnings.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
 								</div>
 							</div>
 						))}
+					</div>
+
+					<div className="earnings-summary">
+						<div className="summary-item">
+							<span className="summary-label">Total Investment:</span>
+							<span className="summary-value">${investment ? investment.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</span>
+						</div>
+						<div className="summary-item">
+							<span className="summary-label">ROI:</span>
+							<span className="summary-value">{investment > 0 ? ((earnings / investment) * 100).toFixed(1) : '0.0'}%</span>
+						</div>
 					</div>
 				</>
 			)}
