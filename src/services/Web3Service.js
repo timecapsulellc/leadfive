@@ -1,4 +1,3 @@
-
 import { ethers } from 'ethers';
 import { NETWORK_CONFIG } from '../utils/constants';
 
@@ -165,6 +164,126 @@ class Web3Service {
       minimumFractionDigits: decimals,
       maximumFractionDigits: decimals
     });
+  }
+
+  // Enhanced genealogy tree building method
+  async buildGenealogyTree(rootAddress, maxDepth = 5) {
+    const visited = new Set();
+    
+    const buildNode = async (address, depth = 0) => {
+      if (depth >= maxDepth || visited.has(address)) {
+        return null;
+      }
+      
+      visited.add(address);
+      
+      try {
+        const [matrixData, earningsData] = await Promise.all([
+          this.getMatrixData(address),
+          this.getUserEarnings(address)
+        ]);
+        
+        const node = {
+          name: address === rootAddress ? 'YOU' : this.formatAddress(address),
+          attributes: {
+            address: address,
+            earnings: `$${this.formatCurrency(earningsData.totalEarned)}`,
+            withdrawable: `$${this.formatCurrency(earningsData.withdrawableAmount)}`,
+            position: matrixData.position,
+            directReferrals: matrixData.directReferrals,
+            teamSize: matrixData.teamSize,
+            isUser: address === rootAddress,
+            isCapped: earningsData.isCapped,
+            level: depth + 1
+          },
+          children: []
+        };
+        
+        // Add left and right children
+        const childPromises = [];
+        if (matrixData.leftChild) {
+          childPromises.push(buildNode(matrixData.leftChild, depth + 1));
+        }
+        if (matrixData.rightChild) {
+          childPromises.push(buildNode(matrixData.rightChild, depth + 1));
+        }
+        
+        const children = await Promise.all(childPromises);
+        node.children = children.filter(child => child !== null);
+        
+        return node;
+      } catch (error) {
+        console.error(`Error building node for ${address}:`, error);
+        return {
+          name: this.formatAddress(address),
+          attributes: {
+            address: address,
+            earnings: '$0.00',
+            withdrawable: '$0.00',
+            error: 'Failed to load',
+            level: depth + 1
+          },
+          children: []
+        };
+      }
+    };
+    
+    return await buildNode(rootAddress);
+  }
+
+  // Get team hierarchy data for genealogy view
+  async getTeamHierarchy(rootAddress, maxDepth = 10) {
+    const teamMembers = [];
+    const visited = new Set();
+    
+    const processNode = async (address, level = 1, sponsor = null) => {
+      if (visited.has(address) || level > maxDepth) return;
+      
+      visited.add(address);
+      
+      try {
+        const [matrixData, earningsData] = await Promise.all([
+          this.getMatrixData(address),
+          this.getUserEarnings(address)
+        ]);
+        
+        const memberData = {
+          address: address,
+          displayName: address === rootAddress ? 'YOU' : this.formatAddress(address),
+          level: level,
+          position: matrixData.position,
+          totalEarnings: earningsData.totalEarned,
+          withdrawableAmount: earningsData.withdrawableAmount,
+          directReferrals: matrixData.directReferrals,
+          teamSize: matrixData.teamSize,
+          isCapped: earningsData.isCapped,
+          joinDate: new Date(Date.now() - (Math.random() * 90 * 24 * 60 * 60 * 1000)), // Simulated
+          sponsor: sponsor,
+          children: []
+        };
+        
+        teamMembers.push(memberData);
+        
+        // Process children
+        const childPromises = [];
+        if (matrixData.leftChild) {
+          childPromises.push(processNode(matrixData.leftChild, level + 1, address));
+          memberData.children.push(matrixData.leftChild);
+        }
+        if (matrixData.rightChild) {
+          childPromises.push(processNode(matrixData.rightChild, level + 1, address));
+          memberData.children.push(matrixData.rightChild);
+        }
+        
+        await Promise.all(childPromises);
+        
+      } catch (error) {
+        console.error(`Error processing team member ${address}:`, error);
+      }
+    };
+    
+    await processNode(rootAddress);
+    return teamMembers.filter(member => member.address !== rootAddress); // Exclude root user
   }
 }
 

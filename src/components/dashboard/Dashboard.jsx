@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import EarningsOverview from './EarningsOverview';
 import MatrixVisualization from './MatrixVisualization';
+import TeamGenealogy from './TeamGenealogy';
 import WithdrawalPanel from './WithdrawalPanel';
 import ReferralManager from './ReferralManager';
 import TeamOverview from './TeamOverview';
@@ -57,7 +58,8 @@ const Dashboard = () => {
   const tabs = [
     { id: 'overview', label: '📊 Overview', icon: '📊' },
     { id: 'matrix', label: '🌳 Matrix', icon: '🌳' },
-    { id: 'team', label: '👥 Team', icon: '👥' },
+    { id: 'genealogy', label: '👥 Genealogy', icon: '👥' },
+    { id: 'team', label: '🏆 Team Stats', icon: '🏆' },
     { id: 'referrals', label: '🔗 Referrals', icon: '🔗' },
     { id: 'withdraw', label: '💸 Withdraw', icon: '💸' },
     ...(isAdmin ? [{ id: 'admin', label: '🔧 Admin', icon: '🔧' }] : [])
@@ -113,6 +115,12 @@ const Dashboard = () => {
         {activeTab === 'matrix' && (
           <div className="dashboard-single">
             <MatrixVisualization wallet={wallet} contract={contract} />
+          </div>
+        )}
+
+        {activeTab === 'genealogy' && (
+          <div className="dashboard-single">
+            <TeamGenealogy wallet={wallet} contract={contract} />
           </div>
         )}
 
