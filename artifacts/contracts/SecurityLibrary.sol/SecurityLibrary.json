@@ -1,0 +1,122 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "SecurityLibrary",
+  "sourceName": "contracts/SecurityLibrary.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "BlockDelayNotMet",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "CircuitBreakerActive",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "ExcessiveGasUsage",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidUpgradeProposal",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "OracleDataStale",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "PriceDeviationTooHigh",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "TimelockNotExpired",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "reason",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "CircuitBreakerTriggered",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "blockNumber",
+          "type": "uint256"
+        }
+      ],
+      "name": "MEVProtectionBlocked",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "isHealthy",
+          "type": "bool"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "OracleHealthCheck",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "proposalId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "executeTime",
+          "type": "uint256"
+        }
+      ],
+      "name": "UpgradeProposed",
+      "type": "event"
+    }
+  ],
+  "bytecode": "0x60808060405234601757603a9081601d823930815050f35b600080fdfe600080fdfea26469706673582212200e813d91e2d1574df839068c0325a74745fcc905139731103a9dc8e51ea484cb64736f6c63430008160033",
+  "deployedBytecode": "0x600080fdfea26469706673582212200e813d91e2d1574df839068c0325a74745fcc905139731103a9dc8e51ea484cb64736f6c63430008160033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrphiChain Navigation Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            color: #00D4FF;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #00D4FF;
+        }
+        
+        .test-button {
+            background: linear-gradient(135deg, #00D4FF, #0066CC);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+        }
+        
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .status.success {
+            background: rgba(0, 255, 0, 0.2);
+            border: 1px solid #00ff00;
+        }
+        
+        .status.error {
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid #ff0000;
+        }
+        
+        .status.info {
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid #00D4FF;
+        }
+        
+        .app-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #00D4FF, #0066CC);
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .app-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+        }
+        
+        .navigation-flow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .flow-step {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: #00D4FF;
+        }
+        
+        .flow-step:last-child::after {
+            display: none;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #00D4FF;
+            color: white;
+            border-radius: 50%;
+            line-height: 30px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🚀 OrphiChain Navigation Test</h1>
+        
+        <div class="test-section">
+            <h3>📱 Live Application</h3>
+            <p>Test the actual wallet connection navigation flow:</p>
+            <a href="http://localhost:5179" target="_blank" class="app-link">
+                🌐 Open OrphiChain App (Port 5179)
+            </a>
+        </div>
+        
+        <div class="test-section">
+            <h3>🔄 Navigation Flow</h3>
+            <p>Expected user journey through the application:</p>
+            <div class="navigation-flow">
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <h4>Landing Page</h4>
+                    <p>Welcome screen with "Connect Wallet & Start" button</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <h4>Wallet Connection</h4>
+                    <p>MetaMask/WalletConnect integration</p>
+                </div>
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <h4>Dashboard</h4>
+                    <p>Main application interface</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🔍 Navigation Analysis</h3>
+            <div id="analysis-results">
+                <div class="status info">
+                    <strong>✅ App Structure:</strong> React app with proper navigation state management
+                </div>
+                <div class="status info">
+                    <strong>✅ Routing:</strong> Uses currentView state ('landing', 'wallet', 'dashboard')
+                </div>
+                <div class="status info">
+                    <strong>✅ Button Implementation:</strong> "Connect Wallet & Start" calls navigateToWallet()
+                </div>
+                <div class="status success">
+                    <strong>✅ Server Running:</strong> Development server active on port 5179
+                </div>
+                <div class="status success">
+                    <strong>✅ Dependencies:</strong> All React dependencies properly installed
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>📋 Test Checklist</h3>
+            <div id="test-checklist">
+                <p><strong>Manual Testing Steps:</strong></p>
+                <ol>
+                    <li>✅ Navigate to <code>http://localhost:5179</code></li>
+                    <li>🔄 Verify landing page loads with hero section</li>
+                    <li>🔄 Click "Connect Wallet & Start" button</li>
+                    <li>🔄 Confirm navigation to wallet connection view</li>
+                    <li>🔄 Test wallet connection (MetaMask required)</li>
+                    <li>🔄 Verify navigation to dashboard after connection</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🛠️ Technical Details</h3>
+            <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 5px; font-family: monospace;">
+                <strong>Navigation Implementation:</strong><br>
+                • State: <code>currentView</code> ('landing' | 'wallet' | 'dashboard')<br>
+                • Button Handler: <code>onConnectWallet={navigateToWallet}</code><br>
+                • Flow: Landing → Wallet → Dashboard<br>
+                • Server: Vite dev server on port 5179<br>
+                • Components: LandingPage.jsx, WalletConnection.jsx, UnifiedDashboard.jsx
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🎯 Resolution Summary</h3>
+            <div class="status success">
+                <strong>Issues Resolved:</strong><br>
+                ✅ Fixed HTML Webpack Plugin conflicts by using Vite<br>
+                ✅ Resolved React dependency conflicts with --legacy-peer-deps<br>
+                ✅ Server now running on correct port (5179)<br>
+                ✅ Navigation flow properly implemented and testable
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-refresh status every 5 seconds
+        function updateStatus() {
+            const timestamp = new Date().toLocaleTimeString();
+            console.log(`Status check at ${timestamp}`);
+            
+            // Test if the app is still running
+            fetch('http://localhost:5179')
+                .then(response => {
+                    if (response.ok) {
+                        document.querySelector('.status.success').innerHTML = 
+                            `<strong>✅ Server Running:</strong> Development server active on port 5179 (Last checked: ${timestamp})`;
+                    }
+                })
+                .catch(error => {
+                    document.querySelector('.status.success').innerHTML = 
+                        `<strong>❌ Server Error:</strong> Development server may be down (Last checked: ${timestamp})`;
+                });
+        }
+        
+        // Update status every 30 seconds
+        setInterval(updateStatus, 30000);
+        updateStatus(); // Initial check
+    </script>
+</body>
+</html>

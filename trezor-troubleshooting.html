@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔐 Trezor Connection Troubleshooting</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .step h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        
+        .button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        
+        .button:hover {
+            background: #0056b3;
+        }
+        
+        .button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .status.warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+        
+        .code {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 3px;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        
+        .progress {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: #007bff;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔐 Trezor Connection Troubleshooting</h1>
+            <p>Let's fix the Trezor connection issue step by step</p>
+        </div>
+
+        <div id="currentStatus" class="status warning">
+            <strong>Status:</strong> Checking Trezor connection...
+        </div>
+
+        <div class="step">
+            <h3>🔍 Step 1: Check Browser Permissions</h3>
+            <p>Make sure your browser allows popups and has permissions for Trezor Connect:</p>
+            <ul>
+                <li>Check if popup blocker is enabled (disable it for this page)</li>
+                <li>Allow camera/USB access if prompted</li>
+                <li>Try refreshing the page</li>
+            </ul>
+            <button class="button" onclick="checkBrowserSupport()">Check Browser Support</button>
+        </div>
+
+        <div class="step">
+            <h3>🔌 Step 2: Verify Trezor Bridge</h3>
+            <p>Trezor Bridge must be running for web connections:</p>
+            <div class="code">
+                Bridge Status: <span id="bridgeStatus">Checking...</span>
+            </div>
+            <button class="button" onclick="checkTrezorBridge()">Check Bridge</button>
+            <button class="button" onclick="openTrezorSuite()">Open Trezor Suite</button>
+        </div>
+
+        <div class="step">
+            <h3>📱 Step 3: Test Trezor Connection</h3>
+            <p>Test if your Trezor device responds:</p>
+            <div id="connectionProgress" class="progress" style="display: none;">
+                <div class="progress-bar" style="width: 0%"></div>
+            </div>
+            <button class="button" id="testConnectionBtn" onclick="testTrezorConnection()">Test Connection</button>
+            <button class="button" onclick="initializeTrezorConnect()">Initialize Trezor Connect</button>
+        </div>
+
+        <div class="step">
+            <h3>🚀 Step 4: Alternative Deployment Methods</h3>
+            <p>If web interface fails, use these alternatives:</p>
+            <button class="button" onclick="showNodeJSMethod()">Node.js Method</button>
+            <button class="button" onclick="showHardhatMethod()">Hardhat Method</button>
+            <button class="button" onclick="showManualMethod()">Manual Method</button>
+        </div>
+
+        <div id="methodInstructions" style="display: none;">
+            <!-- Instructions will be populated here -->
+        </div>
+
+        <div id="trezorOutput" class="code" style="display: none;">
+            <!-- Trezor connection output will appear here -->
+        </div>
+    </div>
+
+    <script src="https://connect.trezor.io/9/trezor-connect.js"></script>
+    <script>
+        let trezorInitialized = false;
+        
+        function updateStatus(message, type = 'warning') {
+            const statusEl = document.getElementById('currentStatus');
+            statusEl.className = `status ${type}`;
+            statusEl.innerHTML = `<strong>Status:</strong> ${message}`;
+        }
+        
+        function log(message) {
+            const output = document.getElementById('trezorOutput');
+            output.style.display = 'block';
+            output.innerHTML += new Date().toLocaleTimeString() + ': ' + message + '\n';
+            output.scrollTop = output.scrollHeight;
+        }
+        
+        async function checkBrowserSupport() {
+            log('Checking browser support...');
+            
+            // Check for required APIs
+            const checks = {
+                'USB API': !!navigator.usb,
+                'Secure Context': window.isSecureContext,
+                'Local Storage': !!window.localStorage,
+                'Popup Support': !window.opener === null
+            };
+            
+            let allSupported = true;
+            for (const [feature, supported] of Object.entries(checks)) {
+                log(`${feature}: ${supported ? '✅ Supported' : '❌ Not Supported'}`);
+                if (!supported) allSupported = false;
+            }
+            
+            if (allSupported) {
+                updateStatus('Browser support OK', 'success');
+            } else {
+                updateStatus('Browser compatibility issues detected', 'error');
+                log('💡 Try using Chrome or Firefox with HTTPS');
+            }
+        }
+        
+        async function checkTrezorBridge() {
+            log('Checking Trezor Bridge...');
+            
+            try {
+                const response = await fetch('http://127.0.0.1:21325', {
+                    method: 'GET',
+                    mode: 'no-cors'
+                });
+                
+                document.getElementById('bridgeStatus').textContent = '✅ Running';
+                updateStatus('Trezor Bridge is running', 'success');
+                log('✅ Trezor Bridge is accessible');
+                
+            } catch (error) {
+                document.getElementById('bridgeStatus').textContent = '❌ Not Running';
+                updateStatus('Trezor Bridge not running', 'error');
+                log('❌ Trezor Bridge not accessible');
+                log('💡 Please start Trezor Suite or install Trezor Bridge');
+            }
+        }
+        
+        function openTrezorSuite() {
+            window.open('https://suite.trezor.io/', '_blank');
+            log('Opening Trezor Suite in new tab...');
+        }
+        
+        async function initializeTrezorConnect() {
+            log('Initializing Trezor Connect...');
+            
+            try {
+                await TrezorConnect.init({
+                    lazyLoad: true,
+                    manifest: {
+                        email: 'orphi@example.com',
+                        appUrl: 'https://orphi.com'
+                    },
+                    popup: true,
+                    webusb: true,
+                    debug: true
+                });
+                
+                trezorInitialized = true;
+                updateStatus('Trezor Connect initialized successfully', 'success');
+                log('✅ Trezor Connect initialized');
+                
+            } catch (error) {
+                updateStatus('Failed to initialize Trezor Connect', 'error');
+                log(`❌ Initialization error: ${error.message}`);
+            }
+        }
+        
+        async function testTrezorConnection() {
+            if (!trezorInitialized) {
+                await initializeTrezorConnect();
+            }
+            
+            log('Testing Trezor device connection...');
+            log('👆 Please look at your Trezor device and confirm when prompted');
+            
+            const progressBar = document.querySelector('.progress-bar');
+            const progress = document.getElementById('connectionProgress');
+            progress.style.display = 'block';
+            
+            // Animate progress
+            let width = 0;
+            const interval = setInterval(() => {
+                width += 2;
+                progressBar.style.width = width + '%';
+                if (width >= 100) clearInterval(interval);
+            }, 100);
+            
+            try {
+                const result = await TrezorConnect.ethereumGetAddress({
+                    path: "m/44'/60'/0'/0/0",
+                    showOnTrezor: true
+                });
+                
+                clearInterval(interval);
+                progressBar.style.width = '100%';
+                
+                if (result.success) {
+                    updateStatus('Trezor connection successful!', 'success');
+                    log(`✅ Connected successfully!`);
+                    log(`📍 Address: ${result.payload.address}`);
+                    
+                    // Check if it's the expected address
+                    const expectedAddress = "0xeB652c4523f3Cf615D3F3694b14E551145953aD0";
+                    if (result.payload.address.toLowerCase() === expectedAddress.toLowerCase()) {
+                        log('✅ Address matches expected deployment address');
+                        log('🚀 Ready for deployment!');
+                        
+                        // Enable deployment
+                        showDeploymentOptions();
+                    } else {
+                        log(`⚠️ Address mismatch:`);
+                        log(`   Expected: ${expectedAddress}`);
+                        log(`   Got:      ${result.payload.address}`);
+                    }
+                } else {
+                    updateStatus('Trezor connection failed', 'error');
+                    log(`❌ Connection failed: ${result.payload.error}`);
+                    
+                    if (result.payload.error.includes('Permissions not granted')) {
+                        log('💡 Make sure to approve the connection on your Trezor device');
+                    } else if (result.payload.error.includes('Device not found')) {
+                        log('💡 Check USB connection and make sure Trezor is unlocked');
+                    }
+                }
+                
+            } catch (error) {
+                clearInterval(interval);
+                updateStatus('Connection test failed', 'error');
+                log(`❌ Test error: ${error.message}`);
+            }
+        }
+        
+        function showDeploymentOptions() {
+            const methodInstructions = document.getElementById('methodInstructions');
+            methodInstructions.style.display = 'block';
+            methodInstructions.innerHTML = `
+                <div class="step">
+                    <h3>🚀 Ready for Deployment!</h3>
+                    <p>Your Trezor is connected and ready. Choose deployment method:</p>
+                    <button class="button" onclick="startWebDeployment()">Deploy via Web Interface</button>
+                    <button class="button" onclick="showNodeJSInstructions()">Use Node.js Method</button>
+                </div>
+            `;
+        }
+        
+        function showNodeJSMethod() {
+            const methodInstructions = document.getElementById('methodInstructions');
+            methodInstructions.style.display = 'block';
+            methodInstructions.innerHTML = `
+                <div class="step">
+                    <h3>📝 Node.js Deployment Method</h3>
+                    <p>Use this method if the web interface isn't working:</p>
+                    <div class="code">
+cd "/Users/dadou/Orphi CrowdFund"
+node scripts/deploy-pure-trezor.js
+                    </div>
+                    <p>This script will:</p>
+                    <ul>
+                        <li>Connect directly to your Trezor device</li>
+                        <li>Deploy InternalAdminManager contract</li>
+                        <li>Deploy OrphiCrowdFund contract</li>
+                        <li>Verify contracts on BSCScan</li>
+                    </ul>
+                </div>
+            `;
+        }
+        
+        function showHardhatMethod() {
+            const methodInstructions = document.getElementById('methodInstructions');
+            methodInstructions.style.display = 'block';
+            methodInstructions.innerHTML = `
+                <div class="step">
+                    <h3>⚡ Hardhat Deployment Method</h3>
+                    <p>Use Hardhat with custom Trezor signer:</p>
+                    <div class="code">
+cd "/Users/dadou/Orphi CrowdFund"
+npx hardhat run scripts/deploy-secure-with-trezor-transfer.cjs --network bsc --config hardhat.config.trezor.js
+                    </div>
+                </div>
+            `;
+        }
+        
+        function showManualMethod() {
+            const methodInstructions = document.getElementById('methodInstructions');
+            methodInstructions.style.display = 'block';
+            methodInstructions.innerHTML = `
+                <div class="step">
+                    <h3>🔧 Manual Deployment Method</h3>
+                    <p>If automated methods fail, use manual deployment:</p>
+                    <ol>
+                        <li>Use MyEtherWallet or MyCrypto with Trezor</li>
+                        <li>Deploy contract bytecode manually</li>
+                        <li>Set constructor parameters</li>
+                        <li>Verify on BSCScan manually</li>
+                    </ol>
+                </div>
+            `;
+        }
+        
+        // Initialize checks on page load
+        window.onload = function() {
+            checkBrowserSupport();
+            checkTrezorBridge();
+        };
+    </script>
+</body>
+</html>

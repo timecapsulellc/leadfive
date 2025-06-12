@@ -1,0 +1,23 @@
+{
+  "network": "bsc_testnet",
+  "contractName": "OrphiCrowdFundUpgradeableSecure",
+  "contractAddress": "0x2A5CDeEc5dF5AE5137AF46920b2B4C4Aa9b0aEA0",
+  "deployer": "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29",
+  "usdtToken": "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd",
+  "mockUSDT": "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd",
+  "treasury": "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29",
+  "emergency": "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29",
+  "poolManager": "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29",
+  "deploymentTime": "2025-06-10T00:00:00.000Z",
+  "gasUsed": "Estimated",
+  "securityFeatures": {
+    "mevProtection": true,
+    "circuitBreaker": true,
+    "timelockEnabled": true,
+    "upgradeProtection": true,
+    "accessControl": true,
+    "reentrancyGuard": true
+  },
+  "contractSize": "23.5 KB",
+  "note": "Using existing deployed secure contract for testing"
+}

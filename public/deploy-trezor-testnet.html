@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrphiCrowdFund - Testnet Deployment</title>
+    <script src="libs/ethers-5.7.2.umd.min.js"></script>
+    <script src="contract-data.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .config-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ffd700;
+        }
+        
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+        
+        .status.info {
+            background: rgba(52, 152, 219, 0.2);
+            border-color: #3498db;
+        }
+        
+        .status.success {
+            background: rgba(46, 204, 113, 0.2);
+            border-color: #2ecc71;
+        }
+        
+        .status.warning {
+            background: rgba(241, 196, 15, 0.2);
+            border-color: #f1c40f;
+        }
+        
+        .status.error {
+            background: rgba(231, 76, 60, 0.2);
+            border-color: #e74c3c;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .address {
+            font-family: 'Courier New', monospace;
+            background: rgba(0,0,0,0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            word-break: break-all;
+        }
+        
+        .gas-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .network-badge {
+            display: inline-block;
+            background: #f39c12;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 5px 0;
+        }
+        
+        .testnet-warning {
+            background: rgba(241, 196, 15, 0.3);
+            border: 2px solid #f1c40f;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 OrphiCrowdFund - Testnet Deployment</h1>
+        
+        <div class="testnet-warning">
+            <h3>⚠️ TESTNET DEPLOYMENT</h3>
+            <p>This is a <strong>test deployment</strong> on BSC Testnet using test BNB. Perfect for testing before mainnet deployment!</p>
+        </div>
+        
+        <div class="config-info">
+            <h3>📋 Test Deployment Configuration</h3>
+            <p><strong>Target Network:</strong> <span class="network-badge">BSC Testnet (Chain ID: 97)</span></p>
+            <p><strong>Trezor Address:</strong> <span class="address">0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29</span></p>
+            <p><strong>Strategy:</strong> Deploy implementation contract with initialization</p>
+            <p><strong>Admin Rights:</strong> Treasury, Emergency, and Pool Manager roles assigned to Trezor</p>
+            <p><strong>Test USDT:</strong> Will use BSC Testnet USDT token</p>
+        </div>
+
+        <div id="statusContainer">
+            <div class="status info">
+                ℹ️ Ready to deploy OrphiCrowdFund on BSC Testnet. This is a safe test environment using test tokens.
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <button onclick="checkConnection()">🔍 Check Connection</button>
+            <button onclick="resetConnection()">🔄 Reset Connection</button>
+            <button id="estimateBtn" onclick="estimateGas()" disabled>⛽ Estimate Gas</button>
+            <button id="deployBtn" onclick="deployContract()" disabled>🧪 Deploy Test Contract</button>
+            <button id="verifyBtn" onclick="verifyDeployment()" disabled>✅ Verify Deployment</button>
+        </div>
+
+        <div id="gasInfo" class="gas-info" style="display: none;">
+            <h4>⛽ Gas Estimation</h4>
+            <p id="gasDetails"></p>
+        </div>
+
+        <div id="deploymentResult"></div>
+    </div>
+
+    <script>
+        const TREZOR_ADDRESS = '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29';
+        const NETWORK_CONFIG = {
+            chainId: 97,
+            name: 'BSC Testnet',
+            rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+            explorer: 'https://testnet.bscscan.com'
+        };
+        
+        // BSC Testnet USDT (or we'll use a mock address)
+        const USDT_TOKEN = '0x7ef95a0FEE0Dd31b22626fA2e10Ee6A223F8a684'; // BSC Testnet USDT
+
+        let provider = null;
+        let signer = null;
+        let deployedAddress = null;
+        let gasEstimate = null;
+
+        function updateStatus(message, type = 'info') {
+            const statusContainer = document.getElementById('statusContainer');
+            const statusClass = type === 'success' ? 'success' : 
+                              type === 'error' ? 'error' : 
+                              type === 'warning' ? 'warning' : 'info';
+            
+            statusContainer.innerHTML = `<div class="status ${statusClass}">${message}</div>`;
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        // Add network change listener
+        function setupNetworkListener() {
+            if (window.ethereum) {
+                window.ethereum.on('chainChanged', () => {
+                    updateStatus('🔄 Network changed detected. Please reconnect...', 'warning');
+                    resetConnection();
+                });
+            }
+        }
+
+        function resetConnection() {
+            provider = null;
+            signer = null;
+            deployedAddress = null;
+            gasEstimate = null;
+            
+            // Reset button states
+            document.getElementById('estimateBtn').disabled = true;
+            document.getElementById('deployBtn').disabled = true;
+            document.getElementById('verifyBtn').disabled = true;
+            
+            // Clear gas info and deployment result
+            document.getElementById('gasInfo').style.display = 'none';
+            document.getElementById('deploymentResult').innerHTML = '';
+            
+            updateStatus('🔄 Connection reset. Please check connection again.', 'info');
+        }
+
+        async function checkConnection() {
+            try {
+                updateStatus('🔍 Checking MetaMask + Trezor connection to BSC Testnet...');
+                
+                if (typeof window.ethereum === 'undefined') {
+                    updateStatus('❌ MetaMask not installed. Please install MetaMask to continue.', 'error');
+                    return;
+                }
+
+                if (!CONTRACT_DATA) {
+                    updateStatus('❌ Contract data not loaded. Please check contract-data.js', 'error');
+                    return;
+                }
+
+                // Setup network change listener
+                setupNetworkListener();
+
+                // Request account access first
+                await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+                // Check and switch network BEFORE creating provider
+                const currentChainId = await window.ethereum.request({ method: 'eth_chainId' });
+                const targetChainId = '0x' + NETWORK_CONFIG.chainId.toString(16);
+                
+                if (currentChainId !== targetChainId) {
+                    updateStatus(`⚠️ Wrong network detected. Switching to ${NETWORK_CONFIG.name}...`, 'warning');
+                    
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: targetChainId }],
+                        });
+                        updateStatus(`✅ Switched to ${NETWORK_CONFIG.name}`, 'success');
+                    } catch (switchError) {
+                        if (switchError.code === 4902) {
+                            // Network not added to MetaMask
+                            try {
+                                await window.ethereum.request({
+                                    method: 'wallet_addEthereumChain',
+                                    params: [{
+                                        chainId: targetChainId,
+                                        chainName: NETWORK_CONFIG.name,
+                                        rpcUrls: [NETWORK_CONFIG.rpcUrl],
+                                        nativeCurrency: {
+                                            name: 'BNB',
+                                            symbol: 'BNB',
+                                            decimals: 18,
+                                        },
+                                        blockExplorerUrls: [NETWORK_CONFIG.explorer],
+                                    }],
+                                });
+                                updateStatus(`✅ Added and switched to ${NETWORK_CONFIG.name}`, 'success');
+                            } catch (addError) {
+                                updateStatus(`❌ Failed to add network: ${addError.message}`, 'error');
+                                return;
+                            }
+                        } else {
+                            updateStatus(`❌ Failed to switch network: ${switchError.message}`, 'error');
+                            return;
+                        }
+                    }
+                    
+                    // Wait a moment for network switch to complete
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                }
+
+                // Now create provider AFTER network is correct
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                signer = provider.getSigner();
+                const connectedAddress = await signer.getAddress();
+
+                updateStatus(`🔗 Connected to wallet: ${connectedAddress}`);
+
+                // Verify we're on the correct network
+                const network = await provider.getNetwork();
+                if (network.chainId === NETWORK_CONFIG.chainId) {
+                    updateStatus(`✅ Connected to ${NETWORK_CONFIG.name}`, 'success');
+                    document.getElementById('estimateBtn').disabled = false;
+                } else {
+                    updateStatus(`❌ Network verification failed. Expected ${NETWORK_CONFIG.chainId}, got ${network.chainId}`, 'error');
+                    return;
+                }
+
+                // Check if connected address matches Trezor address
+                if (connectedAddress.toLowerCase() !== TREZOR_ADDRESS.toLowerCase()) {
+                    updateStatus(`⚠️ Warning: Connected wallet (${connectedAddress}) does not match target Trezor address (${TREZOR_ADDRESS})`, 'warning');
+                }
+
+                // Check balance
+                const balance = await provider.getBalance(connectedAddress);
+                const balanceEth = ethers.utils.formatEther(balance);
+                updateStatus(`💰 Wallet balance: ${parseFloat(balanceEth).toFixed(4)} test BNB`, 'info');
+
+                if (parseFloat(balanceEth) < 0.01) {
+                    updateStatus('⚠️ Low balance detected. Get test BNB from BSC Testnet faucet: https://testnet.binance.org/faucet-smart', 'warning');
+                }
+
+            } catch (error) {
+                console.error('Connection error:', error);
+                
+                // Handle specific network change errors
+                if (error.code === 'NETWORK_ERROR' && error.reason === 'underlying network changed') {
+                    updateStatus('🔄 Network change detected. Resetting connection...', 'warning');
+                    resetConnection();
+                    updateStatus('✅ Connection reset. Please click "Check Connection" again.', 'info');
+                } else {
+                    updateStatus(`❌ Connection failed: ${error.message}`, 'error');
+                }
+            }
+        }
+
+        async function estimateGas() {
+            try {
+                updateStatus('⛽ Estimating gas for contract deployment and initialization...');
+                
+                if (!CONTRACT_DATA) {
+                    updateStatus('❌ Contract data not loaded', 'error');
+                    return;
+                }
+
+                if (!provider || !signer) {
+                    updateStatus('❌ Please check connection first', 'error');
+                    return;
+                }
+
+                // Create contract factory
+                const contractFactory = new ethers.ContractFactory(
+                    CONTRACT_DATA.abi,
+                    CONTRACT_DATA.bytecode,
+                    signer
+                );
+
+                // Estimate deployment gas
+                const deployGas = await contractFactory.signer.estimateGas(
+                    contractFactory.getDeployTransaction()
+                );
+
+                // Estimate initialization gas (rough estimate)
+                const estimatedInitGas = 500000; // Conservative estimate for initialization
+
+                const totalGasEstimate = deployGas.add(estimatedInitGas);
+                const gasPrice = await provider.getGasPrice();
+                const gasCost = totalGasEstimate.mul(gasPrice);
+                const gasCostEth = ethers.utils.formatEther(gasCost);
+
+                gasEstimate = deployGas;
+
+                // Display gas information
+                document.getElementById('gasInfo').style.display = 'block';
+                document.getElementById('gasDetails').innerHTML = `
+                    <strong>Deployment Gas:</strong> ${deployGas.toString()} units<br>
+                    <strong>Initialization Gas:</strong> ~${estimatedInitGas.toLocaleString()} units<br>
+                    <strong>Total Estimated Gas:</strong> ${totalGasEstimate.toString()} units<br>
+                    <strong>Gas Price:</strong> ${ethers.utils.formatUnits(gasPrice, 'gwei')} Gwei<br>
+                    <strong>Estimated Total Cost:</strong> ${parseFloat(gasCostEth).toFixed(6)} test BNB<br>
+                    <em>Note: This is testnet deployment using test tokens - no real cost!</em>
+                `;
+
+                updateStatus(`✅ Gas estimation complete. Total estimated cost: ${parseFloat(gasCostEth).toFixed(6)} test BNB`, 'success');
+                document.getElementById('deployBtn').disabled = false;
+
+            } catch (error) {
+                console.error('Gas estimation error:', error);
+                updateStatus(`❌ Gas estimation failed: ${error.message}`, 'error');
+                
+                // If gas estimation fails, still allow deployment with higher gas limit
+                updateStatus('⚠️ Using fallback gas settings. Deployment may still work.', 'warning');
+                document.getElementById('deployBtn').disabled = false;
+            }
+        }
+
+        async function deployContract() {
+            try {
+                updateStatus('🧪 Starting testnet contract deployment...');
+                
+                if (!CONTRACT_DATA) {
+                    updateStatus('❌ Contract data not loaded', 'error');
+                    return;
+                }
+
+                if (!provider || !signer) {
+                    updateStatus('❌ Please check connection first', 'error');
+                    return;
+                }
+
+                updateStatus('📝 Creating contract factory...');
+                const contractFactory = new ethers.ContractFactory(
+                    CONTRACT_DATA.abi,
+                    CONTRACT_DATA.bytecode,
+                    signer
+                );
+
+                // Deployment configuration
+                const TREASURY_ADDRESS = TREZOR_ADDRESS; // Trezor wallet as treasury
+                const EMERGENCY_ADDRESS = TREZOR_ADDRESS; // Trezor wallet as emergency
+                const POOL_MANAGER_ADDRESS = TREZOR_ADDRESS; // Trezor wallet as pool manager
+
+                updateStatus('⏳ Deploying contract (please confirm on Trezor)...');
+
+                // Set deployment options
+                const deployOptions = {
+                    gasLimit: gasEstimate ? gasEstimate.mul(120).div(100) : 6000000, // 20% buffer or 6M fallback
+                };
+
+                // Deploy the implementation contract (without initialization)
+                const deployTx = await contractFactory.deploy(deployOptions);
+                
+                updateStatus(`⏳ Implementation deployment transaction sent. Hash: ${deployTx.hash}`);
+                updateStatus('⏳ Waiting for deployment confirmation...');
+                
+                // Wait for deployment
+                const deployedContract = await deployTx.deployed();
+                const implementationAddress = deployedContract.address;
+                
+                updateStatus(`✅ Implementation deployed at: ${implementationAddress}`, 'success');
+                updateStatus('⏳ Now initializing contract (please confirm on Trezor)...');
+
+                // Initialize the contract
+                const initTx = await deployedContract.initialize(
+                    USDT_TOKEN,
+                    TREASURY_ADDRESS,
+                    EMERGENCY_ADDRESS,
+                    POOL_MANAGER_ADDRESS,
+                    { gasLimit: 2000000 }
+                );
+
+                updateStatus(`⏳ Initialization transaction sent. Hash: ${initTx.hash}`);
+                await initTx.wait();
+
+                deployedAddress = implementationAddress;
+
+                updateStatus(`✅ Test contract deployed and initialized successfully!`, 'success');
+                
+                document.getElementById('verifyBtn').disabled = false;
+                
+                document.getElementById('deploymentResult').innerHTML = `
+                    <div class="status success">
+                        <h3>🎉 Testnet Deployment Successful!</h3>
+                        <p><strong>Implementation Address:</strong> <span class="address">${deployedAddress}</span></p>
+                        <p><strong>Deployment Transaction:</strong> <span class="address">${deployTx.hash}</span></p>
+                        <p><strong>Initialization Transaction:</strong> <span class="address">${initTx.hash}</span></p>
+                        <p><strong>Explorer:</strong> <a href="${NETWORK_CONFIG.explorer}/address/${deployedAddress}" target="_blank">View on BSC Testnet</a></p>
+                        <p><strong>ALL ADMIN ROLES assigned to:</strong> <span class="address">${TREZOR_ADDRESS}</span></p>
+                        <p><strong>Test USDT Token:</strong> <span class="address">${USDT_TOKEN}</span></p>
+                        <div class="status warning" style="margin-top: 10px;">
+                            <strong>✅ Test Successful!</strong> This testnet deployment validates your setup. Now you can deploy to mainnet with confidence!
+                        </div>
+                    </div>
+                `;
+
+            } catch (error) {
+                console.error('Deployment error:', error);
+                
+                let errorMessage = error.message;
+                if (error.code === 'UNPREDICTABLE_GAS_LIMIT') {
+                    errorMessage = 'Gas estimation failed. This might be due to contract initialization parameters. Check the console for details.';
+                } else if (error.code === 'INSUFFICIENT_FUNDS') {
+                    errorMessage = 'Insufficient test BNB for gas fees. Get more from the BSC Testnet faucet.';
+                } else if (error.code === 4001) {
+                    errorMessage = 'Transaction rejected by user.';
+                }
+                
+                updateStatus(`❌ Deployment failed: ${errorMessage}`, 'error');
+            }
+        }
+
+        async function verifyDeployment() {
+            try {
+                updateStatus('🔍 Verifying contract deployment and admin roles...');
+                
+                if (!deployedAddress) {
+                    updateStatus('❌ No deployed contract to verify', 'error');
+                    return;
+                }
+
+                const contract = new ethers.Contract(deployedAddress, CONTRACT_DATA.abi, provider);
+
+                // Check if contract is initialized
+                try {
+                    const owner = await contract.owner();
+                    updateStatus(`📋 Contract owner: ${owner}`);
+                    
+                    if (owner.toLowerCase() === TREZOR_ADDRESS.toLowerCase()) {
+                        updateStatus('✅ Ownership verification successful!', 'success');
+                    } else {
+                        updateStatus(`❌ Ownership verification failed: Expected ${TREZOR_ADDRESS}, got ${owner}`, 'error');
+                    }
+
+                    // Check admin roles
+                    const adminRole = await contract.DEFAULT_ADMIN_ROLE();
+                    const hasAdminRole = await contract.hasRole(adminRole, TREZOR_ADDRESS);
+                    
+                    if (hasAdminRole) {
+                        updateStatus('✅ Admin role verification successful!', 'success');
+                    } else {
+                        updateStatus('❌ Admin role verification failed!', 'error');
+                    }
+
+                    updateStatus('✅ Test deployment verification complete! Ready for mainnet deployment.', 'success');
+
+                } catch (roleError) {
+                    updateStatus(`⚠️ Could not verify all roles: ${roleError.message}`, 'warning');
+                }
+
+            } catch (error) {
+                console.error('Verification error:', error);
+                updateStatus(`❌ Verification failed: ${error.message}`, 'error');
+            }
+        }
+
+        // Load contract data on page load
+        window.addEventListener('load', function() {
+            if (typeof CONTRACT_DATA === 'undefined') {
+                updateStatus('❌ Contract data not loaded. Please ensure contract-data.js is available.', 'error');
+            } else {
+                updateStatus('✅ Contract data loaded successfully. Ready to connect wallet.', 'success');
+            }
+        });
+    </script>
+</body>
+</html>

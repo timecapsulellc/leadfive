@@ -1,0 +1,10 @@
+{
+  "timestamp": "2025-06-12T11:54:24.442Z",
+  "network": "testnet",
+  "deployer": "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29",
+  "chainId": 97,
+  "deploymentMethod": "PURE_TREZOR_NO_PRIVATE_KEYS",
+  "contracts": {},
+  "roles": {},
+  "verification": {}
+}

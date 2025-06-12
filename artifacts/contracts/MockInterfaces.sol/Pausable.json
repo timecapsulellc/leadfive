@@ -1,0 +1,10 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "Pausable",
+  "sourceName": "contracts/MockInterfaces.sol",
+  "abi": [],
+  "bytecode": "0x60808060405234601357603a908160198239f35b600080fdfe600080fdfea264697066735822122078687b84beee07ae8b5b9d0b02792a66beb4452528ab0788597bc2737606768664736f6c63430008160033",
+  "deployedBytecode": "0x600080fdfea264697066735822122078687b84beee07ae8b5b9d0b02792a66beb4452528ab0788597bc2737606768664736f6c63430008160033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔐 Orphi CrowdFund - Pure Trezor Deployment</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .status {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .success { border-left: 4px solid #10b981; }
+        .warning { border-left: 4px solid #f59e0b; }
+        .error { border-left: 4px solid #ef4444; }
+        .info { border-left: 4px solid #3b82f6; }
+        button {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        button:disabled {
+            background: #6b7280;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .deployment-info {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .role-assignment {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .address {
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔐 Orphi CrowdFund - Pure Trezor Deployment</h1>
+            <p>Deploy with hardware wallet security - No private keys required</p>
+        </div>
+
+        <div id="statusContainer">
+            <div class="status info">
+                <strong>🔍 Checking MetaMask + Trezor connection...</strong>
+            </div>
+        </div>
+
+        <div class="deployment-info">
+            <h3>🎯 Deployment Configuration</h3>
+            <div class="role-assignment">
+                <span><strong>Network:</strong></span>
+                <span>BSC Testnet (Chain ID: 97)</span>
+            </div>
+            <div class="role-assignment">
+                <span><strong>Trezor Wallet:</strong></span>
+                <span class="address">0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29</span>
+            </div>
+            <div class="role-assignment">
+                <span><strong>Contract Owner:</strong></span>
+                <span class="address">0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29 🔐</span>
+            </div>
+            <div class="role-assignment">
+                <span><strong>All Admin Roles:</strong></span>
+                <span class="address">0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29 🔐</span>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <button onclick="checkConnection()">🔍 Check Connection</button>
+            <button onclick="deployContract()" id="deployBtn" disabled>🚀 Deploy Contract</button>
+            <button onclick="verifyDeployment()" id="verifyBtn" disabled>✅ Verify Deployment</button>
+        </div>
+
+        <div id="deploymentResult" style="margin-top: 20px;"></div>
+    </div>
+
+    <script src="libs/ethers-5.7.2.umd.min.js"></script>
+    <script src="contract-data.js"></script>
+    <script>
+        const NETWORK_CONFIG = {
+            name: "BSC Testnet",
+            rpc: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+            chainId: 97,
+            explorer: "https://testnet.bscscan.com"
+        };
+        const TREZOR_ADDRESS = '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29';
+        let provider, signer, deployedAddress;
+
+        function updateStatus(message, type = 'info') {
+            const statusContainer = document.getElementById('statusContainer');
+            const statusClass = type === 'success' ? 'success' : 
+                               type === 'error' ? 'error' : 
+                               type === 'warning' ? 'warning' : 'info';
+            statusContainer.innerHTML = `<div class="status ${statusClass}"><strong>${message}</strong></div>`;
+        }
+
+        async function checkConnection() {
+            try {
+                updateStatus('🔍 Checking MetaMask + Trezor connection...');
+                
+                if (typeof window.ethereum === 'undefined') {
+                    updateStatus('❌ MetaMask not installed', 'error');
+                    return;
+                }
+
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                
+                if (!accounts || accounts.length === 0) {
+                    updateStatus('❌ No accounts connected', 'error');
+                    return;
+                }
+
+                const connectedAddress = accounts[0];
+                updateStatus(`✅ Connected: ${connectedAddress}`, 'success');
+
+                if (connectedAddress.toLowerCase() === TREZOR_ADDRESS.toLowerCase()) {
+                    updateStatus('✅ Trezor wallet connected successfully!', 'success');
+                    document.getElementById('deployBtn').disabled = false;
+                } else {
+                    updateStatus(`⚠️ Connected wallet (${connectedAddress}) does not match Trezor address`, 'warning');
+                }
+
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                signer = provider.getSigner();
+                
+                const network = await provider.getNetwork();
+                if (network.chainId !== NETWORK_CONFIG.chainId) {
+                    updateStatus(`⚠️ Wrong network. Please switch to ${NETWORK_CONFIG.name}`, 'warning');
+                }
+
+            } catch (error) {
+                console.error('Connection error:', error);
+                updateStatus(`❌ Connection failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function deployContract() {
+            try {
+                updateStatus('🚀 Starting contract deployment...');
+                
+                if (!CONTRACT_DATA) {
+                    updateStatus('❌ Contract data not loaded', 'error');
+                    return;
+                }
+
+                if (!provider || !signer) {
+                    updateStatus('❌ Please connect wallet first', 'error');
+                    return;
+                }
+
+                updateStatus('📝 Creating contract factory...');
+                const contractFactory = new ethers.ContractFactory(
+                    CONTRACT_DATA.abi,
+                    CONTRACT_DATA.bytecode,
+                    signer
+                );
+
+                updateStatus('⏳ Deploying contract (confirm on Trezor)...');
+                
+                const deployTx = await contractFactory.deploy();
+                
+                updateStatus('⏳ Waiting for deployment confirmation...');
+                const deployedContract = await deployTx.deployed();
+                deployedAddress = deployedContract.address;
+
+                updateStatus(`✅ Contract deployed at: ${deployedAddress}`, 'success');
+                
+                document.getElementById('verifyBtn').disabled = false;
+                
+                document.getElementById('deploymentResult').innerHTML = `
+                    <div class="status success">
+                        <h3>🎉 Deployment Successful!</h3>
+                        <p><strong>Contract Address:</strong> <span class="address">${deployedAddress}</span></p>
+                        <p><strong>Transaction Hash:</strong> <span class="address">${deployTx.hash}</span></p>
+                        <p><strong>Explorer:</strong> <a href="${NETWORK_CONFIG.explorer}/address/${deployedAddress}" target="_blank">View on BSCScan</a></p>
+                        <p><strong>ALL ADMIN ROLES assigned to:</strong> <span class="address">${TREZOR_ADDRESS}</span></p>
+                    </div>
+                `;
+
+            } catch (error) {
+                console.error('Deployment error:', error);
+                updateStatus(`❌ Deployment failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function verifyDeployment() {
+            try {
+                if (!deployedAddress) {
+                    updateStatus('❌ No deployed contract to verify', 'error');
+                    return;
+                }
+
+                updateStatus('🔍 Verifying contract ownership...');
+                
+                const contract = new ethers.Contract(deployedAddress, CONTRACT_DATA.abi, provider);
+                
+                const owner = await contract.owner();
+                updateStatus(`✅ Contract owner verified: ${owner}`, 'success');
+                
+                if (owner.toLowerCase() === TREZOR_ADDRESS.toLowerCase()) {
+                    updateStatus('✅ All verifications passed! Trezor wallet has full control.', 'success');
+                } else {
+                    updateStatus('❌ Verification failed: Owner mismatch', 'error');
+                }
+
+            } catch (error) {
+                console.error('Verification error:', error);
+                updateStatus(`❌ Verification failed: ${error.message}`, 'error');
+            }
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(checkConnection, 1000);
+        });
+    </script>
+</body>
+</html>

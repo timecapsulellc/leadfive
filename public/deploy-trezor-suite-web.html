@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrphiCrowdFund - Trezor Suite Web Integration</title>
+    <script src="libs/ethers-5.7.2.umd.min.js"></script>
+    <script src="contract-data.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #0f3460 0%, #e94560 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: #ecf0f1;
+        }
+        
+        .trezor-suite-header {
+            background: linear-gradient(45deg, #00854d, #00ab5e);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .config-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #00ab5e;
+        }
+        
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+        
+        .status.info {
+            background: rgba(52, 152, 219, 0.2);
+            border-color: #3498db;
+        }
+        
+        .status.success {
+            background: rgba(46, 204, 113, 0.2);
+            border-color: #2ecc71;
+        }
+        
+        .status.warning {
+            background: rgba(241, 196, 15, 0.2);
+            border-color: #f1c40f;
+        }
+        
+        .status.error {
+            background: rgba(231, 76, 60, 0.2);
+            border-color: #e74c3c;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        button.trezor-suite-btn {
+            background: linear-gradient(45deg, #00854d, #00ab5e);
+        }
+        
+        .address {
+            font-family: 'Courier New', monospace;
+            background: rgba(0,0,0,0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            word-break: break-all;
+        }
+        
+        .gas-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .network-badge {
+            display: inline-block;
+            background: #00ab5e;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 5px 0;
+        }
+        
+        .trezor-suite-integration {
+            background: rgba(0, 171, 94, 0.2);
+            border: 2px solid #00ab5e;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .suite-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #00854d, #00ab5e);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin: 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .suite-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="trezor-suite-header">
+            <h1>🔐 OrphiCrowdFund - Trezor Suite Web Integration</h1>
+            <p>Authentic Trezor Suite Web connection - No third-party tools</p>
+        </div>
+        
+        <div class="trezor-suite-integration">
+            <h3>🌐 Trezor Suite Web Integration</h3>
+            <p>This is the proper way to connect to your Trezor device using the official Trezor Suite Web interface.</p>
+            
+            <a href="https://suite.trezor.io/web/" target="_blank" class="suite-link">
+                🚀 Open Trezor Suite Web
+            </a>
+            
+            <div style="margin-top: 15px;">
+                <strong>Official Trezor Suite Web:</strong><br>
+                <span class="address">https://suite.trezor.io/web/</span>
+            </div>
+        </div>
+        
+        <div class="config-info">
+            <h3>📋 Trezor Suite Web Deployment Process</h3>
+            <p><strong>Target Network:</strong> <span class="network-badge">BSC Testnet (Chain ID: 97)</span></p>
+            <p><strong>Trezor Address:</strong> <span class="address">0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29</span></p>
+            <p><strong>Connection:</strong> Official Trezor Suite Web interface</p>
+            <p><strong>Security:</strong> 100% authentic Trezor ecosystem</p>
+        </div>
+
+        <div id="statusContainer">
+            <div class="status info">
+                ℹ️ Follow the step-by-step process below to deploy using authentic Trezor Suite Web.
+            </div>
+        </div>
+
+        <div class="status warning" style="margin: 20px 0;">
+            <h3>📋 Step-by-Step Trezor Suite Web Deployment</h3>
+            
+            <h4>Step 1: Open Trezor Suite Web</h4>
+            <ol>
+                <li>Click the "Open Trezor Suite Web" button above</li>
+                <li>Connect your Trezor device to your computer</li>
+                <li>Unlock your Trezor device with your PIN</li>
+                <li>Allow Trezor Suite Web to connect to your device</li>
+            </ol>
+
+            <h4>Step 2: Configure BSC Network</h4>
+            <ol>
+                <li>In Trezor Suite Web, go to "Coins" or "Accounts"</li>
+                <li>Add Ethereum account if not already present</li>
+                <li>Configure custom network for BSC Testnet:
+                    <ul>
+                        <li><strong>Network Name:</strong> BSC Testnet</li>
+                        <li><strong>RPC URL:</strong> https://data-seed-prebsc-1-s1.binance.org:8545/</li>
+                        <li><strong>Chain ID:</strong> 97</li>
+                        <li><strong>Symbol:</strong> BNB</li>
+                        <li><strong>Explorer:</strong> https://testnet.bscscan.com</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4>Step 3: Get Test BNB</h4>
+            <ol>
+                <li>Copy your Trezor address from Trezor Suite Web</li>
+                <li>Visit BSC Testnet faucet: <a href="https://testnet.binance.org/faucet-smart" target="_blank">https://testnet.binance.org/faucet-smart</a></li>
+                <li>Request test BNB for your Trezor address</li>
+                <li>Wait for confirmation in Trezor Suite Web</li>
+            </ol>
+
+            <h4>Step 4: Deploy Contract</h4>
+            <ol>
+                <li>Use the deployment tools below</li>
+                <li>Confirm all transactions on your Trezor device</li>
+                <li>Monitor deployment progress in Trezor Suite Web</li>
+                <li>Verify contract deployment on BSC Testnet explorer</li>
+            </ol>
+        </div>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <button class="trezor-suite-btn" onclick="openTrezorSuite()">🌐 Open Trezor Suite Web</button>
+            <button onclick="openFaucet()">🚰 Get Test BNB</button>
+            <button onclick="openExplorer()">🔍 BSC Testnet Explorer</button>
+            <button id="checkSetupBtn" onclick="checkSetup()">✅ Verify Setup</button>
+        </div>
+
+        <div id="setupStatus" style="display: none;">
+            <h3>🔧 Setup Verification</h3>
+            <div id="setupDetails"></div>
+        </div>
+
+        <div class="status success" style="margin: 20px 0;">
+            <h3>✅ Why Trezor Suite Web is the Right Choice</h3>
+            <ul style="text-align: left;">
+                <li><strong>Official Trezor Product:</strong> Made by SatoshiLabs (Trezor creators)</li>
+                <li><strong>No Third-Party Risk:</strong> Direct connection to authentic Trezor ecosystem</li>
+                <li><strong>Latest Security:</strong> Always up-to-date with latest Trezor firmware</li>
+                <li><strong>Full Feature Support:</strong> Complete access to all Trezor capabilities</li>
+                <li><strong>Transparent Transactions:</strong> All details verified on Trezor device</li>
+                <li><strong>BSC Network Support:</strong> Full Ethereum-compatible network support</li>
+            </ul>
+        </div>
+
+        <div class="status info">
+            <h3>🛡️ Security Benefits</h3>
+            <p>Using Trezor Suite Web ensures:</p>
+            <ul style="text-align: left;">
+                <li>Your private keys never leave the Trezor hardware device</li>
+                <li>All transactions are signed on the hardware device</li>
+                <li>No browser extensions or third-party wallets required</li>
+                <li>Direct communication with authentic Trezor servers</li>
+                <li>Full transaction verification on device screen</li>
+            </ul>
+        </div>
+
+        <div id="deploymentResult"></div>
+    </div>
+
+    <script>
+        const TREZOR_ADDRESS = '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29';
+        const TREZOR_SUITE_URL = 'https://suite.trezor.io/web/';
+        const BSC_TESTNET_FAUCET = 'https://testnet.binance.org/faucet-smart';
+        const BSC_TESTNET_EXPLORER = 'https://testnet.bscscan.com';
+
+        function updateStatus(message, type = 'info') {
+            const statusContainer = document.getElementById('statusContainer');
+            const statusClass = type === 'success' ? 'success' : 
+                              type === 'error' ? 'error' : 
+                              type === 'warning' ? 'warning' : 'info';
+            
+            statusContainer.innerHTML = `<div class="status ${statusClass}">${message}</div>`;
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        function openTrezorSuite() {
+            updateStatus('🌐 Opening official Trezor Suite Web...', 'info');
+            window.open(TREZOR_SUITE_URL, '_blank');
+            
+            setTimeout(() => {
+                updateStatus('✅ Trezor Suite Web opened. Please connect your device and configure BSC Testnet.', 'success');
+            }, 1000);
+        }
+
+        function openFaucet() {
+            updateStatus('🚰 Opening BSC Testnet faucet...', 'info');
+            window.open(BSC_TESTNET_FAUCET, '_blank');
+            
+            setTimeout(() => {
+                updateStatus('✅ Faucet opened. Enter your Trezor address to get test BNB.', 'success');
+            }, 1000);
+        }
+
+        function openExplorer() {
+            updateStatus('🔍 Opening BSC Testnet explorer...', 'info');
+            const explorerUrl = `${BSC_TESTNET_EXPLORER}/address/${TREZOR_ADDRESS}`;
+            window.open(explorerUrl, '_blank');
+            
+            setTimeout(() => {
+                updateStatus('✅ Explorer opened. Check your Trezor address balance and transactions.', 'success');
+            }, 1000);
+        }
+
+        function checkSetup() {
+            updateStatus('🔧 Verifying Trezor Suite Web setup...', 'info');
+            
+            const setupDiv = document.getElementById('setupStatus');
+            setupDiv.style.display = 'block';
+            
+            const setupDetails = document.getElementById('setupDetails');
+            setupDetails.innerHTML = `
+                <div class="status info">
+                    <h4>✅ Setup Checklist</h4>
+                    <ul style="text-align: left;">
+                        <li>□ Trezor Suite Web opened at: <a href="${TREZOR_SUITE_URL}" target="_blank">${TREZOR_SUITE_URL}</a></li>
+                        <li>□ Trezor device connected and unlocked</li>
+                        <li>□ BSC Testnet network configured in Trezor Suite</li>
+                        <li>□ Test BNB received from faucet</li>
+                        <li>□ Trezor address verified: <span class="address">${TREZOR_ADDRESS}</span></li>
+                    </ul>
+                    
+                    <h4>📋 Next Steps</h4>
+                    <p>Once all items are checked:</p>
+                    <ol style="text-align: left;">
+                        <li>Return to Trezor Suite Web</li>
+                        <li>Navigate to the "Send" or "Apps" section</li>
+                        <li>Look for smart contract interaction features</li>
+                        <li>Use the contract deployment functionality</li>
+                        <li>Deploy OrphiCrowdFund contract with initialization</li>
+                    </ol>
+                    
+                    <h4>📝 Contract Details</h4>
+                    <ul style="text-align: left;">
+                        <li><strong>Contract:</strong> OrphiCrowdFund</li>
+                        <li><strong>Network:</strong> BSC Testnet (Chain ID: 97)</li>
+                        <li><strong>Admin Roles:</strong> All assigned to your Trezor address</li>
+                        <li><strong>Initialization:</strong> Treasury, Emergency, Pool Manager = Trezor</li>
+                    </ul>
+                </div>
+            `;
+            
+            updateStatus('✅ Setup verification complete. Follow the checklist above.', 'success');
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            updateStatus('✅ Ready to connect to authentic Trezor Suite Web!', 'success');
+            
+            // Display contract information
+            if (typeof CONTRACT_DATA !== 'undefined') {
+                updateStatus('✅ Contract data loaded and ready for deployment via Trezor Suite Web.', 'success');
+            } else {
+                updateStatus('⚠️ Contract data not loaded. Please ensure contract-data.js is available.', 'warning');
+            }
+        });
+    </script>
+</body>
+</html>

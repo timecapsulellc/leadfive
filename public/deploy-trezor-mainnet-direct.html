@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrphiCrowdFund - Direct Trezor Suite Mainnet Deployment</title>
+    <script src="https://connect.trezor.io/9/trezor-connect.js"></script>
+    <script src="libs/ethers-5.7.2.umd.min.js"></script>
+    <script src="contract-data.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: #ecf0f1;
+        }
+        
+        .mainnet-header {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 2px solid #e74c3c;
+        }
+        
+        .config-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #f39c12;
+        }
+        
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+        
+        .status.info {
+            background: rgba(52, 152, 219, 0.2);
+            border-color: #3498db;
+        }
+        
+        .status.success {
+            background: rgba(46, 204, 113, 0.2);
+            border-color: #2ecc71;
+        }
+        
+        .status.warning {
+            background: rgba(241, 196, 15, 0.2);
+            border-color: #f1c40f;
+        }
+        
+        .status.error {
+            background: rgba(231, 76, 60, 0.2);
+            border-color: #e74c3c;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        button.trezor-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        }
+        
+        button.mainnet-btn {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+        }
+        
+        .address {
+            font-family: 'Courier New', monospace;
+            background: rgba(0,0,0,0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            word-break: break-all;
+        }
+        
+        .gas-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .network-badge {
+            display: inline-block;
+            background: #f39c12;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin: 5px 0;
+        }
+        
+        .mainnet-warning {
+            background: rgba(231, 76, 60, 0.3);
+            border: 2px solid #e74c3c;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="mainnet-header">
+            <h1>🔐 OrphiCrowdFund - Direct Trezor Suite MAINNET Deployment</h1>
+            <p><strong>⚠️ PRODUCTION DEPLOYMENT - REAL BNB REQUIRED ⚠️</strong></p>
+        </div>
+        
+        <div class="mainnet-warning">
+            <h3>⚠️ MAINNET DEPLOYMENT WARNING</h3>
+            <p><strong>This is a LIVE deployment using REAL BNB!</strong></p>
+            <p>Ensure you have sufficient BNB balance and have tested on testnet first.</p>
+        </div>
+        
+        <div class="config-info">
+            <h3>📋 Direct Trezor Mainnet Configuration</h3>
+            <p><strong>Target Network:</strong> <span class="network-badge">BSC Mainnet (Chain ID: 56)</span></p>
+            <p><strong>Trezor Address:</strong> <span class="address">0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29</span></p>
+            <p><strong>Connection:</strong> Direct to Trezor Suite (no MetaMask)</p>
+            <p><strong>Security:</strong> Hardware-signed transactions only</p>
+            <p><strong>USDT Token:</strong> <span class="address">0x55d398326f99059fF775485246999027B3197955</span></p>
+        </div>
+
+        <div id="statusContainer">
+            <div class="status info">
+                ℹ️ Ready for MAINNET deployment via direct Trezor Suite connection. Ensure your device is ready.
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 20px 0;">
+            <button class="trezor-btn" onclick="connectTrezor()">🔐 Connect Trezor Suite</button>
+            <button id="getAddressBtn" onclick="getTrezorAddress()" disabled>📍 Get Address</button>
+            <button id="checkBalanceBtn" onclick="checkBalance()" disabled>💰 Check Balance</button>
+            <button id="estimateBtn" onclick="estimateGas()" disabled>⛽ Estimate Gas</button>
+            <button id="deployBtn" class="mainnet-btn" onclick="deployContract()" disabled>🚀 Deploy to Mainnet</button>
+        </div>
+
+        <div id="gasInfo" class="gas-info" style="display: none;">
+            <h4>⛽ Gas Estimation</h4>
+            <p id="gasDetails"></p>
+        </div>
+
+        <div id="deploymentResult"></div>
+    </div>
+
+    <script>
+        const TREZOR_ADDRESS = '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29';
+        const NETWORK_CONFIG = {
+            chainId: 56,
+            name: 'BSC Mainnet',
+            rpcUrl: 'https://bsc-dataseed1.binance.org/',
+            explorer: 'https://bscscan.com'
+        };
+        
+        const USDT_TOKEN = '0x55d398326f99059fF775485246999027B3197955'; // BSC Mainnet USDT
+
+        let trezorConnected = false;
+        let connectedAddress = null;
+        let provider = null;
+        let deployedAddress = null;
+
+        function updateStatus(message, type = 'info') {
+            const statusContainer = document.getElementById('statusContainer');
+            const statusClass = type === 'success' ? 'success' : 
+                              type === 'error' ? 'error' : 
+                              type === 'warning' ? 'warning' : 'info';
+            
+            statusContainer.innerHTML = `<div class="status ${statusClass}">${message}</div>`;
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+
+        async function connectTrezor() {
+            try {
+                updateStatus('🔐 Initializing Trezor Connect for BSC Mainnet...');
+                
+                // Initialize Trezor Connect
+                const result = await TrezorConnect.init({
+                    lazyLoad: true,
+                    manifest: {
+                        email: 'dev@orphichain.com',
+                        appUrl: 'http://localhost:3000'
+                    }
+                });
+
+                if (!result.success) {
+                    updateStatus(`❌ Trezor Connect initialization failed: ${result.payload.error}`, 'error');
+                    return;
+                }
+
+                updateStatus('✅ Trezor Connect initialized for MAINNET deployment!', 'success');
+                trezorConnected = true;
+                
+                // Initialize provider for BSC Mainnet
+                provider = new ethers.providers.JsonRpcProvider(NETWORK_CONFIG.rpcUrl);
+                
+                // Verify we're on mainnet
+                const network = await provider.getNetwork();
+                if (network.chainId !== 56) {
+                    updateStatus(`❌ Network mismatch! Expected BSC Mainnet (56), got ${network.chainId}`, 'error');
+                    return;
+                }
+                
+                updateStatus('✅ Connected to BSC Mainnet', 'success');
+                
+                // Enable buttons
+                document.getElementById('getAddressBtn').disabled = false;
+                
+                updateStatus('🔗 Trezor Connect ready for MAINNET. Click "Get Address" to proceed.', 'warning');
+                
+            } catch (error) {
+                console.error('Trezor connection error:', error);
+                updateStatus(`❌ Trezor connection failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function getTrezorAddress() {
+            try {
+                updateStatus('📍 Getting Trezor address for MAINNET deployment...');
+                
+                if (!trezorConnected) {
+                    updateStatus('❌ Please connect to Trezor first', 'error');
+                    return;
+                }
+
+                // Get Ethereum address from Trezor
+                const result = await TrezorConnect.ethereumGetAddress({
+                    path: "m/44'/60'/0'/0/0",
+                    showOnTrezor: true
+                });
+
+                if (!result.success) {
+                    updateStatus(`❌ Failed to get address: ${result.payload.error}`, 'error');
+                    return;
+                }
+
+                connectedAddress = result.payload.address;
+                updateStatus(`🔗 Connected to Trezor address: ${connectedAddress}`, 'success');
+
+                // Verify address matches expected
+                if (connectedAddress.toLowerCase() === TREZOR_ADDRESS.toLowerCase()) {
+                    updateStatus('✅ Address verification successful!', 'success');
+                } else {
+                    updateStatus(`⚠️ Address mismatch! Expected: ${TREZOR_ADDRESS}, Got: ${connectedAddress}`, 'warning');
+                }
+
+                // Enable next button
+                document.getElementById('checkBalanceBtn').disabled = false;
+
+            } catch (error) {
+                console.error('Address retrieval error:', error);
+                updateStatus(`❌ Address retrieval failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function checkBalance() {
+            try {
+                updateStatus('💰 Checking MAINNET balance...');
+                
+                if (!provider || !connectedAddress) {
+                    updateStatus('❌ Please get Trezor address first', 'error');
+                    return;
+                }
+
+                const balance = await provider.getBalance(connectedAddress);
+                const balanceFormatted = ethers.utils.formatEther(balance);
+                
+                updateStatus(`💰 MAINNET Balance: ${parseFloat(balanceFormatted).toFixed(4)} BNB`, 'info');
+
+                if (parseFloat(balanceFormatted) < 0.1) {
+                    updateStatus('❌ Insufficient BNB! Need at least 0.1 BNB for mainnet deployment.', 'error');
+                } else {
+                    updateStatus('✅ Sufficient BNB balance for MAINNET deployment!', 'success');
+                    document.getElementById('estimateBtn').disabled = false;
+                }
+
+            } catch (error) {
+                console.error('Balance check error:', error);
+                updateStatus(`❌ Balance check failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function estimateGas() {
+            try {
+                updateStatus('⛽ Estimating MAINNET deployment gas costs...');
+                
+                if (!CONTRACT_DATA) {
+                    updateStatus('❌ Contract data not loaded', 'error');
+                    return;
+                }
+
+                // Create contract factory for gas estimation
+                const contractInterface = new ethers.utils.Interface(CONTRACT_DATA.abi);
+                const deployData = ethers.utils.hexlify(ethers.utils.concat([
+                    CONTRACT_DATA.bytecode,
+                    contractInterface.encodeDeploy([]) // Empty constructor args
+                ]));
+
+                // Estimate deployment gas
+                const gasEstimate = await provider.estimateGas({
+                    data: deployData
+                });
+
+                // Estimate initialization gas
+                const initGas = ethers.BigNumber.from(500000); // Conservative estimate
+                
+                const totalGas = gasEstimate.add(initGas);
+                const gasPrice = await provider.getGasPrice();
+                const totalCost = totalGas.mul(gasPrice);
+                
+                // Calculate USD cost (assuming BNB = $600)
+                const bnbPrice = 600;
+                const usdCost = parseFloat(ethers.utils.formatEther(totalCost)) * bnbPrice;
+                
+                // Display gas info
+                document.getElementById('gasInfo').style.display = 'block';
+                document.getElementById('gasDetails').innerHTML = `
+                    <strong>Deployment Gas:</strong> ${gasEstimate.toString()} units<br>
+                    <strong>Initialization Gas:</strong> ~${initGas.toString()} units<br>
+                    <strong>Total Gas:</strong> ${totalGas.toString()} units<br>
+                    <strong>Gas Price:</strong> ${ethers.utils.formatUnits(gasPrice, 'gwei')} Gwei<br>
+                    <strong>Total Cost:</strong> ${ethers.utils.formatEther(totalCost)} BNB<br>
+                    <strong>USD Cost:</strong> ~$${usdCost.toFixed(2)} (BNB=$${bnbPrice})<br>
+                    <em style="color: #e74c3c;">⚠️ This will cost REAL money on MAINNET!</em>
+                `;
+
+                updateStatus(`⚠️ MAINNET deployment cost: ${ethers.utils.formatEther(totalCost)} BNB (~$${usdCost.toFixed(2)})`, 'warning');
+                document.getElementById('deployBtn').disabled = false;
+
+            } catch (error) {
+                console.error('Gas estimation error:', error);
+                updateStatus(`❌ Gas estimation failed: ${error.message}`, 'error');
+                // Still allow deployment
+                document.getElementById('deployBtn').disabled = false;
+            }
+        }
+
+        async function deployContract() {
+            try {
+                // Final confirmation
+                const confirm = window.confirm(
+                    'WARNING: This will deploy to BSC MAINNET using REAL BNB!\n\n' +
+                    'Are you absolutely sure you want to proceed?\n\n' +
+                    'This action cannot be undone.'
+                );
+                
+                if (!confirm) {
+                    updateStatus('❌ Deployment cancelled by user', 'warning');
+                    return;
+                }
+
+                updateStatus('🚀 Preparing MAINNET contract deployment via Trezor...', 'warning');
+                
+                if (!CONTRACT_DATA || !connectedAddress) {
+                    updateStatus('❌ Missing required data for deployment', 'error');
+                    return;
+                }
+
+                // Create deployment transaction
+                const contractInterface = new ethers.utils.Interface(CONTRACT_DATA.abi);
+                const deployData = ethers.utils.hexlify(ethers.utils.concat([
+                    CONTRACT_DATA.bytecode,
+                    contractInterface.encodeDeploy([]) // Empty constructor
+                ]));
+
+                // Get nonce and gas price
+                const nonce = await provider.getTransactionCount(connectedAddress);
+                const gasPrice = await provider.getGasPrice();
+                const gasLimit = 3000000; // 3M gas limit
+
+                // Prepare transaction for Trezor
+                const txData = {
+                    to: null, // Contract deployment
+                    value: '0x0',
+                    data: deployData,
+                    chainId: NETWORK_CONFIG.chainId,
+                    nonce: ethers.utils.hexValue(nonce),
+                    gasLimit: ethers.utils.hexValue(gasLimit),
+                    gasPrice: ethers.utils.hexValue(gasPrice)
+                };
+
+                updateStatus('📱 Please confirm MAINNET deployment on your Trezor device...', 'warning');
+                updateStatus('⚠️ Verify ALL transaction details on your Trezor screen!', 'warning');
+
+                // Sign transaction with Trezor
+                const signResult = await TrezorConnect.ethereumSignTransaction({
+                    path: "m/44'/60'/0'/0/0",
+                    transaction: txData
+                });
+
+                if (!signResult.success) {
+                    updateStatus(`❌ Transaction signing failed: ${signResult.payload.error}`, 'error');
+                    return;
+                }
+
+                updateStatus('✅ MAINNET transaction signed! Broadcasting...', 'success');
+
+                // Broadcast signed transaction
+                const signedTx = signResult.payload.serializedTx;
+                const txResponse = await provider.sendTransaction(signedTx);
+                
+                updateStatus(`⏳ MAINNET deployment transaction sent: ${txResponse.hash}`);
+                updateStatus('⏳ Waiting for MAINNET confirmation...');
+
+                // Wait for deployment
+                const receipt = await txResponse.wait();
+                const contractAddress = receipt.contractAddress;
+                
+                if (!contractAddress) {
+                    updateStatus('❌ Contract deployment failed - no address returned', 'error');
+                    return;
+                }
+
+                updateStatus(`✅ Contract deployed on MAINNET at: ${contractAddress}`, 'success');
+                deployedAddress = contractAddress;
+
+                // Now initialize the contract
+                await initializeContract(contractAddress);
+
+            } catch (error) {
+                console.error('MAINNET deployment error:', error);
+                updateStatus(`❌ MAINNET deployment failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function initializeContract(contractAddress) {
+            try {
+                updateStatus('⏳ Initializing MAINNET contract...');
+
+                const contractInterface = new ethers.utils.Interface(CONTRACT_DATA.abi);
+                const initData = contractInterface.encodeFunctionData('initialize', [
+                    USDT_TOKEN,
+                    connectedAddress,  // Treasury = Trezor
+                    connectedAddress,  // Emergency = Trezor  
+                    connectedAddress   // Pool Manager = Trezor
+                ]);
+
+                // Prepare initialization transaction
+                const nonce = await provider.getTransactionCount(connectedAddress);
+                const gasPrice = await provider.getGasPrice();
+
+                const txData = {
+                    to: contractAddress,
+                    value: '0x0',
+                    data: initData,
+                    chainId: NETWORK_CONFIG.chainId,
+                    nonce: ethers.utils.hexValue(nonce),
+                    gasLimit: ethers.utils.hexValue(2000000),
+                    gasPrice: ethers.utils.hexValue(gasPrice)
+                };
+
+                updateStatus('📱 Please confirm MAINNET initialization on your Trezor...', 'warning');
+
+                // Sign initialization with Trezor
+                const signResult = await TrezorConnect.ethereumSignTransaction({
+                    path: "m/44'/60'/0'/0/0",
+                    transaction: txData
+                });
+
+                if (!signResult.success) {
+                    updateStatus(`❌ Initialization signing failed: ${signResult.payload.error}`, 'error');
+                    return;
+                }
+
+                // Broadcast initialization
+                const signedTx = signResult.payload.serializedTx;
+                const txResponse = await provider.sendTransaction(signedTx);
+                
+                updateStatus(`⏳ MAINNET initialization transaction sent: ${txResponse.hash}`);
+                await txResponse.wait();
+
+                updateStatus('✅ MAINNET contract initialized successfully!', 'success');
+                
+                // Display final result
+                document.getElementById('deploymentResult').innerHTML = `
+                    <div class="status success">
+                        <h3>🎉 MAINNET Deployment Successful!</h3>
+                        <p><strong>Contract Address:</strong> <span class="address">${deployedAddress}</span></p>
+                        <p><strong>Network:</strong> ${NETWORK_CONFIG.name}</p>
+                        <p><strong>Explorer:</strong> <a href="${NETWORK_CONFIG.explorer}/address/${deployedAddress}" target="_blank">View on BSCScan</a></p>
+                        <p><strong>Admin Rights:</strong> All assigned to <span class="address">${connectedAddress}</span></p>
+                        <p><strong>USDT Token:</strong> <span class="address">${USDT_TOKEN}</span></p>
+                        <div class="status success" style="margin-top: 10px;">
+                            <strong>✅ Production Ready!</strong> Direct Trezor deployment complete - 100% hardware secured!
+                        </div>
+                    </div>
+                `;
+
+            } catch (error) {
+                console.error('MAINNET initialization error:', error);
+                updateStatus(`❌ MAINNET contract initialization failed: ${error.message}`, 'error');
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            if (typeof CONTRACT_DATA === 'undefined') {
+                updateStatus('❌ Contract data not loaded. Please ensure contract-data.js is available.', 'error');
+            } else {
+                updateStatus('✅ Ready for direct Trezor Suite MAINNET deployment!', 'warning');
+            }
+        });
+    </script>
+</body>
+</html>

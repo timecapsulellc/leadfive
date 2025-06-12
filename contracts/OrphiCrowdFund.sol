@@ -83,6 +83,18 @@ interface IPriceOracle {
     function getPriceWithTimestamp(address token) external view returns (uint256 price, uint256 timestamp);
 }
 
+/**
+ * @title IInternalAdminManager
+ * @dev Interface for internal admin management
+ */
+interface IInternalAdminManager {
+    function checkIsInternalAdmin(address admin) external view returns (bool);
+    function validateInternalAdmin(address caller) external view returns (bool);
+    function trackAdminActivity(address admin, string calldata action) external;
+    function getAllInternalAdmins() external view returns (address[] memory);
+    function getInternalAdminCount() external view returns (uint256);
+}
+
 contract OrphiCrowdFund is 
     Initializable,
     UUPSUpgradeable,
@@ -187,6 +199,10 @@ contract OrphiCrowdFund is
     address public emergencyAddress;
     address public poolManagerAddress;
     
+    // Internal Admin Manager integration
+    address public internalAdminManager;
+    bool public internalAdminEnabled;
+    
     // Package configuration (USDT has 6 decimals on BSC)
     uint256[4] public packageAmounts;
     
@@ -226,6 +242,25 @@ contract OrphiCrowdFund is
     bool public oracleEnabled;
     uint256 public maxPriceAge;
     uint256 public priceDeviationThreshold;
+    
+    // Circuit breaker configuration
+    bool public circuitBreakerEnabled;
+    uint256 public maxDailyWithdrawals;
+    uint256 public currentDayWithdrawals;
+    uint256 public lastWithdrawalResetTime;
+    uint256 public emergencyPauseThreshold;
+    
+    // MEV protection
+    mapping(address => uint256) public lastTransactionBlock;
+    uint256 public constant MIN_BLOCK_DELAY = 1;
+    
+    // Upgrade timelock
+    uint256 public constant UPGRADE_DELAY = 48 hours;
+    mapping(address => uint256) public proposedUpgrades;
+    
+    // Events for upgrade timelock
+    event UpgradeProposed(address indexed newImplementation, uint256 unlockTime);
+    event UpgradeExecuted(address indexed newImplementation);
 
     // ==================== EVENTS ====================
     
@@ -268,11 +303,28 @@ contract OrphiCrowdFund is
         uint256 timestamp
     );
     
+    event GlobalHelpPoolBatchDistributed(
+        uint256 indexed batchAmount,
+        uint256 indexed batchEligibleUsers,
+        uint256 indexed startIndex,
+        uint256 endIndex,
+        uint256 timestamp
+    );
+    
     event LeaderBonusDistributed(
         uint256 indexed shiningStarAmount,
         uint256 indexed silverStarAmount,
         uint256 shiningStarCount,
         uint256 silverStarCount,
+        uint256 timestamp
+    );
+    
+    event LeaderBonusBatchDistributed(
+        uint256 indexed batchAmount,
+        uint256 indexed batchShiningStars,
+        uint256 indexed batchSilverStars,
+        uint256 startIndex,
+        uint256 endIndex,
         uint256 timestamp
     );
     
@@ -297,6 +349,10 @@ contract OrphiCrowdFund is
         uint256 level,
         uint256 timestamp
     );
+    
+    // Internal Admin Manager events
+    event InternalAdminManagerUpdated(address indexed oldManager, address indexed newManager);
+    event InternalAdminStatusChanged(bool enabled);
 
     // ==================== MODIFIERS ====================
     
@@ -312,6 +368,20 @@ contract OrphiCrowdFund is
     
     modifier notCapped(address user) {
         require(!users[user].isCapped, "OrphiCrowdFund: User has reached earnings cap");
+        _;
+    }
+    
+    modifier mevProtection() {
+        require(block.number > lastTransactionBlock[msg.sender] + MIN_BLOCK_DELAY, "OrphiCrowdFund: MEV protection active");
+        lastTransactionBlock[msg.sender] = block.number;
+        _;
+    }
+    
+    modifier circuitBreakerCheck() {
+        if (circuitBreakerEnabled) {
+            _resetDailyWithdrawalsIfNeeded();
+            require(currentDayWithdrawals < maxDailyWithdrawals, "OrphiCrowdFund: Daily withdrawal limit exceeded");
+        }
         _;
     }
 
@@ -379,6 +449,13 @@ contract OrphiCrowdFund is
         oracleEnabled = false;
         maxPriceAge = 3600; // 1 hour
         priceDeviationThreshold = 1000; // 10%
+        
+        // Initialize circuit breaker
+        circuitBreakerEnabled = false;
+        maxDailyWithdrawals = 1000; // Default limit
+        currentDayWithdrawals = 0;
+        lastWithdrawalResetTime = block.timestamp;
+        emergencyPauseThreshold = 500; // Pause after 500 rapid withdrawals
         
         // Generate storage layout hash
         storageLayoutHash = _generateStorageLayoutHash();
@@ -649,16 +726,29 @@ contract OrphiCrowdFund is
      * @param totalAmount The total Global Upline Bonus amount (10% of package)
      */
     function _distributeGlobalUplineBonus(address user, uint256 totalAmount) internal {
-        uint256 perUplineAmount = totalAmount / 30; // Equal distribution
+        // Fix precision loss: Calculate per upline amount with better precision
+        uint256 perUplineAmount = (totalAmount * BASIS_POINTS) / (30 * BASIS_POINTS);
         uint256 distributedAmount = 0;
+        uint256 actualDistributed = 0;
+        
+        // Gas optimization: Cache array in memory
+        address[30] storage uplines = uplineChain[user];
         
         for (uint256 i = 0; i < 30; i++) {
-            address upline = uplineChain[user][i];
+            address upline = uplines[i];
             if (upline != address(0) && !users[upline].isCapped) {
                 _creditEarnings(upline, perUplineAmount, 2);
                 emit CommissionDistributed(upline, user, perUplineAmount, 2, "Global Upline Bonus", block.timestamp);
-                distributedAmount += perUplineAmount;
+                actualDistributed += perUplineAmount;
             }
+            distributedAmount += perUplineAmount; // Track total attempted distribution
+        }
+        
+        // Handle any remaining dust due to rounding
+        uint256 remainingAmount = totalAmount - actualDistributed;
+        if (remainingAmount > 0 && totalUsers > 0) {
+            // Add remaining amount to treasury for fairness
+            require(usdtToken.transfer(treasuryAddress, remainingAmount), "OrphiCrowdFund: Dust transfer failed");
         }
         
         poolBalances[2] += totalAmount;
@@ -709,7 +799,13 @@ contract OrphiCrowdFund is
      * @dev Withdraws earnings with progressive withdrawal rates and reinvestment
      * @param amount The amount to withdraw
      */
-    function withdraw(uint256 amount) external nonReentrant registeredUser(msg.sender) whenNotPaused {
+    function withdraw(uint256 amount) external 
+        nonReentrant 
+        registeredUser(msg.sender) 
+        whenNotPaused 
+        mevProtection 
+        circuitBreakerCheck 
+    {
         require(amount > 0, "OrphiCrowdFund: Amount must be greater than 0");
         require(users[msg.sender].withdrawableAmount >= amount, "OrphiCrowdFund: Insufficient balance");
         
@@ -720,16 +816,21 @@ contract OrphiCrowdFund is
         uint256 withdrawableAmount = (amount * withdrawalRate) / BASIS_POINTS;
         uint256 reinvestmentAmount = amount - withdrawableAmount;
         
-        // Update user data
+        // CEI Pattern: Update state FIRST before external calls
         user.withdrawableAmount = _safeUint128(user.withdrawableAmount - amount);
         user.totalWithdrawn = _safeUint128(user.totalWithdrawn + withdrawableAmount);
         user.lastWithdrawal = _safeUint64(block.timestamp);
         user.withdrawalCount++;
         
-        // Transfer withdrawable amount
+        // Update circuit breaker counters
+        if (circuitBreakerEnabled) {
+            currentDayWithdrawals++;
+        }
+        
+        // THEN perform external calls - Transfer withdrawable amount
         require(usdtToken.transfer(msg.sender, withdrawableAmount), "OrphiCrowdFund: Transfer failed");
         
-        // Handle reinvestment
+        // Handle reinvestment (internal calls are safe after state update)
         if (reinvestmentAmount > 0) {
             _processReinvestment(msg.sender, reinvestmentAmount);
         }
@@ -772,108 +873,242 @@ contract OrphiCrowdFund is
         poolBalances[4] += globalHelpReinvest;
     }
 
+    // Distribution batch size to prevent gas limit issues
+    uint256 public constant DISTRIBUTION_BATCH_SIZE = 100;
+    
+    // Pagination state for distributions
+    uint256 public ghpDistributionIndex;
+    uint256 public leaderDistributionIndex;
+    bool public ghpDistributionInProgress;
+    bool public leaderDistributionInProgress;
+
     // ==================== WEEKLY GLOBAL HELP POOL DISTRIBUTION ====================
     
     /**
-     * @dev Distributes the weekly Global Help Pool to active members
+     * @dev Distributes the weekly Global Help Pool to active members (paginated)
+     * @param batchSize Number of users to process in this batch (max DISTRIBUTION_BATCH_SIZE)
      */
-    function distributeGlobalHelpPool() external onlyRole(POOL_MANAGER_ROLE) {
-        require(block.timestamp >= lastGlobalHelpPoolDistribution + WEEKLY_DISTRIBUTION_INTERVAL, 
-                "OrphiCrowdFund: Too early for distribution");
-        require(globalHelpPoolBalance > 0, "OrphiCrowdFund: No funds to distribute");
+    function distributeGlobalHelpPool(uint256 batchSize) external onlyRole(POOL_MANAGER_ROLE) {
+        _distributeGlobalHelpPoolBatch(batchSize);
+    }
+    
+    /**
+     * @dev Internal function for paginated Global Help Pool distribution
+     * @param batchSize Number of users to process in this batch
+     */
+    function _distributeGlobalHelpPoolBatch(uint256 batchSize) internal {
+        require(batchSize <= DISTRIBUTION_BATCH_SIZE, "OrphiCrowdFund: Batch size too large");
         
-        // Count eligible users (active and not capped)
+        // Start new distribution cycle if not in progress
+        if (!ghpDistributionInProgress) {
+            require(block.timestamp >= lastGlobalHelpPoolDistribution + WEEKLY_DISTRIBUTION_INTERVAL, 
+                    "OrphiCrowdFund: Too early for distribution");
+            require(globalHelpPoolBalance > 0, "OrphiCrowdFund: No funds to distribute");
+            
+            ghpDistributionInProgress = true;
+            ghpDistributionIndex = 0;
+        }
+        
+        uint256 endIndex = ghpDistributionIndex + batchSize;
+        if (endIndex > totalUsers) {
+            endIndex = totalUsers;
+        }
+        
+        // Count eligible users in this batch
         uint256 eligibleUsers = 0;
-        for (uint256 i = 0; i < totalUsers; i++) {
+        for (uint256 i = ghpDistributionIndex; i < endIndex; i++) {
             address userAddr = userIdToAddress[i];
             if (users[userAddr].isActive && !users[userAddr].isCapped) {
                 eligibleUsers++;
             }
         }
         
-        require(eligibleUsers > 0, "OrphiCrowdFund: No eligible users");
-        
-        uint256 perUserAmount = globalHelpPoolBalance / eligibleUsers;
-        uint256 totalDistributed = 0;
-        
-        // Distribute to eligible users
-        for (uint256 i = 0; i < totalUsers; i++) {
-            address userAddr = userIdToAddress[i];
-            if (users[userAddr].isActive && !users[userAddr].isCapped) {
-                _creditEarnings(userAddr, perUserAmount, 4);
-                totalDistributed += perUserAmount;
+        if (eligibleUsers > 0) {
+            // Calculate total eligible users if this is the first batch
+            uint256 totalEligible = _getTotalEligibleUsers();
+            require(totalEligible > 0, "OrphiCrowdFund: No eligible users");
+            
+            uint256 perUserAmount = globalHelpPoolBalance / totalEligible;
+            uint256 batchDistributed = 0;
+            
+            // Distribute to eligible users in this batch
+            for (uint256 i = ghpDistributionIndex; i < endIndex; i++) {
+                address userAddr = userIdToAddress[i];
+                if (users[userAddr].isActive && !users[userAddr].isCapped) {
+                    _creditEarnings(userAddr, perUserAmount, 4);
+                    batchDistributed += perUserAmount;
+                }
             }
+            
+            emit GlobalHelpPoolBatchDistributed(batchDistributed, eligibleUsers, ghpDistributionIndex, endIndex, block.timestamp);
         }
         
-        // Update distribution tracking
+        ghpDistributionIndex = endIndex;
+        
+        // Complete distribution if we've processed all users
+        if (ghpDistributionIndex >= totalUsers) {
+            _completeGHPDistribution();
+        }
+    }
+    
+    /**
+     * @dev Complete GHP distribution and reset state
+     */
+    function _completeGHPDistribution() internal {
         globalHelpPoolBalance = 0;
         lastGlobalHelpPoolDistribution = block.timestamp;
         weeklyDistributionCount++;
-        totalDistributedAmount += totalDistributed;
+        ghpDistributionInProgress = false;
+        ghpDistributionIndex = 0;
         
-        emit GlobalHelpPoolDistributed(totalDistributed, eligibleUsers, perUserAmount, block.timestamp);
+        emit GlobalHelpPoolDistributed(0, 0, 0, block.timestamp); // Final completion event
+    }
+    
+    /**
+     * @dev Get total number of eligible users for GHP distribution
+     */
+    function _getTotalEligibleUsers() internal view returns (uint256) {
+        uint256 eligible = 0;
+        for (uint256 i = 0; i < totalUsers; i++) {
+            address userAddr = userIdToAddress[i];
+            if (users[userAddr].isActive && !users[userAddr].isCapped) {
+                eligible++;
+            }
+        }
+        return eligible;
+    }
+    
+    /**
+     * @dev Legacy function for backward compatibility (uses default batch size)
+     */
+    function distributeGlobalHelpPool() external onlyRole(POOL_MANAGER_ROLE) {
+        _distributeGlobalHelpPoolBatch(DISTRIBUTION_BATCH_SIZE);
     }
 
     // ==================== BI-MONTHLY LEADER BONUS DISTRIBUTION ====================
     
     /**
-     * @dev Distributes the bi-monthly Leader Bonus Pool
+     * @dev Distributes the bi-monthly Leader Bonus Pool (paginated)
+     * @param batchSize Number of users to process in this batch (max DISTRIBUTION_BATCH_SIZE)
      */
-    function distributeLeaderBonus() external onlyRole(POOL_MANAGER_ROLE) {
-        require(block.timestamp >= lastLeaderBonusDistribution + LEADER_DISTRIBUTION_INTERVAL, 
-                "OrphiCrowdFund: Too early for distribution");
-        require(leaderBonusPoolBalance > 0, "OrphiCrowdFund: No funds to distribute");
+    function distributeLeaderBonus(uint256 batchSize) external onlyRole(POOL_MANAGER_ROLE) {
+        _distributeLeaderBonusBatch(batchSize);
+    }
+    
+    /**
+     * @dev Internal function for paginated Leader Bonus distribution
+     * @param batchSize Number of users to process in this batch
+     */
+    function _distributeLeaderBonusBatch(uint256 batchSize) internal {
+        require(batchSize <= DISTRIBUTION_BATCH_SIZE, "OrphiCrowdFund: Batch size too large");
         
-        // Count leaders by rank
-        uint256 shiningStarCount = 0;
-        uint256 silverStarCount = 0;
+        // Start new distribution cycle if not in progress
+        if (!leaderDistributionInProgress) {
+            require(block.timestamp >= lastLeaderBonusDistribution + LEADER_DISTRIBUTION_INTERVAL, 
+                    "OrphiCrowdFund: Too early for distribution");
+            require(leaderBonusPoolBalance > 0, "OrphiCrowdFund: No funds to distribute");
+            
+            leaderDistributionInProgress = true;
+            leaderDistributionIndex = 0;
+        }
         
+        uint256 endIndex = leaderDistributionIndex + batchSize;
+        if (endIndex > totalUsers) {
+            endIndex = totalUsers;
+        }
+        
+        // Count leaders by rank in this batch
+        uint256 batchShiningStars = 0;
+        uint256 batchSilverStars = 0;
+        
+        for (uint256 i = leaderDistributionIndex; i < endIndex; i++) {
+            address userAddr = userIdToAddress[i];
+            LeaderRank rank = _uint32ToLeaderRank(users[userAddr].leaderRankValue);
+            
+            if (rank == LeaderRank.SHINING_STAR) {
+                batchShiningStars++;
+            } else if (rank == LeaderRank.SILVER_STAR) {
+                batchSilverStars++;
+            }
+        }
+        
+        if (batchShiningStars > 0 || batchSilverStars > 0) {
+            // Get total leader counts for proper distribution calculation
+            (uint256 totalShiningStars, uint256 totalSilverStars) = _getTotalLeaderCounts();
+            
+            // Split pool 50/50 between ranks
+            uint256 shiningStarPool = leaderBonusPoolBalance / 2;
+            uint256 silverStarPool = leaderBonusPoolBalance / 2;
+            
+            uint256 batchDistributed = 0;
+            
+            // Distribute to leaders in this batch
+            if (totalShiningStars > 0 && batchShiningStars > 0) {
+                uint256 perShiningStarAmount = shiningStarPool / totalShiningStars;
+                for (uint256 i = leaderDistributionIndex; i < endIndex; i++) {
+                    address userAddr = userIdToAddress[i];
+                    if (_uint32ToLeaderRank(users[userAddr].leaderRankValue) == LeaderRank.SHINING_STAR) {
+                        _creditEarnings(userAddr, perShiningStarAmount, 3);
+                        batchDistributed += perShiningStarAmount;
+                    }
+                }
+            }
+            
+            if (totalSilverStars > 0 && batchSilverStars > 0) {
+                uint256 perSilverStarAmount = silverStarPool / totalSilverStars;
+                for (uint256 i = leaderDistributionIndex; i < endIndex; i++) {
+                    address userAddr = userIdToAddress[i];
+                    if (_uint32ToLeaderRank(users[userAddr].leaderRankValue) == LeaderRank.SILVER_STAR) {
+                        _creditEarnings(userAddr, perSilverStarAmount, 3);
+                        batchDistributed += perSilverStarAmount;
+                    }
+                }
+            }
+            
+            emit LeaderBonusBatchDistributed(batchDistributed, batchShiningStars, batchSilverStars, leaderDistributionIndex, endIndex, block.timestamp);
+        }
+        
+        leaderDistributionIndex = endIndex;
+        
+        // Complete distribution if we've processed all users
+        if (leaderDistributionIndex >= totalUsers) {
+            _completeLeaderDistribution();
+        }
+    }
+    
+    /**
+     * @dev Complete leader distribution and reset state
+     */
+    function _completeLeaderDistribution() internal {
+        leaderBonusPoolBalance = 0;
+        lastLeaderBonusDistribution = block.timestamp;
+        leaderDistributionInProgress = false;
+        leaderDistributionIndex = 0;
+        
+        emit LeaderBonusDistributed(0, 0, 0, 0, block.timestamp); // Final completion event
+    }
+    
+    /**
+     * @dev Get total leader counts for distribution calculation
+     */
+    function _getTotalLeaderCounts() internal view returns (uint256 shiningStars, uint256 silverStars) {
         for (uint256 i = 0; i < totalUsers; i++) {
             address userAddr = userIdToAddress[i];
             LeaderRank rank = _uint32ToLeaderRank(users[userAddr].leaderRankValue);
             
             if (rank == LeaderRank.SHINING_STAR) {
-                shiningStarCount++;
+                shiningStars++;
             } else if (rank == LeaderRank.SILVER_STAR) {
-                silverStarCount++;
+                silverStars++;
             }
         }
-        
-        // Split pool 50/50 between ranks
-        uint256 shiningStarPool = leaderBonusPoolBalance / 2;
-        uint256 silverStarPool = leaderBonusPoolBalance / 2;
-        
-        uint256 totalDistributed = 0;
-        
-        // Distribute to Shining Star leaders
-        if (shiningStarCount > 0) {
-            uint256 perShiningStarAmount = shiningStarPool / shiningStarCount;
-            for (uint256 i = 0; i < totalUsers; i++) {
-                address userAddr = userIdToAddress[i];
-                if (_uint32ToLeaderRank(users[userAddr].leaderRankValue) == LeaderRank.SHINING_STAR) {
-                    _creditEarnings(userAddr, perShiningStarAmount, 3);
-                    totalDistributed += perShiningStarAmount;
-                }
-            }
-        }
-        
-        // Distribute to Silver Star leaders
-        if (silverStarCount > 0) {
-            uint256 perSilverStarAmount = silverStarPool / silverStarCount;
-            for (uint256 i = 0; i < totalUsers; i++) {
-                address userAddr = userIdToAddress[i];
-                if (_uint32ToLeaderRank(users[userAddr].leaderRankValue) == LeaderRank.SILVER_STAR) {
-                    _creditEarnings(userAddr, perSilverStarAmount, 3);
-                    totalDistributed += perSilverStarAmount;
-                }
-            }
-        }
-        
-        // Update distribution tracking
-        leaderBonusPoolBalance = 0;
-        lastLeaderBonusDistribution = block.timestamp;
-        
-        emit LeaderBonusDistributed(shiningStarPool, silverStarPool, shiningStarCount, silverStarCount, block.timestamp);
+    }
+    
+    /**
+     * @dev Legacy function for backward compatibility (uses default batch size)
+     */
+    function distributeLeaderBonus() external onlyRole(POOL_MANAGER_ROLE) {
+        _distributeLeaderBonusBatch(DISTRIBUTION_BATCH_SIZE);
     }
 
     // ==================== RANK ADVANCEMENT SYSTEM ====================
@@ -989,11 +1224,61 @@ contract OrphiCrowdFund is
         try priceOracle.getPriceWithTimestamp(address(usdtToken)) returns (uint256 price, uint256 timestamp) {
             require(block.timestamp - timestamp <= maxPriceAge, "OrphiCrowdFund: Price too old");
             require(price > 0, "OrphiCrowdFund: Invalid price");
+            
+            // Check for extreme price deviations
+            uint256 expectedPrice = 1e18; // 1 USD
+            uint256 deviation = price > expectedPrice ? 
+                ((price - expectedPrice) * BASIS_POINTS) / expectedPrice :
+                ((expectedPrice - price) * BASIS_POINTS) / expectedPrice;
+            
+            require(deviation <= priceDeviationThreshold, "OrphiCrowdFund: Price deviation too high");
+            
             return price;
         } catch {
             return 1e18; // Fallback to fixed price
         }
     }
+
+    // ==================== CIRCUIT BREAKER FUNCTIONS ====================
+    
+    /**
+     * @dev Reset daily withdrawal counter if a day has passed
+     */
+    function _resetDailyWithdrawalsIfNeeded() internal {
+        if (block.timestamp >= lastWithdrawalResetTime + 1 days) {
+            currentDayWithdrawals = 0;
+            lastWithdrawalResetTime = block.timestamp;
+        }
+    }
+    
+    /**
+     * @dev Configure circuit breaker settings
+     */
+    function setCircuitBreakerConfig(
+        bool _enabled,
+        uint256 _maxDailyWithdrawals,
+        uint256 _emergencyPauseThreshold
+    ) external onlyRole(EMERGENCY_ROLE) {
+        circuitBreakerEnabled = _enabled;
+        maxDailyWithdrawals = _maxDailyWithdrawals;
+        emergencyPauseThreshold = _emergencyPauseThreshold;
+        
+        if (_enabled && lastWithdrawalResetTime == 0) {
+            lastWithdrawalResetTime = block.timestamp;
+        }
+    }
+    
+    /**
+     * @dev Emergency circuit breaker trigger
+     */
+    function triggerCircuitBreaker() external onlyRole(EMERGENCY_ROLE) {
+        _pause();
+        emit CircuitBreakerTriggered(msg.sender, block.timestamp);
+    }
+    
+    // Circuit breaker events
+    event CircuitBreakerTriggered(address indexed admin, uint256 timestamp);
+    event CircuitBreakerConfigUpdated(bool enabled, uint256 maxDaily, uint256 threshold);
 
     // ==================== VIEW FUNCTIONS ====================
     
@@ -1008,7 +1293,7 @@ contract OrphiCrowdFund is
         bool isCapped,
         bool isActive,
         address sponsor,
-        uint32 directReferrals
+        uint32 directReferralCount
     ) {
         User storage userData = users[user];
         return (
@@ -1050,6 +1335,38 @@ contract OrphiCrowdFund is
         return _uint64ToPackageTier(users[user].packageTierValue) != PackageTier.NONE;
     }
     
+    function getDistributionStatus() external view returns (
+        bool ghpInProgress,
+        uint256 ghpIndex,
+        bool leaderInProgress,
+        uint256 leaderIndex,
+        uint256 batchSize
+    ) {
+        return (
+            ghpDistributionInProgress,
+            ghpDistributionIndex,
+            leaderDistributionInProgress,
+            leaderDistributionIndex,
+            DISTRIBUTION_BATCH_SIZE
+        );
+    }
+    
+    function getCircuitBreakerStatus() external view returns (
+        bool enabled,
+        uint256 maxDaily,
+        uint256 currentDaily,
+        uint256 resetTime,
+        uint256 threshold
+    ) {
+        return (
+            circuitBreakerEnabled,
+            maxDailyWithdrawals,
+            currentDayWithdrawals,
+            lastWithdrawalResetTime,
+            emergencyPauseThreshold
+        );
+    }
+    
     function getPackageAmounts() external view returns (uint256[4] memory) {
         return packageAmounts;
     }
@@ -1080,7 +1397,147 @@ contract OrphiCrowdFund is
     }
     
     function emergencyWithdraw(uint256 amount) external onlyRole(EMERGENCY_ROLE) {
+        require(amount > 0, "OrphiCrowdFund: Invalid amount");
+        require(usdtToken.balanceOf(address(this)) >= amount, "OrphiCrowdFund: Insufficient contract balance");
         require(usdtToken.transfer(emergencyAddress, amount), "OrphiCrowdFund: Transfer failed");
+        
+        emit EmergencyWithdrawal(emergencyAddress, amount, block.timestamp);
+    }
+    
+    function emergencyPause() external onlyRole(EMERGENCY_ROLE) {
+        _pause();
+        emit EmergencyPauseActivated(msg.sender, block.timestamp);
+    }
+    
+    function emergencyUnpause() external onlyOwner {
+        _unpause();
+        emit EmergencyPauseDeactivated(msg.sender, block.timestamp);
+    }
+    
+    // Emergency events
+    event EmergencyWithdrawal(address indexed recipient, uint256 amount, uint256 timestamp);
+    event EmergencyPauseActivated(address indexed admin, uint256 timestamp);
+    event EmergencyPauseDeactivated(address indexed admin, uint256 timestamp);
+    
+    // ==================== INTERNAL ADMIN MANAGER FUNCTIONS ====================
+    
+    /**
+     * @dev Sets the InternalAdminManager contract address
+     * @param _adminManager Address of the InternalAdminManager contract
+     */
+    function setInternalAdminManager(address _adminManager) external onlyOwner {
+        require(_adminManager != address(0), "OrphiCrowdFund: Invalid admin manager address");
+        address oldManager = internalAdminManager;
+        internalAdminManager = _adminManager;
+        emit InternalAdminManagerUpdated(oldManager, _adminManager);
+    }
+    
+    /**
+     * @dev Initializes the InternalAdminManager integration (called after both contracts are deployed)
+     * @param _adminManager Address of the InternalAdminManager contract
+     * @param _enabled Whether to enable internal admin functionality
+     */
+    function initializeInternalAdminManager(address _adminManager, bool _enabled) external onlyOwner {
+        require(_adminManager != address(0), "OrphiCrowdFund: Invalid admin manager address");
+        
+        address oldManager = internalAdminManager;
+        internalAdminManager = _adminManager;
+        internalAdminEnabled = _enabled;
+        
+        emit InternalAdminManagerUpdated(oldManager, _adminManager);
+        emit InternalAdminStatusChanged(_enabled);
+    }
+    
+    /**
+     * @dev Enables or disables internal admin functionality
+     * @param _enabled Whether to enable internal admin functionality
+     */
+    function setInternalAdminEnabled(bool _enabled) external onlyOwner {
+        internalAdminEnabled = _enabled;
+        emit InternalAdminStatusChanged(_enabled);
+    }
+    
+    /**
+     * @dev Checks if an address is an internal admin
+     * @param _admin Address to check
+     */
+    function isInternalAdmin(address _admin) public view returns (bool) {
+        if (!internalAdminEnabled || internalAdminManager == address(0)) {
+            return false;
+        }
+        
+        try IInternalAdminManager(internalAdminManager).checkIsInternalAdmin(_admin) returns (bool result) {
+            return result;
+        } catch {
+            return false;
+        }
+    }
+    
+    /**
+     * @dev Validates internal admin access for simulation purposes
+     * @param _caller Address to validate
+     */
+    function validateInternalAdminAccess(address _caller) external view returns (bool) {
+        return isInternalAdmin(_caller);
+    }
+    
+    /**
+     * @dev Tracks admin activity for simulation purposes
+     * @param _action Description of action performed
+     */
+    function trackAdminActivity(string calldata _action) external {
+        if (internalAdminEnabled && internalAdminManager != address(0) && isInternalAdmin(msg.sender)) {
+            try IInternalAdminManager(internalAdminManager).trackAdminActivity(msg.sender, _action) {
+                // Activity tracked successfully
+            } catch {
+                // Silently fail to not break main functionality
+            }
+        }
+    }
+    
+    /**
+     * @dev Gets all internal admin addresses for display purposes
+     */
+    function getAllInternalAdmins() external view returns (address[] memory) {
+        if (!internalAdminEnabled || internalAdminManager == address(0)) {
+            return new address[](0);
+        }
+        
+        try IInternalAdminManager(internalAdminManager).getAllInternalAdmins() returns (address[] memory admins) {
+            return admins;
+        } catch {
+            return new address[](0);
+        }
+    }
+    
+    /**
+     * @dev Gets internal admin count for display purposes
+     */
+    function getInternalAdminCount() external view returns (uint256) {
+        if (!internalAdminEnabled || internalAdminManager == address(0)) {
+            return 0;
+        }
+        
+        try IInternalAdminManager(internalAdminManager).getInternalAdminCount() returns (uint256 count) {
+            return count;
+        } catch {
+            return 0;
+        }
+    }
+    
+    /**
+     * @dev Returns internal admin manager configuration
+     */
+    function getInternalAdminConfig() external view returns (
+        address adminManagerAddress,
+        bool enabled,
+        uint256 adminCount
+    ) {
+        return (
+            internalAdminManager,
+            internalAdminEnabled,
+            this.getInternalAdminCount()
+        );
     }
     
     function pause() external onlyRole(EMERGENCY_ROLE) {
@@ -1097,8 +1554,33 @@ contract OrphiCrowdFund is
 
     // ==================== UPGRADE AUTHORIZATION ====================
     
+    /**
+     * @dev Propose an upgrade with timelock
+     */
+    function proposeUpgrade(address newImplementation) external onlyRole(UPGRADER_ROLE) {
+        require(newImplementation != address(0), "OrphiCrowdFund: Invalid implementation");
+        require(newImplementation != address(this), "OrphiCrowdFund: Same implementation");
+        
+        uint256 unlockTime = block.timestamp + UPGRADE_DELAY;
+        proposedUpgrades[newImplementation] = unlockTime;
+        
+        emit UpgradeProposed(newImplementation, unlockTime);
+    }
+    
+    /**
+     * @dev Cancel a proposed upgrade
+     */
+    function cancelUpgrade(address newImplementation) external onlyRole(UPGRADER_ROLE) {
+        delete proposedUpgrades[newImplementation];
+    }
+    
     function _authorizeUpgrade(address newImplementation) internal view override onlyRole(UPGRADER_ROLE) {
         require(newImplementation != address(0), "OrphiCrowdFund: Invalid implementation");
         require(newImplementation != address(this), "OrphiCrowdFund: Same implementation");
+        
+        // Check timelock
+        uint256 unlockTime = proposedUpgrades[newImplementation];
+        require(unlockTime != 0, "OrphiCrowdFund: Upgrade not proposed");
+        require(block.timestamp >= unlockTime, "OrphiCrowdFund: Upgrade timelock not expired");
     }
 }

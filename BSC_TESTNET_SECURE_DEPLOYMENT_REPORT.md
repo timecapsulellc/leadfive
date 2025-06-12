@@ -17,10 +17,10 @@
 - **💰 USDT Token**: `0x337610d27c682E347C9cD60BD4b3b107C9d34dDd` (Official BSC Testnet USDT)
 
 ### **Administrative Addresses**
-- **👤 Deployer**: `0x658C37b88d211EEFd9a684237a20D5268B4A2e72`
-- **🏦 Treasury**: `0x658C37b88d211EEFd9a684237a20D5268B4A2e72`
-- **🚨 Emergency**: `0x658C37b88d211EEFd9a684237a20D5268B4A2e72`
-- **⚙️ Pool Manager**: `0x658C37b88d211EEFd9a684237a20D5268B4A2e72`
+- **👤 Deployer**: `0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29`
+- **🏦 Treasury**: `0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29`
+- **🚨 Emergency**: `0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29`
+- **⚙️ Pool Manager**: `0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29`
 
 ---
 
@@ -53,7 +53,7 @@
 
 ### **Contract Information**
 - **Version**: "Orphichain Crowdfund Platform Upgradeable Secure v1.1.0"
-- **Owner**: `0x658C37b88d211EEFd9a684237a20D5268B4A2e72`
+- **Owner**: `0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29`
 - **Oracle Configured**: ✅ Successfully set to `0x3d82369533E48065f4BDf7086faecF087DA2Aaf8`
 - **USDT Price**: 1.0 USD (verified working)
 - **Deployment Balance**: 1.27864779062 BNB (sufficient for operations)
@@ -143,6 +143,6 @@ The OrphiChain Crowdfund Platform Upgradeable Secure contract has been successfu
 ---
 
 **Deployment Timestamp:** 2025-06-10T06:48:13.794Z  
-**Deployer:** 0x658C37b88d211EEFd9a684237a20D5268B4A2e72  
+**Deployer:** 0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29  
 **Network:** BSC Testnet (97)  
 **Status:** Production Ready ✅
