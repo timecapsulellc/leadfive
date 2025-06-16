@@ -1,0 +1,737 @@
+/**
+ * NetworkTreeVisualization.css
+ * 
+ * Professional styling for the Network Tree Visualization component
+ * Consolidated from multiple genealogy tree CSS implementations
+ * 
+ * @features
+ * - OrphiChain brand-compliant color scheme
+ * - Responsive design with mobile support
+ * - Dark/light theme variants
+ * - Smooth animations and transitions
+ * - Accessible UI controls
+ * 
+ * @author OrphiChain Development Team
+ * @version 2.0.0
+ * @since 2025-06-14
+ */
+
+/* ============================================================================
+   CSS CUSTOM PROPERTIES (DESIGN TOKENS)
+   ============================================================================ */
+
+:root {
+  /* OrphiChain Brand Colors */
+  --orphi-royal-purple: #7B2CBF;
+  --orphi-cyber-blue: #00D4FF;
+  --orphi-energy-orange: #FF6B35;
+  --orphi-success-green: #00FF88;
+  --orphi-silver-mist: #C0C0C0;
+  
+  /* Background Gradients */
+  --orphi-primary-gradient: linear-gradient(135deg, var(--orphi-royal-purple) 0%, var(--orphi-cyber-blue) 100%);
+  --orphi-accent-gradient: linear-gradient(135deg, var(--orphi-energy-orange) 0%, var(--orphi-success-green) 100%);
+  
+  /* Typography */
+  --orphi-font-primary: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --orphi-font-secondary: 'Roboto Mono', 'Consolas', monospace;
+  
+  /* Spacing Scale */
+  --orphi-spacing-xs: 0.25rem;
+  --orphi-spacing-sm: 0.5rem;
+  --orphi-spacing-md: 1rem;
+  --orphi-spacing-lg: 1.5rem;
+  --orphi-spacing-xl: 2rem;
+  --orphi-spacing-xxl: 3rem;
+  
+  /* Border Radius */
+  --orphi-radius-sm: 0.375rem;
+  --orphi-radius-md: 0.5rem;
+  --orphi-radius-lg: 0.75rem;
+  --orphi-radius-xl: 1rem;
+  
+  /* Shadows */
+  --orphi-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --orphi-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --orphi-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --orphi-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Transitions */
+  --orphi-transition-fast: 0.15s ease-in-out;
+  --orphi-transition-normal: 0.3s ease-in-out;
+  --orphi-transition-slow: 0.5s ease-in-out;
+}
+
+/* ============================================================================
+   MAIN COMPONENT CONTAINER
+   ============================================================================ */
+
+.network-tree-visualization {
+  position: relative;
+  width: 100%;
+  min-height: 600px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--orphi-radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  font-family: var(--orphi-font-primary);
+}
+
+.network-tree-visualization.theme-light {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================================================
+   LOADING STATE
+   ============================================================================ */
+
+.network-tree-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--orphi-radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.network-tree-loading.theme-light {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.loading-spinner {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  margin-bottom: var(--orphi-spacing-lg);
+}
+
+.spinner-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top: 4px solid var(--orphi-cyber-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.theme-light .spinner-ring {
+  border-color: rgba(0, 0, 0, 0.1);
+  border-top-color: var(--orphi-cyber-blue);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.network-tree-loading p {
+  color: var(--orphi-cyber-blue);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* ============================================================================
+   HEADER & STATISTICS
+   ============================================================================ */
+
+.tree-header {
+  padding: var(--orphi-spacing-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.theme-light .tree-header {
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.tree-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: var(--orphi-spacing-lg);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.stat-item {
+  text-align: center;
+  padding: var(--orphi-spacing-md);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--orphi-radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all var(--orphi-transition-normal);
+}
+
+.theme-light .stat-item {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.stat-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--orphi-shadow-md);
+  border-color: var(--orphi-cyber-blue);
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: var(--orphi-spacing-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.theme-light .stat-label {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: var(--orphi-primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: var(--orphi-cyber-blue); /* Fallback */
+}
+
+/* ============================================================================
+   CONTROLS SECTION
+   ============================================================================ */
+
+.tree-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--orphi-spacing-lg);
+  padding: var(--orphi-spacing-lg);
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-light .tree-controls {
+  background: rgba(0, 0, 0, 0.02);
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: var(--orphi-spacing-sm);
+}
+
+.control-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  white-space: nowrap;
+}
+
+.theme-light .control-group label {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.control-select,
+.search-input {
+  padding: var(--orphi-spacing-sm) var(--orphi-spacing-md);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--orphi-radius-sm);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all var(--orphi-transition-normal);
+  min-width: 120px;
+}
+
+.theme-light .control-select,
+.theme-light .search-input {
+  border-color: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.05);
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.control-select:focus,
+.search-input:focus {
+  outline: none;
+  border-color: var(--orphi-cyber-blue);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+.search-input {
+  min-width: 200px;
+}
+
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.theme-light .search-input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.search-results {
+  font-size: 0.75rem;
+  color: var(--orphi-energy-orange);
+  font-weight: 600;
+  margin-left: var(--orphi-spacing-sm);
+}
+
+.zoom-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 120px;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  outline: none;
+  transition: background var(--orphi-transition-normal);
+}
+
+.theme-light .zoom-slider {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.zoom-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--orphi-cyber-blue);
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all var(--orphi-transition-normal);
+}
+
+.zoom-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.zoom-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--orphi-cyber-blue);
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.zoom-value {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--orphi-cyber-blue);
+  min-width: 40px;
+  text-align: center;
+}
+
+.reset-btn {
+  padding: var(--orphi-spacing-sm) var(--orphi-spacing-lg);
+  border: 1px solid var(--orphi-cyber-blue);
+  border-radius: var(--orphi-radius-sm);
+  background: transparent;
+  color: var(--orphi-cyber-blue);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--orphi-transition-normal);
+}
+
+.reset-btn:hover {
+  background: var(--orphi-cyber-blue);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: var(--orphi-shadow-md);
+}
+
+/* ============================================================================
+   TREE CONTAINER
+   ============================================================================ */
+
+.tree-container {
+  position: relative;
+  background: rgba(255, 255, 255, 0.01);
+  overflow: hidden;
+}
+
+.theme-light .tree-container {
+  background: rgba(0, 0, 0, 0.01);
+}
+
+/* React D3 Tree Customizations */
+.rd3t-tree-container {
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent;
+}
+
+.rd3t-node {
+  cursor: pointer;
+}
+
+.rd3t-node text {
+  font-family: var(--orphi-font-secondary);
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.rd3t-link {
+  stroke: rgba(255, 255, 255, 0.3);
+  stroke-width: 2px;
+  fill: none;
+  transition: stroke var(--orphi-transition-normal);
+}
+
+.theme-light .rd3t-link {
+  stroke: rgba(0, 0, 0, 0.3);
+}
+
+.rd3t-link:hover {
+  stroke: var(--orphi-cyber-blue);
+  stroke-width: 3px;
+}
+
+/* ============================================================================
+   NODE DETAILS PANEL
+   ============================================================================ */
+
+.node-details-panel {
+  position: absolute;
+  top: 100px;
+  right: 20px;
+  width: 320px;
+  max-width: calc(100vw - 40px);
+  background: rgba(0, 0, 0, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--orphi-radius-lg);
+  backdrop-filter: blur(10px);
+  z-index: 10;
+  box-shadow: var(--orphi-shadow-xl);
+  animation: slideInRight 0.3s ease-out;
+}
+
+.theme-light .node-details-panel {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--orphi-spacing-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.theme-light .panel-header {
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.panel-header h3 {
+  margin: 0;
+  color: var(--orphi-cyber-blue);
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font-size: 1.25rem;
+  padding: var(--orphi-spacing-xs);
+  border-radius: var(--orphi-radius-sm);
+  transition: all var(--orphi-transition-fast);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-light .close-btn {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.close-btn:hover {
+  color: var(--orphi-cyber-blue);
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.theme-light .close-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.panel-content {
+  padding: var(--orphi-spacing-lg);
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--orphi-spacing-md);
+  padding-bottom: var(--orphi-spacing-sm);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.theme-light .detail-row {
+  border-bottom-color: rgba(0, 0, 0, 0.05);
+}
+
+.detail-row:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.detail-label {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  flex-shrink: 0;
+  margin-right: var(--orphi-spacing-md);
+}
+
+.theme-light .detail-label {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.detail-value {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--orphi-font-secondary);
+  font-weight: 600;
+  text-align: right;
+  word-break: break-all;
+}
+
+.theme-light .detail-value {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+/* ============================================================================
+   LEGEND
+   ============================================================================ */
+
+.tree-legend {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--orphi-radius-lg);
+  padding: var(--orphi-spacing-lg);
+  backdrop-filter: blur(10px);
+  min-width: 200px;
+  box-shadow: var(--orphi-shadow-lg);
+}
+
+.theme-light .tree-legend {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.tree-legend h4 {
+  margin: 0 0 var(--orphi-spacing-md) 0;
+  color: var(--orphi-cyber-blue);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.legend-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--orphi-spacing-sm);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--orphi-spacing-sm);
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.theme-light .legend-color {
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+.legend-item span {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+.theme-light .legend-item span {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 1024px) {
+  .tree-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--orphi-spacing-md);
+  }
+  
+  .control-group {
+    justify-content: space-between;
+  }
+  
+  .search-input {
+    min-width: auto;
+    flex: 1;
+  }
+  
+  .node-details-panel {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90vw;
+    max-width: 400px;
+  }
+  
+  .tree-legend {
+    position: static;
+    margin-top: var(--orphi-spacing-lg);
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 768px) {
+  .tree-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--orphi-spacing-md);
+  }
+  
+  .tree-header,
+  .tree-controls {
+    padding: var(--orphi-spacing-md);
+  }
+  
+  .control-group {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--orphi-spacing-xs);
+  }
+  
+  .control-group label {
+    font-size: 0.75rem;
+  }
+  
+  .zoom-slider {
+    width: 100%;
+  }
+  
+  .stat-value {
+    font-size: 1.25rem;
+  }
+  
+  .stat-label {
+    font-size: 0.6875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tree-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .network-tree-visualization {
+    min-height: 500px;
+  }
+  
+  .tree-container {
+    height: 400px !important;
+  }
+  
+  .panel-content {
+    padding: var(--orphi-spacing-md);
+  }
+  
+  .detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--orphi-spacing-xs);
+  }
+  
+  .detail-value {
+    text-align: left;
+  }
+}
+
+/* ============================================================================
+   ACCESSIBILITY ENHANCEMENTS
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .loading-spinner .spinner-ring {
+    animation: none;
+  }
+}
+
+.control-select:focus,
+.search-input:focus,
+.zoom-slider:focus,
+.reset-btn:focus,
+.close-btn:focus {
+  outline: 2px solid var(--orphi-cyber-blue);
+  outline-offset: 2px;
+}
+
+@media (prefers-contrast: high) {
+  .network-tree-visualization {
+    border-width: 2px;
+  }
+  
+  .stat-item,
+  .node-details-panel,
+  .tree-legend {
+    border-width: 2px;
+  }
+  
+  .control-select,
+  .search-input {
+    border-width: 2px;
+  }
+}

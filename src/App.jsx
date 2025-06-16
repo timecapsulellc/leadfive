@@ -1,11 +1,12 @@
 // OrphiChain Ultimate Dashboard - Force Vercel Deployment Update
+import React from 'react';
 import './App.css'
-import Dashboard from './components/dashboard/Dashboard';
+import OrphiCrowdFundApp from './components/OrphiCrowdFundApp';
 
 function App() {
   return (
     <div className="App">
-      <Dashboard />
+      <OrphiCrowdFundApp />
     </div>
   )
 }

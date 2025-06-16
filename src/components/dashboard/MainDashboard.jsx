@@ -12,6 +12,9 @@ import { useCompensationData } from '../../hooks/useCompensationData';
 import { useDeviceInfo } from '../../hooks/useDeviceInfo';
 import { useLiveStats } from '../../hooks/useLiveStats';
 import { useAnalytics } from '../../hooks/useAnalytics';
+import Web3Service from '../../web3';
+import GlobalStatsPanel from './GlobalStatsPanel';
+import DistributionStatusPanel from './DistributionStatusPanel';
 import '../../styles/dashboard.css';
 
 /**
@@ -25,6 +28,9 @@ function MainDashboard() {
   const { deviceInfo } = useDeviceInfo();
   const { liveStats, transactions, wsConnected } = useLiveStats();
   const { analyticsData, chartData, exportTeamData } = useAnalytics(teamData, compensationData);
+  
+  // Contract instance for real-time stats
+  const contract = Web3Service.contract;
 
   // Local state for UI controls
   const [showStats, setShowStats] = React.useState(true);
@@ -143,7 +149,17 @@ function MainDashboard() {
 
           {/* Right Column - Analytics and Controls */}
           <div className="right-column">
-            
+
+            {/* Global Contract Stats */}
+            <div className="dashboard-section">
+              <GlobalStatsPanel contract={contract} />
+            </div>
+
+            {/* Distribution Status */}
+            <div className="dashboard-section">
+              <DistributionStatusPanel contract={contract} />
+            </div>
+
             {/* Performance Metrics */}
             {showPerformanceMetrics && (
               <div className="dashboard-section">

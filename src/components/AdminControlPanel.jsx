@@ -42,6 +42,14 @@ const AdminControlPanel = ({ onSystemAction, userInfo }) => {
     { id: 'risk_assessment', label: 'Risk Assessment', action: 'run' }
   ];
 
+  const adminToolControls = [
+    { id: 'matrix_audit', label: 'Audit Matrix', action: 'audit' },
+    { id: 'matrix_repair', label: 'Repair Matrix', action: 'repair' },
+    { id: 'auto_ghp_distribution', label: 'Auto GHP Distribution', action: 'distribute' },
+    { id: 'auto_leader_distribution', label: 'Auto Leader Distribution', action: 'distribute' },
+    { id: 'auto_club_distribution', label: 'Auto Club Distribution', action: 'distribute' }
+  ];
+
   const handleAdminAction = async (controlId, action) => {
     setPendingAction(controlId);
     
@@ -163,7 +171,8 @@ const AdminControlPanel = ({ onSystemAction, userInfo }) => {
           { id: 'system', label: 'System', icon: '🔐' },
           { id: 'analytics', label: 'Analytics', icon: '📊' },
           { id: 'users', label: 'Users', icon: '👥' },
-          { id: 'security', label: 'Security', icon: '🛡️' }
+          { id: 'security', label: 'Security', icon: '🛡️' },
+          { id: 'tools', label: 'Tools', icon: '🛠️' }
         ].map(section => (
           <button
             key={section.id}
@@ -188,6 +197,93 @@ const AdminControlPanel = ({ onSystemAction, userInfo }) => {
         )}
         {activeSection === 'security' && renderControlSection(
           'Security & Compliance', securityControls, '🛡️'
+        )}
+        {activeSection === 'tools' && (
+          <div className="admin-section">
+            <h4><span className="section-icon">🛠️</span> Admin Tools</h4>
+            <div className="controls-list">
+              {/* Audit Matrix */}
+              <div className="control-item">
+                <input
+                  type="text"
+                  placeholder="User address"
+                  id="audit-user-input"
+                  className="control-input"
+                />
+                <button
+                  className="admin-btn"
+                  onClick={async () => {
+                    const user = document.getElementById('audit-user-input').value;
+                    try {
+                      const result = await Web3Service.contract.methods.auditMatrixPlacement(user).call();
+                      console.log('Matrix audit result:', result);
+                      alert(`Upline: ${result.sponsor}, Downlines: ${result.downlines.length}`);
+                    } catch (e) { console.error(e); alert('Audit failed'); }
+                  }}
+                >Audit Matrix</button>
+              </div>
+              {/* Repair Matrix */}
+              <div className="control-item">
+                <input
+                  type="text"
+                  placeholder="User address"
+                  id="repair-user-input"
+                  className="control-input"
+                />
+                <input
+                  type="text"
+                  placeholder="New Sponsor"
+                  id="repair-sponsor-input"
+                  className="control-input"
+                />
+                <button
+                  className="admin-btn"
+                  onClick={async () => {
+                    const user = document.getElementById('repair-user-input').value;
+                    const sponsor = document.getElementById('repair-sponsor-input').value;
+                    try {
+                      await Web3Service.contract.methods.repairMatrixPlacement(user, sponsor).send({ from: Web3Service.account });
+                      alert('Matrix repaired');
+                    } catch (e) { console.error(e); alert('Repair failed'); }
+                  }}
+                >Repair Matrix</button>
+              </div>
+              {/* Automated Distributions */}
+              <div className="control-item">
+                <button
+                  className="admin-btn"
+                  onClick={async () => {
+                    try {
+                      await Web3Service.contract.methods.distributeGlobalHelpPoolAuto().send({ from: Web3Service.account });
+                      alert('GHP distributed');
+                    } catch (e) { console.error(e); alert('GHP distribution failed'); }
+                  }}
+                >Auto GHP Distribution</button>
+              </div>
+              <div className="control-item">
+                <button
+                  className="admin-btn"
+                  onClick={async () => {
+                    try {
+                      await Web3Service.contract.methods.distributeLeaderBonusPoolAuto().send({ from: Web3Service.account });
+                      alert('Leader bonus distributed');
+                    } catch (e) { console.error(e); alert('Leader distribution failed'); }
+                  }}
+                >Auto Leader Distribution</button>
+              </div>
+              <div className="control-item">
+                <button
+                  className="admin-btn"
+                  onClick={async () => {
+                    try {
+                      await Web3Service.contract.methods.distributeClubPoolAuto().send({ from: Web3Service.account });
+                      alert('Club pool distributed');
+                    } catch (e) { console.error(e); alert('Club distribution failed'); }
+                  }}
+                >Auto Club Distribution</button>
+              </div>
+            </div>
+          </div>
         )}
       </div>
 
