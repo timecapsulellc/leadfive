@@ -36,7 +36,6 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom'],
           web3: ['ethers', '@walletconnect/web3-provider', 'web3modal'],
-          supabase: ['@supabase/supabase-js'],
           ui: ['react-toastify']
         }
       }

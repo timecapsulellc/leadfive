@@ -13,12 +13,10 @@
     "preview": "vite preview --host 0.0.0.0 --port 8080",
     "start": "serve -s dist -l 8080",
     "start-vite": "vite preview --host 0.0.0.0 --port 8080 --allowedHosts all",
-    "vercel-build": "vite build",
     "digitalocean-build": "vite build",
     "digitalocean-start": "serve -s dist -l 8080"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.50.0",
     "@walletconnect/web3-provider": "^1.8.0",
     "ethers": "^6.8.0",
     "react": "^18.2.0",
