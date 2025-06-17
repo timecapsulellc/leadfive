@@ -96,8 +96,8 @@ body {
   align-items: center;
   gap: var(--spacing-lg);
   flex: 1;
-  min-width: 0; /* Prevent flex item overflow */
-  max-width: calc(100% - 200px); /* Reserve space for header-right */
+  min-width: 0;
+  max-width: calc(100% - 250px);
 }
 
 .header-title {
@@ -112,7 +112,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
+  max-width: 300px;
 }
 
 .header-subtitle {
@@ -124,6 +124,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 200px;
 }
 
 .header-right {
@@ -131,7 +132,8 @@ body {
   align-items: center;
   gap: var(--spacing-md);
   flex-shrink: 0;
-  min-width: 150px;
+  min-width: 200px;
+  max-width: 250px;
   justify-content: flex-end;
 }
 
@@ -144,6 +146,10 @@ body {
   max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  min-height: 40px;
 }
 
 /* Specific wallet connector responsive styles */
@@ -152,11 +158,18 @@ body {
   align-items: center;
   gap: var(--spacing-sm);
   max-width: 100%;
+  height: 40px;
+  justify-content: flex-end;
 }
 
 .wallet-connector button {
   min-width: 0;
   flex-shrink: 1;
+  height: 40px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Connected wallet display */
@@ -164,8 +177,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  justify-content: center;
   min-width: 0;
   max-width: 120px;
+  height: 40px;
 }
 
 .wallet-connector .text-right p {
@@ -175,6 +190,19 @@ body {
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 100%;
+  font-size: 0.85rem;
+}
+
+/* Connected wallet balance */
+.wallet-connector .text-right p:first-child {
+  font-weight: 600;
+  color: var(--orphi-primary);
+}
+
+.wallet-connector .text-right p:last-child {
+  font-size: 0.75rem;
+  color: var(--orphi-text-muted);
+  margin-top: -2px;
 }
 
 .mobile-menu-btn {
@@ -271,6 +299,7 @@ body {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  align-items: stretch;
 }
 
 /* Wallet Connection Panel */
@@ -754,13 +783,13 @@ body {
   }
 
   .header-left {
-    max-width: calc(100% - 180px);
+    max-width: calc(100% - 200px);
     gap: var(--spacing-sm);
   }
 
   .header-title {
     font-size: 1.3rem;
-    max-width: 150px;
+    max-width: 180px;
   }
 
   .header-subtitle {
@@ -768,7 +797,8 @@ body {
   }
 
   .header-right {
-    min-width: 120px;
+    min-width: 150px;
+    max-width: 200px;
     gap: var(--spacing-xs);
   }
 
@@ -776,16 +806,25 @@ body {
   .header-right button {
     font-size: 0.85rem;
     padding: var(--spacing-sm) var(--spacing-md);
-    max-width: 140px;
+    max-width: 160px;
+    height: 36px;
+    min-height: 36px;
   }
 
   .wallet-connector {
     gap: var(--spacing-xs);
-    max-width: 140px;
+    max-width: 160px;
+    height: 36px;
+  }
+
+  .wallet-connector button {
+    height: 36px;
+    font-size: 0.85rem;
   }
 
   .wallet-connector .text-right {
-    max-width: 80px;
+    max-width: 100px;
+    height: 36px;
   }
 
   .wallet-connector .text-right p {
@@ -796,6 +835,8 @@ body {
     display: block;
     font-size: 1.2rem;
     padding: var(--spacing-xs);
+    height: 36px;
+    width: 36px;
   }
 
   .dashboard-navigation {
@@ -905,16 +946,17 @@ body {
 
   .header-left {
     gap: var(--spacing-xs);
-    max-width: calc(100% - 140px);
+    max-width: calc(100% - 160px);
   }
 
   .header-title {
     font-size: 1.1rem;
-    max-width: 120px;
+    max-width: 140px;
   }
 
   .header-right {
-    min-width: 100px;
+    min-width: 120px;
+    max-width: 160px;
     gap: var(--spacing-xs);
   }
 
@@ -922,30 +964,37 @@ body {
   .header-right button {
     font-size: 0.8rem;
     padding: var(--spacing-xs) var(--spacing-sm);
-    max-width: 100px;
+    max-width: 120px;
+    height: 32px;
+    min-height: 32px;
   }
 
   .wallet-connector {
     gap: var(--spacing-xs);
-    max-width: 100px;
+    max-width: 120px;
+    height: 32px;
+  }
+
+  .wallet-connector button {
+    font-size: 0.8rem;
+    padding: var(--spacing-xs);
+    height: 32px;
   }
 
   .wallet-connector .text-right {
-    max-width: 60px;
+    max-width: 80px;
+    height: 32px;
   }
 
   .wallet-connector .text-right p {
     font-size: 0.7rem;
   }
 
-  .wallet-connector button {
-    font-size: 0.7rem;
-    padding: var(--spacing-xs);
-  }
-
   .mobile-menu-btn {
     font-size: 1rem;
     padding: var(--spacing-xs);
+    height: 32px;
+    width: 32px;
   }
 
   .dashboard-main {
