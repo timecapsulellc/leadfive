@@ -5,18 +5,26 @@ require("@openzeppelin/hardhat-upgrades");
 require("dotenv").config();
 require("@nomicfoundation/hardhat-toolbox");
 require("@nomicfoundation/hardhat-verify");
+require("hardhat-contract-sizer");
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: {
-    version: "0.8.22",
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 1000, // Increased for better optimization
-      },
-      viaIR: true, // Enable IR-based compilation to resolve stack too deep
-    },
+    compilers: [
+      {
+        version: "0.8.22",
+        settings: {
+          viaIR: true,
+          optimizer: {
+            enabled: true,
+            runs: 1000
+          },
+          metadata: {
+            bytecodeHash: "none"
+          }
+        }
+      }
+    ]
   },
   networks: {
     hardhat: {
@@ -35,19 +43,35 @@ module.exports = {
     },
     bsc_mainnet: {
       url:
-        process.env.BSC_MAINNET_RPC_URL || "https://bsc-dataseed.binance.org/",
+        process.env.BSC_MAINNET_RPC_URL || "https://bsc-dataseed1.binance.org/",
       chainId: 56,
-      // NOTE: For production deployment, use environment variable - NEVER hardcode private keys
-      accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
-      gasPrice: 5000000000, // 5 Gwei
+      // Priority: TREASURY_PRIVATE_KEY (for upgrades) > ADMIN_PRIVATE_KEY > DEPLOYER_PRIVATE_KEY
+      accounts: process.env.TREASURY_PRIVATE_KEY 
+        ? [process.env.TREASURY_PRIVATE_KEY] 
+        : process.env.ADMIN_PRIVATE_KEY 
+        ? [process.env.ADMIN_PRIVATE_KEY] 
+        : process.env.DEPLOYER_PRIVATE_KEY 
+        ? [process.env.DEPLOYER_PRIVATE_KEY] 
+        : [],
+      gasPrice: 3000000000, // 3 Gwei (BSC optimized)
+      gasLimit: 6000000,    // 6M gas limit
+      timeout: 60000,       // 60 second timeout
     },
     bsc: {
       url:
-        process.env.BSC_MAINNET_RPC_URL || "https://bsc-dataseed.binance.org/",
+        process.env.BSC_MAINNET_RPC_URL || "https://bsc-dataseed2.defibit.io/",
       chainId: 56,
-      // NOTE: For production deployment, use environment variable - NEVER hardcode private keys
-      accounts: process.env.DEPLOYER_PRIVATE_KEY ? [process.env.DEPLOYER_PRIVATE_KEY] : [],
-      gasPrice: 5000000000, // 5 Gwei
+      // SECURITY: Hardware wallet configuration (recommended)
+      accounts: process.env.MNEMONIC 
+        ? { mnemonic: process.env.MNEMONIC }
+        : process.env.ADMIN_PRIVATE_KEY 
+        ? [process.env.ADMIN_PRIVATE_KEY] 
+        : process.env.DEPLOYER_PRIVATE_KEY 
+        ? [process.env.DEPLOYER_PRIVATE_KEY] 
+        : [],
+      gasPrice: 3000000000, // 3 Gwei (BSC optimized)
+      gasLimit: 6000000,    // 6M gas limit
+      timeout: 60000,       // 60 second timeout
     },
   },
   etherscan: {
@@ -67,10 +91,30 @@ module.exports = {
   mocha: {
     timeout: 40000,
   },
+  contractSizer: {
+    alphaSort: true,
+    disambiguatePaths: false,
+    runOnCompile: true,
+    strict: false,
+    only: ["OrphiCrowdFund"],
+  },
   paths: {
     sources: "./contracts",
     tests: "./test",
     cache: "./cache",
     artifacts: "./artifacts",
+  },
+  // Exclude archive, backup, and temp folders from compilation
+  solidityExtSettings: {
+    ignoreWarnings: true,
+    exclude: [
+      "contracts/archive/**/*",
+      "contracts/backup/**/*", 
+      "contracts/temp/**/*",
+      "contracts/**/backup_*",
+      "contracts/**/*_backup*",
+      "contracts/**/*Archived*",
+      "contracts/**/*Archive*"
+    ]
   },
 };

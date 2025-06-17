@@ -1,0 +1,57 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "MockPriceFeed",
+  "sourceName": "contracts/mocks/MockPriceFeed.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "latestRoundData",
+      "outputs": [
+        {
+          "internalType": "uint80",
+          "name": "roundId",
+          "type": "uint80"
+        },
+        {
+          "internalType": "int256",
+          "name": "answer",
+          "type": "int256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "startedAt",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "updatedAt",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint80",
+          "name": "answeredInRound",
+          "type": "uint80"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "int256",
+          "name": "_price",
+          "type": "int256"
+        }
+      ],
+      "name": "setPrice",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6080806040523461001e576406fc23ac00600055608e90816100248239f35b600080fdfe6080806040526004361015601257600080fd5b600090813560e01c8063f7a308061460665763feaf968c14603257600080fd5b346062578160031936011260625760a0915460018252602082015242604082015242606082015260016080820152f35b5080fd5b8234607e576020366003190112607e57600435815580f35b80fdfea164736f6c6343000816000a",
+  "deployedBytecode": "0x6080806040526004361015601257600080fd5b600090813560e01c8063f7a308061460665763feaf968c14603257600080fd5b346062578160031936011260625760a0915460018252602082015242604082015242606082015260016080820152f35b5080fd5b8234607e576020366003190112607e57600435815580f35b80fdfea164736f6c6343000816000a",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

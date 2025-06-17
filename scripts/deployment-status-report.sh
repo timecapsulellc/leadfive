@@ -85,14 +85,6 @@ echo "2. Create Dockerfile with Node.js 18"
 echo "3. Run deployment in container"
 echo ""
 
-echo "Option 4: Remix IDE Deployment"
-echo "-----------------------------"
-echo "1. Open Remix IDE (remix.ethereum.org)"
-echo "2. Upload OrphiCrowdFundSimplified.sol"
-echo "3. Connect to BSC Testnet via MetaMask"
-echo "4. Deploy with constructor parameters"
-echo ""
-
 # Next Steps
 echo -e "${BLUE}📋 RECOMMENDED NEXT STEPS${NC}"
 echo "=========================="

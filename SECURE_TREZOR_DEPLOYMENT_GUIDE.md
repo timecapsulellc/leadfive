@@ -71,37 +71,6 @@ npx hardhat run scripts/deploy-with-trezor.js --network bscMainnet --config hard
 
 ---
 
-## 🌐 OPTION 2: REMIX IDE DEPLOYMENT
-
-### Step 1: Open Remix IDE
-1. Go to https://remix.ethereum.org/
-2. Create new file: `OrphiCrowdFund.sol`
-3. Copy your contract code from `contracts/OrphiCrowdFund.sol`
-
-### Step 2: Compile Contract
-1. Go to "Solidity Compiler" tab
-2. Set compiler version to `0.8.22`
-3. Enable optimization (200 runs)
-4. Click "Compile OrphiCrowdFund.sol"
-
-### Step 3: Connect Trezor
-1. Go to "Deploy & Run Transactions" tab
-2. Environment: Select "Injected Provider - MetaMask"
-3. MetaMask will connect (ensure Trezor account is selected)
-4. Verify account shows: `0xeB652c4523f3Cf615D3F3694b14E551145953aD0`
-
-### Step 4: Deploy Contract
-1. Select "OrphiCrowdFund" from contract dropdown
-2. Set constructor parameters:
-   - `_usdtToken`: `0x55d398326f99059fF775485246999027B3197955`
-   - `_treasury`: `0xeB652c4523f3Cf615D3F3694b14E551145953aD0`
-   - `_emergency`: `0xeB652c4523f3Cf615D3F3694b14E551145953aD0`
-   - `_poolManager`: `0xeB652c4523f3Cf615D3F3694b14E551145953aD0`
-3. Click "Deploy"
-4. Confirm transaction on Trezor device
-
----
-
 ## ✅ DEPLOYMENT VERIFICATION
 
 After successful deployment:

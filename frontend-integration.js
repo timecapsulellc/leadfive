@@ -7,9 +7,9 @@
 
 // Contract Configuration
 const ORPHI_CROWDFUND_CONFIG = {
-    // Deployed Contract Details
-    contractAddress: "0x2A5CDeEc5dF5AE5137AF46920b2B4C4Aa9b0aEA0",
-    usdtTokenAddress: "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd",
+    // Deployed Contract Details - UPDATED JUNE 13, 2025
+    contractAddress: "0x6fA993A33AA860A79E15ae44AC9390465c5f02aC",
+    usdtTokenAddress: "0xa78E507928afA5501468a6C4D0A32b14E3cD3c04",
     
     // Network Configuration
     network: {

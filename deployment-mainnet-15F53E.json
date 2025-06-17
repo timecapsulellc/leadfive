@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-06-16T12:28:55.612Z",
+  "network": "BSC Testnet",
+  "chainId": "97",
+  "contractAddress": "0x15F53E08a4F4732192778CCEB532694349D26684",
+  "implementationAddress": "0x536A3A5F3979e6Db17802b0B43608CF67AB2dEc3",
+  "deployer": "0x69fBE3E29d32d3518ca53db0D3d017FC163F0E8C",
+  "finalOwner": "0x69fBE3E29d32d3518ca53db0D3d017FC163F0E8C",
+  "transferDelay": 604800,
+  "transferScheduled": "2025-06-23T12:28:55.000Z",
+  "config": {
+    "usdt": "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd",
+    "priceFeed": "0x2514895c72f50D8bd4B4F9b1110F0D6bD2c97526",
+    "adminCount": 1
+  },
+  "gasUsed": "~0.05 BNB",
+  "contractSize": "14.763 KiB",
+  "features": [
+    "8-tier package system ($30-$2000)",
+    "40% direct sponsor bonus",
+    "10-level bonus distribution",
+    "30-level upline chain",
+    "Binary matrix (2×∞)",
+    "Global pools (Leader, Help, Club)",
+    "4× earnings cap system",
+    "Progressive withdrawal rates (70-80%)",
+    "Auto-reinvestment logic",
+    "UUPS upgradeable pattern",
+    "MEV protection",
+    "Admin controls & security"
+  ]
+}

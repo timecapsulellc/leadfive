@@ -36,7 +36,6 @@
   },
   "deploymentCommand": "npx hardhat run scripts/deploy-simple-testnet.cjs --network bsc_testnet --config hardhat.config.cjs",
   "alternativeDeploymentMethods": [
-    "Remix IDE (browser-based)",
     "Docker with Node.js 18",
     "GitHub Codespaces with Node.js 18",
     "Manual compilation + web3.js deployment"

@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 OrphiCrowdFund - Mainnet Dashboard Testing Environment</title>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --orphi-royal-purple: #7B2CBF;
+            --orphi-cyber-blue: #00D4FF;
+            --orphi-energy-orange: #FF6B35;
+            --orphi-success-green: #00C851;
+            --orphi-warning-yellow: #FFD700;
+            --orphi-error-red: #FF4444;
+            --orphi-dark-bg: #0A0A0A;
+            --orphi-card-bg: rgba(255, 255, 255, 0.05);
+            --orphi-border: rgba(255, 255, 255, 0.1);
+            --orphi-text-primary: #FFFFFF;
+            --orphi-text-secondary: #B0B0B0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0A0A0A 0%, #1a1a2e 50%, #16213e 100%);
+            color: var(--orphi-text-primary);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--orphi-card-bg);
+            border-radius: 15px;
+            border: 1px solid var(--orphi-border);
+        }
+
+        .status-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .status-card {
+            background: var(--orphi-card-bg);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--orphi-border);
+            text-align: center;
+        }
+
+        .testing-section {
+            background: var(--orphi-card-bg);
+            margin-bottom: 20px;
+            border-radius: 15px;
+            border: 1px solid var(--orphi-border);
+            overflow: hidden;
+        }
+
+        .section-header {
+            padding: 15px 20px;
+            background: linear-gradient(135deg, var(--orphi-royal-purple) 0%, var(--orphi-cyber-blue) 100%);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .section-content {
+            padding: 20px;
+        }
+
+        .test-group {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            border-left: 4px solid var(--orphi-cyber-blue);
+        }
+
+        .test-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        label {
+            font-size: 14px;
+            color: var(--orphi-text-secondary);
+            font-weight: 500;
+        }
+
+        input, select {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--orphi-border);
+            border-radius: 8px;
+            color: var(--orphi-text-primary);
+            font-size: 14px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--orphi-cyber-blue);
+            box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--orphi-royal-purple) 0%, var(--orphi-cyber-blue) 100%);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--orphi-success-green);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--orphi-warning-yellow);
+            color: black;
+        }
+
+        .btn-danger {
+            background: var(--orphi-error-red);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results-area {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--orphi-border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .success { color: var(--orphi-success-green); }
+        .error { color: var(--orphi-error-red); }
+        .warning { color: var(--orphi-warning-yellow); }
+        .info { color: var(--orphi-cyber-blue); }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: var(--orphi-cyber-blue);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 OrphiCrowdFund - Mainnet Dashboard Testing</h1>
+            <p>Contract: <code id="contractAddress">0xE93db0753A90b495e8FE31f9793c9D4dbf2E29C7</code></p>
+            <p>Network: <span id="networkStatus">Not Connected</span> | Account: <span id="accountStatus">Not Connected</span></p>
+        </div>
+
+        <div class="status-bar">
+            <div class="status-card">
+                <h3>Connection</h3>
+                <div id="connectionStatus">❌ Disconnected</div>
+            </div>
+            <div class="status-card">
+                <h3>USDT Balance</h3>
+                <div id="usdtBalance">-</div>
+            </div>
+            <div class="status-card">
+                <h3>Total Users</h3>
+                <div id="totalUsers">-</div>
+            </div>
+            <div class="status-card">
+                <h3>Total Investments</h3>
+                <div id="totalInvestments">-</div>
+            </div>
+            <div class="status-card">
+                <h3>Registration Open</h3>
+                <div id="registrationOpen">-</div>
+            </div>
+            <div class="status-card">
+                <h3>Contract Paused</h3>
+                <div id="contractPaused">-</div>
+            </div>
+        </div>
+
+        <div class="testing-section">
+            <div class="section-header">🔌 Connection & Setup</div>
+            <div class="section-content">
+                <div class="test-controls">
+                    <button class="btn btn-primary" onclick="connectWallet()">Connect MetaMask</button>
+                    <button class="btn btn-success" onclick="switchToBSC()">Switch to BSC Mainnet</button>
+                    <button class="btn btn-warning" onclick="refreshData()">Refresh All Data</button>
+                </div>
+                <div class="results-area" id="connectionResults"></div>
+            </div>
+        </div>
+
+        <div class="testing-section">
+            <div class="section-header">👤 User Information Testing</div>
+            <div class="section-content">
+                <div class="test-group">
+                    <h4>Check User Data</h4>
+                    <div class="test-controls">
+                        <div class="input-group">
+                            <label>User Address:</label>
+                            <input type="text" id="userAddressInput" placeholder="0x... or use connected account">
+                        </div>
+                        <button class="btn btn-primary" onclick="checkUserInfo()">Get User Info</button>
+                        <button class="btn btn-success" onclick="checkMyInfo()">Check My Account</button>
+                    </div>
+                </div>
+                <div class="results-area" id="userInfoResults"></div>
+            </div>
+        </div>
+
+        <div class="testing-section">
+            <div class="section-header">📊 Registration Testing</div>
+            <div class="section-content">
+                <div class="test-group">
+                    <h4>New User Registration</h4>
+                    <div class="test-controls">
+                        <div class="input-group">
+                            <label>Sponsor Address:</label>
+                            <input type="text" id="sponsorAddress" placeholder="0x... (use zero address for root)">
+                        </div>
+                        <div class="input-group">
+                            <label>Package Tier:</label>
+                            <select id="packageTier">
+                                <option value="1">Tier 1 - $10 USDT</option>
+                                <option value="2">Tier 2 - $25 USDT</option>
+                                <option value="3">Tier 3 - $50 USDT</option>
+                                <option value="4">Tier 4 - $100 USDT</option>
+                                <option value="5">Tier 5 - $250 USDT</option>
+                                <option value="6">Tier 6 - $500 USDT</option>
+                                <option value="7">Tier 7 - $1000 USDT</option>
+                                <option value="8">Tier 8 - $2500 USDT</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="test-controls">
+                        <button class="btn btn-warning" onclick="checkPackageAmount()">Check Package Amount</button>
+                        <button class="btn btn-success" onclick="approveUSDT()">Approve USDT</button>
+                        <button class="btn btn-primary" onclick="registerUser()">Register User</button>
+                    </div>
+                </div>
+                <div class="results-area" id="registrationResults"></div>
+            </div>
+        </div>
+
+        <div class="testing-section">
+            <div class="section-header">💰 Financial Testing</div>
+            <div class="section-content">
+                <div class="test-group">
+                    <h4>Withdrawal Testing</h4>
+                    <div class="test-controls">
+                        <button class="btn btn-primary" onclick="checkWithdrawableBalance()">Check Withdrawable Balance</button>
+                        <button class="btn btn-success" onclick="performWithdrawal()">Withdraw Earnings</button>
+                    </div>
+                </div>
+                <div class="results-area" id="financialResults"></div>
+            </div>
+        </div>
+
+        <div class="testing-section">
+            <div class="section-header">🌐 Network & Referral Testing</div>
+            <div class="section-content">
+                <div class="test-group">
+                    <h4>Referral Network</h4>
+                    <div class="test-controls">
+                        <div class="input-group">
+                            <label>User Address for Referrals:</label>
+                            <input type="text" id="referralUserAddress" placeholder="0x... or use connected account">
+                        </div>
+                        <button class="btn btn-primary" onclick="getDirectReferrals()">Get Direct Referrals</button>
+                        <button class="btn btn-success" onclick="checkTeamData()">Check Team Data</button>
+                    </div>
+                </div>
+                <div class="results-area" id="networkResults"></div>
+            </div>
+        </div>
+
+        <div class="testing-section">
+            <div class="section-header">🔧 Contract Administration Testing</div>
+            <div class="section-content">
+                <div class="test-group">
+                    <h4>Contract State</h4>
+                    <div class="test-controls">
+                        <button class="btn btn-primary" onclick="checkContractState()">Check Contract State</button>
+                        <button class="btn btn-warning" onclick="checkOwnership()">Check Ownership</button>
+                        <button class="btn btn-success" onclick="checkRegistrationStatus()">Check Registration Status</button>
+                    </div>
+                </div>
+                <div class="results-area" id="adminResults"></div>
+            </div>
+        </div>
+
+        <div class="testing-section">
+            <div class="section-header">📋 Complete Testing Suite</div>
+            <div class="section-content">
+                <div class="test-controls">
+                    <button class="btn btn-primary" onclick="runBasicTests()">Run Basic Function Tests</button>
+                    <button class="btn btn-success" onclick="runComprehensiveTests()">Run Comprehensive Tests</button>
+                    <button class="btn btn-warning" onclick="simulateUserJourney()">Simulate User Journey</button>
+                </div>
+                <div class="results-area" id="testSuiteResults"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Contract Configuration
+        const BSC_MAINNET_CONFIG = {
+            chainId: '0x38',
+            chainName: 'BSC Mainnet',
+            rpcUrls: ['https://bsc-dataseed.binance.org/'],
+            blockExplorerUrls: ['https://bscscan.com/'],
+            nativeCurrency: {
+                name: 'BNB',
+                symbol: 'BNB',
+                decimals: 18
+            }
+        };
+
+        const CONTRACT_ADDRESS = '0xE93db0753A90b495e8FE31f9793c9D4dbf2E29C7';
+        const USDT_ADDRESS = '0x55d398326f99059fF775485246999027B3197955';
+
+        // Contract ABIs (Essential functions only)
+        const CONTRACT_ABI = [
+            {"inputs":[{"internalType":"address","name":"sponsor","type":"address"},{"internalType":"uint8","name":"_tier","type":"uint8"}],"name":"register","outputs":[],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[],"name":"withdraw","outputs":[],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[{"internalType":"address","name":"","type":"address"}],"name":"users","outputs":[{"internalType":"bool","name":"isRegistered","type":"bool"},{"internalType":"address","name":"sponsor","type":"address"},{"internalType":"uint8","name":"currentTier","type":"uint8"},{"internalType":"uint256","name":"totalInvestment","type":"uint256"},{"internalType":"uint256","name":"totalEarnings","type":"uint256"},{"internalType":"uint256","name":"withdrawableBalance","type":"uint256"},{"internalType":"uint256","name":"directReferrals","type":"uint256"},{"internalType":"uint256","name":"teamSize","type":"uint256"},{"internalType":"uint256","name":"teamVolume","type":"uint256"},{"internalType":"uint256","name":"registrationTime","type":"uint256"},{"internalType":"uint8","name":"rank","type":"uint8"},{"internalType":"bool","name":"isActive","type":"bool"},{"internalType":"bool","name":"isBlacklisted","type":"bool"},{"internalType":"uint256","name":"lastWithdrawal","type":"uint256"},{"internalType":"uint256","name":"earningsCap","type":"uint256"},{"internalType":"address","name":"leftChild","type":"address"},{"internalType":"address","name":"rightChild","type":"address"},{"internalType":"uint256","name":"leftVolume","type":"uint256"},{"internalType":"uint256","name":"rightVolume","type":"uint256"},{"internalType":"bool","name":"clubMember","type":"bool"},{"internalType":"uint256","name":"clubJoinTime","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"totalUsers","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"totalInvestments","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[{"internalType":"uint8","name":"_tier","type":"uint8"}],"name":"getPackageAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"registrationOpen","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"paused","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},
+            {"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"getDirectReferrals","outputs":[{"internalType":"address[]","name":"","type":"address[]"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}
+        ];
+
+        const USDT_ABI = [
+            {"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"}
+        ];
+
+        // Global variables
+        let provider = null;
+        let signer = null;
+        let contract = null;
+        let usdtContract = null;
+        let userAccount = null;
+
+        // Utility functions
+        function log(message, type = 'info', targetId = null) {
+            const timestamp = new Date().toLocaleTimeString();
+            const formattedMessage = `[${timestamp}] ${message}\n`;
+            
+            if (targetId) {
+                const element = document.getElementById(targetId);
+                if (element) {
+                    element.innerHTML += `<span class="${type}">${formattedMessage}</span>`;
+                    element.scrollTop = element.scrollHeight;
+                }
+            }
+            
+            console.log(`[${type}] ${message}`);
+        }
+
+        function clearResults(targetId) {
+            const element = document.getElementById(targetId);
+            if (element) element.innerHTML = '';
+        }
+
+        function formatUSDT(amount) {
+            return ethers.utils.formatUnits(amount, 18);
+        }
+
+        function parseUSDT(amount) {
+            return ethers.utils.parseUnits(amount.toString(), 18);
+        }
+
+        // Connection functions
+        async function connectWallet() {
+            clearResults('connectionResults');
+            log('Connecting to MetaMask...', 'info', 'connectionResults');
+            
+            try {
+                if (typeof window.ethereum === 'undefined') {
+                    throw new Error('MetaMask not found! Please install MetaMask.');
+                }
+
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                await provider.send("eth_requestAccounts", []);
+                signer = provider.getSigner();
+                userAccount = await signer.getAddress();
+                
+                contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+                usdtContract = new ethers.Contract(USDT_ADDRESS, USDT_ABI, signer);
+
+                document.getElementById('accountStatus').textContent = userAccount;
+                document.getElementById('connectionStatus').innerHTML = '✅ Connected';
+                
+                const network = await provider.getNetwork();
+                document.getElementById('networkStatus').textContent = `${network.name} (${network.chainId})`;
+                
+                log('✅ Successfully connected to MetaMask', 'success', 'connectionResults');
+                log(`Account: ${userAccount}`, 'info', 'connectionResults');
+                log(`Network: ${network.name} (Chain ID: ${network.chainId})`, 'info', 'connectionResults');
+                
+                if (network.chainId !== 56) {
+                    log('⚠️ Warning: Not connected to BSC Mainnet. Please switch networks.', 'warning', 'connectionResults');
+                }
+                
+                await refreshData();
+                
+            } catch (error) {
+                log(`❌ Connection failed: ${error.message}`, 'error', 'connectionResults');
+            }
+        }
+
+        async function switchToBSC() {
+            clearResults('connectionResults');
+            log('Switching to BSC Mainnet...', 'info', 'connectionResults');
+            
+            try {
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: BSC_MAINNET_CONFIG.chainId }],
+                });
+                
+                log('✅ Successfully switched to BSC Mainnet', 'success', 'connectionResults');
+                await connectWallet();
+                
+            } catch (switchError) {
+                if (switchError.code === 4902) {
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_addEthereumChain',
+                            params: [BSC_MAINNET_CONFIG],
+                        });
+                        log('✅ BSC Mainnet added and switched', 'success', 'connectionResults');
+                        await connectWallet();
+                    } catch (addError) {
+                        log(`❌ Failed to add BSC Mainnet: ${addError.message}`, 'error', 'connectionResults');
+                    }
+                } else {
+                    log(`❌ Failed to switch network: ${switchError.message}`, 'error', 'connectionResults');
+                }
+            }
+        }
+
+        async function refreshData() {
+            if (!contract) return;
+            
+            try {
+                // Update USDT balance
+                const usdtBalance = await usdtContract.balanceOf(userAccount);
+                document.getElementById('usdtBalance').textContent = `${formatUSDT(usdtBalance)} USDT`;
+                
+                // Update contract stats
+                const totalUsers = await contract.totalUsers();
+                document.getElementById('totalUsers').textContent = totalUsers.toString();
+                
+                const totalInvestments = await contract.totalInvestments();
+                document.getElementById('totalInvestments').textContent = `${formatUSDT(totalInvestments)} USDT`;
+                
+                const registrationOpen = await contract.registrationOpen();
+                document.getElementById('registrationOpen').textContent = registrationOpen ? '✅ Open' : '❌ Closed';
+                
+                const paused = await contract.paused();
+                document.getElementById('contractPaused').textContent = paused ? '⚠️ Paused' : '✅ Active';
+                
+            } catch (error) {
+                console.error('Error refreshing data:', error);
+            }
+        }
+
+        // User information functions
+        async function checkUserInfo() {
+            clearResults('userInfoResults');
+            const address = document.getElementById('userAddressInput').value || userAccount;
+            
+            if (!address) {
+                log('❌ Please provide a user address', 'error', 'userInfoResults');
+                return;
+            }
+            
+            log(`Checking user info for: ${address}`, 'info', 'userInfoResults');
+            
+            try {
+                const userInfo = await contract.users(address);
+                
+                log('📊 User Information:', 'info', 'userInfoResults');
+                log(`  • Registered: ${userInfo.isRegistered}`, 'info', 'userInfoResults');
+                log(`  • Sponsor: ${userInfo.sponsor}`, 'info', 'userInfoResults');
+                log(`  • Current Tier: ${userInfo.currentTier}`, 'info', 'userInfoResults');
+                log(`  • Total Investment: ${formatUSDT(userInfo.totalInvestment)} USDT`, 'info', 'userInfoResults');
+                log(`  • Total Earnings: ${formatUSDT(userInfo.totalEarnings)} USDT`, 'info', 'userInfoResults');
+                log(`  • Withdrawable Balance: ${formatUSDT(userInfo.withdrawableBalance)} USDT`, 'info', 'userInfoResults');
+                log(`  • Direct Referrals: ${userInfo.directReferrals}`, 'info', 'userInfoResults');
+                log(`  • Team Size: ${userInfo.teamSize}`, 'info', 'userInfoResults');
+                log(`  • Team Volume: ${formatUSDT(userInfo.teamVolume)} USDT`, 'info', 'userInfoResults');
+                log(`  • Rank: ${userInfo.rank}`, 'info', 'userInfoResults');
+                log(`  • Active: ${userInfo.isActive}`, 'info', 'userInfoResults');
+                log(`  • Blacklisted: ${userInfo.isBlacklisted}`, 'info', 'userInfoResults');
+                log(`  • Club Member: ${userInfo.clubMember}`, 'info', 'userInfoResults');
+                log(`  • Left Child: ${userInfo.leftChild}`, 'info', 'userInfoResults');
+                log(`  • Right Child: ${userInfo.rightChild}`, 'info', 'userInfoResults');
+                log(`  • Left Volume: ${formatUSDT(userInfo.leftVolume)} USDT`, 'info', 'userInfoResults');
+                log(`  • Right Volume: ${formatUSDT(userInfo.rightVolume)} USDT`, 'info', 'userInfoResults');
+                
+                if (userInfo.registrationTime.gt(0)) {
+                    const regDate = new Date(userInfo.registrationTime.toNumber() * 1000);
+                    log(`  • Registration Time: ${regDate.toLocaleString()}`, 'info', 'userInfoResults');
+                }
+                
+                if (userInfo.lastWithdrawal.gt(0)) {
+                    const lastWithdraw = new Date(userInfo.lastWithdrawal.toNumber() * 1000);
+                    log(`  • Last Withdrawal: ${lastWithdraw.toLocaleString()}`, 'info', 'userInfoResults');
+                }
+                
+            } catch (error) {
+                log(`❌ Error checking user info: ${error.message}`, 'error', 'userInfoResults');
+            }
+        }
+
+        async function checkMyInfo() {
+            document.getElementById('userAddressInput').value = userAccount || '';
+            await checkUserInfo();
+        }
+
+        // Registration functions
+        async function checkPackageAmount() {
+            clearResults('registrationResults');
+            const tier = document.getElementById('packageTier').value;
+            
+            log(`Checking package amount for tier ${tier}...`, 'info', 'registrationResults');
+            
+            try {
+                const amount = await contract.getPackageAmount(tier);
+                log(`💰 Tier ${tier} package amount: ${formatUSDT(amount)} USDT`, 'success', 'registrationResults');
+            } catch (error) {
+                log(`❌ Error checking package amount: ${error.message}`, 'error', 'registrationResults');
+            }
+        }
+
+        async function approveUSDT() {
+            clearResults('registrationResults');
+            const tier = document.getElementById('packageTier').value;
+            
+            log('Getting package amount for approval...', 'info', 'registrationResults');
+            
+            try {
+                const amount = await contract.getPackageAmount(tier);
+                log(`Approving ${formatUSDT(amount)} USDT for contract...`, 'info', 'registrationResults');
+                
+                const tx = await usdtContract.approve(CONTRACT_ADDRESS, amount);
+                log(`Transaction sent: ${tx.hash}`, 'info', 'registrationResults');
+                log('Waiting for confirmation...', 'warning', 'registrationResults');
+                
+                await tx.wait();
+                log('✅ USDT approval successful!', 'success', 'registrationResults');
+                
+                // Check allowance
+                const allowance = await usdtContract.allowance(userAccount, CONTRACT_ADDRESS);
+                log(`Current allowance: ${formatUSDT(allowance)} USDT`, 'info', 'registrationResults');
+                
+            } catch (error) {
+                log(`❌ Approval failed: ${error.message}`, 'error', 'registrationResults');
+            }
+        }
+
+        async function registerUser() {
+            clearResults('registrationResults');
+            const sponsor = document.getElementById('sponsorAddress').value || ethers.constants.AddressZero;
+            const tier = document.getElementById('packageTier').value;
+            
+            log(`Registering user with sponsor: ${sponsor}, tier: ${tier}`, 'info', 'registrationResults');
+            
+            try {
+                // Check if already registered
+                const userInfo = await contract.users(userAccount);
+                if (userInfo.isRegistered) {
+                    log('⚠️ Warning: User is already registered', 'warning', 'registrationResults');
+                    return;
+                }
+                
+                // Check allowance
+                const packageAmount = await contract.getPackageAmount(tier);
+                const allowance = await usdtContract.allowance(userAccount, CONTRACT_ADDRESS);
+                
+                if (allowance.lt(packageAmount)) {
+                    log('❌ Insufficient USDT allowance. Please approve first.', 'error', 'registrationResults');
+                    return;
+                }
+                
+                log('Sending registration transaction...', 'info', 'registrationResults');
+                const tx = await contract.register(sponsor, tier);
+                log(`Transaction sent: ${tx.hash}`, 'info', 'registrationResults');
+                log('Waiting for confirmation...', 'warning', 'registrationResults');
+                
+                const receipt = await tx.wait();
+                log('✅ Registration successful!', 'success', 'registrationResults');
+                log(`Gas used: ${receipt.gasUsed.toString()}`, 'info', 'registrationResults');
+                
+                // Refresh data
+                await refreshData();
+                await checkMyInfo();
+                
+            } catch (error) {
+                log(`❌ Registration failed: ${error.message}`, 'error', 'registrationResults');
+            }
+        }
+
+        // Financial functions
+        async function checkWithdrawableBalance() {
+            clearResults('financialResults');
+            
+            log('Checking withdrawable balance...', 'info', 'financialResults');
+            
+            try {
+                const userInfo = await contract.users(userAccount);
+                log(`💰 Withdrawable balance: ${formatUSDT(userInfo.withdrawableBalance)} USDT`, 'success', 'financialResults');
+                log(`📊 Total earnings: ${formatUSDT(userInfo.totalEarnings)} USDT`, 'info', 'financialResults');
+                
+                if (userInfo.withdrawableBalance.gt(0)) {
+                    log('✅ You have earnings available for withdrawal!', 'success', 'financialResults');
+                } else {
+                    log('ℹ️ No earnings available for withdrawal at this time.', 'info', 'financialResults');
+                }
+                
+            } catch (error) {
+                log(`❌ Error checking balance: ${error.message}`, 'error', 'financialResults');
+            }
+        }
+
+        async function performWithdrawal() {
+            clearResults('financialResults');
+            
+            log('Initiating withdrawal...', 'info', 'financialResults');
+            
+            try {
+                // Check withdrawable balance first
+                const userInfo = await contract.users(userAccount);
+                if (userInfo.withdrawableBalance.eq(0)) {
+                    log('❌ No funds available for withdrawal', 'error', 'financialResults');
+                    return;
+                }
+                
+                log(`Withdrawing ${formatUSDT(userInfo.withdrawableBalance)} USDT...`, 'info', 'financialResults');
+                
+                const tx = await contract.withdraw();
+                log(`Transaction sent: ${tx.hash}`, 'info', 'financialResults');
+                log('Waiting for confirmation...', 'warning', 'financialResults');
+                
+                const receipt = await tx.wait();
+                log('✅ Withdrawal successful!', 'success', 'financialResults');
+                log(`Gas used: ${receipt.gasUsed.toString()}`, 'info', 'financialResults');
+                
+                // Refresh data
+                await refreshData();
+                await checkMyInfo();
+                
+            } catch (error) {
+                log(`❌ Withdrawal failed: ${error.message}`, 'error', 'financialResults');
+            }
+        }
+
+        // Network functions
+        async function getDirectReferrals() {
+            clearResults('networkResults');
+            const address = document.getElementById('referralUserAddress').value || userAccount;
+            
+            if (!address) {
+                log('❌ Please provide a user address', 'error', 'networkResults');
+                return;
+            }
+            
+            log(`Getting direct referrals for: ${address}`, 'info', 'networkResults');
+            
+            try {
+                const referrals = await contract.getDirectReferrals(address);
+                log(`👥 Found ${referrals.length} direct referrals:`, 'success', 'networkResults');
+                
+                if (referrals.length === 0) {
+                    log('ℹ️ No direct referrals found.', 'info', 'networkResults');
+                } else {
+                    referrals.forEach((referral, index) => {
+                        log(`  ${index + 1}. ${referral}`, 'info', 'networkResults');
+                    });
+                }
+                
+            } catch (error) {
+                log(`❌ Error getting referrals: ${error.message}`, 'error', 'networkResults');
+            }
+        }
+
+        async function checkTeamData() {
+            clearResults('networkResults');
+            const address = document.getElementById('referralUserAddress').value || userAccount;
+            
+            if (!address) {
+                log('❌ Please provide a user address', 'error', 'networkResults');
+                return;
+            }
+            
+            log(`Checking team data for: ${address}`, 'info', 'networkResults');
+            
+            try {
+                const userInfo = await contract.users(address);
+                const referrals = await contract.getDirectReferrals(address);
+                
+                log('🌐 Team Information:', 'info', 'networkResults');
+                log(`  • Direct Referrals: ${userInfo.directReferrals}`, 'info', 'networkResults');
+                log(`  • Total Team Size: ${userInfo.teamSize}`, 'info', 'networkResults');
+                log(`  • Team Volume: ${formatUSDT(userInfo.teamVolume)} USDT`, 'info', 'networkResults');
+                log(`  • Left Volume: ${formatUSDT(userInfo.leftVolume)} USDT`, 'info', 'networkResults');
+                log(`  • Right Volume: ${formatUSDT(userInfo.rightVolume)} USDT`, 'info', 'networkResults');
+                log(`  • Left Child: ${userInfo.leftChild}`, 'info', 'networkResults');
+                log(`  • Right Child: ${userInfo.rightChild}`, 'info', 'networkResults');
+                
+                if (referrals.length > 0) {
+                    log('\n📋 Direct Referrals List:', 'info', 'networkResults');
+                    referrals.forEach((referral, index) => {
+                        log(`  ${index + 1}. ${referral}`, 'info', 'networkResults');
+                    });
+                }
+                
+            } catch (error) {
+                log(`❌ Error checking team data: ${error.message}`, 'error', 'networkResults');
+            }
+        }
+
+        // Admin functions
+        async function checkContractState() {
+            clearResults('adminResults');
+            
+            log('Checking contract state...', 'info', 'adminResults');
+            
+            try {
+                const registrationOpen = await contract.registrationOpen();
+                const paused = await contract.paused();
+                const totalUsers = await contract.totalUsers();
+                const totalInvestments = await contract.totalInvestments();
+                
+                log('🔧 Contract State:', 'info', 'adminResults');
+                log(`  • Registration Open: ${registrationOpen ? '✅ Yes' : '❌ No'}`, 'info', 'adminResults');
+                log(`  • Contract Paused: ${paused ? '⚠️ Yes' : '✅ No'}`, 'info', 'adminResults');
+                log(`  • Total Users: ${totalUsers.toString()}`, 'info', 'adminResults');
+                log(`  • Total Investments: ${formatUSDT(totalInvestments)} USDT`, 'info', 'adminResults');
+                
+            } catch (error) {
+                log(`❌ Error checking contract state: ${error.message}`, 'error', 'adminResults');
+            }
+        }
+
+        async function checkOwnership() {
+            clearResults('adminResults');
+            
+            log('Checking contract ownership...', 'info', 'adminResults');
+            
+            try {
+                const owner = await contract.owner();
+                log(`👑 Contract Owner: ${owner}`, 'info', 'adminResults');
+                log(`🔑 Your Address: ${userAccount}`, 'info', 'adminResults');
+                
+                if (owner.toLowerCase() === userAccount.toLowerCase()) {
+                    log('✅ You are the contract owner!', 'success', 'adminResults');
+                } else {
+                    log('ℹ️ You are not the contract owner.', 'info', 'adminResults');
+                }
+                
+            } catch (error) {
+                log(`❌ Error checking ownership: ${error.message}`, 'error', 'adminResults');
+            }
+        }
+
+        async function checkRegistrationStatus() {
+            clearResults('adminResults');
+            
+            log('Checking registration status...', 'info', 'adminResults');
+            
+            try {
+                const registrationOpen = await contract.registrationOpen();
+                log(`📝 Registration Status: ${registrationOpen ? '✅ OPEN' : '❌ CLOSED'}`, registrationOpen ? 'success' : 'error', 'adminResults');
+                
+                if (!registrationOpen) {
+                    log('⚠️ New user registrations are currently disabled.', 'warning', 'adminResults');
+                }
+                
+            } catch (error) {
+                log(`❌ Error checking registration status: ${error.message}`, 'error', 'adminResults');
+            }
+        }
+
+        // Test suites
+        async function runBasicTests() {
+            clearResults('testSuiteResults');
+            
+            log('🧪 Running Basic Function Tests...', 'info', 'testSuiteResults');
+            
+            try {
+                // Test 1: Check contract connection
+                log('\n1️⃣ Testing contract connection...', 'info', 'testSuiteResults');
+                const totalUsers = await contract.totalUsers();
+                log(`✅ Contract connected. Total users: ${totalUsers}`, 'success', 'testSuiteResults');
+                
+                // Test 2: Check USDT connection
+                log('\n2️⃣ Testing USDT contract...', 'info', 'testSuiteResults');
+                const usdtBalance = await usdtContract.balanceOf(userAccount);
+                log(`✅ USDT contract connected. Your balance: ${formatUSDT(usdtBalance)} USDT`, 'success', 'testSuiteResults');
+                
+                // Test 3: Check user info
+                log('\n3️⃣ Testing user info retrieval...', 'info', 'testSuiteResults');
+                const userInfo = await contract.users(userAccount);
+                log(`✅ User info retrieved. Registered: ${userInfo.isRegistered}`, 'success', 'testSuiteResults');
+                
+                // Test 4: Check package amounts
+                log('\n4️⃣ Testing package amounts...', 'info', 'testSuiteResults');
+                for (let tier = 1; tier <= 8; tier++) {
+                    const amount = await contract.getPackageAmount(tier);
+                    log(`  Tier ${tier}: ${formatUSDT(amount)} USDT`, 'info', 'testSuiteResults');
+                }
+                
+                // Test 5: Check contract state
+                log('\n5️⃣ Testing contract state...', 'info', 'testSuiteResults');
+                const registrationOpen = await contract.registrationOpen();
+                const paused = await contract.paused();
+                log(`✅ Registration open: ${registrationOpen}, Paused: ${paused}`, 'success', 'testSuiteResults');
+                
+                log('\n🎉 All basic tests completed successfully!', 'success', 'testSuiteResults');
+                
+            } catch (error) {
+                log(`❌ Basic tests failed: ${error.message}`, 'error', 'testSuiteResults');
+            }
+        }
+
+        async function runComprehensiveTests() {
+            clearResults('testSuiteResults');
+            
+            log('🔬 Running Comprehensive Tests...', 'info', 'testSuiteResults');
+            
+            try {
+                await runBasicTests();
+                
+                log('\n\n📊 Additional Comprehensive Checks:', 'info', 'testSuiteResults');
+                
+                // Test allowances
+                log('\n6️⃣ Checking USDT allowances...', 'info', 'testSuiteResults');
+                const allowance = await usdtContract.allowance(userAccount, CONTRACT_ADDRESS);
+                log(`Current allowance: ${formatUSDT(allowance)} USDT`, 'info', 'testSuiteResults');
+                
+                // Test referrals
+                log('\n7️⃣ Checking referral system...', 'info', 'testSuiteResults');
+                const referrals = await contract.getDirectReferrals(userAccount);
+                log(`Direct referrals: ${referrals.length}`, 'info', 'testSuiteResults');
+                
+                // Test ownership
+                log('\n8️⃣ Checking ownership...', 'info', 'testSuiteResults');
+                const owner = await contract.owner();
+                log(`Contract owner: ${owner}`, 'info', 'testSuiteResults');
+                
+                log('\n🚀 Comprehensive testing completed!', 'success', 'testSuiteResults');
+                
+            } catch (error) {
+                log(`❌ Comprehensive tests failed: ${error.message}`, 'error', 'testSuiteResults');
+            }
+        }
+
+        async function simulateUserJourney() {
+            clearResults('testSuiteResults');
+            
+            log('🎯 Simulating Complete User Journey...', 'info', 'testSuiteResults');
+            
+            try {
+                // Step 1: Check if user is registered
+                log('\n1️⃣ Checking registration status...', 'info', 'testSuiteResults');
+                const userInfo = await contract.users(userAccount);
+                
+                if (!userInfo.isRegistered) {
+                    log('❌ User not registered. Registration simulation would require:', 'warning', 'testSuiteResults');
+                    log('  • USDT approval', 'info', 'testSuiteResults');
+                    log('  • Valid sponsor address', 'info', 'testSuiteResults');
+                    log('  • Package tier selection', 'info', 'testSuiteResults');
+                    log('  • Registration transaction', 'info', 'testSuiteResults');
+                } else {
+                    log('✅ User is registered! Continuing journey...', 'success', 'testSuiteResults');
+                    
+                    // Step 2: Check earnings
+                    log('\n2️⃣ Checking earnings and withdrawable balance...', 'info', 'testSuiteResults');
+                    log(`  • Total earnings: ${formatUSDT(userInfo.totalEarnings)} USDT`, 'info', 'testSuiteResults');
+                    log(`  • Withdrawable: ${formatUSDT(userInfo.withdrawableBalance)} USDT`, 'info', 'testSuiteResults');
+                    
+                    // Step 3: Check team
+                    log('\n3️⃣ Checking team performance...', 'info', 'testSuiteResults');
+                    log(`  • Direct referrals: ${userInfo.directReferrals}`, 'info', 'testSuiteResults');
+                    log(`  • Team size: ${userInfo.teamSize}`, 'info', 'testSuiteResults');
+                    log(`  • Team volume: ${formatUSDT(userInfo.teamVolume)} USDT`, 'info', 'testSuiteResults');
+                    
+                    // Step 4: Check binary tree
+                    log('\n4️⃣ Checking binary tree position...', 'info', 'testSuiteResults');
+                    log(`  • Left child: ${userInfo.leftChild}`, 'info', 'testSuiteResults');
+                    log(`  • Right child: ${userInfo.rightChild}`, 'info', 'testSuiteResults');
+                    log(`  • Left volume: ${formatUSDT(userInfo.leftVolume)} USDT`, 'info', 'testSuiteResults');
+                    log(`  • Right volume: ${formatUSDT(userInfo.rightVolume)} USDT`, 'info', 'testSuiteResults');
+                    
+                    // Step 5: Test withdrawal capability
+                    log('\n5️⃣ Testing withdrawal readiness...', 'info', 'testSuiteResults');
+                    if (userInfo.withdrawableBalance.gt(0)) {
+                        log('✅ Funds available for withdrawal!', 'success', 'testSuiteResults');
+                        log('ℹ️ Use the withdrawal function to claim earnings', 'info', 'testSuiteResults');
+                    } else {
+                        log('ℹ️ No funds currently available for withdrawal', 'info', 'testSuiteResults');
+                    }
+                }
+                
+                log('\n🎉 User journey simulation completed!', 'success', 'testSuiteResults');
+                
+            } catch (error) {
+                log(`❌ User journey simulation failed: ${error.message}`, 'error', 'testSuiteResults');
+            }
+        }
+
+        // Initialize dashboard on load
+        window.addEventListener('load', function() {
+            log('Dashboard loaded. Please connect your wallet to begin testing.', 'info', 'connectionResults');
+        });
+    </script>
+</body>
+</html>

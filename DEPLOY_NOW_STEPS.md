@@ -15,6 +15,9 @@ This deployment creates a **COMPLETELY NEW** OrphiCrowdFund contract with:
 
 ---
 
+> [!WARNING]
+> **Deprecation Notice:** All deployments must use `OrphiCrowdFund.sol` only. `OrphiCrowdFundSimplified.sol` is deprecated and should not be used for any new deployments or upgrades.
+
 ## 🎯 **IMMEDIATE NEXT STEPS**
 
 ### **STEP 1: Open Trezor Suite Web**
@@ -63,18 +66,18 @@ Explorer: https://testnet.bscscan.com
 
 ---
 
-## 🔧 **IF TREZOR SUITE WEB DOESN'T SUPPORT CONTRACT DEPLOYMENT**
+## 🚀 Post-Deployment: Secure Ownership and Role Transfer
 
-### **Alternative: Use Remix IDE + Trezor**
-1. **Go to:** https://remix.ethereum.org/
-2. **Connect** Trezor via "Injected Provider"
-3. **Deploy** contract using Remix interface
-4. **Sign** all transactions with Trezor
+After deploying with the temporary MetaMask wallet, immediately run:
 
-### **Files You Need:**
-- **Contract Bytecode:** In `/public/contract-data.js`
-- **Contract ABI:** In `/public/contract-data.js`
-- **Deployment Guide:** `/AUTHENTIC_TREZOR_SUITE_DEPLOYMENT_GUIDE.md`
+```sh
+CONTRACT_ADDRESS=<deployed_contract_address> npx hardhat run scripts/transfer-ownership-and-roles.cjs --network bsc_testnet
+```
+
+- This will transfer all contract ownership and admin roles to your Trezor wallet (0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29).
+- The deployer will have no remaining permissions.
+- Verify on BSCScan and via script output that only your Trezor wallet has admin rights.
+- Discard the temporary MetaMask private key after this step.
 
 ---
 
@@ -93,4 +96,4 @@ Explorer: https://testnet.bscscan.com
 - **Full Guide:** Read `/AUTHENTIC_TREZOR_SUITE_DEPLOYMENT_GUIDE.md`
 - **Checklist:** Follow `/TREZOR_DEPLOYMENT_CHECKLIST.md`
 
-**🔐 REMEMBER:** Only use authentic Trezor Suite Web or Remix with Trezor injection. No third-party tools!
+**🔐 REMEMBER:** Only use authentic Trezor Suite Web. No third-party tools!

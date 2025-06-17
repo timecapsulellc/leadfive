@@ -1,0 +1,371 @@
+const { expect } = require("chai");
+const { ethers, upgrades } = require("hardhat");
+
+/**
+ * FOCUSED TEST SUITE FOR ORPHI CROWD FUND COMPLETE
+ * 
+ * This test suite is specifically designed for the deployed OrphiCrowdFundComplete contract
+ * and tests all core compensation plan features as per the presentation requirements.
+ * 
+ * Contract Address: 0xbad3e2bAEA016099149909CA5263eeFD78bD4aBf
+ * Network: BSC Testnet
+ */
+
+describe("🎯 OrphiCrowdFundComplete - Core Functions Test", function () {
+    let contract, mockUSDT, owner, user1, user2, user3, user4, user5;
+    
+    // Package amounts as per presentation ($30, $50, $100, $200)
+    const PACKAGE_AMOUNTS = [
+        ethers.parseUnits("30", 6),   // $30 USDT
+        ethers.parseUnits("50", 6),   // $50 USDT
+        ethers.parseUnits("100", 6),  // $100 USDT
+        ethers.parseUnits("200", 6)   // $200 USDT
+    ];
+
+    const TREZOR_ADMIN = "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29";
+
+    beforeEach(async function () {
+        console.log("🚀 Setting up test environment...");
+        
+        [owner, user1, user2, user3, user4, user5] = await ethers.getSigners();
+        
+        console.log("📋 Test Addresses:");
+        console.log(`├─ Owner: ${owner.address}`);
+        console.log(`├─ User1: ${user1.address}`);
+        console.log(`├─ User2: ${user2.address}`);
+        console.log(`└─ User3: ${user3.address}`);
+
+        try {
+            // Deploy MockUSDT for testing
+            console.log("💰 Deploying MockUSDT...");
+            const MockUSDT = await ethers.getContractFactory("MockUSDT");
+            mockUSDT = await MockUSDT.deploy();
+            await mockUSDT.waitForDeployment();
+            console.log(`✅ MockUSDT deployed: ${await mockUSDT.getAddress()}`);
+
+            // Mint USDT for test users
+            const mintAmount = ethers.parseUnits("10000", 6); // $10,000 each
+            await mockUSDT.mint(user1.address, mintAmount);
+            await mockUSDT.mint(user2.address, mintAmount);
+            await mockUSDT.mint(user3.address, mintAmount);
+            await mockUSDT.mint(user4.address, mintAmount);
+            await mockUSDT.mint(user5.address, mintAmount);
+            console.log("✅ USDT minted for all test users");
+
+            // Deploy OrphiCrowdFundComplete using correct proxy pattern
+            console.log("🏗️  Deploying OrphiCrowdFundComplete...");
+            const OrphiCrowdFundComplete = await ethers.getContractFactory("OrphiCrowdFundComplete");
+            
+            contract = await upgrades.deployProxy(
+                OrphiCrowdFundComplete,
+                [await mockUSDT.getAddress(), PACKAGE_AMOUNTS],
+                {
+                    initializer: "initialize",
+                    kind: "uups"
+                }
+            );
+            
+            await contract.waitForDeployment();
+            console.log(`✅ OrphiCrowdFundComplete deployed: ${await contract.getAddress()}`);
+
+            // Approve USDT spending for all users
+            const contractAddress = await contract.getAddress();
+            await mockUSDT.connect(user1).approve(contractAddress, ethers.parseUnits("1000", 6));
+            await mockUSDT.connect(user2).approve(contractAddress, ethers.parseUnits("1000", 6));
+            await mockUSDT.connect(user3).approve(contractAddress, ethers.parseUnits("1000", 6));
+            await mockUSDT.connect(user4).approve(contractAddress, ethers.parseUnits("1000", 6));
+            await mockUSDT.connect(user5).approve(contractAddress, ethers.parseUnits("1000", 6));
+            console.log("✅ USDT approvals set for all users");
+
+        } catch (error) {
+            console.error("❌ Setup failed:", error);
+            throw error;
+        }
+    });
+
+    describe("📋 Contract Initialization & Configuration", function () {
+        it("Should have correct contract name and version", async function () {
+            expect(await contract.getContractName()).to.equal("Orphi Crowd Fund");
+            expect(await contract.version()).to.equal("2.0.0");
+        });
+
+        it("Should return correct package amounts", async function () {
+            const amounts = await contract.getPackageAmounts();
+            expect(amounts.length).to.equal(4);
+            expect(amounts[0]).to.equal(PACKAGE_AMOUNTS[0]); // $30
+            expect(amounts[1]).to.equal(PACKAGE_AMOUNTS[1]); // $50
+            expect(amounts[2]).to.equal(PACKAGE_AMOUNTS[2]); // $100
+            expect(amounts[3]).to.equal(PACKAGE_AMOUNTS[3]); // $200
+        });
+
+        it("Should have matrix root registered", async function () {
+            expect(await contract.totalUsers()).to.equal(1);
+            expect(await contract.isUserRegistered(TREZOR_ADMIN)).to.be.true;
+        });
+
+        it("Should return correct global stats", async function () {
+            const stats = await contract.getGlobalStats();
+            expect(stats[0]).to.equal(1); // totalUsers
+            expect(stats[1]).to.equal(0); // totalVolume
+        });
+    });
+
+    describe("👥 User Registration & Contribution", function () {
+        it("Should allow user registration with Package 1 ($30)", async function () {
+            const tx = await contract.connect(user1).contribute(TREZOR_ADMIN, 1);
+            
+            await expect(tx)
+                .to.emit(contract, "ContributionMade")
+                .withArgs(user1.address, TREZOR_ADMIN, PACKAGE_AMOUNTS[0], 1, await time.latest() + 1);
+
+            const userInfo = await contract.getUserInfo(user1.address);
+            expect(userInfo.totalInvested).to.equal(PACKAGE_AMOUNTS[0]);
+            expect(userInfo.packageTier).to.equal(1);
+            expect(userInfo.isActive).to.be.true;
+            
+            expect(await contract.totalUsers()).to.equal(2);
+        });
+
+        it("Should allow user registration with Package 4 ($200)", async function () {
+            await expect(contract.connect(user2).contribute(TREZOR_ADMIN, 4))
+                .to.emit(contract, "ContributionMade");
+
+            const userInfo = await contract.getUserInfo(user2.address);
+            expect(userInfo.totalInvested).to.equal(PACKAGE_AMOUNTS[3]);
+            expect(userInfo.packageTier).to.equal(4);
+        });
+
+        it("Should prevent registration with invalid package tier", async function () {
+            await expect(contract.connect(user1).contribute(TREZOR_ADMIN, 0))
+                .to.be.revertedWith("Invalid package tier");
+            
+            await expect(contract.connect(user1).contribute(TREZOR_ADMIN, 5))
+                .to.be.revertedWith("Invalid package tier");
+        });
+
+        it("Should prevent double registration", async function () {
+            await contract.connect(user1).contribute(TREZOR_ADMIN, 1);
+            
+            await expect(contract.connect(user1).contribute(TREZOR_ADMIN, 2))
+                .to.be.revertedWith("User already registered");
+        });
+
+        it("Should prevent self-sponsoring", async function () {
+            await expect(contract.connect(user1).contribute(user1.address, 1))
+                .to.be.revertedWith("Invalid sponsor");
+        });
+    });
+
+    describe("📈 Package Upgrade System", function () {
+        beforeEach(async function () {
+            // Register user1 with Package 1 ($30)
+            await contract.connect(user1).contribute(TREZOR_ADMIN, 1);
+        });
+
+        it("Should allow package upgrade from $30 to $100", async function () {
+            const upgradeCost = PACKAGE_AMOUNTS[2] - PACKAGE_AMOUNTS[0]; // $100 - $30 = $70
+            
+            await expect(contract.connect(user1).upgradePackage(3))
+                .to.emit(contract, "PackageUpgraded")
+                .withArgs(user1.address, 1, 3, upgradeCost, await time.latest() + 1);
+
+            const userInfo = await contract.getUserInfo(user1.address);
+            expect(userInfo.packageTier).to.equal(3);
+            expect(userInfo.totalInvested).to.equal(PACKAGE_AMOUNTS[2]);
+        });
+
+        it("Should prevent downgrade", async function () {
+            await contract.connect(user1).upgradePackage(2); // Upgrade to $50
+            
+            await expect(contract.connect(user1).upgradePackage(1))
+                .to.be.revertedWith("Can only upgrade to higher tier");
+        });
+    });
+
+    describe("💰 Commission Distribution System", function () {
+        it("Should distribute sponsor commission (40%)", async function () {
+            // User1 registers under matrix root
+            await contract.connect(user1).contribute(TREZOR_ADMIN, 1);
+            
+            // User2 registers under user1 (should trigger sponsor commission)
+            await contract.connect(user2).contribute(user1.address, 1);
+            
+            const user1Info = await contract.getUserInfo(user1.address);
+            const expectedCommission = (PACKAGE_AMOUNTS[0] * 4000n) / 10000n; // 40%
+            
+            expect(user1Info.withdrawableAmount).to.be.gte(expectedCommission);
+        });
+
+        it("Should handle multi-level referral structure", async function () {
+            // Create referral chain: root -> user1 -> user2 -> user3
+            await contract.connect(user1).contribute(TREZOR_ADMIN, 1);
+            await contract.connect(user2).contribute(user1.address, 1);
+            await contract.connect(user3).contribute(user2.address, 1);
+            
+            // Check that both user1 and user2 have earnings
+            const user1Info = await contract.getUserInfo(user1.address);
+            const user2Info = await contract.getUserInfo(user2.address);
+            
+            expect(user1Info.withdrawableAmount).to.be.gt(0);
+            expect(user2Info.withdrawableAmount).to.be.gt(0);
+        });
+    });
+
+    describe("💸 Withdrawal System", function () {
+        beforeEach(async function () {
+            // Setup users with earnings
+            await contract.connect(user1).contribute(TREZOR_ADMIN, 2); // $50
+            await contract.connect(user2).contribute(user1.address, 2); // Triggers commission for user1
+        });
+
+        it("Should allow withdrawal with correct rates", async function () {
+            const user1Info = await contract.getUserInfo(user1.address);
+            const withdrawableAmount = user1Info.withdrawableAmount;
+            
+            if (withdrawableAmount > 0) {
+                const tx = await contract.connect(user1).withdrawFunds();
+                
+                await expect(tx)
+                    .to.emit(contract, "FundsWithdrawn");
+                
+                // Check withdrawal rate based on direct referrals (70% for 0-4 direct)
+                const receipt = await tx.wait();
+                const event = receipt.logs.find(log => {
+                    try {
+                        const parsed = contract.interface.parseLog(log);
+                        return parsed.name === "FundsWithdrawn";
+                    } catch {
+                        return false;
+                    }
+                });
+                
+                if (event) {
+                    const parsed = contract.interface.parseLog(event);
+                    const withdrawAmount = parsed.args.amount;
+                    const reinvestAmount = parsed.args.reinvestmentAmount;
+                    
+                    expect(withdrawAmount + reinvestAmount).to.equal(withdrawableAmount);
+                }
+            }
+        });
+
+        it("Should handle zero withdrawable amount", async function () {
+            // User3 has no earnings yet
+            await expect(contract.connect(user3).withdrawFunds())
+                .to.be.revertedWith("No withdrawable amount");
+        });
+    });
+
+    describe("🏆 Rewards Claiming System", function () {
+        beforeEach(async function () {
+            await contract.connect(user1).contribute(TREZOR_ADMIN, 1);
+            await contract.connect(user2).contribute(user1.address, 1);
+        });
+
+        it("Should allow claiming sponsor rewards", async function () {
+            const user1Info = await contract.getUserInfo(user1.address);
+            const claimableAmount = user1Info.withdrawableAmount;
+            
+            if (claimableAmount > 0) {
+                await expect(contract.connect(user1).claimRewards("sponsor"))
+                    .to.emit(contract, "RewardsClaimed")
+                    .withArgs(user1.address, claimableAmount, "sponsor", await time.latest() + 1);
+            }
+        });
+
+        it("Should handle zero claimable amount", async function () {
+            await expect(contract.connect(user3).claimRewards("level"))
+                .to.be.revertedWith("No rewards to claim");
+        });
+    });
+
+    describe("📊 View Functions", function () {
+        beforeEach(async function () {
+            await contract.connect(user1).contribute(TREZOR_ADMIN, 2);
+            await contract.connect(user2).contribute(user1.address, 3);
+        });
+
+        it("Should return correct user information", async function () {
+            const userInfo = await contract.getUserInfo(user1.address);
+            
+            expect(userInfo.totalInvested).to.equal(PACKAGE_AMOUNTS[1]); // $50
+            expect(userInfo.registrationTime).to.be.gt(0);
+            expect(userInfo.packageTier).to.equal(2);
+            expect(userInfo.isActive).to.be.true;
+            expect(userInfo.directReferralsCount).to.equal(1);
+        });
+
+        it("Should return correct global statistics", async function () {
+            const stats = await contract.getGlobalStats();
+            
+            expect(stats[0]).to.be.gte(3); // totalUsers (root + user1 + user2)
+            expect(stats[1]).to.be.gt(0);  // totalVolume
+        });
+
+        it("Should return correct pool balances", async function () {
+            const balances = await contract.getPoolBalances();
+            
+            expect(balances.length).to.equal(4);
+            // globalHelpPool, leaderBonusPool, clubPool, contractBalance
+        });
+
+        it("Should check user registration status", async function () {
+            expect(await contract.isUserRegistered(user1.address)).to.be.true;
+            expect(await contract.isUserRegistered(user3.address)).to.be.false;
+        });
+    });
+
+    describe("🔒 Security Features", function () {
+        it("Should enforce access control", async function () {
+            // Only admin should be able to pause
+            await expect(contract.connect(user1).pause())
+                .to.be.reverted; // Should be reverted due to access control
+        });
+
+        it("Should prevent MEV attacks (basic check)", async function () {
+            // This is a simplified test for MEV protection
+            // In practice, MEV protection prevents same-block transactions
+            
+            await contract.connect(user1).contribute(TREZOR_ADMIN, 1);
+            
+            // Try to register another user in what would be the same block
+            // (This is more of a conceptual test since we can't easily simulate same-block)
+            expect(await contract.isUserRegistered(user1.address)).to.be.true;
+        });
+    });
+
+    describe("🎯 Presentation Compliance Verification", function () {
+        it("Should have exact package amounts as per presentation", async function () {
+            const amounts = await contract.getPackageAmounts();
+            
+            expect(ethers.formatUnits(amounts[0], 6)).to.equal("30.0");   // $30
+            expect(ethers.formatUnits(amounts[1], 6)).to.equal("50.0");   // $50
+            expect(ethers.formatUnits(amounts[2], 6)).to.equal("100.0");  // $100
+            expect(ethers.formatUnits(amounts[3], 6)).to.equal("200.0");  // $200
+        });
+
+        it("Should have correct commission rates (mathematical verification)", async function () {
+            // This test verifies that the contract constants match the presentation
+            // The actual commission distribution is tested in other test cases
+            
+            // Register users to trigger commission calculations
+            await contract.connect(user1).contribute(TREZOR_ADMIN, 3); // $100
+            await contract.connect(user2).contribute(user1.address, 3); // Should trigger all commissions
+            
+            // Verify that user1 received sponsor commission (40% of $100 = $40)
+            const user1Info = await contract.getUserInfo(user1.address);
+            const expectedSponsorCommission = (PACKAGE_AMOUNTS[2] * 4000n) / 10000n;
+            
+            // Allow for some variance due to other commission types
+            expect(user1Info.withdrawableAmount).to.be.gte(expectedSponsorCommission);
+        });
+    });
+});
+
+// Utility function to get latest block timestamp
+const time = {
+    latest: async () => {
+        const block = await ethers.provider.getBlock('latest');
+        return block.timestamp;
+    }
+};

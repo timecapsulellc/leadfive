@@ -1,0 +1,46 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "CoreLogic",
+  "sourceName": "contracts/CoreLogic.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "AlreadyRegistered",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InactivePackage",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidReferrer",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "InvalidTier",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "NoWithdrawableAmount",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "TransferFailed",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "UserDoesNotExist",
+      "type": "error"
+    }
+  ],
+  "bytecode": "0x6080806040523460175760119081601d823930815050f35b600080fdfe600080fdfea164736f6c6343000816000a",
+  "deployedBytecode": "0x600080fdfea164736f6c6343000816000a",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

@@ -46,10 +46,6 @@ show_menu() {
     echo "   - Generate raw transactions for manual signing"
     echo "   - Use with Trezor Suite or MetaMask"
     echo ""
-    echo -e "${YELLOW}4.${NC} ${GREEN}Remix IDE with Trezor${NC}"
-    echo "   - Deploy through Remix using Trezor"
-    echo "   - Browser-based development environment"
-    echo ""
     echo -e "${YELLOW}5.${NC} ${BLUE}Check Wallet Balance${NC}"
     echo "   - Verify Trezor wallet has sufficient BNB"
     echo ""
@@ -129,29 +125,6 @@ method_3_manual_transactions() {
         echo "2. Copy each transaction data"
         echo "3. Use Trezor Suite to create and sign transactions"
         echo "4. Broadcast transactions in order"
-    fi
-}
-
-method_4_remix_ide() {
-    echo -e "${GREEN}🎛️  Remix IDE with Trezor${NC}"
-    echo "================================"
-    echo ""
-    echo "Deploy through Remix IDE with Trezor integration."
-    echo ""
-    echo -e "${YELLOW}📋 Steps:${NC}"
-    echo "1. Open Remix IDE"
-    echo "2. Upload contract files"
-    echo "3. Connect to Trezor via WalletConnect"
-    echo "4. Deploy contracts"
-    echo ""
-    echo -e "${BLUE}🔗 Useful links:${NC}"
-    echo "• Remix IDE: https://remix.ethereum.org"
-    echo "• Trezor WalletConnect guide: https://wiki.trezor.io/Apps:WalletConnect"
-    echo ""
-    
-    read -p "Open Remix IDE? (y/N): " choice
-    if [[ "$choice" =~ ^[Yy]$ ]]; then
-        open "https://remix.ethereum.org" 2>/dev/null || echo "Please manually open: https://remix.ethereum.org"
     fi
 }
 
@@ -244,9 +217,6 @@ main() {
                 ;;
             3)
                 method_3_manual_transactions
-                ;;
-            4)
-                method_4_remix_ide
                 ;;
             5)
                 check_wallet_balance

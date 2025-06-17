@@ -77,7 +77,6 @@
   1. Check private key configuration in `.env`
   2. Try different RPC endpoint
   3. Use MetaMask/hardware wallet deployment
-  4. Manual deployment via Remix IDE
 
 #### **Option 3: Local Testing First (🧪 DEVELOPMENT)**
 - Deploy on local Hardhat network
@@ -163,7 +162,6 @@ curl -X POST https://data-seed-prebsc-1-s1.binance.org:8545/ \
 ```
 
 3. **Alternative Deployment Methods:**
-   - Use Remix IDE with MetaMask
    - Use Hardhat with hardware wallet
    - Use different RPC endpoint
 

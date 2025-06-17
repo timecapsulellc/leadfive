@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Contract Ownership - Trezor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+        }
+        .important {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+            color: #856404;
+        }
+        .success {
+            background: #d1e7dd;
+            border-left-color: #198754;
+            color: #0f5132;
+        }
+        .code {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+        }
+    </style>
+    <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Transfer Contract Ownership</h1>
+        
+        <div class="step important">
+            <h3>⚠️ Important Information</h3>
+            <p><strong>Current Contract Owner (Your Trezor):</strong></p>
+            <div class="code">0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29</div>
+            
+            <p><strong>New Owner (Admin Account):</strong></p>
+            <div class="code">0xD29ef4aE187AB9E07B7E0839CF64508A3D70A229</div>
+            
+            <p><strong>Contract Address:</strong></p>
+            <div class="code">0x4Db5C5C94e0e6eA5553f8432ca1D121DE350B732</div>
+        </div>
+
+        <div class="step">
+            <h3>📋 Steps to Transfer Ownership</h3>
+            <ol>
+                <li>Connect your Trezor wallet to MetaMask</li>
+                <li>Make sure you're on BSC Mainnet (Chain ID: 56)</li>
+                <li>Click "Connect Wallet" below</li>
+                <li>Verify the addresses match your Trezor</li>
+                <li>Click "Transfer Ownership"</li>
+                <li>Confirm the transaction on your Trezor device</li>
+            </ol>
+        </div>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <button id="connectBtn" onclick="connectWallet()">🔗 Connect Wallet</button>
+            <button id="transferBtn" onclick="transferOwnership()" style="display: none;">🔄 Transfer Ownership</button>
+            <button id="debugBtn" onclick="debugConnection()" style="margin-left: 10px;">🔍 Debug Connection</button>
+        </div>
+
+        <div id="status" class="status" style="display: none;"></div>
+        <div id="debug" class="status" style="display: none; margin-top: 10px; font-family: monospace; font-size: 12px;"></div>
+    </div>
+
+    <script>
+        const CONTRACT_ADDRESS = "0x4Db5C5C94e0e6eA5553f8432ca1D121DE350B732";
+        const NEW_OWNER = "0xD29ef4aE187AB9E07B7E0839CF64508A3D70A229";
+        const CONTRACT_ABI = [
+            "function owner() view returns (address)",
+            "function transferOwnership(address newOwner) external"
+        ];
+
+        let provider;
+        let signer;
+        let contract;
+
+        async function debugConnection() {
+            const debugDiv = document.getElementById("debug");
+            debugDiv.style.display = "block";
+            debugDiv.style.background = "#f8f9fa";
+            debugDiv.style.color = "#333";
+            
+            let debugInfo = "🔍 Debug Information:\n";
+            debugInfo += `- window.ethereum exists: ${typeof window.ethereum !== 'undefined'}\n`;
+            debugInfo += `- ethers library loaded: ${typeof ethers !== 'undefined'}\n`;
+            
+            if (typeof window.ethereum !== 'undefined') {
+                debugInfo += `- MetaMask installed: ${window.ethereum.isMetaMask}\n`;
+                debugInfo += `- Connected: ${window.ethereum.isConnected()}\n`;
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                    debugInfo += `- Current accounts: ${accounts.length > 0 ? accounts[0] : 'None'}\n`;
+                } catch (e) {
+                    debugInfo += `- Error getting accounts: ${e.message}\n`;
+                }
+            }
+            
+            debugDiv.textContent = debugInfo;
+        }
+
+        async function connectWallet() {
+            try {
+                showStatus("🔄 Checking MetaMask...", "info");
+                
+                if (typeof window.ethereum === 'undefined') {
+                    showStatus("❌ MetaMask not detected. Please install MetaMask extension.", "error");
+                    return;
+                }
+
+                if (typeof ethers === 'undefined') {
+                    showStatus("❌ Ethers library not loaded. Please refresh the page.", "error");
+                    return;
+                }
+
+                showStatus("🔄 Requesting account access...", "info");
+                
+                // Request account access
+                const accounts = await window.ethereum.request({ 
+                    method: 'eth_requestAccounts' 
+                });
+                
+                if (accounts.length === 0) {
+                    showStatus("❌ No accounts found. Please unlock MetaMask.", "error");
+                    return;
+                }
+
+                showStatus("🔄 Creating provider...", "info");
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                signer = provider.getSigner();
+                
+                const address = await signer.getAddress();
+                const network = await provider.getNetwork();
+                
+                showStatus(`🔄 Connected to ${address} on chain ${network.chainId}`, "info");
+                
+                // Check network
+                if (network.chainId !== 56) {
+                    showStatus(`❌ Wrong network. Please switch to BSC Mainnet (Chain ID: 56). Current: ${network.chainId}`, "error");
+                    
+                    // Try to switch network
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0x38' }], // BSC Mainnet
+                        });
+                        location.reload(); // Reload to re-check
+                    } catch (switchError) {
+                        showStatus("❌ Failed to switch network. Please manually switch to BSC Mainnet.", "error");
+                    }
+                    return;
+                }
+                
+                // Check address
+                if (address.toLowerCase() !== "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29".toLowerCase()) {
+                    showStatus(`❌ Wrong address. Expected treasury: 0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29, Got: ${address}`, "error");
+                    return;
+                }
+
+                showStatus("🔄 Creating contract instance...", "info");
+                contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+                
+                // Verify current owner
+                showStatus("🔄 Verifying contract ownership...", "info");
+                const currentOwner = await contract.owner();
+                if (currentOwner.toLowerCase() !== address.toLowerCase()) {
+                    showStatus(`❌ You are not the contract owner. Current owner: ${currentOwner}`, "error");
+                    return;
+                }
+
+                showStatus(`✅ Connected as ${address} - Ready to transfer ownership`, "success");
+                document.getElementById("connectBtn").style.display = "none";
+                document.getElementById("transferBtn").style.display = "inline-block";
+                
+            } catch (error) {
+                showStatus(`❌ Error connecting wallet: ${error.message}`, "error");
+                console.error("Connection error:", error);
+            }
+        }
+
+        async function transferOwnership() {
+            try {
+                showStatus("🔄 Initiating ownership transfer...", "info");
+                
+                const gasEstimate = await contract.estimateGas.transferOwnership(NEW_OWNER);
+                showStatus(`🔄 Estimated gas: ${gasEstimate.toString()}`, "info");
+                
+                const tx = await contract.transferOwnership(NEW_OWNER, {
+                    gasLimit: gasEstimate.mul(120).div(100) // 20% buffer
+                });
+                
+                showStatus(`🔄 Transaction submitted: ${tx.hash}. Waiting for confirmation...`, "info");
+                
+                const receipt = await tx.wait();
+                showStatus(`✅ Ownership transferred successfully! Block: ${receipt.blockNumber}`, "success");
+                
+                // Verify the transfer
+                const newOwner = await contract.owner();
+                if (newOwner.toLowerCase() === NEW_OWNER.toLowerCase()) {
+                    showStatus(`✅ Verified: New owner is ${newOwner}`, "success");
+                } else {
+                    showStatus(`⚠️ Warning: Expected new owner ${NEW_OWNER}, but got ${newOwner}`, "error");
+                }
+                
+            } catch (error) {
+                showStatus(`❌ Error transferring ownership: ${error.message}`, "error");
+                console.error("Transfer error:", error);
+            }
+        }
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById("status");
+            statusDiv.style.display = "block";
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+            
+            if (type === "success") {
+                statusDiv.style.background = "#d1e7dd";
+                statusDiv.style.color = "#0f5132";
+            } else if (type === "error") {
+                statusDiv.style.background = "#f8d7da";
+                statusDiv.style.color = "#721c24";
+            } else {
+                statusDiv.style.background = "#cff4fc";
+                statusDiv.style.color = "#055160";
+            }
+        }
+
+        // Auto-detect MetaMask changes
+        if (typeof window.ethereum !== 'undefined') {
+            window.ethereum.on('accountsChanged', function (accounts) {
+                showStatus('🔄 Account changed. Please reconnect.', 'info');
+                document.getElementById("connectBtn").style.display = "inline-block";
+                document.getElementById("transferBtn").style.display = "none";
+            });
+
+            window.ethereum.on('chainChanged', function (chainId) {
+                showStatus('🔄 Network changed. Please reconnect.', 'info');
+                location.reload();
+            });
+        }
+    </script>
+</body>
+</html>

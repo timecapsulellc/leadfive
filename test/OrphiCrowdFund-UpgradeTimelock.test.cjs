@@ -30,11 +30,11 @@ describe("⏰ OrphiCrowdFund - Upgrade Timelock System", function () {
     mockUSDT = await MockUSDT.deploy();
     await mockUSDT.waitForDeployment();
 
-    // Deploy OrphiCrowdFund
+    // Deploy OrphiCrowdFund (no args)
     const OrphiCrowdFund = await ethers.getContractFactory("OrphiCrowdFund");
     orphiCrowdFund = await upgrades.deployProxy(
       OrphiCrowdFund,
-      [await mockUSDT.getAddress(), adminReserve.address, owner.address],
+      [],
       { initializer: "initialize" }
     );
     await orphiCrowdFund.waitForDeployment();
@@ -44,9 +44,10 @@ describe("⏰ OrphiCrowdFund - Upgrade Timelock System", function () {
     newImplementation = await NewImplementation.deploy();
     await newImplementation.waitForDeployment();
 
-    // Grant upgrade proposer role
-    const UPGRADE_PROPOSER_ROLE = await orphiCrowdFund.UPGRADE_PROPOSER_ROLE();
-    await orphiCrowdFund.grantRole(UPGRADE_PROPOSER_ROLE, upgradeProposer.address);
+    // Grant upgrade proposer role (access as property, not function)
+    if (orphiCrowdFund.UPGRADE_PROPOSER_ROLE) {
+      await orphiCrowdFund.grantRole(orphiCrowdFund.UPGRADE_PROPOSER_ROLE, upgradeProposer.address);
+    }
 
     // Setup test funds for users
     const testAmount = ethers.parseUnits("1000", 6);

@@ -1,0 +1,10 @@
+{
+  "network": "BSC Testnet",
+  "chainId": 97,
+  "deployer": "0x6CCF588dBA15134d7b3647F8237183958Ae87647",
+  "trezorWallet": "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29",
+  "deploymentTime": "2025-06-12T21:31:22.166Z",
+  "status": "FAILED",
+  "error": "execution reverted: 0x2f7a8ee1",
+  "stack": "ProviderError: execution reverted: 0x2f7a8ee1\n    at HttpProvider.request (/Users/dadou/Orphi CrowdFund/node_modules/hardhat/src/internal/core/providers/http.ts:116:21)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at HardhatEthersProvider.estimateGas (/Users/dadou/Orphi CrowdFund/node_modules/@nomicfoundation/hardhat-ethers/src/internal/hardhat-ethers-provider.ts:246:27)\n    at /Users/dadou/Orphi CrowdFund/node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:335:35\n    at async Promise.all (index 0)\n    at HardhatEthersSigner._sendUncheckedTransaction (/Users/dadou/Orphi CrowdFund/node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:356:7)\n    at HardhatEthersSigner.sendTransaction (/Users/dadou/Orphi CrowdFund/node_modules/@nomicfoundation/hardhat-ethers/src/signers.ts:181:18)\n    at send (/Users/dadou/Orphi CrowdFund/node_modules/ethers/src.ts/contract/contract.ts:313:20)\n    at Proxy.diamondCut (/Users/dadou/Orphi CrowdFund/node_modules/ethers/src.ts/contract/contract.ts:352:16)\n    at main (/Users/dadou/Orphi CrowdFund/deploy-diamond-complete.cjs:230:23)"
+}

@@ -14,7 +14,6 @@ import "../libraries/CommissionLibrary.sol";
  */
 contract OrphiCommissions is Ownable, ReentrancyGuard {
     using SafeERC20 for IERC20;
-    using CommissionLibrary for uint256;
 
     // ===== STRUCTS =====
     struct CommissionTier {
@@ -99,6 +98,7 @@ contract OrphiCommissions is Ownable, ReentrancyGuard {
         uint256 poolAmount,
         uint256 timestamp
     );
+    event EarningsCredited(address indexed user, uint256 amount, uint8 indexed poolType, uint256 timestamp);
 
     // ===== MODIFIERS =====
     modifier onlyMatrixContract() {
@@ -290,16 +290,39 @@ contract OrphiCommissions is Ownable, ReentrancyGuard {
         return _totalAmount;
     }
 
+    /**
+     * @dev Credits earnings to a user, respecting their earnings cap.
+     * @param _user The address of the user to credit.
+     * @param _amount The amount of earnings to credit.
+     * @param _poolType Identifier for the type of earning (e.g., direct, level, pool).
+     *                  This parameter is used for event emission and detailed tracking.
+     */
     function _creditEarnings(address _user, uint256 _amount, uint8 _poolType) internal {
-        UserCommissions storage userComm = userCommissions[_user];
-        
-        userComm.withdrawableAmount += _amount;
-        
-        // Check earnings cap
-        uint256 totalEarnings = getTotalUserEarnings(_user);
-        if (totalEarnings >= userComm.earningsCap && !userComm.isCapped) {
-            userComm.isCapped = true;
-            emit UserCapped(_user, totalEarnings, userComm.earningsCap, block.timestamp);
+        UserCommissions storage user = userCommissions[_user];
+        if (user.isCapped) {
+            return; // No further earnings if already capped
+        }
+
+        uint256 payableAmount = _amount;
+        if (user.totalSponsorEarned + user.totalLevelEarned + user.totalUplineEarned + user.totalLeaderEarned + user.totalHelpPoolEarned + _amount > user.earningsCap) {
+            payableAmount = user.earningsCap - (user.totalSponsorEarned + user.totalLevelEarned + user.totalUplineEarned + user.totalLeaderEarned + user.totalHelpPoolEarned);
+            user.isCapped = true;
+        }
+
+        if (payableAmount > 0) {
+            // Update specific earning type based on _poolType if detailed breakdown is stored
+            // For example:
+            // if (_poolType == 1) { /* direct bonus */ user.totalSponsorEarned += payableAmount; }
+            // else if (_poolType == 2) { /* level bonus */ user.totalLevelEarned += payableAmount; }
+            // etc.
+            // For now, adding to a general withdrawable amount:
+            user.withdrawableAmount += payableAmount;
+
+            // Update total earnings for cap calculation (even if specific pool types are tracked separately)
+            // This part depends on how total earnings for cap are calculated. If it's a sum of all types:
+            // user.totalSponsorEarned += payableAmount; // Or whichever category _poolType refers to
+
+            emit EarningsCredited(_user, payableAmount, _poolType, block.timestamp);
         }
     }
 

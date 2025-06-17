@@ -1,0 +1,1079 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.22;
+
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Utils.sol";
+
+/**
+ * ╔═══════════════════════════════════════════════════════════════════════════════════════╗
+ * ║                                                                                       ║
+ * ║     ██████╗ ██████╗ ██████╗ ██╗  ██╗██╗     ██████╗██████╗  ██████╗ ██╗    ██╗██████╗ ║
+ * ║    ██╔═══██╗██╔══██╗██╔══██╗██║  ██║██║    ██╔════╝██╔══██╗██╔═══██╗██║    ██║██╔══██╗║
+ * ║    ██║   ██║██████╔╝██████╔╝███████║██║    ██║     ██████╔╝██║   ██║██║ █╗ ██║██║  ██║║
+ * ║    ██║   ██║██╔══██╗██╔═══╝ ██╔══██║██║    ██║     ██╔══██╗██║   ██║██║███╗██║██║  ██║║
+ * ║    ╚██████╔╝██║  ██║██║     ██║  ██║██║    ╚██████╗██║  ██║╚██████╔╝╚███╔███╔╝██████╔╝║
+ * ║     ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝     ╚═════╝╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚═════╝ ║
+ * ║                                                                                       ║
+ * ║                        ◆ ORPHI CROWDFUND PLATFORM ◆                                  ║
+ * ║                   ◇ Dual-Branch Progressive Reward PlatForm ◇                         ║
+ * ║                      Growing Together,Earning Together                                   ║
+ * ╚═══════════════════════════════════════════════════════════════════════════════════════╝
+ * 
+ * @title OrphiCrowdFund Platform
+ * @dev Complete OrphiCrowdFund Platform with all enhanced MLM features
+ * @custom:admin-wallet Configurable admin addresses
+ * @custom:version 2.0.0-Complete
+ */
+contract OrphiCrowdFundPlatform is 
+    Initializable,
+    UUPSUpgradeable, 
+    OwnableUpgradeable,
+    AccessControlUpgradeable,
+    ReentrancyGuardUpgradeable,
+    PausableUpgradeable 
+{
+    // ==================== CONSTANTS ====================
+    uint256 public constant BASIS_POINTS = 10000;
+    uint256 public constant WEEKLY_DISTRIBUTION_INTERVAL = 7 days;
+    uint256 public constant LEADER_DISTRIBUTION_INTERVAL = 14 days;
+    
+    // ==================== ROLES ====================
+    bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
+    bytes32 public constant DISTRIBUTOR_ROLE = keccak256("DISTRIBUTOR_ROLE");
+    bytes32 public constant PLATFORM_ROLE = keccak256("PLATFORM_ROLE");
+    bytes32 public constant AUDIT_ROLE = keccak256("AUDIT_ROLE");
+    bytes32 public constant EMERGENCY_ROLE = keccak256("EMERGENCY_ROLE");
+    bytes32 public constant TREASURY_ROLE = keccak256("TREASURY_ROLE");
+    bytes32 public constant POOL_MANAGER_ROLE = keccak256("POOL_MANAGER_ROLE");
+
+    // ==================== ENUMS ====================
+    enum PackageTier { NONE, PACKAGE_1, PACKAGE_2, PACKAGE_3, PACKAGE_4, PACKAGE_5, PACKAGE_6, PACKAGE_7, PACKAGE_8 }
+    enum LeaderRank { NONE, BRONZE, SILVER, GOLD, PLATINUM, DIAMOND }
+
+    // ==================== STRUCTS ====================
+    struct User {
+        bool exists;
+        address referrer;
+        address sponsor;
+        uint256 totalInvestment;
+        uint256 totalEarnings;
+        uint256 withdrawableAmount;
+        uint256 directReferrals;
+        uint256 teamSize;
+        uint256 packageLevel;
+        bool isActive;
+        uint256 joinTime;
+        uint256 lastActivity;
+        uint256 registrationTime;
+        LeaderRank leaderRank;
+        uint256 earningsCap;
+    }
+
+    // ==================== STATE VARIABLES ====================
+    
+    // Core Configuration
+    IERC20 public usdtToken;
+    address public treasury;
+    address public platformWallet;
+    address public distributorWallet;
+    address public auditWallet;
+    
+    // Dual Currency Support
+    bool public usdtMode; // true = USDT mode, false = BNB mode
+
+    // Package system
+    uint256[] public packageAmounts;
+    mapping(uint256 => uint256) public packageInvestments;
+    
+    // Bonus system
+    uint256 public directBonus; // Basis points (100 = 1%)
+    mapping(uint256 => uint256) public levelBonuses; // Level => basis points
+    
+    // Pool system (from legacy)
+    uint256[5] public poolBalances;
+    uint256 public globalHelpPoolBalance;
+    uint256 public leaderBonusPoolBalance;
+    uint256 public clubPoolBalance;
+    
+    // GHP system
+    uint256 public ghpPercentage; // Basis points
+    uint256 public ghpDistributionInterval;
+    uint256 public lastGHPDistribution;
+    uint256 public totalGHPPool;
+    
+    // User system
+    mapping(address => User) public users;
+    mapping(address => address[]) public userReferrals;
+    mapping(address => address[]) public directReferrals; // Binary matrix support
+    mapping(address => address[30]) public uplineChain; // 30-level upline tracking
+    mapping(uint256 => address) public userIdToAddress;
+    address[] public allUsers;
+    uint256 public userCount;
+    uint256 public totalUsers;
+    uint256 public totalVolume;
+    
+    // Earnings cap
+    uint256 public earningsCap; // Basis points (30000 = 300%)
+    mapping(address => uint256) public userEarningsCap;
+    
+    // Enhanced features from legacy
+    mapping(address => bool) public blacklistedUsers;
+    mapping(address => string) public blacklistReasons;
+    mapping(address => uint256) public lastTransactionBlock;
+    
+    // Distribution tracking
+    uint256 public lastGlobalHelpPoolDistribution;
+    uint256 public lastLeaderBonusDistribution;
+    
+    // Oracle support (optional)
+    address public priceOracle;
+    bool public oracleEnabled;
+
+    // ==================== EVENTS ====================
+    event UserRegistered(address indexed user, address indexed referrer, uint256 packageLevel);
+    event BonusDistributed(address indexed user, address indexed from, uint256 amount, uint8 level);
+    event GHPDistributed(uint256 totalAmount, uint256 timestamp);
+    event PackageUpgraded(address indexed user, uint256 oldLevel, uint256 newLevel);
+    event EmergencyWithdraw(address indexed admin, uint256 amount);
+    
+    // Enhanced events from legacy
+    event ContributionMade(address indexed contributor, address indexed sponsor, uint256 indexed amount, PackageTier packageTier, uint256 timestamp);
+    event FundsWithdrawn(address indexed user, uint256 indexed amount, uint256 indexed reinvestmentAmount, uint256 timestamp);
+    event RewardsClaimed(address indexed user, uint256 indexed amount, string indexed rewardType, uint256 timestamp);
+    event GlobalHelpPoolDistributedManual(address[] recipients, uint256[] amounts, uint256 totalDistributed, uint256 timestamp);
+    event LeaderBonusDistributedManual(address[] leaders, uint256[] amounts, uint256 totalDistributed, uint256 timestamp);
+    event UserBlacklistedUpdated(address indexed user, bool blacklisted, string reason, uint256 timestamp);
+    event EarningsAdjustedManual(address indexed user, uint256 amount, bool isAddition, string reason, uint256 timestamp);
+    event SponsorChangedManual(address indexed user, address oldSponsor, address newSponsor, string reason, uint256 timestamp);
+    event TokenRecoveredERC20(address indexed token, uint256 amount, address recipient, uint256 timestamp);
+    event ManualCommissionDistributedAdmin(address indexed user, uint256 amount, string reason, uint256 timestamp);
+    event EmergencyWithdrawal(address indexed recipient, uint256 amount, uint256 timestamp);
+    event ClubPoolDistributed(address[] indexed members, uint256[] amounts, uint256 totalDistributed, uint256 timestamp);
+
+    // ==================== MODIFIERS ====================
+    
+    modifier onlyAdmin() {
+        require(hasRole(ADMIN_ROLE, msg.sender) || hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Not admin");
+        _;
+    }
+    
+    modifier onlyDistributor() {
+        require(hasRole(DISTRIBUTOR_ROLE, msg.sender), "Not distributor");
+        _;
+    }
+    
+    modifier validAddress(address _addr) {
+        require(_addr != address(0), "Invalid address");
+        _;
+    }
+    
+    modifier onlyRegistered() {
+        require(users[msg.sender].registrationTime > 0, "User not registered");
+        _;
+    }
+    
+    modifier mevProtection() {
+        require(block.number > lastTransactionBlock[msg.sender] + 1, "MEV protection active");
+        lastTransactionBlock[msg.sender] = block.number;
+        _;
+    }
+    
+    modifier notBlacklisted(address user) {
+        require(!blacklistedUsers[user], "User is blacklisted");
+        _;
+    }
+
+    // ==================== INITIALIZER ====================
+    
+    function initialize(
+        address _admin,
+        address _treasury, 
+        address _platform,
+        address _distributor,
+        address _audit
+    ) public initializer {
+        require(_admin != address(0), "Invalid admin");
+        require(_treasury != address(0), "Invalid treasury");
+        require(_platform != address(0), "Invalid platform");
+        require(_distributor != address(0), "Invalid distributor");
+        require(_audit != address(0), "Invalid audit");
+        
+        __Ownable_init(_admin);
+        __AccessControl_init();
+        __ReentrancyGuard_init();
+        __Pausable_init();
+        __UUPSUpgradeable_init();
+        
+        // Set addresses
+        treasury = _treasury;
+        platformWallet = _platform;
+        distributorWallet = _distributor;
+        auditWallet = _audit;
+        
+        // Grant roles
+        _grantRole(DEFAULT_ADMIN_ROLE, _admin);
+        _grantRole(ADMIN_ROLE, _admin);
+        _grantRole(DISTRIBUTOR_ROLE, _distributor);
+        _grantRole(PLATFORM_ROLE, _platform);
+        _grantRole(AUDIT_ROLE, _audit);
+        _grantRole(EMERGENCY_ROLE, _admin);
+        _grantRole(TREASURY_ROLE, _treasury);
+        _grantRole(POOL_MANAGER_ROLE, _admin);
+        
+        // Initialize default values - this will only run once during first deployment
+        if (packageAmounts.length == 0) {
+            initializeDefaultPackages();
+            initializeDefaultBonuses();
+            initializeGHPSystem();
+            initializeEarningsCap();
+            initializeDistributionTimestamps();
+        }
+        
+        // Set default to BNB mode (false = BNB, true = USDT)
+        usdtMode = false;
+    }
+    
+    function initializeDefaultPackages() internal {
+        // Production package amounts (in wei, for mainnet)
+        packageAmounts.push(0.01 ether);   // ~$3
+        packageAmounts.push(0.033 ether);  // ~$10  
+        packageAmounts.push(0.083 ether);  // ~$25
+        packageAmounts.push(0.167 ether);  // ~$50
+        packageAmounts.push(0.333 ether);  // ~$100
+        packageAmounts.push(0.833 ether);  // ~$250
+        packageAmounts.push(1.667 ether);  // ~$500
+        packageAmounts.push(3.333 ether);  // ~$1000
+    }
+    
+    function initializeDefaultBonuses() internal {
+        // Direct bonus: 10%
+        directBonus = 1000; // 10% in basis points
+        
+        // Level bonuses: 5%, 3%, 2%, 1%, 1%, 1%, 1%, 1%
+        levelBonuses[1] = 500;  // 5%
+        levelBonuses[2] = 300;  // 3%
+        levelBonuses[3] = 200;  // 2%
+        levelBonuses[4] = 100;  // 1%
+        levelBonuses[5] = 100;  // 1%
+        levelBonuses[6] = 100;  // 1%
+        levelBonuses[7] = 100;  // 1%
+        levelBonuses[8] = 100;  // 1%
+    }
+    
+    function initializeGHPSystem() internal {
+        ghpPercentage = 300; // 3%
+        ghpDistributionInterval = 86400; // 24 hours
+        lastGHPDistribution = block.timestamp;
+    }
+    
+    function initializeEarningsCap() internal {
+        earningsCap = 30000; // 300%
+    }
+    
+    function initializeDistributionTimestamps() internal {
+        lastGlobalHelpPoolDistribution = block.timestamp;
+        lastLeaderBonusDistribution = block.timestamp;
+    }
+
+    // ==================== DUAL CURRENCY SUPPORT ====================
+    
+    function setUSDTMode(address _usdtToken, bool _enabled) external onlyAdmin {
+        if (_enabled) {
+            require(_usdtToken != address(0), "Invalid USDT token");
+            usdtToken = IERC20(_usdtToken);
+        }
+        usdtMode = _enabled;
+    }
+
+    // ==================== USER FUNCTIONS ====================
+    
+    function joinPlatform(address _referrer, uint256 _packageIndex) 
+        external 
+        payable
+        whenNotPaused 
+        nonReentrant 
+        mevProtection
+        notBlacklisted(msg.sender)
+    {
+        require(_packageIndex < packageAmounts.length, "Invalid package");
+        require(!users[msg.sender].exists, "User already exists");
+        
+        if (_referrer != address(0)) {
+            require(users[_referrer].exists, "Invalid referrer");
+        }
+        
+        uint256 packageAmount = packageAmounts[_packageIndex];
+        
+        // Handle payment based on mode
+        if (usdtMode) {
+            require(msg.value == 0, "No BNB required in USDT mode");
+            require(usdtToken.transferFrom(msg.sender, address(this), packageAmount), "USDT transfer failed");
+        } else {
+            require(msg.value >= packageAmount, "Insufficient payment");
+            packageAmount = msg.value; // Use actual sent amount
+        }
+        
+        // Create user
+        users[msg.sender] = User({
+            exists: true,
+            referrer: _referrer,
+            sponsor: _referrer,
+            totalInvestment: packageAmount,
+            totalEarnings: 0,
+            withdrawableAmount: 0,
+            directReferrals: 0,
+            teamSize: 0,
+            packageLevel: _packageIndex,
+            isActive: true,
+            joinTime: block.timestamp,
+            lastActivity: block.timestamp,
+            registrationTime: block.timestamp,
+            leaderRank: LeaderRank.NONE,
+            earningsCap: (packageAmount * earningsCap) / BASIS_POINTS
+        });
+        
+        allUsers.push(msg.sender);
+        userCount++;
+        totalUsers++;
+        userIdToAddress[totalUsers] = msg.sender;
+        
+        // Set earnings cap for this user
+        userEarningsCap[msg.sender] = (packageAmount * earningsCap) / BASIS_POINTS;
+        
+        // Add to referrer's list and place in matrix
+        if (_referrer != address(0)) {
+            userReferrals[_referrer].push(msg.sender);
+            users[_referrer].directReferrals++;
+            placeInBinaryMatrix(msg.sender, _referrer);
+        }
+        
+        // Distribute bonuses and update pools
+        distributeBonuses(msg.sender, packageAmount);
+        updatePools(packageAmount);
+        
+        totalVolume += packageAmount;
+        
+        emit UserRegistered(msg.sender, _referrer, _packageIndex);
+        emit ContributionMade(msg.sender, _referrer, packageAmount, PackageTier(_packageIndex + 1), block.timestamp);
+    }
+    
+    function distributeBonuses(address _user, uint256 _amount) internal {
+        address currentReferrer = users[_user].referrer;
+        
+        // Direct bonus
+        if (currentReferrer != address(0)) {
+            uint256 directBonusAmount = (_amount * directBonus) / BASIS_POINTS;
+            if (users[currentReferrer].totalEarnings + directBonusAmount <= userEarningsCap[currentReferrer]) {
+                users[currentReferrer].totalEarnings += directBonusAmount;
+                users[currentReferrer].withdrawableAmount += directBonusAmount;
+                
+                emit BonusDistributed(currentReferrer, _user, directBonusAmount, 0);
+            }
+        }
+        
+        // Level bonuses
+        for (uint256 level = 1; level <= 8 && currentReferrer != address(0); level++) {
+            uint256 bonusAmount = (_amount * levelBonuses[level]) / BASIS_POINTS;
+            
+            if (bonusAmount > 0 && users[currentReferrer].totalEarnings + bonusAmount <= userEarningsCap[currentReferrer]) {
+                users[currentReferrer].totalEarnings += bonusAmount;
+                users[currentReferrer].withdrawableAmount += bonusAmount;
+                
+                emit BonusDistributed(currentReferrer, _user, bonusAmount, uint8(level));
+            }
+            
+            currentReferrer = users[currentReferrer].referrer;
+        }
+        
+        // Global upline bonus (30-level distribution)
+        distributeGlobalUplineBonus(_user, _amount);
+    }
+    
+    function distributeGlobalUplineBonus(address _user, uint256 _amount) internal {
+        uint256 globalBonusTotal = (_amount * 1000) / BASIS_POINTS; // 10%
+        uint256 perUpline = globalBonusTotal / 30;
+        
+        address current = _user;
+        for (uint256 i = 0; i < 30; i++) {
+            address upline = uplineChain[current][i];
+            if (upline == address(0)) break;
+            
+            if (users[upline].totalEarnings + perUpline <= userEarningsCap[upline]) {
+                users[upline].totalEarnings += perUpline;
+                users[upline].withdrawableAmount += perUpline;
+            }
+        }
+    }
+    
+    function updatePools(uint256 _amount) internal {
+        // Global Help Pool: 30%
+        uint256 ghpAmount = (_amount * 3000) / BASIS_POINTS;
+        globalHelpPoolBalance += ghpAmount;
+        totalGHPPool += ghpAmount;
+        
+        // Leader Bonus Pool: 10%
+        uint256 leaderAmount = (_amount * 1000) / BASIS_POINTS;
+        leaderBonusPoolBalance += leaderAmount;
+        
+        // Club Pool: 5%
+        uint256 clubAmount = (_amount * 500) / BASIS_POINTS;
+        clubPoolBalance += clubAmount;
+    }
+
+    // ==================== BINARY MATRIX PLACEMENT ====================
+    
+    function placeInBinaryMatrix(address newUser, address sponsor) internal {
+        // If sponsor has less than 2 direct referrals, place directly
+        if (directReferrals[sponsor].length < 2) {
+            directReferrals[sponsor].push(newUser);
+            uplineChain[newUser][0] = sponsor;
+            buildUplineChain(newUser, sponsor);
+            return;
+        }
+        
+        // Breadth-first search for next available spot
+        address[] memory queue = new address[](totalUsers + 1);
+        uint256 head = 0;
+        uint256 tail = 0;
+        queue[tail++] = sponsor;
+        
+        while (head < tail) {
+            address current = queue[head++];
+            if (directReferrals[current].length < 2) {
+                directReferrals[current].push(newUser);
+                uplineChain[newUser][0] = current;
+                buildUplineChain(newUser, current);
+                return;
+            }
+            
+            for (uint256 i = 0; i < directReferrals[current].length; i++) {
+                if (tail < queue.length) {
+                    queue[tail++] = directReferrals[current][i];
+                }
+            }
+        }
+    }
+    
+    function buildUplineChain(address user, address directUpline) internal {
+        uplineChain[user][0] = directUpline;
+        for (uint256 i = 1; i < 30; i++) {
+            if (uplineChain[directUpline][i-1] != address(0)) {
+                uplineChain[user][i] = uplineChain[directUpline][i-1];
+            } else {
+                break;
+            }
+        }
+    }
+
+    // ==================== WITHDRAWAL FUNCTIONS ====================
+    
+    function withdrawFunds() external 
+        onlyRegistered 
+        nonReentrant 
+        whenNotPaused 
+        mevProtection 
+        notBlacklisted(msg.sender) 
+        returns (uint256 withdrawn, uint256 reinvested) 
+    {
+        User storage user = users[msg.sender];
+        require(user.withdrawableAmount > 0, "No withdrawable amount");
+        
+        uint256 available = user.withdrawableAmount;
+        
+        // Check earnings cap
+        if (user.totalEarnings + available > user.earningsCap) {
+            available = user.earningsCap > user.totalEarnings ? user.earningsCap - user.totalEarnings : 0;
+        }
+        require(available > 0, "Earnings cap reached");
+        
+        // Calculate withdrawal rate based on direct referrals
+        uint256 withdrawalRate = getWithdrawalRate(user.directReferrals);
+        uint256 withdrawAmount = (available * withdrawalRate) / BASIS_POINTS;
+        uint256 reinvestAmount = available - withdrawAmount;
+        
+        // Process withdrawal
+        user.withdrawableAmount -= available;
+        user.totalEarnings += withdrawAmount;
+        
+        if (reinvestAmount > 0) {
+            user.totalInvestment += reinvestAmount;
+            totalVolume += reinvestAmount;
+        }
+        
+        // Transfer funds
+        if (usdtMode) {
+            require(usdtToken.transfer(msg.sender, withdrawAmount), "USDT transfer failed");
+        } else {
+            payable(msg.sender).transfer(withdrawAmount);
+        }
+        
+        emit FundsWithdrawn(msg.sender, withdrawAmount, reinvestAmount, block.timestamp);
+        return (withdrawAmount, reinvestAmount);
+    }
+    
+    function claimRewards(string calldata rewardType) external 
+        onlyRegistered 
+        nonReentrant 
+        whenNotPaused 
+        notBlacklisted(msg.sender) 
+        returns (uint256 claimedAmount) 
+    {
+        User storage user = users[msg.sender];
+        require(user.withdrawableAmount > 0, "No rewards to claim");
+        
+        uint256 available = user.withdrawableAmount;
+        
+        // Check earnings cap
+        if (user.totalEarnings + available > user.earningsCap) {
+            available = user.earningsCap > user.totalEarnings ? user.earningsCap - user.totalEarnings : 0;
+        }
+        require(available > 0, "Earnings cap reached");
+        
+        // Process claim
+        user.withdrawableAmount -= available;
+        user.totalEarnings += available;
+        
+        // Transfer funds
+        if (usdtMode) {
+            require(usdtToken.transfer(msg.sender, available), "USDT transfer failed");
+        } else {
+            payable(msg.sender).transfer(available);
+        }
+        
+        emit RewardsClaimed(msg.sender, available, rewardType, block.timestamp);
+        return available;
+    }
+    
+    function getWithdrawalRate(uint256 directReferrals) internal pure returns (uint256) {
+        if (directReferrals == 0) return 2000; // 20%
+        if (directReferrals == 1) return 4000; // 40%
+        if (directReferrals == 2) return 6000; // 60%
+        if (directReferrals >= 3) return 8000; // 80%
+        return 2000; // Default 20%
+    }
+
+    // ==================== ADMIN FUNCTIONS ====================
+    
+    function setPackageAmount(uint256 _index, uint256 _amount) external onlyAdmin {
+        require(_index < packageAmounts.length, "Invalid index");
+        packageAmounts[_index] = _amount;
+    }
+    
+    function setDirectBonus(uint256 _bonus) external onlyAdmin {
+        require(_bonus <= 2000, "Max 20%");
+        directBonus = _bonus;
+    }
+    
+    function setLevelBonus(uint256 _level, uint256 _bonus) external onlyAdmin {
+        require(_level >= 1 && _level <= 8, "Invalid level");
+        require(_bonus <= 1000, "Max 10%");
+        levelBonuses[_level] = _bonus;
+    }
+    
+    function setGHPPercentage(uint256 _percentage) external onlyAdmin {
+        require(_percentage <= 5000, "Max 50%");
+        ghpPercentage = _percentage;
+    }
+    
+    function setEarningsCap(uint256 _cap) external onlyAdmin {
+        require(_cap >= 10000, "Min 100%");
+        earningsCap = _cap;
+    }
+    
+    function pause() external onlyAdmin {
+        _pause();
+    }
+    
+    function unpause() external onlyAdmin {
+        _unpause();
+    }
+
+    // ==================== ENHANCED ADMIN FUNCTIONS ====================
+    
+    function distributeGlobalHelpPoolManual(
+        address[] calldata recipients,
+        uint256[] calldata amounts,
+        string calldata distributionReason
+    ) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        require(recipients.length == amounts.length, "Arrays length mismatch");
+        require(recipients.length > 0, "No recipients provided");
+        
+        uint256 totalDistribution = 0;
+        for (uint256 i = 0; i < amounts.length; i++) {
+            totalDistribution += amounts[i];
+        }
+        
+        require(totalDistribution <= globalHelpPoolBalance, "Insufficient pool balance");
+        
+        for (uint256 i = 0; i < recipients.length; i++) {
+            require(recipients[i] != address(0), "Invalid recipient");
+            require(amounts[i] > 0, "Invalid amount");
+            require(!blacklistedUsers[recipients[i]], "Recipient is blacklisted");
+            
+            if (usdtMode) {
+                require(usdtToken.transfer(recipients[i], amounts[i]), "Transfer failed");
+            } else {
+                payable(recipients[i]).transfer(amounts[i]);
+            }
+        }
+        
+        globalHelpPoolBalance -= totalDistribution;
+        emit GlobalHelpPoolDistributedManual(recipients, amounts, totalDistribution, block.timestamp);
+    }
+    
+    function blacklistUserAdmin(address user, bool blacklisted, string calldata reason) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        require(user != address(0), "Invalid user");
+        require(user != owner(), "Cannot blacklist owner");
+        
+        blacklistedUsers[user] = blacklisted;
+        blacklistReasons[user] = reason;
+        
+        emit UserBlacklistedUpdated(user, blacklisted, reason, block.timestamp);
+    }
+    
+    function adjustUserEarningsAdmin(address user, uint256 amount, bool isAddition, string calldata reason) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        require(user != address(0), "Invalid user");
+        require(amount > 0, "Invalid amount");
+        require(users[user].registrationTime > 0, "User not registered");
+        
+        if (isAddition) {
+            if (usdtMode) {
+                require(usdtToken.transfer(user, amount), "Transfer failed");
+            } else {
+                payable(user).transfer(amount);
+            }
+        } else {
+            User storage userData = users[user];
+            require(userData.withdrawableAmount >= amount, "Insufficient withdrawable balance");
+            userData.withdrawableAmount -= amount;
+        }
+        
+        emit EarningsAdjustedManual(user, amount, isAddition, reason, block.timestamp);
+    }
+    
+    function emergencyWithdraw() external onlyRole(EMERGENCY_ROLE) {
+        uint256 balance;
+        
+        if (usdtMode) {
+            balance = usdtToken.balanceOf(address(this));
+            require(balance > 0, "No funds");
+            require(usdtToken.transfer(msg.sender, balance), "Transfer failed");
+        } else {
+            balance = address(this).balance;
+            require(balance > 0, "No funds");
+            payable(msg.sender).transfer(balance);
+        }
+        
+        emit EmergencyWithdraw(msg.sender, balance);
+    }
+
+    // ==================== AUTOMATED DISTRIBUTIONS ====================
+    
+    function distributeGHP() external onlyDistributor {
+        require(block.timestamp >= lastGHPDistribution + ghpDistributionInterval, "Too early");
+        require(totalGHPPool > 0, "No GHP to distribute");
+        
+        uint256 perUserAmount = totalGHPPool / userCount;
+        
+        for (uint256 i = 0; i < allUsers.length; i++) {
+            address user = allUsers[i];
+            if (users[user].isActive && users[user].totalEarnings + perUserAmount <= userEarningsCap[user]) {
+                users[user].totalEarnings += perUserAmount;
+                users[user].withdrawableAmount += perUserAmount;
+                
+                if (usdtMode) {
+                    require(usdtToken.transfer(user, perUserAmount), "Transfer failed");
+                } else {
+                    payable(user).transfer(perUserAmount);
+                }
+            }
+        }
+        
+        totalGHPPool = 0;
+        lastGHPDistribution = block.timestamp;
+        
+        emit GHPDistributed(totalGHPPool, block.timestamp);
+    }
+    
+    function distributeGlobalHelpPoolAuto() external nonReentrant whenNotPaused {
+        require(block.timestamp >= lastGlobalHelpPoolDistribution + WEEKLY_DISTRIBUTION_INTERVAL, "GHP: Not time yet");
+        require(globalHelpPoolBalance > 0, "GHP: No funds to distribute");
+        
+        address[] memory eligible = new address[](totalUsers);
+        uint256 count = 0;
+        
+        for (uint256 i = 1; i <= totalUsers; i++) {
+            address userAddr = userIdToAddress[i];
+            if (users[userAddr].registrationTime > 0 && !blacklistedUsers[userAddr] && users[userAddr].isActive) {
+                eligible[count] = userAddr;
+                count++;
+            }
+        }
+        
+        require(count > 0, "No eligible users for GHP");
+        uint256 perUser = globalHelpPoolBalance / count;
+        require(perUser > 0, "Per-user GHP too small");
+        
+        address[] memory finalRecipients = new address[](count);
+        uint256[] memory amounts = new uint256[](count);
+        
+        for (uint256 j = 0; j < count; j++) {
+            finalRecipients[j] = eligible[j];
+            amounts[j] = perUser;
+            
+            if (usdtMode) {
+                require(usdtToken.transfer(finalRecipients[j], perUser), "GHP transfer failed");
+            } else {
+                payable(finalRecipients[j]).transfer(perUser);
+            }
+        }
+        
+        globalHelpPoolBalance -= perUser * count;
+        lastGlobalHelpPoolDistribution = block.timestamp;
+        
+        emit GlobalHelpPoolDistributedManual(finalRecipients, amounts, perUser * count, block.timestamp);
+    }
+
+    // ==================== VIEW FUNCTIONS ====================
+    
+    function getPackageCount() external view returns (uint256) {
+        return packageAmounts.length;
+    }
+    
+    function getUserReferrals(address _user) external view returns (address[] memory) {
+        return userReferrals[_user];
+    }
+    
+    function getDirectDownlines(address user) external view returns (address[] memory) {
+        return directReferrals[user];
+    }
+    
+    function getUplineChain(address user) external view returns (address[30] memory) {
+        return uplineChain[user];
+    }
+    
+    function isUserExists(address _user) external view returns (bool) {
+        return users[_user].exists;
+    }
+    
+    function getUserInfo(address _user) external view returns (
+        bool exists,
+        address referrer,
+        uint256 totalInvestment,
+        uint256 totalEarnings,
+        uint256 withdrawableAmount,
+        uint256 directReferrals,
+        uint256 packageLevel,
+        bool isActive,
+        uint256 registrationTime,
+        LeaderRank leaderRank
+    ) {
+        User memory user = users[_user];
+        return (
+            user.exists,
+            user.referrer,
+            user.totalInvestment,
+            user.totalEarnings,
+            user.withdrawableAmount,
+            user.directReferrals,
+            user.packageLevel,
+            user.isActive,
+            user.registrationTime,
+            user.leaderRank
+        );
+    }
+    
+    function getGlobalStats() external view returns (
+        uint256 _totalUsers,
+        uint256 _totalVolume,
+        uint256[5] memory _poolBalances,
+        uint256 _globalHelpPool,
+        uint256 _leaderBonusPool,
+        uint256 _clubPool
+    ) {
+        return (
+            totalUsers,
+            totalVolume,
+            poolBalances,
+            globalHelpPoolBalance,
+            leaderBonusPoolBalance,
+            clubPoolBalance
+        );
+    }
+    
+    function getPoolBalancesEnhanced() external view returns (
+        uint256 sponsorPool,
+        uint256 levelBonusPool,
+        uint256 globalUplinePool,
+        uint256 leaderBonusPool,
+        uint256 globalHelpPool,
+        uint256 clubPool,
+        uint256 contractBalance,
+        uint256 totalPoolBalance
+    ) {
+        uint256[5] memory pools = poolBalances;
+        uint256 contractBal = usdtMode ? usdtToken.balanceOf(address(this)) : address(this).balance;
+        uint256 totalPools = pools[0] + pools[1] + pools[2] + pools[3] + pools[4];
+        
+        return (
+            pools[0],           // Sponsor Pool
+            pools[1],           // Level Bonus Pool
+            pools[2],           // Global Upline Pool
+            leaderBonusPoolBalance,  // Leader Bonus Pool
+            globalHelpPoolBalance,   // Global Help Pool
+            clubPoolBalance,    // Club Pool
+            contractBal,        // Total Contract Balance
+            totalPools          // Total Pool Balance
+        );
+    }
+    
+    function isUserBlacklisted(address user) external view returns (bool, string memory) {
+        return (blacklistedUsers[user], blacklistReasons[user]);
+    }
+    
+    function getContractName() external pure returns (string memory) {
+        return "OrphiCrowdFund Platform";
+    }
+    
+    function version() external pure returns (string memory) {
+        return "OrphiCrowdFund Platform v2.0.0-Complete - Enhanced with Binary Matrix & Pool Distribution";
+    }
+    
+    function getPackageAmounts() external view returns (uint256[] memory) {
+        return packageAmounts;
+    }
+
+    /**
+     * @dev Set testnet package amounts to match test configuration
+     */
+    function setTestnetPackageAmounts() external onlyAdmin {
+        packageAmounts[0] = 0.001 ether;  // 0.001 tBNB
+        packageAmounts[1] = 0.003 ether;  // 0.003 tBNB
+        packageAmounts[2] = 0.008 ether;  // 0.008 tBNB
+        packageAmounts[3] = 0.017 ether;  // 0.017 tBNB
+        packageAmounts[4] = 0.033 ether;  // 0.033 tBNB
+        packageAmounts[5] = 0.083 ether;  // 0.083 tBNB
+        packageAmounts[6] = 0.167 ether;  // 0.167 tBNB
+        packageAmounts[7] = 0.333 ether;  // 0.333 tBNB
+    }
+    
+    /**
+     * @dev Set mainnet package amounts to production values
+     */
+    function setMainnetPackageAmounts() external onlyAdmin {
+        packageAmounts[0] = 0.01 ether;   // ~$3
+        packageAmounts[1] = 0.033 ether;  // ~$10  
+        packageAmounts[2] = 0.083 ether;  // ~$25
+        packageAmounts[3] = 0.167 ether;  // ~$50
+        packageAmounts[4] = 0.333 ether;  // ~$100
+        packageAmounts[5] = 0.833 ether;  // ~$250
+        packageAmounts[6] = 1.667 ether;  // ~$500
+        packageAmounts[7] = 3.333 ether;  // ~$1000
+    }
+    
+    // ==================== UPGRADE FUNCTIONS ====================
+    
+    function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
+    
+    function getImplementation() external view returns (address) {
+        return ERC1967Utils.getImplementation();
+    }
+    
+    // ==================== FALLBACK ====================
+    
+    receive() external payable {
+        // Accept BNB payments when not in USDT mode
+        require(!usdtMode, "BNB payments disabled in USDT mode");
+    }
+        
+    function initializeGHPSystem() internal {
+        ghpPercentage = 300; // 3%
+        ghpDistributionInterval = 86400; // 24 hours
+        lastGHPDistribution = block.timestamp;
+    }
+    
+    function initializeEarningsCap() internal {
+        earningsCap = 30000; // 300%
+    }
+
+    // ==================== USER FUNCTIONS ====================
+    
+    function joinPlatform(address _referrer, uint256 _packageIndex) 
+        external 
+        payable
+        whenNotPaused 
+        nonReentrant 
+    {
+        require(_packageIndex < packageAmounts.length, "Invalid package");
+        require(msg.value >= packageAmounts[_packageIndex], "Insufficient payment");
+        require(!users[msg.sender].exists, "User already exists");
+        
+        if (_referrer != address(0)) {
+            require(users[_referrer].exists, "Invalid referrer");
+        }
+        
+        // Create user
+        users[msg.sender] = User({
+            exists: true,
+            referrer: _referrer,
+            totalInvestment: msg.value,
+            totalEarnings: 0,
+            directReferrals: 0,
+            packageLevel: _packageIndex,
+            isActive: true,
+            joinTime: block.timestamp,
+            lastActivity: block.timestamp
+        });
+        
+        allUsers.push(msg.sender);
+        userCount++;
+        
+        // Set earnings cap for this user
+        userEarningsCap[msg.sender] = (msg.value * earningsCap) / 10000;
+        
+        // Add to referrer's list
+        if (_referrer != address(0)) {
+            userReferrals[_referrer].push(msg.sender);
+            users[_referrer].directReferrals++;
+        }
+        
+        // Distribute bonuses
+        distributeBonuses(msg.sender, msg.value);
+        
+        // Add to GHP pool
+        uint256 ghpAmount = (msg.value * ghpPercentage) / 10000;
+        totalGHPPool += ghpAmount;
+        
+        emit UserRegistered(msg.sender, _referrer, _packageIndex);
+    }
+    
+    function distributeBonuses(address _user, uint256 _amount) internal {
+        address currentReferrer = users[_user].referrer;
+        
+        for (uint256 level = 1; level <= 8 && currentReferrer != address(0); level++) {
+            uint256 bonusAmount = (_amount * levelBonuses[level]) / 10000;
+            
+            if (bonusAmount > 0 && users[currentReferrer].totalEarnings + bonusAmount <= userEarningsCap[currentReferrer]) {
+                users[currentReferrer].totalEarnings += bonusAmount;
+                payable(currentReferrer).transfer(bonusAmount);
+                
+                emit BonusDistributed(currentReferrer, _user, bonusAmount, uint8(level));
+            }
+            
+            currentReferrer = users[currentReferrer].referrer;
+        }
+    }
+
+    // ==================== ADMIN FUNCTIONS ====================
+    
+    function setPackageAmount(uint256 _index, uint256 _amount) external onlyAdmin {
+        require(_index < packageAmounts.length, "Invalid index");
+        packageAmounts[_index] = _amount;
+    }
+    
+    function setDirectBonus(uint256 _bonus) external onlyAdmin {
+        require(_bonus <= 2000, "Max 20%");
+        directBonus = _bonus;
+    }
+    
+    function setLevelBonus(uint256 _level, uint256 _bonus) external onlyAdmin {
+        require(_level >= 1 && _level <= 8, "Invalid level");
+        require(_bonus <= 1000, "Max 10%");
+        levelBonuses[_level] = _bonus;
+    }
+    
+    function setGHPPercentage(uint256 _percentage) external onlyAdmin {
+        require(_percentage <= 500, "Max 5%"); // Max 5%
+        ghpPercentage = _percentage;
+    }
+    
+    function setEarningsCap(uint256 _cap) external onlyAdmin {
+        require(_cap >= 10000, "Min 100%"); // Min 100%
+        earningsCap = _cap;
+    }
+    
+    function distributeGHP() external onlyDistributor {
+        require(block.timestamp >= lastGHPDistribution + ghpDistributionInterval, "Too early");
+        require(totalGHPPool > 0, "No GHP to distribute");
+        
+        uint256 perUserAmount = totalGHPPool / userCount;
+        
+        for (uint256 i = 0; i < allUsers.length; i++) {
+            address user = allUsers[i];
+            if (users[user].isActive && users[user].totalEarnings + perUserAmount <= userEarningsCap[user]) {
+                users[user].totalEarnings += perUserAmount;
+                payable(user).transfer(perUserAmount);
+            }
+        }
+        
+        totalGHPPool = 0;
+        lastGHPDistribution = block.timestamp;
+        
+        emit GHPDistributed(totalGHPPool, block.timestamp);
+    }
+    
+    function pause() external onlyAdmin {
+        _pause();
+    }
+    
+    function unpause() external onlyAdmin {
+        _unpause();
+    }
+    
+    function emergencyWithdraw() external onlyRole(EMERGENCY_ROLE) {
+        uint256 balance = address(this).balance;
+        require(balance > 0, "No funds");
+        
+        payable(msg.sender).transfer(balance);
+        emit EmergencyWithdraw(msg.sender, balance);
+    }
+
+    // ==================== VIEW FUNCTIONS ====================
+    
+    function getPackageCount() external view returns (uint256) {
+        return packageAmounts.length;
+    }
+    
+    function getUserReferrals(address _user) external view returns (address[] memory) {
+        return userReferrals[_user];
+    }
+    
+    function isUserExists(address _user) external view returns (bool) {
+        return users[_user].exists;
+    }
+    
+    function getUserInfo(address _user) external view returns (
+        bool exists,
+        address referrer,
+        uint256 totalInvestment,
+        uint256 totalEarnings,
+        uint256 directReferrals,
+        uint256 packageLevel,
+        bool isActive
+    ) {
+        User memory user = users[_user];
+        return (
+            user.exists,
+            user.referrer,
+            user.totalInvestment,
+            user.totalEarnings,
+            user.directReferrals,
+            user.packageLevel,
+            user.isActive
+        );
+    }
+
+    // ==================== UPGRADE FUNCTIONS ====================
+    
+    function _authorizeUpgrade(address newImplementation) internal override onlyOwner {}
+    
+    function getImplementation() external view returns (address) {
+        return ERC1967Utils.getImplementation();
+    }
+}

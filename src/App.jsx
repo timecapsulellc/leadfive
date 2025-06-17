@@ -2,12 +2,15 @@
 import React from 'react';
 import './App.css'
 import OrphiCrowdFundApp from './components/OrphiCrowdFundApp';
+import { SupabaseProvider } from './contexts/SupabaseContext';
 
 function App() {
   return (
-    <div className="App">
-      <OrphiCrowdFundApp />
-    </div>
+    <SupabaseProvider>
+      <div className="App">
+        <OrphiCrowdFundApp />
+      </div>
+    </SupabaseProvider>
   )
 }
 

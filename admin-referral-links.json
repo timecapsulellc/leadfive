@@ -1,0 +1,297 @@
+{
+  "contractAddresses": {
+    "testnet": "0x01F1fCf1aA7072B6b9d95974174AecbF753795FF",
+    "mainnet": "0x4965197b430343daec1042B413Dd6e20D06dAdba"
+  },
+  "networks": {
+    "testnet": {
+      "name": "BSC Testnet",
+      "chainId": 97,
+      "rpcUrl": "https://data-seed-prebsc-1-s1.binance.org:8545/",
+      "explorerUrl": "https://testnet.bscscan.com",
+      "frontendUrl": "https://testnet.crowdfund-lake.vercel.app"
+    },
+    "mainnet": {
+      "name": "BSC Mainnet", 
+      "chainId": 56,
+      "rpcUrl": "https://bsc-dataseed.binance.org/",
+      "explorerUrl": "https://bscscan.com",
+      "frontendUrl": "https://crowdfund-lake.vercel.app"
+    }
+  },
+  "adminAccounts": [
+    {
+      "id": 1,
+      "name": "Root Admin",
+      "role": "ROOT_ADMIN",
+      "address": "0xBcae617E213145BB76fD8023B3D9d7d4F97013e5",
+      "packageLevel": 8,
+      "packageName": "Ultimate",
+      "packagePrice": 2000,
+      "description": "Primary admin account - Root of the network tree",
+      "referralCode": "BCAE61",
+      "priority": 1,
+      "permissions": ["ALL"]
+    },
+    {
+      "id": 2,
+      "name": "Treasury Admin",
+      "role": "TREASURY_ADMIN", 
+      "address": "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29",
+      "packageLevel": 7,
+      "packageName": "Elite",
+      "packagePrice": 1000,
+      "description": "Treasury management and financial operations",
+      "referralCode": "DF628E",
+      "priority": 2,
+      "permissions": ["TREASURY", "FINANCIAL"]
+    },
+    {
+      "id": 3,
+      "name": "Operations Admin",
+      "role": "OPERATIONS_ADMIN",
+      "address": "0x96264D29910eC58CD9fE4e9367931C191416b1e1", 
+      "packageLevel": 6,
+      "packageName": "Premium",
+      "packagePrice": 500,
+      "description": "Day-to-day operations and user management",
+      "referralCode": "96264D",
+      "priority": 3,
+      "permissions": ["OPERATIONS", "USER_MANAGEMENT"]
+    },
+    {
+      "id": 4,
+      "name": "Support Admin",
+      "role": "SUPPORT_ADMIN",
+      "address": "0xDB54f3f8F42e0165a15A33736550790BB0662Ac6",
+      "packageLevel": 5,
+      "packageName": "Professional", 
+      "packagePrice": 300,
+      "description": "Customer support and user assistance",
+      "referralCode": "DB54F3",
+      "priority": 4,
+      "permissions": ["SUPPORT", "USER_ASSISTANCE"]
+    },
+    {
+      "id": 5,
+      "name": "Marketing Admin",
+      "role": "MARKETING_ADMIN",
+      "address": "0xE347b326Af572a7115aec536EBf68F72b263D816",
+      "packageLevel": 4,
+      "packageName": "Advanced",
+      "packagePrice": 200,
+      "description": "Marketing campaigns and referral management", 
+      "referralCode": "E347B3",
+      "priority": 5,
+      "permissions": ["MARKETING", "CAMPAIGNS"]
+    }
+  ],
+  "packages": [
+    { "level": 1, "name": "Starter", "price": 30, "priceUSD": "$30" },
+    { "level": 2, "name": "Basic", "price": 50, "priceUSD": "$50" },
+    { "level": 3, "name": "Standard", "price": 100, "priceUSD": "$100" },
+    { "level": 4, "name": "Advanced", "price": 200, "priceUSD": "$200" },
+    { "level": 5, "name": "Professional", "price": 300, "priceUSD": "$300" },
+    { "level": 6, "name": "Premium", "price": 500, "priceUSD": "$500" },
+    { "level": 7, "name": "Elite", "price": 1000, "priceUSD": "$1000" },
+    { "level": 8, "name": "Ultimate", "price": 2000, "priceUSD": "$2000" }
+  ],
+  "referralLinks": {
+    "mainnet": {
+      "baseUrl": "https://crowdfund-lake.vercel.app",
+      "adminLinks": {
+        "ROOT_ADMIN": {
+          "direct": "https://crowdfund-lake.vercel.app?ref=0xBcae617E213145BB76fD8023B3D9d7d4F97013e5",
+          "short": "https://crowdfund-lake.vercel.app?ref=BCAE61",
+          "packages": [
+            "https://crowdfund-lake.vercel.app?ref=BCAE61&pkg=1",
+            "https://crowdfund-lake.vercel.app?ref=BCAE61&pkg=2", 
+            "https://crowdfund-lake.vercel.app?ref=BCAE61&pkg=3",
+            "https://crowdfund-lake.vercel.app?ref=BCAE61&pkg=4",
+            "https://crowdfund-lake.vercel.app?ref=BCAE61&pkg=5",
+            "https://crowdfund-lake.vercel.app?ref=BCAE61&pkg=6",
+            "https://crowdfund-lake.vercel.app?ref=BCAE61&pkg=7",
+            "https://crowdfund-lake.vercel.app?ref=BCAE61&pkg=8"
+          ]
+        },
+        "TREASURY_ADMIN": {
+          "direct": "https://crowdfund-lake.vercel.app?ref=0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29",
+          "short": "https://crowdfund-lake.vercel.app?ref=DF628E",
+          "packages": [
+            "https://crowdfund-lake.vercel.app?ref=DF628E&pkg=1",
+            "https://crowdfund-lake.vercel.app?ref=DF628E&pkg=2",
+            "https://crowdfund-lake.vercel.app?ref=DF628E&pkg=3", 
+            "https://crowdfund-lake.vercel.app?ref=DF628E&pkg=4",
+            "https://crowdfund-lake.vercel.app?ref=DF628E&pkg=5",
+            "https://crowdfund-lake.vercel.app?ref=DF628E&pkg=6",
+            "https://crowdfund-lake.vercel.app?ref=DF628E&pkg=7",
+            "https://crowdfund-lake.vercel.app?ref=DF628E&pkg=8"
+          ]
+        },
+        "OPERATIONS_ADMIN": {
+          "direct": "https://crowdfund-lake.vercel.app?ref=0x96264D29910eC58CD9fE4e9367931C191416b1e1",
+          "short": "https://crowdfund-lake.vercel.app?ref=96264D",
+          "packages": [
+            "https://crowdfund-lake.vercel.app?ref=96264D&pkg=1",
+            "https://crowdfund-lake.vercel.app?ref=96264D&pkg=2",
+            "https://crowdfund-lake.vercel.app?ref=96264D&pkg=3",
+            "https://crowdfund-lake.vercel.app?ref=96264D&pkg=4", 
+            "https://crowdfund-lake.vercel.app?ref=96264D&pkg=5",
+            "https://crowdfund-lake.vercel.app?ref=96264D&pkg=6",
+            "https://crowdfund-lake.vercel.app?ref=96264D&pkg=7",
+            "https://crowdfund-lake.vercel.app?ref=96264D&pkg=8"
+          ]
+        },
+        "SUPPORT_ADMIN": {
+          "direct": "https://crowdfund-lake.vercel.app?ref=0xDB54f3f8F42e0165a15A33736550790BB0662Ac6",
+          "short": "https://crowdfund-lake.vercel.app?ref=DB54F3",
+          "packages": [
+            "https://crowdfund-lake.vercel.app?ref=DB54F3&pkg=1",
+            "https://crowdfund-lake.vercel.app?ref=DB54F3&pkg=2",
+            "https://crowdfund-lake.vercel.app?ref=DB54F3&pkg=3",
+            "https://crowdfund-lake.vercel.app?ref=DB54F3&pkg=4",
+            "https://crowdfund-lake.vercel.app?ref=DB54F3&pkg=5",
+            "https://crowdfund-lake.vercel.app?ref=DB54F3&pkg=6",
+            "https://crowdfund-lake.vercel.app?ref=DB54F3&pkg=7",
+            "https://crowdfund-lake.vercel.app?ref=DB54F3&pkg=8"
+          ]
+        },
+        "MARKETING_ADMIN": {
+          "direct": "https://crowdfund-lake.vercel.app?ref=0xE347b326Af572a7115aec536EBf68F72b263D816",
+          "short": "https://crowdfund-lake.vercel.app?ref=E347B3",
+          "packages": [
+            "https://crowdfund-lake.vercel.app?ref=E347B3&pkg=1",
+            "https://crowdfund-lake.vercel.app?ref=E347B3&pkg=2",
+            "https://crowdfund-lake.vercel.app?ref=E347B3&pkg=3",
+            "https://crowdfund-lake.vercel.app?ref=E347B3&pkg=4",
+            "https://crowdfund-lake.vercel.app?ref=E347B3&pkg=5",
+            "https://crowdfund-lake.vercel.app?ref=E347B3&pkg=6",
+            "https://crowdfund-lake.vercel.app?ref=E347B3&pkg=7",
+            "https://crowdfund-lake.vercel.app?ref=E347B3&pkg=8"
+          ]
+        }
+      }
+    },
+    "testnet": {
+      "baseUrl": "https://testnet.crowdfund-lake.vercel.app",
+      "adminLinks": {
+        "ROOT_ADMIN": {
+          "direct": "https://testnet.crowdfund-lake.vercel.app?ref=0xBcae617E213145BB76fD8023B3D9d7d4F97013e5",
+          "short": "https://testnet.crowdfund-lake.vercel.app?ref=BCAE61"
+        }
+      }
+    }
+  },
+  "bootstrapProcess": {
+    "phase": "BOOTSTRAP_REQUIRED",
+    "currentStatus": "No users registered yet",
+    "nextSteps": [
+      {
+        "step": 1,
+        "action": "Root Admin Registration",
+        "description": "Root Admin must register first using zero address sponsor",
+        "wallet": "0xBcae617E213145BB76fD8023B3D9d7d4F97013e5",
+        "package": "Ultimate ($2000)",
+        "method": "BSCScan Write Contract",
+        "function": "register(address(0), 8, false)",
+        "value": "~3.33 BNB (equivalent to $2000)"
+      },
+      {
+        "step": 2,
+        "action": "Treasury Admin Registration", 
+        "description": "Treasury Admin registers with Root Admin as sponsor",
+        "wallet": "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29",
+        "package": "Elite ($1000)",
+        "sponsor": "0xBcae617E213145BB76fD8023B3D9d7d4F97013e5",
+        "function": "register(0xBcae617E213145BB76fD8023B3D9d7d4F97013e5, 7, false)",
+        "value": "~1.67 BNB"
+      },
+      {
+        "step": 3,
+        "action": "Operations Admin Registration",
+        "description": "Operations Admin registers with Root Admin as sponsor", 
+        "wallet": "0x96264D29910eC58CD9fE4e9367931C191416b1e1",
+        "package": "Premium ($500)",
+        "sponsor": "0xBcae617E213145BB76fD8023B3D9d7d4F97013e5",
+        "function": "register(0xBcae617E213145BB76fD8023B3D9d7d4F97013e5, 6, false)",
+        "value": "~0.83 BNB"
+      },
+      {
+        "step": 4,
+        "action": "Support Admin Registration",
+        "description": "Support Admin registers with Root Admin as sponsor",
+        "wallet": "0xDB54f3f8F42e0165a15A33736550790BB0662Ac6", 
+        "package": "Professional ($300)",
+        "sponsor": "0xBcae617E213145BB76fD8023B3D9d7d4F97013e5",
+        "function": "register(0xBcae617E213145BB76fD8023B3D9d7d4F97013e5, 5, false)",
+        "value": "~0.5 BNB"
+      },
+      {
+        "step": 5,
+        "action": "Marketing Admin Registration",
+        "description": "Marketing Admin registers with Root Admin as sponsor",
+        "wallet": "0xE347b326Af572a7115aec536EBf68F72b263D816",
+        "package": "Advanced ($200)", 
+        "sponsor": "0xBcae617E213145BB76fD8023B3D9d7d4F97013e5",
+        "function": "register(0xBcae617E213145BB76fD8023B3D9d7d4F97013e5, 4, false)",
+        "value": "~0.33 BNB"
+      }
+    ]
+  },
+  "bscscanLinks": {
+    "mainnet": {
+      "contract": "https://bscscan.com/address/0x4965197b430343daec1042B413Dd6e20D06dAdba",
+      "writeContract": "https://bscscan.com/address/0x4965197b430343daec1042B413Dd6e20D06dAdba#writeContract",
+      "readContract": "https://bscscan.com/address/0x4965197b430343daec1042B413Dd6e20D06dAdba#readContract"
+    },
+    "testnet": {
+      "contract": "https://testnet.bscscan.com/address/0x01F1fCf1aA7072B6b9d95974174AecbF753795FF",
+      "writeContract": "https://testnet.bscscan.com/address/0x01F1fCf1aA7072B6b9d95974174AecbF753795FF#writeContract",
+      "readContract": "https://testnet.bscscan.com/address/0x01F1fCf1aA7072B6b9d95974174AecbF753795FF#readContract"
+    }
+  },
+  "commissionStructure": {
+    "directBonus": "40%",
+    "levelBonus": "10% across 10 levels",
+    "globalHelpPool": "30%",
+    "leaderBonusPool": "10%", 
+    "clubPool": "5%",
+    "earningsMultiplier": "4x",
+    "withdrawalRates": {
+      "level1": "70%",
+      "level2": "75%", 
+      "level3": "80%"
+    }
+  },
+  "networkTree": {
+    "root": {
+      "address": "0xBcae617E213145BB76fD8023B3D9d7d4F97013e5",
+      "name": "Root Admin",
+      "package": "Ultimate ($2000)",
+      "children": [
+        {
+          "address": "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29",
+          "name": "Treasury Admin", 
+          "package": "Elite ($1000)"
+        },
+        {
+          "address": "0x96264D29910eC58CD9fE4e9367931C191416b1e1",
+          "name": "Operations Admin",
+          "package": "Premium ($500)"
+        },
+        {
+          "address": "0xDB54f3f8F42e0165a15A33736550790BB0662Ac6",
+          "name": "Support Admin",
+          "package": "Professional ($300)"
+        },
+        {
+          "address": "0xE347b326Af572a7115aec536EBf68F72b263D816", 
+          "name": "Marketing Admin",
+          "package": "Advanced ($200)"
+        }
+      ]
+    }
+  },
+  "generatedAt": "2024-12-16T18:30:00Z",
+  "version": "1.0.0"
+} 

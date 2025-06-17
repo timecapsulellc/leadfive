@@ -1,0 +1,341 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.22;
+
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/proxy/ERC1967/ERC1967Utils.sol";
+
+// Import libraries
+import "./libraries/DataStructures.sol";
+import "./libraries/ConstantsLib.sol";
+import "./libraries/UserRegistration.sol";
+import "./libraries/ViewFunctions.sol";
+import "./libraries/AdminOperations.sol";
+import "./libraries/BonusCalculations.sol";
+import "./IPriceOracle.sol";
+
+/**
+ * @title OrphiCrowdFund - Optimized Contract
+ * @dev Size-optimized version using libraries
+ */
+contract OrphiCrowdFundOptimized is 
+    Initializable,
+    UUPSUpgradeable, 
+    OwnableUpgradeable,
+    AccessControlUpgradeable,
+    ReentrancyGuardUpgradeable,
+    PausableUpgradeable 
+{
+    using UserRegistration for mapping(address => DataStructures.User);
+    using ViewFunctions for mapping(address => DataStructures.User);
+    using AdminOperations for mapping(address => DataStructures.User);
+    using BonusCalculations for mapping(address => DataStructures.User);
+
+    // ==================== CONSTANTS ====================
+    uint256 public constant BASIS_POINTS = 10000;
+    uint256 public constant SPONSOR_COMMISSION_RATE = 4000; // 40%
+    uint256 public constant LEVEL_BONUS_RATE = 1000; // 10%
+    uint256 public constant GLOBAL_UPLINE_RATE = 1000; // 10%
+    uint256 public constant LEADER_BONUS_RATE = 1000; // 10%
+    uint256 public constant GLOBAL_HELP_POOL_RATE = 3000; // 30%
+    uint256 public constant EARNINGS_CAP_BASIS_POINTS = 30000; // 300%
+    uint256 public constant MAX_UPLINE_LEVELS = 30;
+
+    // ==================== ROLES ====================
+    bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
+    bytes32 public constant DISTRIBUTOR_ROLE = keccak256("DISTRIBUTOR_ROLE");
+    bytes32 public constant EMERGENCY_ROLE = keccak256("EMERGENCY_ROLE");
+    bytes32 public constant ORACLE_ROLE = keccak256("ORACLE_ROLE");
+
+    // ==================== ENUMS ====================
+    enum PackageTier { 
+        NONE,       // 0
+        PACKAGE_5,  // 1 - $300
+        PACKAGE_6,  // 2 - $500
+        PACKAGE_7,  // 3 - $1000
+        PACKAGE_8   // 4 - $2000
+    }
+
+    // ==================== STATE VARIABLES ====================
+    mapping(address => DataStructures.User) public users;
+    mapping(uint8 => DataStructures.Package) public packages;
+    mapping(address => address[]) public directReferrals;
+    
+    address[] public allUsers;
+    address[] public qualifiedLeaders;
+    address[] public clubPoolEligible;
+    
+    uint256 public totalUsers;
+    uint256 public totalInvestment;
+    uint256 public totalDistributed;
+    
+    // Pool balances
+    uint256 public globalHelpPoolBalance;
+    uint256 public leaderBonusPoolBalance;
+    uint256 public clubPoolBalance;
+    
+    // Distribution tracking
+    uint256 public lastGlobalDistribution;
+    uint256 public lastLeaderDistribution;
+    
+    // Oracle integration
+    IPriceOracle public priceOracle;
+    bool public oracleEnabled;
+    uint256 public usdtPriceInBNB;
+    
+    // Admin privilege system
+    address[16] public adminPrivilegeIDs;
+
+    // ==================== EVENTS ====================
+    event UserRegistered(address indexed user, address indexed referrer, address indexed sponsor, uint256 packageTier, uint256 amount, uint256 timestamp);
+    event InvestmentMade(address indexed user, PackageTier tier, uint256 amount, uint256 timestamp);
+    event BonusDistributed(address indexed recipient, address indexed payer, uint256 amount, uint8 level, string bonusType, uint256 timestamp);
+    event FundsWithdrawn(address indexed user, uint256 totalAmount, uint256 withdrawnAmount, uint256 reinvestedAmount, string withdrawalType, uint256 timestamp);
+    event PoolUpdated(string poolName, uint256 amountAdded, uint256 timestamp);
+
+    // ==================== MODIFIERS ====================
+    modifier onlyRegistered() {
+        require(users[msg.sender].isRegistered, "Not registered");
+        _;
+    }
+    
+    modifier onlyActive() {
+        require(users[msg.sender].isActive, "Account not active");
+        _;
+    }
+    
+    modifier notBlacklisted() {
+        require(!users[msg.sender].isBlacklisted, "Account blacklisted");
+        _;
+    }
+
+    // ==================== INITIALIZATION ====================
+    function initialize() public initializer {
+        __Ownable_init(msg.sender);
+        __AccessControl_init();
+        __ReentrancyGuard_init();
+        __Pausable_init();
+        __UUPSUpgradeable_init();
+        
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(ADMIN_ROLE, msg.sender);
+        _grantRole(EMERGENCY_ROLE, msg.sender);
+        
+        // Initialize packages for $300, $500, $1000, $2000
+        packages[1] = DataStructures.Package(300 * 1e18, 0.5 ether, 300 * 1e18, 0, true); // PACKAGE_5
+        packages[2] = DataStructures.Package(500 * 1e18, 0.8 ether, 500 * 1e18, 0, true); // PACKAGE_6  
+        packages[3] = DataStructures.Package(1000 * 1e18, 1.6 ether, 1000 * 1e18, 0, true); // PACKAGE_7
+        packages[4] = DataStructures.Package(2000 * 1e18, 3.2 ether, 2000 * 1e18, 0, true); // PACKAGE_8
+        
+        oracleEnabled = false;
+        usdtPriceInBNB = 1e15; // Default: 0.001 BNB per USDT
+    }
+
+    // ==================== USER REGISTRATION ====================
+    function register(address referrer, PackageTier tier, bool useUSDT) 
+        external 
+        payable 
+        nonReentrant 
+        whenNotPaused 
+    {
+        require(!users[msg.sender].isRegistered, "Already registered");
+        require(users[referrer].isRegistered, "Invalid referrer");
+        require(tier != PackageTier.NONE, "Invalid package");
+        
+        uint8 packageTier = uint8(tier);
+        uint256 requiredAmount;
+        
+        if (useUSDT) {
+            // Handle USDT payment logic here
+            revert("USDT payment not implemented in optimized version");
+        } else {
+            requiredAmount = oracleEnabled 
+                ? (packages[packageTier].usdtAmount * usdtPriceInBNB) / 1e18
+                : packages[packageTier].amount;
+            require(msg.value == requiredAmount, "Incorrect BNB amount");
+        }
+        
+        UserRegistration.RegistrationResult memory result = UserRegistration.registerUser(
+            users,
+            packages,
+            allUsers,
+            msg.sender,
+            referrer,
+            packageTier,
+            requiredAmount,
+            EARNINGS_CAP_BASIS_POINTS
+        );
+        
+        require(result.success, result.message);
+        
+        directReferrals[referrer].push(msg.sender);
+        totalUsers++;
+        totalInvestment += requiredAmount;
+        
+        // Distribute bonuses
+        _distributeBonuses(msg.sender, requiredAmount);
+        
+        emit UserRegistered(msg.sender, referrer, referrer, packageTier, requiredAmount, block.timestamp);
+        emit InvestmentMade(msg.sender, tier, requiredAmount, block.timestamp);
+    }
+
+    // ==================== ADMIN FUNCTIONS ====================
+    function registerRootUser(address user, PackageTier tier) external onlyRole(ADMIN_ROLE) {
+        require(!users[user].isRegistered, "Already registered");
+        
+        UserRegistration.RegistrationResult memory result = UserRegistration.registerAdminUser(
+            users,
+            allUsers,
+            user,
+            address(0),
+            uint8(tier)
+        );
+        
+        require(result.success, result.message);
+        totalUsers++;
+        
+        emit UserRegistered(user, address(0), address(0), uint8(tier), 0, block.timestamp);
+    }
+    
+    function adminFreeRegister(address user, uint8 privilegeIndex, address referrer, PackageTier tier) 
+        external 
+        onlyRole(ADMIN_ROLE) 
+    {
+        require(privilegeIndex < 16, "Invalid privilege index");
+        require(adminPrivilegeIDs[privilegeIndex] != address(0), "ID already used");
+        require(!users[user].isRegistered, "Already registered");
+        
+        adminPrivilegeIDs[privilegeIndex] = address(0);
+        
+        UserRegistration.RegistrationResult memory result = UserRegistration.registerAdminUser(
+            users,
+            allUsers,
+            user,
+            referrer,
+            uint8(tier)
+        );
+        
+        require(result.success, result.message);
+        directReferrals[referrer].push(user);
+        totalUsers++;
+        
+        emit UserRegistered(user, referrer, referrer, uint8(tier), 0, block.timestamp);
+    }
+
+    // ==================== VIEW FUNCTIONS (SIMPLIFIED) ====================
+    function getUserBasic(address user) external view returns (
+        bool isRegistered, bool isActive, address sponsor, uint256 totalInvestment, uint256 withdrawableAmount
+    ) {
+        DataStructures.User storage u = users[user];
+        return (u.isRegistered, u.isActive, u.sponsor, u.totalInvestment, u.withdrawableBalance);
+    }
+    
+    function getUserBonuses(address user) external view returns (uint256, uint256, uint256) {
+        return ViewFunctions.getUserBonuses(users, user);
+    }
+    
+    function getUserPoolEligibility(address user) external view returns (bool, bool) {
+        return ViewFunctions.getUserPoolEligibility(users, user);
+    }
+    
+    function getPackageAmount(uint256 tier) external view returns (uint256) {
+        return ViewFunctions.getPackageAmount(packages, tier);
+    }
+    
+    function getDirectReferrals(address user) external view returns (address[] memory) {
+        return ViewFunctions.getDirectReferrals(directReferrals, user);
+    }
+
+    // ==================== ADMIN OPERATIONS (DELEGATED TO LIBRARY) ====================
+    function blacklistUser(address user, string memory reason) external onlyRole(ADMIN_ROLE) {
+        AdminOperations.blacklistUser(users, user, reason);
+    }
+    
+    function unblacklistUser(address user) external onlyRole(ADMIN_ROLE) {
+        AdminOperations.unblacklistUser(users, user);
+    }
+    
+    function setEarningsCap(address user, uint256 cap, string memory reason) external onlyRole(ADMIN_ROLE) {
+        AdminOperations.setEarningsCap(users, user, cap, reason);
+    }
+    
+    function changeSponsor(address user, address newSponsor, string memory reason) external onlyRole(ADMIN_ROLE) {
+        AdminOperations.changeSponsor(users, user, newSponsor, reason);
+    }
+    
+    function manualBonusDistribution(address recipient, uint256 amount, string memory reason) external onlyRole(ADMIN_ROLE) {
+        AdminOperations.manualBonusDistribution(users, recipient, amount, reason);
+    }
+    
+    function emergencyWithdrawal(address recipient, uint256 amount) external onlyRole(ADMIN_ROLE) {
+        AdminOperations.emergencyWithdrawal(payable(recipient), amount);
+    }
+
+    // ==================== INTERNAL FUNCTIONS ====================
+    function _distributeBonuses(address user, uint256 amount) internal {
+        address sponsor = users[user].sponsor;
+        
+        // Direct bonus
+        uint256 directBonus = BonusCalculations.distributeDirectBonus(
+            users, sponsor, amount, SPONSOR_COMMISSION_RATE, BASIS_POINTS
+        );
+        
+        // Level bonuses (simplified)
+        uint256[] memory levelPercentages = new uint256[](10);
+        levelPercentages[0] = 300; // L1: 3%
+        levelPercentages[1] = 100; // L2: 1%
+        levelPercentages[2] = 100; // L3: 1%
+        for (uint256 i = 3; i < 10; i++) {
+            levelPercentages[i] = 50; // L4-L10: 0.5%
+        }
+        
+        uint256 levelBonus = BonusCalculations.distributeLevelBonuses(
+            users, user, amount, levelPercentages, BASIS_POINTS, 10
+        );
+        
+        // Pool contributions
+        uint256 ghpAmount = (amount * GLOBAL_HELP_POOL_RATE) / BASIS_POINTS;
+        globalHelpPoolBalance += ghpAmount;
+        
+        emit PoolUpdated("GHP", ghpAmount, block.timestamp);
+    }
+    
+    function getQualifiedLeaders() public view returns (address[] memory) {
+        return qualifiedLeaders;
+    }
+
+    // ==================== ORACLE FUNCTIONS ====================
+    function updateOracle(address newOracle) external onlyRole(ADMIN_ROLE) {
+        priceOracle = IPriceOracle(newOracle);
+    }
+    
+    function setOracleEnabled(bool enabled) external onlyRole(ADMIN_ROLE) {
+        oracleEnabled = enabled;
+    }
+    
+    function setOraclePrice(uint256 price) external onlyRole(ORACLE_ROLE) {
+        usdtPriceInBNB = price;
+    }
+
+    // ==================== EMERGENCY FUNCTIONS ====================
+    function emergencyPause() external onlyRole(EMERGENCY_ROLE) {
+        _pause();
+    }
+    
+    function emergencyUnpause() external onlyRole(EMERGENCY_ROLE) {
+        _unpause();
+    }
+
+    // ==================== REQUIRED OVERRIDES ====================
+    function _authorizeUpgrade(address newImplementation) internal override onlyRole(ADMIN_ROLE) {}
+
+    // ==================== FALLBACK ====================
+    receive() external payable {
+        // Accept BNB payments
+    }
+}

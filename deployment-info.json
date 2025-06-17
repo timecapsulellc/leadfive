@@ -1,0 +1,12 @@
+{
+  "network": "localhost",
+  "contractAddress": "0x6fA993A33AA860A79E15ae44AC9390465c5f02aC",
+  "implementationAddress": "0xbf0E5dE34973B27F641aFf48a8b18cf53B9Ee8de",
+  "adminAddress": "0x0000000000000000000000000000000000000000",
+  "deployer": "0x6CCF588dBA15134d7b3647F8237183958Ae87647",
+  "trezorAdmin": "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29",
+  "usdtToken": "0xa78E507928afA5501468a6C4D0A32b14E3cD3c04",
+  "timestamp": "2025-06-13T14:27:05.499Z",
+  "transactionHash": "0x71b7b568815814f7064457794ea482b4f84681ba5c66560f68adf4e861b0a403",
+  "gasUsed": "397542"
+}

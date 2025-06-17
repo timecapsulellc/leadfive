@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaMask Connection Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+        .success { background: #0f5132; border-color: #198754; }
+        .error { background: #842029; border-color: #dc3545; }
+        .warning { background: #664d03; border-color: #ffc107; }
+        .info { background: #055160; border-color: #0dcaf0; }
+        button {
+            background: #0d6efd;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0b5ed7; }
+        button:disabled { background: #6c757d; cursor: not-allowed; }
+        .code { 
+            background: #2d2d2d; 
+            padding: 10px; 
+            border-radius: 4px; 
+            font-family: monospace; 
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔗 MetaMask Connection Test</h1>
+    <p>This page tests MetaMask connection functionality for the ORPHI CrowdFund platform.</p>
+    
+    <div id="status" class="status info">
+        <strong>Status:</strong> Initializing...
+    </div>
+    
+    <div class="controls">
+        <button onclick="testMetaMaskDetection()">1. Test MetaMask Detection</button>
+        <button onclick="testNetworkDetection()">2. Test Network Detection</button>
+        <button onclick="testConnection()">3. Test Connection</button>
+        <button onclick="testBSCSwitch()">4. Test BSC Switch</button>
+        <button onclick="clearResults()">Clear Results</button>
+    </div>
+    
+    <div id="results"></div>
+    
+    <h2>📋 Test Results</h2>
+    <div id="testResults"></div>
+    
+    <h2>🔧 Troubleshooting</h2>
+    <div class="status warning">
+        <strong>Common Issues:</strong>
+        <ul>
+            <li><strong>MetaMask not detected:</strong> Install MetaMask browser extension</li>
+            <li><strong>Wrong network:</strong> Switch to BSC Mainnet (Chain ID: 56)</li>
+            <li><strong>Connection rejected:</strong> Approve connection in MetaMask popup</li>
+            <li><strong>Pending request:</strong> Check MetaMask for pending requests</li>
+        </ul>
+    </div>
+
+    <script>
+        let testCount = 0;
+        
+        function addResult(message, type = 'info') {
+            testCount++;
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.innerHTML = `<strong>Test ${testCount}:</strong> ${message}`;
+            results.appendChild(div);
+        }
+        
+        function updateStatus(message, type = 'info') {
+            const status = document.getElementById('status');
+            status.className = `status ${type}`;
+            status.innerHTML = `<strong>Status:</strong> ${message}`;
+        }
+        
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+            testCount = 0;
+            updateStatus('Ready for testing');
+        }
+        
+        async function testMetaMaskDetection() {
+            updateStatus('Testing MetaMask detection...');
+            
+            if (typeof window.ethereum !== 'undefined') {
+                addResult('✅ MetaMask detected successfully', 'success');
+                
+                // Check if it's actually MetaMask
+                if (window.ethereum.isMetaMask) {
+                    addResult('✅ Confirmed MetaMask provider', 'success');
+                } else {
+                    addResult('⚠️ Ethereum provider detected but may not be MetaMask', 'warning');
+                }
+                
+                updateStatus('MetaMask detection complete', 'success');
+            } else {
+                addResult('❌ MetaMask not detected. Please install MetaMask.', 'error');
+                updateStatus('MetaMask not found', 'error');
+            }
+        }
+        
+        async function testNetworkDetection() {
+            if (typeof window.ethereum === 'undefined') {
+                addResult('❌ MetaMask not available for network test', 'error');
+                return;
+            }
+            
+            updateStatus('Testing network detection...');
+            
+            try {
+                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                const chainIdDecimal = parseInt(chainId, 16);
+                
+                addResult(`🔍 Current Chain ID: ${chainId} (${chainIdDecimal})`, 'info');
+                
+                if (chainId === '0x38') {
+                    addResult('✅ Connected to BSC Mainnet (Chain ID: 56)', 'success');
+                    updateStatus('Correct network detected', 'success');
+                } else {
+                    const networkNames = {
+                        '0x1': 'Ethereum Mainnet',
+                        '0x89': 'Polygon Mainnet',
+                        '0xa': 'Optimism',
+                        '0xa4b1': 'Arbitrum One',
+                        '0x61': 'BSC Testnet'
+                    };
+                    
+                    const networkName = networkNames[chainId] || 'Unknown Network';
+                    addResult(`⚠️ Connected to ${networkName}. Need BSC Mainnet.`, 'warning');
+                    updateStatus('Wrong network detected', 'warning');
+                }
+            } catch (error) {
+                addResult(`❌ Network detection failed: ${error.message}`, 'error');
+                updateStatus('Network detection failed', 'error');
+            }
+        }
+        
+        async function testConnection() {
+            if (typeof window.ethereum === 'undefined') {
+                addResult('❌ MetaMask not available for connection test', 'error');
+                return;
+            }
+            
+            updateStatus('Testing wallet connection...');
+            
+            try {
+                // Request account access
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                
+                if (accounts.length > 0) {
+                    addResult(`✅ Connected to wallet: ${accounts[0]}`, 'success');
+                    addResult(`📍 Address: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`, 'info');
+                    updateStatus('Wallet connected successfully', 'success');
+                } else {
+                    addResult('❌ No accounts returned', 'error');
+                    updateStatus('Connection failed', 'error');
+                }
+            } catch (error) {
+                if (error.code === 4001) {
+                    addResult('❌ User rejected connection request', 'error');
+                    updateStatus('Connection rejected by user', 'error');
+                } else if (error.code === -32002) {
+                    addResult('⚠️ Connection request already pending', 'warning');
+                    updateStatus('Pending connection request', 'warning');
+                } else {
+                    addResult(`❌ Connection failed: ${error.message}`, 'error');
+                    updateStatus('Connection error', 'error');
+                }
+            }
+        }
+        
+        async function testBSCSwitch() {
+            if (typeof window.ethereum === 'undefined') {
+                addResult('❌ MetaMask not available for network switch test', 'error');
+                return;
+            }
+            
+            updateStatus('Testing BSC network switch...');
+            
+            try {
+                // Try to switch to BSC Mainnet
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0x38' }],
+                });
+                
+                addResult('✅ Successfully switched to BSC Mainnet', 'success');
+                updateStatus('Network switch successful', 'success');
+                
+            } catch (switchError) {
+                if (switchError.code === 4902) {
+                    addResult('⚠️ BSC not added to MetaMask. Attempting to add...', 'warning');
+                    
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_addEthereumChain',
+                            params: [
+                                {
+                                    chainId: '0x38',
+                                    chainName: 'BNB Smart Chain',
+                                    nativeCurrency: {
+                                        name: 'BNB',
+                                        symbol: 'BNB',
+                                        decimals: 18,
+                                    },
+                                    rpcUrls: ['https://bsc-dataseed.binance.org/'],
+                                    blockExplorerUrls: ['https://bscscan.com/'],
+                                },
+                            ],
+                        });
+                        
+                        addResult('✅ BSC Mainnet added and switched successfully', 'success');
+                        updateStatus('BSC network added and switched', 'success');
+                        
+                    } catch (addError) {
+                        addResult(`❌ Failed to add BSC network: ${addError.message}`, 'error');
+                        updateStatus('Failed to add BSC network', 'error');
+                    }
+                } else {
+                    addResult(`❌ Network switch failed: ${switchError.message}`, 'error');
+                    updateStatus('Network switch failed', 'error');
+                }
+            }
+        }
+        
+        // Initialize
+        window.addEventListener('load', () => {
+            updateStatus('Ready for testing');
+            addResult('🚀 MetaMask Connection Test initialized', 'info');
+            addResult('Click the buttons above to run individual tests', 'info');
+        });
+        
+        // Listen for account changes
+        if (typeof window.ethereum !== 'undefined') {
+            window.ethereum.on('accountsChanged', (accounts) => {
+                if (accounts.length === 0) {
+                    addResult('🔌 Wallet disconnected', 'warning');
+                } else {
+                    addResult(`🔄 Account changed to: ${accounts[0]}`, 'info');
+                }
+            });
+            
+            window.ethereum.on('chainChanged', (chainId) => {
+                const chainIdDecimal = parseInt(chainId, 16);
+                addResult(`🔄 Network changed to Chain ID: ${chainId} (${chainIdDecimal})`, 'info');
+            });
+        }
+    </script>
+</body>
+</html> 

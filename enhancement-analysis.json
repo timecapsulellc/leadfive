@@ -1,0 +1,75 @@
+{
+  "deploymentRequired": false,
+  "upgradeRecommended": true,
+  "features": [
+    {
+      "name": "Free-Tier Registration Privilege (Admin Only)",
+      "description": "Admin can register users without USDT deposit",
+      "contractChanges": [
+        "Add FREE_TIER enum value",
+        "Add adminFreeRegister function",
+        "Modify user registration logic",
+        "Add earning prevention for free-tier users"
+      ],
+      "storageChanges": false,
+      "enumChanges": true,
+      "functionAdditions": true,
+      "upgradeCompatible": true,
+      "securityImpact": "Low - Admin only functionality"
+    },
+    {
+      "name": "Flexible Registration Slot",
+      "description": "Custom investment amount ($10-$1000) with same distribution",
+      "contractChanges": [
+        "Add FLEXIBLE enum value",
+        "Add MIN/MAX_FLEXIBLE_AMOUNT constants",
+        "Add flexibleContribute function",
+        "Modify distribution logic for flexible amounts"
+      ],
+      "storageChanges": false,
+      "enumChanges": true,
+      "functionAdditions": true,
+      "upgradeCompatible": true,
+      "securityImpact": "Medium - New payment flow"
+    },
+    {
+      "name": "16 Admin Privilege IDs for Genealogy Setup",
+      "description": "Pre-defined admin IDs for structured network growth",
+      "contractChanges": [
+        "Add adminGenealogyIDs[16] storage array",
+        "Add initializeAdminIDs function",
+        "Add adminReferFromPrivilegeID function",
+        "Modify initialization logic"
+      ],
+      "storageChanges": true,
+      "enumChanges": false,
+      "functionAdditions": true,
+      "upgradeCompatible": true,
+      "securityImpact": "Low - Admin controlled genealogy"
+    }
+  ],
+  "cost": "~0.05 BNB",
+  "timeframe": "1-2 days",
+  "riskLevel": "Low",
+  "storageChanges": [
+    "adminGenealogyIDs[16]",
+    "MIN_FLEXIBLE_AMOUNT",
+    "MAX_FLEXIBLE_AMOUNT"
+  ],
+  "enumExtensions": [
+    "FREE_TIER",
+    "FLEXIBLE"
+  ],
+  "newFunctions": [
+    "adminFreeRegister",
+    "flexibleContribute",
+    "initializeAdminGenealogyIDs",
+    "adminReferFromPrivilegeID"
+  ],
+  "securityMeasures": [
+    "Role-based access",
+    "Reentrancy protection",
+    "Input validation",
+    "Pausable functionality"
+  ]
+}

@@ -31,23 +31,6 @@ console.log(`
 
 For maximum security with your Trezor wallet, you have three options:
 
-OPTION 1: REMIX IDE + TREZOR (RECOMMENDED)
-========================================
-1. Go to https://remix.ethereum.org
-2. Upload your contract files
-3. Connect your Trezor via "Injected Provider"
-4. Deploy directly through Remix
-5. All transactions signed by Trezor hardware wallet
-
-Steps:
-• Upload contracts/OrphiCrowdFund.sol
-• Upload contracts/modules/InternalAdminManager.sol
-• Compile both contracts
-• Connect Trezor wallet
-• Deploy InternalAdminManager first
-• Deploy OrphiCrowdFund second
-• Link them together
-
 OPTION 2: FRAME + HARDHAT
 ========================
 1. Install Frame: https://frame.sh

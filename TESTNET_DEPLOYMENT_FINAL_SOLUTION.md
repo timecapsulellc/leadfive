@@ -38,24 +38,6 @@ npx hardhat run scripts/deploy-simple-testnet.cjs --network bsc_testnet
 npx hardhat run scripts/deploy-simple-testnet.cjs --network bsc_testnet --config hardhat.config.cjs
 ```
 
-### Option 3: Remix IDE Deployment (Browser-based)
-1. Open [Remix IDE](https://remix.ethereum.org)
-2. Upload `contracts/OrphiCrowdFundSimplified.sol`
-3. Upload `contracts/SecurityLibrary.sol` 
-4. Upload `contracts/MockUSDT.sol`
-5. Compile with Solidity 0.8.22
-6. Connect MetaMask to BSC Testnet
-7. Deploy MockUSDT first
-8. Deploy OrphiCrowdFundSimplified with initialization parameters:
-   ```
-   _usdtToken: [MockUSDT_Address]
-   _oracleAddress: 0x0000000000000000000000000000000000000000
-   _adminAddress: [Your_Address]
-   _mevProtectionEnabled: true
-   _circuitBreakerEnabled: true
-   _timelockEnabled: true
-   ```
-
 ---
 
 ## 🔒 SECURITY FEATURES IMPLEMENTED

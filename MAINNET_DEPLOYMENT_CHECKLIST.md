@@ -1,262 +1,158 @@
-# 🚀 ORPHI CROWDFUND - MAINNET DEPLOYMENT CHECKLIST
+# 🚀 MAINNET DEPLOYMENT CHECKLIST
 
-## 📋 **PRE-DEPLOYMENT CHECKLIST**
+## ✅ Pre-Deployment Requirements
 
-### ✅ **1. SECURITY PREPARATIONS**
-- [ ] **Hardware Wallet Setup**
-  - [ ] Trezor/Ledger connected and verified
-  - [ ] Private keys secured and backed up
-  - [ ] Test hardware wallet connection
-  - [ ] Verify deployer address: `0xE0Ea180812e05AE1B257D212C01FC4E45865EBd4` (or your Trezor address)
+### 1. Environment Setup
+- [ ] `.env` file configured with mainnet settings
+- [ ] `DEPLOYER_PRIVATE_KEY` set (with sufficient BNB balance)
+- [ ] `FINAL_OWNER_ADDRESS` set (future contract owner)
+- [ ] `BSCSCAN_API_KEY` set for contract verification
+- [ ] Additional admin addresses configured (optional)
 
-- [ ] **Environment Configuration**
-  - [ ] `.env.mainnet.production` file configured
-  - [ ] `MAINNET_PRIVATE_KEY` set (or hardware wallet configured)
-  - [ ] `BSCSCAN_API_KEY` configured for verification
-  - [ ] Network settings validated (BSC Mainnet - Chain ID 56)
+### 2. Security Verification
+- [ ] Contract tested on BSC Testnet ✅ (COMPLETED)
+- [ ] All functions verified working ✅ (COMPLETED)
+- [ ] Package system tested ✅ (COMPLETED)
+- [ ] Admin controls tested ✅ (COMPLETED)
+- [ ] Contract size under 24KB ✅ (14.763 KiB)
 
-- [ ] **Funding Verification**
-  - [ ] Deployer wallet has minimum 0.1 BNB for gas fees
-  - [ ] Gas price settings optimized (5 gwei recommended)
-  - [ ] Backup funding source available
+### 3. Financial Preparation
+- [ ] Deployer wallet has minimum 0.1 BNB for deployment
+- [ ] Backup funds available for contract operations
+- [ ] Emergency withdrawal procedures documented
 
-### ✅ **2. CONTRACT VALIDATION**
-- [ ] **Source Code Review**
-  - [ ] `OrphiCrowdFundV2Enhanced.sol` final review completed
-  - [ ] No test-only code or debug statements
-  - [ ] All security audits passed (100% test success achieved)
-  - [ ] Contract size within limits
+## 🔧 Environment Variables Required
 
-- [ ] **Configuration Verification**
-  - [ ] USDT address correct: `0x55d398326f99059fF775485246999027B3197955`
-  - [ ] Package amounts verified: $30, $50, $100, $200
-  - [ ] Commission rates confirmed: 10% direct, 5% binary
-  - [ ] Matrix system validated
+Create a `.env` file with these variables:
 
-### ✅ **3. TESTING VALIDATION**
-- [ ] **Testnet Success Confirmation**
-  - [ ] ✅ **PERFECT 100% TEST SUCCESS ACHIEVED** (37/37 tests passed)
-  - [ ] All matrix functions working
-  - [ ] All registration functions validated
-  - [ ] All commission calculations verified
-  - [ ] Performance metrics excellent (740ms response time)
-
----
-
-## 🚀 **DEPLOYMENT PROCESS**
-
-### **STEP 1: Final Pre-Deployment Checks**
 ```bash
-# 1. Verify network configuration
-npx hardhat console --network bscMainnet
+# BSC Mainnet Configuration
+BSC_MAINNET_RPC_URL=https://bsc-dataseed.binance.org/
+DEPLOYER_PRIVATE_KEY=your_private_key_here
+FINAL_OWNER_ADDRESS=0x...  # Address that will receive ownership after frontend is ready
 
-# 2. Check deployer balance
-npx hardhat run scripts/get-wallet-address.js --network bscMainnet
+# Contract Addresses (Mainnet)
+USDT_MAINNET=0x55d398326f99059fF775485246999027B3197955
+PRICE_FEED_MAINNET=0x0567F2323251f0Aab15c8dFb1967E4e8A7D42aeE
 
-# 3. Validate contract compilation
-npx hardhat compile --config hardhat.mainnet.config.js
+# Verification
+BSCSCAN_API_KEY=your_bscscan_api_key
+
+# Optional: Additional Admins
+ADMIN_1_ADDRESS=0x...
+ADMIN_2_ADDRESS=0x...
 ```
 
-### **STEP 2: Execute Mainnet Deployment**
+## 🚀 Deployment Process
+
+### Step 1: Final Verification
+```bash
+# Test the deployment script on testnet first
+npx hardhat run scripts/deploy-mainnet-secure.cjs --network bsc_testnet
+```
+
+### Step 2: Mainnet Deployment
 ```bash
 # Deploy to BSC Mainnet
-npx hardhat run scripts/deploy-mainnet-production.js --network bscMainnet --config hardhat.mainnet.config.js
+npx hardhat run scripts/deploy-mainnet-secure.cjs --network bsc_mainnet
 ```
 
-**Expected Output:**
-- ✅ Network validation (Chain ID 56)
-- ✅ Deployer balance check
-- ✅ USDT contract validation
-- ✅ Gas estimation
-- ✅ Contract deployment
-- ✅ Post-deployment validation
-- ✅ Function testing
-- 📄 Deployment report saved
-
-### **STEP 3: Contract Verification**
+### Step 3: Contract Verification
 ```bash
-# Verify contract on BSCScan (replace with actual address)
-npx hardhat run scripts/verify-mainnet-contract.js --network bscMainnet <CONTRACT_ADDRESS>
+# Verify on BSCScan (address will be provided by deployment script)
+npx hardhat verify --network bsc_mainnet <CONTRACT_ADDRESS>
 ```
 
----
+## 🔒 Security Features
 
-## 📋 **POST-DEPLOYMENT CHECKLIST**
+### Delayed Ownership Transfer
+- ✅ Contract deploys with deployer as initial owner
+- ✅ Ownership transfer script generated but NOT executed
+- ✅ 7-day delay built into transfer process
+- ✅ Manual execution required after frontend completion
 
-### ✅ **1. IMMEDIATE VERIFICATION**
-- [ ] **Contract Deployment Confirmed**
-  - [ ] Contract address received and documented
-  - [ ] Transaction hash confirmed on BSCScan
-  - [ ] Contract code verified on BSCScan
-  - [ ] Gas costs documented
+### Admin Controls
+- ✅ Deployer automatically set as admin
+- ✅ Additional admins can be configured via environment
+- ✅ Admin functions available immediately
+- ✅ Emergency controls accessible
 
-- [ ] **Function Validation**
-  - [ ] All package prices correct
-  - [ ] Owner address verified
-  - [ ] USDT integration working
-  - [ ] Matrix functions operational
-  - [ ] Commission calculations accurate
+### Contract Security
+- ✅ UUPS upgradeable pattern
+- ✅ MEV protection enabled
+- ✅ Pause/unpause functionality
+- ✅ Blacklist management
+- ✅ Emergency withdrawal functions
 
-### ✅ **2. SECURITY VALIDATION**
-- [ ] **Access Control**
-  - [ ] Owner functions restricted to deployer
-  - [ ] No unauthorized access possible
-  - [ ] Emergency functions available
-  - [ ] Admin controls documented
+## 📋 Post-Deployment Tasks
 
-- [ ] **Integration Testing**
-  - [ ] USDT transfers working
-  - [ ] Registration process functional
-  - [ ] Withdrawal system operational
-  - [ ] Matrix positioning correct
+### Immediate (Day 1)
+- [ ] Verify contract on BSCScan
+- [ ] Test basic functions (getUserInfo, getPoolBalances)
+- [ ] Confirm admin access works
+- [ ] Document contract addresses
+- [ ] Set up monitoring
 
-### ✅ **3. PERFORMANCE VALIDATION**
-- [ ] **Response Times**
-  - [ ] View functions < 1 second
-  - [ ] Transaction confirmations < 30 seconds
-  - [ ] Gas usage optimized
-  - [ ] Network connectivity stable
+### Short-term (Week 1)
+- [ ] Complete frontend integration
+- [ ] Test user registration flow
+- [ ] Test package purchases
+- [ ] Test withdrawal system
+- [ ] Conduct security audit
 
----
+### Before Ownership Transfer
+- [ ] Frontend fully functional
+- [ ] All user flows tested
+- [ ] Emergency procedures documented
+- [ ] Team trained on admin functions
+- [ ] Backup plans in place
 
-## 🌐 **FRONTEND INTEGRATION**
+## 🎯 Contract Features Deployed
 
-### ✅ **1. CONFIGURATION UPDATES**
-- [ ] **Contract Address Update**
-  - [ ] Update `src/contracts.js` with new mainnet address
-  - [ ] Update `src/web3.js` network configuration
-  - [ ] Update dashboard components with mainnet settings
-  - [ ] Test frontend connection to mainnet contract
+### Package System
+- ✅ 8-tier packages ($30 - $2000)
+- ✅ 40% direct sponsor bonus
+- ✅ 10% level bonus distribution
 
-- [ ] **Network Configuration**
-  - [ ] BSC Mainnet RPC endpoints configured
-  - [ ] Chain ID 56 settings verified
-  - [ ] USDT token address updated
-  - [ ] Gas price settings optimized
+### Network Structure
+- ✅ 30-level upline chain
+- ✅ Binary matrix (2×∞)
+- ✅ Direct referral tracking
 
-### ✅ **2. USER INTERFACE UPDATES**
-- [ ] **Production Mode**
-  - [ ] Remove testnet warnings
-  - [ ] Update network indicators
-  - [ ] Enable mainnet features
-  - [ ] Test user registration flow
+### Compensation Pools
+- ✅ Leader Pool (weekly distribution)
+- ✅ Help Pool (weekly distribution)
+- ✅ Club Pool (monthly distribution)
 
----
+### User Management
+- ✅ 4× earnings cap system
+- ✅ Progressive withdrawal rates (70-80%)
+- ✅ Auto-reinvestment logic
+- ✅ Blacklist management
 
-## 📊 **MONITORING SETUP**
+## ⚠️ Critical Reminders
 
-### ✅ **1. TRANSACTION MONITORING**
-- [ ] **BSCScan Integration**
-  - [ ] Contract address bookmarked
-  - [ ] Transaction alerts configured
-  - [ ] Balance monitoring enabled
-  - [ ] Event log tracking setup
+1. **Private Key Security**: Never share or commit private keys
+2. **Test First**: Always test on testnet before mainnet
+3. **Monitor Closely**: Watch contract activity after deployment
+4. **Emergency Access**: Ensure emergency procedures are ready
+5. **Documentation**: Keep all deployment info secure and documented
 
-### ✅ **2. PERFORMANCE MONITORING**
-- [ ] **System Health**
-  - [ ] Response time monitoring
-  - [ ] Error rate tracking
-  - [ ] Gas usage optimization
-  - [ ] User activity metrics
+## 📞 Emergency Contacts
 
----
+- Deployer: [Your contact info]
+- Technical Lead: [Contact info]
+- Security Team: [Contact info]
 
-## 🎯 **LAUNCH PREPARATION**
+## 🔗 Important Links
 
-### ✅ **1. DOCUMENTATION**
-- [ ] **User Guides**
-  - [ ] Registration process documented
-  - [ ] Package selection guide
-  - [ ] Withdrawal instructions
-  - [ ] FAQ updated for mainnet
-
-- [ ] **Technical Documentation**
-  - [ ] Contract address published
-  - [ ] ABI files distributed
-  - [ ] Integration guides updated
-  - [ ] API endpoints documented
-
-### ✅ **2. COMMUNITY PREPARATION**
-- [ ] **Announcements**
-  - [ ] Mainnet launch announcement prepared
-  - [ ] Social media posts scheduled
-  - [ ] Community notifications sent
-  - [ ] Press release drafted
+- BSC Mainnet Explorer: https://bscscan.com/
+- Hardhat Documentation: https://hardhat.org/
+- OpenZeppelin Upgrades: https://docs.openzeppelin.com/upgrades-plugins/
 
 ---
 
-## 🚨 **EMERGENCY PROCEDURES**
-
-### ✅ **1. INCIDENT RESPONSE**
-- [ ] **Emergency Contacts**
-  - [ ] Development team contact list
-  - [ ] Security audit team contacts
-  - [ ] Community management contacts
-  - [ ] Legal/compliance contacts
-
-- [ ] **Emergency Actions**
-  - [ ] Contract pause procedures documented
-  - [ ] Emergency withdrawal processes
-  - [ ] Communication protocols established
-  - [ ] Rollback procedures prepared
-
----
-
-## 📈 **SUCCESS METRICS**
-
-### **Deployment Success Indicators:**
-- ✅ Contract deployed successfully
-- ✅ All functions operational
-- ✅ BSCScan verification complete
-- ✅ Frontend integration working
-- ✅ First user registration successful
-- ✅ First commission payment processed
-
-### **Performance Targets:**
-- 🎯 Transaction confirmation time: < 30 seconds
-- 🎯 Function response time: < 1 second
-- 🎯 Gas usage: Optimized and predictable
-- 🎯 Uptime: 99.9%
-- 🎯 User satisfaction: > 95%
-
----
-
-## 🏆 **FINAL VALIDATION**
-
-### **Pre-Launch Checklist:**
-- [ ] All deployment steps completed successfully
-- [ ] All post-deployment validations passed
-- [ ] Frontend integration tested and working
-- [ ] Monitoring systems operational
-- [ ] Documentation complete and published
-- [ ] Community prepared for launch
-- [ ] Emergency procedures in place
-- [ ] Success metrics tracking enabled
-
-### **Launch Authorization:**
-- [ ] Technical team approval: ________________
-- [ ] Security team approval: ________________
-- [ ] Business team approval: ________________
-- [ ] Final launch authorization: ________________
-
----
-
-## 📞 **SUPPORT INFORMATION**
-
-### **Technical Support:**
-- **Contract Address:** (To be filled after deployment)
-- **BSCScan URL:** (To be filled after deployment)
-- **Verification URL:** (To be filled after deployment)
-- **Deployment Date:** (To be filled after deployment)
-- **Deployer Address:** `0xE0Ea180812e05AE1B257D212C01FC4E45865EBd4`
-
-### **Emergency Contacts:**
-- **Development Team:** [Contact Information]
-- **Security Team:** [Contact Information]
-- **Community Management:** [Contact Information]
-
----
-
-**🎉 READY FOR MAINNET DEPLOYMENT!**
-
-*This checklist ensures a secure, successful, and well-monitored mainnet deployment of the OrphiCrowdFund platform.*
+**Status**: Ready for mainnet deployment ✅
+**Last Updated**: [Current Date]
+**Contract Size**: 14.763 KiB (under 24KB limit)
+**Testnet Address**: 0x01F1fCf1aA7072B6b9d95974174AecbF753795FF

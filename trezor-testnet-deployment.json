@@ -1,0 +1,9 @@
+{
+  "network": "BSC Testnet",
+  "chainId": 97,
+  "deployer": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
+  "trezorWallet": "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29",
+  "deploymentTime": "2025-06-14T07:53:10.272Z",
+  "status": "FAILED",
+  "error": "The contract has no initializer function matching the name or signature: orphiInitialize\n\nEnsure that the initializer function exists, specify an existing function with the 'initializer' option, or set the 'initializer' option to false to omit the initializer call."
+}
