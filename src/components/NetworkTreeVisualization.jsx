@@ -195,7 +195,7 @@ const NetworkTreeVisualization = ({
     refreshData,
     lookupUser,
     isConnected,
-    config: contractConfig
+    config
   } = useLiveNetworkData({
     autoRefresh: useLiveData && autoRefresh,
     refreshInterval,

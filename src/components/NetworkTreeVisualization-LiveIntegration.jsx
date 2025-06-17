@@ -196,7 +196,7 @@ const NetworkTreeVisualization = ({
     refreshData,
     lookupUser,
     isConnected,
-    config: contractConfig
+    config
   } = useLiveNetworkData({
     autoRefresh: useLiveData && autoRefresh,
     refreshInterval,
@@ -604,7 +604,7 @@ const NetworkTreeVisualization = ({
         <div className="live-stats">
           <div className="stat-item">
             <span className="stat-label">Contract:</span>
-            <span className="stat-value">{contractConfig?.address?.slice(0, 10)}...</span>
+            <span className="stat-value">{config?.address?.slice(0, 10)}...</span>
           </div>
           <div className="stat-item">
             <span className="stat-label">Total Users:</span>

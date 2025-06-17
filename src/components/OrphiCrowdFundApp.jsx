@@ -618,7 +618,7 @@ const OrphiCrowdFundApp = () => {
             </p>
             
             <div className="flex justify-center space-x-6 text-sm text-silver-mist">
-              <span>Contract: {contractConfig.contractAddress.slice(0, 10)}...</span>
+              <span>Contract: {ORPHI_CROWDFUND_CONFIG.address.slice(0, 10)}...</span>
               <span>•</span>
               <span>BSC Mainnet</span>
               <span>•</span>
