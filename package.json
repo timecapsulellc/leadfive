@@ -10,11 +10,11 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "start": "vite preview --host 0.0.0.0 --port 8080",
+    "preview": "vite preview --host 0.0.0.0 --port 8080",
+    "start": "vite preview --host 0.0.0.0 --port 8080 --allowedHosts all",
     "vercel-build": "vite build",
     "digitalocean-build": "vite build",
-    "digitalocean-start": "vite preview --host 0.0.0.0 --port 8080"
+    "digitalocean-start": "vite preview --host 0.0.0.0 --port 8080 --allowedHosts all"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.0",
