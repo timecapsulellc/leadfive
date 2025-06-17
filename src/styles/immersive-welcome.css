@@ -1,0 +1,616 @@
+/**
+ * Enhanced Immersive Welcome Page Styles
+ * Complete HTML Design Implementation
+ * ORPHI CrowdFund Platform - "Welcome to Orphi" + "Growing Together, Earning Together"
+ * Features: GSAP Animations, Particle Effects, Responsive Design
+ * Developed by LEAD 5 - Young Blockchain Engineers
+ */
+
+/* CSS Variables for ORPHI Brand Colors */
+:root {
+  --orphi-primary: #00D4FF;      /* Cyber Blue */
+  --orphi-secondary: #7B2CBF;    /* Royal Purple */
+  --orphi-accent: #FF6B35;       /* Energy Orange */
+  --orphi-success: #00FF88;      /* Success Green */
+  --orphi-error: #FF4757;        /* Error Red */
+  --orphi-warning: #FFD700;      /* Warning Gold */
+  --orphi-background: #1A1A2E;   /* Deep Space */
+  --orphi-surface: #16213E;      /* Midnight Blue */
+  --orphi-text: #FFFFFF;         /* Pure White */
+  --orphi-text-muted: #B8C5D1;   /* Silver Mist */
+  --orphi-border: rgba(255, 255, 255, 0.1);
+  --orphi-glass: rgba(255, 255, 255, 0.05);
+}
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  background: var(--orphi-background);
+  color: var(--orphi-text);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Main Container */
+.immersive-welcome {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 10;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
+  color: #FFFFFF;
+}
+
+/* Background Animation */
+.animated-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--orphi-background) 0%, var(--orphi-surface) 100%);
+  opacity: 0;
+  z-index: 1;
+}
+
+/* Header Styles */
+.immersive-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: rgba(26, 26, 46, 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--orphi-border);
+  padding: 1rem 2rem;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--orphi-primary), var(--orphi-secondary));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+.logo-text h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, var(--orphi-primary), var(--orphi-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.logo-text p {
+  font-size: 0.875rem;
+  color: var(--orphi-text-muted);
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.network-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 71, 87, 0.2);
+  color: var(--orphi-error);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+}
+
+/* Logo Animation */
+.logo-container {
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: scale(0.7) rotate(45deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-container svg {
+  width: 150px;
+  height: 150px;
+  filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.3));
+}
+
+.logo-container svg path {
+  opacity: 0;
+  transform: scale(0.7) rotate(45deg);
+}
+
+/* Welcome Text */
+.welcome-text {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateY(30px);
+  background: linear-gradient(90deg, var(--orphi-primary), var(--orphi-secondary), var(--orphi-accent));
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease-in-out infinite;
+  line-height: 1.2;
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+.welcome-text .word {
+  display: inline-block;
+  margin-right: 0.5rem;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.welcome-text .word:last-child {
+  margin-right: 0;
+}
+
+/* Tagline */
+.tagline {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 3rem;
+  color: var(--orphi-text-muted);
+  opacity: 0;
+  transform: translateY(20px);
+  line-height: 1.4;
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+.tagline .word {
+  display: inline-block;
+  margin-right: 0.3rem;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.tagline .word:last-child {
+  margin-right: 0;
+}
+
+/* Stats Container */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  opacity: 0;
+  transform: translateY(30px);
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.stat-card {
+  background: var(--orphi-glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--orphi-border);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--orphi-primary);
+  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+}
+
+.stat-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.stat-title {
+  font-size: 0.875rem;
+  color: var(--orphi-text-muted);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--orphi-text);
+  margin-bottom: 0.5rem;
+}
+
+.stat-change {
+  font-size: 0.75rem;
+  color: var(--orphi-success);
+  font-weight: 500;
+}
+
+/* Features Container */
+.features-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  width: 100%;
+  padding: 0 1rem;
+}
+
+.feature-icon {
+  opacity: 0;
+  transform: translateY(30px);
+  background: var(--orphi-glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--orphi-border);
+  border-radius: 16px;
+  padding: 2rem 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.feature-icon:hover {
+  transform: translateY(-5px);
+  border-color: var(--orphi-primary);
+  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+}
+
+.feature-icon i {
+  font-size: 2.5rem;
+  color: var(--orphi-primary);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.feature-icon h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--orphi-text);
+  line-height: 1.3;
+}
+
+/* Welcome Container */
+.welcome-container {
+  position: relative;
+  z-index: 10;
+  padding: 6rem 2rem 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  min-height: calc(100vh - 12rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Developer Credit */
+.developer-credit {
+  margin-top: 4rem;
+  opacity: 0.8;
+}
+
+.developer-credit p {
+  font-size: 0.875rem;
+  color: var(--orphi-text-muted);
+  line-height: 1.6;
+}
+
+.developer-credit .highlight {
+  color: var(--orphi-primary);
+  font-weight: 600;
+}
+
+/* Gradient Animation */
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Particle Effects */
+#particles-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  opacity: 0;
+}
+
+@keyframes particlesFadeIn {
+  from { opacity: 0; }
+  to { opacity: 0.6; }
+}
+
+/* Responsive Design */
+/* Large tablets and small laptops */
+@media (max-width: 1024px) {
+  .welcome-container {
+    padding: 5rem 1.5rem 3rem;
+  }
+  
+  .welcome-text {
+    font-size: 3rem;
+  }
+  
+  .tagline {
+    font-size: 1.375rem;
+  }
+  
+  .stats-container {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.25rem;
+  }
+  
+  .features-container {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+}
+
+/* Standard tablets */
+@media (max-width: 768px) {
+  .immersive-header {
+    padding: 1rem;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .welcome-container {
+    padding: 6rem 1rem 2rem;
+  }
+
+  .welcome-text {
+    font-size: 2.5rem;
+  }
+
+  .tagline {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .logo-container svg {
+    width: 120px;
+    height: 120px;
+  }
+
+  .stats-container {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .features-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .feature-icon {
+    padding: 1.5rem 1rem;
+  }
+
+  .feature-icon i {
+    font-size: 2rem;
+  }
+
+  .feature-icon h3 {
+    font-size: 0.875rem;
+  }
+
+  .welcome-text .word {
+    margin-right: 0.3rem;
+  }
+}
+
+/* Large mobile devices */
+@media (max-width: 640px) {
+  .welcome-text {
+    font-size: 2.25rem;
+    line-height: 1.1;
+  }
+  
+  .tagline {
+    font-size: 1.125rem;
+  }
+  
+  .stats-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .stat-card {
+    padding: 1.5rem;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .welcome-container {
+    padding: 5rem 0.75rem 2rem;
+  }
+
+  .welcome-text {
+    font-size: 2rem;
+    line-height: 1.1;
+  }
+
+  .tagline {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .logo-container {
+    margin-bottom: 1.5rem;
+  }
+
+  .logo-container svg {
+    width: 100px;
+    height: 100px;
+  }
+
+  .features-container {
+    grid-template-columns: 1fr;
+    gap: 0.875rem;
+  }
+
+  .stat-card,
+  .feature-icon {
+    padding: 1rem;
+  }
+  
+  .stat-icon {
+    font-size: 1.75rem;
+  }
+  
+  .feature-icon i {
+    font-size: 1.75rem;
+  }
+  
+  .developer-credit {
+    margin-top: 2rem;
+  }
+
+  .welcome-text .word {
+    margin-right: 0.25rem;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 360px) {
+  .welcome-text {
+    font-size: 1.75rem;
+  }
+  
+  .tagline {
+    font-size: 0.9rem;
+  }
+  
+  .logo-container svg {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .stat-card,
+  .feature-icon {
+    padding: 0.875rem;
+  }
+}
+
+/* Loading States */
+.wallet-connector {
+  opacity: 0;
+  transform: translateY(20px);
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .animated-background {
+    opacity: 1;
+  }
+  
+  .welcome-text,
+  .tagline,
+  .feature-icon,
+  .stats-container,
+  .wallet-connector {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  :root {
+    --orphi-background: #000000;
+    --orphi-surface: #1a1a1a;
+    --orphi-text: #ffffff;
+    --orphi-border: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .immersive-welcome {
+    background: white;
+    color: black;
+  }
+  
+  .animated-background,
+  #particles-canvas {
+    display: none;
+  }
+  
+  .welcome-text {
+    color: black;
+    -webkit-text-fill-color: black;
+  }
+} 

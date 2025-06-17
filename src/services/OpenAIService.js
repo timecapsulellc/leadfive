@@ -5,6 +5,19 @@ class OpenAIService {
     this.openai = null;
     this.isInitialized = false;
     this.apiKey = null;
+    this.model = import.meta.env.VITE_OPENAI_MODEL || "gpt-4-turbo-preview";
+    this.maxTokens = parseInt(import.meta.env.VITE_OPENAI_MAX_TOKENS) || 500;
+    
+    // Auto-initialize if environment variable is available
+    this.autoInitialize();
+  }
+
+  // Auto-initialize from environment variables
+  autoInitialize() {
+    const envApiKey = import.meta.env.VITE_OPENAI_API_KEY;
+    if (envApiKey && envApiKey !== 'sk-your-openai-key-here') {
+      this.initialize(envApiKey);
+    }
   }
 
   // Initialize OpenAI with API key
@@ -26,6 +39,34 @@ class OpenAIService {
     } catch (error) {
       console.error('❌ Failed to initialize OpenAI:', error);
       return false;
+    }
+  }
+
+  // Generate response with context
+  async generateResponse(prompt, context = {}) {
+    if (!this.isInitialized) {
+      return this.getFallbackResponse(prompt);
+    }
+
+    try {
+      const systemPrompt = this.buildSystemPrompt(context);
+      
+      const response = await this.openai.chat.completions.create({
+        model: this.model,
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: prompt }
+        ],
+        temperature: context.temperature || 0.8,
+        max_tokens: this.maxTokens,
+        presence_penalty: 0.6,
+        frequency_penalty: 0.3
+      });
+
+      return response.choices[0].message.content;
+    } catch (error) {
+      console.error('OpenAI API error:', error);
+      return this.getFallbackResponse(prompt);
     }
   }
 

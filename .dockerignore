@@ -1,23 +1,136 @@
+# Node.js
 node_modules
 npm-debug.log
-.git
-.gitignore
-README.md
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.nyc_output
-coverage
-.vscode
-.idea
-*.log
-.DS_Store
-Thumbs.db
+yarn-debug.log
+yarn-error.log
+.npm
+.yarn
+package-lock.json
+
+# Build outputs
 dist
 build
 .cache
 .temp
 temp
-tmp 
+tmp
+
+# Development files
+.git
+.gitignore
+.gitattributes
+.env*
+!.env.example
+
+# IDE and editor files
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Testing
+.nyc_output
+coverage
+test-results
+junit.xml
+
+# Documentation
+README.md
+*.md
+!deploy-digitalocean.md
+docs/
+audit-reports/
+
+# Deployment and scripts
+deploy.sh
+docker-compose*.yml
+nginx.conf
+deployment-summary.md
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Dependency directories
+jspm_packages/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
+
+# Archive files
+*.zip
+*.tar.gz
+*.tar.bz2
+*.rar
+*.7z
+
+# Backup files
+backup/
+*.backup
+*.bak
+
+# Contract artifacts (for smaller Docker image)
+artifacts/
+cache/
+deployments/
+
+# Test files
+test/
+tests/
+*.test.js
+*.spec.js
+
+# Development only
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local 

@@ -3,13 +3,25 @@ class ElevenLabsService {
     this.apiKey = null;
     this.isInitialized = false;
     this.baseUrl = 'https://api.elevenlabs.io/v1';
-    this.defaultVoiceId = 'EXAVITQu4vr4xnSDxMaL'; // Bella - friendly female voice
+    this.defaultVoiceId = import.meta.env.VITE_ELEVENLABS_VOICE_ID || 'EXAVITQu4vr4xnSDxMaL'; // Bella - friendly female voice
+    this.model = import.meta.env.VITE_ELEVENLABS_MODEL || 'eleven_multilingual_v2';
     this.voiceSettings = {
       stability: 0.75,
       similarity_boost: 0.75,
       style: 0.5,
       use_speaker_boost: true
     };
+    
+    // Auto-initialize if environment variable is available
+    this.autoInitialize();
+  }
+
+  // Auto-initialize from environment variables
+  autoInitialize() {
+    const envApiKey = import.meta.env.VITE_ELEVENLABS_API_KEY;
+    if (envApiKey && envApiKey !== 'your-elevenlabs-key-here') {
+      this.initialize(envApiKey);
+    }
   }
 
   // Initialize ElevenLabs with API key
@@ -41,7 +53,7 @@ class ElevenLabsService {
         },
         body: JSON.stringify({
           text: text,
-          model_id: options.model || 'eleven_multilingual_v2',
+          model_id: options.model || this.model,
           voice_settings: {
             ...this.voiceSettings,
             ...options.voiceSettings

@@ -9,6 +9,7 @@ export default defineConfig({
     global: 'globalThis',
     'process.env': {}
   },
+  envPrefix: 'VITE_',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

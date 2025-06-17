@@ -11,12 +11,11 @@ import { ORPHI_CROWDFUND_CONFIG, ORPHI_CROWDFUND_ABI } from '../contracts';
 // Import multi-wallet connector
 import WalletConnector from './WalletConnector';
 
-// Import AI Enhanced Dashboard
-import AIEnhancedDashboard from './dashboard/AIEnhancedDashboard';
+// Import Unified Dashboard
+import UnifiedOrphiDashboard from './dashboard/UnifiedOrphiDashboard';
 
-// Import AI components
-import AISettings from './admin/AISettings';
-import CompensationPlanUpload from './admin/CompensationPlanUpload';
+// Import Immersive Welcome Page
+import ImmersiveWelcomePage from './welcome/ImmersiveWelcomePage';
 
 const OrphiCrowdFundApp = () => {
   // State management
@@ -36,9 +35,6 @@ const OrphiCrowdFundApp = () => {
   });
   const [isCorrectNetwork, setIsCorrectNetwork] = useState(false);
   const [networkError, setNetworkError] = useState('');
-  const [showAIDashboard, setShowAIDashboard] = useState(false);
-  const [showAISettings, setShowAISettings] = useState(false);
-  const [showCompPlanUpload, setShowCompPlanUpload] = useState(false);
 
   // Package configurations with ORPHI branding
   const packages = [
@@ -260,6 +256,20 @@ const OrphiCrowdFundApp = () => {
       setIsCorrectNetwork(true);
       setNetworkError('');
       
+      // Initialize default user info immediately
+      setUserInfo({
+        isRegistered: false,
+        balance: '0',
+        totalInvestment: '0',
+        totalEarnings: '0',
+        directReferrals: '0',
+        teamSize: '0',
+        packageLevel: '0',
+        rank: '0',
+        sponsor: ethers.ZeroAddress,
+        registrationTime: null
+      });
+      
       // Initialize contract with new provider
       const contractInstance = new ethers.Contract(
         ORPHI_CROWDFUND_CONFIG.address,
@@ -279,6 +289,22 @@ const OrphiCrowdFundApp = () => {
     } catch (error) {
       console.error('Error handling wallet connection:', error);
       setNetworkError('Failed to initialize wallet connection');
+      
+      // Ensure userInfo is still set even if there's an error
+      if (!userInfo) {
+        setUserInfo({
+          isRegistered: false,
+          balance: '0',
+          totalInvestment: '0',
+          totalEarnings: '0',
+          directReferrals: '0',
+          teamSize: '0',
+          packageLevel: '0',
+          rank: '0',
+          sponsor: ethers.ZeroAddress,
+          registrationTime: null
+        });
+      }
     } finally {
       setLoading(false);
     }
@@ -296,39 +322,8 @@ const OrphiCrowdFundApp = () => {
   };
 
   const loadUserInfo = async (address) => {
-    if (!contract) return;
-    
-    try {
-      console.log('👤 Loading user info for:', address);
-      
-      // Try to get user info from contract
-      const info = await contract.getUser(address);
-      
-      // Check if user is registered (packageLevel > 0)
-      const isRegistered = info.packageLevel && parseInt(info.packageLevel.toString()) > 0;
-      
-      setUserInfo({
-        isRegistered: isRegistered,
-        balance: ethers.formatEther(info.withdrawableAmount || 0),
-        totalInvestment: ethers.formatEther(info.totalInvested || 0),
-        totalEarnings: ethers.formatEther(info.totalEarnings || 0),
-        directReferrals: info.directReferrals ? info.directReferrals.toString() : '0',
-        teamSize: info.teamSize ? info.teamSize.toString() : '0',
-        packageLevel: info.packageLevel ? info.packageLevel.toString() : '0',
-        rank: info.leaderRank ? info.leaderRank.toString() : '0',
-        sponsor: info.sponsor || ethers.ZeroAddress,
-        registrationTime: info.registrationTime ? new Date(parseInt(info.registrationTime.toString()) * 1000).toLocaleDateString() : null
-      });
-
-      console.log('✅ User info loaded:', {
-        isRegistered,
-        packageLevel: info.packageLevel ? info.packageLevel.toString() : '0',
-        totalEarnings: ethers.formatEther(info.totalEarnings || 0)
-      });
-
-    } catch (error) {
-      console.log('ℹ️ User not registered or error loading info:', error.message);
-      // Set default values for unregistered user
+    if (!contract) {
+      console.log('⚠️ No contract available, setting default user info');
       setUserInfo({
         isRegistered: false,
         balance: '0',
@@ -341,6 +336,57 @@ const OrphiCrowdFundApp = () => {
         sponsor: ethers.ZeroAddress,
         registrationTime: null
       });
+      return;
+    }
+    
+    try {
+      console.log('👤 Loading user info for:', address);
+      
+      // Try to get user info from contract
+      const info = await contract.getUser(address);
+      
+      // Check if user is registered (packageLevel > 0)
+      const isRegistered = info.packageLevel && parseInt(info.packageLevel.toString()) > 0;
+      
+      const userInfoData = {
+        isRegistered: isRegistered,
+        balance: ethers.formatEther(info.withdrawableAmount || 0),
+        totalInvestment: ethers.formatEther(info.totalInvested || 0),
+        totalEarnings: ethers.formatEther(info.totalEarnings || 0),
+        directReferrals: info.directReferrals ? info.directReferrals.toString() : '0',
+        teamSize: info.teamSize ? info.teamSize.toString() : '0',
+        packageLevel: info.packageLevel ? info.packageLevel.toString() : '0',
+        rank: info.leaderRank ? info.leaderRank.toString() : '0',
+        sponsor: info.sponsor || ethers.ZeroAddress,
+        registrationTime: info.registrationTime ? new Date(parseInt(info.registrationTime.toString()) * 1000).toLocaleDateString() : null
+      };
+      
+      setUserInfo(userInfoData);
+
+      console.log('✅ User info loaded:', {
+        isRegistered,
+        packageLevel: info.packageLevel ? info.packageLevel.toString() : '0',
+        totalEarnings: ethers.formatEther(info.totalEarnings || 0)
+      });
+
+    } catch (error) {
+      console.log('ℹ️ User not registered or error loading info:', error.message);
+      // Always set userInfo to something, even for unregistered users
+      const defaultUserInfo = {
+        isRegistered: false,
+        balance: '0',
+        totalInvestment: '0',
+        totalEarnings: '0',
+        directReferrals: '0',
+        teamSize: '0',
+        packageLevel: '0',
+        rank: '0',
+        sponsor: ethers.ZeroAddress,
+        registrationTime: null
+      };
+      
+      setUserInfo(defaultUserInfo);
+      console.log('📝 Set default user info for unregistered user');
     }
   };
 
@@ -374,446 +420,38 @@ const OrphiCrowdFundApp = () => {
     }
   };
 
-  // If AI Dashboard is enabled and user is connected, show AI Dashboard
-  if (showAIDashboard && account) {
+  // Debug logging
+  console.log('🔍 Dashboard Logic Debug:', {
+    account: !!account,
+    userInfo: !!userInfo,
+    userInfoLoaded: userInfo !== null,
+    loading
+  });
+
+  // If user is connected, show Unified Dashboard
+  if (account) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-deep-space to-midnight-blue">
-        {/* Header for AI Dashboard */}
-        <header className="glass-effect border-b border-white/10 p-4">
-          <div className="container mx-auto flex justify-between items-center">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-cyber-blue to-royal-purple rounded-xl flex items-center justify-center">
-                <span className="text-2xl font-bold text-white">O</span>
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gradient font-display">ORPHI AI Dashboard</h1>
-                <p className="text-sm text-silver-mist">Powered by ChatGPT & ElevenLabs</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => setShowAISettings(true)}
-                className="glass-effect px-4 py-2 rounded-lg text-sm font-semibold text-silver-mist hover:text-white transition-all"
-              >
-                <i className="fas fa-cog mr-2"></i>AI Settings
-              </button>
-              <button
-                onClick={() => setShowAIDashboard(false)}
-                className="bg-gradient-to-r from-royal-purple to-cyber-blue text-white px-4 py-2 rounded-lg text-sm font-semibold"
-              >
-                <i className="fas fa-arrow-left mr-2"></i>Back to Classic
-              </button>
-            </div>
-          </div>
-        </header>
-
-        <AIEnhancedDashboard 
-          account={account}
-          contractData={userInfo}
-          isConnected={!!account}
-        />
-
-        {/* AI Settings Modal */}
-        {showAISettings && (
-          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-gradient-to-br from-deep-space to-midnight-blue rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-              <div className="sticky top-0 bg-gradient-to-r from-royal-purple to-cyber-blue p-4 rounded-t-2xl">
-                <div className="flex justify-between items-center">
-                  <h2 className="text-xl font-bold text-white">AI Configuration</h2>
-                  <button
-                    onClick={() => setShowAISettings(false)}
-                    className="text-white hover:text-silver-mist transition-colors"
-                  >
-                    <i className="fas fa-times text-xl"></i>
-                  </button>
-                </div>
-              </div>
-              <div className="p-6">
-                <AISettings />
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+      <UnifiedOrphiDashboard 
+        account={account}
+        contract={contract}
+        provider={provider}
+        signer={signer}
+        userInfo={userInfo}
+        networkStats={networkStats}
+        isConnected={!!account}
+        loading={loading}
+      />
     );
   }
 
-  // If Compensation Plan Upload is shown
-  if (showCompPlanUpload) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-deep-space to-midnight-blue">
-        {/* Header */}
-        <header className="glass-effect border-b border-white/10 p-4">
-          <div className="container mx-auto flex justify-between items-center">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-cyber-blue to-royal-purple rounded-xl flex items-center justify-center">
-                <span className="text-2xl font-bold text-white">O</span>
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gradient font-display">Compensation Plan Upload</h1>
-                <p className="text-sm text-silver-mist">AI-powered analysis by ChatGPT</p>
-              </div>
-            </div>
-            <button
-              onClick={() => setShowCompPlanUpload(false)}
-              className="bg-gradient-to-r from-royal-purple to-cyber-blue text-white px-4 py-2 rounded-lg text-sm font-semibold"
-            >
-              <i className="fas fa-arrow-left mr-2"></i>Back to Dashboard
-            </button>
-          </div>
-        </header>
-
-        <div className="container mx-auto p-6">
-          <CompensationPlanUpload 
-            onAnalysisComplete={(result) => {
-              console.log('Compensation plan analysis:', result);
-            }}
-          />
-        </div>
-      </div>
-    );
-  }
-
+  // Welcome page for non-connected users - Use Enhanced Immersive Welcome Page
   return (
-    <div className="min-h-screen bg-gradient-to-br from-deep-space to-midnight-blue">
-      {/* Header */}
-      <header className="glass-effect border-b border-white/10">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-cyber-blue to-royal-purple rounded-xl flex items-center justify-center">
-                <span className="text-2xl font-bold text-white">O</span>
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gradient font-display">ORPHI</h1>
-                <p className="text-sm text-silver-mist">CrowdFund Platform</p>
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              {networkError && (
-                <div className="bg-alert-red/20 text-alert-red px-3 py-1 rounded-lg text-sm">
-                  {networkError}
-                </div>
-              )}
-              
-              {/* AI Dashboard Toggle */}
-              {account && (
-                <button
-                  onClick={() => setShowAIDashboard(!showAIDashboard)}
-                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
-                    showAIDashboard 
-                      ? 'bg-gradient-to-r from-royal-purple to-cyber-blue text-white' 
-                      : 'glass-effect text-silver-mist hover:text-white'
-                  }`}
-                >
-                  <i className="fas fa-robot mr-2"></i>
-                  {showAIDashboard ? 'Classic View' : 'AI Dashboard'}
-                </button>
-              )}
-
-              {/* Compensation Plan Upload */}
-              {account && (
-                <button
-                  onClick={() => setShowCompPlanUpload(true)}
-                  className="glass-effect px-4 py-2 rounded-lg text-sm font-semibold text-silver-mist hover:text-white transition-all"
-                >
-                  <i className="fas fa-file-upload mr-2"></i>
-                  Upload Plan
-                </button>
-              )}
-              
-              <WalletConnector
-                onConnect={handleWalletConnect}
-                onDisconnect={handleWalletDisconnect}
-                currentAccount={account}
-                isConnected={!!account}
-              />
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-6 text-center">
-          <h1 className="text-5xl md:text-7xl font-black text-gradient font-display mb-6 fade-in-up">
-            ORPHI CROWDFUND
-          </h1>
-          <p className="text-lg md:text-xl text-silver-mist mb-8 max-w-3xl mx-auto slide-in-right leading-relaxed">
-            Revolutionary Web3 Crowdfunding Platform. Experience next-generation decentralized investment 
-            powered by innovative blockchain technology and transparent smart contracts.
-          </p>
-          <div className="text-sm text-silver-mist/70 mb-4">
-            Developed by <span className="text-cyber-blue font-semibold">LEAD 5</span> - 
-            A group of young, freshly graduated blockchain engineers
-          </div>
-          
-          {/* Network Stats */}
-          <div className="stats-grid max-w-4xl mx-auto mb-12">
-            <div className="stat-card">
-              <div className="stat-icon stat-icon-primary">
-                👥
-              </div>
-              <div className="stat-content">
-                <div className="stat-title">Active Users</div>
-                <div className="stat-value">{networkStats.totalUsers.toLocaleString()}</div>
-                <div className="stat-change stat-change-up">
-                  ↗️ +12.4%
-                </div>
-              </div>
-            </div>
-            
-            <div className="stat-card">
-              <div className="stat-icon stat-icon-secondary">
-                💰
-              </div>
-              <div className="stat-content">
-                <div className="stat-title">Total Volume</div>
-                <div className="stat-value">${networkStats.totalVolume.toLocaleString()}</div>
-                <div className="stat-change stat-change-up">
-                  ↗️ +23.7%
-                </div>
-              </div>
-            </div>
-            
-            <div className="stat-card">
-              <div className="stat-icon stat-icon-success">
-                🎯
-              </div>
-              <div className="stat-content">
-                <div className="stat-title">Distributed</div>
-                <div className="stat-value">${networkStats.totalDistributed.toLocaleString()}</div>
-                <div className="stat-change stat-change-up">
-                  ↗️ +18.9%
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* User Dashboard */}
-      {account && userInfo && (
-        <section className="py-12">
-          <div className="container mx-auto px-6">
-            <div className="card cyber-glow mb-8">
-              <div className="card-header">
-                <h2 className="card-title text-xl md:text-2xl">Your Investment Dashboard</h2>
-                <div className={`px-3 md:px-4 py-2 rounded-full text-xs md:text-sm font-medium ${
-                  userInfo.isRegistered 
-                    ? 'bg-success-green/20 text-success-green' 
-                    : 'bg-alert-red/20 text-alert-red'
-                }`}>
-                  {userInfo.isRegistered ? 'Active Investor' : 'Not Registered'}
-                </div>
-              </div>
-              
-              {userInfo.isRegistered && (
-                <div className="stats-grid">
-                  <div className="stat-card">
-                    <div className="stat-icon stat-icon-primary">💎</div>
-                    <div className="stat-content">
-                      <div className="stat-title">Total Earnings</div>
-                      <div className="stat-value">{parseFloat(userInfo.totalEarnings).toFixed(4)} ETH</div>
-                    </div>
-                  </div>
-                  
-                  <div className="stat-card">
-                    <div className="stat-icon stat-icon-secondary">📈</div>
-                    <div className="stat-content">
-                      <div className="stat-title">Investment</div>
-                      <div className="stat-value">{parseFloat(userInfo.totalInvestment).toFixed(4)} ETH</div>
-                    </div>
-                  </div>
-                  
-                  <div className="stat-card">
-                    <div className="stat-icon stat-icon-success">👥</div>
-                    <div className="stat-content">
-                      <div className="stat-title">Team Size</div>
-                      <div className="stat-value">{userInfo.teamSize}</div>
-                    </div>
-                  </div>
-                  
-                  <div className="stat-card">
-                    <div className="stat-icon stat-icon-warning">🏆</div>
-                    <div className="stat-content">
-                      <div className="stat-title">Package Level</div>
-                      <div className="stat-value">{packages[parseInt(userInfo.packageLevel) - 1]?.name || 'N/A'}</div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Registration Section */}
-      {account && (!userInfo || !userInfo.isRegistered) && (
-        <section className="py-12">
-          <div className="container mx-auto px-6">
-            <div className="card purple-glow max-w-4xl mx-auto">
-              <div className="card-header">
-                <h2 className="card-title text-2xl md:text-3xl text-center">Choose Your Investment Package</h2>
-                <p className="text-sm md:text-base text-silver-mist text-center leading-relaxed">
-                  Select the crowdfunding package that aligns with your investment goals
-                </p>
-              </div>
-              
-              {/* Package Selection */}
-              <div className="package-grid">
-                {packages.map((pkg) => (
-                  <div 
-                    key={pkg.id}
-                    className={`package-card cursor-pointer transition-all ${
-                      selectedPackage === pkg.id ? 'featured' : ''
-                    } ${pkg.featured ? 'featured' : ''}`}
-                    onClick={() => setSelectedPackage(pkg.id)}
-                  >
-                    <div className="text-4xl mb-4">{pkg.icon}</div>
-                    <div className="package-name">{pkg.name}</div>
-                    <div className="package-price">${pkg.price}</div>
-                    <div className="text-sm text-silver-mist mb-6">
-                      {pkg.bnbPrice} BNB
-                    </div>
-                    
-                    <ul className="package-features text-sm">
-                      <li>✅ Direct Referral Bonus: {(pkg.price * 0.1).toFixed(0)}%</li>
-                      <li>✅ Network Growth Rewards</li>
-                      <li>✅ Global Pool Distribution</li>
-                      <li>✅ Leadership Incentives</li>
-                      {pkg.featured && <li>🌟 Priority Support</li>}
-                    </ul>
-                    
-                    {selectedPackage === pkg.id && (
-                      <div className="mt-4 p-3 bg-cyber-blue/10 rounded-lg border border-cyber-blue/30">
-                        <span className="text-cyber-blue font-medium">Selected Package</span>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-              
-              {/* Registration Form */}
-              <div className="mt-12 max-w-md mx-auto">
-                <div className="space-y-6">
-                  <div>
-                    <label className="block text-sm font-medium text-silver-mist mb-2">
-                      Referrer Address (Optional)
-                    </label>
-                    <input
-                      type="text"
-                      value={referrerAddress}
-                      onChange={(e) => setReferrerAddress(e.target.value)}
-                      placeholder="0x... or leave empty for direct join"
-                      className="input text-sm"
-                    />
-                  </div>
-                  
-                  <div className="flex items-center space-x-3">
-                    <input
-                      type="checkbox"
-                      id="useUSDT"
-                      checked={useUSDT}
-                      onChange={(e) => setUseUSDT(e.target.checked)}
-                      className="w-4 h-4 text-cyber-blue bg-transparent border-2 border-silver-mist rounded focus:ring-cyber-blue"
-                    />
-                    <label htmlFor="useUSDT" className="text-sm text-silver-mist">
-                      Pay with USDT instead of BNB
-                    </label>
-                  </div>
-                  
-                  <button
-                    onClick={register}
-                    disabled={loading}
-                    className="btn btn-primary w-full text-lg py-4"
-                  >
-                    {loading ? (
-                      <div className="flex items-center justify-center space-x-2">
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                        <span>Processing...</span>
-                      </div>
-                    ) : (
-                      `Register - ${packages.find(p => p.id === selectedPackage)?.bnbPrice} BNB`
-                    )}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Features Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gradient font-display mb-4">
-              Why Choose ORPHI CrowdFund?
-            </h2>
-            <p className="text-lg md:text-xl text-silver-mist max-w-2xl mx-auto leading-relaxed">
-              Experience the next generation of decentralized crowdfunding with innovative blockchain technology
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="card text-center">
-              <div className="text-4xl md:text-5xl mb-4">🔒</div>
-              <h3 className="text-lg md:text-xl font-semibold text-white mb-3">Secure & Transparent</h3>
-              <p className="text-sm md:text-base text-silver-mist leading-relaxed">
-                Built on blockchain with verified smart contracts. Every transaction is transparent and immutable.
-              </p>
-            </div>
-            
-            <div className="card text-center">
-              <div className="text-4xl md:text-5xl mb-4">⚡</div>
-              <h3 className="text-lg md:text-xl font-semibold text-white mb-3">Instant Rewards</h3>
-              <p className="text-sm md:text-base text-silver-mist leading-relaxed">
-                Automated smart contract distribution ensures instant reward payments to your wallet.
-              </p>
-            </div>
-            
-            <div className="card text-center">
-              <div className="text-4xl md:text-5xl mb-4">🌐</div>
-              <h3 className="text-lg md:text-xl font-semibold text-white mb-3">Global Community</h3>
-              <p className="text-sm md:text-base text-silver-mist leading-relaxed">
-                Join a worldwide community of investors and grow your crowdfunding network globally.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="glass-effect border-t border-white/10 py-12">
-        <div className="container mx-auto px-6">
-          <div className="text-center">
-            <div className="flex items-center justify-center space-x-4 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-r from-cyber-blue to-royal-purple rounded-lg flex items-center justify-center">
-                <span className="text-xl font-bold text-white">O</span>
-              </div>
-              <span className="text-2xl font-bold text-gradient font-display">ORPHI</span>
-            </div>
-            
-            <p className="text-sm md:text-base text-silver-mist mb-4">
-              The Future of Decentralized Crowdfunding
-            </p>
-            <div className="text-xs text-silver-mist/60 mb-2">
-              Engineered by LEAD 5 - Next-Generation Blockchain Developers
-            </div>
-            
-            <div className="flex justify-center space-x-6 text-sm text-silver-mist">
-              <span>Contract: {ORPHI_CROWDFUND_CONFIG.address.slice(0, 10)}...</span>
-              <span>•</span>
-              <span>BSC Mainnet</span>
-              <span>•</span>
-              <span>Verified ✅</span>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+    <ImmersiveWelcomePage 
+      onConnect={handleWalletConnect}
+      networkError={networkError}
+      isLoading={loading}
+      networkStats={networkStats}
+    />
   );
 };
 
