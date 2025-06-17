@@ -1,227 +1,43 @@
-# React + Vite
+# OrphiCrowdFund - MLM Crowdfunding Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React-based MLM (Multi-Level Marketing) crowdfunding platform built with blockchain integration and Supabase backend.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **User Authentication** - Secure login/signup with Supabase
+- **MLM Network Management** - Referral system and downline tracking
+- **Blockchain Integration** - Web3 wallet connections and transactions
+- **Real-time Updates** - Live data synchronization
+- **Responsive Design** - Mobile-first approach with Tailwind CSS
+- **Admin Dashboard** - Comprehensive management tools
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend**: React 18, Vite, Tailwind CSS
+- **Backend**: Supabase (PostgreSQL, Auth, Real-time)
+- **Blockchain**: Ethers.js, Web3Modal, WalletConnect
+- **Deployment**: Vercel, DigitalOcean ready
 
-# Orphi Crowd Fund Smart Contract
+## 📦 Installation
 
-## Introduction
+1. **Clone the repository**
+   ```bash
+   git clone git@github.com:timecapsulellc/orphicrowdfund.git
+   cd orphicrowdfund
+   ```
 
-This document provides an overview of the `OrphiCrowdFund.sol` smart contract, which powers the Orphi Crowd Fund platform. It outlines the core functionalities available to users, administrative capabilities, security features, and other relevant technical details.
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-The platform allows users to contribute USDT, participate in a community funding model, and earn rewards based on the program's structure.
+## 🚀 DigitalOcean Deployment
 
-## Deployed Contract Information (BSC Mainnet)
+This project is optimized for DigitalOcean deployment. Follow the deployment guide below.
 
-*   **Network:** Binance Smart Chain (BSC) Mainnet
-*   **Proxy Contract Address:** `0x4Db5C5C94e0e6eA5553f8432ca1D121DE350B732`
-*   **Implementation Contract Address:** `0x4CE48E3565E85cF74794C245463878672627fc1D`
-*   **Verify on BSCScan:** 
-    *   Proxy: `https://bscscan.com/address/0x4Db5C5C94e0e6eA5553f8432ca1D121DE350B732`
-    *   Implementation: `https://bscscan.com/address/0x4CE48E3565E85cF74794C245463878672627fc1D` (You may need to navigate to the proxy's contract page and find the implementation link via "Read as Proxy" or similar features on BSCScan).
+## 📋 Quick Start
 
-## Core Features (User-Facing)
-
-These are the primary functions users interact with:
-
-*   **`contribute(address sponsor, uint8 packageTier)`:**
-    *   Allows new users to register and make a USDT contribution by selecting a package tier.
-    *   Requires a valid, registered sponsor.
-    *   Distributes commissions (Sponsor, Level, Global Upline) and allocates funds to the Global Help Pool.
-    *   Protected against MEV and blacklisted users.
-*   **`withdrawFunds()`:**
-    *   Enables registered users to withdraw a portion of their available earnings.
-    *   A percentage of the earnings is withdrawn to the user's wallet, and the remainder is automatically reinvested.
-    *   The withdrawal rate depends on the number of direct referrals.
-    *   Protected against MEV and blacklisted users.
-*   **`claimRewards(string calldata rewardType)`:**
-    *   Allows registered users to claim their entire withdrawable amount without reinvestment.
-    *   Protected against blacklisted users.
-
-## Key Administrative Features
-
-The contract includes robust administrative functions, primarily controlled by the `TREZOR_ADMIN_WALLET` (`0xD29ef4aE187AB9E07B7E0839CF64508A3D70A229`), which holds `DEFAULT_ADMIN_ROLE`, `TREASURY_ROLE`, `EMERGENCY_ROLE`, and `POOL_MANAGER_ROLE`.
-
-*   **Emergency Pause/Unpause (`emergencyPause`, `emergencyUnpause`):**
-    *   Allows the Trezor Admin to pause and unpause critical contract functions in emergencies.
-*   **Pool Distribution (`distributeGlobalHelpPoolManual`, `distributeLeaderBonusPoolManual`):**
-    *   Admins can manually distribute accumulated funds from the Global Help Pool (30% of contributions) and Leader Bonus Pool to eligible recipients/leaders.
-*   **User Management:**
-    *   `blacklistUserAdmin`: Blacklist or unblacklist users for security reasons.
-    *   `changeSponsorAdmin`: Correct a user's sponsor relationship if needed.
-    *   `adjustUserEarningsAdmin`: Manually adjust a user's earnings for support or correction purposes.
-*   **Token Recovery (`recoverERC20Admin`):**
-    *   Recover ERC20 tokens (excluding the platform's USDT) mistakenly sent to the contract address.
-*   **Emergency Drain (`emergencyDrainPools`):**
-    *   In extreme situations, allows the `EMERGENCY_ROLE` holder to transfer the contract's entire USDT balance to the designated treasury address and reset pool balances.
-*   **Treasury Management (`setTreasury`):**
-    *   Allows the Trezor Admin to set the treasury address, which must be the Trezor Admin Wallet itself.
-
-## Security & Design Features
-
-*   **Upgradability (UUPS):** The contract uses the UUPS proxy pattern, allowing for future upgrades initiated by the owner (Trezor Admin Wallet).
-*   **Reentrancy Guard:** Protects key functions from reentrancy attacks.
-*   **MEV Protection:** A basic mechanism to deter Miner Extractable Value by preventing users from executing transactions in consecutive blocks.
-*   **Pausable:** Core functions can be paused by the admin in case of emergencies.
-*   **Access Control:** Role-based permissions for administrative functions.
-*   **Ownable:** The contract has a designated owner (Trezor Admin Wallet).
-
-## View Functions (Data Access)
-
-The contract provides numerous view functions to retrieve data without making state changes. These include:
-
-*   `getUserInfo`: Detailed information about a user.
-*   `getGlobalStats`: Platform-wide statistics (total users, volume, etc.).
-*   `getPoolBalancesEnhanced`: Detailed breakdown of various fund pools.
-*   `isUserRegistered`, `isUserBlacklisted`: Status checks for users.
-*   `getDistributionStatusEnhanced`: Information on automated pool distribution schedules.
-*   `getSystemHealthMetrics`: Key metrics for system health.
-*   `getContractName`, `version`, `getPackageAmounts`.
-
-## Libraries Used
-
-The contract leverages several internal libraries to manage complex logic:
-
-*   **`UserStorage.sol`:** Handles the structure and storage of user data.
-*   **`CommissionLib.sol`:** Contains logic for calculating and distributing commissions.
-*   **`MatrixLib.sol`:** Manages the user placement and relationships within the network structure.
-*   **`ConstantsLib.sol`:** Defines various constants like package amounts and withdrawal rates.
-
-## Frontend Technology Stack
-
-The Orphi Crowd Fund platform utilizes modern frontend technologies to provide an exceptional user experience:
-
-### **Core Technologies**
-*   **React 19.1.0** - Modern React with latest features and optimizations
-*   **Vite** - Fast build tool with HMR (Hot Module Replacement) support
-*   **react-d3-tree 3.6.6** - Professional network tree visualization library
-*   **Ethers.js 6.14.3** - Ethereum blockchain interaction library
-*   **React Toastify 11.0.5** - User notification system
-
-### **Key Frontend Components**
-
-#### **NetworkTreeVisualization.jsx**
-A professional, consolidated genealogy tree component that replaces multiple previous implementations:
-
-**Features:**
-*   Interactive D3 tree visualization with zoom/pan controls
-*   Configurable orientation (vertical/horizontal)
-*   Custom node rendering with package tier styling
-*   Search and filtering capabilities
-*   Node details panel with user information
-*   Export functionality for network reports
-*   Mobile-responsive design with theme support
-*   Real-time smart contract data integration
-
-**Usage Examples:**
-```jsx
-// Basic demo mode
-<NetworkTreeVisualization
-  demoMode={true}
-  showControls={true}
-  showSearch={true}
-  theme="dark"
-  onNodeClick={(node) => console.log(node)}
-/>
-
-// Real smart contract data
-<NetworkTreeVisualization
-  data={networkData}
-  orientation="vertical"
-  showStats={true}
-  showNodeDetails={true}
-  onTreeLoad={(data, stats) => handleTreeLoad(data, stats)}
-/>
-
-// Minimal embedded version
-<NetworkTreeVisualization
-  data={userData}
-  showControls={false}
-  showLegend={false}
-  initialZoom={0.6}
-  theme="light"
-/>
-```
-
-**Professional Engineering Approach:**
-- **Domain-Driven Naming:** `NetworkTreeVisualization` accurately reflects blockchain network relationships
-- **Consolidated Architecture:** Merged 6+ genealogy tree components into one robust solution
-- **Configuration-Driven:** Highly configurable through props for different use cases
-- **Performance Optimized:** Uses React hooks, memoization, and efficient data structures
-- **Accessibility Compliant:** WCAG 2.1 compliant with keyboard navigation and screen reader support
-- **Theme-Aware:** Dark/light mode support with CSS custom properties
-- **Mobile-First:** Responsive design with breakpoints for all device sizes
-
-## 🔗 Live Network Tree Visualization
-
-### Real-time BSC Mainnet Integration
-The NetworkTreeVisualization component now includes live integration with the deployed BSC Mainnet contract, providing real-time network monitoring and visualization.
-
-#### Key Features
-- **Live Data Fetching:** Real-time connection to BSC Mainnet contract
-- **Auto-refresh:** Configurable automatic data updates (default: 30 seconds)
-- **User Lookup:** Direct smart contract user information retrieval
-- **Connection Monitoring:** Real-time connection status and error handling
-- **Graceful Fallbacks:** Demo mode when live data unavailable
-
-#### Usage
-```jsx
-import NetworkTreeVisualization from './components/NetworkTreeVisualization-LiveIntegration';
-
-// Live BSC Mainnet integration
-<NetworkTreeVisualization
-  useLiveData={true}
-  autoRefresh={true}
-  refreshInterval={30000}
-  showStats={true}
-  showControls={true}
-/>
-
-// Demo mode for development
-<NetworkTreeVisualization
-  demoMode={true}
-  useLiveData={false}
-/>
-```
-
-#### Live Data Hook
-```jsx
-import { useLiveNetworkData } from './hooks/useLiveNetworkData';
-
-const {
-  networkData,
-  networkStats,
-  loading,
-  error,
-  refreshData,
-  isConnected
-} = useLiveNetworkData({
-  autoRefresh: true,
-  refreshInterval: 30000
-});
-```
-
-#### Contract Integration Status
-- ✅ **Contract Address:** `0x4Db5C5C94e0e6eA5553f8432ca1D121DE350B732`
-- ✅ **Network:** BSC Mainnet (Chain ID: 56)
-- ✅ **Interface Verified:** 4/5 core functions operational
-- ✅ **Real-time Stats:** Total users, contract status, USDT config
-- ✅ **Ready for Growth:** Will automatically populate as users register
-
-#### Files
-- `src/hooks/useLiveNetworkData.js` - Live data integration hook
-- `src/components/NetworkTreeVisualization-LiveIntegration.jsx` - Enhanced component
-- `verify-mainnet-interface.cjs` - Contract interface verification
-- `live-network-integration-showcase.html` - Integration demonstration
-
-## Disclaimer
-
-This document is for informational purposes. Always exercise caution and do your own research (DYOR) before interacting with any smart contract or decentralized application. The features and functionalities are subject to the terms and conditions outlined by the Orphi Crowd Fund platform.
+1. **Install dependencies**: `npm install`
+2. **Build the app**: `npm run build`
+3. **Start development**: `npm run dev`
+4. **Deploy to DigitalOcean**: Follow DIGITALOCEAN_DEPLOYMENT.md

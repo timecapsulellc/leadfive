@@ -3,12 +3,18 @@
   "version": "1.0.0",
   "description": "Frontend for OrphiCrowdFund MLM Platform",
   "main": "index.js",
+  "engines": {
+    "node": "18.x",
+    "npm": "9.x"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "vite",
-    "vercel-build": "vite build"
+    "start": "vite preview --host 0.0.0.0 --port 8080",
+    "vercel-build": "vite build",
+    "digitalocean-build": "vite build",
+    "digitalocean-start": "vite preview --host 0.0.0.0 --port 8080"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.0",
@@ -26,7 +32,7 @@
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
-    "vite": "^4.5.0"
+    "vite": "^6.3.5"
   },
   "keywords": [
     "blockchain",

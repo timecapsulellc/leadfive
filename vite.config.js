@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   define: {
@@ -17,13 +17,28 @@ export default defineConfig({
     }
   },
   server: {
-    port: 3000,
-    open: true
+    host: '0.0.0.0',
+    port: 8080
+  },
+  preview: {
+    host: '0.0.0.0',
+    port: 8080
   },
   build: {
     outDir: 'dist',
-    sourcemap: true,
-    minify: 'terser'
+    sourcemap: false,
+    minify: 'terser',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          web3: ['ethers', '@walletconnect/web3-provider', 'web3modal'],
+          supabase: ['@supabase/supabase-js'],
+          ui: ['react-toastify']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000
   },
   base: './'
 })
