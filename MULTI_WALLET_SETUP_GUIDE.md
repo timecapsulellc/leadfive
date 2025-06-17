@@ -46,9 +46,10 @@ Your ORPHI CrowdFund platform now supports **8+ different wallet types** without
 
 ### 🔗 **Universal Connection**
 8. **WalletConnect** 🔗
-   - Connect any mobile wallet
-   - QR code scanning
-   - Works with 100+ wallets
+   - Guides users to install mobile wallets
+   - Provides download links for popular wallets
+   - Fallback detection for browser wallets
+   - Works with Trust Wallet, MetaMask Mobile, SafePal
 
 ---
 

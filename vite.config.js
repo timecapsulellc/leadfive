@@ -6,15 +6,21 @@ import path from 'path'
 export default defineConfig({
   plugins: [react()],
   define: {
+    global: 'globalThis',
     'process.env': {}
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      buffer: 'buffer',
       process: "process/browser",
       stream: "stream-browserify",
-      util: "util"
+      util: "util",
+      events: "events"
     }
+  },
+  optimizeDeps: {
+    include: ['buffer', 'process', 'events']
   },
   server: {
     host: '0.0.0.0',
@@ -35,7 +41,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
-          web3: ['ethers', '@walletconnect/web3-provider', 'web3modal'],
+          web3: ['ethers', '@walletconnect/ethereum-provider', '@walletconnect/modal'],
           ui: ['react-toastify']
         }
       }

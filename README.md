@@ -1,11 +1,11 @@
-# OrphiCrowdFund - MLM Crowdfunding Platform
+# ORPHI CrowdFund - Web3 Crowdfunding Platform
 
-A modern React-based MLM (Multi-Level Marketing) crowdfunding platform built with blockchain integration and Supabase backend.
+A revolutionary Web3 crowdfunding platform built with React and blockchain technology. Developed by **LEAD 5** - a group of young, freshly graduated blockchain engineers passionate about creating innovative decentralized solutions.
 
 ## 🚀 Features
 
 - **User Authentication** - Secure login/signup with Supabase
-- **MLM Network Management** - Referral system and downline tracking
+- **Network Growth Management** - Referral system and community building
 - **Blockchain Integration** - Web3 wallet connections and transactions
 - **Real-time Updates** - Live data synchronization
 - **Responsive Design** - Mobile-first approach with Tailwind CSS

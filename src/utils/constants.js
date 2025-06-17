@@ -1,11 +1,12 @@
 
 // Application Constants
 export const APP_CONFIG = {
-  NAME: "Orphi Chain CrowdFund",
-  SHORT_NAME: "OrphiChain", 
-  TAGLINE: "AI-Powered Cross-Chain Community Platform",
-  VERSION: "v4.0",
-  DESCRIPTION: "Revolutionary blockchain-based crowdfunding platform with 5-pool compensation system"
+  NAME: "ORPHI CrowdFund",
+  SHORT_NAME: "ORPHI", 
+  TAGLINE: "Web3 Crowdfunding Platform by LEAD 5",
+  VERSION: "v1.0",
+  DESCRIPTION: "Revolutionary Web3 crowdfunding platform with transparent smart contracts",
+  DEVELOPER: "LEAD 5 - Young Blockchain Engineers"
 };
 
 // OrphiChain Official Brand Colors
@@ -46,16 +47,16 @@ export const BRAND_COLORS = {
 // Compensation Pool Configuration with Brand Colors
 export const COMPENSATION_POOLS = [
   { 
-    name: 'Sponsor Commission', 
+    name: 'Referral Commission', 
     percentage: 40, 
     color: BRAND_COLORS.CYBER_BLUE,
     description: 'Direct referral commission' 
   },
   { 
-    name: 'Level Bonus', 
+    name: 'Network Bonus', 
     percentage: 10, 
     color: BRAND_COLORS.ROYAL_PURPLE,
-    description: 'Multi-level team bonus' 
+    description: 'Network growth bonus' 
   },
   { 
     name: 'Global Upline Bonus', 

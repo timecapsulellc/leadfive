@@ -404,10 +404,14 @@ const OrphiCrowdFundApp = () => {
           <h1 className="text-5xl md:text-7xl font-black text-gradient font-display mb-6 fade-in-up">
             ORPHI CROWDFUND
           </h1>
-          <p className="text-xl text-silver-mist mb-8 max-w-3xl mx-auto slide-in-right">
-            The Future of Decentralized Investment. Join the most advanced MLM platform 
-            built on blockchain technology with transparent smart contracts.
+          <p className="text-lg md:text-xl text-silver-mist mb-8 max-w-3xl mx-auto slide-in-right leading-relaxed">
+            Revolutionary Web3 Crowdfunding Platform. Experience next-generation decentralized investment 
+            powered by innovative blockchain technology and transparent smart contracts.
           </p>
+          <div className="text-sm text-silver-mist/70 mb-4">
+            Developed by <span className="text-cyber-blue font-semibold">LEAD 5</span> - 
+            A group of young, freshly graduated blockchain engineers
+          </div>
           
           {/* Network Stats */}
           <div className="stats-grid max-w-4xl mx-auto mb-12">
@@ -459,13 +463,13 @@ const OrphiCrowdFundApp = () => {
           <div className="container mx-auto px-6">
             <div className="card cyber-glow mb-8">
               <div className="card-header">
-                <h2 className="card-title text-2xl">Your Dashboard</h2>
-                <div className={`px-4 py-2 rounded-full text-sm font-medium ${
+                <h2 className="card-title text-xl md:text-2xl">Your Investment Dashboard</h2>
+                <div className={`px-3 md:px-4 py-2 rounded-full text-xs md:text-sm font-medium ${
                   userInfo.isRegistered 
                     ? 'bg-success-green/20 text-success-green' 
                     : 'bg-alert-red/20 text-alert-red'
                 }`}>
-                  {userInfo.isRegistered ? 'Active Member' : 'Not Registered'}
+                  {userInfo.isRegistered ? 'Active Investor' : 'Not Registered'}
                 </div>
               </div>
               
@@ -515,8 +519,10 @@ const OrphiCrowdFundApp = () => {
           <div className="container mx-auto px-6">
             <div className="card purple-glow max-w-4xl mx-auto">
               <div className="card-header">
-                <h2 className="card-title text-3xl text-center">Choose Your Package</h2>
-                <p className="text-silver-mist text-center">Select the investment package that suits your goals</p>
+                <h2 className="card-title text-2xl md:text-3xl text-center">Choose Your Investment Package</h2>
+                <p className="text-sm md:text-base text-silver-mist text-center leading-relaxed">
+                  Select the crowdfunding package that aligns with your investment goals
+                </p>
               </div>
               
               {/* Package Selection */}
@@ -536,12 +542,12 @@ const OrphiCrowdFundApp = () => {
                       {pkg.bnbPrice} BNB
                     </div>
                     
-                    <ul className="package-features">
-                      <li>✅ Sponsor Bonus: {pkg.price * 0.1}%</li>
-                      <li>✅ Level Bonus: Up to 10 levels</li>
-                      <li>✅ Global Upline Bonus</li>
-                      <li>✅ Leader Pool Share</li>
-                      {pkg.featured && <li>🌟 Premium Support</li>}
+                    <ul className="package-features text-sm">
+                      <li>✅ Direct Referral Bonus: {(pkg.price * 0.1).toFixed(0)}%</li>
+                      <li>✅ Network Growth Rewards</li>
+                      <li>✅ Global Pool Distribution</li>
+                      <li>✅ Leadership Incentives</li>
+                      {pkg.featured && <li>🌟 Priority Support</li>}
                     </ul>
                     
                     {selectedPackage === pkg.id && (
@@ -564,8 +570,8 @@ const OrphiCrowdFundApp = () => {
                       type="text"
                       value={referrerAddress}
                       onChange={(e) => setReferrerAddress(e.target.value)}
-                      placeholder="0x... or leave empty"
-                      className="input"
+                      placeholder="0x... or leave empty for direct join"
+                      className="input text-sm"
                     />
                   </div>
                   
@@ -607,36 +613,36 @@ const OrphiCrowdFundApp = () => {
       <section className="py-20">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gradient font-display mb-4">
-              Why Choose ORPHI?
+            <h2 className="text-3xl md:text-4xl font-bold text-gradient font-display mb-4">
+              Why Choose ORPHI CrowdFund?
             </h2>
-            <p className="text-xl text-silver-mist max-w-2xl mx-auto">
-              Experience the next generation of decentralized investment with cutting-edge technology
+            <p className="text-lg md:text-xl text-silver-mist max-w-2xl mx-auto leading-relaxed">
+              Experience the next generation of decentralized crowdfunding with innovative blockchain technology
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             <div className="card text-center">
-              <div className="text-5xl mb-4">🔒</div>
-              <h3 className="text-xl font-semibold text-white mb-3">Secure & Transparent</h3>
-              <p className="text-silver-mist">
+              <div className="text-4xl md:text-5xl mb-4">🔒</div>
+              <h3 className="text-lg md:text-xl font-semibold text-white mb-3">Secure & Transparent</h3>
+              <p className="text-sm md:text-base text-silver-mist leading-relaxed">
                 Built on blockchain with verified smart contracts. Every transaction is transparent and immutable.
               </p>
             </div>
             
             <div className="card text-center">
-              <div className="text-5xl mb-4">⚡</div>
-              <h3 className="text-xl font-semibold text-white mb-3">Instant Rewards</h3>
-              <p className="text-silver-mist">
-                Automated smart contract distribution ensures instant commission payments to your wallet.
+              <div className="text-4xl md:text-5xl mb-4">⚡</div>
+              <h3 className="text-lg md:text-xl font-semibold text-white mb-3">Instant Rewards</h3>
+              <p className="text-sm md:text-base text-silver-mist leading-relaxed">
+                Automated smart contract distribution ensures instant reward payments to your wallet.
               </p>
             </div>
             
             <div className="card text-center">
-              <div className="text-5xl mb-4">🌐</div>
-              <h3 className="text-xl font-semibold text-white mb-3">Global Network</h3>
-              <p className="text-silver-mist">
-                Join a worldwide community of investors and build your network across the globe.
+              <div className="text-4xl md:text-5xl mb-4">🌐</div>
+              <h3 className="text-lg md:text-xl font-semibold text-white mb-3">Global Community</h3>
+              <p className="text-sm md:text-base text-silver-mist leading-relaxed">
+                Join a worldwide community of investors and grow your crowdfunding network globally.
               </p>
             </div>
           </div>
@@ -654,9 +660,12 @@ const OrphiCrowdFundApp = () => {
               <span className="text-2xl font-bold text-gradient font-display">ORPHI</span>
             </div>
             
-            <p className="text-silver-mist mb-4">
-              The Future of Decentralized Investment
+            <p className="text-sm md:text-base text-silver-mist mb-4">
+              The Future of Decentralized Crowdfunding
             </p>
+            <div className="text-xs text-silver-mist/60 mb-2">
+              Engineered by LEAD 5 - Next-Generation Blockchain Developers
+            </div>
             
             <div className="flex justify-center space-x-6 text-sm text-silver-mist">
               <span>Contract: {ORPHI_CROWDFUND_CONFIG.address.slice(0, 10)}...</span>

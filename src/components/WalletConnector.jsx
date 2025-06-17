@@ -229,24 +229,27 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
           break;
 
         case 'walletconnect':
-          try {
-            // Dynamic import for WalletConnect
-            const WalletConnectProvider = (await import('@walletconnect/web3-provider')).default;
-            
-            const walletConnectProvider = new WalletConnectProvider({
-              rpc: {
-                56: 'https://bsc-dataseed.binance.org/',
-              },
-              chainId: 56,
-              bridge: 'https://bridge.walletconnect.org',
-              qrcodeModal: (await import('@walletconnect/qrcode-modal')).default,
-            });
-
-            await walletConnectProvider.enable();
-            provider = walletConnectProvider;
-            accounts = walletConnectProvider.accounts;
-          } catch (wcError) {
-            throw new Error('WalletConnect connection failed. Please try again or use a different wallet.');
+          // For now, redirect WalletConnect users to install a mobile wallet
+          // This provides better UX than failing with project ID error
+          const walletOptions = [
+            { name: 'Trust Wallet', url: 'https://trustwallet.com/download' },
+            { name: 'MetaMask Mobile', url: 'https://metamask.io/download/' },
+            { name: 'SafePal', url: 'https://safepal.io/download' },
+            { name: 'Binance Wallet', url: 'https://www.binance.org/en' }
+          ];
+          
+          const message = `WalletConnect requires additional setup. For now, please install one of these mobile wallets:\n\n${walletOptions.map(w => `• ${w.name}`).join('\n')}\n\nThen connect directly using the wallet's browser or scan QR codes from their apps.`;
+          
+          if (confirm(message + '\n\nWould you like to visit Trust Wallet download page?')) {
+            window.open('https://trustwallet.com/download', '_blank');
+          }
+          
+          // Try to detect if any wallet is available as fallback
+          if (window.ethereum) {
+            provider = window.ethereum;
+            accounts = await provider.request({ method: 'eth_requestAccounts' });
+          } else {
+            throw new Error('Please install a wallet app first');
           }
           break;
 
