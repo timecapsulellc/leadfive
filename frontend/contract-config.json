@@ -1,13 +1,13 @@
 {
   "network": {
-    "name": "BSC Testnet",
-    "chainId": 97,
-    "rpcUrl": "https://data-seed-prebsc-1-s1.binance.org:8545/",
-    "blockExplorer": "https://testnet.bscscan.com"
+    "name": "BSC Mainnet",
+    "chainId": 56,
+    "rpcUrl": "https://bsc-dataseed.binance.org/",
+    "blockExplorer": "https://bscscan.com"
   },
   "contracts": {
     "OrphiCrowdFund": {
-      "address": "0x70147f13E7e2363071A85772A0a4f08065BE993F",
+      "address": "0x4965197b430343daec1042B413Dd6e20D06dAdba",
       "implementation": "0x55a4355F729A400A2C4d47aC696F460D8bD7D085",
       "abi": [
         {
@@ -1234,8 +1234,8 @@
       ]
     },
     "USDT": {
-      "address": "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd",
-      "decimals": 6,
+      "address": "0x55d398326f99059fF775485246999027B3197955",
+      "decimals": 18,
       "symbol": "USDT"
     }
   },

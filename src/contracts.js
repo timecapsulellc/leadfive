@@ -2,15 +2,15 @@
 // Auto-generated on 2025-06-10T12:10:41.238Z
 
 export const ORPHI_CROWDFUND_CONFIG = {
-    address: "0xf9538Fe9FCF16C018E6057744555F2556f63cED9",
-    implementationAddress: "0xE9184176cbc9eF5635e47505dD2029C3d07Ea4DC",
+    address: "0x4965197b430343daec1042B413Dd6e20D06dAdba",
+    implementationAddress: "",
     network: "BSC Mainnet",
     chainId: 56,
     usdtAddress: "0x55d398326f99059fF775485246999027B3197955",
     rpcUrl: "https://bsc-dataseed.binance.org/",
     blockExplorer: "https://bscscan.com",
-    contractUrl: "https://bscscan.com/address/0xf9538Fe9FCF16C018E6057744555F2556f63cED9",
-    writeContractUrl: "https://bscscan.com/address/0xf9538Fe9FCF16C018E6057744555F2556f63cED9#writeContract"
+    contractUrl: "https://bscscan.com/address/0x4965197b430343daec1042B413Dd6e20D06dAdba",
+    writeContractUrl: "https://bscscan.com/address/0x4965197b430343daec1042B413Dd6e20D06dAdba#writeContract"
 };
 
 export const ORPHI_CROWDFUND_ABI = [
