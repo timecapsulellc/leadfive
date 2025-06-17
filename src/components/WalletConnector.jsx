@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ethers } from 'ethers';
 
 // Wallet connector icons (you can replace with actual SVGs)
@@ -19,6 +19,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
   const [selectedWallet, setSelectedWallet] = useState(null);
   const [availableWallets, setAvailableWallets] = useState([]);
   const [error, setError] = useState(null);
+  const [isDetecting, setIsDetecting] = useState(true);
 
   // BSC Mainnet configuration
   const BSC_CONFIG = {
@@ -33,191 +34,243 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
     blockExplorerUrls: ['https://bscscan.com/'],
   };
 
-  // Enhanced wallet detection
-  useEffect(() => {
-    const detectWallets = () => {
-      const wallets = [];
-      
-      console.log('🔍 Detecting wallets...', {
-        ethereum: !!window.ethereum,
-        isMetaMask: window.ethereum?.isMetaMask,
-        isTrust: window.ethereum?.isTrust,
-        providers: window.ethereum?.providers
-      });
+  // Enhanced wallet detection with better timing
+  const detectWallets = useCallback(() => {
+    console.log('🔍 Starting wallet detection...');
+    const wallets = [];
+    
+    // Log current state
+    console.log('Current window state:', {
+      ethereum: !!window.ethereum,
+      isMetaMask: window.ethereum?.isMetaMask,
+      isTrust: window.ethereum?.isTrust,
+      providers: window.ethereum?.providers,
+      readyState: document.readyState
+    });
 
-      // Check for multiple providers first
-      if (window.ethereum?.providers && Array.isArray(window.ethereum.providers)) {
-        // Multiple wallet providers detected
-        window.ethereum.providers.forEach(provider => {
-          if (provider.isMetaMask) {
-            wallets.push({
-              name: 'MetaMask',
-              id: 'metamask',
-              icon: WalletIcons.MetaMask,
-              installed: true,
-              downloadUrl: 'https://metamask.io/download/',
-              provider: provider
-            });
-          }
-          if (provider.isTrust) {
-            wallets.push({
-              name: 'Trust Wallet',
-              id: 'trust',
-              icon: WalletIcons.TrustWallet,
-              installed: true,
-              downloadUrl: 'https://trustwallet.com/download',
-              provider: provider
-            });
-          }
-          if (provider.isCoinbaseWallet) {
-            wallets.push({
-              name: 'Coinbase Wallet',
-              id: 'coinbase',
-              icon: WalletIcons.CoinbaseWallet,
-              installed: true,
-              downloadUrl: 'https://wallet.coinbase.com/',
-              provider: provider
-            });
-          }
+    // Check for multiple providers first (most common scenario)
+    if (window.ethereum?.providers && Array.isArray(window.ethereum.providers)) {
+      console.log('📱 Multiple providers detected:', window.ethereum.providers.length);
+      
+      window.ethereum.providers.forEach((provider, index) => {
+        console.log(`Provider ${index}:`, {
+          isMetaMask: provider.isMetaMask,
+          isTrust: provider.isTrust,
+          isCoinbaseWallet: provider.isCoinbaseWallet,
+          constructor: provider.constructor.name
         });
-      } else if (window.ethereum) {
-        // Single provider detected
-        if (window.ethereum.isMetaMask) {
+
+        if (provider.isMetaMask) {
           wallets.push({
             name: 'MetaMask',
             id: 'metamask',
             icon: WalletIcons.MetaMask,
             installed: true,
             downloadUrl: 'https://metamask.io/download/',
-            provider: window.ethereum
+            provider: provider
           });
-        } else if (window.ethereum.isTrust) {
+        }
+        if (provider.isTrust) {
           wallets.push({
             name: 'Trust Wallet',
             id: 'trust',
             icon: WalletIcons.TrustWallet,
             installed: true,
             downloadUrl: 'https://trustwallet.com/download',
-            provider: window.ethereum
+            provider: provider
           });
-        } else if (window.ethereum.isCoinbaseWallet) {
+        }
+        if (provider.isCoinbaseWallet) {
           wallets.push({
             name: 'Coinbase Wallet',
             id: 'coinbase',
             icon: WalletIcons.CoinbaseWallet,
             installed: true,
             downloadUrl: 'https://wallet.coinbase.com/',
-            provider: window.ethereum
-          });
-        } else {
-          // Generic ethereum provider
-          wallets.push({
-            name: 'Injected Wallet',
-            id: 'injected',
-            icon: '💳',
-            installed: true,
-            downloadUrl: null,
-            provider: window.ethereum
+            provider: provider
           });
         }
-      }
-
-      // Check for other specific wallet providers
-      if (window.BinanceChain) {
+      });
+    } else if (window.ethereum) {
+      // Single provider detected
+      console.log('📱 Single provider detected');
+      
+      if (window.ethereum.isMetaMask) {
+        console.log('✅ MetaMask detected as single provider');
         wallets.push({
-          name: 'Binance Wallet',
-          id: 'binance',
-          icon: WalletIcons.BinanceWallet,
+          name: 'MetaMask',
+          id: 'metamask',
+          icon: WalletIcons.MetaMask,
           installed: true,
-          downloadUrl: 'https://www.binance.org/en',
-          provider: window.BinanceChain
+          downloadUrl: 'https://metamask.io/download/',
+          provider: window.ethereum
         });
-      }
-
-      if (window.safepal) {
+      } else if (window.ethereum.isTrust) {
         wallets.push({
-          name: 'SafePal',
-          id: 'safepal',
-          icon: WalletIcons.SafePal,
+          name: 'Trust Wallet',
+          id: 'trust',
+          icon: WalletIcons.TrustWallet,
           installed: true,
-          downloadUrl: 'https://safepal.io/download',
-          provider: window.safepal.ethereum
+          downloadUrl: 'https://trustwallet.com/download',
+          provider: window.ethereum
         });
-      }
-
-      if (window.tokenpocket) {
+      } else if (window.ethereum.isCoinbaseWallet) {
         wallets.push({
-          name: 'TokenPocket',
-          id: 'tokenpocket',
-          icon: WalletIcons.TokenPocket,
+          name: 'Coinbase Wallet',
+          id: 'coinbase',
+          icon: WalletIcons.CoinbaseWallet,
           installed: true,
-          downloadUrl: 'https://tokenpocket.pro/en/download/app',
-          provider: window.tokenpocket.ethereum
+          downloadUrl: 'https://wallet.coinbase.com/',
+          provider: window.ethereum
         });
-      }
-
-      if (window.ethereum?.isMathWallet) {
+      } else {
+        // Generic ethereum provider - could be MetaMask or other wallet
+        console.log('🔍 Generic ethereum provider detected, assuming MetaMask compatibility');
         wallets.push({
-          name: 'MathWallet',
-          id: 'mathwallet',
-          icon: WalletIcons.MathWallet,
+          name: 'Ethereum Wallet',
+          id: 'ethereum',
+          icon: '💳',
           installed: true,
-          downloadUrl: 'https://mathwallet.org/',
+          downloadUrl: null,
           provider: window.ethereum
         });
       }
+    } else {
+      console.log('❌ No ethereum provider detected');
+    }
 
-      // Always add popular wallets for download if not installed
-      const popularWallets = [
-        { name: 'MetaMask', id: 'metamask', icon: WalletIcons.MetaMask, downloadUrl: 'https://metamask.io/download/' },
-        { name: 'Trust Wallet', id: 'trust', icon: WalletIcons.TrustWallet, downloadUrl: 'https://trustwallet.com/download' },
-        { name: 'Coinbase Wallet', id: 'coinbase', icon: WalletIcons.CoinbaseWallet, downloadUrl: 'https://wallet.coinbase.com/' }
-      ];
-
-      popularWallets.forEach(wallet => {
-        if (!wallets.find(w => w.id === wallet.id)) {
-          wallets.push({ ...wallet, installed: false });
-        }
+    // Check for other specific wallet providers
+    if (window.BinanceChain) {
+      console.log('✅ Binance Chain Wallet detected');
+      wallets.push({
+        name: 'Binance Wallet',
+        id: 'binance',
+        icon: WalletIcons.BinanceWallet,
+        installed: true,
+        downloadUrl: 'https://www.binance.org/en',
+        provider: window.BinanceChain
       });
+    }
 
-      console.log('✅ Detected wallets:', wallets);
-      setAvailableWallets(wallets);
+    if (window.safepal) {
+      console.log('✅ SafePal detected');
+      wallets.push({
+        name: 'SafePal',
+        id: 'safepal',
+        icon: WalletIcons.SafePal,
+        installed: true,
+        downloadUrl: 'https://safepal.io/download',
+        provider: window.safepal.ethereum
+      });
+    }
+
+    if (window.tokenpocket) {
+      console.log('✅ TokenPocket detected');
+      wallets.push({
+        name: 'TokenPocket',
+        id: 'tokenpocket',
+        icon: WalletIcons.TokenPocket,
+        installed: true,
+        downloadUrl: 'https://tokenpocket.pro/en/download/app',
+        provider: window.tokenpocket.ethereum
+      });
+    }
+
+    if (window.ethereum?.isMathWallet) {
+      console.log('✅ MathWallet detected');
+      wallets.push({
+        name: 'MathWallet',
+        id: 'mathwallet',
+        icon: WalletIcons.MathWallet,
+        installed: true,
+        downloadUrl: 'https://mathwallet.org/',
+        provider: window.ethereum
+      });
+    }
+
+    // Always add popular wallets for download if not installed
+    const popularWallets = [
+      { name: 'MetaMask', id: 'metamask', icon: WalletIcons.MetaMask, downloadUrl: 'https://metamask.io/download/' },
+      { name: 'Trust Wallet', id: 'trust', icon: WalletIcons.TrustWallet, downloadUrl: 'https://trustwallet.com/download' },
+      { name: 'Coinbase Wallet', id: 'coinbase', icon: WalletIcons.CoinbaseWallet, downloadUrl: 'https://wallet.coinbase.com/' }
+    ];
+
+    popularWallets.forEach(wallet => {
+      if (!wallets.find(w => w.id === wallet.id)) {
+        wallets.push({ ...wallet, installed: false });
+      }
+    });
+
+    console.log('✅ Final detected wallets:', wallets);
+    setAvailableWallets(wallets);
+    setIsDetecting(false);
+  }, []);
+
+  // Enhanced detection with multiple attempts and timing
+  useEffect(() => {
+    let attempts = 0;
+    const maxAttempts = 5;
+    const detectInterval = 500; // ms
+
+    const attemptDetection = () => {
+      attempts++;
+      console.log(`🔄 Wallet detection attempt ${attempts}/${maxAttempts}`);
+      
+      detectWallets();
+      
+      // If no wallets detected and we haven't reached max attempts, try again
+      if (attempts < maxAttempts && (!window.ethereum || availableWallets.length === 0)) {
+        setTimeout(attemptDetection, detectInterval);
+      } else {
+        setIsDetecting(false);
+      }
     };
 
-    detectWallets();
-    
-    // Re-detect when window loads and ethereum object changes
-    const handleEthereumChange = () => {
-      console.log('🔄 Ethereum object changed, re-detecting wallets...');
+    // Start detection immediately
+    attemptDetection();
+
+    // Also listen for ethereum object injection
+    const handleEthereumAvailable = () => {
+      console.log('🔔 Ethereum became available, re-detecting...');
       setTimeout(detectWallets, 100);
     };
 
-    if (document.readyState === 'loading') {
-      window.addEventListener('load', detectWallets);
-    }
+    // Listen for various events that might indicate wallet availability
+    window.addEventListener('ethereum#initialized', handleEthereumAvailable);
+    window.addEventListener('eip6963:announceProvider', handleEthereumAvailable);
     
-    // Listen for ethereum object changes
-    if (window.ethereum) {
-      window.ethereum.on('connect', handleEthereumChange);
-      window.ethereum.on('disconnect', handleEthereumChange);
+    // For MetaMask specifically
+    if (typeof window !== 'undefined') {
+      const handleLoad = () => {
+        console.log('🔄 Window loaded, final detection attempt...');
+        setTimeout(detectWallets, 1000);
+      };
+      
+      if (document.readyState === 'loading') {
+        window.addEventListener('load', handleLoad);
+      } else {
+        // Document already loaded, do a delayed detection
+        setTimeout(detectWallets, 1000);
+      }
     }
 
     return () => {
+      window.removeEventListener('ethereum#initialized', handleEthereumAvailable);
+      window.removeEventListener('eip6963:announceProvider', handleEthereumAvailable);
       window.removeEventListener('load', detectWallets);
-      if (window.ethereum) {
-        window.ethereum.removeListener('connect', handleEthereumChange);
-        window.ethereum.removeListener('disconnect', handleEthereumChange);
-      }
     };
-  }, []);
+  }, [detectWallets]);
 
   const switchToBSC = async (provider) => {
     try {
+      console.log('🌐 Switching to BSC Mainnet...');
       await provider.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: BSC_CONFIG.chainId }],
       });
+      console.log('✅ Successfully switched to BSC');
     } catch (switchError) {
+      console.log('⚠️ Switch failed, attempting to add BSC:', switchError);
       // If BSC is not added, add it
       if (switchError.code === 4902) {
         try {
@@ -225,7 +278,9 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
             method: 'wallet_addEthereumChain',
             params: [BSC_CONFIG],
           });
+          console.log('✅ Successfully added and switched to BSC');
         } catch (addError) {
+          console.error('❌ Failed to add BSC:', addError);
           throw new Error('Please add BSC Mainnet to your wallet manually');
         }
       } else {
@@ -241,9 +296,6 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
     setError(null);
 
     try {
-      let provider = null;
-      let accounts = [];
-
       // Find the wallet from our detected wallets
       const walletInfo = availableWallets.find(w => w.id === walletId);
       
@@ -258,23 +310,40 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
       }
 
       // Use the specific provider for this wallet
-      provider = walletInfo.provider;
+      let provider = walletInfo.provider;
 
       if (!provider) {
         throw new Error(`${walletInfo.name} provider not available`);
       }
 
-      console.log(`📱 Using provider for ${walletId}:`, provider);
+      console.log(`📱 Using provider for ${walletId}:`, {
+        isMetaMask: provider.isMetaMask,
+        isTrust: provider.isTrust,
+        constructor: provider.constructor.name
+      });
 
-      // Special handling for MetaMask unlock check
-      if (walletId === 'metamask' && provider.isMetaMask) {
+      // Enhanced MetaMask unlock check
+      if ((walletId === 'metamask' || walletId === 'ethereum') && provider.isMetaMask) {
         try {
-          // Check if MetaMask is unlocked (if method exists)
+          // Multiple ways to check if MetaMask is unlocked
           if (provider._metamask && provider._metamask.isUnlocked) {
             const isUnlocked = await provider._metamask.isUnlocked();
+            console.log('🔓 MetaMask unlock status:', isUnlocked);
             if (!isUnlocked) {
               throw new Error('MetaMask is locked. Please unlock your MetaMask wallet first.');
             }
+          }
+
+          // Alternative check: try to get accounts without requesting
+          try {
+            const existingAccounts = await provider.request({ method: 'eth_accounts' });
+            if (existingAccounts.length === 0) {
+              console.log('🔐 No existing accounts found, will need to request permission');
+            } else {
+              console.log('✅ Existing accounts found:', existingAccounts.length);
+            }
+          } catch (accountsError) {
+            console.log('Could not check existing accounts:', accountsError);
           }
         } catch (unlockError) {
           console.log('Could not check MetaMask unlock status:', unlockError);
@@ -282,34 +351,58 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         }
       }
 
-      // Request account access
+      // Request account access with enhanced error handling
       console.log(`🔑 Requesting accounts for ${walletId}...`);
       
-      // Add timeout for the request
-      const requestPromise = provider.request({ 
-        method: 'eth_requestAccounts' 
-      });
-      
-      const timeoutPromise = new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Connection request timed out. Please try again.')), 30000)
-      );
-      
-      accounts = await Promise.race([requestPromise, timeoutPromise]);
+      let accounts;
+      try {
+        // Create a promise that will timeout
+        const requestPromise = provider.request({ 
+          method: 'eth_requestAccounts' 
+        });
+        
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Connection request timed out after 60 seconds. Please check your wallet.')), 60000)
+        );
+        
+        accounts = await Promise.race([requestPromise, timeoutPromise]);
+      } catch (requestError) {
+        console.error('❌ Account request failed:', requestError);
+        
+        // Enhanced error handling
+        if (requestError.code === 4001) {
+          throw new Error('Connection rejected. Please approve the connection in your wallet.');
+        } else if (requestError.code === -32002) {
+          throw new Error('Connection request already pending. Please check your wallet for a pending approval.');
+        } else if (requestError.code === -32603) {
+          throw new Error('Wallet internal error. Please try refreshing the page.');
+        } else if (requestError.message.includes('timeout')) {
+          throw new Error('Connection timed out. Please make sure your wallet is responsive and try again.');
+        } else {
+          throw requestError;
+        }
+      }
 
       if (!accounts || accounts.length === 0) {
         throw new Error('No accounts found. Please make sure your wallet is unlocked and has at least one account.');
       }
 
-      console.log(`✅ Accounts received for ${walletId}:`, accounts);
+      console.log(`✅ Accounts received for ${walletId}:`, accounts.length, 'accounts');
 
       // Switch to BSC Mainnet
       console.log(`🌐 Switching to BSC Mainnet for ${walletId}...`);
       await switchToBSC(provider);
 
-      // Create ethers provider
-      const ethersProvider = new ethers.BrowserProvider(provider);
-      const signer = await ethersProvider.getSigner();
-      const address = await signer.getAddress();
+      // Create ethers provider with error handling
+      let ethersProvider, signer, address;
+      try {
+        ethersProvider = new ethers.BrowserProvider(provider);
+        signer = await ethersProvider.getSigner();
+        address = await signer.getAddress();
+      } catch (ethersError) {
+        console.error('❌ Ethers provider creation failed:', ethersError);
+        throw new Error('Failed to create wallet connection. Please try again.');
+      }
 
       console.log(`🎉 Successfully connected ${walletId}:`, address);
 
@@ -343,10 +436,10 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         errorMessage = 'Connection rejected by user';
         userGuidance = 'Please click "Connect" in your wallet popup to continue.';
       } else if (error.code === -32002) {
-        errorMessage = 'Pending connection request';
+        errorMessage = 'Connection request already pending';
         userGuidance = 'Please check your wallet - there may be a pending connection request waiting for approval.';
       } else if (error.code === -32603) {
-        errorMessage = 'Internal wallet error';
+        errorMessage = 'Wallet internal error';
         userGuidance = 'Please try refreshing the page and reconnecting.';
       } else if (error.message.includes('locked')) {
         errorMessage = 'Wallet is locked';
@@ -356,13 +449,16 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         userGuidance = 'Please try again. Make sure your wallet is unlocked and responsive.';
       } else if (error.message.includes('not installed')) {
         userGuidance = 'The wallet will open in a new tab for installation.';
+      } else if (error.message.includes('rejected')) {
+        errorMessage = 'Connection rejected';
+        userGuidance = 'Please approve the connection request in your wallet.';
       }
       
       setError({ message: errorMessage, guidance: userGuidance });
       
       // Don't show alert for user rejection (code 4001) as it's intentional
       if (error.code !== 4001 && !error.message.includes('not installed')) {
-        alert(`Failed to connect ${walletId}: ${errorMessage}${userGuidance ? '\n\n' + userGuidance : ''}`);
+        console.log(`Connection failed: ${errorMessage}${userGuidance ? ' - ' + userGuidance : ''}`);
       }
     } finally {
       setConnecting(false);
@@ -378,18 +474,24 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
     console.log('🔌 Wallet disconnected');
   };
 
-  // Auto-reconnect on page load
+  // Auto-reconnect on page load with better error handling
   useEffect(() => {
     const autoReconnect = async () => {
       const savedWallet = localStorage.getItem('orphi_wallet');
-      if (savedWallet && !isConnected) {
+      if (savedWallet && !isConnected && !isDetecting) {
         try {
           const walletInfo = JSON.parse(savedWallet);
           // Check if connection is less than 24 hours old
           if (Date.now() - walletInfo.timestamp < 24 * 60 * 60 * 1000) {
             console.log('🔄 Auto-reconnecting wallet:', walletInfo.type);
-            await connectWallet(walletInfo.type);
+            // Wait a bit more to ensure wallet detection is complete
+            setTimeout(() => {
+              if (availableWallets.some(w => w.id === walletInfo.type && w.installed)) {
+                connectWallet(walletInfo.type);
+              }
+            }, 2000);
           } else {
+            console.log('🗑️ Removing expired wallet connection');
             localStorage.removeItem('orphi_wallet');
           }
         } catch (error) {
@@ -399,10 +501,11 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
       }
     };
 
-    // Delay auto-reconnect to ensure wallets are detected first
-    const timeoutId = setTimeout(autoReconnect, 1000);
-    return () => clearTimeout(timeoutId);
-  }, [availableWallets, isConnected]);
+    // Only attempt auto-reconnect after wallet detection is complete
+    if (!isDetecting) {
+      autoReconnect();
+    }
+  }, [availableWallets, isConnected, isDetecting]);
 
   if (isConnected && currentAccount) {
     return (
@@ -451,7 +554,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
           e.target.style.boxShadow = '0 4px 15px rgba(0, 212, 255, 0.3)';
         }}
       >
-        Connect Wallet
+        {isDetecting ? 'Detecting Wallets...' : 'Connect Wallet'}
       </button>
 
       {/* Wallet Selection Modal */}
@@ -472,6 +575,16 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
               Connect your wallet to start using ORPHI CrowdFund platform
             </p>
 
+            {/* Detection Status */}
+            {isDetecting && (
+              <div className="mb-4 p-4 bg-blue-500/10 border border-blue-500/30 rounded-xl">
+                <div className="flex items-center space-x-2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-400"></div>
+                  <p className="text-blue-400 text-sm">Detecting installed wallets...</p>
+                </div>
+              </div>
+            )}
+
             {/* Error Display */}
             {error && (
               <div className="mb-4 p-4 bg-red-500/10 border border-red-500/30 rounded-xl">
@@ -479,6 +592,16 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
                 {error.guidance && (
                   <p className="text-red-300 text-xs mt-1">{error.guidance}</p>
                 )}
+              </div>
+            )}
+
+            {/* No Wallets Detected Warning */}
+            {!isDetecting && availableWallets.filter(w => w.installed).length === 0 && (
+              <div className="mb-4 p-4 bg-orange-500/10 border border-orange-500/30 rounded-xl">
+                <p className="text-orange-400 text-sm font-medium">No wallets detected!</p>
+                <p className="text-orange-300 text-xs mt-1">
+                  Please install a wallet like MetaMask first, then refresh this page.
+                </p>
               </div>
             )}
 
@@ -499,7 +622,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
                     <div className="text-left">
                       <p className="text-white font-medium">{wallet.name}</p>
                       <p className="text-xs text-silver-mist">
-                        {wallet.installed ? 'Detected' : 'Not installed'}
+                        {wallet.installed ? 'Detected ✅' : 'Not installed'}
                       </p>
                     </div>
                   </div>
@@ -522,15 +645,17 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
               </p>
             </div>
 
-            {/* Troubleshooting Tips */}
+            {/* Enhanced Troubleshooting Tips */}
             <div className="mt-4 p-4 bg-yellow-500/10 rounded-xl border border-yellow-500/30">
               <p className="text-sm text-yellow-400 font-medium mb-2">Having trouble connecting?</p>
               <ul className="text-xs text-yellow-300 space-y-1">
-                <li>• Make sure your wallet is unlocked</li>
-                <li>• Check for popup blockers</li>
-                <li>• Try refreshing the page</li>
+                <li>• Make sure MetaMask is unlocked and has accounts</li>
+                <li>• Check for popup blockers in your browser</li>
+                <li>• Try refreshing the page and reconnecting</li>
                 <li>• Ensure you approve the connection in your wallet</li>
                 <li>• Close other DApps that might be using your wallet</li>
+                <li>• Switch to BSC Mainnet manually if auto-switch fails</li>
+                <li>• Try disconnecting and reconnecting your wallet</li>
               </ul>
             </div>
 
