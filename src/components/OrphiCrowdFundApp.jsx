@@ -11,6 +11,9 @@ import { ORPHI_CROWDFUND_CONFIG, ORPHI_CROWDFUND_ABI } from '../contracts';
 // Import multi-wallet connector
 import WalletConnector from './WalletConnector';
 
+// Import AI Enhanced Dashboard
+import AIEnhancedDashboard from './dashboard/AIEnhancedDashboard';
+
 const OrphiCrowdFundApp = () => {
   // State management
   const [account, setAccount] = useState('');
@@ -29,6 +32,7 @@ const OrphiCrowdFundApp = () => {
   });
   const [isCorrectNetwork, setIsCorrectNetwork] = useState(false);
   const [networkError, setNetworkError] = useState('');
+  const [showAIDashboard, setShowAIDashboard] = useState(false);
 
   // Package configurations with ORPHI branding
   const packages = [
@@ -364,6 +368,17 @@ const OrphiCrowdFundApp = () => {
     }
   };
 
+  // If AI Dashboard is enabled and user is connected, show AI Dashboard
+  if (showAIDashboard && account) {
+    return (
+      <AIEnhancedDashboard 
+        account={account}
+        contractData={userInfo}
+        isConnected={!!account}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-deep-space to-midnight-blue">
       {/* Header */}
@@ -385,6 +400,21 @@ const OrphiCrowdFundApp = () => {
                 <div className="bg-alert-red/20 text-alert-red px-3 py-1 rounded-lg text-sm">
                   {networkError}
                 </div>
+              )}
+              
+              {/* AI Dashboard Toggle */}
+              {account && (
+                <button
+                  onClick={() => setShowAIDashboard(!showAIDashboard)}
+                  className={`px-4 py-2 rounded-lg text-sm font-semibold transition-all ${
+                    showAIDashboard 
+                      ? 'bg-gradient-to-r from-royal-purple to-cyber-blue text-white' 
+                      : 'glass-effect text-silver-mist hover:text-white'
+                  }`}
+                >
+                  <i className="fas fa-robot mr-2"></i>
+                  {showAIDashboard ? 'Classic View' : 'AI Dashboard'}
+                </button>
               )}
               
               <WalletConnector
