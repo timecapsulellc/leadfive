@@ -8,6 +8,9 @@ import '../styles/design-system.css';
 // Import contract configuration
 import { ORPHI_CROWDFUND_CONFIG, ORPHI_CROWDFUND_ABI } from '../contracts';
 
+// Import multi-wallet connector
+import WalletConnector from './WalletConnector';
+
 const OrphiCrowdFundApp = () => {
   // State management
   const [account, setAccount] = useState('');
@@ -236,90 +239,50 @@ const OrphiCrowdFundApp = () => {
     }
   };
 
-  const connectWallet = async () => {
-    if (!window.ethereum) {
-      alert('MetaMask is not installed! Please install MetaMask to continue.');
-      return;
-    }
-
-    if (!provider) {
-      alert('Provider not initialized. Please refresh the page.');
-      return;
-    }
-    
+  const handleWalletConnect = async (walletData) => {
     try {
       setLoading(true);
       
-      // Request account access
-      await window.ethereum.request({ method: 'eth_requestAccounts' });
+      // Set wallet data
+      setProvider(walletData.provider);
+      setSigner(walletData.signer);
+      setAccount(walletData.address);
+      setIsCorrectNetwork(true);
+      setNetworkError('');
       
-      // Check if we're on BSC Mainnet
-      const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-      const bscChainId = '0x38'; // BSC Mainnet chain ID in hex
+      // Initialize contract with new provider
+      const contractInstance = new ethers.Contract(
+        ORPHI_CROWDFUND_CONFIG.address,
+        ORPHI_CROWDFUND_ABI,
+        walletData.provider
+      );
+      setContract(contractInstance);
       
-      if (chainId !== bscChainId) {
-        try {
-          // Try to switch to BSC Mainnet
-          await window.ethereum.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: bscChainId }],
-          });
-        } catch (switchError) {
-          // If BSC is not added to MetaMask, add it
-          if (switchError.code === 4902) {
-            try {
-              await window.ethereum.request({
-                method: 'wallet_addEthereumChain',
-                params: [
-                  {
-                    chainId: bscChainId,
-                    chainName: 'BNB Smart Chain',
-                    nativeCurrency: {
-                      name: 'BNB',
-                      symbol: 'BNB',
-                      decimals: 18,
-                    },
-                    rpcUrls: ['https://bsc-dataseed.binance.org/'],
-                    blockExplorerUrls: ['https://bscscan.com/'],
-                  },
-                ],
-              });
-            } catch (addError) {
-              console.error('Error adding BSC network:', addError);
-              alert('Please manually add BSC Mainnet to MetaMask and try again.');
-              return;
-            }
-          } else {
-            console.error('Error switching to BSC network:', switchError);
-            alert('Please switch to BSC Mainnet in MetaMask and try again.');
-            return;
-          }
-        }
-      }
+      // Load user info and network stats
+      await Promise.all([
+        loadUserInfo(walletData.address),
+        loadNetworkStats(contractInstance)
+      ]);
       
-      // Get signer and address
-      const signer = await provider.getSigner();
-      const address = await signer.getAddress();
+      console.log(`✅ ${walletData.walletType} connected successfully:`, walletData.address);
       
-      setSigner(signer);
-      setAccount(address);
-      
-      // Load user info
-      await loadUserInfo(address);
-      
-      console.log('Wallet connected successfully:', address);
     } catch (error) {
-      console.error('Error connecting wallet:', error);
-      if (error.code === 4001) {
-        alert('Please approve the connection request in MetaMask.');
-      } else if (error.code === -32002) {
-        alert('Please check MetaMask - there may be a pending connection request.');
-      } else {
-        alert(`Connection failed: ${error.message}`);
-      }
+      console.error('Error handling wallet connection:', error);
+      setNetworkError('Failed to initialize wallet connection');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleWalletDisconnect = () => {
+    setProvider(null);
+    setSigner(null);
+    setAccount('');
+    setContract(null);
+    setUserInfo(null);
+    setIsCorrectNetwork(false);
+    setNetworkError('');
+    console.log('🔌 Wallet disconnected');
   };
 
   const loadUserInfo = async (address) => {
@@ -424,30 +387,12 @@ const OrphiCrowdFundApp = () => {
                 </div>
               )}
               
-              {account ? (
-                <div className="flex items-center space-x-3">
-                  <div className="text-right">
-                    <p className="text-sm text-silver-mist">Connected</p>
-                    <p className="text-xs font-mono text-cyber-blue">
-                      {account.slice(0, 6)}...{account.slice(-4)}
-                    </p>
-                    {isCorrectNetwork && (
-                      <p className="text-xs text-success-green">BSC Mainnet ✅</p>
-                    )}
-                  </div>
-                  <div className={`w-3 h-3 rounded-full animate-pulse ${
-                    isCorrectNetwork ? 'bg-success-green' : 'bg-alert-red'
-                  }`}></div>
-                </div>
-              ) : (
-                <button 
-                  onClick={connectWallet}
-                  disabled={loading}
-                  className="btn btn-primary"
-                >
-                  {loading ? 'Connecting...' : 'Connect Wallet'}
-                </button>
-              )}
+              <WalletConnector
+                onConnect={handleWalletConnect}
+                onDisconnect={handleWalletDisconnect}
+                currentAccount={account}
+                isConnected={!!account}
+              />
             </div>
           </div>
         </div>

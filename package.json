@@ -1,6 +1,8 @@
 {
   "name": "orphi-crowdfund-frontend",
+  "private": true,
   "version": "1.0.0",
+  "type": "module",
   "description": "Frontend for OrphiCrowdFund MLM Platform",
   "main": "index.js",
   "engines": {
@@ -10,29 +12,37 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview --host 0.0.0.0 --port 8080",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
     "start": "serve -s dist -l 8080",
     "start-vite": "vite preview --host 0.0.0.0 --port 8080 --allowedHosts all",
     "digitalocean-build": "vite build",
     "digitalocean-start": "serve -s dist -l 8080"
   },
   "dependencies": {
+    "@walletconnect/qrcode-modal": "^1.8.0",
     "@walletconnect/web3-provider": "^1.8.0",
-    "ethers": "^6.8.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-toastify": "^11.0.5",
+    "ethers": "^6.13.4",
+    "framer-motion": "^11.14.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-toastify": "^10.0.6",
     "serve": "^14.2.4",
+    "web3": "^4.15.0",
     "web3modal": "^1.9.12"
   },
   "devDependencies": {
-    "@types/react": "^18.2.37",
-    "@types/react-dom": "^18.2.15",
-    "@vitejs/plugin-react": "^4.1.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
     "autoprefixer": "^10.4.16",
+    "eslint": "^9.13.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
-    "vite": "^6.3.5"
+    "vite": "^6.0.1"
   },
   "keywords": [
     "blockchain",
