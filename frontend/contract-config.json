@@ -8,1228 +8,1020 @@
   "contracts": {
     "OrphiCrowdFund": {
       "address": "0x4965197b430343daec1042B413Dd6e20D06dAdba",
-      "implementation": "0x55a4355F729A400A2C4d47aC696F460D8bD7D085",
+      "implementation": "",
       "abi": [
         {
-          "type": "error",
-          "name": "AccessControlBadConfirmation",
-          "inputs": []
-        },
-        {
-          "type": "error",
-          "name": "AccessControlUnauthorizedAccount",
           "inputs": [
             {
-              "type": "address",
-              "name": "account"
-            },
-            {
-              "type": "bytes32",
-              "name": "neededRole"
+              "internalType": "address",
+              "name": "target",
+              "type": "address"
             }
-          ]
-        },
-        {
-          "type": "error",
+          ],
           "name": "AddressEmptyCode",
+          "type": "error"
+        },
+        {
           "inputs": [
             {
-              "type": "address",
-              "name": "target"
-            }
-          ]
-        },
-        {
-          "type": "error",
-          "name": "ERC1967InvalidImplementation",
-          "inputs": [
-            {
-              "type": "address",
-              "name": "implementation"
-            }
-          ]
-        },
-        {
-          "type": "error",
-          "name": "ERC1967NonPayable",
-          "inputs": []
-        },
-        {
-          "type": "error",
-          "name": "EnforcedPause",
-          "inputs": []
-        },
-        {
-          "type": "error",
-          "name": "ExpectedPause",
-          "inputs": []
-        },
-        {
-          "type": "error",
-          "name": "FailedCall",
-          "inputs": []
-        },
-        {
-          "type": "error",
-          "name": "InvalidInitialization",
-          "inputs": []
-        },
-        {
-          "type": "error",
-          "name": "NotInitializing",
-          "inputs": []
-        },
-        {
-          "type": "error",
-          "name": "OwnableInvalidOwner",
-          "inputs": [
-            {
-              "type": "address",
-              "name": "owner"
-            }
-          ]
-        },
-        {
-          "type": "error",
-          "name": "OwnableUnauthorizedAccount",
-          "inputs": [
-            {
-              "type": "address",
-              "name": "account"
-            }
-          ]
-        },
-        {
-          "type": "error",
-          "name": "ReentrancyGuardReentrantCall",
-          "inputs": []
-        },
-        {
-          "type": "error",
-          "name": "UUPSUnauthorizedCallContext",
-          "inputs": []
-        },
-        {
-          "type": "error",
-          "name": "UUPSUnsupportedProxiableUUID",
-          "inputs": [
-            {
-              "type": "bytes32",
-              "name": "slot"
-            }
-          ]
-        },
-        {
-          "type": "event",
-          "anonymous": false,
-          "name": "ContributionMade",
-          "inputs": [
-            {
-              "type": "address",
-              "name": "user",
-              "indexed": true
-            },
-            {
-              "type": "uint256",
-              "name": "amount",
-              "indexed": false
-            },
-            {
-              "type": "uint8",
-              "name": "tier",
-              "indexed": false
-            }
-          ]
-        },
-        {
-          "type": "event",
-          "anonymous": false,
-          "name": "GlobalHelpPoolDistribution",
-          "inputs": [
-            {
-              "type": "address",
-              "name": "recipient",
-              "indexed": true
-            },
-            {
-              "type": "uint256",
-              "name": "amount",
-              "indexed": false
-            }
-          ]
-        },
-        {
-          "type": "event",
-          "anonymous": false,
-          "name": "Initialized",
-          "inputs": [
-            {
-              "type": "uint64",
-              "name": "version",
-              "indexed": false
-            }
-          ]
-        },
-        {
-          "type": "event",
-          "anonymous": false,
-          "name": "LevelBonusPaid",
-          "inputs": [
-            {
-              "type": "address",
-              "name": "recipient",
-              "indexed": true
-            },
-            {
-              "type": "address",
-              "name": "user",
-              "indexed": true
-            },
-            {
-              "type": "uint8",
-              "name": "level",
-              "indexed": false
-            },
-            {
-              "type": "uint256",
-              "name": "amount",
-              "indexed": false
-            }
-          ]
-        },
-        {
-          "type": "event",
-          "anonymous": false,
-          "name": "OwnershipTransferred",
-          "inputs": [
-            {
-              "type": "address",
-              "name": "previousOwner",
-              "indexed": true
-            },
-            {
-              "type": "address",
-              "name": "newOwner",
-              "indexed": true
-            }
-          ]
-        },
-        {
-          "type": "event",
-          "anonymous": false,
-          "name": "Paused",
-          "inputs": [
-            {
-              "type": "address",
-              "name": "account",
-              "indexed": false
-            }
-          ]
-        },
-        {
-          "type": "event",
-          "anonymous": false,
-          "name": "RoleAdminChanged",
-          "inputs": [
-            {
-              "type": "bytes32",
-              "name": "role",
-              "indexed": true
-            },
-            {
-              "type": "bytes32",
-              "name": "previousAdminRole",
-              "indexed": true
-            },
-            {
-              "type": "bytes32",
-              "name": "newAdminRole",
-              "indexed": true
-            }
-          ]
-        },
-        {
-          "type": "event",
-          "anonymous": false,
-          "name": "RoleGranted",
-          "inputs": [
-            {
-              "type": "bytes32",
-              "name": "role",
-              "indexed": true
-            },
-            {
-              "type": "address",
-              "name": "account",
-              "indexed": true
-            },
-            {
-              "type": "address",
-              "name": "sender",
-              "indexed": true
-            }
-          ]
-        },
-        {
-          "type": "event",
-          "anonymous": false,
-          "name": "RoleRevoked",
-          "inputs": [
-            {
-              "type": "bytes32",
-              "name": "role",
-              "indexed": true
-            },
-            {
-              "type": "address",
-              "name": "account",
-              "indexed": true
-            },
-            {
-              "type": "address",
-              "name": "sender",
-              "indexed": true
-            }
-          ]
-        },
-        {
-          "type": "event",
-          "anonymous": false,
-          "name": "SponsorBonusPaid",
-          "inputs": [
-            {
-              "type": "address",
-              "name": "sponsor",
-              "indexed": true
-            },
-            {
-              "type": "address",
-              "name": "user",
-              "indexed": true
-            },
-            {
-              "type": "uint256",
-              "name": "amount",
-              "indexed": false
-            }
-          ]
-        },
-        {
-          "type": "event",
-          "anonymous": false,
-          "name": "Unpaused",
-          "inputs": [
-            {
-              "type": "address",
-              "name": "account",
-              "indexed": false
-            }
-          ]
-        },
-        {
-          "type": "event",
-          "anonymous": false,
-          "name": "Upgraded",
-          "inputs": [
-            {
-              "type": "address",
+              "internalType": "address",
               "name": "implementation",
-              "indexed": true
+              "type": "address"
             }
-          ]
+          ],
+          "name": "ERC1967InvalidImplementation",
+          "type": "error"
         },
         {
-          "type": "event",
-          "anonymous": false,
-          "name": "UserRegistered",
-          "inputs": [
-            {
-              "type": "address",
-              "name": "user",
-              "indexed": true
-            },
-            {
-              "type": "address",
-              "name": "sponsor",
-              "indexed": true
-            },
-            {
-              "type": "uint256",
-              "name": "userId",
-              "indexed": false
-            },
-            {
-              "type": "uint8",
-              "name": "tier",
-              "indexed": false
-            }
-          ]
+          "inputs": [],
+          "name": "ERC1967NonPayable",
+          "type": "error"
         },
         {
-          "type": "event",
-          "anonymous": false,
-          "name": "WithdrawalMade",
+          "inputs": [],
+          "name": "EnforcedPause",
+          "type": "error"
+        },
+        {
+          "inputs": [],
+          "name": "ExpectedPause",
+          "type": "error"
+        },
+        {
+          "inputs": [],
+          "name": "FailedCall",
+          "type": "error"
+        },
+        {
+          "inputs": [],
+          "name": "InvalidInitialization",
+          "type": "error"
+        },
+        {
+          "inputs": [],
+          "name": "NotInitializing",
+          "type": "error"
+        },
+        {
           "inputs": [
             {
-              "type": "address",
-              "name": "user",
-              "indexed": true
+              "internalType": "address",
+              "name": "owner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnableInvalidOwner",
+          "type": "error"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "name": "OwnableUnauthorizedAccount",
+          "type": "error"
+        },
+        {
+          "inputs": [],
+          "name": "ReentrancyGuardReentrantCall",
+          "type": "error"
+        },
+        {
+          "inputs": [],
+          "name": "UUPSUnauthorizedCallContext",
+          "type": "error"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "bytes32",
+              "name": "slot",
+              "type": "bytes32"
+            }
+          ],
+          "name": "UUPSUnsupportedProxiableUUID",
+          "type": "error"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "recipient",
+              "type": "address"
             },
             {
-              "type": "uint256",
+              "indexed": false,
+              "internalType": "uint96",
               "name": "amount",
-              "indexed": false
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "ADMIN_ROLE",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
-          "outputs": [
+              "type": "uint96"
+            },
             {
-              "type": "bytes32",
-              "name": ""
+              "indexed": false,
+              "internalType": "uint8",
+              "name": "bonusType",
+              "type": "uint8"
             }
-          ]
+          ],
+          "name": "BonusDistributed",
+          "type": "event"
         },
         {
-          "type": "function",
-          "name": "BASIS_POINTS",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
-          "outputs": [
+          "anonymous": false,
+          "inputs": [
             {
-              "type": "uint256",
-              "name": ""
+              "indexed": false,
+              "internalType": "uint64",
+              "name": "version",
+              "type": "uint64"
             }
-          ]
+          ],
+          "name": "Initialized",
+          "type": "event"
         },
         {
-          "type": "function",
-          "name": "DEFAULT_ADMIN_ROLE",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
-          "outputs": [
+          "anonymous": false,
+          "inputs": [
             {
-              "type": "bytes32",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "EARNINGS_CAP_MULTIPLIER",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
-          "outputs": [
+              "indexed": true,
+              "internalType": "address",
+              "name": "previousOwner",
+              "type": "address"
+            },
             {
-              "type": "uint256",
-              "name": ""
+              "indexed": true,
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
             }
-          ]
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
         },
         {
-          "type": "function",
-          "name": "GLOBAL_HELP_POOL_RATE",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
-          "outputs": [
+          "anonymous": false,
+          "inputs": [
             {
-              "type": "uint256",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "LEVEL_BONUS_RATE",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
-          "outputs": [
+              "indexed": true,
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            },
             {
-              "type": "uint256",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "SPONSOR_COMMISSION_RATE",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
-          "outputs": [
+              "indexed": false,
+              "internalType": "uint8",
+              "name": "newLevel",
+              "type": "uint8"
+            },
             {
-              "type": "uint256",
-              "name": ""
+              "indexed": false,
+              "internalType": "uint96",
+              "name": "amount",
+              "type": "uint96"
             }
-          ]
+          ],
+          "name": "PackageUpgraded",
+          "type": "event"
         },
         {
-          "type": "function",
-          "name": "UPGRADER_ROLE",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
-          "outputs": [
+          "anonymous": false,
+          "inputs": [
             {
-              "type": "bytes32",
-              "name": ""
+              "indexed": false,
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
             }
-          ]
+          ],
+          "name": "Paused",
+          "type": "event"
         },
         {
-          "type": "function",
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "uint8",
+              "name": "poolType",
+              "type": "uint8"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint96",
+              "name": "amount",
+              "type": "uint96"
+            }
+          ],
+          "name": "PoolDistributed",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            }
+          ],
+          "name": "Unpaused",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "implementation",
+              "type": "address"
+            }
+          ],
+          "name": "Upgraded",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "referrer",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint8",
+              "name": "packageLevel",
+              "type": "uint8"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint96",
+              "name": "amount",
+              "type": "uint96"
+            }
+          ],
+          "name": "UserRegistered",
+          "type": "event"
+        },
+        {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint96",
+              "name": "amount",
+              "type": "uint96"
+            }
+          ],
+          "name": "Withdrawal",
+          "type": "event"
+        },
+        {
+          "inputs": [],
           "name": "UPGRADE_INTERFACE_VERSION",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
           "outputs": [
             {
-              "type": "string",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "VERSION",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
-          "outputs": [
-            {
-              "type": "uint256",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "addressToUserId",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [
-            {
-              "type": "address",
-              "name": ""
-            }
-          ],
-          "outputs": [
-            {
-              "type": "uint256",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "allUsersList",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [
-            {
-              "type": "uint256",
-              "name": ""
-            }
-          ],
-          "outputs": [
-            {
-              "type": "address",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "emergencyWithdraw",
-          "constant": false,
-          "payable": false,
-          "inputs": [],
-          "outputs": []
-        },
-        {
-          "type": "function",
-          "name": "getContractStats",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
-          "outputs": [
-            {
-              "type": "uint256",
-              "name": "totalUsers"
-            },
-            {
-              "type": "uint256",
-              "name": "totalContributed"
-            },
-            {
-              "type": "uint256",
-              "name": "totalWithdrawn"
-            },
-            {
-              "type": "uint256",
-              "name": "globalPoolBalance"
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "getPackageAmounts",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
-          "outputs": [
-            {
-              "type": "uint256[8]",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "getRoleAdmin",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [
-            {
-              "type": "bytes32",
-              "name": "role"
-            }
-          ],
-          "outputs": [
-            {
-              "type": "bytes32",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "getTotalUsers",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
-          "outputs": [
-            {
-              "type": "uint256",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "getUserInfo",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [
-            {
-              "type": "address",
-              "name": "user"
-            }
-          ],
-          "outputs": [
-            {
-              "type": "tuple",
+              "internalType": "string",
               "name": "",
+              "type": "string"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "name": "adminIds",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "name": "binaryMatrix",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            },
+            {
+              "internalType": "bool",
+              "name": "status",
+              "type": "bool"
+            }
+          ],
+          "name": "blacklistUser",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "clubPool",
+          "outputs": [
+            {
+              "internalType": "uint96",
+              "name": "balance",
+              "type": "uint96"
+            },
+            {
+              "internalType": "uint32",
+              "name": "lastDistribution",
+              "type": "uint32"
+            },
+            {
+              "internalType": "uint32",
+              "name": "interval",
+              "type": "uint32"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "name": "directReferrals",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "distributePools",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "emergencyWithdraw",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            }
+          ],
+          "name": "getBinaryMatrix",
+          "outputs": [
+            {
+              "internalType": "address[2]",
+              "name": "",
+              "type": "address[2]"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            }
+          ],
+          "name": "getDirectReferrals",
+          "outputs": [
+            {
+              "internalType": "address[]",
+              "name": "",
+              "type": "address[]"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
+          "name": "getPoolBalances",
+          "outputs": [
+            {
+              "internalType": "uint96",
+              "name": "",
+              "type": "uint96"
+            },
+            {
+              "internalType": "uint96",
+              "name": "",
+              "type": "uint96"
+            },
+            {
+              "internalType": "uint96",
+              "name": "",
+              "type": "uint96"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            }
+          ],
+          "name": "getUplineChain",
+          "outputs": [
+            {
+              "internalType": "address[30]",
+              "name": "",
+              "type": "address[30]"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            }
+          ],
+          "name": "getUserInfo",
+          "outputs": [
+            {
               "components": [
                 {
-                  "type": "bool",
-                  "name": "isRegistered"
+                  "internalType": "bool",
+                  "name": "isRegistered",
+                  "type": "bool"
                 },
                 {
-                  "type": "address",
-                  "name": "sponsor"
+                  "internalType": "bool",
+                  "name": "isBlacklisted",
+                  "type": "bool"
                 },
                 {
-                  "type": "uint8",
-                  "name": "currentTier"
+                  "internalType": "address",
+                  "name": "referrer",
+                  "type": "address"
                 },
                 {
-                  "type": "uint256",
-                  "name": "totalInvestment"
+                  "internalType": "uint96",
+                  "name": "balance",
+                  "type": "uint96"
                 },
                 {
-                  "type": "uint256",
-                  "name": "totalEarnings"
+                  "internalType": "uint96",
+                  "name": "totalInvestment",
+                  "type": "uint96"
                 },
                 {
-                  "type": "uint256",
-                  "name": "withdrawableBalance"
+                  "internalType": "uint96",
+                  "name": "totalEarnings",
+                  "type": "uint96"
                 },
                 {
-                  "type": "uint256",
-                  "name": "directReferrals"
+                  "internalType": "uint96",
+                  "name": "earningsCap",
+                  "type": "uint96"
                 },
                 {
-                  "type": "uint256",
-                  "name": "teamSize"
+                  "internalType": "uint32",
+                  "name": "directReferrals",
+                  "type": "uint32"
                 },
                 {
-                  "type": "uint256",
-                  "name": "teamVolume"
+                  "internalType": "uint32",
+                  "name": "teamSize",
+                  "type": "uint32"
                 },
                 {
-                  "type": "uint256",
-                  "name": "registrationTime"
+                  "internalType": "uint8",
+                  "name": "packageLevel",
+                  "type": "uint8"
                 },
                 {
-                  "type": "uint8",
-                  "name": "rank"
+                  "internalType": "uint8",
+                  "name": "rank",
+                  "type": "uint8"
                 },
                 {
-                  "type": "bool",
-                  "name": "isActive"
-                },
-                {
-                  "type": "bool",
-                  "name": "isBlacklisted"
-                },
-                {
-                  "type": "uint256",
-                  "name": "lastWithdrawal"
-                },
-                {
-                  "type": "uint256",
-                  "name": "earningsCap"
-                },
-                {
-                  "type": "address",
-                  "name": "leftChild"
-                },
-                {
-                  "type": "address",
-                  "name": "rightChild"
-                },
-                {
-                  "type": "uint256",
-                  "name": "leftVolume"
-                },
-                {
-                  "type": "uint256",
-                  "name": "rightVolume"
-                },
-                {
-                  "type": "bool",
-                  "name": "clubMember"
-                },
-                {
-                  "type": "uint256",
-                  "name": "clubJoinTime"
+                  "internalType": "uint8",
+                  "name": "withdrawalRate",
+                  "type": "uint8"
                 }
-              ]
+              ],
+              "internalType": "struct OrphiCrowdFund.User",
+              "name": "",
+              "type": "tuple"
             }
-          ]
+          ],
+          "stateMutability": "view",
+          "type": "function"
         },
         {
-          "type": "function",
-          "name": "globalHelpPoolBalance",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
           "inputs": [],
+          "name": "helpPool",
           "outputs": [
             {
-              "type": "uint256",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "grantRole",
-          "constant": false,
-          "payable": false,
-          "inputs": [
-            {
-              "type": "bytes32",
-              "name": "role"
+              "internalType": "uint96",
+              "name": "balance",
+              "type": "uint96"
             },
             {
-              "type": "address",
-              "name": "account"
+              "internalType": "uint32",
+              "name": "lastDistribution",
+              "type": "uint32"
+            },
+            {
+              "internalType": "uint32",
+              "name": "interval",
+              "type": "uint32"
             }
           ],
-          "outputs": []
-        },
-        {
-          "type": "function",
-          "name": "hasRole",
-          "constant": true,
           "stateMutability": "view",
-          "payable": false,
-          "inputs": [
-            {
-              "type": "bytes32",
-              "name": "role"
-            },
-            {
-              "type": "address",
-              "name": "account"
-            }
-          ],
-          "outputs": [
-            {
-              "type": "bool",
-              "name": ""
-            }
-          ]
+          "type": "function"
         },
         {
-          "type": "function",
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "_usdt",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "_priceFeed",
+              "type": "address"
+            },
+            {
+              "internalType": "address[16]",
+              "name": "_adminIds",
+              "type": "address[16]"
+            }
+          ],
           "name": "initialize",
-          "constant": false,
-          "payable": false,
-          "inputs": [],
-          "outputs": []
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
         },
         {
-          "type": "function",
-          "name": "levelBonusRates",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [
-            {
-              "type": "uint8",
-              "name": ""
-            }
-          ],
+          "inputs": [],
+          "name": "leaderPool",
           "outputs": [
             {
-              "type": "uint256",
-              "name": ""
+              "internalType": "uint96",
+              "name": "balance",
+              "type": "uint96"
+            },
+            {
+              "internalType": "uint32",
+              "name": "lastDistribution",
+              "type": "uint32"
+            },
+            {
+              "internalType": "uint32",
+              "name": "interval",
+              "type": "uint32"
             }
-          ]
+          ],
+          "stateMutability": "view",
+          "type": "function"
         },
         {
-          "type": "function",
+          "inputs": [],
           "name": "owner",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
           "outputs": [
             {
-              "type": "address",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "packageAmounts",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [
-            {
-              "type": "uint256",
-              "name": ""
+              "internalType": "address",
+              "name": "",
+              "type": "address"
             }
           ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint8",
+              "name": "",
+              "type": "uint8"
+            }
+          ],
+          "name": "packages",
           "outputs": [
             {
-              "type": "uint256",
-              "name": ""
+              "internalType": "uint96",
+              "name": "price",
+              "type": "uint96"
+            },
+            {
+              "internalType": "uint16",
+              "name": "directBonus",
+              "type": "uint16"
+            },
+            {
+              "internalType": "uint16",
+              "name": "levelBonus",
+              "type": "uint16"
+            },
+            {
+              "internalType": "uint16",
+              "name": "uplineBonus",
+              "type": "uint16"
+            },
+            {
+              "internalType": "uint16",
+              "name": "leaderBonus",
+              "type": "uint16"
+            },
+            {
+              "internalType": "uint16",
+              "name": "helpBonus",
+              "type": "uint16"
+            },
+            {
+              "internalType": "uint16",
+              "name": "clubBonus",
+              "type": "uint16"
             }
-          ]
+          ],
+          "stateMutability": "view",
+          "type": "function"
         },
         {
-          "type": "function",
-          "name": "pause",
-          "constant": false,
-          "payable": false,
           "inputs": [],
-          "outputs": []
-        },
-        {
-          "type": "function",
           "name": "paused",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
           "outputs": [
             {
-              "type": "bool",
-              "name": ""
+              "internalType": "bool",
+              "name": "",
+              "type": "bool"
             }
-          ]
+          ],
+          "stateMutability": "view",
+          "type": "function"
         },
         {
-          "type": "function",
+          "inputs": [],
+          "name": "priceFeed",
+          "outputs": [
+            {
+              "internalType": "contract IPriceFeed",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [],
           "name": "proxiableUUID",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
           "outputs": [
             {
-              "type": "bytes32",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "registerUser",
-          "constant": false,
-          "stateMutability": "payable",
-          "payable": true,
-          "inputs": [
-            {
-              "type": "address",
-              "name": "sponsor"
-            },
-            {
-              "type": "uint8",
-              "name": "tier"
+              "internalType": "bytes32",
+              "name": "",
+              "type": "bytes32"
             }
           ],
-          "outputs": []
+          "stateMutability": "view",
+          "type": "function"
         },
         {
-          "type": "function",
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "recoverUSDT",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "referrer",
+              "type": "address"
+            },
+            {
+              "internalType": "uint8",
+              "name": "packageLevel",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "useUSDT",
+              "type": "bool"
+            }
+          ],
+          "name": "register",
+          "outputs": [],
+          "stateMutability": "payable",
+          "type": "function"
+        },
+        {
+          "inputs": [],
           "name": "renounceOwnership",
-          "constant": false,
-          "payable": false,
-          "inputs": [],
-          "outputs": []
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
         },
         {
-          "type": "function",
-          "name": "renounceRole",
-          "constant": false,
-          "payable": false,
           "inputs": [
             {
-              "type": "bytes32",
-              "name": "role"
-            },
-            {
-              "type": "address",
-              "name": "callerConfirmation"
+              "internalType": "address",
+              "name": "newOwner",
+              "type": "address"
             }
           ],
-          "outputs": []
-        },
-        {
-          "type": "function",
-          "name": "revokeRole",
-          "constant": false,
-          "payable": false,
-          "inputs": [
-            {
-              "type": "bytes32",
-              "name": "role"
-            },
-            {
-              "type": "address",
-              "name": "account"
-            }
-          ],
-          "outputs": []
-        },
-        {
-          "type": "function",
-          "name": "setUSDTMode",
-          "constant": false,
-          "payable": false,
-          "inputs": [
-            {
-              "type": "bool",
-              "name": "_enabled"
-            }
-          ],
-          "outputs": []
-        },
-        {
-          "type": "function",
-          "name": "setUSDTToken",
-          "constant": false,
-          "payable": false,
-          "inputs": [
-            {
-              "type": "address",
-              "name": "_usdtToken"
-            }
-          ],
-          "outputs": []
-        },
-        {
-          "type": "function",
-          "name": "supportsInterface",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [
-            {
-              "type": "bytes4",
-              "name": "interfaceId"
-            }
-          ],
-          "outputs": [
-            {
-              "type": "bool",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "totalContributions",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
-          "outputs": [
-            {
-              "type": "uint256",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "totalWithdrawals",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
-          "outputs": [
-            {
-              "type": "uint256",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
           "name": "transferOwnership",
-          "constant": false,
-          "payable": false,
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
           "inputs": [
             {
-              "type": "address",
-              "name": "newOwner"
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            },
+            {
+              "internalType": "uint8",
+              "name": "rank",
+              "type": "uint8"
             }
           ],
-          "outputs": []
+          "name": "updateUserRank",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
         },
         {
-          "type": "function",
-          "name": "unpause",
-          "constant": false,
-          "payable": false,
-          "inputs": [],
-          "outputs": []
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            },
+            {
+              "internalType": "uint8",
+              "name": "rate",
+              "type": "uint8"
+            }
+          ],
+          "name": "updateWithdrawalRate",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
         },
         {
-          "type": "function",
-          "name": "upgradeToAndCall",
-          "constant": false,
+          "inputs": [
+            {
+              "internalType": "uint8",
+              "name": "newLevel",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "useUSDT",
+              "type": "bool"
+            }
+          ],
+          "name": "upgradePackage",
+          "outputs": [],
           "stateMutability": "payable",
-          "payable": true,
+          "type": "function"
+        },
+        {
           "inputs": [
             {
-              "type": "address",
-              "name": "newImplementation"
+              "internalType": "address",
+              "name": "newImplementation",
+              "type": "address"
             },
             {
-              "type": "bytes",
-              "name": "data"
+              "internalType": "bytes",
+              "name": "data",
+              "type": "bytes"
             }
           ],
-          "outputs": []
+          "name": "upgradeToAndCall",
+          "outputs": [],
+          "stateMutability": "payable",
+          "type": "function"
         },
         {
-          "type": "function",
-          "name": "usdtMode",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
-          "outputs": [
-            {
-              "type": "bool",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "usdtToken",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [],
-          "outputs": [
-            {
-              "type": "address",
-              "name": ""
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "userIdToAddress",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
           "inputs": [
             {
-              "type": "uint256",
-              "name": ""
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
             }
           ],
+          "name": "uplineChain",
           "outputs": [
             {
-              "type": "address",
-              "name": ""
+              "internalType": "address",
+              "name": "",
+              "type": "address"
             }
-          ]
+          ],
+          "stateMutability": "view",
+          "type": "function"
         },
         {
-          "type": "function",
+          "inputs": [],
+          "name": "usdt",
+          "outputs": [
+            {
+              "internalType": "contract IERC20",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
           "name": "users",
-          "constant": true,
-          "stateMutability": "view",
-          "payable": false,
-          "inputs": [
-            {
-              "type": "address",
-              "name": ""
-            }
-          ],
           "outputs": [
             {
-              "type": "bool",
-              "name": "isRegistered"
+              "internalType": "bool",
+              "name": "isRegistered",
+              "type": "bool"
             },
             {
-              "type": "address",
-              "name": "sponsor"
+              "internalType": "bool",
+              "name": "isBlacklisted",
+              "type": "bool"
             },
             {
-              "type": "uint8",
-              "name": "currentTier"
+              "internalType": "address",
+              "name": "referrer",
+              "type": "address"
             },
             {
-              "type": "uint256",
-              "name": "totalInvestment"
+              "internalType": "uint96",
+              "name": "balance",
+              "type": "uint96"
             },
             {
-              "type": "uint256",
-              "name": "totalEarnings"
+              "internalType": "uint96",
+              "name": "totalInvestment",
+              "type": "uint96"
             },
             {
-              "type": "uint256",
-              "name": "withdrawableBalance"
+              "internalType": "uint96",
+              "name": "totalEarnings",
+              "type": "uint96"
             },
             {
-              "type": "uint256",
-              "name": "directReferrals"
+              "internalType": "uint96",
+              "name": "earningsCap",
+              "type": "uint96"
             },
             {
-              "type": "uint256",
-              "name": "teamSize"
+              "internalType": "uint32",
+              "name": "directReferrals",
+              "type": "uint32"
             },
             {
-              "type": "uint256",
-              "name": "teamVolume"
+              "internalType": "uint32",
+              "name": "teamSize",
+              "type": "uint32"
             },
             {
-              "type": "uint256",
-              "name": "registrationTime"
+              "internalType": "uint8",
+              "name": "packageLevel",
+              "type": "uint8"
             },
             {
-              "type": "uint8",
-              "name": "rank"
+              "internalType": "uint8",
+              "name": "rank",
+              "type": "uint8"
             },
             {
-              "type": "bool",
-              "name": "isActive"
-            },
-            {
-              "type": "bool",
-              "name": "isBlacklisted"
-            },
-            {
-              "type": "uint256",
-              "name": "lastWithdrawal"
-            },
-            {
-              "type": "uint256",
-              "name": "earningsCap"
-            },
-            {
-              "type": "address",
-              "name": "leftChild"
-            },
-            {
-              "type": "address",
-              "name": "rightChild"
-            },
-            {
-              "type": "uint256",
-              "name": "leftVolume"
-            },
-            {
-              "type": "uint256",
-              "name": "rightVolume"
-            },
-            {
-              "type": "bool",
-              "name": "clubMember"
-            },
-            {
-              "type": "uint256",
-              "name": "clubJoinTime"
-            }
-          ]
-        },
-        {
-          "type": "function",
-          "name": "withdraw",
-          "constant": false,
-          "payable": false,
-          "inputs": [
-            {
-              "type": "uint256",
-              "name": "amount"
+              "internalType": "uint8",
+              "name": "withdrawalRate",
+              "type": "uint8"
             }
           ],
-          "outputs": []
+          "stateMutability": "view",
+          "type": "function"
         },
         {
-          "type": "receive",
-          "stateMutability": "payable"
+          "inputs": [
+            {
+              "internalType": "uint96",
+              "name": "amount",
+              "type": "uint96"
+            }
+          ],
+          "name": "withdraw",
+          "outputs": [],
+          "stateMutability": "nonpayable",
+          "type": "function"
+        },
+        {
+          "stateMutability": "payable",
+          "type": "receive"
         }
       ]
     },
@@ -1238,87 +1030,5 @@
       "decimals": 18,
       "symbol": "USDT"
     }
-  },
-  "features": {
-    "packages": [
-      {
-        "tier": 0,
-        "name": "Package 1",
-        "amount": "30",
-        "currency": "USDT"
-      },
-      {
-        "tier": 1,
-        "name": "Package 2",
-        "amount": "50",
-        "currency": "USDT"
-      },
-      {
-        "tier": 2,
-        "name": "Package 3",
-        "amount": "100",
-        "currency": "USDT"
-      },
-      {
-        "tier": 3,
-        "name": "Package 4",
-        "amount": "200",
-        "currency": "USDT"
-      },
-      {
-        "tier": 4,
-        "name": "Package 5",
-        "amount": "300",
-        "currency": "USDT"
-      },
-      {
-        "tier": 5,
-        "name": "Package 6",
-        "amount": "500",
-        "currency": "USDT"
-      },
-      {
-        "tier": 6,
-        "name": "Package 7",
-        "amount": "1000",
-        "currency": "USDT"
-      },
-      {
-        "tier": 7,
-        "name": "Package 8",
-        "amount": "2000",
-        "currency": "USDT"
-      }
-    ],
-    "compensation": {
-      "sponsorBonus": "40%",
-      "levelBonuses": {
-        "level1": "3%",
-        "level2": "1%",
-        "level3": "1%",
-        "levels4to10": "0.5% each"
-      },
-      "globalHelpPool": "30%",
-      "earningsCap": "300% of investment"
-    },
-    "paymentMethods": [
-      "BNB",
-      "USDT"
-    ]
-  },
-  "functions": {
-    "read": [
-      "getUserInfo(address)",
-      "getPackageAmounts()",
-      "getContractStats()",
-      "owner()",
-      "VERSION()",
-      "usdtMode()"
-    ],
-    "write": [
-      "registerUser(address,uint8)",
-      "withdraw(uint256)",
-      "setUSDTMode(bool)"
-    ]
   }
 }
