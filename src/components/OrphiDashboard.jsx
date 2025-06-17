@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useWeb3 } from '../contexts/Web3Context';
-import { CONTRACT_ADDRESSES, CONTRACT_ABI } from '../contracts';
+import { ORPHI_CROWDFUND_CONFIG, ORPHI_CROWDFUND_ABI } from '../contracts';
 import { ethers, formatEther } from 'ethers';
 import { toast } from 'react-toastify';
 
@@ -26,8 +26,8 @@ const OrphiDashboard = () => {
     try {
       setLoading(true);
       const contract = new ethers.Contract(
-        CONTRACT_ADDRESSES.bscTestnet.orphiCrowdFund,
-        CONTRACT_ABI,
+        ORPHI_CROWDFUND_CONFIG.address,
+        ORPHI_CROWDFUND_ABI,
         provider.getSigner()
       );
       
@@ -82,8 +82,8 @@ const OrphiDashboard = () => {
   const handleWithdraw = async () => {
     try {
       const contract = new ethers.Contract(
-        CONTRACT_ADDRESSES.bscTestnet.orphiCrowdFund,
-        CONTRACT_ABI,
+        ORPHI_CROWDFUND_CONFIG.address,
+        ORPHI_CROWDFUND_ABI,
         provider.getSigner()
       );
       const tx = await contract.withdrawEarnings();
@@ -99,8 +99,8 @@ const OrphiDashboard = () => {
   const handleJoinClub = async () => {
     try {
       const contract = new ethers.Contract(
-        CONTRACT_ADDRESSES.bscTestnet.orphiCrowdFund,
-        CONTRACT_ABI,
+        ORPHI_CROWDFUND_CONFIG.address,
+        ORPHI_CROWDFUND_ABI,
         provider.getSigner()
       );
       const tx = await contract.joinClub();

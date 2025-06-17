@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 
+// Import styles
+import '../styles/global.css';
+import '../styles/design-system.css';
+
 // Import contract configuration
-import contractConfig from '../../mainnet-config.json';
+import { ORPHI_CROWDFUND_CONFIG, ORPHI_CROWDFUND_ABI } from '../contracts';
 
 const OrphiCrowdFundApp = () => {
   // State management
@@ -93,8 +97,8 @@ const OrphiCrowdFundApp = () => {
         }
         
         const contract = new ethers.Contract(
-          contractConfig.contractAddress,
-          contractConfig.abi,
+          ORPHI_CROWDFUND_CONFIG.address,
+          ORPHI_CROWDFUND_ABI,
           provider
         );
         setContract(contract);
