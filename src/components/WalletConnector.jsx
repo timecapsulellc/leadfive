@@ -18,6 +18,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
   const [connecting, setConnecting] = useState(false);
   const [selectedWallet, setSelectedWallet] = useState(null);
   const [availableWallets, setAvailableWallets] = useState([]);
+  const [error, setError] = useState(null);
 
   // BSC Mainnet configuration
   const BSC_CONFIG = {
@@ -174,10 +175,25 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
   const connectWallet = async (walletId) => {
     setConnecting(true);
     setSelectedWallet(walletId);
+    setError(null);
 
     try {
       let provider = null;
       let accounts = [];
+
+      // Check if MetaMask is locked
+      if (walletId === 'metamask' && window.ethereum?.isMetaMask) {
+        try {
+          // First check if MetaMask is unlocked
+          const isUnlocked = await window.ethereum._metamask.isUnlocked();
+          if (!isUnlocked) {
+            throw new Error('MetaMask is locked. Please unlock your MetaMask wallet first.');
+          }
+        } catch (unlockError) {
+          console.log('Could not check MetaMask unlock status:', unlockError);
+          // Continue anyway, as some versions don't support this method
+        }
+      }
 
       switch (walletId) {
         case 'metamask':
@@ -185,7 +201,17 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
             throw new Error('MetaMask not installed');
           }
           provider = window.ethereum;
-          accounts = await provider.request({ method: 'eth_requestAccounts' });
+          
+          // Add a small delay to ensure MetaMask is ready
+          await new Promise(resolve => setTimeout(resolve, 100));
+          
+          // Request accounts with explicit timeout
+          const requestPromise = provider.request({ method: 'eth_requestAccounts' });
+          const timeoutPromise = new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Connection request timed out. Please try again.')), 30000)
+          );
+          
+          accounts = await Promise.race([requestPromise, timeoutPromise]);
           break;
 
         case 'trust':
@@ -264,7 +290,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
       }
 
       if (!accounts || accounts.length === 0) {
-        throw new Error('No accounts found');
+        throw new Error('No accounts found. Please make sure your wallet is unlocked and has at least one account.');
       }
 
       // Switch to BSC Mainnet
@@ -300,13 +326,31 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
       console.error(`❌ Error connecting ${walletId}:`, error);
       
       let errorMessage = error.message;
+      let userGuidance = '';
+      
       if (error.code === 4001) {
         errorMessage = 'Connection rejected by user';
+        userGuidance = 'Please click "Connect" in your wallet popup to continue.';
       } else if (error.code === -32002) {
-        errorMessage = 'Please check your wallet - there may be a pending connection request';
+        errorMessage = 'Pending connection request';
+        userGuidance = 'Please check your wallet - there may be a pending connection request waiting for approval.';
+      } else if (error.code === -32603) {
+        errorMessage = 'Internal wallet error';
+        userGuidance = 'Please try refreshing the page and reconnecting.';
+      } else if (error.message.includes('locked')) {
+        errorMessage = 'Wallet is locked';
+        userGuidance = 'Please unlock your wallet and try again.';
+      } else if (error.message.includes('timeout')) {
+        errorMessage = 'Connection timed out';
+        userGuidance = 'Please try again. Make sure your wallet is unlocked and responsive.';
       }
       
-      alert(`Failed to connect ${walletId}: ${errorMessage}`);
+      setError({ message: errorMessage, guidance: userGuidance });
+      
+      // Don't show alert for user rejection (code 4001) as it's intentional
+      if (error.code !== 4001) {
+        alert(`Failed to connect ${walletId}: ${errorMessage}${userGuidance ? '\n\n' + userGuidance : ''}`);
+      }
     } finally {
       setConnecting(false);
       setSelectedWallet(null);
@@ -394,6 +438,16 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
               Connect your wallet to start using ORPHI CrowdFund platform
             </p>
 
+            {/* Error Display */}
+            {error && (
+              <div className="mb-4 p-4 bg-red-500/10 border border-red-500/30 rounded-xl">
+                <p className="text-red-400 text-sm font-medium">{error.message}</p>
+                {error.guidance && (
+                  <p className="text-red-300 text-xs mt-1">{error.guidance}</p>
+                )}
+              </div>
+            )}
+
             <div className="space-y-3">
               {availableWallets.map((wallet) => (
                 <button
@@ -432,6 +486,17 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
                 <span className="text-royal-purple">💡 Tip:</span> Make sure you're on BSC Mainnet. 
                 The app will automatically switch networks if needed.
               </p>
+            </div>
+
+            {/* Troubleshooting Tips */}
+            <div className="mt-4 p-4 bg-yellow-500/10 rounded-xl border border-yellow-500/30">
+              <p className="text-sm text-yellow-400 font-medium mb-2">Having trouble connecting?</p>
+              <ul className="text-xs text-yellow-300 space-y-1">
+                <li>• Make sure your wallet is unlocked</li>
+                <li>• Check for popup blockers</li>
+                <li>• Try refreshing the page</li>
+                <li>• Ensure you approve the connection in your wallet</li>
+              </ul>
             </div>
 
             <div className="mt-4 text-center">
