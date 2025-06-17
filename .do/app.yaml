@@ -1,0 +1,24 @@
+name: orphi-crowdfund
+services:
+- name: web
+  source_dir: /
+  github:
+    repo: timecapsulellc/orphicrowdfund
+    branch: deployment-clean
+    deploy_on_push: true
+  build_command: npm run build
+  output_dir: dist
+  environment_slug: node-js
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  routes:
+  - path: /
+  envs:
+  - key: NODE_ENV
+    value: production
+  - key: VITE_APP_NAME
+    value: ORPHI CrowdFund
+  - key: VITE_NETWORK_ID
+    value: "56"
+  - key: VITE_NETWORK_NAME
+    value: BSC Mainnet 
