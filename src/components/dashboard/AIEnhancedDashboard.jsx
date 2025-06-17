@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import OpenAIService from '../../services/OpenAIService';
+import ElevenLabsService from '../../services/ElevenLabsService';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -132,8 +134,15 @@ const AIEnhancedDashboard = ({ account, contractData, isConnected }) => {
   // Voice greeting on mount
   useEffect(() => {
     if (isConnected && account) {
-      setTimeout(() => {
-        speakText(voiceGreeting);
+      setTimeout(async () => {
+        const userName = account.slice(0, 6);
+        const audio = await ElevenLabsService.generateWelcomeGreeting(
+          userName, 
+          contractData
+        );
+        if (audio.success) {
+          audio.play();
+        }
       }, 2000);
     }
   }, [isConnected, account]);
@@ -157,29 +166,55 @@ const AIEnhancedDashboard = ({ account, contractData, isConnected }) => {
   };
 
   // AI Assistant functions
-  const askAI = () => {
-    const responses = [
-      "Based on your emotion analysis, I recommend the 'Innovation Fund' - it matches your optimistic mood and has 89% success rate!",
-      "Your face-tracking shows high focus levels. Perfect time to review those high-ROI opportunities!",
-      "AI prediction: You're 3x more likely to succeed with Web3 projects. Want to see the top recommendations?",
-      "The train's moving—hop on or wave goodbye to $10K/month! Our AI shows 94% of successful users act within the next hour.",
-      "Your portfolio optimization score is 8.7/10. I can help you reach 9.5 with one strategic move!"
-    ];
-    const response = responses[Math.floor(Math.random() * responses.length)];
-    setVoiceGreeting(response);
-    speakText(response);
+  const askAI = async () => {
+    const userContext = {
+      account,
+      earnings: contractData?.totalEarnings || '0',
+      teamSize: contractData?.teamSize || '0',
+      packageLevel: contractData?.packageLevel || '0',
+      isRegistered: contractData?.isRegistered || false
+    };
+
+    try {
+      const response = await OpenAIService.getChatResponse(
+        "Give me a motivational insight about my Web3 crowdfunding journey!",
+        userContext
+      );
+      
+      setVoiceGreeting(response);
+      
+      // Generate voice response
+      const audio = await ElevenLabsService.generateSpeech(response);
+      if (audio.success) {
+        audio.play();
+      }
+    } catch (error) {
+      console.error('AI response error:', error);
+      const fallback = "You're on the right track! 🚀 The blockchain revolution needs leaders like you. Ready to claim your spot in the top 10%?";
+      setVoiceGreeting(fallback);
+      
+      const audio = await ElevenLabsService.generateSpeech(fallback);
+      if (audio.success) {
+        audio.play();
+      }
+    }
   };
 
-  const getNewJoke = () => {
-    const jokes = [
-      "Why don't crypto traders ever get tired? Because they're always pumped!",
-      "What do you call a crypto investor's favorite dance? The Moon Walk!",
-      "Why did the blockchain go to therapy? It had trust issues!",
-      "What's a crypto trader's favorite type of music? Heavy metal... because they love volatile beats!",
-      "Why don't Bitcoin investors ever feel lonely? Because they're always part of a block party!"
-    ];
-    const joke = jokes[Math.floor(Math.random() * jokes.length)];
-    setDailyJoke(joke);
+  const getNewJoke = async () => {
+    try {
+      const joke = await OpenAIService.generateJoke();
+      setDailyJoke(joke);
+      
+      // Optionally play the joke as audio
+      const audio = await ElevenLabsService.generateSpeech(joke);
+      if (audio.success) {
+        audio.play();
+      }
+    } catch (error) {
+      console.error('Joke generation error:', error);
+      const fallbackJoke = "Why don't crypto traders ever get tired? Because they're always pumped! 🚀";
+      setDailyJoke(fallbackJoke);
+    }
   };
 
   const handleChatSubmit = (e) => {
@@ -191,17 +226,30 @@ const AIEnhancedDashboard = ({ account, contractData, isConnected }) => {
     setChatMessages(prev => [...prev, { type: 'user', message: input }]);
     chatInputRef.current.value = '';
 
-    // Simulate AI response
-    setTimeout(() => {
-      const aiResponses = [
-        "Great question! Based on your data, I'd recommend diversifying into AI-powered projects. They show 340% better performance!",
-        "Your investment pattern suggests you're ready for the next tier. Top 10% earn $15,000/month - want me to show you how?",
-        "Interesting! The emotion tracking shows you're in an optimal decision-making state. Perfect time for that big move!",
-        "That's exactly what Sarah Lee asked before her $23,500 success story. Here's what worked for her...",
-        "AI analysis complete: You have a 94% compatibility with the 'Future Tech' portfolio. Shall I set it up?"
-      ];
-      const response = aiResponses[Math.floor(Math.random() * aiResponses.length)];
-      setChatMessages(prev => [...prev, { type: 'ai', message: response }]);
+    // Get AI response
+    setTimeout(async () => {
+      try {
+        const userContext = {
+          account,
+          earnings: contractData?.totalEarnings || '0',
+          teamSize: contractData?.teamSize || '0',
+          packageLevel: contractData?.packageLevel || '0',
+          isRegistered: contractData?.isRegistered || false
+        };
+
+        const response = await OpenAIService.getChatResponse(input, userContext);
+        setChatMessages(prev => [...prev, { type: 'ai', message: response }]);
+        
+        // Generate voice response for chat
+        const audio = await ElevenLabsService.generateSpeech(response);
+        if (audio.success) {
+          audio.play();
+        }
+      } catch (error) {
+        console.error('Chat AI error:', error);
+        const fallback = "Great question! 🚀 Based on current trends, Web3 projects show amazing potential. Ready to explore opportunities?";
+        setChatMessages(prev => [...prev, { type: 'ai', message: fallback }]);
+      }
     }, 1500);
   };
 

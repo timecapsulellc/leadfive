@@ -14,6 +14,10 @@ import WalletConnector from './WalletConnector';
 // Import AI Enhanced Dashboard
 import AIEnhancedDashboard from './dashboard/AIEnhancedDashboard';
 
+// Import AI components
+import AISettings from './admin/AISettings';
+import CompensationPlanUpload from './admin/CompensationPlanUpload';
+
 const OrphiCrowdFundApp = () => {
   // State management
   const [account, setAccount] = useState('');
@@ -33,6 +37,8 @@ const OrphiCrowdFundApp = () => {
   const [isCorrectNetwork, setIsCorrectNetwork] = useState(false);
   const [networkError, setNetworkError] = useState('');
   const [showAIDashboard, setShowAIDashboard] = useState(false);
+  const [showAISettings, setShowAISettings] = useState(false);
+  const [showCompPlanUpload, setShowCompPlanUpload] = useState(false);
 
   // Package configurations with ORPHI branding
   const packages = [
@@ -371,11 +377,100 @@ const OrphiCrowdFundApp = () => {
   // If AI Dashboard is enabled and user is connected, show AI Dashboard
   if (showAIDashboard && account) {
     return (
-      <AIEnhancedDashboard 
-        account={account}
-        contractData={userInfo}
-        isConnected={!!account}
-      />
+      <div className="min-h-screen bg-gradient-to-br from-deep-space to-midnight-blue">
+        {/* Header for AI Dashboard */}
+        <header className="glass-effect border-b border-white/10 p-4">
+          <div className="container mx-auto flex justify-between items-center">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-cyber-blue to-royal-purple rounded-xl flex items-center justify-center">
+                <span className="text-2xl font-bold text-white">O</span>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-gradient font-display">ORPHI AI Dashboard</h1>
+                <p className="text-sm text-silver-mist">Powered by ChatGPT & ElevenLabs</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setShowAISettings(true)}
+                className="glass-effect px-4 py-2 rounded-lg text-sm font-semibold text-silver-mist hover:text-white transition-all"
+              >
+                <i className="fas fa-cog mr-2"></i>AI Settings
+              </button>
+              <button
+                onClick={() => setShowAIDashboard(false)}
+                className="bg-gradient-to-r from-royal-purple to-cyber-blue text-white px-4 py-2 rounded-lg text-sm font-semibold"
+              >
+                <i className="fas fa-arrow-left mr-2"></i>Back to Classic
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <AIEnhancedDashboard 
+          account={account}
+          contractData={userInfo}
+          isConnected={!!account}
+        />
+
+        {/* AI Settings Modal */}
+        {showAISettings && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div className="bg-gradient-to-br from-deep-space to-midnight-blue rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="sticky top-0 bg-gradient-to-r from-royal-purple to-cyber-blue p-4 rounded-t-2xl">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-xl font-bold text-white">AI Configuration</h2>
+                  <button
+                    onClick={() => setShowAISettings(false)}
+                    className="text-white hover:text-silver-mist transition-colors"
+                  >
+                    <i className="fas fa-times text-xl"></i>
+                  </button>
+                </div>
+              </div>
+              <div className="p-6">
+                <AISettings />
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // If Compensation Plan Upload is shown
+  if (showCompPlanUpload) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-deep-space to-midnight-blue">
+        {/* Header */}
+        <header className="glass-effect border-b border-white/10 p-4">
+          <div className="container mx-auto flex justify-between items-center">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-cyber-blue to-royal-purple rounded-xl flex items-center justify-center">
+                <span className="text-2xl font-bold text-white">O</span>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-gradient font-display">Compensation Plan Upload</h1>
+                <p className="text-sm text-silver-mist">AI-powered analysis by ChatGPT</p>
+              </div>
+            </div>
+            <button
+              onClick={() => setShowCompPlanUpload(false)}
+              className="bg-gradient-to-r from-royal-purple to-cyber-blue text-white px-4 py-2 rounded-lg text-sm font-semibold"
+            >
+              <i className="fas fa-arrow-left mr-2"></i>Back to Dashboard
+            </button>
+          </div>
+        </header>
+
+        <div className="container mx-auto p-6">
+          <CompensationPlanUpload 
+            onAnalysisComplete={(result) => {
+              console.log('Compensation plan analysis:', result);
+            }}
+          />
+        </div>
+      </div>
     );
   }
 
@@ -414,6 +509,17 @@ const OrphiCrowdFundApp = () => {
                 >
                   <i className="fas fa-robot mr-2"></i>
                   {showAIDashboard ? 'Classic View' : 'AI Dashboard'}
+                </button>
+              )}
+
+              {/* Compensation Plan Upload */}
+              {account && (
+                <button
+                  onClick={() => setShowCompPlanUpload(true)}
+                  className="glass-effect px-4 py-2 rounded-lg text-sm font-semibold text-silver-mist hover:text-white transition-all"
+                >
+                  <i className="fas fa-file-upload mr-2"></i>
+                  Upload Plan
                 </button>
               )}
               
