@@ -14,7 +14,7 @@ import ReferralManager from './ReferralManager';
 import AdminDashboard from '../admin/AdminDashboard';
 import LoadingSpinner from '../common/LoadingSpinner';
 import OrphiChainLogo from '../OrphiChainLogo';
-import WalletConnection from '../web3/WalletConnection';
+import WalletConnector from '../WalletConnector';
 import FileUploader from '../common/FileUploader';
 import '../../styles/unified-dashboard.css';
 
@@ -1639,7 +1639,12 @@ const UnifiedOrphiDashboard = ({
             </div>
           )}
           
-          <WalletConnection />
+          <WalletConnector 
+            onConnect={() => {}}
+            onDisconnect={() => {}}
+            currentAccount={account}
+            isConnected={isConnected}
+          />
           
           {deviceInfo.isMobile && (
             <button 
@@ -1691,7 +1696,12 @@ const UnifiedOrphiDashboard = ({
           <div className="wallet-connection-panel">
             <h2>Welcome to ORPHI CrowdFund</h2>
             <p>Connect your wallet to access the dashboard and start building your Web3 empire!</p>
-            <WalletConnection />
+            <WalletConnector 
+              onConnect={() => {}}
+              onDisconnect={() => {}}
+              currentAccount={account}
+              isConnected={isConnected}
+            />
           </div>
         ) : (
           <div className="fade-in">
