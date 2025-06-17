@@ -11,10 +11,11 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0 --port 8080",
-    "start": "vite preview --host 0.0.0.0 --port 8080 --allowedHosts all",
+    "start": "serve -s dist -l 8080",
+    "start-vite": "vite preview --host 0.0.0.0 --port 8080 --allowedHosts all",
     "vercel-build": "vite build",
     "digitalocean-build": "vite build",
-    "digitalocean-start": "vite preview --host 0.0.0.0 --port 8080 --allowedHosts all"
+    "digitalocean-start": "serve -s dist -l 8080"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.50.0",
@@ -23,6 +24,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-toastify": "^11.0.5",
+    "serve": "^14.2.4",
     "web3modal": "^1.9.12"
   },
   "devDependencies": {
