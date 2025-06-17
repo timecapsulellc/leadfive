@@ -88,6 +88,7 @@ body {
   transition: all var(--transition-normal);
   min-height: 80px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .header-left {
@@ -96,6 +97,7 @@ body {
   gap: var(--spacing-lg);
   flex: 1;
   min-width: 0; /* Prevent flex item overflow */
+  max-width: calc(100% - 200px); /* Reserve space for header-right */
 }
 
 .header-title {
@@ -110,6 +112,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .header-subtitle {
@@ -119,13 +122,59 @@ body {
   margin-left: var(--spacing-md);
   opacity: 0.8;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .header-right {
   display: flex;
   align-items: center;
-  gap: var(--spacing-lg);
+  gap: var(--spacing-md);
   flex-shrink: 0;
+  min-width: 150px;
+  justify-content: flex-end;
+}
+
+/* Wallet Connection Styles in Header */
+.header-right .wallet-connector,
+.header-right .btn,
+.header-right button {
+  white-space: nowrap;
+  flex-shrink: 0;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Specific wallet connector responsive styles */
+.wallet-connector {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  max-width: 100%;
+}
+
+.wallet-connector button {
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+/* Connected wallet display */
+.wallet-connector .text-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 0;
+  max-width: 120px;
+}
+
+.wallet-connector .text-right p {
+  margin: 0;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
 .mobile-menu-btn {
@@ -138,6 +187,7 @@ body {
   padding: var(--spacing-sm);
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
+  flex-shrink: 0;
 }
 
 .mobile-menu-btn:hover {
@@ -698,20 +748,54 @@ body {
 @media (max-width: 768px) {
   .dashboard-header {
     padding: var(--spacing-md);
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     min-height: 70px;
+    gap: var(--spacing-sm);
+  }
+
+  .header-left {
+    max-width: calc(100% - 180px);
+    gap: var(--spacing-sm);
   }
 
   .header-title {
     font-size: 1.3rem;
+    max-width: 150px;
   }
 
   .header-subtitle {
     display: none;
   }
 
+  .header-right {
+    min-width: 120px;
+    gap: var(--spacing-xs);
+  }
+
+  .header-right .btn,
+  .header-right button {
+    font-size: 0.85rem;
+    padding: var(--spacing-sm) var(--spacing-md);
+    max-width: 140px;
+  }
+
+  .wallet-connector {
+    gap: var(--spacing-xs);
+    max-width: 140px;
+  }
+
+  .wallet-connector .text-right {
+    max-width: 80px;
+  }
+
+  .wallet-connector .text-right p {
+    font-size: 0.75rem;
+  }
+
   .mobile-menu-btn {
     display: block;
+    font-size: 1.2rem;
+    padding: var(--spacing-xs);
   }
 
   .dashboard-navigation {
@@ -816,14 +900,52 @@ body {
   .dashboard-header {
     padding: var(--spacing-sm) var(--spacing-md);
     min-height: 60px;
+    gap: var(--spacing-xs);
   }
 
   .header-left {
-    gap: var(--spacing-md);
+    gap: var(--spacing-xs);
+    max-width: calc(100% - 140px);
   }
 
   .header-title {
     font-size: 1.1rem;
+    max-width: 120px;
+  }
+
+  .header-right {
+    min-width: 100px;
+    gap: var(--spacing-xs);
+  }
+
+  .header-right .btn,
+  .header-right button {
+    font-size: 0.8rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    max-width: 100px;
+  }
+
+  .wallet-connector {
+    gap: var(--spacing-xs);
+    max-width: 100px;
+  }
+
+  .wallet-connector .text-right {
+    max-width: 60px;
+  }
+
+  .wallet-connector .text-right p {
+    font-size: 0.7rem;
+  }
+
+  .wallet-connector button {
+    font-size: 0.7rem;
+    padding: var(--spacing-xs);
+  }
+
+  .mobile-menu-btn {
+    font-size: 1rem;
+    padding: var(--spacing-xs);
   }
 
   .dashboard-main {
