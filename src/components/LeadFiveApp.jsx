@@ -4,7 +4,6 @@ import { ethers } from 'ethers';
 import { LEAD_FIVE_CONFIG, LEAD_FIVE_ABI, PACKAGES } from '../contracts-leadfive.js';
 import WalletConnect from './WalletConnect';
 import UltimateDashboard from './UltimateDashboard';
-import AdminControlPanel from './AdminControlPanel';
 import RealTimeDashboard from './RealTimeDashboard';
 import NetworkTreeVisualization from './NetworkTreeVisualization';
 import ErrorBoundary from './ErrorBoundary';
@@ -381,10 +380,14 @@ const LeadFiveApp = () => {
                     )}
 
                     {activeTab === 'admin' && isAdmin && (
-                        <AdminControlPanel
-                            contract={contract}
-                            account={account}
-                        />
+                        <div className="admin-placeholder">
+                            <h3>🔧 Admin Panel</h3>
+                            <p>Admin functionality will be available after deployment.</p>
+                            <div className="admin-info">
+                                <p>Connected as Admin: {account}</p>
+                                <p>Contract: {LEAD_FIVE_CONFIG.address}</p>
+                            </div>
+                        </div>
                     )}
                 </div>
 
