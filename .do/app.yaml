@@ -1,24 +1,59 @@
-name: orphi-crowdfund
+#
+# DigitalOcean App Platform Configuration
+# LeadFive MLM Platform Deployment
+# Repository: git@github.com:timecapsulellc/LeadFive.git
+#
+
+name: leadfive
+region: nyc
+
 services:
-- name: web
+- name: leadfive-web
   source_dir: /
   github:
-    repo: timecapsulellc/orphicrowdfund
-    branch: deployment-clean
+    repo: timecapsulellc/LeadFive
+    branch: main
     deploy_on_push: true
+  
   build_command: npm run build
-  output_dir: dist
+  run_command: npm start
+  
   environment_slug: node-js
   instance_count: 1
   instance_size_slug: basic-xxs
-  routes:
-  - path: /
+  
+  http_port: 3000
+  
+  health_check:
+    http_path: /
+    initial_delay_seconds: 30
+    period_seconds: 10
+    timeout_seconds: 5
+    success_threshold: 1
+    failure_threshold: 3
+  
   envs:
   - key: NODE_ENV
     value: production
-  - key: VITE_APP_NAME
-    value: ORPHI CrowdFund
+  - key: VITE_APP_ENV
+    value: production
+  - key: VITE_CONTRACT_ADDRESS
+    value: "0x7FEEA22942407407801cCDA55a4392f25975D998"
   - key: VITE_NETWORK_ID
     value: "56"
-  - key: VITE_NETWORK_NAME
-    value: BSC Mainnet 
+  - key: VITE_WEB3_PROVIDER_URL
+    value: "https://bsc-dataseed.binance.org/"
+  - key: VITE_DEBUG_MODE
+    value: "false"
+
+# Optional: Add domain configuration (uncomment when ready for Phase 3)
+# domains:
+# - domain: leadfive.today
+#   type: PRIMARY
+#   wildcard: false
+#   certificate_id: ""
+
+# Optional: Add alerts
+alerts:
+- rule: DEPLOYMENT_FAILED
+- rule: DOMAIN_FAILED
