@@ -195,7 +195,7 @@ const NetworkTreeVisualization = ({
     refreshData,
     lookupUser,
     isConnected,
-    config
+    config: liveConfig // Renamed to avoid duplicate declaration
   } = useLiveNetworkData({
     autoRefresh: useLiveData && autoRefresh,
     refreshInterval,
@@ -400,9 +400,9 @@ const NetworkTreeVisualization = ({
     const isSearchMatch = searchResults.some(result => result.node.name === nodeDatum.name);
     
     return (
-      &lt;g onClick={() => handleNodeClick(nodeDatum)}&gt;
+      <g onClick={() => handleNodeClick(nodeDatum)}>
         {/* Node Circle */}
-        &lt;circle
+        <circle
           r={radius}
           fill={color}
           stroke={isSearchMatch ? '#FFD700' : '#ffffff'}
@@ -413,21 +413,19 @@ const NetworkTreeVisualization = ({
               'brightness(1.3) drop-shadow(0 0 8px rgba(255,255,255,0.6))' : 
               'brightness(1) drop-shadow(0 0 8px rgba(255,255,255,0.4))'
           }}
-        /&gt;
-        
+        />
         {/* Center Icon */}
-        &lt;text
+        <text
           fill="#ffffff"
           fontSize={isRoot ? "16" : "14"}
           textAnchor="middle"
           y="5"
           fontWeight="bold"
-        &gt;
+        >
           {isRoot ? '🏢' : '👤'}
-        &lt;/text&gt;
-        
+        </text>
         {/* User Name */}
-        &lt;text
+        <text
           fill="#fff"
           fontSize="18"
           fontWeight="bold"
@@ -444,13 +442,12 @@ const NetworkTreeVisualization = ({
             letterSpacing: '1px',
             wordSpacing: '2px',
           }}
-        &gt;
+        >
           {nodeDatum.name}
-        &lt;/text&gt;
-        
+        </text>
         {/* Package Tier Label */}
         {!isRoot && (
-          &lt;text
+          <text
             fill="#fff"
             fontSize="14"
             fontWeight="600"
@@ -458,69 +455,13 @@ const NetworkTreeVisualization = ({
             y={radius + 42}
             dominantBaseline="middle"
             alignmentBaseline="middle"
-            stroke="#000"
-            strokeWidth="3"
-            paintOrder="stroke fill"
-            style={{
-              filter: 'drop-shadow(0 1px 1px #000)',
-              textShadow: '0 1px 4px #000, 0 0 3px #fff',
-              letterSpacing: '1px',
-              wordSpacing: '2px',
-            }}
-          &gt;
+          >
             {getPackageTierLabel(nodeDatum.attributes?.packageTier)}
-          &lt;/text&gt;
+          </text>
         )}
-        
-        {/* Address */}
-        {nodeDatum.attributes?.address && nodeDatum.attributes.address !== 'Root' && (
-          &lt;text
-            fill="#fff"
-            fontSize="14"
-            fontWeight="600"
-            textAnchor="middle"
-            y={-radius - 12}
-            dominantBaseline="middle"
-            alignmentBaseline="middle"
-            stroke="#000"
-            strokeWidth="3"
-            paintOrder="stroke fill"
-            style={{
-              filter: 'drop-shadow(0 1px 1px #000)',
-              textShadow: '0 1px 4px #000, 0 0 3px #fff',
-              letterSpacing: '1px',
-              wordSpacing: '1px',
-            }}
-          &gt;
-            {nodeDatum.attributes.address.slice(0, 8)}...
-          &lt;/text&gt;
-        )}
-        
-        {/* Volume Badge */}
-        {!isRoot && nodeDatum.attributes?.volume > 0 && (
-          &lt;&gt;
-            &lt;rect
-              x="-25"
-              y={-radius - 5}
-              width="50"
-              height="12"
-              rx="6"
-              fill="rgba(0, 212, 255, 0.8)"
-            /&gt;
-            &lt;text
-              fill="#ffffff"
-              fontSize="8"
-              fontWeight="600"
-              textAnchor="middle"
-              y={-radius + 3}
-            &gt;
-              ${(nodeDatum.attributes.volume / 1000).toFixed(1)}K
-            &lt;/text&gt;
-          &lt;/&gt;
-        )}
-      &lt;/g&gt;
+      </g>
     );
-  }, [selectedNode, searchResults]);
+  }, [selectedNode, searchResults, handleNodeClick]);
   
   // ============================================================================
   // EVENT HANDLERS
@@ -590,12 +531,12 @@ const NetworkTreeVisualization = ({
   
   if (liveDataLoading || !activeData) {
     return (
-      &lt;div className={`network-tree-loading theme-${theme}`}&gt;
-        &lt;div className="loading-spinner"&gt;
-          &lt;div className="spinner-ring">&lt;/div&gt;
-        &lt;/div&gt;
-        &lt;p&gt;Loading network tree...&lt;/p&gt;
-      &lt;/div&gt;
+      <div className={`network-tree-loading theme-${theme}`}>
+        <div className="loading-spinner">
+          <div className="spinner-ring"></div>
+        </div>
+        <p>Loading network tree...</p>
+      </div>
     );
   }
   
@@ -604,163 +545,163 @@ const NetworkTreeVisualization = ({
   // ============================================================================
   
   return (
-    &lt;div className={`network-tree-visualization theme-${theme}`} ref={containerRef}&gt;
+    <div className={`network-tree-visualization theme-${theme}`} ref={containerRef}>
       
       {/* Header with Stats */}
       {showStats && (
-        &lt;div className="tree-header"&gt;
-          &lt;div className="tree-stats"&gt;
-            &lt;div className="stat-item"&gt;
-              &lt;span className="stat-label"&gt;Total Nodes&lt;/span&gt;
-              &lt;span className="stat-value"&gt;{treeStats.totalNodes}&lt;/span&gt;
-            &lt;/div&gt;
-            &lt;div className="stat-item"&gt;
-              &lt;span className="stat-label"&gt;Max Depth&lt;/span&gt;
-              &lt;span className="stat-value"&gt;{treeStats.maxDepth}&lt;/span&gt;
-            &lt;/div&gt;
-            &lt;div className="stat-item"&gt;
-              &lt;span className="stat-label"&gt;Total Volume&lt;/span&gt;
-              &lt;span className="stat-value"&gt;${(treeStats.totalVolume / 1000).toFixed(1)}K&lt;/span&gt;
-            &lt;/div&gt;
-            &lt;div className="stat-item"&gt;
-              &lt;span className="stat-label"&gt;Direct Children&lt;/span&gt;
-              &lt;span className="stat-value"&gt;{treeStats.directChildren}&lt;/span&gt;
-            &lt;/div&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
+        <div className="tree-header">
+          <div className="tree-stats">
+            <div className="stat-item">
+              <span className="stat-label">Total Nodes</span>
+              <span className="stat-value">{treeStats.totalNodes}</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-label">Max Depth</span>
+              <span className="stat-value">{treeStats.maxDepth}</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-label">Total Volume</span>
+              <span className="stat-value">${(treeStats.totalVolume / 1000).toFixed(1)}K</span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-label">Direct Children</span>
+              <span className="stat-value">{treeStats.directChildren}</span>
+            </div>
+          </div>
+        </div>
       )}
       
       {/* Controls */}
       {showControls && (
-        &lt;div className="tree-controls"&gt;
+        <div className="tree-controls">
           {/* Orientation Control */}
-          &lt;div className="control-group"&gt;
-            &lt;label&gt;Orientation:&lt;/label&gt;
-            &lt;select 
+          <div className="control-group">
+            <label>Orientation:</label>
+            <select 
               value={currentOrientation} 
-              onChange={(e) =&gt; handleOrientationChange(e.target.value)}
+              onChange={(e) => handleOrientationChange(e.target.value)}
               className="control-select"
-            &gt;
-              &lt;option value="vertical"&gt;Vertical&lt;/option&gt;
-              &lt;option value="horizontal"&gt;Horizontal&lt;/option&gt;
-            &lt;/select&gt;
-          &lt;/div&gt;
+            >
+              <option value="vertical">Vertical</option>
+              <option value="horizontal">Horizontal</option>
+            </select>
+          </div>
           
           {/* Zoom Control */}
-          &lt;div className="control-group"&gt;
-            &lt;label&gt;Zoom:&lt;/label&gt;
-            &lt;input
+          <div className="control-group">
+            <label>Zoom:</label>
+            <input
               type="range"
               min={scaleExtent.min}
               max={scaleExtent.max}
               step="0.1"
               value={currentZoom}
-              onChange={(e) =&gt; handleZoomChange(parseFloat(e.target.value))}
+              onChange={(e) => handleZoomChange(parseFloat(e.target.value))}
               className="zoom-slider"
-            /&gt;
-            &lt;span className="zoom-value"&gt;{(currentZoom * 100).toFixed(0)}%&lt;/span&gt;
-          &lt;/div&gt;
+            />
+            <span className="zoom-value">{(currentZoom * 100).toFixed(0)}%</span>
+          </div>
           
           {/* Search Control */}
           {showSearch && (
-            &lt;div className="control-group"&gt;
-              &lt;label&gt;Search:&lt;/label&gt;
-              &lt;input
+            <div className="control-group">
+              <label>Search:</label>
+              <input
                 type="text"
                 placeholder="Search users or addresses..."
                 value={searchQuery}
-                onChange={(e) =&gt; handleSearchChange(e.target.value)}
+                onChange={(e) => handleSearchChange(e.target.value)}
                 className="search-input"
-              /&gt;
+              />
               {searchResults.length > 0 && (
-                &lt;span className="search-results"&gt;{searchResults.length} found&lt;/span&gt;
+                <span className="search-results">{searchResults.length} found</span>
               )}
-            &lt;/div&gt;
+            </div>
           )}
           
           {/* Reset Button */}
-          &lt;button className="reset-btn" onClick={resetView}&gt;
+          <button className="reset-btn" onClick={resetView}>
             Reset View
-          &lt;/button&gt;
-        &lt;/div&gt;
+          </button>
+        </div>
       )}
       
       {/* Tree Container */}
-      &lt;div className="tree-container" style={{ height: '600px', width: '100%' }}&gt;
-        &lt;Tree
+      <div className="tree-container" style={{ height: '600px', width: '100%' }}>
+        <Tree
           ref={treeRef}
           {...treeConfigProps}
-        /&gt;
-      &lt;/div&gt;
+        />
+      </div>
       
       {/* Node Details Panel */}
       {showNodeDetails && selectedNode && (
-        &lt;div className="node-details-panel"&gt;
-          &lt;div className="panel-header"&gt;
-            &lt;h3&gt;Node Details&lt;/h3&gt;
-            &lt;button 
+        <div className="node-details-panel">
+          <div className="panel-header">
+            <h3>Node Details</h3>
+            <button 
               className="close-btn"
-              onClick={() =&gt; setSelectedNode(null)}
-            &gt;
+              onClick={() => setSelectedNode(null)}
+            >
               ✕
-            &lt;/button&gt;
-          &lt;/div&gt;
-          &lt;div className="panel-content"&gt;
-            &lt;div className="detail-row"&gt;
-              &lt;span className="detail-label"&gt;Name:&lt;/span&gt;
-              &lt;span className="detail-value"&gt;{selectedNode.name}&lt;/span&gt;
-            &lt;/div&gt;
-            &lt;div className="detail-row"&gt;
-              &lt;span className="detail-label"&gt;Address:&lt;/span&gt;
-              &lt;span className="detail-value"&gt;{selectedNode.attributes?.address}&lt;/span&gt;
-            &lt;/div&gt;
-            &lt;div className="detail-row"&gt;
-              &lt;span className="detail-label"&gt;Package:&lt;/span&gt;
-              &lt;span className="detail-value"&gt;
+            </button>
+          </div>
+          <div className="panel-content">
+            <div className="detail-row">
+              <span className="detail-label">Name:</span>
+              <span className="detail-value">{selectedNode.name}</span>
+            </div>
+            <div className="detail-row">
+              <span className="detail-label">Address:</span>
+              <span className="detail-value">{selectedNode.attributes?.address}</span>
+            </div>
+            <div className="detail-row">
+              <span className="detail-label">Package:</span>
+              <span className="detail-value">
                 {getPackageTierLabel(selectedNode.attributes?.packageTier)}
-              &lt;/span&gt;
-            &lt;/div&gt;
-            &lt;div className="detail-row"&gt;
-              &lt;span className="detail-label"&gt;Volume:&lt;/span&gt;
-              &lt;span className="detail-value"&gt;
+              </span>
+            </div>
+            <div className="detail-row">
+              <span className="detail-label">Volume:</span>
+              <span className="detail-value">
                 ${selectedNode.attributes?.volume?.toLocaleString()}
-              &lt;/span&gt;
-            &lt;/div&gt;
-            &lt;div className="detail-row"&gt;
-              &lt;span className="detail-label"&gt;Downline:&lt;/span&gt;
-              &lt;span className="detail-value"&gt;{selectedNode.attributes?.downlineCount || 0}&lt;/span&gt;
-            &lt;/div&gt;
+              </span>
+            </div>
+            <div className="detail-row">
+              <span className="detail-label">Downline:</span>
+              <span className="detail-value">{selectedNode.attributes?.downlineCount || 0}</span>
+            </div>
             {selectedNode.attributes?.registrationDate && (
-              &lt;div className="detail-row"&gt;
-                &lt;span className="detail-label"&gt;Registered:&lt;/span&gt;
-                &lt;span className="detail-value"&gt;
+              <div className="detail-row">
+                <span className="detail-label">Registered:</span>
+                <span className="detail-value">
                   {new Date(selectedNode.attributes.registrationDate).toLocaleDateString()}
-                &lt;/span&gt;
-              &lt;/div&gt;
+                </span>
+              </div>
             )}
-          &lt;/div&gt;
-        &lt;/div&gt;
+          </div>
+        </div>
       )}
       
       {/* Legend */}
       {showLegend && (
-        &lt;div className="tree-legend"&gt;
-          &lt;h4&gt;Package Tiers&lt;/h4&gt;
-          &lt;div className="legend-items"&gt;
-            {Object.entries(PACKAGE_TIER_LABELS).map(([tier, label]) =&gt; (
-              &lt;div key={tier} className="legend-item"&gt;
-                &lt;div 
+        <div className="tree-legend">
+          <h4>Package Tiers</h4>
+          <div className="legend-items">
+            {Object.entries(PACKAGE_TIER_LABELS).map(([tier, label]) => (
+              <div key={tier} className="legend-item">
+                <div 
                   className="legend-color" 
                   style={{ backgroundColor: getPackageTierColor(parseInt(tier)) }}
-                &gt;&lt;/div&gt;
-                &lt;span&gt;{label} Package&lt;/span&gt;
-              &lt;/div&gt;
+                ></div>
+                <span>{label} Package</span>
+              </div>
             ))}
-          &lt;/div&gt;
-        &lt;/div&gt;
+          </div>
+        </div>
       )}
       
-    &lt;/div&gt;
+    </div>
   );
 };
 
