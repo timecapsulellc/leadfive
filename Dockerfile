@@ -3,7 +3,7 @@
 # Target domain: leadfive.today
 
 # ==================== STAGE 1: BUILD ENVIRONMENT ====================
-FROM node:18-alpine AS builder
+FROM node:18.14.2-alpine AS builder
 
 # Set working directory
 WORKDIR /app
@@ -29,7 +29,7 @@ COPY . .
 RUN npm run build
 
 # ==================== STAGE 2: PRODUCTION ENVIRONMENT ====================
-FROM node:18-alpine AS production
+FROM node:18.14.2-alpine AS production
 
 # Set environment variables
 ENV NODE_ENV=production

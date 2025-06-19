@@ -22,6 +22,9 @@ services:
   instance_count: 1
   instance_size_slug: basic-xxs
   
+  # Force specific Node.js version
+  dockerfile_path: Dockerfile
+  
   http_port: 3000
   
   health_check:
