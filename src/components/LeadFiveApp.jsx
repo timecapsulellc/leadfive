@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import { LEAD_FIVE_CONFIG, LEAD_FIVE_ABI, PACKAGES } from '../contracts-leadfive.js';
 import WalletConnect from './WalletConnect';
 import UltimateDashboard from './UltimateDashboard';
-import AdminControlPanel from './admin/AdminControlPanel';
+import AdminControlPanel from './AdminControlPanel';
 import RealTimeDashboard from './RealTimeDashboard';
 import NetworkTreeVisualization from './NetworkTreeVisualization';
 import ErrorBoundary from './ErrorBoundary';
