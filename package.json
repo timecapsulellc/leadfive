@@ -41,35 +41,11 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "ethers": "^6.8.1",
-    "react-router-dom": "^6.8.1",
-    "react-hot-toast": "^2.4.1",
-    "lucide-react": "^0.263.1",
-    "recharts": "^2.8.0",
-    "framer-motion": "^10.16.4",
-    "react-query": "^3.39.3",
-    "zustand": "^4.4.1",
-    "date-fns": "^2.30.0",
-    "clsx": "^2.0.0",
-    "tailwind-merge": "^1.14.0"
+    "ethers": "^6.8.1"
   },
   "devDependencies": {
-    "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",
-    "vite": "^4.4.5",
-    "eslint": "^8.45.0",
-    "eslint-plugin-react": "^7.32.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.3",
-    "tailwindcss": "^3.3.3",
-    "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.27",
-    "@hardhat/hardhat-toolbox": "^3.0.0",
-    "hardhat": "^2.17.1",
-    "@openzeppelin/contracts": "^4.9.3",
-    "@openzeppelin/contracts-upgradeable": "^4.9.3",
-    "dotenv": "^16.3.1"
+    "vite": "^4.4.5"
   },
   "engines": {
     "node": ">=18.0.0",
