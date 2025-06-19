@@ -25,7 +25,7 @@ services:
   # Force specific Node.js version
   dockerfile_path: Dockerfile
   
-  http_port: 3000
+  http_port: 8080
   
   health_check:
     http_path: /
