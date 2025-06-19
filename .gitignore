@@ -191,7 +191,7 @@ private/
 sensitive/
 
 # ==================== PACKAGE MANAGERS ====================
-package-lock.json
+# package-lock.json  # Commented out - we need this for production builds
 yarn.lock
 pnpm-lock.yaml
 .pnpm-store/
