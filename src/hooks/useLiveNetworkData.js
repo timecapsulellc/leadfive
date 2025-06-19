@@ -14,7 +14,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Web3 } from 'web3';
-import { ORPHI_CROWDFUND_CONFIG, ORPHI_CROWDFUND_ABI } from '../contracts.js';
+import { ORPHI_CROWDFUND_CONFIG, ORPHI_CROWDFUND_ABI } from '../contracts-leadfive.js';
 
 // ============================================================================
 // CONSTANTS
