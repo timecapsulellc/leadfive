@@ -45,8 +45,8 @@ WORKDIR /app
 # Install production dependencies and utilities
 RUN apk add --no-cache \
     curl \
+    wget \
     dumb-init \
-    nginx \
     && rm -rf /var/cache/apk/*
 
 # Copy built application from builder stage
@@ -54,17 +54,15 @@ COPY --from=builder --chown=leadfive:nodejs /app/dist ./dist
 COPY --from=builder --chown=leadfive:nodejs /app/package*.json ./
 COPY --from=builder --chown=leadfive:nodejs /app/node_modules ./node_modules
 
-# Copy production configuration files
-COPY --chown=leadfive:nodejs nginx.conf /etc/nginx/nginx.conf
-COPY --chown=leadfive:nodejs public/favicon.ico ./dist/
-COPY --chown=leadfive:nodejs public/manifest.json ./dist/
+# Copy vite config
+COPY --chown=leadfive:nodejs vite.config.js ./
 
 # Create necessary directories
-RUN mkdir -p /app/data /app/logs /var/log/nginx && \
-    chown -R leadfive:nodejs /app /var/log/nginx
+RUN mkdir -p /app/data /app/logs && \
+    chown -R leadfive:nodejs /app
 
 # Create health check endpoint
-RUN echo '<!DOCTYPE html><html><head><title>Health Check</title></head><body><h1>LeadFive is running</h1><p>Status: OK</p></body></html>' > /app/dist/health.html
+RUN echo '<!DOCTYPE html><html><head><title>Health Check</title></head><body><h1>LeadFive is running</h1><p>Status: OK</p></body></html>' > /app/dist/index.html
 
 # Expose port
 EXPOSE 3000
@@ -80,7 +78,7 @@ USER leadfive
 ENTRYPOINT ["dumb-init", "--"]
 
 # Start the application
-CMD ["sh", "-c", "nginx -g 'daemon off;' & npm start"]
+CMD ["npm", "start"]
 
 # ==================== STAGE 3: DEVELOPMENT ENVIRONMENT ====================
 FROM node:18-alpine AS development
