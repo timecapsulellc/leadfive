@@ -75,7 +75,7 @@ const LeadFiveApp = () => {
         // Listen for bonus distributions
         contract.on("BonusDistributed", (recipient, amount, bonusType) => {
             if (recipient.toLowerCase() === account.toLowerCase()) {
-                showNotification(`Bonus received: ${ethers.utils.formatEther(amount)} USDT`, "success");
+                showNotification(`Bonus received: ${ethers.formatEther(amount)} USDT`, "success");
                 fetchUserData();
             }
         });
@@ -83,7 +83,7 @@ const LeadFiveApp = () => {
         // Listen for withdrawals
         contract.on("Withdrawal", (user, amount) => {
             if (user.toLowerCase() === account.toLowerCase()) {
-                showNotification(`Withdrawal processed: ${ethers.utils.formatEther(amount)} USDT`, "success");
+                showNotification(`Withdrawal processed: ${ethers.formatEther(amount)} USDT`, "success");
                 fetchUserData();
             }
         });
@@ -102,11 +102,38 @@ const LeadFiveApp = () => {
 
         try {
             setLoading(true);
+            
+            // Get basic user info (this function exists in the ABI)
             const userData = await contract.getUserInfo(account);
-            const directReferrals = await contract.getDirectReferrals(account);
-            const uplineChain = await contract.getUplineChain(account);
-            const binaryMatrix = await contract.getBinaryMatrix(account);
+            
+            // Get pool balances (this function exists in the ABI)
             const poolBalances = await contract.getPoolBalances();
+            
+            // Try to get additional data, but handle gracefully if functions don't exist
+            let directReferrals = [];
+            let uplineChain = [];
+            let binaryMatrix = [];
+            
+            try {
+                // Check if directReferrals function exists by trying to call it
+                directReferrals = await contract.directReferrals(account, 0);
+            } catch (err) {
+                console.log('directReferrals function not available or no referrals');
+            }
+            
+            try {
+                // Check if uplineChain function exists
+                uplineChain = await contract.uplineChain(account, 0);
+            } catch (err) {
+                console.log('uplineChain function not available');
+            }
+            
+            try {
+                // Check if binaryMatrix function exists
+                binaryMatrix = await contract.binaryMatrix(account, 0);
+            } catch (err) {
+                console.log('binaryMatrix function not available');
+            }
 
             setUserInfo({
                 ...userData,
@@ -117,7 +144,7 @@ const LeadFiveApp = () => {
             });
         } catch (err) {
             console.error('Failed to fetch user data:', err);
-            setError('Failed to load user data');
+            setError(`Failed to load user data: ${err.message}`);
         } finally {
             setLoading(false);
         }
@@ -175,7 +202,7 @@ const LeadFiveApp = () => {
                     signer
                 );
 
-                const packagePrice = ethers.utils.parseEther(PACKAGES[packageLevel - 1].price.toString());
+                const packagePrice = ethers.parseEther(PACKAGES[packageLevel - 1].price.toString());
                 
                 // Approve USDT spending
                 const approveTx = await usdtContract.approve(LEAD_FIVE_CONFIG.address, packagePrice);
@@ -186,7 +213,7 @@ const LeadFiveApp = () => {
             } else {
                 // BNB payment flow - contract will calculate the required BNB amount
                 tx = await contract.register(referrer, packageLevel, false, {
-                    value: ethers.utils.parseEther("0.1") // This will be calculated by the contract
+                    value: ethers.parseEther("0.1") // This will be calculated by the contract
                 });
             }
 
@@ -205,7 +232,7 @@ const LeadFiveApp = () => {
 
         try {
             setLoading(true);
-            const tx = await contract.withdraw(ethers.utils.parseEther(amount.toString()));
+            const tx = await contract.withdraw(ethers.parseEther(amount.toString()));
             await tx.wait();
             showNotification("Withdrawal transaction submitted!", "success");
         } catch (err) {
@@ -232,7 +259,7 @@ const LeadFiveApp = () => {
                     signer
                 );
 
-                const packagePrice = ethers.utils.parseEther(PACKAGES[newLevel - 1].price.toString());
+                const packagePrice = ethers.parseEther(PACKAGES[newLevel - 1].price.toString());
                 
                 // Approve USDT spending
                 const approveTx = await usdtContract.approve(LEAD_FIVE_CONFIG.address, packagePrice);
@@ -243,7 +270,7 @@ const LeadFiveApp = () => {
             } else {
                 // BNB upgrade flow
                 tx = await contract.upgradePackage(newLevel, false, {
-                    value: ethers.utils.parseEther("0.1") // This will be calculated by the contract
+                    value: ethers.parseEther("0.1") // This will be calculated by the contract
                 });
             }
 
