@@ -34,101 +34,86 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
   const [error, setError] = useState(null);
   const [isDetecting, setIsDetecting] = useState(true);
 
-  // Enhanced wallet detection
+  // Define detectWallets function outside useEffect to avoid scope issues
   const detectWallets = useCallback(() => {
-    console.log('🔍 Starting wallet detection...');
-    setIsDetecting(true);
-    
     const wallets = [];
-
-    // Check for MetaMask
-    if (window.ethereum && window.ethereum.isMetaMask) {
-      console.log('✅ MetaMask detected');
+    
+    // MetaMask detection
+    if (window.ethereum?.isMetaMask) {
       wallets.push({
-        name: 'MetaMask',
         id: 'metamask',
-        icon: WalletIcons.MetaMask,
+        name: 'MetaMask',
+        icon: '🦊',
         installed: true,
-        downloadUrl: 'https://metamask.io/download/',
         provider: window.ethereum
       });
     }
-
-    // Check for Trust Wallet
-    if (window.ethereum && window.ethereum.isTrust) {
-      console.log('✅ Trust Wallet detected');
+    
+    // Trust Wallet detection
+    if (window.ethereum?.isTrust) {
       wallets.push({
-        name: 'Trust Wallet',
         id: 'trust',
-        icon: WalletIcons.TrustWallet,
+        name: 'Trust Wallet',
+        icon: '🛡️',
         installed: true,
-        downloadUrl: 'https://trustwallet.com/download',
         provider: window.ethereum
       });
     }
-
-    // Check for Coinbase Wallet
-    if (window.ethereum && (window.ethereum.isCoinbaseWallet || window.ethereum.selectedProvider?.isCoinbaseWallet)) {
-      console.log('✅ Coinbase Wallet detected');
+    
+    // Generic Ethereum provider
+    if (window.ethereum && !window.ethereum.isMetaMask && !window.ethereum.isTrust) {
       wallets.push({
-        name: 'Coinbase Wallet',
-        id: 'coinbase',
-        icon: WalletIcons.CoinbaseWallet,
+        id: 'injected',
+        name: 'Injected Wallet',
+        icon: '🔗',
         installed: true,
-        downloadUrl: 'https://wallet.coinbase.com/',
         provider: window.ethereum
       });
     }
-
-    // Check for Binance Wallet
-    if (window.BinanceChain) {
-      console.log('✅ Binance Wallet detected');
+    
+    // Add not installed wallets
+    if (!wallets.some(w => w.id === 'metamask')) {
       wallets.push({
-        name: 'Binance Wallet',
-        id: 'binance',
-        icon: WalletIcons.BinanceWallet,
-        installed: true,
-        downloadUrl: 'https://www.binance.org/en/smartChain',
-        provider: window.BinanceChain
+        id: 'metamask',
+        name: 'MetaMask',
+        icon: '🦊',
+        installed: false,
+        downloadUrl: 'https://metamask.io/download/'
+      });
+    }
+    
+    if (!wallets.some(w => w.id === 'trust')) {
+      wallets.push({
+        id: 'trust',
+        name: 'Trust Wallet',
+        icon: '🛡️',
+        installed: false,
+        downloadUrl: 'https://trustwallet.com/download'
       });
     }
 
-    // Generic ethereum provider (if no specific wallet detected)
-    if (window.ethereum && wallets.length === 0) {
-      console.log('✅ Generic Ethereum provider detected');
-      wallets.push({
-        name: 'Ethereum Wallet',
-        id: 'ethereum',
-        icon: WalletIcons.MetaMask,
-        installed: true,
-        downloadUrl: 'https://metamask.io/download/',
-        provider: window.ethereum
-      });
-    }
-
-    // Always add popular wallets for download if not installed
-    const popularWallets = [
-      { name: 'MetaMask', id: 'metamask', icon: WalletIcons.MetaMask, downloadUrl: 'https://metamask.io/download/' },
-      { name: 'Trust Wallet', id: 'trust', icon: WalletIcons.TrustWallet, downloadUrl: 'https://trustwallet.com/download' },
-      { name: 'Coinbase Wallet', id: 'coinbase', icon: WalletIcons.CoinbaseWallet, downloadUrl: 'https://wallet.coinbase.com/' }
-    ];
-
-    popularWallets.forEach(wallet => {
-      if (!wallets.find(w => w.id === wallet.id)) {
-        wallets.push({ ...wallet, installed: false });
-      }
-    });
-
-    console.log('✅ Final detected wallets:', wallets);
+    console.log('🔍 Detected wallets:', wallets);
     setAvailableWallets(wallets);
     setIsDetecting(false);
   }, []);
 
-  // Enhanced detection with multiple attempts
+  // Detect available wallets
+  useEffect(() => {
+    // Initial detection
+    detectWallets();
+    
+    // Re-detect when ethereum becomes available
+    if (window.ethereum) {
+      window.ethereum.on('connect', detectWallets);
+      return () => window.ethereum.removeListener('connect', detectWallets);
+    }
+  }, [detectWallets]);
+
+  // Enhanced detection with multiple attempts and better timing
   useEffect(() => {
     let attempts = 0;
-    const maxAttempts = 3;
-    const detectInterval = 1000;
+    const maxAttempts = 5;
+    const baseDelay = 500;
 
     const attemptDetection = () => {
       attempts++;
@@ -136,21 +121,32 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
       
       detectWallets();
       
-      if (attempts < maxAttempts && (!window.ethereum || availableWallets.length === 0)) {
-        setTimeout(attemptDetection, detectInterval);
+      // Continue trying if no wallets found and we haven't reached max attempts
+      if (attempts < maxAttempts && availableWallets.filter(w => w.installed).length === 0) {
+        const delay = baseDelay * attempts; // Exponential backoff
+        setTimeout(attemptDetection, delay);
       }
     };
 
+    // Initial detection
     attemptDetection();
 
-    // Listen for ethereum object injection
+    // Listen for ethereum injection events
     const handleEthereumAvailable = () => {
-      console.log('🔔 Ethereum became available, re-detecting...');
+      console.log('🔔 Ethereum provider became available, re-detecting...');
       setTimeout(detectWallets, 100);
     };
 
+    // Multiple event listeners for different wallet injection patterns
     window.addEventListener('ethereum#initialized', handleEthereumAvailable);
     window.addEventListener('eip6963:announceProvider', handleEthereumAvailable);
+    
+    // Also listen for load event in case wallets inject after page load
+    if (document.readyState !== 'complete') {
+      window.addEventListener('load', () => {
+        setTimeout(detectWallets, 1000);
+      });
+    }
     
     return () => {
       window.removeEventListener('ethereum#initialized', handleEthereumAvailable);
@@ -160,18 +156,23 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
 
   const switchToBSC = async (provider) => {
     try {
+      console.log('🔄 Switching to BSC Mainnet...');
       await provider.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: BSC_CONFIG.chainId }],
       });
+      console.log('✅ Successfully switched to BSC');
     } catch (switchError) {
+      console.log('⚠️ Network switch failed, attempting to add BSC:', switchError.code);
       if (switchError.code === 4902) {
         try {
           await provider.request({
             method: 'wallet_addEthereumChain',
             params: [BSC_CONFIG],
           });
+          console.log('✅ BSC network added successfully');
         } catch (addError) {
+          console.error('❌ Failed to add BSC network:', addError);
           throw new Error('Please add BSC Mainnet to your wallet manually');
         }
       } else {
@@ -181,11 +182,18 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
   };
 
   const connectWallet = async (walletId) => {
+    console.log('🚀 ConnectWallet function called with walletId:', walletId);
+    console.log('🔍 Current state - connecting:', connecting, 'selectedWallet:', selectedWallet);
+    console.log('🔍 Available onConnect callback:', !!onConnect);
+    console.log('🔍 Available wallets:', availableWallets.map(w => ({ id: w.id, name: w.name, installed: w.installed })));
+    
     setConnecting(true);
     setSelectedWallet(walletId);
     setError(null);
 
     try {
+      console.log(`🔗 Attempting to connect ${walletId}...`);
+      
       const walletInfo = availableWallets.find(w => w.id === walletId);
       
       if (!walletInfo) {
@@ -193,6 +201,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
       }
 
       if (!walletInfo.installed) {
+        console.log(`📱 Opening download page for ${walletInfo.name}`);
         window.open(walletInfo.downloadUrl, '_blank');
         throw new Error(`${walletInfo.name} is not installed. Please install it first.`);
       }
@@ -202,14 +211,21 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         throw new Error(`${walletInfo.name} provider not available`);
       }
 
-      // Request account access
-      const accounts = await provider.request({ 
-        method: 'eth_requestAccounts' 
-      });
+      console.log('📝 Requesting account access...');
+      
+      // Request account access with timeout
+      const accounts = await Promise.race([
+        provider.request({ method: 'eth_requestAccounts' }),
+        new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('Connection timeout')), 30000)
+        )
+      ]);
 
       if (!accounts || accounts.length === 0) {
-        throw new Error('No accounts found');
+        throw new Error('No accounts found or access denied');
       }
+
+      console.log('✅ Account access granted:', accounts[0]);
 
       // Switch to BSC Mainnet
       await switchToBSC(provider);
@@ -218,6 +234,9 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
       const ethersProvider = new ethers.BrowserProvider(provider);
       const signer = await ethersProvider.getSigner();
       const address = await signer.getAddress();
+
+      console.log('🎉 Wallet connected successfully:', address);
+      console.log('📞 Calling onConnect callback with data:', { address, walletType: walletId });
 
       // Store wallet info
       localStorage.setItem('orphi_wallet', JSON.stringify({
@@ -229,12 +248,15 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
 
       // Call parent callback
       if (onConnect) {
+        console.log('✅ Executing onConnect callback...');
         onConnect({
           address,
           provider: ethersProvider,
           signer,
           walletType: walletId
         });
+      } else {
+        console.warn('⚠️ No onConnect callback provided!');
       }
 
       setShowModal(false);
@@ -246,7 +268,11 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
       if (error.code === 4001) {
         errorMessage = 'Connection rejected by user';
       } else if (error.code === -32002) {
-        errorMessage = 'Connection request already pending';
+        errorMessage = 'Connection request already pending. Please check your wallet.';
+      } else if (error.code === 4902) {
+        errorMessage = 'Please add BSC Mainnet to your wallet';
+      } else if (error.message.includes('timeout')) {
+        errorMessage = 'Connection timed out. Please try again.';
       }
       
       setError(errorMessage);
@@ -257,10 +283,69 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
   };
 
   const disconnectWallet = () => {
+    console.log('🔌 Disconnecting wallet...');
     localStorage.removeItem('orphi_wallet');
     if (onDisconnect) {
       onDisconnect();
     }
+  };
+
+  // Test connection function for debugging
+  const testConnection = () => {
+    console.log('🧪 Testing connection callback...');
+    if (onConnect) {
+      console.log('✅ onConnect callback is available');
+      // Test with dummy data
+      onConnect({
+        address: '0x1234567890123456789012345678901234567890',
+        provider: null,
+        signer: null,
+        walletType: 'test'
+      });
+    } else {
+      console.error('❌ onConnect callback is not available!');
+    }
+  };
+
+  // Auto-reconnect on page load if previously connected
+  useEffect(() => {
+    const checkStoredConnection = async () => {
+      try {
+        const storedWallet = localStorage.getItem('orphi_wallet');
+        if (storedWallet && !isConnected) {
+          const walletData = JSON.parse(storedWallet);
+          const timeDiff = Date.now() - walletData.timestamp;
+          
+          // Auto-reconnect if connection is less than 24 hours old
+          if (timeDiff < 24 * 60 * 60 * 1000 && window.ethereum) {
+            console.log('🔄 Attempting auto-reconnect...');
+            const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+            if (accounts.length > 0 && accounts[0].toLowerCase() === walletData.address.toLowerCase()) {
+              console.log('✅ Auto-reconnect successful');
+              // Trigger connection without showing modal
+              connectWallet(walletData.type);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('❌ Auto-reconnect failed:', error);
+      }
+    };
+
+    // Check after wallets are detected
+    if (!isDetecting && availableWallets.length > 0) {
+      checkStoredConnection();
+    }
+  }, [isDetecting, availableWallets, isConnected]);
+
+  // Ensure modal opens on button click
+  const handleOpenModal = () => {
+    console.log('🖱️ Connect Wallet button clicked - opening modal');
+    console.log('🔍 Current onConnect callback status:', !!onConnect);
+    console.log('🔍 Available wallets:', availableWallets.length);
+    console.log('🔍 Is detecting wallets:', isDetecting);
+    setShowModal(true);
+    setError(null);
   };
 
   // Connected state display
@@ -290,112 +375,344 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
   return (
     <>
       <button 
-        onClick={() => setShowModal(true)}
+        onClick={handleOpenModal}
         className="connect-wallet-btn"
+        disabled={isDetecting}
       >
-        {isDetecting ? 'Detecting...' : 'Connect Wallet'}
+        {isDetecting ? (
+          <>
+            <div className="btn-spinner"></div>
+            Detecting...
+          </>
+        ) : (
+          'Connect Wallet'
+        )}
       </button>
 
-      {/* Mobile-Optimized Modal */}
+      {/* Enhanced Mobile-Optimized Modal */}
       {showModal && (
-        <div className="wallet-modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="wallet-modal" onClick={(e) => e.stopPropagation()}>
-            {/* Header */}
-            <div className="modal-header">
-              <h3 className="modal-title">Connect Wallet</h3>
-              <button 
-                onClick={() => setShowModal(false)}
-                className="modal-close"
-              >
-                ✕
-              </button>
-            </div>
-
-            {/* Description */}
-            <p className="modal-description">
-              Choose your preferred wallet to connect to ORPHI CrowdFund
-            </p>
-
-            {/* Detection Status */}
-            {isDetecting && (
-              <div className="detection-status">
-                <div className="loading-spinner"></div>
-                <span>Detecting wallets...</span>
-              </div>
-            )}
-
-            {/* Error Display */}
-            {error && (
-              <div className="error-message">
-                <span className="error-icon">⚠️</span>
-                <span>{error}</span>
-              </div>
-            )}
-
-            {/* Wallet List */}
-            <div className="wallet-list">
-              {availableWallets.map((wallet) => (
-                <button
-                  key={wallet.id}
-                  onClick={() => wallet.installed ? connectWallet(wallet.id) : window.open(wallet.downloadUrl, '_blank')}
-                  disabled={connecting && selectedWallet === wallet.id}
-                  className={`wallet-option ${!wallet.installed ? 'not-installed' : ''} ${connecting && selectedWallet === wallet.id ? 'connecting' : ''}`}
-                >
-                  <div className="wallet-info-left">
-                    <span className="wallet-icon">{wallet.icon}</span>
-                    <div className="wallet-details">
-                      <span className="wallet-name">{wallet.name}</span>
-                      <span className="wallet-status">
-                        {wallet.installed ? 'Ready' : 'Install required'}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <div className="wallet-action">
-                    {connecting && selectedWallet === wallet.id ? (
-                      <div className="connecting-spinner"></div>
-                    ) : wallet.installed ? (
-                      <span className="connect-text">Connect</span>
-                    ) : (
-                      <span className="install-text">Install</span>
-                    )}
-                  </div>
-                </button>
-              ))}
-            </div>
-
-            {/* Help Section */}
-            <div className="help-section">
-              <div className="tip-box">
-                <span className="tip-icon">💡</span>
-                <span>Make sure your wallet is unlocked and on BSC Mainnet</span>
-              </div>
+        <>
+          <style>
+            {`
+              @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+              }
               
-              <details className="troubleshooting">
-                <summary>Having trouble? Click for help</summary>
-                <ul className="help-list">
-                  <li>Ensure your wallet is unlocked</li>
-                  <li>Check for browser popup blockers</li>
-                  <li>Try refreshing the page</li>
-                  <li>Make sure you approve the connection</li>
-                  <li>Switch to BSC Mainnet manually if needed</li>
-                </ul>
-              </details>
-            </div>
+              @keyframes slideUp {
+                from { 
+                  opacity: 0;
+                  transform: translateY(30px) scale(0.95);
+                }
+                to { 
+                  opacity: 1;
+                  transform: translateY(0) scale(1);
+                }
+              }
+              
+              @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+              }
+              
+              /* Hide scrollbar but keep functionality */
+              .wallet-modal-content::-webkit-scrollbar {
+                width: 0px;
+                background: transparent;
+              }
+            `}
+          </style>
+          <div 
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100vw',
+              height: '100vh',
+              background: 'rgba(0,0,0,0.9)',
+              backdropFilter: 'blur(8px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 999999,
+              padding: '20px',
+              animation: 'fadeIn 0.3s ease-out',
+            }}
+            onClick={(e) => {
+              if (e.target === e.currentTarget) {
+                setShowModal(false);
+              }
+            }}
+          >
+            <div 
+              className="wallet-modal-content"
+              style={{
+                background: 'linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+                border: '2px solid rgba(0, 212, 255, 0.3)',
+                borderRadius: '20px',
+                boxShadow: '0 20px 60px rgba(0, 212, 255, 0.3), inset 0 1px 0 rgba(255,255,255,0.1)',
+                padding: '32px',
+                maxWidth: '500px',
+                width: '100%',
+                maxHeight: '90vh',
+                overflowY: 'auto',
+                color: 'white',
+                position: 'relative',
+                animation: 'slideUp 0.3s ease-out',
+              }}
+            >
+              {/* Header */}
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '24px',
+                borderBottom: '1px solid rgba(255,255,255,0.1)',
+                paddingBottom: '16px',
+              }}>
+                <h3 style={{
+                  fontSize: '24px',
+                  fontWeight: '700',
+                  color: 'white',
+                  margin: 0,
+                  background: 'linear-gradient(90deg, #00D4FF, #7B2CBF)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}>
+                  Connect Wallet
+                </h3>
+                <button 
+                  onClick={() => setShowModal(false)}
+                  style={{
+                    background: 'rgba(255,255,255,0.1)',
+                    border: 'none',
+                    color: 'white',
+                    fontSize: '20px',
+                    cursor: 'pointer',
+                    padding: '8px 12px',
+                    borderRadius: '8px',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = 'rgba(255,255,255,0.2)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = 'rgba(255,255,255,0.1)';
+                  }}
+                >
+                  ✕
+                </button>
+              </div>
 
-            {/* Footer */}
-            <div className="modal-footer">
-              <a 
-                href="https://academy.binance.com/en/articles/how-to-use-metamask" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="help-link"
-              >
-                New to wallets? Learn how to get started →
-              </a>
+              {/* Description */}
+              <p style={{
+                color: '#B8BCC8',
+                fontSize: '16px',
+                marginBottom: '24px',
+                lineHeight: '1.5',
+                textAlign: 'center',
+              }}>
+                Choose your preferred wallet to connect to ORPHI CrowdFund on BSC Mainnet
+              </p>
+
+              {/* Detection Status */}
+              {isDetecting && (
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  padding: '16px',
+                  background: 'rgba(0, 212, 255, 0.1)',
+                  borderRadius: '12px',
+                  marginBottom: '20px',
+                  border: '1px solid rgba(0, 212, 255, 0.3)',
+                }}>
+                  <div style={{
+                    width: '20px',
+                    height: '20px',
+                    border: '2px solid rgba(0, 212, 255, 0.3)',
+                    borderTop: '2px solid #00D4FF',
+                    borderRadius: '50%',
+                    animation: 'spin 1s linear infinite',
+                  }}></div>
+                  <span style={{ color: '#00D4FF', fontWeight: '500' }}>
+                    Scanning for installed wallets...
+                  </span>
+                </div>
+              )}
+
+              {/* Error Display */}
+              {error && (
+                <div style={{
+                  color: '#ff006e',
+                  background: 'rgba(255,0,110,0.15)',
+                  borderRadius: '12px',
+                  padding: '16px',
+                  marginBottom: '20px',
+                  fontWeight: '500',
+                  fontSize: '14px',
+                  border: '1px solid rgba(255,0,110,0.3)',
+                  textAlign: 'center',
+                }}>
+                  {error}
+                </div>
+              )}
+
+              {/* Wallet List */}
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+                marginBottom: '24px',
+              }}>
+                {availableWallets.map((wallet) => (
+                  <button
+                    key={wallet.id}
+                    onClick={() => wallet.installed ? connectWallet(wallet.id) : window.open(wallet.downloadUrl, '_blank')}
+                    disabled={connecting && selectedWallet === wallet.id}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '16px 20px',
+                      background: wallet.installed 
+                        ? 'rgba(0, 212, 255, 0.08)' 
+                        : 'rgba(255, 255, 255, 0.05)',
+                      border: wallet.installed 
+                        ? '1px solid rgba(0, 212, 255, 0.3)' 
+                        : '1px solid rgba(255, 255, 255, 0.1)',
+                      borderRadius: '12px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      color: 'white',
+                      fontSize: '16px',
+                      fontWeight: '500',
+                      opacity: (connecting && selectedWallet === wallet.id) ? 0.7 : 1,
+                      transform: (connecting && selectedWallet === wallet.id) ? 'scale(0.98)' : 'scale(1)',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!connecting || selectedWallet !== wallet.id) {
+                        e.target.style.transform = 'scale(1.02)';
+                        e.target.style.background = wallet.installed 
+                          ? 'rgba(0, 212, 255, 0.15)' 
+                          : 'rgba(255, 255, 255, 0.1)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!connecting || selectedWallet !== wallet.id) {
+                        e.target.style.transform = 'scale(1)';
+                        e.target.style.background = wallet.installed 
+                          ? 'rgba(0, 212, 255, 0.08)' 
+                          : 'rgba(255, 255, 255, 0.05)';
+                      }
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                      <span style={{ fontSize: '24px' }}>{wallet.icon}</span>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                        <span style={{ fontWeight: '600', fontSize: '16px' }}>{wallet.name}</span>
+                        <span style={{ 
+                          fontSize: '12px', 
+                          color: wallet.installed ? '#00D4FF' : '#B8BCC8',
+                          opacity: 0.8,
+                        }}>
+                          {wallet.installed ? 'Ready to connect' : 'Click to install'}
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      {connecting && selectedWallet === wallet.id ? (
+                        <div style={{
+                          width: '20px',
+                          height: '20px',
+                          border: '2px solid rgba(255, 255, 255, 0.3)',
+                          borderTop: '2px solid white',
+                          borderRadius: '50%',
+                          animation: 'spin 1s linear infinite',
+                        }}></div>
+                      ) : wallet.installed ? (
+                        <span style={{ 
+                          color: '#00D4FF', 
+                          fontSize: '14px',
+                          fontWeight: '600',
+                        }}>Connect</span>
+                      ) : (
+                        <span style={{ 
+                          color: '#B8BCC8', 
+                          fontSize: '14px',
+                          fontWeight: '600',
+                        }}>Install</span>
+                      )}
+                    </div>
+                  </button>
+                ))}
+              </div>
+
+              {/* Help Section */}
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.05)',
+                borderRadius: '12px',
+                padding: '16px',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+              }}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  marginBottom: '12px',
+                }}>
+                  <span style={{ fontSize: '16px' }}>💡</span>
+                  <span style={{ color: '#B8BCC8', fontSize: '14px' }}>
+                    Make sure your wallet is unlocked and ready to connect
+                  </span>
+                </div>
+                
+                <details style={{ color: '#B8BCC8', fontSize: '13px' }}>
+                  <summary style={{ cursor: 'pointer', marginBottom: '8px', fontWeight: '500' }}>
+                    Having trouble connecting? Click for help
+                  </summary>
+                  <ul style={{ paddingLeft: '16px', lineHeight: '1.6', margin: '8px 0' }}>
+                    <li>🔓 Ensure your wallet is unlocked</li>
+                    <li>🔄 Try refreshing the page</li>
+                    <li>🚫 Check for browser popup blockers</li>
+                    <li>✅ Make sure you approve the connection request</li>
+                    <li>🌐 Switch to BSC Mainnet if prompted</li>
+                    <li>📱 On mobile, use your wallet's built-in browser</li>
+                  </ul>
+                </details>
+              </div>
+
+              {/* Footer */}
+              <div style={{ 
+                textAlign: 'center', 
+                marginTop: '20px',
+                paddingTop: '16px',
+                borderTop: '1px solid rgba(255,255,255,0.1)',
+              }}>
+                <a 
+                  href="https://academy.binance.com/en/articles/how-to-use-metamask" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  style={{
+                    color: '#00D4FF',
+                    textDecoration: 'none',
+                    fontSize: '13px',
+                    transition: 'color 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.color = '#7B2CBF';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.color = '#00D4FF';
+                  }}
+                >
+                  New to wallets? Learn how to get started →
+                </a>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
 
       <style jsx>{`
@@ -480,6 +797,22 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         .connect-wallet-btn:hover {
           transform: translateY(-2px);
           box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .connect-wallet-btn:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+          transform: none;
+        }
+
+        .btn-spinner {
+          width: 16px;
+          height: 16px;
+          border: 2px solid rgba(255, 255, 255, 0.3);
+          border-top: 2px solid white;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+          margin-right: 8px;
         }
 
         /* Modal Overlay */

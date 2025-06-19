@@ -1,103 +1,18 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/Users/dadou/Orphi CrowdFund/contracts/CommissionLib.sol": {
-      "lastModificationDate": 1750015987776,
-      "contentHash": "f8c116e43df5606d8d6dc16037b27955",
-      "sourceName": "contracts/CommissionLib.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": []
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/CoreLogic.sol": {
-      "lastModificationDate": 1750015987776,
-      "contentHash": "6c59ed99110cd760a24b15e04f766f4f",
-      "sourceName": "contracts/CoreLogic.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./libraries/DataTypes.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "CoreLogic"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/DataTypes.sol": {
-      "lastModificationDate": 1750015987786,
+    "/Users/dadou/LEAD FIVE/contracts/libraries/DataTypes.sol": {
+      "lastModificationDate": 1750236846785,
       "contentHash": "e0135b5c48abc96267a4252a332bf516",
       "sourceName": "contracts/libraries/DataTypes.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -124,21 +39,18 @@
         "DataTypes"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/UserManagementOperations.sol": {
-      "lastModificationDate": 1750015987776,
+    "/Users/dadou/LEAD FIVE/contracts/libraries/UserManagementOperations.sol": {
+      "lastModificationDate": 1750236846794,
       "contentHash": "93c4736e1e4d811d3051faf583ff3532",
       "sourceName": "contracts/libraries/UserManagementOperations.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -167,21 +79,855 @@
         "UserManagementOperations"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/contracts/OrphiCrowdFund.sol": {
-      "lastModificationDate": 1750073895493,
-      "contentHash": "d34dee3879747905410a6d9a8ce66cbd",
-      "sourceName": "contracts/OrphiCrowdFund.sol",
+    "/Users/dadou/LEAD FIVE/contracts/libraries/OptimizedLib.sol": {
+      "lastModificationDate": 1750236846784,
+      "contentHash": "f1c906f9ac9097d8e490e2ecf8832d60",
+      "sourceName": "contracts/libraries/OptimizedLib.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../libraries/DataStructures.sol",
+        "../libraries/DataTypes.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "OptimizedLib"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/libraries/DataStructures.sol": {
+      "lastModificationDate": 1750236846788,
+      "contentHash": "03c9c0df5baa5650f1e7fd9acf93309b",
+      "sourceName": "contracts/libraries/DataStructures.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
           },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "DataStructures"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/libraries/UserOperations.sol": {
+      "lastModificationDate": 1750236846785,
+      "contentHash": "e31ddac2fdb3c6440f11703657e2bb93",
+      "sourceName": "contracts/libraries/UserOperations.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./DataStructures.sol",
+        "./EventsLib.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "UserOperations"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/libraries/EventsLib.sol": {
+      "lastModificationDate": 1750236846794,
+      "contentHash": "b8c2c739739a59f26fb39e03be0f53ad",
+      "sourceName": "contracts/libraries/EventsLib.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "EventsLib"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/libraries/UserManagementLib.sol": {
+      "lastModificationDate": 1750236846782,
+      "contentHash": "9b4e203dbb59dfd26c57dcd72ef40b9f",
+      "sourceName": "contracts/libraries/UserManagementLib.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./DataStructures.sol",
+        "./ConstantsLib.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "UserManagementLib"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/libraries/ConstantsLib.sol": {
+      "lastModificationDate": 1750236846783,
+      "contentHash": "4fbc9fff2d9f282104eb7681130ff794",
+      "sourceName": "contracts/libraries/ConstantsLib.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "ConstantsLib"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/libraries/UserManagement.sol": {
+      "lastModificationDate": 1750236846784,
+      "contentHash": "9d245896ae17e5985fd5930502dafa29",
+      "sourceName": "contracts/libraries/UserManagement.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./DataStructures.sol",
+        "./ConstantsLib.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "UserManagementLib"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/libraries/AdminOperations.sol": {
+      "lastModificationDate": 1750236846785,
+      "contentHash": "65e6c8d216dcf93849cadb9ae6fd783f",
+      "sourceName": "contracts/libraries/AdminOperations.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./DataStructures.sol",
+        "./ConstantsLib.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "AdminOperations"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/libraries/AdminFunctions.sol": {
+      "lastModificationDate": 1750236846800,
+      "contentHash": "947659e0810addc4587d8008d6515c36",
+      "sourceName": "contracts/libraries/AdminFunctions.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "./DataStructures.sol",
+        "./ConstantsLib.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "AdminFunctions"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+      "lastModificationDate": 1750329351922,
+      "contentHash": "8f19f64d2adadf448840908bbaf431c8",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC20"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/interfaces/IERC20.sol": {
+      "lastModificationDate": 1750329351922,
+      "contentHash": "79af12d64eacc7d77b9ee2ac4b4d51ee",
+      "sourceName": "@openzeppelin/contracts/interfaces/IERC20.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../token/ERC20/IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": []
+    },
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/interfaces/IERC1363.sol": {
+      "lastModificationDate": 1750329351922,
+      "contentHash": "6b7c5ee7a59c981072a804c99ab0fac9",
+      "sourceName": "@openzeppelin/contracts/interfaces/IERC1363.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC20.sol",
+        "./IERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC1363"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/interfaces/IERC165.sol": {
+      "lastModificationDate": 1750329351922,
+      "contentHash": "f808b485ee0cdc6768ee8385ae5f9a2a",
+      "sourceName": "@openzeppelin/contracts/interfaces/IERC165.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/introspection/IERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": []
+    },
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
+      "lastModificationDate": 1750329351922,
+      "contentHash": "bf0119eb2a570f219729ff38b6cd1df8",
+      "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC165"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol": {
+      "lastModificationDate": 1750329351895,
+      "contentHash": "61838d7249e45e3941fc2a45d1091448",
+      "sourceName": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/utils/introspection/IERC165.sol",
+        "../../proxy/utils/Initializable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC165Upgradeable"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol": {
+      "lastModificationDate": 1750329351903,
+      "contentHash": "2acae54ad209714bca07edf4bae32f72",
+      "sourceName": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "Initializable"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol": {
+      "lastModificationDate": 1750329351892,
+      "contentHash": "c28aaa25d083a9a55bd9ec9e0b785122",
+      "sourceName": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../proxy/utils/Initializable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ContextUpgradeable"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol": {
+      "lastModificationDate": 1750329351891,
+      "contentHash": "cdbbb56cde3edf99d1426db8d104bb84",
+      "sourceName": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/access/IAccessControl.sol",
+        "../utils/ContextUpgradeable.sol",
+        "../utils/introspection/ERC165Upgradeable.sol",
+        "../proxy/utils/Initializable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "AccessControlUpgradeable"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/access/IAccessControl.sol": {
+      "lastModificationDate": 1750329351921,
+      "contentHash": "80621031deacf7066ec81277f9b1463a",
+      "sourceName": "@openzeppelin/contracts/access/IAccessControl.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IAccessControl"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/modules/InternalAdminManager.sol": {
+      "lastModificationDate": 1750236846808,
+      "contentHash": "d0779d1756326062bad243d886affe93",
+      "sourceName": "contracts/modules/InternalAdminManager.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.19"
+      ],
+      "artifacts": [
+        "InternalAdminManager"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol": {
+      "lastModificationDate": 1750329351904,
+      "contentHash": "a77dad8312dfaddab72fab403ee0c0a6",
+      "sourceName": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/ContextUpgradeable.sol",
+        "../proxy/utils/Initializable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "PausableUpgradeable"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/archive/20250619-124520/OrphiCrowdFund.sol": {
+      "lastModificationDate": 1750317326082,
+      "contentHash": "d34dee3879747905410a6d9a8ce66cbd",
+      "sourceName": "contracts/archive/20250619-124520/OrphiCrowdFund.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -216,943 +962,18 @@
         "OrphiCrowdFund"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/contracts/interfaces/IOrphiCrowdFund.sol": {
-      "lastModificationDate": 1750015987868,
-      "contentHash": "b08e66640a8af79f38ce48c084664f05",
-      "sourceName": "contracts/interfaces/IOrphiCrowdFund.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "IOrphiCrowdFund"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/IPriceOracle.sol": {
-      "lastModificationDate": 1749979500666,
-      "contentHash": "9fee40a5bcd1d9d50c3bef75fffc1b01",
-      "sourceName": "contracts/IPriceOracle.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "IPriceOracle"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/DataStructures.sol": {
-      "lastModificationDate": 1750071973884,
-      "contentHash": "03c9c0df5baa5650f1e7fd9acf93309b",
-      "sourceName": "contracts/libraries/DataStructures.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "DataStructures"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/ConstantsLib.sol": {
-      "lastModificationDate": 1750059465433,
-      "contentHash": "4fbc9fff2d9f282104eb7681130ff794",
-      "sourceName": "contracts/libraries/ConstantsLib.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "ConstantsLib"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/EventsLib.sol": {
-      "lastModificationDate": 1750015988297,
-      "contentHash": "b8c2c739739a59f26fb39e03be0f53ad",
-      "sourceName": "contracts/libraries/EventsLib.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "EventsLib"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/UserOperations.sol": {
-      "lastModificationDate": 1750069615726,
-      "contentHash": "e31ddac2fdb3c6440f11703657e2bb93",
-      "sourceName": "contracts/libraries/UserOperations.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./DataStructures.sol",
-        "./EventsLib.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "UserOperations"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/CompensationLogic.sol": {
-      "lastModificationDate": 1750015987649,
-      "contentHash": "0b52d4d4119a30b1295a4082492db6d4",
-      "sourceName": "contracts/libraries/CompensationLogic.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./DataStructures.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "CompensationLogic"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/AdvancedCompensationLogic.sol": {
-      "lastModificationDate": 1750015987651,
-      "contentHash": "b72075dd357044e872f45867b0c817db",
-      "sourceName": "contracts/libraries/AdvancedCompensationLogic.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "AdvancedCompensationLogic"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/CommissionLib.sol": {
-      "lastModificationDate": 1750009137038,
-      "contentHash": "a6d05631db20d4eac90566df27a643f3",
-      "sourceName": "contracts/libraries/CommissionLib.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./UserStorage.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "CommissionLib"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/UserManagement.sol": {
-      "lastModificationDate": 1750072767712,
-      "contentHash": "9d245896ae17e5985fd5930502dafa29",
-      "sourceName": "contracts/libraries/UserManagement.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./DataStructures.sol",
-        "./ConstantsLib.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "UserManagementLib"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/MatrixLib.sol": {
-      "lastModificationDate": 1750015987675,
-      "contentHash": "b6186640bc266a68e7d0d2cdc8ab2c03",
-      "sourceName": "contracts/libraries/MatrixLib.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./CommissionLibrary.sol",
-        "./UserStorage.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "MatrixLib"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/MatrixLogic.sol": {
-      "lastModificationDate": 1750015987651,
-      "contentHash": "ae0609b3e05f7541ab1e2729e44fb8b6",
-      "sourceName": "contracts/libraries/MatrixLogic.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": []
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/DistributionLogic.sol": {
-      "lastModificationDate": 1750015987651,
-      "contentHash": "ae0609b3e05f7541ab1e2729e44fb8b6",
-      "sourceName": "contracts/libraries/DistributionLogic.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": []
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/AdminOperations.sol": {
-      "lastModificationDate": 1750072046242,
-      "contentHash": "65e6c8d216dcf93849cadb9ae6fd783f",
-      "sourceName": "contracts/libraries/AdminOperations.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./DataStructures.sol",
-        "./ConstantsLib.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "AdminOperations"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/UserStorage.sol": {
-      "lastModificationDate": 1750032971284,
-      "contentHash": "2f2b8cad421a0cbfa37150e6516eaefd",
-      "sourceName": "contracts/libraries/UserStorage.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "UserStorage"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/LeaderManagement.sol": {
-      "lastModificationDate": 1750015987651,
-      "contentHash": "a06c39a432d44c05d5ad0f3ef0aa3ea7",
-      "sourceName": "contracts/libraries/LeaderManagement.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "LeaderManagement"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/OracleLib.sol": {
-      "lastModificationDate": 1750015987651,
-      "contentHash": "48ca1133e7815207a5e9ee553ea61097",
-      "sourceName": "contracts/libraries/OracleLib.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "IPriceOracleMinimal",
-        "OracleLib"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/AdminFunctions.sol": {
-      "lastModificationDate": 1750071987420,
-      "contentHash": "947659e0810addc4587d8008d6515c36",
-      "sourceName": "contracts/libraries/AdminFunctions.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-        "./DataStructures.sol",
-        "./ConstantsLib.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "AdminFunctions"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/CommissionLibrary.sol": {
-      "lastModificationDate": 1749714420536,
-      "contentHash": "79424873349659868bf625a5309206d8",
-      "sourceName": "contracts/libraries/CommissionLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "CommissionLibrary"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/NetworkAnalytics.sol": {
-      "lastModificationDate": 1750015987651,
-      "contentHash": "c39ec4ad504d6514bc448ccd2943ab55",
-      "sourceName": "contracts/libraries/NetworkAnalytics.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "NetworkAnalytics"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/ReferralLib.sol": {
-      "lastModificationDate": 1750015987651,
-      "contentHash": "5a5cb4e7ae85c806d636895c95fc8445",
-      "sourceName": "contracts/libraries/ReferralLib.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "ReferralLib"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol": {
-      "lastModificationDate": 1749656265487,
-      "contentHash": "a77dad8312dfaddab72fab403ee0c0a6",
-      "sourceName": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../utils/ContextUpgradeable.sol",
-        "../proxy/utils/Initializable.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "PausableUpgradeable"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol": {
-      "lastModificationDate": 1749656265487,
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol": {
+      "lastModificationDate": 1750329351904,
       "contentHash": "77d30f3cd93f46b80b6f8f1ebc574ee4",
       "sourceName": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -1182,67 +1003,18 @@
         "OwnableUpgradeable"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol": {
-      "lastModificationDate": 1749656265471,
-      "contentHash": "cdbbb56cde3edf99d1426db8d104bb84",
-      "sourceName": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/access/IAccessControl.sol",
-        "../utils/ContextUpgradeable.sol",
-        "../utils/introspection/ERC165Upgradeable.sol",
-        "../proxy/utils/Initializable.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "AccessControlUpgradeable"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol": {
-      "lastModificationDate": 1749656265487,
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol": {
+      "lastModificationDate": 1750329351904,
       "contentHash": "24562076b21756e3358ede5e844008ce",
       "sourceName": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -1271,103 +1043,18 @@
         "ReentrancyGuardUpgradeable"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol": {
-      "lastModificationDate": 1749656265487,
-      "contentHash": "2acae54ad209714bca07edf4bae32f72",
-      "sourceName": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "Initializable"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-      "lastModificationDate": 1749656265504,
-      "contentHash": "8f19f64d2adadf448840908bbaf431c8",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "IERC20"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol": {
-      "lastModificationDate": 1749656265488,
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol": {
+      "lastModificationDate": 1750329351904,
       "contentHash": "08db0b4bea3d52072346c326c5b857b7",
       "sourceName": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -1398,21 +1085,56 @@
         "UUPSUpgradeable"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/proxy/ERC1967/ERC1967Utils.sol": {
-      "lastModificationDate": 1749656265498,
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/interfaces/draft-IERC1822.sol": {
+      "lastModificationDate": 1750329351911,
+      "contentHash": "64a2b7a96950f0641c477993f3029477",
+      "sourceName": "@openzeppelin/contracts/interfaces/draft-IERC1822.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC1822Proxiable"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/proxy/ERC1967/ERC1967Utils.sol": {
+      "lastModificationDate": 1750329351915,
       "contentHash": "c023a5b23ee35b40b3085e550ff3367f",
       "sourceName": "@openzeppelin/contracts/proxy/ERC1967/ERC1967Utils.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -1444,108 +1166,18 @@
         "ERC1967Utils"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol": {
-      "lastModificationDate": 1749656265474,
-      "contentHash": "c28aaa25d083a9a55bd9ec9e0b785122",
-      "sourceName": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol",
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/proxy/beacon/IBeacon.sol": {
+      "lastModificationDate": 1750329351921,
+      "contentHash": "0a5c323fd908535580597848b8e550fb",
+      "sourceName": "@openzeppelin/contracts/proxy/beacon/IBeacon.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../proxy/utils/Initializable.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "ContextUpgradeable"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol": {
-      "lastModificationDate": 1749656265478,
-      "contentHash": "61838d7249e45e3941fc2a45d1091448",
-      "sourceName": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
           "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts/utils/introspection/IERC165.sol",
-        "../../proxy/utils/Initializable.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "ERC165Upgradeable"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/access/IAccessControl.sol": {
-      "lastModificationDate": 1749656265502,
-      "contentHash": "80621031deacf7066ec81277f9b1463a",
-      "sourceName": "@openzeppelin/contracts/access/IAccessControl.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -1569,106 +1201,21 @@
         "^0.8.20"
       ],
       "artifacts": [
-        "IAccessControl"
+        "IBeacon"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
-      "lastModificationDate": 1749656265503,
-      "contentHash": "bf0119eb2a570f219729ff38b6cd1df8",
-      "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "IERC165"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/interfaces/draft-IERC1822.sol": {
-      "lastModificationDate": 1749656265493,
-      "contentHash": "64a2b7a96950f0641c477993f3029477",
-      "sourceName": "@openzeppelin/contracts/interfaces/draft-IERC1822.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "IERC1822Proxiable"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/interfaces/IERC1967.sol": {
-      "lastModificationDate": 1749656265504,
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/interfaces/IERC1967.sol": {
+      "lastModificationDate": 1750329351922,
       "contentHash": "4e17c826a54a8ee1a185449d4695d07d",
       "sourceName": "@openzeppelin/contracts/interfaces/IERC1967.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -1695,21 +1242,18 @@
         "IERC1967"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/utils/Address.sol": {
-      "lastModificationDate": 1749656265487,
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/utils/Address.sol": {
+      "lastModificationDate": 1750329351905,
       "contentHash": "5b9a49c25d7edbc48ffcbd2c7e8a40ef",
       "sourceName": "@openzeppelin/contracts/utils/Address.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -1738,62 +1282,18 @@
         "Address"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/proxy/beacon/IBeacon.sol": {
-      "lastModificationDate": 1749656265503,
-      "contentHash": "0a5c323fd908535580597848b8e550fb",
-      "sourceName": "@openzeppelin/contracts/proxy/beacon/IBeacon.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "IBeacon"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/utils/StorageSlot.sol": {
-      "lastModificationDate": 1749656265510,
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/utils/StorageSlot.sol": {
+      "lastModificationDate": 1750329351928,
       "contentHash": "e656d64c4ce918f3d13030b91c935134",
       "sourceName": "@openzeppelin/contracts/utils/StorageSlot.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -1820,21 +1320,18 @@
         "StorageSlot"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/utils/Errors.sol": {
-      "lastModificationDate": 1749656265500,
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/utils/Errors.sol": {
+      "lastModificationDate": 1750329351919,
       "contentHash": "6b5eac2b85500c3012977849cfd633d8",
       "sourceName": "@openzeppelin/contracts/utils/Errors.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -1861,21 +1358,18 @@
         "Errors"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol": {
-      "lastModificationDate": 1749656265497,
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol": {
+      "lastModificationDate": 1750329351915,
       "contentHash": "07e13052976ae13746455b10ebf3cff9",
       "sourceName": "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -1905,21 +1399,18 @@
         "ERC1967Proxy"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/proxy/Proxy.sol": {
-      "lastModificationDate": 1749656265508,
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/proxy/Proxy.sol": {
+      "lastModificationDate": 1750329351927,
       "contentHash": "35308c2fa7be99a959494c37e8257c16",
       "sourceName": "@openzeppelin/contracts/proxy/Proxy.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -1946,21 +1437,18 @@
         "Proxy"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/contracts/OrphiProxy.sol": {
-      "lastModificationDate": 1750015987675,
-      "contentHash": "98c095173b14b2b9d64a2214e6acf307",
-      "sourceName": "contracts/OrphiProxy.sol",
+    "/Users/dadou/LEAD FIVE/contracts/LeadFive.sol": {
+      "lastModificationDate": 1750338415148,
+      "contentHash": "e6ec73f19fa12f332e93327d3e6c7601",
+      "sourceName": "contracts/LeadFive.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -1980,30 +1468,33 @@
         }
       },
       "imports": [
-        "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol"
+        "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
       ],
       "versionPragmas": [
         "^0.8.22"
       ],
       "artifacts": [
-        "OrphiProxy"
+        "IPriceFeed",
+        "LeadFive"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/interfaces/IERC165.sol": {
-      "lastModificationDate": 1749656265503,
-      "contentHash": "f808b485ee0cdc6768ee8385ae5f9a2a",
-      "sourceName": "@openzeppelin/contracts/interfaces/IERC165.sol",
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol": {
+      "lastModificationDate": 1750329351928,
+      "contentHash": "1fb9edee1d763745a62d0b1954998792",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -2023,329 +1514,28 @@
         }
       },
       "imports": [
-        "../utils/introspection/IERC165.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": []
-    },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/interfaces/IERC1363.sol": {
-      "lastModificationDate": 1749656265503,
-      "contentHash": "6b7c5ee7a59c981072a804c99ab0fac9",
-      "sourceName": "@openzeppelin/contracts/interfaces/IERC1363.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./IERC20.sol",
-        "./IERC165.sol"
+        "../IERC20.sol",
+        "../../../interfaces/IERC1363.sol"
       ],
       "versionPragmas": [
         "^0.8.20"
       ],
       "artifacts": [
-        "IERC1363"
+        "SafeERC20"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/interfaces/IERC20.sol": {
-      "lastModificationDate": 1749656265504,
-      "contentHash": "79af12d64eacc7d77b9ee2ac4b4d51ee",
-      "sourceName": "@openzeppelin/contracts/interfaces/IERC20.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../token/ERC20/IERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": []
-    },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
-      "lastModificationDate": 1749656265504,
-      "contentHash": "794db3115001aa372c79326fcfd44b1f",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../IERC20.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "IERC20Metadata"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol": {
-      "lastModificationDate": 1749656265498,
-      "contentHash": "57d79df281f57bbb1b09214c7914f877",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./IERC20.sol",
-        "./extensions/IERC20Metadata.sol",
-        "../../utils/Context.sol",
-        "../../interfaces/draft-IERC6093.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "ERC20"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/utils/Context.sol": {
-      "lastModificationDate": 1749656265491,
-      "contentHash": "67bfbc07588eb8683b3fd8f6f909563e",
-      "sourceName": "@openzeppelin/contracts/utils/Context.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "Context"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/interfaces/draft-IERC6093.sol": {
-      "lastModificationDate": 1749656265494,
-      "contentHash": "267d92fe4de67b1bdb3302c08f387dbf",
-      "sourceName": "@openzeppelin/contracts/interfaces/draft-IERC6093.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "IERC1155Errors",
-        "IERC20Errors",
-        "IERC721Errors"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
-      "lastModificationDate": 1749656265507,
-      "contentHash": "d3c790edc9ccf808a17c5a6cd13614fd",
-      "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "../utils/Context.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.20"
-      ],
-      "artifacts": [
-        "Ownable"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/core/OrphiCommissions.sol": {
-      "lastModificationDate": 1750063911119,
+    "/Users/dadou/LEAD FIVE/contracts/core/OrphiCommissions.sol": {
+      "lastModificationDate": 1750236846767,
       "contentHash": "58ea8b4f1a8ae76e714ed3862f936109",
       "sourceName": "contracts/core/OrphiCommissions.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -2378,21 +1568,96 @@
         "OrphiCommissions"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/utils/ReentrancyGuard.sol": {
-      "lastModificationDate": 1749656265508,
+    "/Users/dadou/LEAD FIVE/contracts/libraries/CommissionLibrary.sol": {
+      "lastModificationDate": 1750236846790,
+      "contentHash": "79424873349659868bf625a5309206d8",
+      "sourceName": "contracts/libraries/CommissionLibrary.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "CommissionLibrary"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
+      "lastModificationDate": 1750329351926,
+      "contentHash": "d3c790edc9ccf808a17c5a6cd13614fd",
+      "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "Ownable"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/utils/ReentrancyGuard.sol": {
+      "lastModificationDate": 1750329351927,
       "contentHash": "190613e556d509d9e9a0ea43dc5d891d",
       "sourceName": "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -2419,21 +1684,56 @@
         "ReentrancyGuard"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/node_modules/@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol": {
-      "lastModificationDate": 1749656265510,
-      "contentHash": "1fb9edee1d763745a62d0b1954998792",
-      "sourceName": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/utils/Context.sol": {
+      "lastModificationDate": 1750329351907,
+      "contentHash": "67bfbc07588eb8683b3fd8f6f909563e",
+      "sourceName": "@openzeppelin/contracts/utils/Context.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "Context"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol": {
+      "lastModificationDate": 1750329351915,
+      "contentHash": "57d79df281f57bbb1b09214c7914f877",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
           },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -2453,31 +1753,110 @@
         }
       },
       "imports": [
-        "../IERC20.sol",
-        "../../../interfaces/IERC1363.sol"
+        "./IERC20.sol",
+        "./extensions/IERC20Metadata.sol",
+        "../../utils/Context.sol",
+        "../../interfaces/draft-IERC6093.sol"
       ],
       "versionPragmas": [
         "^0.8.20"
       ],
       "artifacts": [
-        "SafeERC20"
+        "ERC20"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/contracts/MockUSDT.sol": {
-      "lastModificationDate": 1749191975604,
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/interfaces/draft-IERC6093.sol": {
+      "lastModificationDate": 1750329351911,
+      "contentHash": "267d92fe4de67b1bdb3302c08f387dbf",
+      "sourceName": "@openzeppelin/contracts/interfaces/draft-IERC6093.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC1155Errors",
+        "IERC20Errors",
+        "IERC721Errors"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+      "lastModificationDate": 1750329351922,
+      "contentHash": "794db3115001aa372c79326fcfd44b1f",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IERC20Metadata"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/MockUSDT.sol": {
+      "lastModificationDate": 1750236846769,
       "contentHash": "8038d649cd6b6e59e4855ff90f9fe229",
       "sourceName": "contracts/MockUSDT.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -2507,21 +1886,132 @@
         "MockUSDT"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/UserManagementLib.sol": {
-      "lastModificationDate": 1750072782179,
-      "contentHash": "9b4e203dbb59dfd26c57dcd72ef40b9f",
-      "sourceName": "contracts/libraries/UserManagementLib.sol",
+    "/Users/dadou/LEAD FIVE/contracts/libraries/MatrixLib.sol": {
+      "lastModificationDate": 1750345425562,
+      "contentHash": "6b1c904e5745d5438fb54dd34587566a",
+      "sourceName": "contracts/libraries/MatrixLib.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "MatrixLib"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/libraries/UserStorage.sol": {
+      "lastModificationDate": 1750236846780,
+      "contentHash": "2f2b8cad421a0cbfa37150e6516eaefd",
+      "sourceName": "contracts/libraries/UserStorage.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
           },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "UserStorage"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/libraries/CommissionLib.sol": {
+      "lastModificationDate": 1750342166527,
+      "contentHash": "bc9326eb5e1bc557c6b0f4d0c8a7bc4d",
+      "sourceName": "contracts/libraries/CommissionLib.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "CommissionLib"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/libraries/OperationsLib.sol": {
+      "lastModificationDate": 1750236846791,
+      "contentHash": "01d8b804152c937741031b12f38827e3",
+      "sourceName": "contracts/libraries/OperationsLib.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -2542,30 +2032,27 @@
       },
       "imports": [
         "./DataStructures.sol",
-        "./ConstantsLib.sol"
+        "./CoreLib.sol"
       ],
       "versionPragmas": [
         "^0.8.22"
       ],
       "artifacts": [
-        "UserManagementLib"
+        "OperationsLib"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/contracts/modules/InternalAdminManager.sol": {
-      "lastModificationDate": 1749714420536,
-      "contentHash": "d0779d1756326062bad243d886affe93",
-      "sourceName": "contracts/modules/InternalAdminManager.sol",
+    "/Users/dadou/LEAD FIVE/contracts/libraries/CoreLib.sol": {
+      "lastModificationDate": 1750236846783,
+      "contentHash": "13eef207580a7f906ac0fa591750fb5a",
+      "sourceName": "contracts/libraries/CoreLib.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -2585,32 +2072,67 @@
         }
       },
       "imports": [
-        "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol",
-        "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol",
-        "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol"
+        "./DataStructures.sol"
       ],
       "versionPragmas": [
-        "^0.8.19"
+        "^0.8.22"
       ],
       "artifacts": [
-        "InternalAdminManager"
+        "CoreLib"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/contracts/InternalAdminManager.sol": {
-      "lastModificationDate": 1750015987776,
-      "contentHash": "f8c116e43df5606d8d6dc16037b27955",
-      "sourceName": "contracts/InternalAdminManager.sol",
+    "/Users/dadou/LEAD FIVE/contracts/libraries/CompensationLogic.sol": {
+      "lastModificationDate": 1750236846802,
+      "contentHash": "0b52d4d4119a30b1295a4082492db6d4",
+      "sourceName": "contracts/libraries/CompensationLogic.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./DataStructures.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "CompensationLogic"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/IPriceOracle.sol": {
+      "lastModificationDate": 1750236846769,
+      "contentHash": "9fee40a5bcd1d9d50c3bef75fffc1b01",
+      "sourceName": "contracts/IPriceOracle.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
           },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -2633,62 +2155,22 @@
       "versionPragmas": [
         "^0.8.22"
       ],
-      "artifacts": []
+      "artifacts": [
+        "IPriceOracle"
+      ]
     },
-    "/Users/dadou/Orphi CrowdFund/contracts/MatrixPlacementLib.sol": {
-      "lastModificationDate": 1750015987776,
-      "contentHash": "f8c116e43df5606d8d6dc16037b27955",
-      "sourceName": "contracts/MatrixPlacementLib.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": []
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/MockInterfaces.sol": {
-      "lastModificationDate": 1749049265332,
+    "/Users/dadou/LEAD FIVE/contracts/MockInterfaces.sol": {
+      "lastModificationDate": 1750236846807,
       "contentHash": "edbfa7ee813092f37d8718f9fda123c1",
       "sourceName": "contracts/MockInterfaces.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -2720,21 +2202,18 @@
         "SafeERC20"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/contracts/MockPriceOracle.sol": {
-      "lastModificationDate": 1749191975699,
+    "/Users/dadou/LEAD FIVE/contracts/MockPriceOracle.sol": {
+      "lastModificationDate": 1750236846768,
       "contentHash": "d515ecb9b77bfcd32fe47e356bf3454e",
       "sourceName": "contracts/MockPriceOracle.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -2762,101 +2241,18 @@
         "MockPriceOracle"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/contracts/PoolDistribution.sol": {
-      "lastModificationDate": 1750015987792,
-      "contentHash": "f8c116e43df5606d8d6dc16037b27955",
-      "sourceName": "contracts/PoolDistribution.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": []
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/SecurityLibrary.sol": {
-      "lastModificationDate": 1749891500812,
-      "contentHash": "ae738e74e8a94f8ee28aac8fdf552a46",
-      "sourceName": "contracts/SecurityLibrary.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "SecurityLibrary"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/TestContract.sol": {
-      "lastModificationDate": 1750015987649,
+    "/Users/dadou/LEAD FIVE/contracts/TestContract.sol": {
+      "lastModificationDate": 1750236846804,
       "contentHash": "529c815863cf37dab42290c9778c4124",
       "sourceName": "contracts/TestContract.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -2883,21 +2279,18 @@
         "TestContract"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/OptimizedLib.sol": {
-      "lastModificationDate": 1750072512865,
-      "contentHash": "f1c906f9ac9097d8e490e2ecf8832d60",
-      "sourceName": "contracts/libraries/OptimizedLib.sol",
+    "/Users/dadou/LEAD FIVE/contracts/interfaces/IOrphiCrowdFund.sol": {
+      "lastModificationDate": 1750236846810,
+      "contentHash": "b08e66640a8af79f38ce48c084664f05",
+      "sourceName": "contracts/interfaces/IOrphiCrowdFund.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -2916,32 +2309,26 @@
           }
         }
       },
-      "imports": [
-        "../libraries/DataStructures.sol",
-        "../libraries/DataTypes.sol"
-      ],
+      "imports": [],
       "versionPragmas": [
         "^0.8.22"
       ],
       "artifacts": [
-        "OptimizedLib"
+        "IOrphiCrowdFund"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/OperationsLib.sol": {
-      "lastModificationDate": 1750069973593,
-      "contentHash": "01d8b804152c937741031b12f38827e3",
-      "sourceName": "contracts/libraries/OperationsLib.sol",
+    "/Users/dadou/LEAD FIVE/contracts/libraries/AdvancedCompensationLogic.sol": {
+      "lastModificationDate": 1750236846779,
+      "contentHash": "b72075dd357044e872f45867b0c817db",
+      "sourceName": "contracts/libraries/AdvancedCompensationLogic.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -2960,75 +2347,26 @@
           }
         }
       },
-      "imports": [
-        "./DataStructures.sol",
-        "./CoreLib.sol"
-      ],
+      "imports": [],
       "versionPragmas": [
         "^0.8.22"
       ],
       "artifacts": [
-        "OperationsLib"
+        "AdvancedCompensationLogic"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/CoreLib.sol": {
-      "lastModificationDate": 1750069908737,
-      "contentHash": "13eef207580a7f906ac0fa591750fb5a",
-      "sourceName": "contracts/libraries/CoreLib.sol",
-      "solcConfig": {
-        "version": "0.8.22",
-        "settings": {
-          "viaIR": true,
-          "optimizer": {
-            "enabled": true,
-            "runs": 1000
-          },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
-          "evmVersion": "paris",
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "./DataStructures.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.22"
-      ],
-      "artifacts": [
-        "CoreLib"
-      ]
-    },
-    "/Users/dadou/Orphi CrowdFund/contracts/libraries/AssemblyLib.sol": {
-      "lastModificationDate": 1750067597388,
+    "/Users/dadou/LEAD FIVE/contracts/libraries/AssemblyLib.sol": {
+      "lastModificationDate": 1750236846779,
       "contentHash": "b4f85182478fa6dc27a393f021fe53e0",
       "sourceName": "contracts/libraries/AssemblyLib.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -3055,21 +2393,243 @@
         "AssemblyLib"
       ]
     },
-    "/Users/dadou/Orphi CrowdFund/contracts/mocks/MockPriceFeed.sol": {
-      "lastModificationDate": 1750073647323,
+    "/Users/dadou/LEAD FIVE/contracts/libraries/DistributionLogic.sol": {
+      "lastModificationDate": 1750236846773,
+      "contentHash": "ae0609b3e05f7541ab1e2729e44fb8b6",
+      "sourceName": "contracts/libraries/DistributionLogic.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": []
+    },
+    "/Users/dadou/LEAD FIVE/contracts/libraries/LeaderManagement.sol": {
+      "lastModificationDate": 1750236846778,
+      "contentHash": "a06c39a432d44c05d5ad0f3ef0aa3ea7",
+      "sourceName": "contracts/libraries/LeaderManagement.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "LeaderManagement"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/libraries/MatrixLogic.sol": {
+      "lastModificationDate": 1750236846784,
+      "contentHash": "ae0609b3e05f7541ab1e2729e44fb8b6",
+      "sourceName": "contracts/libraries/MatrixLogic.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": []
+    },
+    "/Users/dadou/LEAD FIVE/contracts/libraries/NetworkAnalytics.sol": {
+      "lastModificationDate": 1750236846799,
+      "contentHash": "c39ec4ad504d6514bc448ccd2943ab55",
+      "sourceName": "contracts/libraries/NetworkAnalytics.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "NetworkAnalytics"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/libraries/OracleLib.sol": {
+      "lastModificationDate": 1750236846772,
+      "contentHash": "48ca1133e7815207a5e9ee553ea61097",
+      "sourceName": "contracts/libraries/OracleLib.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "IPriceOracleMinimal",
+        "OracleLib"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/libraries/ReferralLib.sol": {
+      "lastModificationDate": 1750236846801,
+      "contentHash": "5a5cb4e7ae85c806d636895c95fc8445",
+      "sourceName": "contracts/libraries/ReferralLib.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "ReferralLib"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/mocks/MockPriceFeed.sol": {
+      "lastModificationDate": 1750236846765,
       "contentHash": "67234a84349b729fbf38d9adaa3a49a2",
       "sourceName": "contracts/mocks/MockPriceFeed.sol",
       "solcConfig": {
         "version": "0.8.22",
         "settings": {
-          "viaIR": true,
           "optimizer": {
             "enabled": true,
-            "runs": 1000
+            "runs": 200
           },
-          "metadata": {
-            "bytecodeHash": "none"
-          },
+          "viaIR": true,
           "evmVersion": "paris",
           "outputSelection": {
             "*": {
@@ -3094,6 +2654,93 @@
       ],
       "artifacts": [
         "MockPriceFeed"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/LeadFiveModular.sol": {
+      "lastModificationDate": 1750346486700,
+      "contentHash": "f87e7993cb825f36fc032a72ac7ea039",
+      "sourceName": "contracts/LeadFiveModular.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol",
+        "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol",
+        "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "./libraries/CommissionLib.sol",
+        "./libraries/MatrixLib.sol",
+        "./libraries/PoolLib.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "IPriceFeed",
+        "LeadFiveModular"
+      ]
+    },
+    "/Users/dadou/LEAD FIVE/contracts/libraries/PoolLib.sol": {
+      "lastModificationDate": 1750342233882,
+      "contentHash": "1593ddf8c4ee21aa245e485f8ebc8cd7",
+      "sourceName": "contracts/libraries/PoolLib.sol",
+      "solcConfig": {
+        "version": "0.8.22",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "viaIR": true,
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "storageLayout"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.22"
+      ],
+      "artifacts": [
+        "PoolLib"
       ]
     }
   }

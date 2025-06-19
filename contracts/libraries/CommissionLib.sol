@@ -1,131 +1,120 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.22;
 
-import "./UserStorage.sol";
-
 /**
  * @title CommissionLib
- * @dev Library for handling all commission distribution logic to reduce main contract size
+ * @dev Library for handling commission calculations and distributions
  */
 library CommissionLib {
-    // Event declarations for commission tracking
-    event CommissionDistributed(
-        address indexed recipient,
-        address indexed payer,
-        uint256 indexed amount,
-        uint8 poolType,
-        string poolName,
-        uint256 timestamp
-    );
-
-    // Constants for commission rates (basis points)
-    uint256 internal constant SPONSOR_COMMISSION_RATE = 4000;     // 40%
-    uint256 internal constant LEVEL_BONUS_RATE = 1000;           // 10%
-    uint256 internal constant GLOBAL_UPLINE_RATE = 1000;         // 10%
-    uint256 internal constant LEADER_BONUS_RATE = 1000;          // 10%
-    uint256 internal constant GLOBAL_HELP_POOL_RATE = 3000;      // 30%
-    uint256 internal constant BASIS_POINTS = 10000;              // 100%
-
-    /**
-     * @dev Distributes sponsor commission (40% of package amount)
-     */
-    function distributeSponsorCommission(
-        mapping(address => UserStorage.User) storage users,
-        address user,
-        uint256 packageAmount
-    ) internal {
-        address sponsor = users[user].sponsor;
-        if (sponsor != address(0) && !UserStorage.isCapped(users[sponsor])) {
-            uint256 sponsorAmount = (packageAmount * SPONSOR_COMMISSION_RATE) / BASIS_POINTS;
-            _creditEarnings(users, sponsor, sponsorAmount, 0);
-            emit CommissionDistributed(
-                sponsor, 
-                user, 
-                sponsorAmount, 
-                0, 
-                "Sponsor Commission", 
-                block.timestamp
-            );
-        }
+    uint256 constant BASIS_POINTS = 10000;
+    
+    struct CommissionRates {
+        uint16 directBonus;
+        uint16 levelBonus;
+        uint16 uplineBonus;
+        uint16 leaderBonus;
+        uint16 helpBonus;
+        uint16 clubBonus;
     }
-
+    
+    struct User {
+        bool isRegistered;
+        bool isBlacklisted;
+        address referrer;
+        uint96 balance;
+        uint96 totalInvestment;
+        uint96 totalEarnings;
+        uint96 earningsCap;
+        uint32 directReferrals;
+        uint32 teamSize;
+        uint8 packageLevel;
+        uint8 rank;
+        uint8 withdrawalRate;
+        uint32 lastHelpPoolClaim;
+        bool isEligibleForHelpPool;
+        uint32 matrixPosition;
+        uint32 matrixLevel;
+        uint32 registrationTime;
+        string referralCode;
+    }
+    
     /**
-     * @dev Distributes level bonus across 10 levels (10% total)
+     * @dev Calculate direct sponsor bonus
      */
-    function distributeLevelBonus(
-        mapping(address => UserStorage.User) storage users,
-        mapping(address => address[]) storage directReferrals,
-        address user,
-        uint256 packageAmount
-    ) internal {
-        uint256 totalLevelBonus = (packageAmount * LEVEL_BONUS_RATE) / BASIS_POINTS;
-        uint256[10] memory rates = _getLevelBonusRates();
+    function calculateDirectBonus(uint96 amount, uint16 rate) 
+        internal 
+        pure 
+        returns (uint96) 
+    {
+        return uint96((amount * rate) / BASIS_POINTS);
+    }
+    
+    /**
+     * @dev Calculate level bonus distribution
+     */
+    function calculateLevelBonus(uint96 amount, uint16 rate, uint8 level) 
+        internal 
+        pure 
+        returns (uint96) 
+    {
+        uint16[10] memory levelRates = [300, 100, 100, 50, 50, 50, 50, 50, 50, 50];
+        uint96 totalBonus = uint96((amount * rate) / BASIS_POINTS);
         
-        address currentUpline = users[user].sponsor;
-        for (uint8 level = 0; level < 10 && currentUpline != address(0); level++) {
-            if (!UserStorage.isCapped(users[currentUpline]) && directReferrals[currentUpline].length > level) {
-                uint256 levelAmount = (totalLevelBonus * rates[level]) / BASIS_POINTS;
-                _creditEarnings(users, currentUpline, levelAmount, 1);
-                emit CommissionDistributed(
-                    currentUpline, 
-                    user, 
-                    levelAmount, 
-                    1, 
-                    "Level Bonus", 
-                    block.timestamp
-                );
-            }
-            currentUpline = users[currentUpline].sponsor;
+        if (level >= 10) return 0;
+        return uint96((totalBonus * levelRates[level]) / 1000);
+    }
+    
+    /**
+     * @dev Calculate upline bonus per member
+     */
+    function calculateUplineBonus(uint96 amount, uint16 rate, uint8 uplineCount) 
+        internal 
+        pure 
+        returns (uint96) 
+    {
+        if (uplineCount == 0) return 0;
+        uint96 totalBonus = uint96((amount * rate) / BASIS_POINTS);
+        return totalBonus / uplineCount;
+    }
+    
+    /**
+     * @dev Calculate pool contributions
+     */
+    function calculatePoolContributions(uint96 amount, CommissionRates memory rates) 
+        internal 
+        pure 
+        returns (uint96 leaderPool, uint96 helpPool, uint96 clubPool) 
+    {
+        leaderPool = uint96((amount * rates.leaderBonus) / BASIS_POINTS);
+        helpPool = uint96((amount * rates.helpBonus) / BASIS_POINTS);
+        clubPool = uint96((amount * rates.clubBonus) / BASIS_POINTS);
+    }
+    
+    /**
+     * @dev Calculate progressive withdrawal rate
+     */
+    function getProgressiveWithdrawalRate(uint32 directReferralCount) 
+        internal 
+        pure 
+        returns (uint8) 
+    {
+        if (directReferralCount >= 20) {
+            return 80; // 80% withdrawal, 20% reinvestment
+        } else if (directReferralCount >= 5) {
+            return 75; // 75% withdrawal, 25% reinvestment
+        } else {
+            return 70; // 70% withdrawal, 30% reinvestment
         }
     }
-
+    
     /**
-     * @dev Distributes global upline bonus across 30 levels (10% total, equal distribution)
+     * @dev Calculate admin fee
      */
-    function distributeGlobalUplineBonus(
-        mapping(address => UserStorage.User) storage users,
-        mapping(address => address[30]) storage uplineChain,
-        address user,
-        uint256 packageAmount
-    ) internal {
-        uint256 totalUplineBonus = (packageAmount * GLOBAL_UPLINE_RATE) / BASIS_POINTS;
-        uint256 perLevelAmount = totalUplineBonus / 30; // Equal distribution across 30 levels
-        
-        address[30] memory uplines = uplineChain[user];
-        for (uint8 i = 0; i < 30; i++) {
-            if (uplines[i] != address(0) && !UserStorage.isCapped(users[uplines[i]])) {
-                _creditEarnings(users, uplines[i], perLevelAmount, 2);
-                emit CommissionDistributed(
-                    uplines[i], 
-                    user, 
-                    perLevelAmount, 
-                    2, 
-                    "Global Upline Bonus", 
-                    block.timestamp
-                );
-            }
-        }
-    }
-
-    /**
-     * @dev Credits earnings to a user (internal helper)
-     */
-    function _creditEarnings(
-        mapping(address => UserStorage.User) storage users,
-        address recipient,
-        uint256 amount,
-        uint8 poolType
-    ) internal {
-        UserStorage.addEarnings(users[recipient], amount);
-    }
-
-    /**
-     * @dev Returns level bonus distribution rates
-     */
-    function _getLevelBonusRates() internal pure returns (uint256[10] memory) {
-        return [
-            uint256(3000), uint256(1000), uint256(1000), uint256(1000), uint256(1000), 
-            uint256(1000), uint256(500), uint256(500), uint256(500), uint256(500)
-        ]; // Basis points
+    function calculateAdminFee(uint96 amount, uint256 feeRate) 
+        internal 
+        pure 
+        returns (uint96) 
+    {
+        return uint96((amount * feeRate) / BASIS_POINTS);
     }
 }

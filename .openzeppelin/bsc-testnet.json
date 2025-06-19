@@ -25,6 +25,16 @@
       "address": "0x15F53E08a4F4732192778CCEB532694349D26684",
       "txHash": "0x667bfdee1deeb40d2d742fcdce03f94a085b55d888dc06f2450659b12aafd499",
       "kind": "uups"
+    },
+    {
+      "address": "0x7FEEA22942407407801cCDA55a4392f25975D998",
+      "txHash": "0x0296cae5cd0e05f62f49b961f7b0c122960ce0db052a12dffb0b4f61227ca647",
+      "kind": "uups"
+    },
+    {
+      "address": "0xa1F3079BaD306Dc8927d61e280569B315E8fE22E",
+      "txHash": "0xbb0fe37849fd39bfa92ef9f94b562e8a875bc7bd1b076ae738039fd1ae6defa0",
+      "kind": "uups"
     }
   ],
   "impls": {
@@ -1739,6 +1749,1124 @@
               }
             ],
             "numberOfBytes": "128"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_uint96": {
+            "label": "uint96",
+            "numberOfBytes": "12"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Pausable": [
+            {
+              "contract": "PausableUpgradeable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.ReentrancyGuard": [
+            {
+              "contract": "ReentrancyGuardUpgradeable",
+              "label": "_status",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:43",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Ownable": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "8b68af33e3cbe1151b18c358fa073b1c20ab2f0d32e9a1895d43335ec45373c3": {
+      "address": "0xeaAd401c3e61f73920D4a1D80d67Aba07A30F873",
+      "txHash": "0xa8ecfe228f475bd30db4baf7dbd558b15ef245985030b18082a20f6e9105916e",
+      "layout": {
+        "solcVersion": "0.8.22",
+        "storage": [
+          {
+            "label": "users",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_mapping(t_address,t_struct(User)3522_storage)",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:28"
+          },
+          {
+            "label": "packages",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint8,t_struct(Package)1845_storage)",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:29"
+          },
+          {
+            "label": "directReferrals",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:30"
+          },
+          {
+            "label": "uplineChain",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_array(t_address)30_storage)",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:31"
+          },
+          {
+            "label": "binaryMatrix",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_address,t_array(t_address)2_storage)",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:32"
+          },
+          {
+            "label": "referralCodeToUser",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_string_memory_ptr,t_address)",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:33"
+          },
+          {
+            "label": "leaderPool",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_struct(Pool)4189_storage",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:35"
+          },
+          {
+            "label": "helpPool",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_struct(Pool)4189_storage",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:36"
+          },
+          {
+            "label": "clubPool",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_struct(Pool)4189_storage",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:37"
+          },
+          {
+            "label": "usdt",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_contract(IERC20)1392",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:39"
+          },
+          {
+            "label": "priceFeed",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_contract(IPriceFeed)1823",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:40"
+          },
+          {
+            "label": "adminIds",
+            "offset": 0,
+            "slot": "11",
+            "type": "t_array(t_address)16_storage",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:41"
+          },
+          {
+            "label": "shiningStarLeaders",
+            "offset": 0,
+            "slot": "27",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:43"
+          },
+          {
+            "label": "silverStarLeaders",
+            "offset": 0,
+            "slot": "28",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:44"
+          },
+          {
+            "label": "eligibleHelpPoolUsers",
+            "offset": 0,
+            "slot": "29",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:45"
+          },
+          {
+            "label": "totalUsers",
+            "offset": 0,
+            "slot": "30",
+            "type": "t_uint32",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:46"
+          },
+          {
+            "label": "adminFeeRecipient",
+            "offset": 4,
+            "slot": "30",
+            "type": "t_address",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:48"
+          },
+          {
+            "label": "totalAdminFeesCollected",
+            "offset": 0,
+            "slot": "31",
+            "type": "t_uint96",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:49"
+          },
+          {
+            "label": "lastTxBlock",
+            "offset": 0,
+            "slot": "32",
+            "type": "t_uint256",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:54"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_struct(InitializableStorage)73_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(OwnableStorage)13_storage": {
+            "label": "struct OwnableUpgradeable.OwnableStorage",
+            "members": [
+              {
+                "label": "_owner",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(PausableStorage)224_storage": {
+            "label": "struct PausableUpgradeable.PausableStorage",
+            "members": [
+              {
+                "label": "_paused",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ReentrancyGuardStorage)288_storage": {
+            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
+            "members": [
+              {
+                "label": "_status",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_address)16_storage": {
+            "label": "address[16]",
+            "numberOfBytes": "512"
+          },
+          "t_array(t_address)2_storage": {
+            "label": "address[2]",
+            "numberOfBytes": "64"
+          },
+          "t_array(t_address)30_storage": {
+            "label": "address[30]",
+            "numberOfBytes": "960"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_contract(IERC20)1392": {
+            "label": "contract IERC20",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IPriceFeed)1823": {
+            "label": "contract IPriceFeed",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_array(t_address)2_storage)": {
+            "label": "mapping(address => address[2])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_array(t_address)30_storage)": {
+            "label": "mapping(address => address[30])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_array(t_address)dyn_storage)": {
+            "label": "mapping(address => address[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(User)3522_storage)": {
+            "label": "mapping(address => struct CommissionLib.User)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_address)": {
+            "label": "mapping(string => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint8,t_struct(Package)1845_storage)": {
+            "label": "mapping(uint8 => struct LeadFiveModular.Package)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(CommissionRates)3485_storage": {
+            "label": "struct CommissionLib.CommissionRates",
+            "members": [
+              {
+                "label": "directBonus",
+                "type": "t_uint16",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "levelBonus",
+                "type": "t_uint16",
+                "offset": 2,
+                "slot": "0"
+              },
+              {
+                "label": "uplineBonus",
+                "type": "t_uint16",
+                "offset": 4,
+                "slot": "0"
+              },
+              {
+                "label": "leaderBonus",
+                "type": "t_uint16",
+                "offset": 6,
+                "slot": "0"
+              },
+              {
+                "label": "helpBonus",
+                "type": "t_uint16",
+                "offset": 8,
+                "slot": "0"
+              },
+              {
+                "label": "clubBonus",
+                "type": "t_uint16",
+                "offset": 10,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(Package)1845_storage": {
+            "label": "struct LeadFiveModular.Package",
+            "members": [
+              {
+                "label": "price",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "rates",
+                "type": "t_struct(CommissionRates)3485_storage",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(Pool)4189_storage": {
+            "label": "struct PoolLib.Pool",
+            "members": [
+              {
+                "label": "balance",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "lastDistribution",
+                "type": "t_uint32",
+                "offset": 12,
+                "slot": "0"
+              },
+              {
+                "label": "interval",
+                "type": "t_uint32",
+                "offset": 16,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(User)3522_storage": {
+            "label": "struct CommissionLib.User",
+            "members": [
+              {
+                "label": "isRegistered",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isBlacklisted",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "referrer",
+                "type": "t_address",
+                "offset": 2,
+                "slot": "0"
+              },
+              {
+                "label": "balance",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "totalInvestment",
+                "type": "t_uint96",
+                "offset": 12,
+                "slot": "1"
+              },
+              {
+                "label": "totalEarnings",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "earningsCap",
+                "type": "t_uint96",
+                "offset": 12,
+                "slot": "2"
+              },
+              {
+                "label": "directReferrals",
+                "type": "t_uint32",
+                "offset": 24,
+                "slot": "2"
+              },
+              {
+                "label": "teamSize",
+                "type": "t_uint32",
+                "offset": 28,
+                "slot": "2"
+              },
+              {
+                "label": "packageLevel",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "rank",
+                "type": "t_uint8",
+                "offset": 1,
+                "slot": "3"
+              },
+              {
+                "label": "withdrawalRate",
+                "type": "t_uint8",
+                "offset": 2,
+                "slot": "3"
+              },
+              {
+                "label": "lastHelpPoolClaim",
+                "type": "t_uint32",
+                "offset": 3,
+                "slot": "3"
+              },
+              {
+                "label": "isEligibleForHelpPool",
+                "type": "t_bool",
+                "offset": 7,
+                "slot": "3"
+              },
+              {
+                "label": "matrixPosition",
+                "type": "t_uint32",
+                "offset": 8,
+                "slot": "3"
+              },
+              {
+                "label": "matrixLevel",
+                "type": "t_uint32",
+                "offset": 12,
+                "slot": "3"
+              },
+              {
+                "label": "registrationTime",
+                "type": "t_uint32",
+                "offset": 16,
+                "slot": "3"
+              },
+              {
+                "label": "referralCode",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "4"
+              }
+            ],
+            "numberOfBytes": "160"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_uint96": {
+            "label": "uint96",
+            "numberOfBytes": "12"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Pausable": [
+            {
+              "contract": "PausableUpgradeable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.ReentrancyGuard": [
+            {
+              "contract": "ReentrancyGuardUpgradeable",
+              "label": "_status",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:43",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Ownable": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "e9a0a9b9fb9d059eca3b06acdc875d9f81bce02fc0cb54f3c7b9cef587da35cb": {
+      "address": "0xC16b89CAb1AF8BB213C10F65b79fCF6369B08e9f",
+      "txHash": "0x10719a61ecb11f76d832e940ad2ee14dc00463f513f1a21ee68026a285338a23",
+      "layout": {
+        "solcVersion": "0.8.22",
+        "storage": [
+          {
+            "label": "users",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_mapping(t_address,t_struct(User)3643_storage)",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:28"
+          },
+          {
+            "label": "packages",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint8,t_struct(Package)1845_storage)",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:29"
+          },
+          {
+            "label": "directReferrals",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:30"
+          },
+          {
+            "label": "uplineChain",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_array(t_address)30_storage)",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:31"
+          },
+          {
+            "label": "binaryMatrix",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_address,t_array(t_address)2_storage)",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:32"
+          },
+          {
+            "label": "spilloverCounter",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_address,t_uint32)",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:33"
+          },
+          {
+            "label": "referralCodeToUser",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_mapping(t_string_memory_ptr,t_address)",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:34"
+          },
+          {
+            "label": "leaderPool",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_struct(Pool)4426_storage",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:36"
+          },
+          {
+            "label": "helpPool",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_struct(Pool)4426_storage",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:37"
+          },
+          {
+            "label": "clubPool",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_struct(Pool)4426_storage",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:38"
+          },
+          {
+            "label": "usdt",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_contract(IERC20)1392",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:40"
+          },
+          {
+            "label": "priceFeed",
+            "offset": 0,
+            "slot": "11",
+            "type": "t_contract(IPriceFeed)1823",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:41"
+          },
+          {
+            "label": "adminIds",
+            "offset": 0,
+            "slot": "12",
+            "type": "t_array(t_address)16_storage",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:42"
+          },
+          {
+            "label": "shiningStarLeaders",
+            "offset": 0,
+            "slot": "28",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:44"
+          },
+          {
+            "label": "silverStarLeaders",
+            "offset": 0,
+            "slot": "29",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:45"
+          },
+          {
+            "label": "eligibleHelpPoolUsers",
+            "offset": 0,
+            "slot": "30",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:46"
+          },
+          {
+            "label": "totalUsers",
+            "offset": 0,
+            "slot": "31",
+            "type": "t_uint32",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:47"
+          },
+          {
+            "label": "adminFeeRecipient",
+            "offset": 4,
+            "slot": "31",
+            "type": "t_address",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:49"
+          },
+          {
+            "label": "totalAdminFeesCollected",
+            "offset": 0,
+            "slot": "32",
+            "type": "t_uint96",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:50"
+          },
+          {
+            "label": "lastTxBlock",
+            "offset": 0,
+            "slot": "33",
+            "type": "t_uint256",
+            "contract": "LeadFiveModular",
+            "src": "contracts/LeadFiveModular.sol:55"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_struct(InitializableStorage)73_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(OwnableStorage)13_storage": {
+            "label": "struct OwnableUpgradeable.OwnableStorage",
+            "members": [
+              {
+                "label": "_owner",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(PausableStorage)224_storage": {
+            "label": "struct PausableUpgradeable.PausableStorage",
+            "members": [
+              {
+                "label": "_paused",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ReentrancyGuardStorage)288_storage": {
+            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
+            "members": [
+              {
+                "label": "_status",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_address)16_storage": {
+            "label": "address[16]",
+            "numberOfBytes": "512"
+          },
+          "t_array(t_address)2_storage": {
+            "label": "address[2]",
+            "numberOfBytes": "64"
+          },
+          "t_array(t_address)30_storage": {
+            "label": "address[30]",
+            "numberOfBytes": "960"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_contract(IERC20)1392": {
+            "label": "contract IERC20",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IPriceFeed)1823": {
+            "label": "contract IPriceFeed",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_array(t_address)2_storage)": {
+            "label": "mapping(address => address[2])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_array(t_address)30_storage)": {
+            "label": "mapping(address => address[30])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_array(t_address)dyn_storage)": {
+            "label": "mapping(address => address[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(User)3643_storage)": {
+            "label": "mapping(address => struct CommissionLib.User)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint32)": {
+            "label": "mapping(address => uint32)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_address)": {
+            "label": "mapping(string => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint8,t_struct(Package)1845_storage)": {
+            "label": "mapping(uint8 => struct LeadFiveModular.Package)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(CommissionRates)3606_storage": {
+            "label": "struct CommissionLib.CommissionRates",
+            "members": [
+              {
+                "label": "directBonus",
+                "type": "t_uint16",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "levelBonus",
+                "type": "t_uint16",
+                "offset": 2,
+                "slot": "0"
+              },
+              {
+                "label": "uplineBonus",
+                "type": "t_uint16",
+                "offset": 4,
+                "slot": "0"
+              },
+              {
+                "label": "leaderBonus",
+                "type": "t_uint16",
+                "offset": 6,
+                "slot": "0"
+              },
+              {
+                "label": "helpBonus",
+                "type": "t_uint16",
+                "offset": 8,
+                "slot": "0"
+              },
+              {
+                "label": "clubBonus",
+                "type": "t_uint16",
+                "offset": 10,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(Package)1845_storage": {
+            "label": "struct LeadFiveModular.Package",
+            "members": [
+              {
+                "label": "price",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "rates",
+                "type": "t_struct(CommissionRates)3606_storage",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(Pool)4426_storage": {
+            "label": "struct PoolLib.Pool",
+            "members": [
+              {
+                "label": "balance",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "lastDistribution",
+                "type": "t_uint32",
+                "offset": 12,
+                "slot": "0"
+              },
+              {
+                "label": "interval",
+                "type": "t_uint32",
+                "offset": 16,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(User)3643_storage": {
+            "label": "struct CommissionLib.User",
+            "members": [
+              {
+                "label": "isRegistered",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isBlacklisted",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "referrer",
+                "type": "t_address",
+                "offset": 2,
+                "slot": "0"
+              },
+              {
+                "label": "balance",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "totalInvestment",
+                "type": "t_uint96",
+                "offset": 12,
+                "slot": "1"
+              },
+              {
+                "label": "totalEarnings",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "earningsCap",
+                "type": "t_uint96",
+                "offset": 12,
+                "slot": "2"
+              },
+              {
+                "label": "directReferrals",
+                "type": "t_uint32",
+                "offset": 24,
+                "slot": "2"
+              },
+              {
+                "label": "teamSize",
+                "type": "t_uint32",
+                "offset": 28,
+                "slot": "2"
+              },
+              {
+                "label": "packageLevel",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "rank",
+                "type": "t_uint8",
+                "offset": 1,
+                "slot": "3"
+              },
+              {
+                "label": "withdrawalRate",
+                "type": "t_uint8",
+                "offset": 2,
+                "slot": "3"
+              },
+              {
+                "label": "lastHelpPoolClaim",
+                "type": "t_uint32",
+                "offset": 3,
+                "slot": "3"
+              },
+              {
+                "label": "isEligibleForHelpPool",
+                "type": "t_bool",
+                "offset": 7,
+                "slot": "3"
+              },
+              {
+                "label": "matrixPosition",
+                "type": "t_uint32",
+                "offset": 8,
+                "slot": "3"
+              },
+              {
+                "label": "matrixLevel",
+                "type": "t_uint32",
+                "offset": 12,
+                "slot": "3"
+              },
+              {
+                "label": "registrationTime",
+                "type": "t_uint32",
+                "offset": 16,
+                "slot": "3"
+              },
+              {
+                "label": "referralCode",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "4"
+              }
+            ],
+            "numberOfBytes": "160"
           },
           "t_uint16": {
             "label": "uint16",

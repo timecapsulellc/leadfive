@@ -1,12 +1,12 @@
-// OrphiChain Ultimate Dashboard - Force Vercel Deployment Update
+// LeadFive Ultimate Dashboard - Production Ready
 import React from 'react';
 import './App.css'
-import OrphiCrowdFundApp from './components/OrphiCrowdFundApp';
+import LeadFiveApp from './components/LeadFiveApp';
 
 function App() {
   return (
     <div className="App">
-      <OrphiCrowdFundApp />
+      <LeadFiveApp />
     </div>
   )
 }

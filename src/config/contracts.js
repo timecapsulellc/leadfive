@@ -1,6 +1,40 @@
 // OrphiCrowdFund Contract Configuration - Updated with mainnet address and ABI
 export const CONTRACT_ADDRESS = '0x4965197b430343daec1042B413Dd6e20D06dAdba';
 export const USDT_ADDRESS = '0x55d398326f99059fF775485246999027B3197955';
+
+// Network configuration
+export const SUPPORTED_NETWORKS = {
+  BSC_MAINNET: {
+    chainId: '0x38',
+    name: 'BNB Smart Chain',
+    rpcUrl: 'https://bsc-dataseed.binance.org/',
+    blockExplorer: 'https://bscscan.com/',
+    contractAddress: '0x4965197b430343daec1042B413Dd6e20D06dAdba'
+  },
+  BSC_TESTNET: {
+    chainId: '0x61',
+    name: 'BNB Smart Chain Testnet',
+    rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+    blockExplorer: 'https://testnet.bscscan.com/',
+    contractAddress: '0x4965197b430343daec1042B413Dd6e20D06dAdba' // Update with testnet address if different
+  }
+};
+
+// Get contract address for current network
+export const getContractAddress = (chainId) => {
+  const networkConfig = Object.values(SUPPORTED_NETWORKS).find(
+    network => network.chainId === chainId
+  );
+  return networkConfig?.contractAddress || CONTRACT_ADDRESS;
+};
+
+// Check if network is supported
+export const isSupportedNetwork = (chainId) => {
+  return Object.values(SUPPORTED_NETWORKS).some(
+    network => network.chainId === chainId
+  );
+};
+
 export const CONTRACT_ABI = [
   {
     "inputs": [

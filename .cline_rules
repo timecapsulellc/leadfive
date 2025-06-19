@@ -1,0 +1,116 @@
+# 🚀 10x-Tool-Calls for Cline - OrphiCrowdFund Project
+# Continuous Development Workflow Rules
+
+## 🎯 PRIMARY WORKFLOW: Interactive Task Loop
+
+### ✅ Core Process:
+1. **Complete the assigned task** thoroughly and professionally
+2. **Always run the interactive prompt** after task completion:
+   ```bash
+   python3 userinput.py
+   ```
+3. **Wait for user input** from the terminal prompt
+4. **Process the next task** based on user input
+5. **Repeat the loop** until user says "stop"
+
+### 📋 Task Categories for OrphiCrowdFund:
+
+#### 🔗 Contract Operations:
+- Test live contract functionality (0x4965197b430343daec1042B413Dd6e20D06dAdba)
+- Verify contract interactions on BSCScan
+- Check transaction logs and events
+- Test admin functions with Trezor wallet
+- Monitor contract performance
+
+#### 🎨 Frontend Development:
+- Update React components and UI
+- Fix styling and responsive design
+- Test wallet connections (MetaMask, WalletConnect)
+- Improve user experience
+- Add new features to dashboard
+
+#### 🧪 Testing & QA:
+- Test user registration flow
+- Validate compensation plan calculations
+- Test withdrawal and deposit functions
+- Multi-user testing scenarios
+- Cross-browser compatibility
+
+#### 📊 Analytics & Monitoring:
+- Add tracking and analytics
+- Monitor user activity
+- Performance optimization
+- Error logging and reporting
+- Usage statistics
+
+#### 🔒 Security & Auditing:
+- Security vulnerability checks
+- Code review and optimization
+- Access control validation
+- Smart contract security audit
+- Frontend security improvements
+
+### 🛠️ Technical Guidelines:
+
+#### For Contract Tasks:
+- Always reference the live contract: `0x4965197b430343daec1042B413Dd6e20D06dAdba`
+- Use BSC Mainnet configuration
+- Verify changes on BSCScan
+- Test with small amounts first
+
+#### For Frontend Tasks:
+- Update configuration files in `src/config/`
+- Test locally before deployment
+- Ensure mobile responsiveness
+- Maintain brand consistency (OrphiChain)
+
+#### For Deployment Tasks:
+- Use production-ready scripts
+- Verify all environment variables
+- Test on staging before production
+- Document all changes
+
+### 🔄 Loop Management:
+
+#### Continue Loop When:
+- User provides a new task
+- Task requires follow-up work
+- Testing reveals issues to fix
+- Improvements can be made
+
+#### End Loop When:
+- User types "stop", "exit", "quit", or "end"
+- Critical error occurs
+- Maximum tool calls reached
+- User manually interrupts
+
+### 📝 Logging & Tracking:
+- Log all tasks to `development_log.txt`
+- Track progress and completion
+- Note any issues or blockers
+- Document solutions and improvements
+
+### 🎯 Success Criteria:
+- Each task completed thoroughly
+- User feedback incorporated
+- Code quality maintained
+- Project functionality improved
+- Documentation updated
+
+## 🚨 IMPORTANT NOTES:
+
+1. **Always run `python3 userinput.py`** after completing each task
+2. **Wait for user input** before proceeding to next task
+3. **Handle errors gracefully** and continue the loop
+4. **Maintain project context** throughout the session
+5. **Focus on incremental improvements** to the live system
+
+## 🎉 Project Context:
+- **Project**: OrphiCrowdFund - Web3 Crowdfunding Platform
+- **Status**: Live Production System
+- **Contract**: 0x4965197b430343daec1042B413Dd6e20D06dAdba (BSC Mainnet)
+- **Tech Stack**: React, Solidity, Supabase, Web3
+- **Goal**: Continuous improvement and optimization
+
+---
+*10x-Tool-Calls System Active - Maximize your development efficiency!*

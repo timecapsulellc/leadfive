@@ -1,40 +1,208 @@
-# Logs
-logs
-*.log
+# ==================== LEADFIVE PRODUCTION .GITIGNORE ====================
+# CRITICAL: This file ensures no sensitive data is committed to GitHub
+
+# ==================== ENVIRONMENT & SECRETS ====================
+.env
+.env.*
+!.env.example
+.env.local
+.env.production
+.env.staging
+.env.development
+
+# Private keys and sensitive data
+*.key
+*.pem
+*.p12
+*.pfx
+private-keys/
+secrets/
+keys/
+wallets/
+mnemonics/
+*.encrypted
+*.enc
+
+# Deployment artifacts with sensitive data
+*deployment*.json
+*mainnet*.json
+*testnet*.json
+deployment-results/
+deployment-logs/
+
+# ==================== NODE.JS & DEPENDENCIES ====================
+node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+.npm
+.yarn-integrity
+.pnpm-debug.log
 
-node_modules
-dist
-dist-ssr
-*.local
+# ==================== BUILD & DISTRIBUTION ====================
+dist/
+dist-ssr/
+build/
+out/
+.next/
+.nuxt/
+.vuepress/dist
+.serverless/
+.fusebox/
+.dynamodb/
+.tern-port
 
-# Editor directories and files
-.vscode/*
+# ==================== DEVELOPMENT TOOLS ====================
+.vscode/
 !.vscode/extensions.json
-.idea
+.idea/
+*.swp
+*.swo
+*~
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-.vercel
-.env*
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
-# Archive and backup contracts (keep workspace clean)
+# ==================== LOGS & DEBUGGING ====================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+debug.log
+error.log
+access.log
+
+# ==================== TESTING & COVERAGE ====================
+coverage/
+.nyc_output/
+.coverage/
+*.lcov
+.jest/
+test-results/
+test-reports/
+
+# ==================== BLOCKCHAIN & HARDHAT ====================
+cache/
+artifacts/
+typechain/
+typechain-types/
+.openzeppelin/
+deployments/
+.hardhat/
+
+# ==================== ARCHIVE & BACKUP ====================
+archive/
+backup/
+temp/
+tmp/
+*.backup
+*.bak
+*.old
+*_backup.*
+*_old.*
+
+# Archive contracts (keep workspace clean)
 contracts/archive/
 contracts/backup/
 contracts/*_Large_Backup.sol
 contracts/*_Old.sol
 contracts/*_TooLarge.sol
-temp_archive/
-backup/
 
-# Keep only production contracts:
-# contracts/OrphiCrowdFund.sol (main modular contract)
-# contracts/MockUSDT.sol (for testing)
-# contracts/libraries/ (modular libraries)
+# Archive scripts
+scripts/archive/
+scripts/backup/
+scripts/temp/
+
+# Legacy files
+archive/legacy-orphi-cleanup/
+archive/20250619-*/
+
+# ==================== DOCKER & DEPLOYMENT ====================
+.dockerignore
+docker-compose.override.yml
+.docker/
+volumes/
+
+# ==================== TEMPORARY FILES ====================
+*.tmp
+*.temp
+.cache/
+.parcel-cache/
+.sass-cache/
+.eslintcache
+.stylelintcache
+
+# ==================== OS GENERATED ====================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ==================== EDITOR SPECIFIC ====================
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ==================== PRODUCTION DEPLOYMENT ====================
+# Keep these files but exclude sensitive deployment data
+!docker-compose.yml
+!Dockerfile
+!nginx.conf
+!.env.example
+!README.md
+!DEPLOYMENT.md
+
+# Exclude sensitive deployment results
+*-deployment-results.json
+*-initialization-results.json
+*-testing-results.json
+live-*.json
+mainnet-*.json
+testnet-*.json
+
+# ==================== SECURITY ====================
+# Ensure no sensitive files are accidentally committed
+*.private
+*.secret
+*.confidential
+security/
+private/
+sensitive/
+
+# ==================== PACKAGE MANAGERS ====================
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.pnpm-store/
+
+# ==================== MISC ====================
+.vercel
+.netlify
+.firebase/
+.aws/
+*.local
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

@@ -1,243 +1,196 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.22;
 
-import "./CommissionLibrary.sol";
-import "./UserStorage.sol";
-
 /**
  * @title MatrixLib
- * @dev Library for handling dual-branch matrix placement logic to reduce main contract size
+ * @dev Library for handling matrix placement and genealogy
  */
 library MatrixLib {
-    using UserStorage for UserStorage.User;
-
-    // Events for matrix operations
-    event MatrixPlacement(
-        address indexed user,
-        address indexed sponsor,
-        address indexed parent,
-        bool isLeft,
-        uint256 level,
-        uint256 timestamp
-    );
-
-    event MatrixUpgrade(
-        address indexed user,
-        uint256 indexed oldLevel,
-        uint256 indexed newLevel,
-        uint256 timestamp
-    );
-
+    
+    struct MatrixNode {
+        address user;
+        address leftChild;
+        address rightChild;
+        uint32 level;
+        uint32 position;
+    }
+    
     /**
-     * @dev Places user in the dual-branch matrix system
-     * Implements 2×∞ crowd placement as per whitepaper
+     * @dev Calculate matrix position for new user
      */
-    function placeInMatrix(
-        mapping(address => UserStorage.User) storage users,
+    function calculateMatrixPosition(uint32 totalUsers) 
+        internal 
+        pure 
+        returns (uint32) 
+    {
+        return totalUsers + 1;
+    }
+    
+    /**
+     * @dev Calculate matrix level based on position
+     */
+    function calculateMatrixLevel(uint32 position) 
+        internal 
+        pure 
+        returns (uint32) 
+    {
+        if (position == 1) return 1;
+        
+        uint32 level = 1;
+        uint32 maxInLevel = 2;
+        uint32 currentPos = 1;
+        
+        while (currentPos + maxInLevel < position) {
+            currentPos += maxInLevel;
+            maxInLevel *= 2;
+            level++;
+        }
+        
+        return level;
+    }
+    
+    /**
+     * @dev Find placement position in binary matrix with spillover rotation
+     */
+    function findPlacementPosition(
+        mapping(address => address[2]) storage binaryMatrix,
+        mapping(address => uint32) storage spilloverCounter,
+        address referrer
+    ) internal returns (address placementParent, uint8 position) {
+        address current = referrer;
+        uint256 depth = 0;
+        uint256 maxDepth = 100; // Prevent infinite loops
+        
+        while (depth < maxDepth) {
+            if (binaryMatrix[current][0] == address(0)) {
+                return (current, 0); // Left position
+            } else if (binaryMatrix[current][1] == address(0)) {
+                return (current, 1); // Right position
+            } else {
+                // ✅ FIX: Rotate spillover direction for fairness
+                uint8 spilloverDirection = uint8(spilloverCounter[current] % 2);
+                spilloverCounter[current]++;
+                
+                if (spilloverDirection == 0) {
+                    current = binaryMatrix[current][0]; // Spillover to left
+                } else {
+                    current = binaryMatrix[current][1]; // Spillover to right
+                }
+                depth++;
+            }
+        }
+        
+        revert("Matrix placement failed: max depth reached");
+    }
+    
+    /**
+     * @dev Find placement position in binary matrix (view function for compatibility)
+     */
+    function findPlacementPosition(
+        mapping(address => address[2]) storage binaryMatrix,
+        address referrer
+    ) internal view returns (address placementParent, uint8 position) {
+        address current = referrer;
+        uint256 depth = 0;
+        uint256 maxDepth = 100;
+        
+        while (depth < maxDepth) {
+            if (binaryMatrix[current][0] == address(0)) {
+                return (current, 0); // Left position
+            } else if (binaryMatrix[current][1] == address(0)) {
+                return (current, 1); // Right position
+            } else {
+                current = binaryMatrix[current][0]; // Default to left for view
+                depth++;
+            }
+        }
+        
+        revert("Matrix placement failed: max depth reached");
+    }
+    
+    /**
+     * @dev Build upline chain for user
+     */
+    function buildUplineChain(
+        mapping(address => address[30]) storage uplineChain,
+        mapping(address => address) storage referrers,
+        address user,
+        address referrer
+    ) internal {
+        uplineChain[user][0] = referrer;
+        
+        for (uint8 i = 1; i < 30; i++) {
+            address nextUpline = uplineChain[uplineChain[user][i-1]][0];
+            if (nextUpline == address(0)) break;
+            uplineChain[user][i] = nextUpline;
+        }
+    }
+    
+    /**
+     * @dev Get matrix children for a user
+     */
+    function getMatrixChildren(
+        mapping(address => address[2]) storage binaryMatrix,
+        address user
+    ) internal view returns (address left, address right) {
+        return (binaryMatrix[user][0], binaryMatrix[user][1]);
+    }
+    
+    /**
+     * @dev Count team size iteratively (gas efficient)
+     */
+    function calculateTeamSize(
         mapping(address => address[]) storage directReferrals,
-        mapping(address => address[30]) storage uplineChain,
-        address user,
-        address sponsor
-    ) internal {
-        require(sponsor != address(0), "Invalid sponsor");
-        require(users[sponsor].registrationTime > 0, "Sponsor not registered");
-
-        // Set sponsor relationship
-        users[user].sponsor = sponsor;
-        directReferrals[sponsor].push(user);
-
-        // Find placement position in matrix
-        address parent = _findMatrixParent(users, sponsor);
-        _placeInMatrix(users, user, parent);
-
-        // Build upline chain for Global Upline Bonus
-        _buildUplineChain(users, uplineChain, user);
-
-        emit MatrixPlacement(
-            user,
-            sponsor,
-            parent,
-            users[parent].leftChild == user,
-            users[user].currentLevel,
-            block.timestamp
-        );
-    }
-
-    /**
-     * @dev Finds the appropriate parent for matrix placement
-     * Uses crowd placement algorithm to ensure balanced growth
-     */
-    function _findMatrixParent(
-        mapping(address => UserStorage.User) storage users,
-        address startingPoint
-    ) internal view returns (address parent) {
-        // Start from sponsor and traverse down to find available position
-        address current = startingPoint;
+        address user
+    ) internal view returns (uint32) {
+        uint32 totalSize = 0;
+        address[] memory queue = new address[](1000); // Limit to prevent DoS
+        uint256 front = 0;
+        uint256 rear = 1;
+        queue[0] = user;
         
-        while (true) {
-            // Check if current node has space
-            if (users[current].leftChild == address(0)) {
-                return current;
-            } else if (users[current].rightChild == address(0)) {
-                return current;
-            }
+        while (front < rear && front < 1000) {
+            address current = queue[front++];
+            address[] memory refs = directReferrals[current];
             
-            // Both positions filled, move to the node with smaller leg count
-            if (users[current].leftLegCount <= users[current].rightLegCount) {
-                current = users[current].leftChild;
-            } else {
-                current = users[current].rightChild;
+            for (uint i = 0; i < refs.length && rear < 1000; i++) {
+                queue[rear++] = refs[i];
+                totalSize++;
             }
         }
-    }
-
-    /**
-     * @dev Places user in matrix and updates leg counts
-     */
-    function _placeInMatrix(
-        mapping(address => UserStorage.User) storage users,
-        address user,
-        address parent
-    ) internal {
-        // Place in available position
-        if (users[parent].leftChild == address(0)) {
-            users[parent].leftChild = user;
-            _updateLegCounts(users, parent, true);
-        } else {
-            users[parent].rightChild = user;
-            _updateLegCounts(users, parent, false);
-        }
-
-        // Set initial matrix level
-        users[user].currentLevel = users[parent].currentLevel + 1;
-    }
-
-    /**
-     * @dev Updates leg counts up the matrix tree
-     */
-    function _updateLegCounts(
-        mapping(address => UserStorage.User) storage users,
-        address startNode,
-        bool isLeftLeg
-    ) internal {
-        address current = startNode;
         
-        while (current != address(0)) {
-            if (isLeftLeg) {
-                users[current].leftLegCount++;
-            } else {
-                users[current].rightLegCount++;
-            }
-            
-            // Update team size
-            users[current].teamSize++;
-            
-            // Move to parent
-            current = users[current].sponsor;
-        }
+        return totalSize;
     }
-
+    
     /**
-     * @dev Builds the 30-level upline chain for Global Upline Bonus
+     * @dev Update team sizes up the chain
      */
-    function _buildUplineChain(
-        mapping(address => UserStorage.User) storage users,
-        mapping(address => address[30]) storage uplineChain,
+    function updateUplineTeamSizes(
+        mapping(address => address) storage referrers,
+        mapping(address => uint32) storage teamSizes,
         address user
     ) internal {
-        address current = users[user].sponsor;
+        address current = referrers[user];
         
         for (uint8 i = 0; i < 30 && current != address(0); i++) {
-            uplineChain[user][i] = current;
-            current = users[current].sponsor;
+            teamSizes[current]++;
+            current = referrers[current];
         }
     }
-
+    
     /**
-     * @dev Checks if user qualifies for matrix upgrade
+     * @dev Check if user qualifies for leader rank
      */
-    function checkMatrixUpgrade(
-        mapping(address => UserStorage.User) storage users,
-        address user
-    ) internal view returns (bool canUpgrade, uint256 newLevel) {
-        uint32 leftCount = users[user].leftLegCount;
-        uint32 rightCount = users[user].rightLegCount;
-        uint32 currentLevel = users[user].currentLevel;
-        
-        // Check if both legs have sufficient members for upgrade
-        uint256 requiredMembers = 2 ** currentLevel; // Exponential growth requirement
-        
-        if (leftCount >= requiredMembers && rightCount >= requiredMembers) {
-            return (true, currentLevel + 1);
+    function checkLeaderQualification(
+        uint32 teamSize,
+        uint32 directReferrals
+    ) internal pure returns (uint8 rank) {
+        if (teamSize >= 500) {
+            return 2; // Silver Star Leader
+        } else if (teamSize >= 250 && directReferrals >= 10) {
+            return 1; // Shining Star Leader
+        } else {
+            return 0; // No rank
         }
-        
-        return (false, currentLevel);
-    }
-
-    /**
-     * @dev Upgrades user's matrix level
-     */
-    function upgradeMatrixLevel(
-        mapping(address => UserStorage.User) storage users,
-        address user
-    ) internal returns (bool success) {
-        (bool canUpgrade, uint256 newLevel) = checkMatrixUpgrade(users, user);
-        
-        if (canUpgrade) {
-            uint256 oldLevel = users[user].currentLevel;
-            users[user].currentLevel = uint32(newLevel);
-            
-            emit MatrixUpgrade(user, oldLevel, newLevel, block.timestamp);
-            return true;
-        }
-        
-        return false;
-    }
-
-    /**
-     * @dev Gets matrix information for a user
-     */
-    function getMatrixInfo(
-        mapping(address => UserStorage.User) storage users,
-        address user
-    ) internal view returns (
-        address leftChild,
-        address rightChild,
-        uint32 leftCount,
-        uint32 rightCount,
-        uint32 level,
-        address sponsor
-    ) {
-        UserStorage.User storage userData = users[user];
-        return (
-            userData.leftChild,
-            userData.rightChild,
-            userData.leftLegCount,
-            userData.rightLegCount,
-            userData.currentLevel,
-            userData.sponsor
-        );
-    }
-
-    /**
-     * @dev Calculates team volume for leader qualification
-     */
-    function calculateTeamVolume(
-        mapping(address => UserStorage.User) storage users,
-        address user
-    ) internal view returns (uint256 totalVolume) {
-        // Calculate volume from left leg
-        if (users[user].leftChild != address(0)) {
-            totalVolume += users[users[user].leftChild].totalInvested;
-            totalVolume += calculateTeamVolume(users, users[user].leftChild);
-        }
-        
-        // Calculate volume from right leg
-        if (users[user].rightChild != address(0)) {
-            totalVolume += users[users[user].rightChild].totalInvested;
-            totalVolume += calculateTeamVolume(users, users[user].rightChild);
-        }
-        
-        return totalVolume;
     }
 }

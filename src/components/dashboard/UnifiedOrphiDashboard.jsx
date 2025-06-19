@@ -30,7 +30,9 @@ const UnifiedOrphiDashboard = ({
   userInfo, 
   networkStats, 
   isConnected, 
-  onBackToClassic 
+  onBackToClassic,
+  onConnect,
+  onDisconnect
 }) => {
   // Use passed props instead of hooks for better integration
   // const { account, isConnected, connectWallet, disconnectWallet } = useWallet();
@@ -1640,8 +1642,8 @@ const UnifiedOrphiDashboard = ({
           )}
           
           <WalletConnector 
-            onConnect={() => {}}
-            onDisconnect={() => {}}
+            onConnect={onConnect}
+            onDisconnect={onDisconnect}
             currentAccount={account}
             isConnected={isConnected}
           />
@@ -1697,8 +1699,8 @@ const UnifiedOrphiDashboard = ({
             <h2>Welcome to ORPHI CrowdFund</h2>
             <p>Connect your wallet to access the dashboard and start building your Web3 empire!</p>
             <WalletConnector 
-              onConnect={() => {}}
-              onDisconnect={() => {}}
+              onConnect={onConnect}
+              onDisconnect={onDisconnect}
               currentAccount={account}
               isConnected={isConnected}
             />

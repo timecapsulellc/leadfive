@@ -193,18 +193,66 @@ const OrphiCrowdFundApp = () => {
         return;
       }
 
-      // Fetch real data from the contract
-      const [
-        totalUsers,
-        poolBalances,
-        owner,
-        paused
-      ] = await Promise.all([
-        contractInstance.totalUsers ? contractInstance.totalUsers() : Promise.resolve(0),
-        contractInstance.getPoolBalances ? contractInstance.getPoolBalances() : Promise.resolve([0, 0, 0]),
-        contractInstance.owner ? contractInstance.owner() : Promise.resolve('0x0'),
-        contractInstance.paused ? contractInstance.paused() : Promise.resolve(false)
-      ]);
+      // First check if we're on the right network
+      const network = await contractInstance.runner?.provider?.getNetwork();
+      console.log('🌐 Current network:', network?.chainId, network?.name);
+      
+      // Check if contract exists at this address
+      const code = await contractInstance.runner?.provider?.getCode(ORPHI_CROWDFUND_CONFIG.address);
+      if (code === '0x') {
+        console.warn('⚠️ No contract found at address:', ORPHI_CROWDFUND_CONFIG.address);
+        setNetworkStats({
+          totalUsers: 0,
+          totalVolume: '0',
+          totalDistributed: '0',
+          error: 'Contract not deployed on this network'
+        });
+        return;
+      }
+
+      console.log('✅ Contract found, attempting to read data...');
+
+      // Fetch real data from the contract with individual error handling
+      let totalUsers = 0;
+      let poolBalances = [0, 0, 0];
+      let owner = '0x0';
+      let paused = false;
+
+      try {
+        if (contractInstance.totalUsers) {
+          totalUsers = await contractInstance.totalUsers();
+          console.log('📊 Total users:', totalUsers.toString());
+        }
+      } catch (error) {
+        console.warn('⚠️ Failed to get totalUsers:', error.message);
+      }
+
+      try {
+        if (contractInstance.getPoolBalances) {
+          poolBalances = await contractInstance.getPoolBalances();
+          console.log('💰 Pool balances:', poolBalances.map(b => ethers.formatEther(b)));
+        }
+      } catch (error) {
+        console.warn('⚠️ Failed to get pool balances:', error.message);
+      }
+
+      try {
+        if (contractInstance.owner) {
+          owner = await contractInstance.owner();
+          console.log('👑 Contract owner:', owner);
+        }
+      } catch (error) {
+        console.warn('⚠️ Failed to get owner:', error.message);
+      }
+
+      try {
+        if (contractInstance.paused) {
+          paused = await contractInstance.paused();
+          console.log('⏸️ Contract paused:', paused);
+        }
+      } catch (error) {
+        console.warn('⚠️ Failed to get paused status:', error.message);
+      }
 
       // Calculate total distributed from pool balances
       const [helpPool, leaderPool, clubPool] = poolBalances;
@@ -224,14 +272,16 @@ const OrphiCrowdFundApp = () => {
         totalDistributed: Math.floor(totalDistributed).toString(),
         contractOwner: owner,
         isPaused: paused,
-        lastUpdated: new Date().toISOString()
+        lastUpdated: new Date().toISOString(),
+        networkId: network?.chainId?.toString()
       });
 
       console.log('✅ Real network stats loaded:', {
         totalUsers: parseInt(totalUsers.toString()),
         totalVolume: estimatedVolume,
         totalDistributed: Math.floor(totalDistributed),
-        isPaused: paused
+        isPaused: paused,
+        networkId: network?.chainId?.toString()
       });
 
     } catch (error) {
@@ -240,7 +290,8 @@ const OrphiCrowdFundApp = () => {
       setNetworkStats({
         totalUsers: 0,
         totalVolume: '0',
-        totalDistributed: '0'
+        totalDistributed: '0',
+        error: error.message
       });
     }
   };
@@ -440,6 +491,8 @@ const OrphiCrowdFundApp = () => {
         networkStats={networkStats}
         isConnected={!!account}
         loading={loading}
+        onConnect={handleWalletConnect}
+        onDisconnect={handleWalletDisconnect}
       />
     );
   }

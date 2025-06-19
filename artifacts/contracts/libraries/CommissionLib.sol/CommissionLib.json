@@ -2,53 +2,9 @@
   "_format": "hh-sol-artifact-1",
   "contractName": "CommissionLib",
   "sourceName": "contracts/libraries/CommissionLib.sol",
-  "abi": [
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "recipient",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "payer",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint8",
-          "name": "poolType",
-          "type": "uint8"
-        },
-        {
-          "indexed": false,
-          "internalType": "string",
-          "name": "poolName",
-          "type": "string"
-        },
-        {
-          "indexed": false,
-          "internalType": "uint256",
-          "name": "timestamp",
-          "type": "uint256"
-        }
-      ],
-      "name": "CommissionDistributed",
-      "type": "event"
-    }
-  ],
-  "bytecode": "0x6080806040523460175760119081601d823930815050f35b600080fdfe600080fdfea164736f6c6343000816000a",
-  "deployedBytecode": "0x600080fdfea164736f6c6343000816000a",
+  "abi": [],
+  "bytecode": "0x60808060405234601757603a9081601d823930815050f35b600080fdfe600080fdfea2646970667358221220eb3b8cb68e551a28f836bd9d9f108a18ec7a19daab3a38e61f16f0f52200cad764736f6c63430008160033",
+  "deployedBytecode": "0x600080fdfea2646970667358221220eb3b8cb68e551a28f836bd9d9f108a18ec7a19daab3a38e61f16f0f52200cad764736f6c63430008160033",
   "linkReferences": {},
   "deployedLinkReferences": {}
 }
