@@ -64,12 +64,12 @@ RUN mkdir -p /app/data /app/logs && \
 # Create health check endpoint
 RUN echo '<!DOCTYPE html><html><head><title>Health Check</title></head><body><h1>LeadFive is running</h1><p>Status: OK</p></body></html>' > /app/dist/index.html
 
-# Expose port
-EXPOSE 3000
+# Expose port for DigitalOcean public HTTP port
+EXPOSE 8080
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:3000/health.html || exit 1
+    CMD curl -f http://localhost:8080/health.html || exit 1
 
 # Switch to non-root user
 USER leadfive
@@ -78,7 +78,7 @@ USER leadfive
 ENTRYPOINT ["dumb-init", "--"]
 
 # Start the application
-CMD ["npm", "start"]
+CMD ["npm", "start"]  # now serving on port 8080 as configured in package.json
 
 # ==================== STAGE 3: DEVELOPMENT ENVIRONMENT ====================
 FROM node:18-alpine AS development
