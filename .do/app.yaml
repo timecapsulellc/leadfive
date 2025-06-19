@@ -26,7 +26,11 @@ services:
   dockerfile_path: Dockerfile
   
   http_port: 8080
-  
+
+  # Define HTTP routes for the web service
+  routes:
+    - path: /
+
   health_check:
     http_path: /
     initial_delay_seconds: 30
