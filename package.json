@@ -39,6 +39,7 @@
   },
   "homepage": "https://leadfive.today",
   "dependencies": {
+    "@vitejs/plugin-react": "^4.0.3",
     "ethers": "^6.8.1",
     "framer-motion": "^10.18.0",
     "lucide-react": "^0.263.1",
@@ -46,12 +47,11 @@
     "react-d3-tree": "^3.5.0",
     "react-dom": "^18.2.0",
     "react-toastify": "^11.0.5",
+    "terser": "^5.43.1",
+    "vite": "^4.4.5",
     "web3": "^4.3.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.0.3",
-    "terser": "^5.43.1",
-    "vite": "^4.4.5"
   },
   "engines": {
     "node": "20.17.0",
