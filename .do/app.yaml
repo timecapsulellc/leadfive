@@ -30,8 +30,7 @@ services:
     value: "https://bsc-dataseed.binance.org/"
   - key: VITE_DEBUG_MODE
     value: "false"
-
+# static.json in project root ensures SPA routing for all paths
+# No further changes needed for DigitalOcean static hosting
 # Optional: Add alerts
 alerts:
-- rule: DEPLOYMENT_FAILED
-- rule: DOMAIN_FAILED
