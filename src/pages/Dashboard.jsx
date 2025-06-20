@@ -40,11 +40,11 @@ const Dashboard = () => {
 
     // Initialize contract when wallet connects
     useEffect(() => {
-        if (account && provider) {
+        if (account && provider && signer) {
             initializeContract();
             fetchUserData();
         }
-    }, [account, provider]);
+    }, [account, provider, signer]);
 
     const initializeContract = async () => {
         try {
@@ -55,13 +55,15 @@ const Dashboard = () => {
                 return;
             }
 
-            const signerInstance = provider.getSigner();
-            setSigner(signerInstance);
+            if (!signer) {
+                setError('Signer not available. Please reconnect your wallet.');
+                return;
+            }
 
             const contractInstance = new ethers.Contract(
                 LEAD_FIVE_CONFIG.address,
                 LEAD_FIVE_ABI,
-                signerInstance
+                signer
             );
             
             setContract(contractInstance);
@@ -133,9 +135,10 @@ const Dashboard = () => {
         return ranks[rankId] || 'None';
     };
 
-    const handleWalletConnect = async (walletData) => {
-        setAccount(walletData.account);
-        setProvider(walletData.provider);
+    const handleWalletConnect = async (account, provider, signer) => {
+        setAccount(account);
+        setProvider(provider);
+        setSigner(signer);
         setError(null);
     };
 

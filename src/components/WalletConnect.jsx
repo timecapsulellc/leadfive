@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserProvider } from 'ethers';
 
-const WalletConnect = ({ onConnect }) => {
+const WalletConnect = ({ onConnect, onDisconnect }) => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [account, setAccount] = useState(null);
   const [error, setError] = useState(null);
@@ -89,7 +89,7 @@ const WalletConnect = ({ onConnect }) => {
   const disconnectWallet = () => {
     setAccount(null);
     setError(null);
-    onConnect?.(null, null, null);
+    onDisconnect?.();
   };
 
   return (
