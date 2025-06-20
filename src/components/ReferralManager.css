@@ -1,0 +1,531 @@
+/* Referral Manager Styles */
+.referral-manager {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 1rem 0;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.referral-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.referral-header h2 {
+    color: #00D4FF;
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.refresh-btn {
+    background: linear-gradient(135deg, #00D4FF, #0099CC);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.refresh-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+.refresh-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.referral-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 212, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.1);
+}
+
+.stat-card.total {
+    border-left: 4px solid #00D4FF;
+}
+
+.stat-card.active {
+    border-left: 4px solid #00ff88;
+}
+
+.stat-card.earnings {
+    border-left: 4px solid #ffa726;
+}
+
+.stat-card.conversion {
+    border-left: 4px solid #ab47bc;
+}
+
+.stat-icon {
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(0, 212, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-info h3 {
+    color: #8892b0;
+    font-size: 0.9rem;
+    margin: 0 0 0.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    color: #00D4FF;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    color: #8892b0;
+    font-size: 0.8rem;
+}
+
+.referral-link-section {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 2rem;
+}
+
+.referral-link-section h3 {
+    color: #00D4FF;
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+}
+
+.link-container {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.referral-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    padding: 0.75rem;
+    color: white;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+}
+
+.copy-btn {
+    background: linear-gradient(135deg, #00ff88, #00cc66);
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.copy-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 255, 136, 0.3);
+}
+
+.copy-btn.copied {
+    background: linear-gradient(135deg, #4caf50, #388e3c);
+}
+
+.share-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 0.5rem;
+}
+
+.share-btn {
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.share-btn:hover {
+    transform: translateY(-1px);
+}
+
+.share-btn.twitter {
+    background: linear-gradient(135deg, #1da1f2, #0d8bd1);
+    color: white;
+}
+
+.share-btn.facebook {
+    background: linear-gradient(135deg, #4267b2, #365899);
+    color: white;
+}
+
+.share-btn.telegram {
+    background: linear-gradient(135deg, #0088cc, #006699);
+    color: white;
+}
+
+.share-btn.whatsapp {
+    background: linear-gradient(135deg, #25d366, #128c7e);
+    color: white;
+}
+
+.level-commissions {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 2rem;
+}
+
+.level-commissions h3 {
+    color: #00D4FF;
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+}
+
+.levels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+}
+
+.level-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.level-card:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.level-number {
+    color: #00D4FF;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.level-count {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.level-label {
+    color: #8892b0;
+    font-size: 0.8rem;
+}
+
+.recent-referrals {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 2rem;
+}
+
+.recent-referrals h3 {
+    color: #00D4FF;
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+}
+
+.referrals-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.loading-referrals {
+    text-align: center;
+    color: #8892b0;
+    padding: 2rem;
+}
+
+.no-referrals {
+    text-align: center;
+    color: #8892b0;
+    padding: 2rem;
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+
+.no-referrals-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.no-referrals h4 {
+    color: #00D4FF;
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+}
+
+.no-referrals p {
+    margin-bottom: 1rem;
+}
+
+.no-referrals ul {
+    text-align: left;
+    display: inline-block;
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.no-referrals li {
+    margin-bottom: 0.5rem;
+}
+
+.referral-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.referral-item:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateX(4px);
+}
+
+.referral-info {
+    margin-bottom: 1rem;
+}
+
+.referral-address {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.address-text {
+    color: white;
+    font-family: 'Courier New', monospace;
+    font-weight: 500;
+}
+
+.status.active {
+    color: #00ff88;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.status.inactive {
+    color: #ff6b6b;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.referral-details {
+    color: #8892b0;
+    font-size: 0.85rem;
+}
+
+.referral-details span {
+    margin-right: 0.5rem;
+}
+
+.referral-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.metric {
+    text-align: center;
+}
+
+.metric label {
+    display: block;
+    color: #8892b0;
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metric span {
+    color: #00D4FF;
+    font-weight: 600;
+}
+
+.referral-tips {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.referral-tips h3 {
+    color: #00D4FF;
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.tip-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    padding: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.tip-card:hover {
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.tip-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.tip-card h4 {
+    color: #00D4FF;
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+}
+
+.tip-card p {
+    color: #8892b0;
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .referral-manager {
+        padding: 1rem;
+        margin: 0.5rem 0;
+    }
+
+    .referral-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .referral-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .stat-card {
+        padding: 1rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+
+    .stat-icon {
+        font-size: 1.5rem;
+        width: 50px;
+        height: 50px;
+    }
+
+    .stat-value {
+        font-size: 1.3rem;
+    }
+
+    .link-container {
+        flex-direction: column;
+    }
+
+    .share-buttons {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .levels-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .referral-address {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+
+    .referral-metrics {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .tips-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .referral-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .share-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .levels-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
