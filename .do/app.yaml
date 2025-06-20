@@ -23,7 +23,7 @@ services:
   - key: VITE_APP_ENV
     value: production
   - key: VITE_CONTRACT_ADDRESS
-    value: "0x742d35Cc6634C0532925a3b8D398389b7aaB0F7d"
+    value: "0x7FEEA22942407407801cCDA55a4392f25975D998"
   - key: VITE_NETWORK_ID
     value: "56"
   - key: VITE_WEB3_PROVIDER_URL

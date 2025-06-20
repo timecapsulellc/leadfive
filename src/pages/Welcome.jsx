@@ -61,7 +61,7 @@ const Welcome = ({ onConnect }) => {
           <div className="cta-section">
             <WalletConnect onConnect={onConnect} />
             <a 
-              href="https://bscscan.com/address/0x742d35Cc6634C0532925a3b8D398389b7aaB0F7d"
+              href="https://bscscan.com/address/0x7FEEA22942407407801cCDA55a4392f25975D998"
               target="_blank"
               rel="noopener noreferrer"
               className="contract-link"
@@ -99,7 +99,7 @@ const Welcome = ({ onConnect }) => {
           className="footer-info"
         >
           <p className="contract-info">
-            Contract: <code>0x742d35Cc6634C0532925a3b8D398389b7aaB0F7d</code>
+            Contract: <code>0x7FEEA22942407407801cCDA55a4392f25975D998</code>
           </p>
           <p className="network-info">Network: BSC Mainnet</p>
         </motion.div>

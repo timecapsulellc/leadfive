@@ -10,7 +10,7 @@ export const APP_CONFIG = {
   
   // Smart Contract Configuration
   contract: {
-    address: '0x742d35Cc6634C0532925a3b8D398389b7aaB0F7d',
+    address: '0x7FEEA22942407407801cCDA55a4392f25975D998',
     network: {
       name: 'BSC Mainnet',
       chainId: 56,

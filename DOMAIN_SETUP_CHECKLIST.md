@@ -47,4 +47,4 @@ TTL: 3600
 ## 🔗 Important URLs
 - Live Site: https://leadfive.today
 - DigitalOcean App: https://cloud.digitalocean.com/apps/[your-app-id]
-- Contract: https://bscscan.com/address/0x742d35Cc6634C0532925a3b8D398389b7aaB0F7d
+- Contract: https://bscscan.com/address/0x7FEEA22942407407801cCDA55a4392f25975D998

@@ -94,15 +94,15 @@ TTL: 3600
 ### Environment Variables (Already configured in .do/app.yaml)
 - `NODE_ENV=production`
 - `VITE_APP_ENV=production`
-- `VITE_CONTRACT_ADDRESS=0x742d35Cc6634C0532925a3b8D398389b7aaB0F7d`
+- `VITE_CONTRACT_ADDRESS=0x7FEEA22942407407801cCDA55a4392f25975D998`
 - `VITE_NETWORK_ID=56`
 - `VITE_WEB3_PROVIDER_URL=https://bsc-dataseed.binance.org/`
 - `VITE_DEBUG_MODE=false`
 
 ### Smart Contract Integration
-- **Contract Address**: `0x742d35Cc6634C0532925a3b8D398389b7aaB0F7d`
+- **Contract Address**: `0x7FEEA22942407407801cCDA55a4392f25975D998`
 - **Network**: BSC Mainnet (Chain ID: 56)
-- **Explorer**: https://bscscan.com/address/0x742d35Cc6634C0532925a3b8D398389b7aaB0F7d
+- **Explorer**: https://bscscan.com/address/0x7FEEA22942407407801cCDA55a4392f25975D998
 
 ## 📋 Post-Deployment Checklist
 
@@ -140,7 +140,7 @@ TTL: 3600
 ## 🔗 Important Links
 
 - **Live Site**: https://leadfive.today (after DNS setup)
-- **Contract**: https://bscscan.com/address/0x742d35Cc6634C0532925a3b8D398389b7aaB0F7d
+- **Contract**: https://bscscan.com/address/0x7FEEA22942407407801cCDA55a4392f25975D998
 - **Repository**: https://github.com/timecapsulellc/LeadFive
 - **DigitalOcean App**: https://cloud.digitalocean.com/apps
 
