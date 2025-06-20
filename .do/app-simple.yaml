@@ -1,0 +1,29 @@
+name: leadfive
+region: nyc
+services:
+- name: leadfive-web
+  type: static_site
+  source_dir: /
+  github:
+    repo: timecapsulellc/LeadFive
+    branch: main
+    deploy_on_push: true
+  build_command: npm install && npm run build
+  output_dir: dist
+  static_site:
+    index_document: index.html
+    error_document: index.html
+    catch_all_document: index.html
+  envs:
+  - key: NODE_ENV
+    value: production
+  - key: VITE_APP_ENV
+    value: production
+  - key: VITE_CONTRACT_ADDRESS
+    value: "0x742d35Cc6634C0532925a3b8D398389b7aaB0F7d"
+  - key: VITE_NETWORK_ID
+    value: "56"
+  - key: VITE_WEB3_PROVIDER_URL
+    value: "https://bsc-dataseed.binance.org/"
+  - key: VITE_DEBUG_MODE
+    value: "false"
