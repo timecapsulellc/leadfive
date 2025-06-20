@@ -17,18 +17,13 @@ services:
     deploy_on_push: true
   
   # Build configuration for Vite
-  build_command: npm ci && npm run build
+  build_command: npm install && npm run build
   output_dir: dist
   
-  # SPA routing - redirect all routes to index.html
-  routes:
-  - path: /
-  - path: /[...catchall]
-    type: rewrite
-    destination: /index.html
-
-  # Static site configuration
+  # Static site configuration for SPA
   static_site:
+    index_document: index.html
+    error_document: index.html
     catch_all_document: index.html
   
   # Environment variables for build
