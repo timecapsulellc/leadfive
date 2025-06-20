@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BrowserProvider } from 'ethers';
 
 const WalletConnect = ({ onConnect }) => {
   const [isConnecting, setIsConnecting] = useState(false);
@@ -16,8 +17,14 @@ const WalletConnect = ({ onConnect }) => {
       return;
     }
 
+    if (!window.ethereum) {
+      setError('Web3 wallet not detected. Please install MetaMask or another Web3 wallet.');
+      return;
+    }
+
     try {
       setIsConnecting(true);
+      setError(null);
       setError(null);
 
       // Request account access
@@ -65,8 +72,8 @@ const WalletConnect = ({ onConnect }) => {
       }
 
       // Create provider and signer
-      const provider = new window.ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner();
+      const provider = new BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
 
       setAccount(selectedAccount);
       onConnect?.(selectedAccount, provider, signer);
