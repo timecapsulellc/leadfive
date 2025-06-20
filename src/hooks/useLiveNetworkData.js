@@ -2,8 +2,13 @@
  * LiveNetworkDataHook.js
  * 
  * React hook for connecting NetworkTreeVisualization to live BSC Mainnet data
- * 
- * @description Provides real-time data integration for the OrphiCrowdFund network
+ *          const web3Instance = new Web3(LEAD_FIVE_CONFIG.rpcUrl);
+        const contract = new web3Instance.eth.Contract(
+          LEAD_FIVE_ABI,
+          LEAD_FIVE_CONFIG.address  const web3Instance = new Web3(LEAD_FIVE_CONFIG.rpcUrl);
+        const contract = new web3Instance.eth.Contract(
+          LEAD_FIVE_ABI,
+          LEAD_FIVE_CONFIG.address @description Provides real-time data integration for the OrphiCrowdFund network
  *              visualization, fetching user data, network structure, and statistics
  *              from the deployed smart contract on BSC Mainnet.
  * 
@@ -14,7 +19,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { Web3 } from 'web3';
-import { ORPHI_CROWDFUND_CONFIG, ORPHI_CROWDFUND_ABI } from '../contracts-leadfive.js';
+import { LEAD_FIVE_CONFIG, LEAD_FIVE_ABI } from '../contracts-leadfive.js';
 
 // ============================================================================
 // CONSTANTS
@@ -113,10 +118,10 @@ export const useLiveNetworkData = (options = {}) => {
       try {
         console.log('🔗 Initializing Web3 connection to BSC Mainnet...');
         
-        const web3Instance = new Web3(ORPHI_CROWDFUND_CONFIG.rpcUrl);
+        const web3Instance = new Web3(LEAD_FIVE_CONFIG.rpcUrl);
         const contractInstance = new web3Instance.eth.Contract(
-          ORPHI_CROWDFUND_ABI,
-          ORPHI_CROWDFUND_CONFIG.address
+          LEAD_FIVE_ABI,
+          LEAD_FIVE_CONFIG.address
         );
 
         setWeb3(web3Instance);
@@ -227,7 +232,7 @@ export const useLiveNetworkData = (options = {}) => {
             registrationDate: new Date().toISOString(),
             isRoot: true,
             totalUsers: stats.totalUsers,
-            contractAddress: ORPHI_CROWDFUND_CONFIG.address,
+            contractAddress: LEAD_FIVE_CONFIG.address,
             networkStatus: stats.isPaused ? 'Paused' : 'Active'
           },
           children: [
@@ -352,7 +357,7 @@ export const useLiveNetworkData = (options = {}) => {
     lookupUser,
     
     // Configuration
-    config: ORPHI_CROWDFUND_CONFIG,
+    config: LEAD_FIVE_CONFIG,
     
     // Connection status
     isConnected: !!contract,

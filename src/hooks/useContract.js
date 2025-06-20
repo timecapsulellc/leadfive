@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import { ORPHI_CROWDFUND_ABI, ORPHI_CROWDFUND_CONFIG } from '../contracts';
+import { LEAD_FIVE_ABI, LEAD_FIVE_CONFIG } from '../contracts-leadfive.js';
 
 const useContract = (provider) => {
   const [contract, setContract] = useState(null);
@@ -9,8 +9,8 @@ const useContract = (provider) => {
     if (provider) {
       const ethersProvider = new ethers.BrowserProvider(provider);
       const contractInstance = new ethers.Contract(
-        ORPHI_CROWDFUND_CONFIG.address,
-        ORPHI_CROWDFUND_ABI,
+        LEAD_FIVE_CONFIG.address,
+        LEAD_FIVE_ABI,
         ethersProvider.getSigner()
       );
       setContract(contractInstance);
