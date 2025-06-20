@@ -9,39 +9,36 @@ region: nyc
 
 services:
 - name: leadfive-web
-  type: web
+  type: static_site
   source_dir: /
   github:
     repo: timecapsulellc/LeadFive
     branch: main
     deploy_on_push: true
   
-  # Use Dockerfile for build
-  dockerfile_path: Dockerfile
+  # Build configuration for Vite
+  build_command: npm ci && npm run build
+  output_dir: dist
   
-  http_port: 8080
-  instance_count: 1
-  instance_size_slug: basic-xxs
-
-  # Define HTTP routes for the web service
+  # SPA routing - redirect all routes to index.html
   routes:
-    - path: /
+  - path: /
+  - path: /[...catchall]
+    type: rewrite
+    destination: /index.html
 
-  health_check:
-    http_path: /
-    initial_delay_seconds: 30
-    period_seconds: 10
-    timeout_seconds: 5
-    success_threshold: 1
-    failure_threshold: 3
+  # Static site configuration
+  static_site:
+    catch_all_document: index.html
   
+  # Environment variables for build
   envs:
   - key: NODE_ENV
     value: production
   - key: VITE_APP_ENV
     value: production
   - key: VITE_CONTRACT_ADDRESS
-    value: "0x7FEEA22942407407801cCDA55a4392f25975D998"
+    value: "0x742d35Cc6634C0532925a3b8D398389b7aaB0F7d"
   - key: VITE_NETWORK_ID
     value: "56"
   - key: VITE_WEB3_PROVIDER_URL
