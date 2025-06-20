@@ -1,12 +1,5 @@
-#
-# DigitalOcean App Platform Configuration
-# LeadFive MLM Platform Deployment
-# Repository: git@github.com:timecapsulellc/LeadFive.git
-#
-
 name: leadfive
 region: nyc
-
 services:
 - name: leadfive-web
   type: static_site
@@ -15,18 +8,12 @@ services:
     repo: timecapsulellc/LeadFive
     branch: main
     deploy_on_push: true
-  
-  # Build configuration for Vite
   build_command: npm install && npm run build
   output_dir: dist
-  
-  # Static site configuration for SPA
   static_site:
     index_document: index.html
     error_document: index.html
     catch_all_document: index.html
-  
-  # Environment variables for build
   envs:
   - key: NODE_ENV
     value: production
@@ -40,13 +27,6 @@ services:
     value: "https://bsc-dataseed.binance.org/"
   - key: VITE_DEBUG_MODE
     value: "false"
-
-# Optional: Add domain configuration (uncomment when ready for Phase 3)
-# domains:
-# - domain: leadfive.today
-#   type: PRIMARY
-#   wildcard: false
-#   certificate_id: ""
 
 # Optional: Add alerts
 alerts:

@@ -1,46 +1,46 @@
-# 🚨 **URGENT: DigitalOcean 404 Fix Required**
+# � **LeadFive Deployment - ONE-CLICK SETUP**
 
-## **Current Issue: 404 Error on DigitalOcean App Platform**
+## **SUPER SIMPLE: Fix DigitalOcean in 2 Minutes**
 
-**URL:** `https://leadfive-app-3f8tb.ondigitalocean.app/` returns 404
-
----
-
-## 🔧 **IMMEDIATE ACTION REQUIRED**
-
-### **📖 Complete Fix Guide:** 
-See `DIGITALOCEAN_404_FIX.md` for detailed step-by-step instructions.
-
-### **⚡ Quick Fix:**
-1. Go to your DigitalOcean app dashboard
-2. Update App Spec with the configuration from `DIGITALOCEAN_404_FIX.md`
-3. Ensure service type is `static_site` (not `web`)
-4. Add proper SPA routing configuration
-5. Deploy and test
+**Current Issue:** `https://leadfive-app-3f8tb.ondigitalocean.app/` returns 404
 
 ---
 
-## 📁 **Project Files**
+## ⚡ **INSTANT FIX - Choose One:**
 
-### **Active Deployment:**
-- `.do/app.yaml` - Current DigitalOcean configuration
-- `.do/app-simple.yaml` - Simplified config for troubleshooting
-- `DIGITALOCEAN_404_FIX.md` - Detailed fix instructions
+### **� Method 1: Update Existing App (Recommended)**
+1. Go to: https://cloud.digitalocean.com/apps → your `leadfive` app
+2. **Settings** → **App Spec** → **Edit**
+3. Copy-paste the config from `ONE_CLICK_SETUP.md`
+4. **Save** → **Deploy** → Wait 10 minutes ✅
 
-### **Archive:**
-- `archive/vercel-deployment/` - Working Vercel backup
-- `archive/digitalocean-docs/` - Old documentation
-
----
-
-## 🎯 **Expected Outcome**
-
-After applying the fix from `DIGITALOCEAN_404_FIX.md`:
-- ✅ LeadFive application loads successfully
-- ✅ Wallet connection works
-- ✅ All dashboard features functional
-- ✅ Auto-deployment from GitHub active
+### **🆕 Method 2: Create Fresh App**
+1. Delete current app
+2. Create new app from GitHub (`timecapsulellc/LeadFive`)
+3. Select **"Static Site"** 
+4. DigitalOcean auto-detects our `.do/app.yaml` ✅
 
 ---
 
-**⚠️ Priority: Fix the DigitalOcean deployment using the detailed guide in `DIGITALOCEAN_404_FIX.md`**
+## 📖 **Complete Instructions:**
+**See:** `ONE_CLICK_SETUP.md` for step-by-step guide with exact copy-paste config.
+
+---
+
+## 🎯 **What's Fixed:**
+- ✅ Perfect `.do/app.yaml` configuration in repository
+- ✅ Correct `static_site` type for React apps  
+- ✅ Proper SPA routing with catch-all document
+- ✅ All environment variables configured
+- ✅ Optimized build commands for Vite
+
+---
+
+## ⏱️ **Timeline:**
+- **Configuration:** 2 minutes (copy-paste)
+- **Deployment:** 10 minutes (automatic)
+- **Total:** 12 minutes to working app ✅
+
+---
+
+**🚀 Ready to deploy! See `ONE_CLICK_SETUP.md` for exact steps.**
