@@ -1,53 +1,95 @@
-# 🚀 LEAD FIVE - DigitalOcean Deployment Guide
+# ==================== LEADFIVE DIGITALOCEAN DEPLOYMENT GUIDE ====================
 
-Complete guide for deploying LEAD FIVE Web3 Crowdfunding Platform to DigitalOcean App Platform.
+## 🚀 **Complete DigitalOcean Deployment Guide**
 
-## 📋 Prerequisites
+This guide will help you deploy the LeadFive MLM platform to DigitalOcean using Docker containers with SSL, monitoring, and auto-scaling capabilities.
 
-- DigitalOcean account
-- GitHub repository with LEAD FIVE code
-- Domain name (optional but recommended)
-- BSC wallet with BNB for contract deployment
+---
 
-## 🎯 Deployment Overview
+## 📋 **Prerequisites**
 
-### Phase 1: Smart Contract Deployment
-1. Deploy LeadFive contract to BSC Mainnet
-2. Verify contract on BSCScan
-3. Update frontend configuration
+### 1. **DigitalOcean Account Setup**
+- Create a DigitalOcean account at https://digitalocean.com
+- Add payment method and verify account
+- Generate SSH key and add to your account
 
-### Phase 2: DigitalOcean Setup
-1. Create App Platform application
-2. Configure environment variables
-3. Set up custom domain and SSL
-4. Deploy and test
+### 2. **Domain Configuration**
+- Purchase/own a domain (recommended: `leadfive.today`)
+- Configure DNS to point to your droplet IP
+- Ensure you have access to DNS management
 
-## 🔧 Phase 1: Smart Contract Deployment
+### 3. **Local Requirements**
+- SSH client (Terminal on Mac/Linux, PuTTY on Windows)
+- Git (for repository management)
 
-### Step 1: Prepare Environment
+---
 
-```bash
-# Install dependencies
-npm install
+## 🖥️ **Step 1: Create DigitalOcean Droplet**
 
-# Create .env file
-cp .env.example .env
+### **Recommended Droplet Configuration:**
+```
+Droplet Type: Regular Intel
+CPU Options: Regular
+Size: 4 GB RAM / 2 vCPU / 80 GB SSD ($24/month)
+Region: Choose closest to your users
+Image: Ubuntu 22.04 LTS x64
+Additional Options:
+  ✅ Monitoring
+  ✅ IPv6
+  ✅ User data (optional)
+Authentication: SSH Key (recommended)
 ```
 
-### Step 2: Configure Deployment
-
-Edit `.env` file:
-```env
-# BSC Mainnet Configuration
-PRIVATE_KEY=your_private_key_here
-BSC_RPC_URL=https://bsc-dataseed.binance.org/
-ETHERSCAN_API_KEY=your_bscscan_api_key
+### **For Production/Scaling:**
+```
+Droplet Type: Regular Intel  
+Size: 8 GB RAM / 4 vCPU / 160 GB SSD ($48/month)
+Or use Premium Intel for better performance
 ```
 
-### Step 3: Deploy Contract
+---
 
+## 🔧 **Step 2: Initial Server Setup**
+
+### **Connect to Your Droplet:**
 ```bash
-# Compile contracts
+ssh root@your_droplet_ip
+```
+
+### **Update System:**
+```bash
+apt update && apt upgrade -y
+```
+
+### **Create Non-Root User (Recommended):**
+```bash
+adduser leadfive
+usermod -aG sudo leadfive
+rsync --archive --chown=leadfive:leadfive ~/.ssh /home/leadfive
+```
+
+---
+
+## 🚀 **Step 3: Automated Deployment**
+
+### **Quick Deploy (Recommended):**
+```bash
+# Run as root
+curl -fsSL https://raw.githubusercontent.com/timecapsulellc/LeadFive/main/deploy-digitalocean.sh | bash
+```
+
+### **Manual Deployment:**
+```bash
+# 1. Clone repository
+git clone https://github.com/timecapsulellc/LeadFive.git /opt/leadfive
+cd /opt/leadfive
+
+# 2. Make deployment script executable
+chmod +x deploy-digitalocean.sh
+
+# 3. Run deployment
+./deploy-digitalocean.sh
+```
 npx hardhat compile
 
 # Deploy to BSC Mainnet
