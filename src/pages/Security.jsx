@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import UnifiedWalletConnect from '../components/UnifiedWalletConnect';
 import SecurityBadges from '../components/SecurityBadges';
+import PageWrapper from '../components/PageWrapper';
 
 const securityFeatures = [
   {

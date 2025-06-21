@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import UnifiedWalletConnect from '../components/UnifiedWalletConnect';
+import PageWrapper from '../components/PageWrapper';
 
 const packages = [
   { 
@@ -88,15 +89,9 @@ export default function Packages({ account, provider, signer, onConnect, onDisco
   };
 
   return (
-    <div className="packages-page">
-      <div className="page-background">
-        <div className="animated-bg"></div>
-        <div className="gradient-overlay"></div>
-      </div>
-
-      <div className="page-content">
-        <div className="page-header">
-          <h1 className="page-title">LEAD FIVE PARTICIPATION LEVELS</h1>
+    <PageWrapper className="packages-page">
+      <div className="page-header">
+        <h1 className="page-title">LEAD FIVE PARTICIPATION LEVELS</h1>
           <div className="title-underline"></div>
           <p className="page-subtitle">
             Choose your blockchain participation level powered by Binance Smart Chain. All tiers access 
@@ -105,7 +100,7 @@ export default function Packages({ account, provider, signer, onConnect, onDisco
         </div>
 
         {!account && (
-          <div className="wallet-connect-section">
+          <div className="page-wallet-connect">
             <UnifiedWalletConnect
               onConnect={onConnect}
               onDisconnect={onDisconnect}
@@ -165,7 +160,6 @@ export default function Packages({ account, provider, signer, onConnect, onDisco
             All participation levels utilize identical smart contract distribution systems with unstoppable blockchain execution.
           </p>
         </div>
-      </div>
-    </div>
+    </PageWrapper>
   );
 }

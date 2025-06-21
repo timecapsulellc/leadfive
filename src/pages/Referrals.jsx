@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import UnifiedWalletConnect from '../components/UnifiedWalletConnect';
 import ReferralTree from '../components/ReferralTree';
+import PageWrapper from '../components/PageWrapper';
 
 export default function Referrals({ account, provider, signer, onConnect, onDisconnect }) {
   const [referralLink, setReferralLink] = useState('');
@@ -36,20 +37,14 @@ export default function Referrals({ account, provider, signer, onConnect, onDisc
   };
 
   return (
-    <div className="referrals-page">
-      <div className="page-background">
-        <div className="animated-bg"></div>
-        <div className="gradient-overlay"></div>
+    <PageWrapper className="referrals-page">
+      <div className="page-header">
+        <h1 className="page-title">Referral Network</h1>
+        <p className="page-subtitle">Build your team and earn commissions</p>
       </div>
 
-      <div className="page-content">
-        <div className="page-header">
-          <h1 className="page-title">Referral Network</h1>
-          <p className="page-subtitle">Build your team and earn commissions</p>
-        </div>
-
         {!account ? (
-          <div className="wallet-connect-section">
+          <div className="page-wallet-connect">
             <UnifiedWalletConnect
               onConnect={onConnect}
               onDisconnect={onDisconnect}
@@ -122,7 +117,6 @@ export default function Referrals({ account, provider, signer, onConnect, onDisc
             </div>
           </>
         )}
-      </div>
-    </div>
+    </PageWrapper>
   );
 }

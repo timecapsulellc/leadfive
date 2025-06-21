@@ -1,8 +1,49 @@
+/* App Root Styles */
+.App {
+  min-height: 100vh;
+  width: 100%;
+  background: #0A0A0A;
+  color: #ffffff;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 #root {
-  max-width: 1280px;
+  width: 100%;
+  background: #0A0A0A;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure no white margins on any viewport */
+@media screen and (max-width: 1920px) {
+  .App {
+    width: 100vw;
+    max-width: 100vw;
+  }
+}
+
+/* Page content should have controlled max-width, not the background */
+.page-content,
+.about-content,
+.packages-content,
+.dashboard-content {
+  max-width: 1400px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Global dark theme consistency */
+body {
+  background-color: #0A0A0A !important;
+}
+
+html {
+  background-color: #0A0A0A !important;
 }
 
 .logo {
