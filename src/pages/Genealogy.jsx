@@ -844,29 +844,27 @@ const Genealogy = ({ account, provider, signer, onConnect, onDisconnect }) => {
             </button>
           </div>
         )}
+        
+        {/* User Profile Modal */}
+        <UserProfileModal
+          user={profileUser}
+          isOpen={showUserProfile}
+          onClose={() => {
+            setShowUserProfile(false);
+            setProfileUser(null);
+          }}
+        />
+        
+        {/* Export Modal */}
+        <ExportModal
+          isOpen={showExportModal}
+          onClose={() => setShowExportModal(false)}
+          treeData={treeData}
+          elementId="genealogy-tree"
+        />
+        </>
+        )}
       </div>
-      
-      {/* User Profile Modal */}
-      <UserProfileModal
-        user={profileUser}
-        isOpen={showUserProfile}
-        onClose={() => {
-          setShowUserProfile(false);
-          setProfileUser(null);
-        }}
-      />
-      
-      {/* Export Modal */}
-      <ExportModal
-        isOpen={showExportModal}
-        onClose={() => setShowExportModal(false)}
-        treeData={treeData}
-        elementId="genealogy-tree"
-      />
-      
-      {/* Close the conditional block */}
-      </>
-      )}
     </PageWrapper>
   );
 };
