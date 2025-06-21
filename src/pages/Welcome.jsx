@@ -5,18 +5,58 @@ import './Welcome.css';
 const Welcome = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const [showSkip, setShowSkip] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsVisible(true);
+    // Mark that user has visited the welcome page
+    localStorage.setItem('hasVisitedWelcome', 'true');
+    
+    // Start animations
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+
+    // Show skip button after 2 seconds
+    const skipTimer = setTimeout(() => {
+      setShowSkip(true);
+    }, 2000);
     
     // Auto-advance slides
-    const interval = setInterval(() => {
+    const slideInterval = setInterval(() => {
       setCurrentSlide(prev => (prev + 1) % 3);
     }, 4000);
 
-    return () => clearInterval(interval);
-  }, []);
+    // Progress bar animation (5 seconds)
+    const progressInterval = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(progressInterval);
+          navigate('/home');
+          return 100;
+        }
+        return prev + 2; // 100 / 50 = 2% every 100ms = 5 seconds total
+      });
+    }, 100);
+
+    // Auto-redirect after 5 seconds
+    const redirectTimer = setTimeout(() => {
+      navigate('/home');
+    }, 5000);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(skipTimer);
+      clearTimeout(redirectTimer);
+      clearInterval(slideInterval);
+      clearInterval(progressInterval);
+    };
+  }, [navigate]);
+
+  const handleSkip = () => {
+    navigate('/home');
+  };
 
   const slides = [
     {
@@ -39,17 +79,46 @@ const Welcome = () => {
   return (
     <div className="welcome-container">
       <div className="welcome-background">
-        <div className="particle-animation"></div>
+        <div className="animated-gradient"></div>
+        <div className="particle-field"></div>
+        <div className="floating-particles">
+          {[...Array(50)].map((_, i) => (
+            <div key={i} className={`particle particle-${i % 3}`} style={{
+              left: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 20}s`,
+              animationDuration: `${15 + Math.random() * 10}s`
+            }}></div>
+          ))}
+        </div>
         <div className="gradient-overlay"></div>
       </div>
+
+      {/* Progress Bar */}
+      <div className="welcome-progress-bar">
+        <div className="progress-fill" style={{ width: `${progress}%` }}></div>
+      </div>
+
+      {/* Skip Button */}
+      {showSkip && (
+        <button className="skip-button" onClick={handleSkip}>
+          Skip Intro
+        </button>
+      )}
       
       <div className={`welcome-content ${isVisible ? 'fade-in' : ''}`}>
         <div className="logo-section">
           <div className="logo-animation">
-            <img src="/leadfive-logo.svg" alt="LeadFive" className="welcome-logo" />
+            <div className="logo-glow"></div>
+            <div className="logo-container">
+              <div className="logo-text">LeadFive</div>
+              <div className="logo-subtitle">MLM Platform</div>
+            </div>
           </div>
-          <h1 className="welcome-title">LeadFive</h1>
-          <p className="welcome-tagline">Your Path to Financial Freedom</p>
+          <div className="brand-animation">
+            <div className="brand-line"></div>
+            <p className="welcome-tagline">Your Path to Financial Freedom</p>
+            <div className="brand-line"></div>
+          </div>
         </div>
 
         <div className="slides-container">

@@ -19,6 +19,15 @@ function App() {
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
   const [isConnecting, setIsConnecting] = useState(false);
+  const [shouldShowWelcome, setShouldShowWelcome] = useState(false);
+
+  // Check if user should see welcome page
+  useEffect(() => {
+    const hasVisited = localStorage.getItem('hasVisitedWelcome');
+    if (!hasVisited) {
+      setShouldShowWelcome(true);
+    }
+  }, []);
 
   // Check for existing wallet connection on app load
   useEffect(() => {
@@ -95,27 +104,32 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={
-          <>
-            <Header 
-              account={account} 
-              onConnect={handleWalletConnect}
-              onDisconnect={handleDisconnect} 
-            />
-            <div className="App">
-              <Home 
-                account={account}
-                provider={provider}
-                signer={signer}
+      {shouldShowWelcome ? (
+        <Routes>
+          <Route path="*" element={<Welcome />} />
+        </Routes>
+      ) : (
+        <Routes>
+          <Route path="/" element={
+            <>
+              <Header 
+                account={account} 
                 onConnect={handleWalletConnect}
-                onDisconnect={handleDisconnect}
+                onDisconnect={handleDisconnect} 
               />
-            </div>
-            <Footer />
-          </>
-        } />
-        <Route path="/welcome" element={<Welcome />} />
+              <div className="App">
+                <Home 
+                  account={account}
+                  provider={provider}
+                  signer={signer}
+                  onConnect={handleWalletConnect}
+                  onDisconnect={handleDisconnect}
+                />
+              </div>
+              <Footer />
+            </>
+          } />
+          <Route path="/welcome" element={<Welcome />} />
         <Route path="/home" element={
           <>
             <Header 
@@ -296,6 +310,7 @@ function App() {
           </>
         } />
       </Routes>
+      )}
     </Router>
   );
 }
