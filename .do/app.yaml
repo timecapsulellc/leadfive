@@ -8,7 +8,7 @@ services:
     repo: timecapsulellc/LeadFive
     branch: main
     deploy_on_push: true
-  build_command: npm install && npm run build
+  build_command: npm ci && npm run build:clean
   output_dir: dist
   routes:
   - path: /
@@ -23,7 +23,7 @@ services:
   - key: VITE_APP_ENV
     value: production
   - key: VITE_CONTRACT_ADDRESS
-    value: "0x742d35Cc6634C0532925a3b8D208800b3cea8574"
+    value: "0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569"
   - key: VITE_NETWORK_ID
     value: "56"
   - key: VITE_WEB3_PROVIDER_URL
@@ -40,6 +40,26 @@ services:
     value: "https://bscscan.com"
   - key: VITE_USDT_ADDRESS
     value: "0x55d398326f99059fF775485246999027B3197955"
+  - key: VITE_WEBSOCKET_URL
+    value: "wss://ws.leadfive.today"
+  - key: VITE_WEBSOCKET_HOST
+    value: "ws.leadfive.today"
+  - key: VITE_WEBSOCKET_PORT
+    value: "443"
+  - key: VITE_API_BASE_URL
+    value: "https://api.leadfive.today"
+  - key: VITE_ETHEREUM_RPC_URL
+    value: "https://eth-mainnet.g.alchemy.com/v2/demo"
+  - key: VITE_POLYGON_RPC_URL
+    value: "https://polygon-rpc.com"
+  - key: VITE_OWNER_ADDRESS
+    value: "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29"
+  - key: VITE_ADMIN_ADDRESS
+    value: "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29"
+  - key: VITE_FEE_RECIPIENT
+    value: "0xeB652c4523f3Cf615D3F3694b14E551145953aD0"
+  - key: NODE_OPTIONS
+    value: "--max-old-space-size=2048"
 # static.json in project root ensures SPA routing for all paths
 # No further changes needed for DigitalOcean static hosting
 # Optional: Add alerts

@@ -8,8 +8,12 @@ export default defineConfig({
   plugins: [
     react(),
     nodePolyfills({
-      // Whether to polyfill `node:` protocol imports.
-      protocolImports: true,
+      include: ['buffer', 'process', 'util', 'stream', 'events', 'crypto'],
+      globals: {
+        Buffer: true,
+        global: true,
+        process: true,
+      },
     })
   ],
   
@@ -26,7 +30,7 @@ export default defineConfig({
   // Preview configuration (for production)
   preview: {
     host: '0.0.0.0',
-    port: 3000,
+    port: 8080,
     strictPort: true
   },
   
@@ -36,21 +40,30 @@ export default defineConfig({
     assetsDir: 'assets',
     sourcemap: false,
     minify: 'terser',
-    target: 'esnext',
-    commonjsOptions: {
-      transformMixedEsModules: true
-    },
+    target: 'es2020',
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom'],
+          vendor: ['react', 'react-dom', 'react-router-dom'],
           blockchain: ['ethers', 'web3'],
           ui: ['lucide-react', 'framer-motion', 'react-icons'],
           charts: ['chart.js', 'react-chartjs-2'],
           utils: ['react-d3-tree', 'html2canvas', 'jspdf']
         }
-      }
-    }
+      },
+      external: [],
+      onwarn(warning, warn) {
+        if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+          return;
+        }
+        warn(warning);
+      },
+    },
+    commonjsOptions: {
+      transformMixedEsModules: true,
+      include: [/node_modules/],
+      exclude: [/node_modules\/core-js/],
+    },
   },
   
   // Path resolution
@@ -60,31 +73,33 @@ export default defineConfig({
       '@components': resolve(__dirname, './src/components'),
       '@contracts': resolve(__dirname, './src/contracts'),
       '@utils': resolve(__dirname, './src/utils'),
-      '@assets': resolve(__dirname, './src/assets')
+      '@assets': resolve(__dirname, './src/assets'),
+      // Fix for core-js issues
+      'core-js-pure': 'core-js',
     }
   },
-  
-  // Optimizations
+
+  // Optimize dependencies
   optimizeDeps: {
     include: [
-      'react', 
-      'react-dom', 
-      'ethers', 
+      'react',
+      'react-dom',
+      'react-router-dom',
+      'ethers',
       'web3',
       'buffer',
-      'process'
+      'process',
     ],
+    exclude: ['core-js'],
     esbuildOptions: {
       define: {
-        global: 'globalThis'
+        global: 'globalThis',
       },
-      target: 'esnext'
-    }
+    },
   },
 
   // Handle Node.js modules and polyfills
   define: {
-    global: 'globalThis',
-    'process.env': 'process.env'
+    global: 'globalThis'
   }
 })
