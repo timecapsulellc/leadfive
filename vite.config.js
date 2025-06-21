@@ -1,10 +1,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    nodePolyfills({
+      // Whether to polyfill `node:` protocol imports.
+      protocolImports: true,
+    })
+  ],
   
   // Server configuration
   server: {
@@ -29,17 +36,18 @@ export default defineConfig({
     assetsDir: 'assets',
     sourcemap: false,
     minify: 'terser',
+    target: 'esnext',
+    commonjsOptions: {
+      transformMixedEsModules: true
+    },
     rollupOptions: {
-      external: ['events'],
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
-          ethers: ['ethers'],
-          ui: ['lucide-react', 'framer-motion'],
-          charts: ['chart.js', 'react-chartjs-2']
-        },
-        globals: {
-          'events': 'Events'
+          blockchain: ['ethers', 'web3'],
+          ui: ['lucide-react', 'framer-motion', 'react-icons'],
+          charts: ['chart.js', 'react-chartjs-2'],
+          utils: ['react-d3-tree', 'html2canvas', 'jspdf']
         }
       }
     }
@@ -58,13 +66,25 @@ export default defineConfig({
   
   // Optimizations
   optimizeDeps: {
-    include: ['react', 'react-dom', 'ethers'],
-    exclude: ['events']
+    include: [
+      'react', 
+      'react-dom', 
+      'ethers', 
+      'web3',
+      'buffer',
+      'process'
+    ],
+    esbuildOptions: {
+      define: {
+        global: 'globalThis'
+      },
+      target: 'esnext'
+    }
   },
 
-  // Handle Node.js modules
+  // Handle Node.js modules and polyfills
   define: {
     global: 'globalThis',
-    'process.env': {}
+    'process.env': 'process.env'
   }
 })
