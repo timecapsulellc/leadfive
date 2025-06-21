@@ -1,4 +1,4 @@
-# 🚀 LeadFive - Advanced MLM Platform
+# 🚀 LeadFive - The Decentralized Incentive Platform
 
 **Live Platform**: [https://leadfive.today](https://leadfive.today)  
 **Contract**: `0x7FEEA22942407407801cCDA55a4392f25975D998` (BSC Mainnet)  
@@ -354,7 +354,7 @@ This project is licensed under the MIT License - see the [LICENSE](./LICENSE) fi
 
 ## ⚠️ **Disclaimer**
 
-**Investment Risk**: Participation in MLM platforms involves financial risk. Only invest what you can afford to lose.
+**Investment Risk**: Participation in decentralized platforms involves financial risk. Only invest what you can afford to lose.
 
 **Regulatory Compliance**: Users are responsible for compliance with local laws and regulations.
 

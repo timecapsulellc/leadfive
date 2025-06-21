@@ -37,7 +37,7 @@ export default function Withdrawals({ account, provider, signer, onConnect, onDi
       <div className="page-content">
         <div className="page-header">
           <h1 className="page-title">Withdrawals</h1>
-          <p className="page-subtitle">Manage your earnings and withdrawals</p>
+          <p className="page-subtitle">Access and withdraw your earned rewards securely</p>
         </div>
 
         {!account ? (
@@ -45,7 +45,7 @@ export default function Withdrawals({ account, provider, signer, onConnect, onDi
             <UnifiedWalletConnect
               onConnect={onConnect}
               onDisconnect={onDisconnect}
-              buttonText="Connect Wallet to Withdraw"
+              buttonText="Connect Wallet to Access Rewards"
             />
           </div>
         ) : (
@@ -68,7 +68,7 @@ export default function Withdrawals({ account, provider, signer, onConnect, onDi
             </div>
 
             <div className="withdrawal-form">
-              <h2>New Withdrawal</h2>
+              <h2>Request Withdrawal</h2>
               <div className="form-group">
                 <label>Select Token</label>
                 <div className="token-selector">

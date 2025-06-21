@@ -1,5 +1,5 @@
 /**
- * OrphiCrowdFund Compensation Plan Service
+ * LeadFive Compensation Plan Service
  * 
  * Implements the exact compensation structure from the presentation:
  * - Sponsor Commission: 40%

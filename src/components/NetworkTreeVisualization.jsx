@@ -6,7 +6,7 @@
  * 
  * @description A comprehensive, configurable React component for visualizing
  *              hierarchical network relationships using react-d3-tree.
- *              Designed for blockchain/MLM network structures with OrphiChain branding.
+ *              Designed for blockchain network structures with LeadFive branding.
  * 
  * @features
  * - Interactive D3 tree visualization with zoom/pan controls

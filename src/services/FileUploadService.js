@@ -1,5 +1,5 @@
 /**
- * ORPHI CrowdFund File Upload Service
+ * LeadFive File Upload Service
  * Enhanced file upload with security, validation, and AI integration
  * Developed by LEAD 5 - Young Blockchain Engineers
  */
@@ -268,7 +268,7 @@ class FileUploadService {
    */
   async analyzeDocument(upload, openAIService) {
     const prompt = `Analyze this ${upload.metadata.category} file named "${upload.metadata.originalName}". 
-    Provide insights about its content, structure, and potential use in a Web3 crowdfunding context.
+    Provide insights about its content, structure, and potential use in a Web3 networking context.
     File type: ${upload.metadata.type}, Size: ${(upload.metadata.size / 1024).toFixed(1)}KB`;
 
     return await openAIService.generateResponse(prompt, {
@@ -283,7 +283,7 @@ class FileUploadService {
    */
   async summarizeContent(upload, openAIService) {
     const prompt = `Create a concise summary of the file "${upload.metadata.originalName}". 
-    Focus on key points relevant to Web3 crowdfunding and investment decisions.`;
+    Focus on key points relevant to Web3 networking and investment decisions.`;
 
     return await openAIService.generateResponse(prompt, {
       fileType: upload.metadata.type,
@@ -296,7 +296,7 @@ class FileUploadService {
    */
   async extractData(upload, openAIService) {
     const prompt = `Extract structured data from "${upload.metadata.originalName}". 
-    Identify key metrics, dates, amounts, and other relevant information for crowdfunding analysis.
+    Identify key metrics, dates, amounts, and other relevant information for network analysis.
     Return in JSON format if possible.`;
 
     return await openAIService.generateResponse(prompt, {

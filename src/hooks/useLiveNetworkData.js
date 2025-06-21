@@ -8,11 +8,11 @@
           LEAD_FIVE_CONFIG.address  const web3Instance = new Web3(LEAD_FIVE_CONFIG.rpcUrl);
         const contract = new web3Instance.eth.Contract(
           LEAD_FIVE_ABI,
-          LEAD_FIVE_CONFIG.address @description Provides real-time data integration for the OrphiCrowdFund network
+          LEAD_FIVE_CONFIG.address @description Provides real-time data integration for the LeadFive network
  *              visualization, fetching user data, network structure, and statistics
  *              from the deployed smart contract on BSC Mainnet.
  * 
- * @author OrphiChain Development Team
+ * @author LeadFive Development Team
  * @version 1.0.0
  * @since 2025-06-14
  */
@@ -82,7 +82,7 @@ const formatAmount = (weiAmount) => {
 // ============================================================================
 
 /**
- * Hook for connecting to live OrphiCrowdFund network data
+ * Hook for connecting to live LeadFive network data
  * 
  * @param {Object} options - Configuration options
  * @param {boolean} options.autoRefresh - Enable automatic data refresh
@@ -224,7 +224,7 @@ export const useLiveNetworkData = (options = {}) => {
         console.log('ℹ️ No users registered yet, creating demo structure...');
         
         return {
-          name: 'OrphiCrowdFund Network',
+          name: 'LeadFive Network',
           attributes: {
             address: 'Root Network',
             packageTier: null,

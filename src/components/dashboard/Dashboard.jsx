@@ -76,7 +76,7 @@ const Dashboard = () => {
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
           <OrphiChainLogo size="medium" autoRotate backgroundColor="transparent" />
         </div>
-        <h1 className="dashboard-title">Orphi Chain CrowdFund</h1>
+        <h1 className="dashboard-title">LeadFive Network</h1>
         {isAdmin && (
           <div className="admin-badge">
             👑 Administrator Access

@@ -114,7 +114,7 @@ class OpenAIService {
       isRegistered = false 
     } = userContext;
 
-    return `You are ORPHI's AI assistant - a witty, motivational, and FOMO-driven Web3 crowdfunding expert.
+    return `You are LeadFive's AI assistant - a witty, motivational, and FOMO-driven Web3 networking expert.
 
 BRAND PERSONALITY:
 - Enthusiastic about blockchain and Web3 innovation
@@ -139,7 +139,7 @@ RESPONSE STYLE:
 - Always end with a call-to-action
 
 TOPICS TO FOCUS ON:
-- Web3 crowdfunding opportunities
+- Web3 networking opportunities
 - Investment strategies and portfolio growth
 - Team building and referral rewards
 - Blockchain technology education
@@ -156,14 +156,14 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
     }
 
     const prompts = {
-      successStory: `Generate a realistic success story for ORPHI crowdfunding platform. Include:
+      successStory: `Generate a realistic success story for LeadFive networking platform. Include:
         - Name (first name + last initial)
         - Earnings amount ($X,XXX format)
         - Timeframe (weeks/months)
         - Brief motivational quote about their experience
         Format: JSON with name, earnings, timeframe, quote`,
       
-      marketInsight: `Generate a Web3 market insight for ORPHI users. Include:
+      marketInsight: `Generate a Web3 market insight for LeadFive users. Include:
         - Current trend or opportunity
         - Specific percentage or statistic
         - Actionable advice
@@ -176,11 +176,11 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
         - Use appropriate emojis
         Keep it under 80 words.`,
 
-      projectDescription: `Generate a compelling crowdfunding project description for: ${context.projectType || 'Web3 innovation'}.
+      projectDescription: `Generate a compelling networking project description for: ${context.projectType || 'Web3 innovation'}.
         - Exciting title
         - Problem it solves
         - Market opportunity
-        - Why investors should act now
+        - Why members should act now
         Keep it under 150 words, very engaging.`
     };
 
@@ -190,7 +190,7 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
         messages: [
           {
             role: "system",
-            content: "You are ORPHI's content generation AI. Create engaging, FOMO-driven content for Web3 crowdfunding."
+            content: "You are LeadFive's content generation AI. Create engaging, FOMO-driven content for Web3 networking."
           },
           {
             role: "user",
@@ -245,7 +245,7 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
     } catch (error) {
       console.error('Compensation plan analysis error:', error);
       return {
-        summary: "Analysis completed. The plan shows standard MLM structure with blockchain integration.",
+        summary: "Analysis completed. The plan shows standard network structure with blockchain integration.",
         keyPoints: [
           "Multi-tier commission structure",
           "Blockchain-based transparency",
@@ -313,9 +313,9 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
         timeframe: "4 months",
         quote: "ORPHI's AI-powered insights helped me identify the perfect investment timing!"
       },
-      marketInsight: "🚀 Web3 crowdfunding is up 127% this quarter! AI-powered projects show 340% better success rates. The revolution is here!",
+      marketInsight: "🚀 Web3 networking is up 127% this quarter! AI-powered projects show 340% better success rates. The revolution is here!",
       motivationalMessage: "Every crypto success story started with a single click! 💎 Your breakthrough moment is waiting. Ready to join the top 10%?",
-      projectDescription: "Revolutionary Web3 project combining AI and blockchain for next-generation crowdfunding. Limited early access available!"
+      projectDescription: "Revolutionary Web3 project combining AI and blockchain for next-generation networking. Limited early access available!"
     };
 
     return content[type] || content.marketInsight;

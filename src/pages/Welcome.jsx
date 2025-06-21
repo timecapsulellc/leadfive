@@ -66,7 +66,7 @@ const Welcome = () => {
     },
     {
       title: "Automated Earnings",
-      subtitle: "Decentralized commission distribution with genealogy tracking",
+      subtitle: "Decentralized rewards distribution with network tracking",
       icon: "💰"
     },
     {
@@ -116,7 +116,7 @@ const Welcome = () => {
           </div>
           <div className="brand-animation">
             <div className="brand-line"></div>
-            <p className="welcome-tagline">Revolutionary Network Marketing</p>
+            <p className="welcome-tagline">The Decentralized Incentive Platform</p>
             <div className="brand-line"></div>
           </div>
         </div>

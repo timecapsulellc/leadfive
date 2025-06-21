@@ -139,10 +139,10 @@ class ElevenLabsService {
   // Generate welcome greeting with personalization
   async generateWelcomeGreeting(userName, userStats = {}) {
     const greetings = [
-      `Welcome back to ORPHI, ${userName}! Ready to revolutionize Web3 crowdfunding today?`,
+      `Welcome back to LeadFive, ${userName}! Ready to revolutionize Web3 networking today?`,
       `Hey ${userName}! Your crypto success story is just beginning. Let's make it legendary!`,
       `${userName}, the blockchain revolution needs leaders like you. Ready to claim your spot?`,
-      `Welcome to the future, ${userName}! ORPHI's AI is here to guide your Web3 journey.`,
+      `Welcome to the future, ${userName}! LeadFive's AI is here to guide your Web3 journey.`,
       `${userName}, diamond hands incoming! Let's turn your vision into blockchain reality.`
     ];
 

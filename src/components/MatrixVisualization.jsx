@@ -114,7 +114,7 @@ const MatrixVisualization = ({
             return (
                 <div className="matrix-empty">
                     <h3>Not Registered</h3>
-                    <p>Join the matrix to see your position and network</p>
+                    <p>Join the network to see your position and team</p>
                 </div>
             );
         }
@@ -164,7 +164,7 @@ const MatrixVisualization = ({
     return (
         <div className="matrix-visualization">
             <div className="matrix-header">
-                <h2>🔄 Binary Matrix Visualization</h2>
+                <h2>🌐 Network Tree Visualization</h2>
                 <button 
                     onClick={fetchMatrixData} 
                     disabled={loading}
@@ -190,7 +190,7 @@ const MatrixVisualization = ({
                     </span>
                 </div>
                 <div className="matrix-stat">
-                    <label>Matrix Earnings</label>
+                    <label>Incentive Earnings</label>
                     <span>${parseFloat(matrixData.earnings).toFixed(2)}</span>
                 </div>
             </div>
@@ -198,7 +198,7 @@ const MatrixVisualization = ({
             <div className="matrix-content">
                 {loading ? (
                     <div className="loading-matrix">
-                        <p>Loading matrix data...</p>
+                        <p>Loading network data...</p>
                     </div>
                 ) : (
                     renderMatrixTree()
@@ -206,11 +206,11 @@ const MatrixVisualization = ({
             </div>
 
             <div className="matrix-info">
-                <h3>How Binary Matrix Works</h3>
+                <h3>How the Incentive System Works</h3>
                 <ul>
                     <li>🔸 Each position can have maximum 2 direct referrals</li>
                     <li>🔸 When your position is filled, spillover creates new opportunities</li>
-                    <li>🔸 Earn commissions from your entire matrix network</li>
+                    <li>🔸 Earn rewards from your entire network tree</li>
                     <li>🔸 Higher levels unlock greater earning potential</li>
                 </ul>
             </div>

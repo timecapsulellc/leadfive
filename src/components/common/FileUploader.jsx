@@ -1,5 +1,5 @@
 /**
- * ORPHI CrowdFund File Uploader Component
+ * LeadFive File Uploader Component
  * Advanced file upload with AI processing capabilities
  * Developed by LEAD 5 - Young Blockchain Engineers
  */
