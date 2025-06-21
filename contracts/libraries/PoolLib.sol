@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.22;
 
+import "./DataStructures.sol";
+
 /**
  * @title PoolLib
  * @dev Library for handling pool distributions and management
@@ -44,14 +46,44 @@ library PoolLib {
     }
     
     /**
-     * @dev Distribute leader pool to qualified leaders
+     * @dev Initialize pools with default settings
      */
-    function distributeLeaderPool(
+    function initializePools(
         Pool storage leaderPool,
+        Pool storage helpPool,
+        Pool storage clubPool
+    ) internal {
+        leaderPool.balance = 0;
+        leaderPool.lastDistribution = uint32(block.timestamp);
+        leaderPool.interval = 604800; // Weekly
+        
+        helpPool.balance = 0;
+        helpPool.lastDistribution = uint32(block.timestamp);
+        helpPool.interval = 604800; // Weekly
+        
+        clubPool.balance = 0;
+        clubPool.lastDistribution = uint32(block.timestamp);
+        clubPool.interval = 2592000; // Monthly
+    }
+    
+    /**
+     * @dev Initialize a pool with interval
+     */
+    function initialize(Pool storage pool, uint32 _interval) internal {
+        pool.balance = 0;
+        pool.lastDistribution = uint32(block.timestamp);
+        pool.interval = _interval;
+    }
+
+    /**
+     * @dev Distribute leader pool to qualified leaders (simplified for contract use)
+     */
+    function distribute(
+        Pool storage pool,
         address[] storage shiningStarLeaders,
         address[] storage silverStarLeaders
-    ) internal returns (uint96 distributed) {
-        if (!isDistributionReady(leaderPool) || leaderPool.balance == 0) {
+    ) internal returns (uint96) {
+        if (!isDistributionReady(pool) || pool.balance == 0) {
             return 0;
         }
         
@@ -61,135 +93,58 @@ library PoolLib {
         
         if (totalLeaders == 0) return 0;
         
-        // 60% to Silver Star, 40% to Shining Star
-        uint96 silverStarPool = (leaderPool.balance * 60) / 100;
-        uint96 shiningStarPool = leaderPool.balance - silverStarPool;
-        
-        distributed = leaderPool.balance;
-        leaderPool.balance = 0;
-        leaderPool.lastDistribution = uint32(block.timestamp);
+        uint96 distributed = pool.balance;
+        pool.balance = 0;
+        pool.lastDistribution = uint32(block.timestamp);
         
         return distributed;
     }
-    
+
     /**
-     * @dev Distribute help pool to eligible users (batch processing)
+     * @dev Distribute help pool to eligible users (simplified for contract use)
      */
-    function distributeHelpPoolBatch(
-        Pool storage helpPool,
+    function distributeHelp(
+        Pool storage pool,
         address[] storage eligibleUsers,
-        uint256 startIndex,
-        uint256 batchSize
-    ) internal returns (uint96 distributedAmount, uint256 processedCount, bool completed) {
-        if (!isDistributionReady(helpPool) || helpPool.balance == 0) {
-            return (0, 0, true);
-        }
-        
-        uint256 endIndex = startIndex + batchSize;
-        if (endIndex > eligibleUsers.length) {
-            endIndex = eligibleUsers.length;
-        }
-        
-        uint96 perUser = calculatePerUserAmount(helpPool.balance, uint32(eligibleUsers.length));
-        distributedAmount = 0;
-        
-        for (uint256 i = startIndex; i < endIndex; i++) {
-            distributedAmount += perUser;
-        }
-        
-        processedCount = endIndex - startIndex;
-        completed = endIndex >= eligibleUsers.length;
-        
-        if (completed) {
-            helpPool.balance = 0;
-            helpPool.lastDistribution = uint32(block.timestamp);
-        }
-        
-        return (distributedAmount, processedCount, completed);
-    }
-    
-    /**
-     * @dev Add funds to pool
-     */
-    function addToPool(Pool storage pool, uint96 amount) internal {
-        pool.balance += amount;
-    }
-    
-    /**
-     * @dev Get pool status
-     */
-    function getPoolStatus(Pool storage pool) 
-        internal 
-        view 
-        returns (
-            uint96 balance,
-            uint32 lastDistribution,
-            uint32 nextDistribution,
-            bool isReady
-        ) 
-    {
-        balance = pool.balance;
-        lastDistribution = pool.lastDistribution;
-        nextDistribution = pool.lastDistribution + pool.interval;
-        isReady = isDistributionReady(pool);
-    }
-    
-    /**
-     * @dev Initialize pool with interval
-     */
-    function initializePool(Pool storage pool, uint32 distributionInterval) internal {
-        pool.balance = 0;
-        pool.lastDistribution = uint32(block.timestamp);
-        pool.interval = distributionInterval;
-    }
-    
-    /**
-     * @dev Calculate club pool distribution (monthly)
-     */
-    function distributeClubPool(
-        Pool storage clubPool,
-        address[] storage topPerformers
-    ) internal returns (uint96 distributed) {
-        if (!isDistributionReady(clubPool) || clubPool.balance == 0) {
+        mapping(address => DataStructures.User) storage users
+    ) internal returns (uint96) {
+        if (!isDistributionReady(pool) || pool.balance == 0) {
             return 0;
         }
         
-        uint32 performerCount = uint32(topPerformers.length);
-        if (performerCount == 0) return 0;
+        uint32 eligibleCount = uint32(eligibleUsers.length);
+        if (eligibleCount == 0) return 0;
         
-        distributed = clubPool.balance;
-        clubPool.balance = 0;
-        clubPool.lastDistribution = uint32(block.timestamp);
+        uint96 perUser = calculatePerUserAmount(pool.balance, eligibleCount);
+        uint96 distributed = pool.balance;
+        
+        // Credit each eligible user
+        for (uint256 i = 0; i < eligibleUsers.length; i++) {
+            users[eligibleUsers[i]].balance += perUser;
+        }
+        
+        pool.balance = 0;
+        pool.lastDistribution = uint32(block.timestamp);
         
         return distributed;
     }
-    
+
     /**
-     * @dev Emergency pool withdrawal (admin only)
+     * @dev Distribute club pool (simplified for contract use)
      */
-    function emergencyWithdrawFromPool(Pool storage pool, uint96 amount) 
-        internal 
-        returns (uint96 withdrawn) 
-    {
-        if (amount > pool.balance) {
-            withdrawn = pool.balance;
-            pool.balance = 0;
-        } else {
-            withdrawn = amount;
-            pool.balance -= amount;
+    function distributeClub(
+        Pool storage pool,
+        mapping(address => DataStructures.User) storage users,
+        uint32 totalUsers
+    ) internal returns (uint96) {
+        if (!isDistributionReady(pool) || pool.balance == 0) {
+            return 0;
         }
         
-        return withdrawn;
-    }
-    
-    /**
-     * @dev Get total pool balances
-     */
-    function getTotalPoolBalances(
-        Pool storage leaderPool,
-        Pool storage helpPool,
-        Pool storage clubPool
-    ) internal view returns (uint96 total) {
-        return leaderPool.balance + helpPool.balance + clubPool.balance;
+        uint96 distributed = pool.balance;
+        pool.balance = 0;
+        pool.lastDistribution = uint32(block.timestamp);
+        
+        return distributed;
     }
 }

@@ -24,17 +24,27 @@ library OperationsLib {
             balance: 0,
             totalInvestment: 0,
             totalEarnings: 0,
-            withdrawableBalance: 0,
             earningsCap: 0,
-            totalContributed: 0,
             directReferrals: 0,
             teamSize: 0,
-            level: 1,
+            packageLevel: packageLevel,
+            rank: 0,
+            withdrawalRate: 70, // Default 70% withdrawal
+            lastHelpPoolClaim: 0,
+            isEligibleForHelpPool: false,
+            matrixPosition: 0,
             matrixLevel: 1,
-            position: 0,
-            flags: 0,
-            currentTier: packageLevel,
-            rank: 0
+            registrationTime: uint32(block.timestamp),
+            referralCode: "",
+            // New enhanced fields
+            pendingRewards: 0,
+            lastWithdrawal: 0,
+            matrixCycles: 0,
+            leaderRank: 0,
+            leftLegVolume: 0,
+            rightLegVolume: 0,
+            fastStartExpiry: uint32(block.timestamp + 48 hours),
+            isActive: true
         });
         
         return true;
@@ -49,8 +59,8 @@ library OperationsLib {
         if (referrer == address(0)) return true;
         
         DataStructures.User storage referrerUser = users[referrer];
-        if (referrerUser.position == 0) {
-            referrerUser.position = 1;
+        if (referrerUser.matrixPosition == 0) {
+            referrerUser.matrixPosition = 1;
             return true;
         }
         
@@ -73,7 +83,7 @@ library OperationsLib {
         bool isContribution
     ) internal {
         if (isContribution) {
-            user.totalContributed += uint32(amount);
+            user.totalInvestment += uint96(amount);
         }
     }
 

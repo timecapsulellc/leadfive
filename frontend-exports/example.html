@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadFive Contract Integration Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+</head>
+<body>
+    <h1>LeadFive Smart Contract Integration</h1>
+    <div id="status">Loading...</div>
+    <button id="connectWallet">Connect Wallet</button>
+    <button id="getInfo">Get Contract Info</button>
+    
+    <script type="module">
+        // Example usage of the exported configuration
+        import CONFIG from './LeadFive.js';
+        
+        console.log('LeadFive Contract Config:', CONFIG);
+        
+        document.getElementById('status').textContent = 
+            `Contract: ${CONFIG.address} on ${CONFIG.network.name}`;
+            
+        document.getElementById('connectWallet').onclick = async () => {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    console.log('Wallet connected!');
+                } catch (error) {
+                    console.error('Failed to connect wallet:', error);
+                }
+            } else {
+                alert('Please install MetaMask!');
+            }
+        };
+        
+        document.getElementById('getInfo').onclick = async () => {
+            if (typeof window.ethereum !== 'undefined') {
+                const web3 = new Web3(window.ethereum);
+                const contract = new web3.eth.Contract(CONFIG.abi, CONFIG.address);
+                
+                try {
+                    // Example: Get contract owner
+                    const owner = await contract.methods.owner().call();
+                    console.log('Contract Owner:', owner);
+                    alert(`Contract Owner: ${owner}`);
+                } catch (error) {
+                    console.error('Failed to get contract info:', error);
+                }
+            }
+        };
+    </script>
+</body>
+</html>

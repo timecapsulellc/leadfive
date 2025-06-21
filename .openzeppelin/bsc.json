@@ -24,6 +24,11 @@
       "address": "0x4965197b430343daec1042B413Dd6e20D06dAdba",
       "txHash": "0xc3a1e4484440d6a77f6ac28d4eace5fc85833b6fced635d288c2e42de9e5db2e",
       "kind": "uups"
+    },
+    {
+      "address": "0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569",
+      "txHash": "0x34a604a03a76dd44380d8222a87fc9f22a48ded11657921bf29567da76ce720d",
+      "kind": "uups"
     }
   ],
   "impls": {
@@ -1740,6 +1745,1063 @@
               }
             ],
             "numberOfBytes": "128"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_uint96": {
+            "label": "uint96",
+            "numberOfBytes": "12"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Pausable": [
+            {
+              "contract": "PausableUpgradeable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.ReentrancyGuard": [
+            {
+              "contract": "ReentrancyGuardUpgradeable",
+              "label": "_status",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:43",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Ownable": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "f34df1bc4ebcbbcc978c4aa375e731b4ed10a9fb4c6196dcfd6f3af0b5dffb3f": {
+      "address": "0x7d27Ccbcf0EbB045136B5cfBAa9ef10D2ede2163",
+      "txHash": "0x5f6ee8c613815289e743b1415f1b7821a428ac74e1c11cd3d7c4904fe70ec8f2",
+      "layout": {
+        "solcVersion": "0.8.22",
+        "storage": [
+          {
+            "label": "users",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_mapping(t_address,t_struct(User)15623_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:32"
+          },
+          {
+            "label": "packages",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint8,t_struct(Package)3870_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:33"
+          },
+          {
+            "label": "directReferrals",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:34"
+          },
+          {
+            "label": "referralCodeToUser",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_string_memory_ptr,t_address)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:35"
+          },
+          {
+            "label": "leaderPool",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_struct(Pool)3877_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:56"
+          },
+          {
+            "label": "helpPool",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_struct(Pool)3877_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:57"
+          },
+          {
+            "label": "clubPool",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_struct(Pool)3877_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:58"
+          },
+          {
+            "label": "usdt",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_contract(IERC20)2768",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:61"
+          },
+          {
+            "label": "priceFeed",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_contract(IPriceFeed)3821",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:62"
+          },
+          {
+            "label": "priceOracles",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_array(t_contract(IPriceFeed)3821)dyn_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:63"
+          },
+          {
+            "label": "adminIds",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_array(t_address)16_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:64"
+          },
+          {
+            "label": "totalUsers",
+            "offset": 0,
+            "slot": "26",
+            "type": "t_uint32",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:74"
+          },
+          {
+            "label": "rootUser",
+            "offset": 4,
+            "slot": "26",
+            "type": "t_address",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:75"
+          },
+          {
+            "label": "rootUserSet",
+            "offset": 24,
+            "slot": "26",
+            "type": "t_bool",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:76"
+          },
+          {
+            "label": "adminFeeRecipient",
+            "offset": 0,
+            "slot": "27",
+            "type": "t_address",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:77"
+          },
+          {
+            "label": "totalAdminFeesCollected",
+            "offset": 20,
+            "slot": "27",
+            "type": "t_uint96",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:78"
+          },
+          {
+            "label": "lastTxBlock",
+            "offset": 0,
+            "slot": "28",
+            "type": "t_uint256",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:81"
+          },
+          {
+            "label": "matrixPositions",
+            "offset": 0,
+            "slot": "29",
+            "type": "t_mapping(t_address,t_struct(MatrixPosition)18105_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:87"
+          },
+          {
+            "label": "poolQualifications",
+            "offset": 0,
+            "slot": "30",
+            "type": "t_mapping(t_address,t_struct(PoolQualification)20926_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:88"
+          },
+          {
+            "label": "withdrawalStats",
+            "offset": 0,
+            "slot": "31",
+            "type": "t_mapping(t_address,t_struct(UserWithdrawalStats)25905_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:89"
+          },
+          {
+            "label": "userWithdrawalLimits",
+            "offset": 0,
+            "slot": "32",
+            "type": "t_mapping(t_address,t_struct(WithdrawalLimits)25918_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:90"
+          },
+          {
+            "label": "pendingCommissions",
+            "offset": 0,
+            "slot": "33",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:91"
+          },
+          {
+            "label": "pendingPoolRewards",
+            "offset": 0,
+            "slot": "34",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:92"
+          },
+          {
+            "label": "pendingMatrixBonuses",
+            "offset": 0,
+            "slot": "35",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:93"
+          },
+          {
+            "label": "userAchievements",
+            "offset": 0,
+            "slot": "36",
+            "type": "t_mapping(t_address,t_mapping(t_uint32,t_bool))",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:94"
+          },
+          {
+            "label": "leaderPoolSchedule",
+            "offset": 0,
+            "slot": "37",
+            "type": "t_struct(DistributionSchedule)20915_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:97"
+          },
+          {
+            "label": "helpPoolSchedule",
+            "offset": 0,
+            "slot": "41",
+            "type": "t_struct(DistributionSchedule)20915_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:98"
+          },
+          {
+            "label": "clubPoolSchedule",
+            "offset": 0,
+            "slot": "45",
+            "type": "t_struct(DistributionSchedule)20915_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:99"
+          },
+          {
+            "label": "windowWithdrawals",
+            "offset": 0,
+            "slot": "49",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:102"
+          },
+          {
+            "label": "circuitBreakerThreshold",
+            "offset": 0,
+            "slot": "50",
+            "type": "t_uint256",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:103"
+          },
+          {
+            "label": "reserveFund",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_uint256",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:104"
+          },
+          {
+            "label": "totalDeposits",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_uint256",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:105"
+          },
+          {
+            "label": "shiningStarLeaders",
+            "offset": 0,
+            "slot": "53",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:108"
+          },
+          {
+            "label": "eligibleHelpPoolUsers",
+            "offset": 0,
+            "slot": "54",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:109"
+          },
+          {
+            "label": "notificationQueue",
+            "offset": 0,
+            "slot": "55",
+            "type": "t_struct(NotificationQueue)11307_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:112"
+          },
+          {
+            "label": "userNotifications",
+            "offset": 0,
+            "slot": "58",
+            "type": "t_mapping(t_address,t_struct(UserNotifications)11325_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:113"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_struct(InitializableStorage)211_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(OwnableStorage)151_storage": {
+            "label": "struct OwnableUpgradeable.OwnableStorage",
+            "members": [
+              {
+                "label": "_owner",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(PausableStorage)362_storage": {
+            "label": "struct PausableUpgradeable.PausableStorage",
+            "members": [
+              {
+                "label": "_paused",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ReentrancyGuardStorage)426_storage": {
+            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
+            "members": [
+              {
+                "label": "_status",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_address)16_storage": {
+            "label": "address[16]",
+            "numberOfBytes": "512"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_contract(IPriceFeed)3821)dyn_storage": {
+            "label": "contract IPriceFeed[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_contract(IERC20)2768": {
+            "label": "contract IERC20",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IPriceFeed)3821": {
+            "label": "contract IPriceFeed",
+            "numberOfBytes": "20"
+          },
+          "t_enum(NotificationType)15738": {
+            "label": "enum DataStructures.NotificationType",
+            "members": [
+              "Registration",
+              "Withdrawal",
+              "RankUpgrade",
+              "MatrixCompletion",
+              "PoolDistribution",
+              "Achievement"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_array(t_address)dyn_storage)": {
+            "label": "mapping(address => address[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_uint32,t_bool))": {
+            "label": "mapping(address => mapping(uint32 => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(MatrixPosition)18105_storage)": {
+            "label": "mapping(address => struct MatrixManagementLib.MatrixPosition)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(PoolQualification)20926_storage)": {
+            "label": "mapping(address => struct PoolDistributionLib.PoolQualification)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(User)15623_storage)": {
+            "label": "mapping(address => struct DataStructures.User)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(UserNotifications)11325_storage)": {
+            "label": "mapping(address => struct AdvancedFeaturesLib.UserNotifications)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(UserWithdrawalStats)25905_storage)": {
+            "label": "mapping(address => struct WithdrawalSafetyLib.UserWithdrawalStats)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(WithdrawalLimits)25918_storage)": {
+            "label": "mapping(address => struct WithdrawalSafetyLib.WithdrawalLimits)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_string_memory_ptr,t_address)": {
+            "label": "mapping(string => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Notification)11319_storage)": {
+            "label": "mapping(uint256 => struct AdvancedFeaturesLib.Notification)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint32,t_bool)": {
+            "label": "mapping(uint32 => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint8,t_struct(Package)3870_storage)": {
+            "label": "mapping(uint8 => struct LeadFive.Package)",
+            "numberOfBytes": "32"
+          },
+          "t_string_memory_ptr": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(DistributionSchedule)20915_storage": {
+            "label": "struct PoolDistributionLib.DistributionSchedule",
+            "members": [
+              {
+                "label": "lastDistribution",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "interval",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "nextDistribution",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "isActive",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(MatrixPosition)18105_storage": {
+            "label": "struct MatrixManagementLib.MatrixPosition",
+            "members": [
+              {
+                "label": "sponsor",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "downline",
+                "type": "t_array(t_address)dyn_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "level",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "cycleCount",
+                "type": "t_uint32",
+                "offset": 1,
+                "slot": "2"
+              },
+              {
+                "label": "isComplete",
+                "type": "t_bool",
+                "offset": 5,
+                "slot": "2"
+              },
+              {
+                "label": "totalEarnings",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(Notification)11319_storage": {
+            "label": "struct AdvancedFeaturesLib.Notification",
+            "members": [
+              {
+                "label": "user",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "message",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "timestamp",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "notificationType",
+                "type": "t_enum(NotificationType)15738",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "isRead",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "3"
+              }
+            ],
+            "numberOfBytes": "128"
+          },
+          "t_struct(NotificationQueue)11307_storage": {
+            "label": "struct AdvancedFeaturesLib.NotificationQueue",
+            "members": [
+              {
+                "label": "head",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "tail",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "notifications",
+                "type": "t_mapping(t_uint256,t_struct(Notification)11319_storage)",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
+          },
+          "t_struct(Package)3870_storage": {
+            "label": "struct LeadFive.Package",
+            "members": [
+              {
+                "label": "price",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "directBonus",
+                "type": "t_uint16",
+                "offset": 12,
+                "slot": "0"
+              },
+              {
+                "label": "levelBonus",
+                "type": "t_uint16",
+                "offset": 14,
+                "slot": "0"
+              },
+              {
+                "label": "uplineBonus",
+                "type": "t_uint16",
+                "offset": 16,
+                "slot": "0"
+              },
+              {
+                "label": "leaderBonus",
+                "type": "t_uint16",
+                "offset": 18,
+                "slot": "0"
+              },
+              {
+                "label": "helpBonus",
+                "type": "t_uint16",
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "clubBonus",
+                "type": "t_uint16",
+                "offset": 22,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(Pool)3877_storage": {
+            "label": "struct LeadFive.Pool",
+            "members": [
+              {
+                "label": "balance",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "lastDistribution",
+                "type": "t_uint32",
+                "offset": 12,
+                "slot": "0"
+              },
+              {
+                "label": "interval",
+                "type": "t_uint32",
+                "offset": 16,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(PoolQualification)20926_storage": {
+            "label": "struct PoolDistributionLib.PoolQualification",
+            "members": [
+              {
+                "label": "isQualifiedLeader",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isQualifiedHelp",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "isQualifiedClub",
+                "type": "t_bool",
+                "offset": 2,
+                "slot": "0"
+              },
+              {
+                "label": "lastQualificationCheck",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "leaderTier",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
+          },
+          "t_struct(User)15623_storage": {
+            "label": "struct DataStructures.User",
+            "members": [
+              {
+                "label": "isRegistered",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isBlacklisted",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "referrer",
+                "type": "t_address",
+                "offset": 2,
+                "slot": "0"
+              },
+              {
+                "label": "balance",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "totalInvestment",
+                "type": "t_uint96",
+                "offset": 12,
+                "slot": "1"
+              },
+              {
+                "label": "totalEarnings",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "earningsCap",
+                "type": "t_uint96",
+                "offset": 12,
+                "slot": "2"
+              },
+              {
+                "label": "directReferrals",
+                "type": "t_uint32",
+                "offset": 24,
+                "slot": "2"
+              },
+              {
+                "label": "teamSize",
+                "type": "t_uint32",
+                "offset": 28,
+                "slot": "2"
+              },
+              {
+                "label": "packageLevel",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "rank",
+                "type": "t_uint8",
+                "offset": 1,
+                "slot": "3"
+              },
+              {
+                "label": "withdrawalRate",
+                "type": "t_uint8",
+                "offset": 2,
+                "slot": "3"
+              },
+              {
+                "label": "lastHelpPoolClaim",
+                "type": "t_uint32",
+                "offset": 3,
+                "slot": "3"
+              },
+              {
+                "label": "isEligibleForHelpPool",
+                "type": "t_bool",
+                "offset": 7,
+                "slot": "3"
+              },
+              {
+                "label": "matrixPosition",
+                "type": "t_uint32",
+                "offset": 8,
+                "slot": "3"
+              },
+              {
+                "label": "matrixLevel",
+                "type": "t_uint32",
+                "offset": 12,
+                "slot": "3"
+              },
+              {
+                "label": "registrationTime",
+                "type": "t_uint32",
+                "offset": 16,
+                "slot": "3"
+              },
+              {
+                "label": "referralCode",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "pendingRewards",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "lastWithdrawal",
+                "type": "t_uint32",
+                "offset": 12,
+                "slot": "5"
+              },
+              {
+                "label": "matrixCycles",
+                "type": "t_uint32",
+                "offset": 16,
+                "slot": "5"
+              },
+              {
+                "label": "leaderRank",
+                "type": "t_uint8",
+                "offset": 20,
+                "slot": "5"
+              },
+              {
+                "label": "leftLegVolume",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "rightLegVolume",
+                "type": "t_uint96",
+                "offset": 12,
+                "slot": "6"
+              },
+              {
+                "label": "fastStartExpiry",
+                "type": "t_uint32",
+                "offset": 24,
+                "slot": "6"
+              },
+              {
+                "label": "isActive",
+                "type": "t_bool",
+                "offset": 28,
+                "slot": "6"
+              }
+            ],
+            "numberOfBytes": "224"
+          },
+          "t_struct(UserNotifications)11325_storage": {
+            "label": "struct AdvancedFeaturesLib.UserNotifications",
+            "members": [
+              {
+                "label": "notificationIds",
+                "type": "t_array(t_uint256)dyn_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "unreadCount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(UserWithdrawalStats)25905_storage": {
+            "label": "struct WithdrawalSafetyLib.UserWithdrawalStats",
+            "members": [
+              {
+                "label": "dailyWithdrawn",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "weeklyWithdrawn",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "monthlyWithdrawn",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "lastWithdrawalTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "lastDayReset",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "lastWeekReset",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "lastMonthReset",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "totalWithdrawals",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "withdrawalCount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "8"
+              }
+            ],
+            "numberOfBytes": "288"
+          },
+          "t_struct(WithdrawalLimits)25918_storage": {
+            "label": "struct WithdrawalSafetyLib.WithdrawalLimits",
+            "members": [
+              {
+                "label": "dailyLimit",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "weeklyLimit",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "monthlyLimit",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "minimumInterval",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "minimumAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "maximumAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              }
+            ],
+            "numberOfBytes": "192"
           },
           "t_uint16": {
             "label": "uint16",

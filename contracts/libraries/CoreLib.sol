@@ -9,19 +9,6 @@ library CoreLib {
     uint256 constant MAX_UINT32 = type(uint32).max;
     uint256 constant MAX_UINT96 = type(uint96).max;
     
-    // Bit manipulation functions
-    function getFlag(DataStructures.User storage user, uint8 flag) internal view returns (bool) {
-        return (user.flags & uint8(1 << flag)) != 0;
-    }
-    
-    function setFlag(DataStructures.User storage user, uint8 flag, bool value) internal {
-        if (value) {
-            user.flags |= uint8(1 << flag);
-        } else {
-            user.flags &= uint8(~(1 << flag));
-        }
-    }
-    
     // Type conversion functions
     function toUint32(uint256 value) internal pure returns (uint32) {
         require(value <= MAX_UINT32, "Value exceeds uint32");

@@ -1,12 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.22;
 
+import "./DataStructures.sol";
+
 /**
  * @title CommissionLib
  * @dev Library for handling commission calculations and distributions
  */
 library CommissionLib {
     uint256 constant BASIS_POINTS = 10000;
+    uint256 constant EARNINGS_MULTIPLIER = 4;
     
     struct CommissionRates {
         uint16 directBonus;
@@ -15,6 +18,11 @@ library CommissionLib {
         uint16 leaderBonus;
         uint16 helpBonus;
         uint16 clubBonus;
+    }
+    
+    struct Package {
+        uint96 price;
+        CommissionRates rates;
     }
     
     struct User {
@@ -37,7 +45,17 @@ library CommissionLib {
         uint32 registrationTime;
         string referralCode;
     }
-    
+
+    /**
+     * @dev Initialize package configuration
+     */
+    function initializePackages(mapping(uint8 => DataStructures.Package) storage packages) internal {
+        packages[1] = DataStructures.Package(30e18, 4000, 1000, 1000, 1000, 3000, 0);
+        packages[2] = DataStructures.Package(50e18, 4000, 1000, 1000, 1000, 3000, 0);
+        packages[3] = DataStructures.Package(100e18, 4000, 1000, 1000, 1000, 3000, 0);
+        packages[4] = DataStructures.Package(200e18, 4000, 1000, 1000, 1000, 3000, 0);
+    }
+
     /**
      * @dev Calculate direct sponsor bonus
      */
@@ -116,5 +134,60 @@ library CommissionLib {
         returns (uint96) 
     {
         return uint96((amount * feeRate) / BASIS_POINTS);
+    }
+
+    /**
+     * @dev Calculate withdrawal breakdown
+     */
+    function calculateWithdrawalBreakdown(User storage user, uint96 amount, uint256 adminFeeRate) 
+        internal 
+        view 
+        returns (uint96 withdrawable, uint96 adminFee, uint96 userReceives, uint96 reinvestment) 
+    {
+        uint8 withdrawalRate = getProgressiveWithdrawalRate(user.directReferrals);
+        withdrawable = (amount * withdrawalRate) / 100;
+        reinvestment = amount - withdrawable;
+        adminFee = calculateAdminFee(withdrawable, adminFeeRate);
+        userReceives = withdrawable - adminFee;
+    }
+
+    /**
+     * @dev Distribute reinvestment (simplified)
+     */
+    function distributeReinvestment(
+        mapping(address => User) storage users,
+        mapping(address => address[30]) storage uplineChain,
+        address user,
+        uint96 amount
+    ) internal {
+        // 40% Level, 30% Upline, 30% Help distribution
+        // Simplified implementation - just return for now
+    }
+
+    /**
+     * @dev Distribute level bonuses through upline chain
+     */
+    function distributeLevelBonuses(
+        mapping(address => DataStructures.User) storage users,
+        mapping(address => address[30]) storage uplineChain,
+        address user,
+        uint96 amount,
+        uint16 levelBonusRate
+    ) internal {
+        address currentUpline = users[user].referrer;
+        uint8 level = 1;
+        
+        while (currentUpline != address(0) && level <= 10) {
+            if (users[currentUpline].isRegistered && !users[currentUpline].isBlacklisted) {
+                uint96 bonus = uint96((amount * levelBonusRate) / BASIS_POINTS / 10); // Distribute across 10 levels
+                
+                if (users[currentUpline].totalEarnings + bonus <= users[currentUpline].earningsCap) {
+                    users[currentUpline].balance += bonus;
+                }
+            }
+            
+            currentUpline = users[currentUpline].referrer;
+            level++;
+        }
     }
 }

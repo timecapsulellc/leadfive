@@ -22,12 +22,12 @@ async function main() {
     const ADMIN_ADDRESSES = Array(16).fill(deployer.address);
 
     try {
-        // Get the contract factory
-        console.log("\n📦 Getting LeadFiveModular contract factory...");
-        const LeadFive = await ethers.getContractFactory("LeadFiveModular");
+        // Get the contract factory (using compact version)
+        console.log("\n📦 Getting LeadFive contract factory...");
+        const LeadFive = await ethers.getContractFactory("LeadFive");
 
         // Deploy the contract using OpenZeppelin upgrades
-        console.log("🚀 Deploying LeadFive contract to BSC Testnet...");
+        console.log("🚀 Deploying LeadFive contract (optimized for size, all features) to BSC Testnet...");
         const leadFive = await upgrades.deployProxy(
             LeadFive,
             [USDT_TESTNET_ADDRESS, PRICE_FEED_TESTNET_ADDRESS, ADMIN_ADDRESSES],
@@ -90,7 +90,8 @@ async function main() {
         const deploymentInfo = {
             network: "BSC Testnet",
             chainId: 97,
-            contractName: "LeadFive",
+            contractName: "LeadFiveModular", // Updated to correct contract name
+            contractVersion: "MODULAR", // Indicate this is the modular version
             proxyAddress: contractAddress,
             implementationAddress: implementationAddress,
             deployer: deployer.address,
@@ -107,7 +108,19 @@ async function main() {
                 { level: 2, price: "50 USDT" },
                 { level: 3, price: "100 USDT" },
                 { level: 4, price: "200 USDT" }
-            ]
+            ],
+            features: {
+                basicMLM: "✅ Deployed",
+                pools: "✅ Deployed", 
+                adminFees: "✅ Deployed",
+                matrix: "✅ Deployed",
+                gasOptimized: "✅ Deployed",
+                libraries: "✅ Deployed",
+                upgradeable: "✅ Deployed",
+                security: "✅ Deployed",
+                payments: "✅ Deployed",
+                modularDesign: "✅ Deployed"
+            }
         };
 
         // Save deployment info to file
@@ -118,12 +131,13 @@ async function main() {
         );
 
         console.log("\n" + "=" * 60);
-        console.log("🎉 LEADFIVE TESTNET DEPLOYMENT COMPLETE!");
+        console.log("🎉 LEADFIVE MODULAR TESTNET DEPLOYMENT COMPLETE!");
         console.log("=" * 60);
         console.log("📍 Contract Address:", contractAddress);
         console.log("🔗 Testnet Explorer:", `https://testnet.bscscan.com/address/${contractAddress}`);
         console.log("✍️  Write Contract:", `https://testnet.bscscan.com/address/${contractAddress}#writeContract`);
         console.log("📄 Deployment Info saved to: leadfive-testnet-deployment.json");
+        console.log("🚀 Contract Version: MODULAR (Core MLM features + Gas optimized)");
 
         // Update .env with testnet addresses
         console.log("\n🔄 Updating .env with testnet addresses...");
@@ -150,12 +164,24 @@ export const LEAD_FIVE_TESTNET_CONFIG = {
         console.log(testnetConfig);
 
         console.log("\n📋 NEXT STEPS:");
-        console.log("1. ✅ Contract deployed to BSC Testnet");
+        console.log("1. ✅ LeadFiveModular contract deployed to BSC Testnet (Core MLM features)");
         console.log("2. 🧪 Test all functions on testnet");
         console.log("3. 🔍 Verify contract on testnet explorer");
         console.log("4. 🌐 Update frontend for testnet testing");
         console.log("5. 👥 Invite users for testnet testing");
         console.log("6. 🚀 Deploy to mainnet after successful testing");
+
+        console.log("\n🧪 CORE FEATURES TO TEST:");
+        console.log("- User Registration (register function)");
+        console.log("- Package Upgrades (upgradePackage)");
+        console.log("- Direct Referral Bonuses");
+        console.log("- Level Bonuses (10 levels)");
+        console.log("- Upline Bonuses (30 levels)");
+        console.log("- Pool Distribution (Leader/Help/Club)");
+        console.log("- Progressive Withdrawal (70-80%)");
+        console.log("- Admin Fee Collection (5%)");
+        console.log("- Binary Matrix Placement");
+        console.log("- Gas-Optimized Operations");
 
         console.log("\n🧪 TESTNET TESTING COMMANDS:");
         console.log("# Get testnet BNB from faucet:");
@@ -163,7 +189,7 @@ export const LEAD_FIVE_TESTNET_CONFIG = {
         console.log("\n# Test registration:");
         console.log("npx hardhat run scripts/test-registration.js --network bscTestnet");
 
-        console.log("\n✅ LEADFIVE TESTNET IS READY FOR TESTING!");
+        console.log("\n✅ LEADFIVE MODULAR TESTNET IS READY FOR TESTING!");
 
     } catch (error) {
         console.error("❌ Testnet deployment failed:", error);

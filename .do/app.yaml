@@ -23,13 +23,23 @@ services:
   - key: VITE_APP_ENV
     value: production
   - key: VITE_CONTRACT_ADDRESS
-    value: "0x7FEEA22942407407801cCDA55a4392f25975D998"
+    value: "0x742d35Cc6634C0532925a3b8D208800b3cea8574"
   - key: VITE_NETWORK_ID
     value: "56"
   - key: VITE_WEB3_PROVIDER_URL
     value: "https://bsc-dataseed.binance.org/"
   - key: VITE_DEBUG_MODE
     value: "false"
+  - key: VITE_CHAIN_ID
+    value: "56"
+  - key: VITE_NETWORK_NAME
+    value: "BSC Mainnet"
+  - key: VITE_RPC_URL
+    value: "https://bsc-dataseed.binance.org/"
+  - key: VITE_EXPLORER_URL
+    value: "https://bscscan.com"
+  - key: VITE_USDT_ADDRESS
+    value: "0x55d398326f99059fF775485246999027B3197955"
 # static.json in project root ensures SPA routing for all paths
 # No further changes needed for DigitalOcean static hosting
 # Optional: Add alerts

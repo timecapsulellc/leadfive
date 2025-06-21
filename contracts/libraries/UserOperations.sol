@@ -27,8 +27,8 @@ library UserOperations {
         uint96 withdrawableBalance,
         uint32 directReferrals,
         uint32 teamSize,
-        uint8 level,
-        uint8 matrixLevel,
+        uint32 level,
+        uint32 matrixLevel,
         uint8 rank,
         uint96 earningsCap
     ) {
@@ -37,13 +37,13 @@ library UserOperations {
             u.isRegistered,
             u.isBlacklisted,
             u.referrer,
-            u.currentTier,
+            u.packageLevel,
             u.totalInvestment,
             u.totalEarnings,
-            u.withdrawableBalance,
+            u.balance,
             u.directReferrals,
             u.teamSize,
-            u.level,
+            u.matrixLevel,
             u.matrixLevel,
             u.rank,
             u.earningsCap
@@ -64,7 +64,7 @@ library UserOperations {
         DataStructures.User storage u = users[userAddress];
         return (
             u.totalEarnings,
-            u.withdrawableBalance,
+            u.balance,
             u.totalInvestment
         );
     }
@@ -80,7 +80,7 @@ library UserOperations {
     ) external {
         DataStructures.User storage u = users[userAddress];
         u.totalInvestment += amount;
-        u.currentTier = tier;
+        u.packageLevel = tier;
     }
     
     /**
@@ -93,7 +93,7 @@ library UserOperations {
     ) external {
         DataStructures.User storage u = users[userAddress];
         u.totalEarnings += amount;
-        u.withdrawableBalance += amount;
+        u.balance += amount;
     }
     
     /**
@@ -105,8 +105,8 @@ library UserOperations {
         uint96 amount
     ) external {
         DataStructures.User storage u = users[userAddress];
-        require(u.withdrawableBalance >= amount, "Insufficient balance");
-        u.withdrawableBalance -= amount;
+        require(u.balance >= amount, "Insufficient balance");
+        u.balance -= amount;
     }
 
     /**
@@ -124,6 +124,6 @@ library UserOperations {
         u.isRegistered = isRegistered;
         u.isBlacklisted = isBlacklisted;
         u.referrer = referrer;
-        u.currentTier = tier;
+        u.packageLevel = tier;
     }
 }

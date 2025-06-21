@@ -94,7 +94,7 @@ library AdminOperations {
         require(!users[recipient].isBlacklisted, "Recipient is blacklisted");
         
         users[recipient].totalEarnings += uint96(amount);
-        users[recipient].withdrawableBalance += uint96(amount);
+        users[recipient].balance += uint96(amount);
         
         emit ManualBonusDistributed(recipient, amount, reason, block.timestamp);
     }

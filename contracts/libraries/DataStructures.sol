@@ -105,29 +105,36 @@ library DataStructures {
     }
     
     /**
-     * @dev Complete user struct - use only when absolutely necessary
-     * @notice For most operations, use the split structs above
-     * @notice Arrays (directReferrals, matrixReferrals) are stored in mappings in the main contract
-     *        to optimize gas costs and avoid array storage in the struct
+     * @dev Complete user struct - optimized for LeadFive contract
      */
     struct User {
         bool isRegistered;
         bool isBlacklisted;
         address referrer;
         uint96 balance;
-        uint96 totalInvestment;     // Changed from uint256 to uint96 for gas optimization
-        uint96 totalEarnings;       // Added for earnings tracking
-        uint96 withdrawableBalance; // Added for withdrawal tracking
-        uint96 earningsCap;         // Added for earnings cap tracking
-        uint32 totalContributed;
-        uint32 directReferrals;     // Added for referral tracking
-        uint32 teamSize;           // Added for team size tracking
-        uint8 level;
-        uint8 matrixLevel;
-        uint8 position;
-        uint8 flags;
-        uint8 currentTier;         // Added for package tier tracking
-        uint8 rank;                // Added for leader rank tracking
+        uint96 totalInvestment;
+        uint96 totalEarnings;
+        uint96 earningsCap;
+        uint32 directReferrals;
+        uint32 teamSize;
+        uint8 packageLevel;
+        uint8 rank;
+        uint8 withdrawalRate;
+        uint32 lastHelpPoolClaim;
+        bool isEligibleForHelpPool;
+        uint32 matrixPosition;
+        uint32 matrixLevel;
+        uint32 registrationTime;
+        string referralCode;
+        // New enhanced fields
+        uint96 pendingRewards;
+        uint32 lastWithdrawal;
+        uint32 matrixCycles;
+        uint8 leaderRank; // 0=none, 1=silver, 2=gold, 3=diamond
+        uint96 leftLegVolume;
+        uint96 rightLegVolume;
+        uint32 fastStartExpiry;
+        bool isActive;
     }
 
     /**
@@ -142,13 +149,16 @@ library DataStructures {
     }
 
     /**
-     * @dev Optimized package definition 
+     * @dev Package definition for LeadFive contract
      */
     struct Package {
         uint96 price;
         uint16 directBonus;
-        uint16 matrixBonus;
-        uint16 poolShare;
+        uint16 levelBonus;
+        uint16 uplineBonus;
+        uint16 leaderBonus;
+        uint16 helpBonus;
+        uint16 clubBonus;
     }
 
     /**
@@ -178,6 +188,70 @@ library DataStructures {
         uint128 minPersonalVolume;  // Minimum personal investment
         uint32 bonusPercentage;     // Bonus percentage (BP)
         bool isActive;              // Qualification active
+    }
+    
+    /**
+     * @dev Rank qualification requirements
+     */
+    struct RankRequirement {
+        uint32 directReferrals;
+        uint32 teamSize;
+        uint96 personalVolume;
+        uint96 teamVolume;
+        string rankName;
+        uint256 bonus; // Rank achievement bonus
+    }
+    
+    /**
+     * @dev Withdrawal safety limits
+     */
+    struct WithdrawalLimits {
+        uint96 dailyLimit;
+        uint96 weeklyLimit;
+        uint96 monthlyLimit;
+        uint32 cooldownPeriod;
+    }
+    
+    /**
+     * @dev Binary leg tracking
+     */
+    struct BinaryLeg {
+        uint96 volume;
+        uint32 members;
+        uint256 lastUpdate;
+    }
+    
+    /**
+     * @dev Achievement system
+     */
+    struct Achievement {
+        uint32 achievementId;
+        string name;
+        string description;
+        uint256 reward;
+        bool isActive;
+        uint256 timestamp;
+    }
+    
+    /**
+     * @dev Pool types enumeration
+     */
+    enum PoolType {
+        Leader,
+        Help,
+        Club
+    }
+    
+    /**
+     * @dev Notification types for events
+     */
+    enum NotificationType {
+        Registration,
+        Withdrawal,
+        RankUpgrade,
+        MatrixCompletion,
+        PoolDistribution,
+        Achievement
     }
 
     // ==================== EVENT DATA STRUCTS ====================
@@ -399,7 +473,7 @@ library DataStructures {
         return UserFinancials({
             totalInvestment: user.totalInvestment,
             totalEarnings: user.totalEarnings,
-            withdrawableBalance: user.withdrawableBalance,
+            withdrawableBalance: user.balance,
             earningsCap: user.earningsCap
         });
     }

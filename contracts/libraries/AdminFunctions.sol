@@ -34,8 +34,11 @@ library AdminFunctions {
         packages[tier] = DataStructures.Package({
             price: price,
             directBonus: directBonus,
-            matrixBonus: matrixBonus,
-            poolShare: poolShare
+            levelBonus: 0,
+            uplineBonus: 0,
+            leaderBonus: 0,
+            helpBonus: 0,
+            clubBonus: 0
         });
         
         emit PackageAdded(tier, price, directBonus, matrixBonus, poolShare, block.timestamp);
