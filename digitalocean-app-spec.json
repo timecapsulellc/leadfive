@@ -1,0 +1,57 @@
+{
+  "name": "leadfive-production",
+  "region": "nyc",
+  "static_sites": [
+    {
+      "name": "leadfive-frontend",
+      "source_dir": "/",
+      "github": {
+        "repo": "timecapsulellc/leadfive",
+        "branch": "main",
+        "deploy_on_push": true
+      },
+      "build_command": "npm install && npm run build",
+      "output_dir": "dist",
+      "index_document": "index.html",
+      "error_document": "index.html",
+      "routes": [
+        {
+          "path": "/",
+          "preserve_path_prefix": false
+        }
+      ],
+      "environment_variables": [
+        {
+          "key": "NODE_ENV",
+          "value": "production",
+          "scope": "BUILD_TIME"
+        },
+        {
+          "key": "VITE_APP_ENV", 
+          "value": "production",
+          "scope": "BUILD_TIME"
+        },
+        {
+          "key": "VITE_CONTRACT_ADDRESS",
+          "value": "0x7FEEA22942407407801cCDA55a4392f25975D998",
+          "scope": "BUILD_TIME"
+        },
+        {
+          "key": "VITE_NETWORK_ID",
+          "value": "56",
+          "scope": "BUILD_TIME"
+        },
+        {
+          "key": "VITE_WEB3_PROVIDER_URL",
+          "value": "https://bsc-dataseed.binance.org/",
+          "scope": "BUILD_TIME"
+        },
+        {
+          "key": "VITE_DEBUG_MODE",
+          "value": "false",
+          "scope": "BUILD_TIME"
+        }
+      ]
+    }
+  ]
+}

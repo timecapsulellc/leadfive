@@ -9,6 +9,8 @@
 .env.production
 .env.staging
 .env.development
+.env.mainnet
+.env.testnet
 
 # Private keys and sensitive data
 *.key
@@ -22,6 +24,10 @@ wallets/
 mnemonics/
 *.encrypted
 *.enc
+*private*
+*secret*
+*API_KEY*
+*api-key*
 
 # Deployment artifacts with sensitive data
 *deployment*.json
@@ -29,6 +35,15 @@ mnemonics/
 *testnet*.json
 deployment-results/
 deployment-logs/
+*deployed-addresses*
+deployment-artifacts/
+
+# Security backups (often contain sensitive data)
+*.backup
+*.bak
+*.old
+backup/
+backups/
 
 # ==================== NODE.JS & DEPENDENCIES ====================
 node_modules/
