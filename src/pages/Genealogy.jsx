@@ -8,6 +8,7 @@ import TreeSearch from '../components/TreeSearch';
 import ExportModal from '../components/ExportModal';
 import RealtimeStatus from '../components/RealtimeStatus';
 import GenealogyAnalytics from '../components/GenealogyAnalytics';
+import SimpleNetworkTree from '../components/SimpleNetworkTree';
 import Web3Service from '../services/Web3Service';
 import './Genealogy.css';
 
@@ -26,8 +27,21 @@ const Genealogy = ({ account, provider, signer, onConnect, onDisconnect }) => {
   const [profileUser, setProfileUser] = useState(null);
   const [showExportModal, setShowExportModal] = useState(false);
   const [realtimeEnabled, setRealtimeEnabled] = useState(true);
+  const [useSimpleTree, setUseSimpleTree] = useState(false); // Fallback for complex tree
   const treeContainerRef = useRef(null);
   const navigate = useNavigate();
+
+  // Error boundary for tree rendering
+  useEffect(() => {
+    const handleError = (event) => {
+      console.error('Tree rendering error:', event.error);
+      setError('Tree visualization temporarily unavailable');
+      setUseSimpleTree(true);
+    };
+
+    window.addEventListener('error', handleError);
+    return () => window.removeEventListener('error', handleError);
+  }, []);
 
   // Transform data for react-d3-tree format
   const transformToD3TreeData = (data) => {
@@ -482,7 +496,37 @@ const Genealogy = ({ account, provider, signer, onConnect, onDisconnect }) => {
           <p className="page-subtitle">Your complete network structure and team performance</p>
         </div>
 
-        <div className="genealogy-controls">
+        {/* Fallback for complex tree issues */}
+        {(error || useSimpleTree) && (
+          <div>
+            <SimpleNetworkTree account={account} />
+            <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+              <button 
+                onClick={() => {
+                  setError(null);
+                  setUseSimpleTree(false);
+                  window.location.reload();
+                }}
+                style={{
+                  background: 'linear-gradient(135deg, #7B2CBF, #00D4FF)',
+                  color: 'white',
+                  border: 'none',
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '10px',
+                  cursor: 'pointer',
+                  fontWeight: 'bold'
+                }}
+              >
+                🔄 Try Advanced Tree View
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Regular tree view */}
+        {!error && !useSimpleTree && (
+          <>
+            <div className="genealogy-controls">
           <div className="view-controls">
             <button 
               className={`view-btn ${viewMode === 'd3tree' ? 'active' : ''}`}
@@ -819,6 +863,10 @@ const Genealogy = ({ account, provider, signer, onConnect, onDisconnect }) => {
         treeData={treeData}
         elementId="genealogy-tree"
       />
+      
+      {/* Close the conditional block */}
+      </>
+      )}
     </PageWrapper>
   );
 };

@@ -8,7 +8,7 @@ services:
     repo: timecapsulellc/LeadFive
     branch: main
     deploy_on_push: true
-  build_command: npm ci && npm run build:clean
+  build_command: bash build.sh
   output_dir: dist
   routes:
   - path: /
