@@ -1,20 +1,21 @@
 /**
- * Web3 Contract Service for OrphiCrowdFund
+ * Web3 Contract Service for LeadFive
  * 
  * Handles all blockchain interactions with the deployed contract
- * Contract Address: 0x8F826B18096Dcf7AF4515B06Cb563475d189ab50 (BSC Mainnet)
+ * Contract Address: 0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569 (BSC Mainnet - NEW DEPLOYMENT)
  */
 
 import { ethers } from 'ethers';
+import { APP_CONFIG } from '../config/app.js';
 import CompensationPlanService from './CompensationPlanService';
 
 export class Web3ContractService {
   
-  // Contract configuration from .env.mainnet
-  static CONTRACT_ADDRESS = process.env.REACT_APP_CONTRACT_ADDRESS || '0x8F826B18096Dcf7AF4515B06Cb563475d189ab50';
-  static USDT_ADDRESS = process.env.REACT_APP_USDT_ADDRESS || '0x55d398326f99059fF775485246999027B3197955';
-  static CHAIN_ID = parseInt(process.env.REACT_APP_CHAIN_ID) || 56;
-  static NETWORK = process.env.REACT_APP_NETWORK || 'mainnet';
+  // Contract configuration from secure app config
+  static CONTRACT_ADDRESS = APP_CONFIG.contract.address;
+  static USDT_ADDRESS = APP_CONFIG.contract.network.tokens.usdt;
+  static CHAIN_ID = APP_CONFIG.contract.network.chainId;
+  static NETWORK = 'mainnet';
 
   // BSC Network configuration
   static BSC_CONFIG = {

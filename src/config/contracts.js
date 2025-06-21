@@ -1,5 +1,5 @@
-// OrphiCrowdFund Contract Configuration - Updated with mainnet address and ABI
-export const CONTRACT_ADDRESS = '0x4965197b430343daec1042B413Dd6e20D06dAdba';
+// LeadFive Contract Configuration - Updated with NEW mainnet address and ABI
+export const CONTRACT_ADDRESS = '0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569';
 export const USDT_ADDRESS = '0x55d398326f99059fF775485246999027B3197955';
 
 // Network configuration
@@ -9,15 +9,9 @@ export const SUPPORTED_NETWORKS = {
     name: 'BNB Smart Chain',
     rpcUrl: 'https://bsc-dataseed.binance.org/',
     blockExplorer: 'https://bscscan.com/',
-    contractAddress: '0x4965197b430343daec1042B413Dd6e20D06dAdba'
-  },
-  BSC_TESTNET: {
-    chainId: '0x61',
-    name: 'BNB Smart Chain Testnet',
-    rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
-    blockExplorer: 'https://testnet.bscscan.com/',
-    contractAddress: '0x4965197b430343daec1042B413Dd6e20D06dAdba' // Update with testnet address if different
+    contractAddress: '0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569'
   }
+  // Testnet removed for production deployment
 };
 
 // Get contract address for current network

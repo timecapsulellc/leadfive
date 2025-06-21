@@ -1,0 +1,10 @@
+.security-page {
+  padding: 2rem;
+  background: #16213e;
+  color: #ffffff;
+  text-align: center;
+}
+.security-page p {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}

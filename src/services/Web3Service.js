@@ -1,9 +1,11 @@
 import { ethers } from 'ethers';
 import { NETWORK_CONFIG } from '../utils/constants';
+import { APP_CONFIG } from '../config/app.js';
 
 class Web3Service {
   constructor() {
-    this.contractAddress = process.env.VITE_CONTRACT_ADDRESS || '0x5ab22F4d339B66C1859029d2c2540d8BefCbdED4';
+    // Use secure configuration - contract address is public information
+    this.contractAddress = APP_CONFIG.contract.address;
     this.contract = null;
     this.provider = null;
     this.signer = null;

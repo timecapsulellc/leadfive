@@ -1,108 +1,137 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Rocket, Shield, Users, TrendingUp, ChevronRight, Globe } from 'lucide-react';
-import WalletConnect from '../components/WalletConnect';
-import '../styles/Welcome.css';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Welcome = ({ onConnect }) => {
-  const features = [
-    {
-      icon: <Shield className="w-6 h-6" />,
-      title: "Secure & Transparent",
-      description: "Built on BSC blockchain with verified smart contracts"
-    },
-    {
-      icon: <Users className="w-6 h-6" />,
-      title: "5x5 Matrix System",
-      description: "Advanced MLM structure with automatic positioning"
-    },
-    {
-      icon: <TrendingUp className="w-6 h-6" />,
-      title: "Instant Earnings",
-      description: "Direct wallet-to-wallet transactions"
-    },
-    {
-      icon: <Globe className="w-6 h-6" />,
-      title: "Global Opportunity",
-      description: "Join from anywhere, earn in USDT"
+const Welcome = () => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    // Create animated particles
+    const createParticles = () => {
+      const particlesContainer = document.getElementById('particles');
+      if (!particlesContainer) return;
+      
+      // Clear existing particles
+      particlesContainer.innerHTML = '';
+      
+      const particleCount = window.innerWidth < 768 ? 30 : 50;
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 3 + 4) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    };
+
+    createParticles();
+
+    // Add interactive hover effects to logo
+    const logo = document.querySelector('.animated-logo');
+    if (logo) {
+      const handleMouseEnter = function() {
+        this.style.transform = 'scale(1.1) rotate(5deg)';
+        this.style.transition = 'transform 0.3s ease';
+      };
+
+      const handleMouseLeave = function() {
+        this.style.transform = 'scale(1) rotate(0deg)';
+      };
+
+      logo.addEventListener('mouseenter', handleMouseEnter);
+      logo.addEventListener('mouseleave', handleMouseLeave);
+
+      // Cleanup listeners
+      return () => {
+        if (logo) {
+          logo.removeEventListener('mouseenter', handleMouseEnter);
+          logo.removeEventListener('mouseleave', handleMouseLeave);
+        }
+      };
     }
-  ];
+
+    // Responsive particle management
+    const handleResize = () => {
+      createParticles();
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  const handleEnterDApp = (e) => {
+    setIsLoading(true);
+    // Add click animation
+    e.target.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+      e.target.style.transform = 'scale(1)';
+      navigate('/home');
+    }, 300);
+  };
 
   return (
-    <div className="welcome-container">
-      <div className="welcome-content">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="welcome-header"
-        >
-          <div className="logo-section">
-            <Rocket className="logo-icon" />
-            <h1 className="logo-text">LeadFive</h1>
+    <div className="welcome-page">
+      <div className="bg-particles" id="particles"></div>
+      
+      <div className="welcome-container">
+        <div className="logo-container">
+          <div className="logo-glow"></div>
+          <div className="animated-logo">
+            <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#00d4ff" />
+                  <stop offset="50%" stopColor="#7b2cbf" />
+                  <stop offset="100%" stopColor="#ff6b35" />
+                </linearGradient>
+                <linearGradient id="darkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#1a1a2e" />
+                  <stop offset="100%" stopColor="#16213e" />
+                </linearGradient>
+              </defs>
+              <g transform="translate(200, 200)">
+                <path className="logo-path" d="M -80,-20 L -40,-80 L 0,-60 Z" fill="url(#mainGradient)" />
+                <path className="logo-path" d="M -80,-20 L 0,-60 L -30,-10 Z" fill="url(#darkGradient)" opacity="0.7" />
+                <path className="logo-path" d="M 40,-80 L 80,-20 L 60,0 Z" fill="url(#mainGradient)" />
+                <path className="logo-path" d="M 40,-80 L 60,0 L 0,-60 Z" fill="url(#darkGradient)" opacity="0.7" />
+                <path className="logo-path" d="M 80,20 L 40,80 L 0,60 Z" fill="url(#mainGradient)" />
+                <path className="logo-path" d="M 80,20 L 0,60 L 30,10 Z" fill="url(#darkGradient)" opacity="0.7" />
+                <path className="logo-path" d="M -40,80 L -80,20 L -60,0 Z" fill="url(#mainGradient)" />
+                <path className="logo-path" d="M -40,80 L -60,0 L 0,60 Z" fill="url(#darkGradient)" opacity="0.7" />
+                <path className="logo-path" d="M -30,-10 L 0,-60 L 30,10 L 0,60 Z" fill="#16213e" />
+              </g>
+            </svg>
           </div>
-          <p className="tagline">Advanced MLM Platform on BSC</p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="hero-section"
-        >
-          <h2 className="hero-title">
-            Build Your Financial Future with <span className="highlight">LeadFive</span>
-          </h2>
-          <p className="hero-description">
-            Join the revolutionary 5x5 matrix system powered by smart contracts.
-            Earn up to 3,905 USDT per matrix cycle with complete transparency.
-          </p>
-          
-          <div className="cta-section">
-            <WalletConnect onConnect={onConnect} />
-            <a 
-              href="https://bscscan.com/address/0x7FEEA22942407407801cCDA55a4392f25975D998"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="contract-link"
-            >
-              View Contract <ChevronRight className="w-4 h-4" />
-            </a>
-          </div>
-        </motion.div>
+        <h1 className="welcome-title">LEAD FIVE TODAY</h1>
+        <p className="welcome-tagline">The Decentralized Incentive Network</p>
+        <p className="welcome-subtitle">Smart Rewards, Powered by Blockchain</p>
+        <p className="welcome-motto">Autonomous. Transparent. Unstoppable.</p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="features-grid"
-        >
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
-              className="feature-card"
-            >
-              <div className="feature-icon">{feature.icon}</div>
-              <h3 className="feature-title">{feature.title}</h3>
-              <p className="feature-description">{feature.description}</p>
-            </motion.div>
-          ))}
-        </motion.div>
+        <div className="features">
+          <div className="feature-pill">⚡ Autonomous</div>
+          <div className="feature-pill">🔍 Transparent</div>
+          <div className="feature-pill">🚀 Unstoppable</div>
+          <div className="feature-pill">🏆 Smart Rewards</div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="footer-info"
+        <button 
+          className={`cta-button ${isLoading ? 'loading' : ''}`} 
+          onClick={handleEnterDApp}
+          disabled={isLoading}
         >
-          <p className="contract-info">
-            Contract: <code>0x7FEEA22942407407801cCDA55a4392f25975D998</code>
-          </p>
-          <p className="network-info">Network: BSC Mainnet</p>
-        </motion.div>
+          {isLoading ? 'Loading...' : 'Enter DApp'}
+        </button>
+      </div>
+
+      <div className="developer-credit">
+        Developed by: A group of young, freshly graduated blockchain engineers
       </div>
     </div>
   );

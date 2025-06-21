@@ -1,0 +1,26 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background-color: #16213e;
+  color: #ffffff;
+}
+.nav-links a {
+  margin: 0 0.75rem;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+}
+.wallet-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.wallet-info button {
+  background: transparent;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}

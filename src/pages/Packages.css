@@ -1,0 +1,17 @@
+.packages-page {
+  padding: 2rem;
+  text-align: center;
+  background: #16213e;
+  color: #ffffff;
+}
+.packages-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  margin-top: 1rem;
+}
+.package-card {
+  background: #1a1a2e;
+  padding: 1rem;
+  border-radius: 8px;
+}

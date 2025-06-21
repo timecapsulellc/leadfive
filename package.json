@@ -13,8 +13,11 @@
     "test": "hardhat test",
     "test:coverage": "hardhat coverage",
     "deploy:testnet": "hardhat run scripts/deploy-leadfive-testnet.cjs --network bscTestnet",
-    "deploy:mainnet": "hardhat run scripts/deploy-leadfive.cjs --network bscMainnet",
-    "verify": "hardhat verify --network bscMainnet",
+    "deploy:mainnet": "hardhat run scripts/deploy-leadfive-correct.cjs --network bsc",
+    "deploy:correct": "hardhat run scripts/deploy-leadfive-correct.cjs --network bsc",
+    "check:deployment": "hardhat run scripts/check-deployment.cjs --network bsc",
+    "verify": "hardhat verify --network bsc",
+    "verify:simple": "hardhat run scripts/verify-simple.cjs --network bsc",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext js,jsx --fix"
   },
@@ -47,12 +50,21 @@
     "react": "^18.2.0",
     "react-d3-tree": "^3.5.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^7.6.2",
     "react-toastify": "^11.0.5",
     "terser": "^5.43.1",
     "vite": "^4.4.5",
     "web3": "^4.3.0"
   },
   "devDependencies": {
+    "@nomicfoundation/hardhat-ethers": "^3.0.9",
+    "@nomicfoundation/hardhat-verify": "^2.0.14",
+    "@openzeppelin/contracts": "^5.3.0",
+    "@openzeppelin/contracts-upgradeable": "^5.3.0",
+    "@openzeppelin/hardhat-upgrades": "^3.9.0",
+    "dotenv": "^16.5.0",
+    "hardhat": "^2.24.3",
+    "hardhat-contract-sizer": "^2.10.0"
   },
   "engines": {
     "node": "20.17.0",

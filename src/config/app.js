@@ -10,7 +10,7 @@ export const APP_CONFIG = {
   
   // Smart Contract Configuration
   contract: {
-    address: '0x7FEEA22942407407801cCDA55a4392f25975D998',
+    address: '0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569', // ✅ NEW MAINNET DEPLOYMENT
     network: {
       name: 'BSC Mainnet',
       chainId: 56,
@@ -20,7 +20,14 @@ export const APP_CONFIG = {
         name: 'BNB',
         symbol: 'BNB',
         decimals: 18
+      },
+      tokens: {
+        usdt: '0x55d398326f99059fF775485246999027B3197955'
       }
+    },
+    admin: {
+      owner: '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29',
+      feeRecipient: '0xeB652c4523f3Cf615D3F3694b14E551145953aD0'
     }
   },
   

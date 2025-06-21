@@ -1,0 +1,38 @@
+.register-page {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: #1a1a2e;
+  color: #ffffff;
+  border-radius: 8px;
+}
+.register-page label {
+  display: block;
+  margin-top: 1rem;
+}
+.register-page select,
+.register-page .toggle-group {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.toggle-group button {
+  margin-right: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #16213e;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+.toggle-group .active {
+  background: #00d4ff;
+  color: #000000;
+}
+.btn-primary {
+  width: 100%;
+  padding: 0.75rem;
+  background: #00d4ff;
+  color: #000000;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}

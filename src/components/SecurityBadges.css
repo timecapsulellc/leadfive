@@ -1,0 +1,15 @@
+.security-badges {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+.badge-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+}
+.badge-icon {
+  font-size: 2rem;
+}

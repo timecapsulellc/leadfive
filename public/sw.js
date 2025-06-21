@@ -1,9 +1,9 @@
-// OrphiChain PWA Service Worker
+// LeadFive PWA Service Worker
 // Version 1.0.0 - Production Ready
 
-const CACHE_NAME = 'orphi-crowdfund-v1.0.0';
-const RUNTIME_CACHE = 'orphi-runtime-v1.0.0';
-const OFFLINE_CACHE = 'orphi-offline-v1.0.0';
+const CACHE_NAME = 'leadfive-crowdfund-v1.0.0';
+const RUNTIME_CACHE = 'leadfive-runtime-v1.0.0';
+const OFFLINE_CACHE = 'leadfive-offline-v1.0.0';
 
 // Assets to cache for offline usage
 const STATIC_ASSETS = [
@@ -42,14 +42,14 @@ const CACHE_STRATEGIES = {
   STALE_WHILE_REVALIDATE: 'stale-while-revalidate'
 };
 
-// OrphiChain-specific cache strategies
-const ORPHI_CACHE_STRATEGIES = {
+// LeadFive-specific cache strategies
+const LEADFIVE_CACHE_STRATEGIES = {
   // Web3 provider cache
-  WEB3_CACHE: 'orphi-web3-cache',
+  WEB3_CACHE: 'leadfive-web3-cache',
   // Contract data cache
-  CONTRACT_CACHE: 'orphi-contract-cache',
+  CONTRACT_CACHE: 'leadfive-contract-cache',
   // Real-time data cache
-  REALTIME_CACHE: 'orphi-realtime-cache'
+  REALTIME_CACHE: 'leadfive-realtime-cache'
 };
 
 // Runtime cache configuration
@@ -73,7 +73,7 @@ const RUNTIME_CACHING = [
     }
   },
   {
-    urlPattern: /^https:\/\/api\.orphichain\.com/,
+    urlPattern: /^https:\/\/api\.leadfive\.today/,
     handler: CACHE_STRATEGIES.NETWORK_FIRST,
     options: {
       cacheName: 'api-cache',
@@ -184,10 +184,10 @@ self.addEventListener('push', event => {
     console.log('📨 Push data:', data);
 
     const options = {
-      body: data.body || 'New notification from OrphiChain',
+      body: data.body || 'New notification from LeadFive',
       icon: data.icon || '/icons/icon-192x192.png',
       badge: data.badge || '/icons/icon-72x72.png',
-      tag: data.tag || 'orphi-push',
+      tag: data.tag || 'leadfive-push',
       requireInteraction: data.requireInteraction || false,
       actions: data.actions || [],
       data: data.data || {},
@@ -196,7 +196,7 @@ self.addEventListener('push', event => {
     };
 
     event.waitUntil(
-      self.registration.showNotification(data.title || 'OrphiChain', options)
+      self.registration.showNotification(data.title || 'LeadFive', options)
     );
 
   } catch (error) {
@@ -227,7 +227,7 @@ self.addEventListener('notificationclick', event => {
   const handleAction = async () => {
     const clients = await self.clients.matchAll({ type: 'window' });
     
-    // If OrphiChain app is already open, focus it
+    // If LeadFive app is already open, focus it
     if (clients.length > 0) {
       const client = clients[0];
       
@@ -366,9 +366,9 @@ async function handleApiRequest(request) {
     return handleWeb3Request(request);
   }
   
-  // Handle OrphiChain API requests
-  if (url.pathname.includes('/orphi/') || url.pathname.includes('/realtime/')) {
-    return handleOrphiApiRequest(request);
+  // Handle LeadFive API requests
+  if (url.pathname.includes('/leadfive/') || url.pathname.includes('/realtime/')) {
+    return handleLeadFiveApiRequest(request);
   }
   
   try {
@@ -442,7 +442,7 @@ async function handleWeb3Request(request) {
       
       if (parsedBody.method && parsedBody.method.includes('call')) {
         const cacheKey = `web3-${JSON.stringify(parsedBody)}`;
-        const cached = await getCachedData(ORPHI_CACHE_STRATEGIES.WEB3_CACHE, cacheKey);
+        const cached = await getCachedData(LEADFIVE_CACHE_STRATEGIES.WEB3_CACHE, cacheKey);
         
         if (cached && Date.now() - cached.timestamp < 30000) { // 30 second cache
           return new Response(JSON.stringify(cached.data), {
@@ -463,7 +463,7 @@ async function handleWeb3Request(request) {
         const responseData = await response.clone().json();
         const cacheKey = `web3-${JSON.stringify(parsedBody)}`;
         
-        await setCachedData(ORPHI_CACHE_STRATEGIES.WEB3_CACHE, cacheKey, {
+        await setCachedData(LEADFIVE_CACHE_STRATEGIES.WEB3_CACHE, cacheKey, {
           data: responseData,
           timestamp: Date.now()
         });
@@ -497,20 +497,20 @@ async function handleWeb3Request(request) {
   }
 }
 
-// OrphiChain API request handler
-async function handleOrphiApiRequest(request) {
+// LeadFive API request handler
+async function handleLeadFiveApiRequest(request) {
   try {
     const response = await fetch(request);
     
     if (response.ok) {
       // Cache successful responses for real-time dashboard
-      const cache = await caches.open(ORPHI_CACHE_STRATEGIES.REALTIME_CACHE);
+      const cache = await caches.open(LEADFIVE_CACHE_STRATEGIES.REALTIME_CACHE);
       cache.put(request, response.clone());
     }
     
     return response;
   } catch (error) {
-    console.log('📊 OrphiChain API request failed, serving cached data');
+    console.log('📊 LeadFive API request failed, serving cached data');
     
     const cached = await caches.match(request);
     if (cached) {

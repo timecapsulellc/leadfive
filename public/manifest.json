@@ -1,6 +1,6 @@
 {
-  "short_name": "OrphiChain",
-  "name": "OrphiChain Dashboard",
+  "short_name": "LeadFive",
+  "name": "LeadFive - Advanced MLM Platform",
   "icons": [
     {
       "src": "favicon.ico",
@@ -13,7 +13,7 @@
   "theme_color": "#00D4FF",
   "background_color": "#0a0a0a",
   "orientation": "portrait",
-  "description": "OrphiChain Dashboard - Your Web3 Dashboard",
+  "description": "LeadFive - Advanced MLM Platform on BSC with 5x5 Matrix System",
   "dir": "ltr",
   "lang": "en-US"
 }

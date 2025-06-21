@@ -1,12 +1,11 @@
-
 // Application Constants
 export const APP_CONFIG = {
-  NAME: "ORPHI CrowdFund",
-  SHORT_NAME: "ORPHI", 
-  TAGLINE: "Web3 Crowdfunding Platform by LEAD 5",
+  NAME: "LeadFive",
+  SHORT_NAME: "LeadFive", 
+  TAGLINE: "The Most Secure MLM Platform on Blockchain",
   VERSION: "v1.0",
-  DESCRIPTION: "Revolutionary Web3 crowdfunding platform with transparent smart contracts",
-  DEVELOPER: "LEAD 5 - Young Blockchain Engineers"
+  DESCRIPTION: "Bank-grade security meets unlimited earning potential",
+  DEVELOPER: "LeadFive Team"
 };
 
 // OrphiChain Official Brand Colors

@@ -2,7 +2,7 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { ethers } from 'ethers';
 import { LEAD_FIVE_CONFIG, LEAD_FIVE_ABI, PACKAGES } from '../contracts-leadfive.js';
-import WalletConnect from '../components/WalletConnect';
+import UnifiedWalletConnect from '../components/UnifiedWalletConnect';
 import CompensationDashboard from '../components/compensation/CompensationDashboard';
 import MatrixVisualization from '../components/MatrixVisualization';
 import TeamOverview from '../components/TeamOverview';
@@ -271,9 +271,11 @@ const Dashboard = () => {
                 </div>
                 
                 <div className="wallet-connect-section">
-                    <WalletConnect
+                    <UnifiedWalletConnect
                         onConnect={handleWalletConnect}
                         onDisconnect={handleWalletDisconnect}
+                        onError={(error) => setError(error)}
+                        buttonText="Connect Wallet to Dashboard"
                     />
                 </div>
 
@@ -302,9 +304,11 @@ const Dashboard = () => {
                             <span>{networkStatus === 'connected' ? 'Connected' : 'Disconnected'}</span>
                         </div>
                         
-                        <WalletConnect
+                        <UnifiedWalletConnect
                             onConnect={handleWalletConnect}
                             onDisconnect={handleWalletDisconnect}
+                            onError={(error) => setError(error)}
+                            buttonText="Reconnect Wallet"
                         />
                     </div>
                 </header>

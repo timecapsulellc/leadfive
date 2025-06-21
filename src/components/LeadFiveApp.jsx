@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { LEAD_FIVE_CONFIG, LEAD_FIVE_ABI, PACKAGES } from '../contracts-leadfive.js';
-import WalletConnect from './WalletConnect';
+import UnifiedWalletConnect from './UnifiedWalletConnect';
 import UltimateDashboard from './UltimateDashboard';
 import RealTimeDashboard from './RealTimeDashboard';
 import NetworkTreeVisualization from './NetworkTreeVisualization';
@@ -292,7 +292,12 @@ const LeadFiveApp = () => {
                         <h1>🚀 LeadFive Platform</h1>
                         <p>Decentralized MLM Platform on Binance Smart Chain</p>
                     </div>
-                    <WalletConnect onConnect={handleWalletConnect} />
+                    <UnifiedWalletConnect 
+                        onConnect={handleWalletConnect}
+                        onDisconnect={handleWalletDisconnect}
+                        onError={(error) => setError(error)}
+                        buttonText="Connect to LeadFive"
+                    />
                     <div className="leadfive-features">
                         <div className="feature-card">
                             <h3>💰 4-Tier Package System</h3>
