@@ -1,19 +1,49 @@
 {
   "short_name": "LeadFive",
-  "name": "LeadFive - Advanced MLM Platform",
+  "name": "LeadFive - The Decentralized Incentive Network",
   "icons": [
     {
       "src": "favicon.ico",
       "sizes": "32x32",
       "type": "image/x-icon"
+    },
+    {
+      "src": "leadfive-logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "leadfive-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "leadfive-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
   "display": "standalone",
   "theme_color": "#00D4FF",
   "background_color": "#0a0a0a",
   "orientation": "portrait",
-  "description": "LeadFive - Advanced MLM Platform on BSC with 5x5 Matrix System",
+  "description": "LeadFive - Smart Rewards, Powered by Blockchain. Autonomous, Transparent, Unstoppable MLM Platform on BSC with 5x5 Matrix System",
   "dir": "ltr",
-  "lang": "en-US"
+  "lang": "en-US",
+  "categories": ["finance", "business", "productivity"],
+  "screenshots": [
+    {
+      "src": "screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshot-narrow.png",
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
 }

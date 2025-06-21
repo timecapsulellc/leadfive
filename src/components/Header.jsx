@@ -25,7 +25,7 @@ export default function Header({ account, onConnect, onDisconnect }) {
         <span className="logo-text">LeadFive</span>
       </div>
       <nav className="nav-links">
-        <Link to="/home">Home</Link>
+        <Link to="/">Home</Link>
         <Link to="/register">Register</Link>
         <Link to="/packages">Packages</Link>
         <Link to="/referrals">Referrals</Link>
@@ -33,7 +33,7 @@ export default function Header({ account, onConnect, onDisconnect }) {
         <Link to="/security">Security</Link>
         <Link to="/brand-guide">Brand Guide</Link>
         <Link to="/about">About</Link>
-        <Link to="/dashboard">Dashboard</Link>
+        {account && <Link to="/dashboard">Dashboard</Link>}
       </nav>
       <div className="wallet-section">
         {account ? (

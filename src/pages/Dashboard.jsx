@@ -1,371 +1,195 @@
-// LeadFive Dashboard - Consolidated Main Dashboard Component
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-import { LEAD_FIVE_CONFIG, LEAD_FIVE_ABI, PACKAGES } from '../contracts-leadfive.js';
-import UnifiedWalletConnect from '../components/UnifiedWalletConnect';
-import CompensationDashboard from '../components/compensation/CompensationDashboard';
-import MatrixVisualization from '../components/MatrixVisualization';
-import TeamOverview from '../components/TeamOverview';
-import WithdrawalPanel from '../components/WithdrawalPanel';
-import ReferralManager from '../components/ReferralManager';
-import AdminDashboard from '../components/admin/AdminDashboard';
-import ErrorBoundary from '../components/ErrorBoundary';
-import LoadingSpinner from '../components/common/LoadingSpinner';
-import '../styles/dashboard-clean.css';
+import IncomeDashboard from '../components/IncomeDashboard';
+import GenealogyTree from '../components/GenealogyTree';
+import MatrixView from '../components/MatrixView';
+import './Dashboard.css';
 
-const Dashboard = () => {
-    // Web3 State
-    const [account, setAccount] = useState(null);
-    const [provider, setProvider] = useState(null);
-    const [signer, setSigner] = useState(null);
-    const [contract, setContract] = useState(null);
-    
-    // App State
-    const [userInfo, setUserInfo] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [isAdmin, setIsAdmin] = useState(false);
-    const [activeTab, setActiveTab] = useState('overview');
-    const [networkStatus, setNetworkStatus] = useState('disconnected');
-    const [dashboardData, setDashboardData] = useState({
-        earnings: '0',
-        teamSize: 0,
-        rank: 'None',
-        package: 'Not Registered',
-        totalDeposits: '0',
-        totalRewards: '0',
-        referralCount: 0,
-        matrixPosition: null
-    });
+export default function Dashboard({ account, provider, signer }) {
+  const [activeTab, setActiveTab] = useState('overview');
+  const [contract, setContract] = useState(null);
+  const [userStats, setUserStats] = useState({
+    totalReferrals: 0,
+    activeReferrals: 0,
+    teamVolume: '0',
+    rank: 'Starter'
+  });
 
-    // Initialize contract when wallet connects
-    useEffect(() => {
-        if (account && provider && signer) {
-            initializeContract();
-            fetchUserData();
-        }
-    }, [account, provider, signer]);
-
-    const initializeContract = async () => {
-        try {
-            setLoading(true);
-            
-            if (!LEAD_FIVE_CONFIG.address) {
-                setError('LeadFive contract not deployed yet. Please wait for deployment.');
-                return;
-            }
-
-            if (!signer) {
-                setError('Signer not available. Please reconnect your wallet.');
-                return;
-            }
-
-            const contractInstance = new ethers.Contract(
-                LEAD_FIVE_CONFIG.address,
-                LEAD_FIVE_ABI,
-                signer
-            );
-            
-            setContract(contractInstance);
-            setNetworkStatus('connected');
-            
-            // Check if user is admin
-            try {
-                const adminRole = await contractInstance.hasRole(
-                    ethers.keccak256(ethers.toUtf8Bytes("ADMIN_ROLE")),
-                    account
-                );
-                setIsAdmin(adminRole);
-            } catch (err) {
-                console.log('Admin check failed:', err);
-                setIsAdmin(false);
-            }
-
-        } catch (err) {
-            console.error('Contract initialization failed:', err);
-            setError('Failed to connect to LeadFive contract: ' + err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const fetchUserData = async () => {
-        if (!contract || !account) return;
-
-        try {
-            setLoading(true);
-            
-            // Fetch user information
-            const user = await contract.users(account);
-            const userStats = {
-                id: user.id?.toString() || '0',
-                referrer: user.referrer || ethers.ZeroAddress,
-                totalDeposits: ethers.formatEther(user.totalDeposits || '0'),
-                totalRewards: ethers.formatEther(user.totalRewards || '0'),
-                teamSize: user.teamSize?.toString() || '0',
-                rank: getRankName(user.rank || 0),
-                isActive: user.isActive || false,
-                currentPackage: user.currentPackage?.toString() || '0'
-            };
-
-            setUserInfo(userStats);
-            
-            // Update dashboard data
-            setDashboardData({
-                earnings: userStats.totalRewards,
-                teamSize: parseInt(userStats.teamSize),
-                rank: userStats.rank,
-                package: userStats.currentPackage !== '0' ? `$${PACKAGES[userStats.currentPackage]?.price || 'Unknown'} Package` : 'Not Registered',
-                totalDeposits: userStats.totalDeposits,
-                totalRewards: userStats.totalRewards,
-                referralCount: parseInt(userStats.teamSize),
-                matrixPosition: userStats.id !== '0' ? userStats.id : null
-            });
-
-        } catch (err) {
-            console.error('Failed to fetch user data:', err);
-            setError('Failed to load user data: ' + err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const getRankName = (rankId) => {
-        const ranks = ['None', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Crown'];
-        return ranks[rankId] || 'None';
-    };
-
-    const handleWalletConnect = async (account, provider, signer) => {
-        setAccount(account);
-        setProvider(provider);
-        setSigner(signer);
-        setError(null);
-    };
-
-    const handleWalletDisconnect = () => {
-        setAccount(null);
-        setProvider(null);
-        setSigner(null);
-        setContract(null);
-        setUserInfo(null);
-        setIsAdmin(false);
-        setNetworkStatus('disconnected');
-        setDashboardData({
-            earnings: '0',
-            teamSize: 0,
-            rank: 'None',
-            package: 'Not Registered',
-            totalDeposits: '0',
-            totalRewards: '0',
-            referralCount: 0,
-            matrixPosition: null
-        });
-    };
-
-    const handleInvestment = async (packageId, referrerAddress) => {
-        if (!contract || !signer) return;
-
-        try {
-            setLoading(true);
-            const packagePrice = PACKAGES[packageId]?.price;
-            if (!packagePrice) throw new Error('Invalid package');
-
-            const tx = await contract.investInPackage(
-                packageId,
-                referrerAddress || ethers.ZeroAddress,
-                {
-                    value: ethers.parseEther(packagePrice.toString())
-                }
-            );
-
-            await tx.wait();
-            await fetchUserData(); // Refresh data
-            
-        } catch (err) {
-            console.error('Investment failed:', err);
-            setError('Investment failed: ' + err.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    // Tab navigation
-    const tabs = [
-        { id: 'overview', label: '📊 Overview', component: 'compensation' },
-        { id: 'matrix', label: '🔄 Matrix', component: 'matrix' },
-        { id: 'team', label: '👥 Team', component: 'team' },
-        { id: 'referrals', label: '🤝 Referrals', component: 'referrals' },
-        { id: 'withdraw', label: '💰 Withdraw', component: 'withdraw' },
-        ...(isAdmin ? [{ id: 'admin', label: '⚙️ Admin', component: 'admin' }] : [])
-    ];
-
-    const renderActiveComponent = () => {
-        const commonProps = {
-            contract,
-            account,
-            provider,
-            signer,
-            userInfo,
-            dashboardData,
-            onRefresh: fetchUserData
-        };
-
-        switch (activeTab) {
-            case 'overview':
-                return (
-                    <Suspense fallback={<LoadingSpinner />}>
-                        <CompensationDashboard 
-                            {...commonProps}
-                            onInvest={handleInvestment}
-                        />
-                    </Suspense>
-                );
-            case 'matrix':
-                return (
-                    <Suspense fallback={<LoadingSpinner />}>
-                        <MatrixVisualization {...commonProps} />
-                    </Suspense>
-                );
-            case 'team':
-                return (
-                    <Suspense fallback={<LoadingSpinner />}>
-                        <TeamOverview {...commonProps} />
-                    </Suspense>
-                );
-            case 'referrals':
-                return (
-                    <Suspense fallback={<LoadingSpinner />}>
-                        <ReferralManager {...commonProps} />
-                    </Suspense>
-                );
-            case 'withdraw':
-                return (
-                    <Suspense fallback={<LoadingSpinner />}>
-                        <WithdrawalPanel {...commonProps} />
-                    </Suspense>
-                );
-            case 'admin':
-                return isAdmin ? (
-                    <Suspense fallback={<LoadingSpinner />}>
-                        <AdminDashboard {...commonProps} />
-                    </Suspense>
-                ) : null;
-            default:
-                return (
-                    <div className="dashboard-welcome">
-                        <h2>Welcome to LeadFive</h2>
-                        <p>Select a tab to view dashboard features</p>
-                    </div>
-                );
-        }
-    };
-
-    if (!account) {
-        return (
-            <div className="dashboard-container">
-                <div className="dashboard-header">
-                    <div className="dashboard-brand">
-                        <h1>🚀 LeadFive</h1>
-                        <p>Advanced MLM Platform on BSC</p>
-                    </div>
-                </div>
-                
-                <div className="wallet-connect-section">
-                    <UnifiedWalletConnect
-                        onConnect={handleWalletConnect}
-                        onDisconnect={handleWalletDisconnect}
-                        onError={(error) => setError(error)}
-                        buttonText="Connect Wallet to Dashboard"
-                    />
-                </div>
-
-                {error && (
-                    <div className="error-message">
-                        <p>❌ {error}</p>
-                    </div>
-                )}
-            </div>
-        );
+  useEffect(() => {
+    if (signer && account) {
+      initContract();
     }
+  }, [signer, account]);
 
-    return (
-        <ErrorBoundary>
-            <div className="dashboard-container">
-                {/* Header */}
-                <header className="dashboard-header">
-                    <div className="dashboard-brand">
-                        <h1>🚀 LeadFive Dashboard</h1>
-                        <p>Welcome back, {account.slice(0, 6)}...{account.slice(-4)}</p>
-                    </div>
-                    
-                    <div className="dashboard-controls">
-                        <div className="network-status">
-                            <span className={`status-indicator ${networkStatus}`}></span>
-                            <span>{networkStatus === 'connected' ? 'Connected' : 'Disconnected'}</span>
-                        </div>
-                        
-                        <UnifiedWalletConnect
-                            onConnect={handleWalletConnect}
-                            onDisconnect={handleWalletDisconnect}
-                            onError={(error) => setError(error)}
-                            buttonText="Reconnect Wallet"
-                        />
-                    </div>
-                </header>
+  const initContract = async () => {
+    try {
+      const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
+      // Mock contract for demonstration
+      const mockContract = {
+        getUserStats: async () => ({
+          totalReferrals: 12,
+          activeReferrals: 10,
+          teamVolume: '45230',
+          rank: 'Premium Leader'
+        })
+      };
+      setContract(mockContract);
+      fetchUserStats(mockContract);
+    } catch (error) {
+      console.error('Error initializing contract:', error);
+    }
+  };
 
-                {/* Quick Stats */}
-                <div className="quick-stats">
-                    <div className="stat-card">
-                        <div className="stat-label">Total Earnings</div>
-                        <div className="stat-value">${parseFloat(dashboardData.earnings).toFixed(2)}</div>
-                    </div>
-                    <div className="stat-card">
-                        <div className="stat-label">Team Size</div>
-                        <div className="stat-value">{dashboardData.teamSize}</div>
-                    </div>
-                    <div className="stat-card">
-                        <div className="stat-label">Rank</div>
-                        <div className="stat-value">{dashboardData.rank}</div>
-                    </div>
-                    <div className="stat-card">
-                        <div className="stat-label">Package</div>
-                        <div className="stat-value">{dashboardData.package}</div>
-                    </div>
-                </div>
+  const fetchUserStats = async (contractInstance) => {
+    try {
+      const stats = await contractInstance.getUserStats(account);
+      setUserStats({
+        totalReferrals: stats.totalReferrals,
+        activeReferrals: stats.activeReferrals,
+        teamVolume: stats.teamVolume,
+        rank: stats.rank
+      });
+    } catch (error) {
+      console.error('Error fetching user stats:', error);
+    }
+  };
 
-                {/* Navigation Tabs */}
-                <nav className="dashboard-nav">
-                    {tabs.map(tab => (
-                        <button
-                            key={tab.id}
-                            className={`nav-tab ${activeTab === tab.id ? 'active' : ''}`}
-                            onClick={() => setActiveTab(tab.id)}
-                        >
-                            {tab.label}
-                        </button>
-                    ))}
-                </nav>
+  const tabs = [
+    { id: 'overview', label: 'Overview', icon: '📊' },
+    { id: 'income', label: 'Income & Earnings', icon: '💰' },
+    { id: 'genealogy', label: 'Genealogy Tree', icon: '🌳' },
+    { id: 'matrix', label: '5x5 Matrix', icon: '⬜' },
+    { id: 'rewards', label: 'Rewards', icon: '🎁' }
+  ];
 
-                {/* Main Content */}
-                <main className="dashboard-content">
-                    {loading && <LoadingSpinner />}
-                    {error && (
-                        <div className="error-message">
-                            <p>❌ {error}</p>
-                            <button onClick={() => setError(null)}>Dismiss</button>
-                        </div>
-                    )}
-                    {renderActiveComponent()}
-                </main>
+  return (
+    <div className="dashboard-page">
+      <div className="page-background">
+        <div className="animated-bg"></div>
+        <div className="gradient-overlay"></div>
+      </div>
 
-                {/* Footer */}
-                <footer className="dashboard-footer">
-                    <p>LeadFive v1.0 - Advanced MLM Platform</p>
-                    <p>Contract: {LEAD_FIVE_CONFIG.address}</p>
-                </footer>
+      <div className="dashboard-content">
+        <div className="dashboard-header">
+          <h1 className="dashboard-title">Member Dashboard</h1>
+          <div className="user-info">
+            <div className="wallet-address">
+              {account?.slice(0, 6)}...{account?.slice(-4)}
             </div>
-        </ErrorBoundary>
-    );
-};
+            <div className="user-rank">{userStats.rank}</div>
+          </div>
+        </div>
 
-export default Dashboard;
+        <div className="dashboard-stats">
+          <div className="stat-card">
+            <div className="stat-icon">👥</div>
+            <div className="stat-info">
+              <h3>Total Referrals</h3>
+              <p>{userStats.totalReferrals}</p>
+            </div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-icon">✅</div>
+            <div className="stat-info">
+              <h3>Active Members</h3>
+              <p>{userStats.activeReferrals}</p>
+            </div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-icon">💎</div>
+            <div className="stat-info">
+              <h3>Team Volume</h3>
+              <p>${userStats.teamVolume}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="dashboard-tabs">
+          <div className="tab-nav">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                className={`tab-btn ${activeTab === tab.id ? 'active' : ''}`}
+                onClick={() => setActiveTab(tab.id)}
+              >
+                <span className="tab-icon">{tab.icon}</span>
+                <span className="tab-label">{tab.label}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="tab-content">
+            {activeTab === 'overview' && (
+              <div className="overview-section">
+                <h2>Dashboard Overview</h2>
+                <p>Welcome to your LeadFive dashboard. Navigate through the tabs to view your earnings, network, and rewards.</p>
+                <div className="quick-stats">
+                  <div className="quick-stat">
+                    <span className="quick-stat-label">Current Package</span>
+                    <span className="quick-stat-value">Premium</span>
+                  </div>
+                  <div className="quick-stat">
+                    <span className="quick-stat-label">Member Since</span>
+                    <span className="quick-stat-value">Dec 2024</span>
+                  </div>
+                  <div className="quick-stat">
+                    <span className="quick-stat-label">Next Rank</span>
+                    <span className="quick-stat-value">Diamond</span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'income' && contract && (
+              <IncomeDashboard 
+                account={account} 
+                contract={contract} 
+                signer={signer} 
+              />
+            )}
+
+            {activeTab === 'genealogy' && contract && (
+              <GenealogyTree 
+                account={account} 
+                contract={contract} 
+              />
+            )}
+
+            {activeTab === 'matrix' && contract && (
+              <MatrixView 
+                account={account} 
+                contract={contract} 
+              />
+            )}
+
+            {activeTab === 'rewards' && (
+              <div className="rewards-section">
+                <h2>Rewards & Achievements</h2>
+                <div className="rewards-grid">
+                  <div className="reward-card">
+                    <div className="reward-icon">🏆</div>
+                    <h3>Top Recruiter</h3>
+                    <p>Achieved 10+ direct referrals</p>
+                    <span className="reward-status earned">Earned</span>
+                  </div>
+                  <div className="reward-card">
+                    <div className="reward-icon">💎</div>
+                    <h3>Diamond Level</h3>
+                    <p>Reach $50,000 team volume</p>
+                    <span className="reward-status progress">90% Complete</span>
+                  </div>
+                  <div className="reward-card">
+                    <div className="reward-icon">🚀</div>
+                    <h3>Matrix Master</h3>
+                    <p>Complete 5 matrix cycles</p>
+                    <span className="reward-status locked">Locked</span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
