@@ -1,240 +1,419 @@
-/* Genealogy Tree Styles */
-.genealogy-tree {
-  padding: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-}
+/* Enhanced Genealogy Tree Styles for react-d3-tree */
 
-.tree-header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.tree-header h2 {
-  font-size: 2.5rem;
-  background: linear-gradient(45deg, #00D4FF, #7B2CBF);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 2rem;
-}
-
-.tree-stats {
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  margin-bottom: 2rem;
-}
-
-.stat-item {
-  text-align: center;
-}
-
-.stat-label {
-  display: block;
-  font-size: 0.9rem;
-  color: #B8C5D1;
-  margin-bottom: 0.5rem;
-}
-
-.stat-value {
-  display: block;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #FFFFFF;
-}
-
-.tree-container {
-  background: rgba(26, 26, 46, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.genealogy-tree-container {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 20px;
-  padding: 2rem;
-  overflow-x: auto;
-}
-
-.tree-node-wrapper {
+  padding: 30px;
+  color: white;
   position: relative;
-  margin-left: 2rem;
+  overflow: hidden;
 }
 
-.tree-node-wrapper:first-child {
-  margin-left: 0;
+.genealogy-tree-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+  pointer-events: none;
 }
 
-.tree-node {
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.9), rgba(22, 33, 62, 0.9));
-  border: 2px solid rgba(0, 212, 255, 0.3);
-  border-radius: 15px;
-  padding: 1rem;
-  margin: 1rem 0;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.genealogy-tree-loading {
   display: flex;
-  align-items: center;
-  gap: 1rem;
-  position: relative;
-}
-
-.tree-node:hover {
-  transform: translateX(5px);
-  box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
-}
-
-.tree-node.active {
-  border-color: rgba(0, 255, 136, 0.5);
-}
-
-.tree-node.inactive {
-  opacity: 0.6;
-  border-color: rgba(255, 107, 53, 0.3);
-}
-
-.tree-node.selected {
-  border-color: #00D4FF;
-  box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
-}
-
-.node-avatar {
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg, #00D4FF, #7B2CBF);
-  border-radius: 50%;
-  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 1.2rem;
+  height: 400px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
   color: white;
 }
 
-.node-info {
-  flex: 1;
-}
-
-.node-name {
-  font-size: 0.9rem;
-  color: #FFFFFF;
-  margin-bottom: 0.3rem;
-}
-
-.node-package {
-  font-size: 0.8rem;
-  color: #B8C5D1;
-  margin-bottom: 0.2rem;
-  font-weight: 600;
-}
-
-.node-earnings {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #00D4FF;
-}
-
-.expand-btn {
-  background: rgba(0, 212, 255, 0.2);
-  border: 1px solid rgba(0, 212, 255, 0.3);
-  color: #00D4FF;
-  width: 30px;
-  height: 30px;
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1.2rem;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 20px;
 }
 
-.expand-btn:hover {
-  background: rgba(0, 212, 255, 0.3);
-  transform: scale(1.1);
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-.tree-children {
-  margin-left: 2rem;
+.tree-header {
   position: relative;
+  z-index: 2;
+  margin-bottom: 30px;
 }
 
-.tree-children::before {
-  content: '';
-  position: absolute;
-  left: -1rem;
-  top: -1rem;
-  bottom: 1rem;
-  width: 2px;
-  background: linear-gradient(to bottom, 
-    rgba(0, 212, 255, 0.3), 
-    transparent
-  );
-}
-
-.node-details-panel {
-  background: rgba(26, 26, 46, 0.95);
-  border: 2px solid rgba(0, 212, 255, 0.3);
-  border-radius: 15px;
-  padding: 2rem;
-  margin-top: 2rem;
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.node-details-panel h3 {
-  font-size: 1.5rem;
-  color: #FFFFFF;
-  margin-bottom: 1.5rem;
+.tree-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 20px 0;
   text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.detail-item {
+.tree-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 20px;
   display: flex;
-  justify-content: space-between;
-  padding: 0.8rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  align-items: center;
+  gap: 15px;
+  transition: all 0.3s ease;
 }
 
-.detail-item:last-child {
-  border-bottom: none;
+.stat-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
 }
 
-.detail-item span:first-child {
-  color: #B8C5D1;
+.stat-icon {
+  font-size: 24px;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.detail-item span:last-child {
-  color: #FFFFFF;
+.stat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.stat-label {
+  font-size: 14px;
+  opacity: 0.9;
   font-weight: 500;
 }
 
-.status-active {
-  color: #00FF88 !important;
+.stat-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFD700;
 }
 
-.status-inactive {
-  color: #FF6B35 !important;
+.tree-controls {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
-.tree-loading {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #B8C5D1;
-  padding: 4rem;
+.legend {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-/* Mobile Responsive */
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.legend-dot.premium { background: #FFD700; }
+.legend-dot.advanced { background: #FF6B35; }
+.legend-dot.standard { background: #7B2CBF; }
+.legend-dot.entry { background: #00D4FF; }
+
+.tree-instructions {
+  font-size: 12px;
+  opacity: 0.8;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 10px 15px;
+  border-radius: 10px;
+  max-width: 400px;
+}
+
+.tree-visualization {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+/* Custom styles for react-d3-tree SVG elements */
+.tree-visualization .rd3t-tree-container {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.tree-visualization .rd3t-link {
+  stroke: rgba(255, 255, 255, 0.4) !important;
+  stroke-width: 2 !important;
+  fill: none !important;
+}
+
+.tree-visualization .rd3t-leaf-node circle,
+.tree-visualization .rd3t-branch-node circle {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* Member details panel */
+.member-details-panel {
+  position: fixed;
+  top: 50%;
+  right: 30px;
+  transform: translateY(-50%);
+  width: 350px;
+  max-width: 90vw;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  overflow: hidden;
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 25px;
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.panel-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.panel-content {
+  padding: 25px;
+  color: white;
+}
+
+.member-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  margin: 0 auto 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.member-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.label {
+  font-size: 14px;
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+.value {
+  font-size: 14px;
+  font-weight: 600;
+  text-align: right;
+}
+
+.value.package {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+.value.status.active {
+  color: #10B981;
+}
+
+.value.status.inactive {
+  color: #EF4444;
+}
+
+.value.earnings {
+  color: #FFD700;
+  font-weight: 700;
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
+  .genealogy-tree-container {
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  .tree-header h2 {
+    font-size: 24px;
+  }
+  
   .tree-stats {
-    flex-direction: column;
-    gap: 1rem;
+    grid-template-columns: 1fr;
+    gap: 15px;
   }
   
-  .tree-container {
-    padding: 1rem;
+  .stat-card {
+    padding: 15px;
   }
   
-  .tree-node {
+  .tree-controls {
     flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+  
+  .legend {
+    justify-content: center;
+  }
+  
+  .tree-instructions {
     text-align: center;
+    max-width: none;
   }
   
-  .tree-children {
-    margin-left: 1rem;
+  .tree-visualization {
+    height: 500px !important;
+  }
+  
+  .member-details-panel {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: auto;
+    max-width: none;
+    transform: none;
+    border-radius: 20px 20px 0 0;
+    animation: slideInUp 0.3s ease-out;
+  }
+  
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .genealogy-tree-container {
+    padding: 15px;
+    margin: 5px;
+    border-radius: 15px;
+  }
+  
+  .tree-header h2 {
+    font-size: 20px;
+  }
+  
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+  
+  .stat-value {
+    font-size: 18px;
+  }
+  
+  .legend-item {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+  
+  .tree-visualization {
+    height: 400px !important;
   }
 }
