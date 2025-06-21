@@ -12,6 +12,7 @@ import About from './pages/About';
 import Dashboard from './pages/Dashboard';
 import Welcome from './pages/Welcome';
 import BrandGuide from './pages/BrandGuide';
+import Genealogy from './pages/Genealogy';
 import './App.css';
 
 function App() {
@@ -196,6 +197,25 @@ function App() {
             />
             <div className="App">
               <Referrals 
+                account={account}
+                provider={provider}
+                signer={signer}
+                onConnect={handleWalletConnect}
+                onDisconnect={handleDisconnect}
+              />
+            </div>
+            <Footer />
+          </>
+        } />
+        <Route path="/genealogy" element={
+          <>
+            <Header 
+              account={account} 
+              onConnect={handleWalletConnect}
+              onDisconnect={handleDisconnect} 
+            />
+            <div className="App">
+              <Genealogy 
                 account={account}
                 provider={provider}
                 signer={signer}

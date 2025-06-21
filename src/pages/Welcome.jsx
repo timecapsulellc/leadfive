@@ -60,19 +60,19 @@ const Welcome = () => {
 
   const slides = [
     {
-      title: "Build Your Legacy",
-      subtitle: "Create a network that generates passive income",
-      icon: "🏆"
+      title: "Revolutionary Platform",
+      subtitle: "Smart contract-powered decentralized incentive system on BSC blockchain",
+      icon: "🚀"
     },
     {
-      title: "Earn Together",
-      subtitle: "Matrix compensation system with multiple income streams",
+      title: "Automated Earnings",
+      subtitle: "Decentralized commission distribution with genealogy tracking",
       icon: "💰"
     },
     {
-      title: "Lead the Future",
-      subtitle: "Blockchain-powered MLM platform built for success",
-      icon: "🚀"
+      title: "Future of Networking",
+      subtitle: "Transparent, trustless incentive platform with verified results",
+      icon: "🌟"
     }
   ];
 
@@ -111,12 +111,12 @@ const Welcome = () => {
             <div className="logo-glow"></div>
             <div className="logo-container">
               <div className="logo-text">LeadFive</div>
-              <div className="logo-subtitle">MLM Platform</div>
+              <div className="logo-subtitle">Blockchain Platform</div>
             </div>
           </div>
           <div className="brand-animation">
             <div className="brand-line"></div>
-            <p className="welcome-tagline">Your Path to Financial Freedom</p>
+            <p className="welcome-tagline">Revolutionary Network Marketing</p>
             <div className="brand-line"></div>
           </div>
         </div>

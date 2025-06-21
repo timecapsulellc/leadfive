@@ -2,9 +2,9 @@
 export const APP_CONFIG = {
   NAME: "LeadFive",
   SHORT_NAME: "LeadFive", 
-  TAGLINE: "The Most Secure MLM Platform on Blockchain",
+  TAGLINE: "The Decentralized Incentive Platform",
   VERSION: "v1.0",
-  DESCRIPTION: "Bank-grade security meets unlimited earning potential",
+  DESCRIPTION: "Bank-grade security meets transparent earning potential",
   DEVELOPER: "LeadFive Team"
 };
 

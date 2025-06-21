@@ -290,7 +290,7 @@ const LeadFiveApp = () => {
                 <div className="leadfive-app">
                     <div className="leadfive-header">
                         <h1>🚀 LeadFive Platform</h1>
-                        <p>Decentralized MLM Platform on Binance Smart Chain</p>
+                        <p>The Decentralized Incentive Platform on Binance Smart Chain</p>
                     </div>
                     <UnifiedWalletConnect 
                         onConnect={handleWalletConnect}
@@ -304,8 +304,8 @@ const LeadFiveApp = () => {
                             <p>$30, $50, $100, $200 packages with 100% distribution</p>
                         </div>
                         <div className="feature-card">
-                            <h3>🌐 Binary Matrix</h3>
-                            <p>2×∞ matrix with automatic spillover</p>
+                            <h3>🌐 Network Tree</h3>
+                            <p>Binary network with automatic placement</p>
                         </div>
                         <div className="feature-card">
                             <h3>⚡ Progressive Withdrawal</h3>

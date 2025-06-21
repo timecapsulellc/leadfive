@@ -1,7 +1,7 @@
 {
   "name": "leadfive",
   "version": "1.0.0",
-  "description": "LeadFive - Advanced MLM Platform on BSC",
+  "description": "LeadFive - The Decentralized Incentive Platform",
   "type": "module",
   "main": "src/main.jsx",
   "scripts": {
@@ -22,11 +22,11 @@
     "lint:fix": "eslint . --ext js,jsx --fix"
   },
   "keywords": [
-    "mlm",
+    "decentralized-platform",
     "blockchain",
     "bsc",
     "defi",
-    "matrix",
+    "network-incentives",
     "leadfive",
     "smart-contract",
     "react",
@@ -48,7 +48,7 @@
     "framer-motion": "^10.18.0",
     "lucide-react": "^0.263.1",
     "react": "^18.2.0",
-    "react-d3-tree": "^3.6.6",
+    "react-d3-tree": "^3.5.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^7.6.2",
     "react-toastify": "^11.0.5",

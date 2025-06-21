@@ -58,7 +58,7 @@ export default function Dashboard({ account, provider, signer }) {
     { id: 'overview', label: 'Overview', icon: '📊' },
     { id: 'income', label: 'Income & Earnings', icon: '💰' },
     { id: 'genealogy', label: 'Genealogy Tree', icon: '🌳' },
-    { id: 'matrix', label: '5x5 Matrix', icon: '⬜' },
+    { id: 'matrix', label: 'Network Tree', icon: '⬜' },
     { id: 'rewards', label: 'Rewards', icon: '🎁' }
   ];
 
@@ -180,8 +180,8 @@ export default function Dashboard({ account, provider, signer }) {
                   </div>
                   <div className="reward-card">
                     <div className="reward-icon">🚀</div>
-                    <h3>Matrix Master</h3>
-                    <p>Complete 5 matrix cycles</p>
+                    <h3>Network Master</h3>
+                    <p>Complete 5 network cycles</p>
                     <span className="reward-status locked">Locked</span>
                   </div>
                 </div>

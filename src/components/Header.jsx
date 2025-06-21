@@ -29,6 +29,7 @@ export default function Header({ account, onConnect, onDisconnect }) {
         <Link to="/register">Register</Link>
         <Link to="/packages">Packages</Link>
         <Link to="/referrals">Referrals</Link>
+        <Link to="/genealogy">Genealogy</Link>
         <Link to="/withdrawals">Withdrawals</Link>
         <Link to="/security">Security</Link>
         <Link to="/brand-guide">Brand Guide</Link>

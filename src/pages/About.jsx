@@ -65,10 +65,10 @@ export default function About({ account, provider, signer, onConnect, onDisconne
           </svg>
         </div>
         <h1>About LeadFive</h1>
-        <p className="hero-subtitle">The Most Secure MLM Platform on Blockchain</p>
+        <p className="hero-subtitle">The Decentralized Incentive Platform</p>
         <p className="hero-description">
-          LeadFive represents the pinnacle of blockchain-based multi-level marketing platforms, 
-          combining cutting-edge security with unlimited earning potential on BSC Mainnet.
+          LeadFive represents the pinnacle of blockchain-based decentralized platforms, 
+          combining cutting-edge security with transparent earning potential on BSC Mainnet.
         </p>
       </div>
 

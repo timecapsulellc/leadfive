@@ -34,9 +34,9 @@ export default function Home({ account, provider, signer, onConnect, onDisconnec
             </svg>
           </div>
           <h1 className="hero-title">Welcome to LeadFive</h1>
-          <p className="hero-subtitle">The Most Secure MLM Platform on Blockchain</p>
+          <p className="hero-subtitle">The Decentralized Incentive Platform</p>
           <p className="hero-description">
-            Experience the future of multi-level marketing with our revolutionary 5x5 matrix system. 
+            Experience the future of decentralized networking with our revolutionary incentive system. 
             Built on BSC with complete transparency, security, and automated smart contracts.
           </p>
           
@@ -83,8 +83,8 @@ export default function Home({ account, provider, signer, onConnect, onDisconnec
             <div className="stat-label">Max USDT per Cycle</div>
           </div>
           <div className="stat-card">
-            <div className="stat-number">5x5</div>
-            <div className="stat-label">Matrix System</div>
+            <div className="stat-number">Network</div>
+            <div className="stat-label">Incentive System</div>
           </div>
           <div className="stat-card">
             <div className="stat-number">100%</div>

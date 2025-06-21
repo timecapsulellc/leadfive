@@ -122,7 +122,7 @@ export default function Register({ account, provider, signer, onConnect, onDisco
             Register Now
           </button>
           <p className="register-note">
-            By registering, you become the foundation of your MLM network with exclusive benefits and highest earning potential.
+            By registering, you become the foundation of your decentralized network with exclusive benefits and highest earning potential.
           </p>
         </div>
       </div>
