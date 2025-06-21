@@ -1,406 +1,43 @@
 /* Genealogy Page Styles */
 .genealogy-page {
-  min-height: 100vh;
+  min-height: calc(100vh - 140px);
   padding: 2rem;
-  color: white;
+  background: #0A0A0A;
 }
 
-.page-header {
+.genealogy-header {
   text-align: center;
   margin-bottom: 3rem;
 }
 
-.page-title {
-  font-size: 3rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, #00D4FF, #7B2CBF, #FF6B35);
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientShift 4s ease-in-out infinite;
+.genealogy-header h1 {
+  font-size: 2.5rem;
   margin-bottom: 1rem;
-}
-
-.page-subtitle {
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.8);
-  font-weight: 300;
-}
-
-/* Controls */
-.genealogy-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.view-controls {
-  display: flex;
-  gap: 10px;
-}
-
-.view-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.view-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: translateY(-2px);
-}
-
-.view-btn.active {
   background: linear-gradient(135deg, #00D4FF, #7B2CBF);
-  border-color: transparent;
-  box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+  background-clip: text;
+  -webkit-background-clip: text;  
+  -webkit-text-fill-color: transparent;
 }
 
-.tree-controls {
-  display: flex;
-  gap: 10px;
-}
-
-.control-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 16px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 13px;
-}
-
-.control-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-}
-
-/* Tree Structure */
-.genealogy-tree {
-  display: flex;
-  justify-content: center;
-  padding: 2rem;
-  overflow-x: auto;
-  overflow-y: visible;
-  min-height: 600px;
-}
-
-.genealogy-tree.horizontal {
-  flex-direction: column;
-  align-items: center;
-}
-
-.genealogy-tree.vertical {
-  flex-direction: row;
-  align-items: flex-start;
-}
-
-/* Tree Nodes */
-.tree-node {
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin: 1rem;
-}
-
-.tree-node.horizontal {
-  flex-direction: column;
-}
-
-.tree-node.vertical {
-  flex-direction: row;
-}
-
-.node-card {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
-  padding: 20px;
-  backdrop-filter: blur(10px);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  min-width: 280px;
-  max-width: 320px;
-}
-
-.node-card:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(0, 212, 255, 0.5);
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 212, 255, 0.2);
-}
-
-.node-card.selected {
-  background: rgba(0, 212, 255, 0.2);
-  border-color: #00D4FF;
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-}
-
-.root-node .node-card {
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(123, 44, 191, 0.2));
-  border-color: #00D4FF;
-  box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
-}
-
-/* Node Content */
-.node-avatar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 15px;
-  position: relative;
-}
-
-.avatar-circle {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #00D4FF, #7B2CBF);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 16px;
-  color: white;
-}
-
-.node-status {
-  position: absolute;
-  top: -2px;
-  right: -2px;
-}
-
-.status-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.9);
-}
-
-.status-dot.active {
-  background: #4CAF50;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.node-info {
-  text-align: left;
-}
-
-.node-name {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: white;
-  margin-bottom: 5px;
-}
-
-.node-id {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 15px;
-  font-family: 'Courier New', monospace;
-}
-
-.node-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-.stat {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.85rem;
-}
-
-.stat-label {
+.genealogy-header p {
   color: rgba(255, 255, 255, 0.7);
-  font-weight: 500;
-}
-
-.stat-value {
-  color: white;
-  font-weight: 600;
-}
-
-.stat-value.earnings {
-  color: #4CAF50;
-  font-weight: 700;
-}
-
-/* Connection Lines */
-.children-container {
-  position: relative;
-}
-
-.children-container.horizontal {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.children-container.vertical {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-}
-
-.connection-line {
-  background: linear-gradient(135deg, #00D4FF, #7B2CBF);
-  position: relative;
-}
-
-.connection-line.horizontal {
-  width: 2px;
-  height: 40px;
-  margin: 10px 0;
-}
-
-.connection-line.vertical {
-  width: 40px;
-  height: 2px;
-  margin: 0 10px;
-  align-self: center;
-}
-
-.children-grid.horizontal {
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.children-grid.vertical {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-/* Node Details Panel */
-.node-details-panel {
-  position: fixed;
-  top: 50%;
-  right: 30px;
-  transform: translateY(-50%);
-  width: 350px;
-  background: rgba(10, 10, 10, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
-  backdrop-filter: blur(20px);
-  z-index: 1000;
-  animation: slideInRight 0.3s ease-out;
-}
-
-@keyframes slideInRight {
-  from {
-    transform: translateY(-50%) translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(-50%) translateX(0);
-    opacity: 1;
-  }
-}
-
-.panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 20px 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.panel-header h3 {
-  color: white;
   font-size: 1.1rem;
-  font-weight: 700;
-  margin: 0;
 }
 
-.close-btn {
-  background: none;
-  border: none;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 24px;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.close-btn:hover {
-  color: white;
-}
-
-.panel-content {
-  padding: 20px;
-}
-
-.detail-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.detail-row:last-child {
-  border-bottom: none;
-}
-
-.detail-label {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.detail-value {
-  color: white;
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-.detail-value.earnings {
-  color: #4CAF50;
-  font-weight: 700;
-}
-
-/* Statistics Cards */
-.genealogy-stats {
+/* Network Stats */
+.network-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto 3rem;
 }
 
 .stat-card {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.95));
+  border: 2px solid rgba(0, 212, 255, 0.2);
   border-radius: 20px;
   padding: 2rem;
-  backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   gap: 1.5rem;
@@ -408,135 +45,132 @@
 }
 
 .stat-card:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(0, 212, 255, 0.5);
   transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 212, 255, 0.2);
+  border-color: rgba(0, 212, 255, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
 }
 
 .stat-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 15px;
-  background: linear-gradient(135deg, #00D4FF, #7B2CBF);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-}
-
-.stat-info h4 {
-  color: white;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-
-.stat-number {
-  font-size: 2rem;
-  font-weight: 800;
+  font-size: 2.5rem;
   color: #00D4FF;
-  margin: 0;
 }
 
-.stat-number.earnings {
-  color: #4CAF50;
+.stat-card h3 {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
 }
 
-/* Loading State */
-.loading-container {
+.stat-card p {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* View Toggle */
+.view-toggle {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  min-height: 400px;
-  gap: 2rem;
+  gap: 1rem;
+  margin-bottom: 3rem;
 }
 
-.loading-spinner {
-  width: 60px;
-  height: 60px;
-  border: 3px solid rgba(255, 255, 255, 0.2);
+.view-toggle button {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 25px;
+  padding: 0.75rem 2rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.view-toggle button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.view-toggle button.active {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(123, 44, 191, 0.2));
+  border-color: rgba(0, 212, 255, 0.3);
+}
+
+/* Visualization Container */
+.visualization-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.tree-view, .matrix-view {
+  background: rgba(26, 26, 46, 0.6);
+  border: 2px solid rgba(0, 212, 255, 0.2);
+  border-radius: 20px;
+  padding: 2rem;
+  min-height: 600px;
+}
+
+.tree-view h2, .matrix-view h2 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #00D4FF;
+}
+
+/* Network Legend */
+.network-legend {
+  max-width: 600px;
+  margin: 3rem auto 0;
+  background: rgba(26, 26, 46, 0.5);
+  border-radius: 15px;
+  padding: 1.5rem;
+}
+
+.network-legend h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.legend-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  border-top-color: #00D4FF;
-  animation: spin 1s ease-in-out infinite;
+  border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.legend-color.active { background: #00D4FF; box-shadow: 0 0 10px rgba(0, 212, 255, 0.5); }
+.legend-color.inactive { background: rgba(255, 255, 255, 0.1); }
+.legend-color.you { background: linear-gradient(135deg, #00D4FF, #7B2CBF); box-shadow: 0 0 15px rgba(123, 44, 191, 0.5); }
+.legend-color.direct { background: #7B2CBF; box-shadow: 0 0 10px rgba(123, 44, 191, 0.5); }
+
+.legend-item span { color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; }
+
+@media (max-width: 968px) {
+  .network-stats { grid-template-columns: repeat(2, 1fr); }
+  .view-toggle { flex-direction: column; align-items: center; }
+  .view-toggle button { width: 200px; }
 }
 
-.loading-container p {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1.1rem;
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .node-details-panel {
-    position: relative;
-    top: auto;
-    right: auto;
-    transform: none;
-    width: 100%;
-    margin-top: 2rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .genealogy-page {
-    padding: 1rem;
-  }
-  
-  .page-title {
-    font-size: 2.5rem;
-  }
-  
-  .genealogy-controls {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  .view-controls {
-    justify-content: center;
-  }
-  
-  .tree-controls {
-    justify-content: center;
-  }
-  
-  .node-card {
-    min-width: 250px;
-    max-width: 280px;
-  }
-  
-  .children-grid.horizontal {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .genealogy-stats {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .genealogy-page {
-    padding: 0.5rem;
-  }
-  
-  .page-title {
-    font-size: 2rem;
-  }
-  
-  .node-card {
-    min-width: 220px;
-    max-width: 260px;
-    padding: 15px;
-  }
-  
-  .view-btn {
-    padding: 10px 15px;
-    font-size: 13px;
-  }
+@media (max-width: 568px) {
+  .genealogy-page { padding: 1rem; }
+  .network-stats { grid-template-columns: 1fr; }
+  .tree-view, .matrix-view { padding: 1rem; }
+  .legend-items { grid-template-columns: 1fr; }
 }

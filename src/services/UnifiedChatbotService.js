@@ -6,49 +6,60 @@ class UnifiedChatbotService {
     this.elevenLabsKey = import.meta.env.VITE_ELEVENLABS_API_KEY;
     this.voiceId = import.meta.env.VITE_ELEVENLABS_VOICE_ID || '21m00Tcm4TlvDq8ikWAM';
     
-    // Knowledge base from PDF and smart contract
+    // Enhanced Knowledge base from PDF and smart contract
     this.knowledgeBase = {
       platform: {
         name: "LeadFive",
         type: "Decentralized Incentive Platform",
         blockchain: "BSC (Binance Smart Chain)",
         token: "USDT",
-        contract: "0x18f7550B5B3e8b6101712D26083B6d1181Ee550a"
+        contract: "0x18f7550B5B3e8b6101712D26083B6d1181Ee550a",
+        website: "https://leadfive.today",
+        description: "LeadFive is a revolutionary blockchain-based incentive platform that leverages smart contracts for transparent and automated reward distribution."
       },
       packages: [
-        { name: "Starter", price: 15, rewards: "25 USDT per referral" },
-        { name: "Basic", price: 30, rewards: "50 USDT per referral" },
-        { name: "Premium", price: 50, rewards: "125 USDT per referral" },
-        { name: "Professional", price: 100, rewards: "250 USDT per referral" },
-        { name: "Enterprise", price: 200, rewards: "625 USDT per referral" }
+        { id: 1, name: "Starter", price: 15, rewards: "25 USDT per referral", description: "Perfect for beginners to start their journey", benefits: ["Entry level access", "Basic network features", "Community support"] },
+        { id: 2, name: "Basic", price: 30, rewards: "50 USDT per referral", description: "Enhanced rewards for serious networkers", benefits: ["Enhanced rewards", "Priority support", "Advanced features"] },
+        { id: 3, name: "Premium", price: 50, rewards: "125 USDT per referral", description: "Premium benefits for accelerated growth", benefits: ["Premium rewards", "Advanced analytics", "VIP community access"] },
+        { id: 4, name: "Professional", price: 100, rewards: "250 USDT per referral", description: "Professional tools for serious builders", benefits: ["Professional rewards", "Dedicated support", "Exclusive features"] },
+        { id: 5, name: "Enterprise", price: 200, rewards: "625 USDT per referral", description: "Maximum benefits for enterprise builders", benefits: ["Maximum rewards", "White glove support", "All features unlocked"] }
       ],
       features: [
-        "Smart Contract Security",
-        "Automated Rewards Distribution",
-        "Transparent Blockchain Transactions",
-        "5x5 Network Structure",
-        "Direct Referral Bonuses",
-        "Team Building Rewards",
-        "Instant USDT Withdrawals"
+        "Smart Contract Security - Audited and verified contracts",
+        "Automated Rewards Distribution - Instant payouts",
+        "Transparent Blockchain Transactions - Full visibility",
+        "5x5 Network Structure - Sustainable growth model",
+        "Direct Referral Bonuses - Immediate rewards",
+        "Team Building Rewards - Earn from your network",
+        "Instant USDT Withdrawals - No waiting periods",
+        "Real-time Analytics - Track your progress",
+        "Mobile Responsive - Access anywhere",
+        "24/7 Smart Contract Operation - Always active"
       ],
       faq: [
-        {
-          q: "What is LeadFive?",
-          a: "LeadFive is a decentralized incentive platform built on Binance Smart Chain that enables users to earn rewards through network building and smart contract automation."
-        },
-        {
-          q: "How do I get started?",
-          a: "Connect your BSC wallet, choose a package that suits your goals, and start building your network. Rewards are automatically distributed via smart contracts."
-        },
-        {
-          q: "Are the rewards guaranteed?",
-          a: "Rewards are programmed into the smart contract and execute automatically when conditions are met. The blockchain ensures transparency and immutability."
-        },
-        {
-          q: "What wallet do I need?",
-          a: "You need a BSC-compatible wallet like MetaMask, Trust Wallet, or any Web3 wallet that supports Binance Smart Chain."
-        }
-      ]
+        { q: "What is LeadFive?", a: "LeadFive is a decentralized incentive platform built on Binance Smart Chain that enables users to earn rewards through network building and smart contract automation. It's designed for transparency, security, and automated reward distribution." },
+        { q: "How do I get started?", a: "Getting started is easy: 1) Connect your BSC-compatible wallet (MetaMask, Trust Wallet, etc.), 2) Choose a package that suits your goals, 3) Complete registration with a referral link if you have one, 4) Start building your network and earning rewards automatically." },
+        { q: "Are the rewards guaranteed?", a: "Rewards are programmed into the smart contract and execute automatically when conditions are met. The blockchain ensures transparency and immutability. As long as you meet the network building requirements, rewards are distributed instantly." },
+        { q: "What wallet do I need?", a: "You need a BSC-compatible wallet like MetaMask, Trust Wallet, or any Web3 wallet that supports Binance Smart Chain. Make sure you have some BNB for gas fees and USDT for package purchases." },
+        { q: "How do withdrawals work?", a: "Withdrawals are instant and automated. Simply go to the Withdrawals page, enter the amount you want to withdraw (minimum 0.01 USDT), and confirm the transaction. The USDT will be sent directly to your wallet." },
+        { q: "What is the 5x5 structure?", a: "The 5x5 structure means each member can have up to 5 direct referrals, and the network extends 5 levels deep. This creates a sustainable growth model that rewards both direct referrals and team building." },
+        { q: "Is LeadFive secure?", a: "Yes, LeadFive uses audited smart contracts on BSC. All transactions are transparent and recorded on the blockchain. You maintain full control of your funds - they're never held by the platform." },
+        { q: "Can I have multiple packages?", a: "Yes, you can activate multiple packages to increase your earning potential. Each package level offers different reward rates and benefits." },
+        { q: "How do I track my network?", a: "Use the Genealogy page to view your network in both tree and matrix views. You can see your direct referrals, team size, and network structure in real-time." },
+        { q: "What support is available?", a: "We offer multiple support channels: This AI chatbot for instant help, community support through Telegram, comprehensive documentation, and email support for complex issues." }
+      ],
+      commands: {
+        packages: "Show me the available packages",
+        features: "What features does LeadFive offer?",
+        start: "How do I get started?",
+        withdraw: "How do I withdraw my earnings?",
+        security: "Is LeadFive secure?",
+        network: "How does the network structure work?",
+        support: "How can I get help?",
+        genealogy: "How do I view my network?",
+        referral: "How do referrals work?",
+        wallet: "What wallet do I need?"
+      }
     };
   }
 
