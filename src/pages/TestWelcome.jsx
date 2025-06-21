@@ -12,8 +12,8 @@ const TestWelcome = () => {
       justifyContent: 'center',
       fontFamily: 'Inter, sans-serif'
     }}>
-      <h1 style={{ fontSize: '4rem', marginBottom: '1rem' }}>LEADFIVE</h1>
-      <p style={{ fontSize: '1.5rem', marginBottom: '2rem' }}>The Decentralized Incentive Platform</p>
+      <h1 style={{ fontSize: '4rem', marginBottom: '1rem' }}>LEAD FIVE TODAY</h1>
+      <p style={{ fontSize: '1.5rem', marginBottom: '2rem' }}>The Decentralized Incentive Network</p>
       <button 
         onClick={() => window.location.href = '/home'}
         style={{

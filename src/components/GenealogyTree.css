@@ -1,12 +1,14 @@
 /* Enhanced Genealogy Tree Styles for react-d3-tree */
 
 .genealogy-tree-container {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  border: 2px solid #FFD700;
   border-radius: 20px;
   padding: 30px;
   color: white;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
 }
 
 .genealogy-tree-container::before {
@@ -149,10 +151,10 @@
   border: 2px solid rgba(255, 255, 255, 0.8);
 }
 
-.legend-dot.premium { background: #FFD700; }
-.legend-dot.advanced { background: #FF6B35; }
-.legend-dot.standard { background: #7B2CBF; }
-.legend-dot.entry { background: #00D4FF; }
+.legend-dot.premium { background: #FFD700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+.legend-dot.advanced { background: #FF6B35; box-shadow: 0 0 10px rgba(255, 107, 53, 0.5); }
+.legend-dot.standard { background: #00D4FF; box-shadow: 0 0 10px rgba(0, 212, 255, 0.5); }
+.legend-dot.entry { background: #10B981; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
 
 .tree-instructions {
   font-size: 12px;

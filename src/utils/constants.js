@@ -46,10 +46,10 @@ export const BRAND_COLORS = {
 // Compensation Pool Configuration with Brand Colors
 export const COMPENSATION_POOLS = [
   { 
-    name: 'Referral Reward', 
+    name: 'Referral Commission', 
     percentage: 40, 
     color: BRAND_COLORS.CYBER_BLUE,
-    description: 'Direct referral reward' 
+    description: 'Direct referral commission' 
   },
   { 
     name: 'Network Bonus', 

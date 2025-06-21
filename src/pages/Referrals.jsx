@@ -40,7 +40,7 @@ export default function Referrals({ account, provider, signer, onConnect, onDisc
     <PageWrapper className="referrals-page">
       <div className="page-header">
         <h1 className="page-title">Referral Network</h1>
-        <p className="page-subtitle">Build your team and earn rewards</p>
+        <p className="page-subtitle">Build your team and earn commissions</p>
       </div>
 
         {!account ? (

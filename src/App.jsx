@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import ErrorBoundary from './components/ErrorBoundary';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -104,19 +105,20 @@ function App() {
   };
 
   return (
-    <Router>
-      {shouldShowWelcome ? (
-        <Routes>
-          <Route path="*" element={<Welcome />} />
-        </Routes>
-      ) : (
-        <Routes>
-          <Route path="/" element={
-            <>
-              <Header 
-                account={account} 
-                onConnect={handleWalletConnect}
-                onDisconnect={handleDisconnect} 
+    <ErrorBoundary>
+      <Router>
+        {shouldShowWelcome ? (
+          <Routes>
+            <Route path="*" element={<Welcome />} />
+          </Routes>
+        ) : (
+          <Routes>
+            <Route path="/" element={
+              <>
+                <Header 
+                  account={account} 
+                  onConnect={handleWalletConnect}
+                  onDisconnect={handleDisconnect} 
               />
               <div className="App">
                 <Home 
@@ -332,6 +334,7 @@ function App() {
       </Routes>
       )}
     </Router>
+    </ErrorBoundary>
   );
 }
 

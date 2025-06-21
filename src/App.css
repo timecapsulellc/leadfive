@@ -1,3 +1,6 @@
+/* Import mobile responsiveness enhancements */
+@import './styles/mobile-responsive.css';
+
 /* App Root Styles */
 .App {
   min-height: 100vh;

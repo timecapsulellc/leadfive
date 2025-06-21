@@ -53,7 +53,25 @@ class Web3Service {
     await this.ensureInitialized();
     
     try {
+      // First check if user exists in the contract
       const userInfo = await this.contract.getUserInfo(address);
+      
+      // If user doesn't exist or has no earnings data, return default values
+      if (!userInfo || userInfo.totalEarned === 0n) {
+        return {
+          sponsorCommission: 0,
+          levelBonus: 0,
+          globalUplineBonus: 0,
+          leaderBonus: 0,
+          globalHelpPool: 0,
+          totalEarned: 0,
+          withdrawableAmount: 0,
+          totalInvested: 0,
+          isCapped: false,
+          capAmount: 0
+        };
+      }
+      
       const earningsByPool = await this.contract.getEarningsByPool(address);
       
       return {
@@ -69,8 +87,20 @@ class Web3Service {
         capAmount: Number(userInfo.totalInvested) * 4 / 1e18
       };
     } catch (error) {
-      console.error('Error fetching user earnings:', error);
-      throw error;
+      console.warn(`User ${address} not found in contract or has no data. Using default values.`);
+      // Return default values for unregistered users
+      return {
+        sponsorCommission: 0,
+        levelBonus: 0,
+        globalUplineBonus: 0,
+        leaderBonus: 0,
+        globalHelpPool: 0,
+        totalEarned: 0,
+        withdrawableAmount: 0,
+        totalInvested: 0,
+        isCapped: false,
+        capAmount: 0
+      };
     }
   }
 
@@ -80,6 +110,17 @@ class Web3Service {
     try {
       const userInfo = await this.contract.getUserInfo(address);
       
+      // If user doesn't exist, return default values
+      if (!userInfo) {
+        return {
+          position: 0,
+          leftChild: null,
+          rightChild: null,
+          teamSize: 0,
+          directReferrals: 0
+        };
+      }
+      
       return {
         position: Number(userInfo.matrixPosition),
         leftChild: userInfo.leftChild !== '0x0000000000000000000000000000000000000000' ? userInfo.leftChild : null,
@@ -88,8 +129,14 @@ class Web3Service {
         directReferrals: Number(userInfo.directReferrals)
       };
     } catch (error) {
-      console.error('Error fetching matrix data:', error);
-      throw error;
+      console.warn(`Matrix data not found for ${address}. Using default values.`);
+      return {
+        position: 0,
+        leftChild: null,
+        rightChild: null,
+        teamSize: 0,
+        directReferrals: 0
+      };
     }
   }
 

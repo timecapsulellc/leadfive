@@ -1,0 +1,243 @@
+/* Realtime Status Component */
+.realtime-status {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.realtime-status.connected {
+  border-color: rgba(0, 255, 136, 0.3);
+  background: rgba(0, 255, 136, 0.1);
+}
+
+.realtime-status.disconnected {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.realtime-status.error {
+  border-color: rgba(255, 107, 53, 0.3);
+  background: rgba(255, 107, 53, 0.1);
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-icon {
+  position: relative;
+}
+
+.realtime-status.connected .status-icon {
+  color: #00FF88;
+}
+
+.realtime-status.disconnected .status-icon {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.realtime-status.error .status-icon {
+  color: #FF6B35;
+}
+
+.realtime-status.connected .status-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background: #00FF88;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(0, 255, 136, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 136, 0);
+  }
+}
+
+.status-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.status-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: white;
+}
+
+.last-update {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.update-counter {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  background: rgba(0, 212, 255, 0.2);
+  border-radius: 12px;
+  color: #00D4FF;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.update-counter svg {
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Notification Container */
+.notification-container {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 300px;
+}
+
+.notification {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.notification.info {
+  border-left: 4px solid #00D4FF;
+}
+
+.notification.success {
+  border-left: 4px solid #00FF88;
+}
+
+.notification.warning {
+  border-left: 4px solid #FFD700;
+}
+
+.notification.error {
+  border-left: 4px solid #FF6B35;
+}
+
+.notification-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.notification-message {
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.notification-time {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.7rem;
+}
+
+.notification-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  margin-left: 0.5rem;
+}
+
+.notification-close:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .realtime-status {
+    padding: 0.5rem 0.75rem;
+    gap: 0.75rem;
+  }
+  
+  .status-text {
+    gap: 0.125rem;
+  }
+  
+  .status-label {
+    font-size: 0.8rem;
+  }
+  
+  .last-update {
+    font-size: 0.65rem;
+  }
+  
+  .notification-container {
+    top: 80px;
+    right: 10px;
+    left: 10px;
+    max-width: none;
+  }
+  
+  .notification {
+    padding: 0.75rem;
+  }
+  
+  .notification-message {
+    font-size: 0.8rem;
+  }
+}
+
+/* Hide notifications when user scrolls down */
+@media (max-height: 600px) {
+  .notification-container {
+    display: none;
+  }
+}

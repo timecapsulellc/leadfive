@@ -197,7 +197,7 @@ const ReferralManager = ({
                     <div className="stat-info">
                         <h3>Referral Earnings</h3>
                         <div className="stat-value">${parseFloat(referralData.referralEarnings).toFixed(2)}</div>
-                        <div className="stat-label">Total rewards</div>
+                        <div className="stat-label">Total commissions</div>
                     </div>
                 </div>
 
@@ -252,7 +252,7 @@ const ReferralManager = ({
 
             {/* Level Commissions */}
             <div className="level-commissions">
-                <h3>Level Reward Structure</h3>
+                <h3>Level Commission Structure</h3>
                 <div className="levels-grid">
                     {Object.entries(referralData.levelCommissions).map(([level, count]) => (
                         <div key={level} className="level-card">
@@ -278,9 +278,9 @@ const ReferralManager = ({
                         <div className="no-referrals">
                             <div className="no-referrals-icon">🎯</div>
                             <h4>Start Building Your Network</h4>
-                            <p>Share your referral link to start earning rewards from your network!</p>
+                            <p>Share your referral link to start earning commissions from your network!</p>
                             <ul>
-                                <li>💰 Earn direct referral rewards</li>
+                                <li>💰 Earn direct referral commissions</li>
                                 <li>🏆 Get level bonuses from team growth</li>
                                 <li>📈 Build passive income streams</li>
                                 <li>🎁 Unlock leader pool rewards</li>

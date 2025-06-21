@@ -164,7 +164,7 @@ const MatrixVisualization = ({
     return (
         <div className="matrix-visualization">
             <div className="matrix-header">
-                <h2>🌐 Network Tree Visualization</h2>
+                <h2>🔄 Network Tree Visualization</h2>
                 <button 
                     onClick={fetchMatrixData} 
                     disabled={loading}
@@ -190,7 +190,7 @@ const MatrixVisualization = ({
                     </span>
                 </div>
                 <div className="matrix-stat">
-                    <label>Incentive Earnings</label>
+                    <label>Network Earnings</label>
                     <span>${parseFloat(matrixData.earnings).toFixed(2)}</span>
                 </div>
             </div>
@@ -206,11 +206,11 @@ const MatrixVisualization = ({
             </div>
 
             <div className="matrix-info">
-                <h3>How the Incentive System Works</h3>
+                <h3>How the Network System Works</h3>
                 <ul>
                     <li>🔸 Each position can have maximum 2 direct referrals</li>
                     <li>🔸 When your position is filled, spillover creates new opportunities</li>
-                    <li>🔸 Earn rewards from your entire network tree</li>
+                    <li>🔸 Earn commissions from your entire network tree</li>
                     <li>🔸 Higher levels unlock greater earning potential</li>
                 </ul>
             </div>

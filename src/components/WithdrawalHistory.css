@@ -1,0 +1,114 @@
+.withdrawal-history {
+  background: rgba(26, 26, 46, 0.8);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  border-radius: 15px;
+  padding: 2rem;
+}
+
+.withdrawal-history h3 {
+  color: #fff;
+  margin-bottom: 1.5rem;
+}
+
+.history-table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.history-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.history-table th,
+.history-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.history-table th {
+  color: #B8C5D1;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.history-table td {
+  color: #fff;
+}
+
+.amount {
+  font-weight: 600;
+  color: #00D4FF;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-badge.completed {
+  background: rgba(0, 212, 255, 0.2);
+  color: #00D4FF;
+}
+
+.status-badge.pending {
+  background: rgba(255, 193, 7, 0.2);
+  color: #FFC107;
+}
+
+.status-badge.failed {
+  background: rgba(255, 107, 53, 0.2);
+  color: #FF6B35;
+}
+
+.status-icon {
+  font-size: 1rem;
+}
+
+.status-icon.completed {
+  color: #00D4FF;
+}
+
+.status-icon.pending {
+  color: #FFC107;
+}
+
+.status-icon.failed {
+  color: #FF6B35;
+}
+
+.tx-link {
+  color: #00D4FF;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.tx-link:hover {
+  color: #7B2CBF;
+  text-decoration: underline;
+}
+
+.no-history {
+  text-align: center;
+  padding: 3rem;
+  color: #B8C5D1;
+}
+
+@media (max-width: 768px) {
+  .history-table {
+    font-size: 0.9rem;
+  }
+  
+  .history-table th,
+  .history-table td {
+    padding: 0.75rem 0.5rem;
+  }
+}

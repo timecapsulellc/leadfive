@@ -136,6 +136,20 @@ const searchTree = (node, query) => {
   return results;
 };
 
+/**
+ * Gets color for package tier
+ */
+const getPackageTierColor = (tier) => {
+  return PACKAGE_TIER_COLORS[tier] || PACKAGE_TIER_COLORS[0];
+};
+
+/**
+ * Gets label for package tier
+ */
+const getPackageTierLabel = (tier) => {
+  return PACKAGE_TIER_LABELS[tier] || PACKAGE_TIER_LABELS[0];
+};
+
 // ============================================================================
 // MAIN COMPONENT
 // ============================================================================
@@ -164,6 +178,7 @@ const NetworkTreeVisualization = ({
   showSearch = true,
   showExport = true,
   collapsible = true,
+  initialDepth = 3,
   
   // Event handlers
   onNodeClick = null,
@@ -214,6 +229,17 @@ const NetworkTreeVisualization = ({
   const [currentTheme, setCurrentTheme] = useState(theme);
   const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
   const [exportFormat, setExportFormat] = useState('png');
+  const [currentZoom, setCurrentZoom] = useState(DEFAULT_CONFIG.initialZoom || 0.8);
+  const [currentOrientation, setCurrentOrientation] = useState(orientation);
+  
+  // Node size configuration
+  const nodeSize = useMemo(() => ({ x: 200, y: 150 }), []);
+  
+  // Separation configuration
+  const separation = useMemo(() => ({ siblings: 2, nonSiblings: 2 }), []);
+  
+  // Scale extent configuration
+  const scaleExtent = useMemo(() => ({ min: 0.1, max: 3 }), []);
   
   // Refs
   const treeRef = useRef(null);
@@ -388,6 +414,17 @@ const NetworkTreeVisualization = ({
   }, [searchQuery, activeData]);
   
   // ============================================================================
+  // EVENT HANDLERS
+  // ============================================================================
+  
+  const handleNodeClick = useCallback((nodeDatum) => {
+    setSelectedNode(nodeDatum);
+    if (onNodeClick) {
+      onNodeClick(nodeDatum);
+    }
+  }, [onNodeClick]);
+  
+  // ============================================================================
   // CUSTOM NODE RENDERER
   // ============================================================================
   
@@ -461,18 +498,12 @@ const NetworkTreeVisualization = ({
         )}
       </g>
     );
-  }, [selectedNode, searchResults, handleNodeClick]);
+  }, [selectedNode, searchResults]);
   
   // ============================================================================
   // EVENT HANDLERS
   // ============================================================================
   
-  const handleNodeClick = useCallback((nodeDatum) => {
-    setSelectedNode(nodeDatum);
-    if (onNodeClick) {
-      onNodeClick(nodeDatum);
-    }
-  }, [onNodeClick]);
   
   const handleZoomChange = useCallback((newZoom) => {
     setCurrentZoom(newZoom);
@@ -487,10 +518,10 @@ const NetworkTreeVisualization = ({
   }, []);
   
   const resetView = useCallback(() => {
-    setCurrentZoom(initialZoom);
+    setCurrentZoom(DEFAULT_CONFIG.initialZoom || 0.8);
     setSelectedNode(null);
     setSearchQuery('');
-  }, [initialZoom]);
+  }, []);
   
   // ============================================================================
   // MEMOIZED VALUES

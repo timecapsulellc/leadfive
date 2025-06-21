@@ -31,7 +31,7 @@ const packages = [
       'Enhanced reward distribution',
       'Advanced governance rights',
       'Premium community features',
-      'Decentralized earning potential',
+      'Multi-level earning potential',
       'Priority transaction processing'
     ]
   },

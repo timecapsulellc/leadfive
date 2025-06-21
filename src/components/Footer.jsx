@@ -31,7 +31,7 @@ export default function Footer() {
             <h4>Platform</h4>
             <p>BSC Mainnet</p>
             <p>Smart Contracts</p>
-            <p>Network System</p>
+            <p>5x5 Matrix System</p>
           </div>
           
           <div className="footer-section">

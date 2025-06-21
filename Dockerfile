@@ -120,7 +120,7 @@ CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
 # ==================== LABELS ====================
 LABEL maintainer="LeadFive Team"
 LABEL version="1.0.0"
-LABEL description="LeadFive - The Decentralized Incentive Platform - Production Ready"
+LABEL description="LeadFive MLM Platform - Production Ready"
 LABEL domain="leadfive.today"
 LABEL repository="https://github.com/timecapsulellc/LeadFive"
 

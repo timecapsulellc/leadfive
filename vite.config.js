@@ -30,11 +30,16 @@ export default defineConfig({
     sourcemap: false,
     minify: 'terser',
     rollupOptions: {
+      external: ['events'],
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
           ethers: ['ethers'],
-          ui: ['lucide-react', 'framer-motion']
+          ui: ['lucide-react', 'framer-motion'],
+          charts: ['chart.js', 'react-chartjs-2']
+        },
+        globals: {
+          'events': 'Events'
         }
       }
     }
@@ -51,13 +56,15 @@ export default defineConfig({
     }
   },
   
-  // Environment variables
-  define: {
-    global: 'globalThis',
-  },
-  
   // Optimizations
   optimizeDeps: {
-    include: ['react', 'react-dom', 'ethers']
+    include: ['react', 'react-dom', 'ethers'],
+    exclude: ['events']
+  },
+
+  // Handle Node.js modules
+  define: {
+    global: 'globalThis',
+    'process.env': {}
   }
 })

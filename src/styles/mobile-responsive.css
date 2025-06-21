@@ -1,0 +1,369 @@
+/* Mobile Responsiveness Enhancements */
+/* This file contains additional mobile-specific styles to enhance the user experience on mobile devices */
+
+/* General Mobile Optimizations */
+@media (max-width: 768px) {
+  /* Improve touch targets */
+  button, .btn, .view-btn, .toggle-btn {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px 16px;
+  }
+
+  /* Better spacing for mobile */
+  .container, .page-container {
+    padding: 1rem;
+  }
+
+  /* Improve form elements */
+  input, select, textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 12px;
+    border-radius: 8px;
+  }
+
+  /* Stack navigation elements */
+  .header-controls, .genealogy-controls, .dashboard-nav {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  /* Better modal handling on mobile */
+  .modal, .user-profile-modal, .export-modal {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+  }
+
+  .modal-content {
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
+
+  /* Improve table responsiveness */
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+  /* Better chart containers */
+  .chart-container {
+    padding: 1rem;
+  }
+
+  .chart-content {
+    height: 250px;
+  }
+
+  /* Genealogy tree mobile optimizations */
+  .d3-tree-container {
+    height: 400px !important;
+    overflow: hidden;
+  }
+
+  /* Dashboard grid improvements */
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .metric-card {
+    padding: 1.5rem;
+  }
+
+  /* Network tree mobile view */
+  .network-tree-card {
+    padding: 1rem;
+    margin: 0.5rem 0;
+  }
+
+  /* Analytics mobile view */
+  .genealogy-analytics {
+    padding: 1rem;
+  }
+
+  .metrics-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Header mobile improvements */
+  .header {
+    padding: 1rem;
+  }
+
+  .header-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .nav-menu {
+    width: 100%;
+  }
+}
+
+/* Extra small devices (phones in portrait mode) */
+@media (max-width: 480px) {
+  /* Typography adjustments */
+  h1, .page-title {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+
+  /* Smaller containers */
+  .container {
+    padding: 0.75rem;
+  }
+
+  /* Stack metric cards vertically */
+  .metric-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.25rem;
+  }
+
+  .metric-icon {
+    margin-bottom: 0.75rem;
+  }
+
+  /* Smaller buttons */
+  .btn, button {
+    padding: 10px 14px;
+    font-size: 0.9rem;
+  }
+
+  /* Compact genealogy controls */
+  .view-controls {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .view-btn {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Single column layout for cards */
+  .performer-card, .activity-item, .withdrawal-item {
+    margin-bottom: 1rem;
+  }
+
+  /* Simplified navigation */
+  .dashboard-nav {
+    flex-wrap: wrap;
+  }
+
+  .nav-item {
+    flex: 1;
+    min-width: calc(50% - 0.5rem);
+  }
+
+  /* Better modals for small screens */
+  .modal {
+    margin: 0.5rem;
+    border-radius: 12px;
+  }
+
+  .modal-header {
+    padding: 1rem;
+  }
+
+  .modal-body {
+    padding: 1rem;
+  }
+
+  /* Compact search and filters */
+  .search-container {
+    flex-direction: column;
+  }
+
+  .search-input {
+    width: 100%;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Tree zoom controls */
+  .tree-controls {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    flex-direction: column;
+  }
+
+  .zoom-btn {
+    margin-bottom: 0.5rem;
+    padding: 8px;
+    border-radius: 50%;
+  }
+}
+
+/* Landscape phones */
+@media (max-width: 768px) and (orientation: landscape) {
+  .genealogy-analytics {
+    padding: 0.75rem;
+  }
+
+  .charts-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .chart-container.large {
+    grid-column: 1 / -1;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Ensure crisp graphics on retina displays */
+  .chart-content canvas {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+
+  .d3-tree-container svg {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Remove hover effects on touch devices */
+  .btn:hover, .view-btn:hover, .metric-card:hover {
+    transform: none;
+  }
+
+  /* Add touch feedback */
+  .btn:active, .view-btn:active {
+    transform: scale(0.98);
+    transition: transform 0.1s;
+  }
+
+  /* Improve scrollable areas */
+  .scrollable {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Better touch targets for tree nodes */
+  .tree-node {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  /* Improve swipe gestures */
+  .swipeable {
+    touch-action: pan-x;
+  }
+}
+
+/* Dark mode preferences */
+@media (prefers-color-scheme: dark) {
+  /* Ensure good contrast in dark mode */
+  .modal, .card {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(71, 85, 105, 0.5);
+  }
+
+  .text-muted {
+    color: #94a3b8;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  /* Disable animations for users who prefer reduced motion */
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .chart-content {
+    transition: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  /* Optimize for printing */
+  .header, .footer, .floating-controls {
+    display: none;
+  }
+
+  .genealogy-analytics, .dashboard {
+    background: white;
+    color: black;
+  }
+
+  .metric-card, .chart-container {
+    background: white;
+    border: 1px solid #ccc;
+    break-inside: avoid;
+  }
+
+  .page-break {
+    page-break-before: always;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-contrast: high) {
+  /* High contrast mode */
+  button, .btn {
+    border: 2px solid;
+  }
+
+  .metric-card {
+    border: 2px solid rgba(255, 255, 255, 0.8);
+  }
+}
+
+/* Focus improvements for keyboard navigation */
+@media (pointer: fine) {
+  .btn:focus, .view-btn:focus, input:focus, select:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+}
+
+/* Ultra-wide screens */
+@media (min-width: 1400px) {
+  .genealogy-analytics {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .charts-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .chart-container.large {
+    grid-column: 1 / -1;
+  }
+
+  .chart-container.medium {
+    grid-column: span 1;
+  }
+}
