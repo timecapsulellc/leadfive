@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import ErrorBoundary from './components/ErrorBoundary';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import MobileNav from './components/MobileNav';
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Packages from './pages/Packages';
@@ -15,6 +16,8 @@ import Welcome from './pages/Welcome';
 import BrandGuide from './pages/BrandGuide';
 import Genealogy from './pages/Genealogy';
 import './App.css';
+import './styles/mobile-responsive.css';
+import './styles/MobileNav.css';
 
 function App() {
   const [account, setAccount] = useState(null);
@@ -107,6 +110,10 @@ function App() {
   return (
     <ErrorBoundary>
       <Router>
+        <MobileNav 
+          account={account} 
+          onDisconnect={handleDisconnect}
+        />
         {shouldShowWelcome ? (
           <Routes>
             <Route path="*" element={<Welcome />} />
