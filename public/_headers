@@ -1,0 +1,58 @@
+# Security Headers for LeadFive DApp
+# Optimized for mobile browsers and Web3 applications
+
+/*
+  # Content Security Policy - Strict but compatible with Web3
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.jsdelivr.net https://unpkg.com blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https:; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self' https: wss: https://*.bsc.org https://*.binance.org https://api.coingecko.com https://*.infura.io https://*.alchemy.com blob:; frame-ancestors 'none'; form-action 'self'; base-uri 'self'; object-src 'none'; worker-src 'self' blob:; manifest-src 'self'
+  
+  # Prevent clickjacking
+  X-Frame-Options: DENY
+  
+  # Prevent MIME type sniffing
+  X-Content-Type-Options: nosniff
+  
+  # XSS Protection
+  X-XSS-Protection: 1; mode=block
+  
+  # Referrer Policy
+  Referrer-Policy: strict-origin-when-cross-origin
+  
+  # HTTPS enforcement (31536000 = 1 year)
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  
+  # Permissions Policy - Restrict dangerous APIs
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(self), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), ambient-light-sensor=(), autoplay=(), encrypted-media=(), fullscreen=(self), picture-in-picture=()
+  
+  # Cross-Origin policies
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  
+  # Mobile security headers
+  X-Permitted-Cross-Domain-Policies: none
+  X-UA-Compatible: IE=edge
+  
+  # Cache control for security
+  Cache-Control: no-store, no-cache, must-revalidate, private
+  Pragma: no-cache
+  Expires: 0
+
+# Static assets with longer cache but security headers
+/static/*
+  Cache-Control: public, max-age=31536000, immutable
+  
+# API routes with stricter security
+/api/*
+  Content-Security-Policy: default-src 'none'; frame-ancestors 'none'
+  X-Content-Type-Options: nosniff
+  Cache-Control: no-store, no-cache, must-revalidate, private
+
+# Service Worker
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+  Content-Type: application/javascript
+
+# Manifest file
+/manifest.json
+  Content-Type: application/manifest+json
+  Cache-Control: public, max-age=86400

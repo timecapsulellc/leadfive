@@ -9,12 +9,13 @@ import ExportModal from '../components/ExportModal';
 import RealtimeStatus from '../components/RealtimeStatus';
 import GenealogyAnalytics from '../components/GenealogyAnalytics';
 import SimpleNetworkTree from '../components/SimpleNetworkTree';
+import AdvancedGenealogyTree from '../components/AdvancedGenealogyTree';
 import Web3Service from '../services/Web3Service';
 import './Genealogy.css';
 
 const Genealogy = ({ account, provider, signer, onConnect, onDisconnect }) => {
   const [treeData, setTreeData] = useState(null);
-  const [viewMode, setViewMode] = useState('d3tree'); // 'd3tree', 'horizontal', 'vertical'
+  const [viewMode, setViewMode] = useState('advanced'); // 'advanced', 'd3tree', 'horizontal', 'vertical'
   const [loading, setLoading] = useState(false);
   const [selectedNode, setSelectedNode] = useState(null);
   const [treeOrientation, setTreeOrientation] = useState('vertical');
@@ -28,6 +29,7 @@ const Genealogy = ({ account, provider, signer, onConnect, onDisconnect }) => {
   const [showExportModal, setShowExportModal] = useState(false);
   const [realtimeEnabled, setRealtimeEnabled] = useState(true);
   const [useSimpleTree, setUseSimpleTree] = useState(false); // Fallback for complex tree
+  const [searchTerm, setSearchTerm] = useState('');
   const treeContainerRef = useRef(null);
   const navigate = useNavigate();
 
@@ -529,6 +531,15 @@ const Genealogy = ({ account, provider, signer, onConnect, onDisconnect }) => {
             <div className="genealogy-controls">
           <div className="view-controls">
             <button 
+              className={`view-btn ${viewMode === 'advanced' ? 'active' : ''}`}
+              onClick={() => setViewMode('advanced')}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6Z"/>
+              </svg>
+              Advanced 3D
+            </button>
+            <button 
               className={`view-btn ${viewMode === 'd3tree' ? 'active' : ''}`}
               onClick={() => setViewMode('d3tree')}
             >
@@ -576,6 +587,7 @@ const Genealogy = ({ account, provider, signer, onConnect, onDisconnect }) => {
               setProfileUser({
                 name: node.name,
                 id: node.attributes?.address || node.id,
+                level: node.attributes?.level || node.level,
                 address: node.attributes?.address || node.id,
                 package: node.attributes?.package || node.package || 'N/A',
                 earnings: node.attributes?.earnings || node.earnings,
@@ -587,6 +599,8 @@ const Genealogy = ({ account, provider, signer, onConnect, onDisconnect }) => {
               });
               setShowUserProfile(true);
             }}
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
           />
           
           {viewMode === 'd3tree' && (
@@ -704,6 +718,36 @@ const Genealogy = ({ account, provider, signer, onConnect, onDisconnect }) => {
               document.body.removeChild(a);
               URL.revokeObjectURL(url);
             }}
+          />
+        ) : viewMode === 'advanced' ? (
+          <AdvancedGenealogyTree
+            data={treeData}
+            searchTerm={searchTerm}
+            selectedNodeId={selectedNode?.id}
+            onNodeSelect={(node) => {
+              setSelectedNode(node);
+              setProfileUser({
+                name: node.name,
+                id: node.id,
+                level: node.level,
+                address: node.id,
+                package: 'N/A',
+                earnings: node.earnings,
+                withdrawable: '$0.00',
+                directReferrals: node.directReferrals,
+                totalNetwork: node.totalNetwork,
+                isCapped: false,
+                isUser: false
+              });
+              setShowUserProfile(true);
+            }}
+            onNodeHover={(node, isHovering) => {
+              // Handle node hover for tooltips
+              if (isHovering && node) {
+                console.log('Hovering over:', node.name);
+              }
+            }}
+            className="advanced-tree-container"
           />
         ) : (
           <div id="genealogy-tree" className={`genealogy-tree ${viewMode}`}>

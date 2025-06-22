@@ -1,0 +1,65 @@
+/* ProtectedRoute Loading States */
+.protected-route-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 2rem;
+}
+
+.loading-spinner {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-spinner p {
+  color: #666;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .spinner {
+    border: 4px solid #333;
+    border-top: 4px solid #007bff;
+  }
+  
+  .loading-spinner p {
+    color: #ccc;
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .protected-route-loading {
+    min-height: 50vh;
+    padding: 1rem;
+  }
+  
+  .spinner {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .loading-spinner p {
+    font-size: 0.9rem;
+  }
+}
