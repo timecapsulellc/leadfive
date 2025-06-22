@@ -3,7 +3,7 @@
 **Repository**: `git@github.com:timecapsulellc/LeadFive.git`  
 **Target Domain**: `leadfive.today`  
 **Strategy**: GitHub → DigitalOcean → Domain Configuration  
-**Updated**: 2025-06-20 01:45 UTC+5.5
+**Updated**: 2025-06-22 (Current) UTC+5.5
 
 ---
 
@@ -62,10 +62,15 @@ HTTP Port: 3000
 ```bash
 NODE_ENV=production
 VITE_APP_ENV=production
-VITE_CONTRACT_ADDRESS=0x7FEEA22942407407801cCDA55a4392f25975D998
+VITE_CONTRACT_ADDRESS=0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569
 VITE_NETWORK_ID=56
 VITE_WEB3_PROVIDER_URL=https://bsc-dataseed.binance.org/
 VITE_DEBUG_MODE=false
+VITE_CHAIN_ID=56
+VITE_NETWORK_NAME=BSC Mainnet
+VITE_RPC_URL=https://bsc-dataseed.binance.org/
+VITE_EXPLORER_URL=https://bscscan.com
+VITE_USDT_ADDRESS=0x55d398326f99059fF775485246999027B3197955
 ```
 
 #### **Resource Configuration**
