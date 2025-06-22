@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { ethers } from 'ethers';
 import ErrorBoundary from './components/ErrorBoundary';
 import ProtectedRoute, { UserRoute, AdminRoute } from './components/ProtectedRoute';
 import { withLazyLoading, LoadingSpinner, preloadComponents } from './components/LazyLoader';
@@ -168,7 +169,6 @@ function App() {
       try {
         const accounts = await window.ethereum.request({ method: 'eth_accounts' });
         if (accounts.length > 0) {
-          const { ethers } = await import('ethers');
           const provider = new ethers.BrowserProvider(window.ethereum);
           const signer = await provider.getSigner();
           const network = await provider.getNetwork();
@@ -202,7 +202,6 @@ function App() {
         storeWalletConnection(connectedAccount, network.chainId.toString(), 'metamask');
       } else if (connectedAccount && !web3Provider) {
         // Account changed event - recreate provider and signer
-        const { ethers } = await import('ethers');
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
         const network = await provider.getNetwork();

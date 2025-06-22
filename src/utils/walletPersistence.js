@@ -16,6 +16,8 @@
  * - Memory-optimized storage
  */
 
+import { ethers } from 'ethers';
+
 const STORAGE_KEYS = {
   WALLET_CONNECTION: 'leadfive_wallet_connection',
   SESSION_TIMESTAMP: 'leadfive_session_timestamp',
@@ -193,7 +195,6 @@ export const autoReconnectWallet = async (onSuccess, onError) => {
       }
 
       // Restore provider and signer
-      const { ethers } = await import('ethers');
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
       
