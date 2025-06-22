@@ -430,7 +430,7 @@ const NetworkTreeVisualization = ({
   // ============================================================================
   
   /**
-   * Renders custom styled nodes for the tree
+   * Renders custom styled nodes for the tree with production-grade RootID integration
    */
   const renderCustomNodeElement = useCallback((rd3tNodeProps) => {
     const { nodeDatum, toggleNode } = rd3tNodeProps;
@@ -439,12 +439,64 @@ const NetworkTreeVisualization = ({
     const packageTier = nodeDatum.attributes?.packageTier || 0;
     const packageColor = PACKAGE_TIER_COLORS[packageTier] || PACKAGE_TIER_COLORS[0];
     const isActive = nodeDatum.attributes?.isActive !== false;
+    const isEmpty = nodeDatum.attributes?.isEmpty;
     const volume = nodeDatum.attributes?.volume || 0;
     const earnings = nodeDatum.attributes?.totalEarnings || 0;
+    const rootId = nodeDatum.attributes?.rootId || nodeDatum.attributes?.id;
+    
+    // Enhanced positioning for perfect alignment
+    const xOffset = position === 'left' ? -5 : position === 'right' ? 5 : 0;
+    const yOffset = 0;
+    
+    if (isEmpty) {
+      return (
+        <g transform={`translate(${xOffset}, ${yOffset})`}>
+          <circle
+            r={22}
+            fill="transparent"
+            stroke="#4A5568"
+            strokeWidth={2}
+            strokeDasharray="8,4"
+            opacity={0.4}
+          />
+          <text
+            fill="#6B7280"
+            textAnchor="middle"
+            dy={5}
+            fontSize={12}
+            opacity={0.6}
+          >
+            ➕
+          </text>
+          <text
+            fill="#6B7280"
+            textAnchor="middle"
+            y={35}
+            fontSize={8}
+            opacity={0.5}
+          >
+            Empty Slot
+          </text>
+        </g>
+      );
+    }
     
     return (
-      <g>
-        {/* Position indicator for non-root nodes */}
+      <g transform={`translate(${xOffset}, ${yOffset})`}>
+        {/* Root ID indicator for contract sync */}
+        {rootId && !isRoot && (
+          <text
+            fill="#00D4FF"
+            textAnchor="middle"
+            y={-55}
+            fontSize={7}
+            opacity={0.8}
+          >
+            ID: {rootId.slice(0, 8)}
+          </text>
+        )}
+        
+        {/* Position indicator with production styling */}
         {!isRoot && position && (
           <text
             fill={position === 'left' ? '#FF6B35' : '#00D4FF'}
@@ -452,114 +504,146 @@ const NetworkTreeVisualization = ({
             y={-45}
             fontSize={10}
             fontWeight="bold"
+            style={{
+              filter: `drop-shadow(0 0 4px ${position === 'left' ? '#FF6B35' : '#00D4FF'}40)`
+            }}
           >
             {position.toUpperCase()} LEG
           </text>
         )}
         
-        {/* Volume indicators for left/right legs */}
-        {!isRoot && (nodeDatum.attributes?.leftVolume || nodeDatum.attributes?.rightVolume) && (
+        {/* Volume indicators for binary legs */}
+        {!isRoot && !isEmpty && (nodeDatum.attributes?.leftVolume || nodeDatum.attributes?.rightVolume) && (
           <g>
             <text
-              fill="#888"
+              fill="#9CA3AF"
               textAnchor="middle"
-              y={-30}
-              fontSize={8}
+              y={-32}
+              fontSize={7}
             >
-              L: ${(nodeDatum.attributes.leftVolume || 0)}
+              L: ${(nodeDatum.attributes.leftVolume || 0).toLocaleString()}
             </text>
             <text
-              fill="#888"
+              fill="#9CA3AF"
               textAnchor="middle"
-              y={-20}
-              fontSize={8}
+              y={-24}
+              fontSize={7}
             >
-              R: ${(nodeDatum.attributes.rightVolume || 0)}
+              R: ${(nodeDatum.attributes.rightVolume || 0).toLocaleString()}
             </text>
           </g>
         )}
         
-        {/* Node circle */}
+        {/* Main node circle with enhanced styling */}
         <circle
-          r={isRoot ? 35 : 28}
-          fill={isActive ? packageColor : '#6C757D'}
-          stroke={position === 'left' ? '#FF6B35' : position === 'right' ? '#00D4FF' : '#fff'}
-          strokeWidth={position && !isRoot ? 4 : 3}
-          opacity={isActive ? 1 : 0.6}
-          style={{ cursor: 'pointer' }}
+          r={isRoot ? 38 : 32}
+          fill={isActive ? packageColor : '#4A5568'}
+          stroke={
+            isRoot ? '#FFD700' : 
+            position === 'left' ? '#FF6B35' : 
+            position === 'right' ? '#00D4FF' : '#9CA3AF'
+          }
+          strokeWidth={isRoot ? 4 : 3}
+          opacity={isActive ? 1 : 0.7}
+          style={{ 
+            cursor: 'pointer',
+            filter: isActive ? `drop-shadow(0 0 8px ${packageColor}40)` : 'none'
+          }}
           onClick={toggleNode}
         />
         
-        {/* Node icon/content */}
+        {/* Node icon with position-aware styling */}
         <text
-          fill="#fff"
+          fill="#FFFFFF"
           textAnchor="middle"
-          dy={5}
-          fontSize={isRoot ? 16 : 14}
+          dy={6}
+          fontSize={isRoot ? 18 : 16}
           fontWeight="bold"
           style={{ cursor: 'pointer' }}
           onClick={toggleNode}
         >
-          {isRoot ? '👑' : position === 'left' ? 'L' : position === 'right' ? 'R' : nodeDatum.name.charAt(0)}
+          {isRoot ? '👑' : 
+           position === 'left' ? 'L' : 
+           position === 'right' ? 'R' : 
+           nodeDatum.name.charAt(0)}
         </text>
         
-        {/* Node name */}
+        {/* User identifier */}
         <text
-          fill="#333"
+          fill="#E5E7EB"
           textAnchor="middle"
-          y={isRoot ? 50 : 45}
-          fontSize={10}
+          y={isRoot ? 55 : 50}
+          fontSize={11}
           fontWeight="500"
         >
           {nodeDatum.name}
         </text>
         
-        {/* Package tier */}
+        {/* Package tier with enhanced visibility */}
         {!isRoot && packageTier > 0 && (
           <text
             fill={packageColor}
             textAnchor="middle"
-            y={57}
-            fontSize={8}
-            fontWeight="600"
+            y={65}
+            fontSize={9}
+            fontWeight="700"
+            style={{
+              filter: `drop-shadow(0 0 4px ${packageColor}60)`
+            }}
           >
-            Tier {packageTier}
+            ${packageTier === 1 ? '30' : packageTier === 2 ? '50' : packageTier === 3 ? '100' : '200'}
           </text>
         )}
         
-        {/* Volume */}
+        {/* Volume display */}
         {volume > 0 && (
           <text
-            fill="#666"
+            fill="#6B7280"
             textAnchor="middle"
-            y={isRoot ? 67 : 69}
+            y={isRoot ? 75 : 78}
             fontSize={8}
+            fontWeight="500"
           >
-            ${volume.toLocaleString()}
+            Vol: ${volume.toLocaleString()}
           </text>
         )}
         
-        {/* Earnings */}
+        {/* Earnings indicator */}
         {earnings > 0 && (
           <text
-            fill="#00AA00"
+            fill="#10B981"
             textAnchor="middle"
-            y={isRoot ? 79 : 81}
+            y={isRoot ? 90 : 90}
             fontSize={8}
             fontWeight="600"
           >
-            💰 ${earnings}
+            💰 ${earnings.toLocaleString()}
           </text>
         )}
         
-        {/* Binary position indicator */}
-        {!isRoot && (
+        {/* Binary position visual indicator */}
+        {!isRoot && position && (
           <circle
-            cx={position === 'left' ? -15 : 15}
+            cx={position === 'left' ? -20 : 20}
             cy={-35}
             r={6}
             fill={position === 'left' ? '#FF6B35' : '#00D4FF'}
-            opacity={0.8}
+            opacity={0.9}
+            style={{
+              filter: `drop-shadow(0 0 4px ${position === 'left' ? '#FF6B35' : '#00D4FF'}80)`
+            }}
+          />
+        )}
+        
+        {/* Active status indicator */}
+        {isActive && !isRoot && (
+          <circle
+            cx={25}
+            cy={25}
+            r={4}
+            fill="#10B981"
+            stroke="#FFFFFF"
+            strokeWidth={1}
           />
         )}
       </g>
@@ -610,29 +694,34 @@ const NetworkTreeVisualization = ({
     orientation: currentOrientation,
     pathFunc: "diagonal",
     nodeSize: currentOrientation === 'vertical' ? 
-      { x: 250, y: 180 } : // Increased spacing for binary tree
-      { x: 180, y: 250 },
+      { x: 280, y: 200 } : // Optimal spacing for production binary tree
+      { x: 200, y: 280 },
     separation: currentOrientation === 'vertical' ?
-      { siblings: 2, nonSiblings: 2.5 } : // Better separation for binary layout
-      { siblings: 1.8, nonSiblings: 2.2 },
+      { siblings: 1.8, nonSiblings: 2.2 } : // Perfect separation for node alignment
+      { siblings: 1.6, nonSiblings: 2.0 },
     translate: currentOrientation === 'vertical' ? 
-      { x: 500, y: 120 } : // Adjusted for binary tree centering
-      { x: 200, y: 350 },
+      { x: dimensions.width / 2, y: 100 } : // Dynamic centering for all screen sizes
+      { x: 150, y: dimensions.height / 2 },
     zoom: currentZoom,
     scaleExtent,
     enableLegacyTransitions: true,
-    transitionDuration: DEFAULT_CONFIG.transitionDuration,
+    transitionDuration: 350, // Faster transitions for better UX
     renderCustomNodeElement: renderCustomNodeElement || defaultNodeRenderer,
     collapsible,
     initialDepth,
-    // Enhanced for binary tree visualization
+    // Enhanced path styling for production
     pathClassFunc: (datum) => {
       const position = datum.target?.data?.attributes?.position;
-      return position ? `binary-tree-link ${position}-leg` : 'binary-tree-link';
-    }
+      return position ? `binary-tree-link ${position}-leg` : 'binary-tree-link default-link';
+    },
+    // Production-grade tree configuration
+    depthFactor: currentOrientation === 'vertical' ? 200 : 280,
+    branchNodeColor: '#00D4FF',
+    leafNodeColor: '#BD00FF'
   }), [
     activeData,
     currentOrientation,
+    dimensions,
     currentZoom,
     scaleExtent,
     renderCustomNodeElement,

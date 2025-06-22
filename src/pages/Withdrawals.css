@@ -1,26 +1,686 @@
+/**
+ * Withdrawals.css - Production-Grade Withdrawal Page Styling
+ * 
+ * Brand-compliant design following LeadFive guidelines
+ * Optimized for real USDT transactions and BSC integration
+ */
+
+/* ============================================================================
+   BASE LAYOUT
+   ============================================================================ */
+
 .withdrawals-page {
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 1rem;
-  background: #1a1a2e;
-  color: #ffffff;
+  min-height: 100vh;
+  position: relative;
+  background: linear-gradient(135deg, #0D1117 0%, #161B22 50%, #21262D 100%);
+  color: #F0F6FC;
+  overflow-x: hidden;
+}
+
+.page-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+.animated-bg {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(189, 0, 255, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 40% 80%, rgba(255, 107, 53, 0.05) 0%, transparent 50%);
+  animation: float 20s ease-in-out infinite;
+}
+
+.gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(189, 0, 255, 0.05) 100%);
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(-5%, -5%) rotate(1deg); }
+  50% { transform: translate(5%, -10%) rotate(-1deg); }
+  75% { transform: translate(-5%, 5%) rotate(1deg); }
+}
+
+.page-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* ============================================================================
+   PAGE HEADER
+   ============================================================================ */
+
+.page-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.page-title {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #00D4FF 0%, #BD00FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+}
+
+.page-subtitle {
+  font-size: 1.25rem;
+  color: #8B949E;
+  font-weight: 400;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ============================================================================
+   WALLET CONNECT SECTION
+   ============================================================================ */
+
+.wallet-connect-section {
+  display: flex;
+  justify-content: center;
+  margin: 4rem 0;
+}
+
+.connect-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 20px;
+  padding: 3rem;
+  text-align: center;
+  backdrop-filter: blur(20px);
+  max-width: 500px;
+}
+
+.connect-card h2 {
+  color: #00D4FF;
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.connect-card p {
+  color: #8B949E;
+  margin-bottom: 2rem;
+}
+
+/* ============================================================================
+   BALANCE SECTION
+   ============================================================================ */
+
+.balance-section {
+  margin-bottom: 3rem;
+}
+
+.balance-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.balance-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.balance-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(0, 212, 255, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.1);
+}
+
+.balance-card.primary {
+  border-left: 4px solid #00D4FF;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+}
+
+.balance-card.secondary {
+  border-left: 4px solid #BD00FF;
+  background: linear-gradient(135deg, rgba(189, 0, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+}
+
+.balance-card.accent {
+  border-left: 4px solid #FF6B35;
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+}
+
+.balance-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.balance-header h3 {
+  color: #8B949E;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.balance-icon {
+  font-size: 1.5rem;
+  opacity: 0.8;
+}
+
+.balance-amount {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.balance-amount .currency {
+  color: #00D4FF;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.balance-amount .amount {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #F0F6FC;
+}
+
+.balance-subtitle {
+  color: #6E7681;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* ============================================================================
+   WITHDRAWAL SECTION
+   ============================================================================ */
+
+.withdrawal-section {
+  margin-bottom: 3rem;
+}
+
+.withdrawal-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 20px;
+  padding: 2.5rem;
+  backdrop-filter: blur(20px);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.card-header h2 {
+  color: #F0F6FC;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.card-header p {
+  color: #8B949E;
+  margin: 0.5rem 0 0 0;
+  font-size: 0.9rem;
+}
+
+.refresh-button {
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 10px;
+  color: #00D4FF;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.refresh-button:hover {
+  background: rgba(0, 212, 255, 0.2);
+}
+
+.withdrawal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  color: #8B949E;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.token-selector {
+  display: flex;
+  gap: 1rem;
+}
+
+.token-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.token-option.active {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: #00D4FF;
+}
+
+.token-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.token-network {
+  background: rgba(0, 212, 255, 0.2);
+  color: #00D4FF;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-left: auto;
+}
+
+.amount-input-wrapper {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.amount-input {
+  flex: 1;
+  padding: 1.25rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #F0F6FC;
+  font-size: 1.25rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.amount-input:focus {
+  outline: none;
+  border-color: #00D4FF;
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+.amount-input::placeholder {
+  color: #6E7681;
+}
+
+.max-button {
+  padding: 1.25rem 2rem;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid #00D4FF;
+  border-radius: 12px;
+  color: #00D4FF;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.max-button:hover:not(:disabled) {
+  background: rgba(0, 212, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.max-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.input-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.available-text {
+  color: #8B949E;
+  font-size: 0.85rem;
+}
+
+.usd-value {
+  color: #00D4FF;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.withdrawal-info {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-item span:first-child {
+  color: #8B949E;
+  font-size: 0.9rem;
+}
+
+.info-item span:last-child {
+  color: #F0F6FC;
+  font-weight: 600;
+}
+
+.withdraw-button {
+  width: 100%;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #00D4FF 0%, #BD00FF 100%);
+  border: none;
+  border-radius: 16px;
+  color: #FFFFFF;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.withdraw-button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(0, 212, 255, 0.3);
+}
+
+.withdraw-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.withdraw-button.loading {
+  pointer-events: none;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid #FFFFFF;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ============================================================================
+   HISTORY SECTION
+   ============================================================================ */
+
+.history-section {
+  margin-bottom: 3rem;
+}
+
+.history-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2.5rem;
+  backdrop-filter: blur(20px);
+}
+
+.history-table {
+  overflow-x: auto;
+}
+
+.table-header,
+.table-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  align-items: center;
+}
+
+.table-header {
+  font-weight: 600;
+  color: #8B949E;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.table-row {
+  color: #F0F6FC;
+  transition: all 0.3s ease;
+}
+
+.table-row:hover {
+  background: rgba(255, 255, 255, 0.02);
   border-radius: 8px;
 }
-.withdrawals-page input {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #444;
-  border-radius: 4px;
-  background: #16213e;
-  color: #ffffff;
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  justify-content: center;
 }
-.btn-primary {
-  width: 100%;
-  padding: 0.75rem;
-  background: #00d4ff;
-  color: #000000;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status.completed {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10B981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status.completed .status-dot {
+  background: #10B981;
+  animation: pulse 2s infinite;
+}
+
+.status.pending {
+  background: rgba(245, 158, 11, 0.2);
+  color: #F59E0B;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status.pending .status-dot {
+  background: #F59E0B;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.tx-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #00D4FF;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  justify-content: center;
+}
+
+.tx-link:hover {
+  color: #BD00FF;
+  transform: translateY(-2px);
+}
+
+.external-icon {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.no-history {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #6E7681;
+}
+
+.no-history-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.no-history p {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #8B949E;
+}
+
+.no-history span {
+  font-size: 0.9rem;
+  color: #6E7681;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .page-content {
+    padding: 1rem;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+  }
+  
+  .balance-cards {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .balance-card {
+    padding: 1.5rem;
+  }
+  
+  .balance-amount .amount {
+    font-size: 2rem;
+  }
+  
+  .withdrawal-card {
+    padding: 1.5rem;
+  }
+  
+  .amount-input-wrapper {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .max-button {
+    width: 100%;
+  }
+  
+  .table-header,
+  .table-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .input-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.75rem;
+  }
+  
+  .page-subtitle {
+    font-size: 1rem;
+  }
+  
+  .connect-card {
+    padding: 2rem;
+  }
+  
+  .withdrawal-info {
+    padding: 1rem;
+  }
+  
+  .history-card {
+    padding: 1.5rem;
+  }
 }

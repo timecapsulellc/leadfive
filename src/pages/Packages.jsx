@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { ethers } from 'ethers';
+import { LEAD_FIVE_CONFIG, LEAD_FIVE_ABI } from '../contracts-leadfive.js';
 import UnifiedWalletConnect from '../components/UnifiedWalletConnect';
 import PageWrapper from '../components/PageWrapper';
+import '../styles/ContractIntegration.css';
 
 const packages = [
   { 
@@ -71,12 +74,83 @@ const packages = [
 
 export default function Packages({ account, provider, signer, onConnect, onDisconnect }) {
   const [selectedPackage, setSelectedPackage] = useState(null);
+  const [useUSDT, setUseUSDT] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [balances, setBalances] = useState({ usdt: '0', bnb: '0' });
+  const [contract, setContract] = useState(null);
+  const [usdtContract, setUsdtContract] = useState(null);
+
+  // USDT ABI for token operations
+  const USDT_ABI = [
+    "function balanceOf(address owner) view returns (uint256)",
+    "function approve(address spender, uint256 amount) returns (bool)",
+    "function allowance(address owner, address spender) view returns (uint256)"
+  ];
+
+  // Initialize contracts when wallet is connected
+  useEffect(() => {
+    const initContracts = async () => {
+      if (!provider || !account) return;
+
+      try {
+        // Initialize LeadFive contract
+        const leadFiveContract = new ethers.Contract(
+          LEAD_FIVE_CONFIG.address,
+          LEAD_FIVE_ABI,
+          signer
+        );
+        setContract(leadFiveContract);
+
+        // Initialize USDT contract
+        const usdtContract = new ethers.Contract(
+          LEAD_FIVE_CONFIG.usdtAddress,
+          USDT_ABI,
+          signer
+        );
+        setUsdtContract(usdtContract);
+
+        // Load balances
+        await loadBalances(usdtContract);
+      } catch (error) {
+        console.error('Contract initialization failed:', error);
+      }
+    };
+
+    initContracts();
+  }, [provider, account, signer]);
+
+  // Load user balances
+  const loadBalances = async (usdtContract) => {
+    if (!account) return;
+
+    try {
+      // Get BNB balance
+      const bnbBalance = await provider.getBalance(account);
+      const bnbFormatted = parseFloat(ethers.formatEther(bnbBalance)).toFixed(4);
+
+      // Get USDT balance
+      let usdtBalance = '0';
+      try {
+        const balance = await usdtContract.balanceOf(account);
+        usdtBalance = parseFloat(ethers.formatEther(balance)).toFixed(2);
+      } catch (err) {
+        console.log('Could not fetch USDT balance:', err.message);
+      }
+
+      setBalances({ 
+        usdt: usdtBalance,
+        bnb: bnbFormatted
+      });
+    } catch (error) {
+      console.error('Failed to load balances:', error);
+    }
+  };
 
   const handlePackageSelect = (pkg) => {
     setSelectedPackage(pkg);
   };
 
-  const handlePurchase = () => {
+  const handlePurchase = async () => {
     if (!account) {
       alert('Please connect your wallet first');
       return;
@@ -85,7 +159,97 @@ export default function Packages({ account, provider, signer, onConnect, onDisco
       alert('Please select a package');
       return;
     }
-    console.log('Purchasing package:', selectedPackage);
+
+    if (!contract || !usdtContract) {
+      alert('Contracts not initialized. Please refresh and try again.');
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      console.log(`🚀 Purchasing package: ${selectedPackage.name} ($${selectedPackage.price}), pay with ${useUSDT ? 'USDT' : 'BNB'}`);
+
+      let tx;
+
+      if (useUSDT) {
+        // USDT payment flow
+        const packagePrice = ethers.parseEther(selectedPackage.price.toString());
+        
+        // Check USDT balance
+        const userBalance = await usdtContract.balanceOf(account);
+        if (userBalance < packagePrice) {
+          alert(`Insufficient USDT balance. Required: ${selectedPackage.price} USDT, Available: ${ethers.formatEther(userBalance)} USDT`);
+          return;
+        }
+
+        // Check and approve USDT spending
+        const allowance = await usdtContract.allowance(account, LEAD_FIVE_CONFIG.address);
+        if (allowance < packagePrice) {
+          console.log('Approving USDT spending...');
+          const approveTx = await usdtContract.approve(LEAD_FIVE_CONFIG.address, packagePrice);
+          await approveTx.wait();
+          console.log('USDT approval successful');
+        }
+
+        // Register/purchase with USDT (using register function for package purchase)
+        console.log('Executing package purchase with USDT...');
+        tx = await contract.register(
+          ethers.ZeroAddress, // No referrer for direct purchase
+          selectedPackage.id,
+          true // Use USDT
+        );
+      } else {
+        // BNB payment flow
+        // Calculate BNB required (~$300 per BNB as fallback)
+        const bnbRequired = ethers.parseEther((selectedPackage.price / 300).toString());
+        
+        // Check BNB balance
+        const userBalance = await provider.getBalance(account);
+        if (userBalance < bnbRequired) {
+          alert(`Insufficient BNB balance. Required: ${ethers.formatEther(bnbRequired)} BNB, Available: ${ethers.formatEther(userBalance)} BNB`);
+          return;
+        }
+
+        // Register/purchase with BNB
+        console.log('Executing package purchase with BNB...');
+        tx = await contract.register(
+          ethers.ZeroAddress, // No referrer for direct purchase
+          selectedPackage.id,
+          false, // Use BNB
+          { value: bnbRequired }
+        );
+      }
+
+      console.log('Transaction submitted:', tx.hash);
+      console.log('Waiting for confirmation...');
+      
+      const receipt = await tx.wait();
+      console.log('✅ Package purchase successful!', receipt.hash);
+      
+      alert(`Package purchase successful! Transaction: ${receipt.hash}`);
+      
+      // Reload balances
+      await loadBalances(usdtContract);
+      
+    } catch (error) {
+      console.error('Package purchase failed:', error);
+      
+      let errorMessage = 'Package purchase failed: ';
+      if (error.message.includes('Already registered')) {
+        errorMessage += 'Address is already registered';
+      } else if (error.message.includes('Insufficient')) {
+        errorMessage += 'Insufficient balance';
+      } else if (error.message.includes('User rejected')) {
+        errorMessage += 'Transaction rejected by user';
+      } else {
+        errorMessage += error.message;
+      }
+      
+      alert(errorMessage);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -106,6 +270,20 @@ export default function Packages({ account, provider, signer, onConnect, onDisco
               onDisconnect={onDisconnect}
               buttonText="Connect Wallet to Purchase"
             />
+          </div>
+        )}
+
+        {/* Balance Display */}
+        {account && (
+          <div className="balance-display">
+            <div className="balance-item">
+              <span className="balance-label">USDT:</span>
+              <span className="balance-value">{balances.usdt}</span>
+            </div>
+            <div className="balance-item">
+              <span className="balance-label">BNB:</span>
+              <span className="balance-value">{balances.bnb}</span>
+            </div>
           </div>
         )}
 
@@ -149,8 +327,33 @@ export default function Packages({ account, provider, signer, onConnect, onDisco
 
         {selectedPackage && account && (
           <div className="purchase-section">
-            <button className="purchase-btn" onClick={handlePurchase}>
-              Purchase {selectedPackage.name} Package - ${selectedPackage.price}
+            <div className="payment-selection">
+              <h3>Payment Method</h3>
+              <div className="payment-toggle">
+                <button
+                  className={`payment-btn ${useUSDT ? 'active' : ''}`}
+                  onClick={() => setUseUSDT(true)}
+                >
+                  <span className="token-icon">💰</span>
+                  USDT
+                  <span className="recommended">Recommended</span>
+                </button>
+                <button
+                  className={`payment-btn ${!useUSDT ? 'active' : ''}`}
+                  onClick={() => setUseUSDT(false)}
+                >
+                  <span className="token-icon">🔶</span>
+                  BNB
+                </button>
+              </div>
+            </div>
+            
+            <button 
+              className="purchase-btn" 
+              onClick={handlePurchase}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Processing...' : `Purchase ${selectedPackage.name} Package - $${selectedPackage.price}`}
             </button>
           </div>
         )}

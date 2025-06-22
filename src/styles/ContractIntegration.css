@@ -1,0 +1,166 @@
+/* ==================== CONTRACT INTEGRATION STYLES ==================== */
+
+/* Balance Display */
+.balance-display {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.balance-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.balance-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.balance-value {
+  color: #00d4ff;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Payment Toggle */
+.payment-selection {
+  margin: 20px 0;
+}
+
+.payment-selection h3 {
+  color: #ffffff;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.payment-toggle {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.payment-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.payment-btn:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.payment-btn.active {
+  border-color: #00d4ff;
+  background: rgba(0, 212, 255, 0.1);
+  color: #00d4ff;
+}
+
+.payment-btn .token-icon {
+  font-size: 1.2rem;
+}
+
+.payment-btn .recommended {
+  background: #00d4ff;
+  color: #16213e;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Button Loading States */
+.btn-register:disabled,
+.purchase-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-register:disabled:hover,
+.purchase-btn:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Wallet Required Message */
+.wallet-required {
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* Purchase Section */
+.purchase-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  margin: 30px 0;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.purchase-btn {
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #00d4ff, #7b2cbf);
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 300px;
+}
+
+.purchase-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .balance-display {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .payment-toggle {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .payment-btn {
+    min-width: 200px;
+    justify-content: center;
+  }
+  
+  .purchase-btn {
+    min-width: auto;
+    width: 100%;
+  }
+}
