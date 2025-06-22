@@ -150,27 +150,98 @@ export const useLiveNetworkData = (options = {}) => {
     try {
       console.log('📊 Fetching network statistics...');
 
-      const [totalUsers, owner, paused, usdtToken] = await Promise.all([
-        contract.methods.totalUsers().call(),
-        contract.methods.owner().call(),
-        contract.methods.paused().call(),
-        contract.methods.usdtToken().call()
-      ]);
+      // Check if contract and methods exist before calling
+      if (!contract || !contract.methods) {
+        throw new Error('Invalid contract instance');
+      }
 
-      const stats = {
-        totalUsers: parseInt(totalUsers.toString()),
-        contractOwner: owner,
-        isPaused: paused,
-        usdtTokenAddress: usdtToken,
+      // Get the methods available on the contract
+      const contractMethods = Object.keys(contract.methods);
+      console.log('Available contract methods:', contractMethods);
+
+      // Initialize default values
+      let stats = {
+        totalUsers: 0,
+        contractOwner: '0x0000000000000000000000000000000000000000',
+        isPaused: false,
+        usdtTokenAddress: '0x55d398326f99059fF775485246999027B3197955', // BSC USDT address
         lastUpdated: new Date().toISOString()
       };
+
+      // Create an array of promises for methods that exist
+      const promises = [];
+      const methodMap = {};
+
+      // Safely check and add method calls
+      if (contract.methods.totalUsers) {
+        promises.push(contract.methods.totalUsers().call());
+        methodMap[promises.length - 1] = 'totalUsers';
+      }
+
+      if (contract.methods.owner) {
+        promises.push(contract.methods.owner().call());
+        methodMap[promises.length - 1] = 'owner';
+      }
+
+      if (contract.methods.paused) {
+        promises.push(contract.methods.paused().call());
+        methodMap[promises.length - 1] = 'paused';
+      }
+
+      // Try different possible USDT token method names
+      if (contract.methods.usdtToken) {
+        promises.push(contract.methods.usdtToken().call());
+        methodMap[promises.length - 1] = 'usdtToken';
+      } else if (contract.methods.USDT) {
+        promises.push(contract.methods.USDT().call());
+        methodMap[promises.length - 1] = 'USDT';
+      } else if (contract.methods.token) {
+        promises.push(contract.methods.token().call());
+        methodMap[promises.length - 1] = 'token';
+      }
+
+      // Execute all available method calls
+      if (promises.length > 0) {
+        const results = await Promise.allSettled(promises);
+        
+        results.forEach((result, index) => {
+          const methodName = methodMap[index];
+          if (result.status === 'fulfilled') {
+            switch (methodName) {
+              case 'totalUsers':
+                stats.totalUsers = parseInt(result.value.toString());
+                break;
+              case 'owner':
+                stats.contractOwner = result.value;
+                break;
+              case 'paused':
+                stats.isPaused = result.value;
+                break;
+              case 'usdtToken':
+              case 'USDT':
+              case 'token':
+                stats.usdtTokenAddress = result.value;
+                break;
+            }
+          } else {
+            console.warn(`❌ Failed to call ${methodName}:`, result.reason);
+          }
+        });
+      }
 
       console.log('✅ Network stats fetched:', stats);
       return stats;
 
     } catch (err) {
       console.error('❌ Error fetching network stats:', err);
-      throw new Error(`Failed to fetch network stats: ${err.message}`);
+      // Return default stats instead of throwing
+      return {
+        totalUsers: 0,
+        contractOwner: '0x0000000000000000000000000000000000000000',
+        isPaused: false,
+        usdtTokenAddress: '0x55d398326f99059fF775485246999027B3197955',
+        lastUpdated: new Date().toISOString()
+      };
     }
   }, [contract]);
 

@@ -30,7 +30,8 @@ const CSP_DIRECTIVES = {
     "'self'",
     "'unsafe-inline'", // Required for React styles and CSS-in-JS
     'https://fonts.googleapis.com',
-    'https://cdnjs.cloudflare.com'
+    'https://cdnjs.cloudflare.com',
+    'https://cdn.jsdelivr.net' // For Font Awesome and other CDN stylesheets
   ],
   'img-src': [
     "'self'",

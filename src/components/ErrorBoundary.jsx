@@ -34,6 +34,16 @@ class ErrorBoundary extends React.Component {
 
   render() {
     if (this.state.hasError) {
+      // Use fallback component if provided
+      if (this.props.fallback) {
+        return this.props.fallback;
+      }
+
+      // Use custom fallback render function if provided
+      if (this.props.fallbackComponent) {
+        return this.props.fallbackComponent(this.state.error, this.state.errorInfo);
+      }
+
       const isProduction = process.env.NODE_ENV === 'production';
       
       return (

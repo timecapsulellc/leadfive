@@ -474,6 +474,7 @@
 /* Network Section */
 .network-section {
   animation: fadeIn 0.5s ease-in-out;
+  margin-bottom: 2rem;
 }
 
 .section-header {
@@ -828,6 +829,154 @@
 
 .security-btn:hover {
   background: rgba(0, 212, 255, 0.2);
+}
+
+/* Error Container Styles */
+.tree-error-container {
+  padding: 2rem;
+  background: rgba(255, 69, 58, 0.1);
+  border: 1px solid rgba(255, 69, 58, 0.3);
+  border-radius: 12px;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.tree-error-container .error-message {
+  color: #fff;
+}
+
+.tree-error-container h4 {
+  color: #FF453A;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.tree-error-container p {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.tree-error-container .error-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.tree-error-container .refresh-btn,
+.tree-error-container .full-view-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tree-error-container .refresh-btn {
+  background: linear-gradient(135deg, #00D4FF, #0099CC);
+  color: #000;
+}
+
+.tree-error-container .refresh-btn:hover {
+  background: linear-gradient(135deg, #00B8E6, #0088BB);
+  transform: translateY(-2px);
+}
+
+.tree-error-container .full-view-btn {
+  background: linear-gradient(135deg, #7B2CBF, #6A1B9A);
+  color: #fff;
+}
+
+.tree-error-container .full-view-btn:hover {
+  background: linear-gradient(135deg, #6A1B9A, #5A1A8A);
+  transform: translateY(-2px);
+}
+
+/* Network Section Specific Styles */
+.network-section {
+  margin-bottom: 2rem;
+}
+
+.network-section .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.network-section .section-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.network-section .view-toggle {
+  display: flex;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.network-section .view-toggle button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.network-section .view-toggle button.active,
+.network-section .view-toggle button:hover {
+  background: rgba(0, 212, 255, 0.2);
+  color: #00D4FF;
+}
+
+.network-section .full-view-btn {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #00D4FF, #0099CC);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.network-section .full-view-btn:hover {
+  background: linear-gradient(135deg, #00B8E6, #0088BB);
+  transform: translateY(-2px);
+}
+
+/* Dashboard Genealogy Tree Specific Styles */
+.dashboard-genealogy-tree {
+  max-height: 400px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dashboard-genealogy-tree .tree-controls {
+  display: none; /* Hide controls in dashboard view */
+}
+
+.dashboard-genealogy-tree .tree-stats {
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+.dashboard-genealogy-tree .tree-content {
+  max-height: 300px;
+  overflow: hidden;
 }
 
 /* Animations */
