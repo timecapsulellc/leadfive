@@ -277,58 +277,283 @@ export const useLiveNetworkData = (options = {}) => {
     if (!contract || !stats) return null;
 
     try {
-      console.log('🌳 Building network tree structure...');
+      console.log('🌳 Building binary network tree structure...');
 
-      // For now, create a demo structure since totalUsers is 0
-      // In a real scenario with users, we would:
-      // 1. Fetch all user addresses from events
-      // 2. Build the referral tree from sponsor relationships
-      // 3. Create the hierarchical structure
-
+      // For now, create a demo binary structure since totalUsers is 0
+      // In a real scenario with users, we would fetch real binary tree data
+      
       if (stats.totalUsers === 0) {
-        console.log('ℹ️ No users registered yet, creating demo structure...');
+        console.log('ℹ️ No users registered yet, creating demo binary structure...');
         
-        return {
-          name: 'LeadFive Network',
-          attributes: {
-            address: 'Root Network',
-            packageTier: null,
-            volume: 0,
-            registrationDate: new Date().toISOString(),
-            isRoot: true,
-            totalUsers: stats.totalUsers,
-            contractAddress: LEAD_FIVE_CONFIG.address,
-            networkStatus: stats.isPaused ? 'Paused' : 'Active'
-          },
-          children: [
-            {
-              name: 'Ready for First User',
-              attributes: {
-                address: 'Waiting for registration...',
-                packageTier: 0,
-                volume: 0,
-                registrationDate: null,
-                isPlaceholder: true,
-                message: 'Network is ready to accept new users'
-              }
-            }
-          ]
-        };
+        return createDemoBinaryTree();
       }
 
-      // TODO: Implement real user tree building when users exist
+      // TODO: Implement real binary tree building when users exist
       // This would involve:
-      // - Fetching UserRegistered events to get all user addresses
-      // - For each user, fetch their sponsor to build parent-child relationships
-      // - Organize into tree structure
+      // 1. Fetch user data from contract
+      // 2. Build binary tree from left/right leg relationships
+      // 3. Maintain proper binary structure
       
-      return null;
+      return createDemoBinaryTree();
 
     } catch (err) {
       console.error('❌ Error building network tree:', err);
       throw new Error(`Failed to build network tree: ${err.message}`);
     }
   }, [contract]);
+
+  /**
+   * Creates a demo binary tree structure for visualization
+   */
+  const createDemoBinaryTree = useCallback(() => {
+    return {
+      name: "You (Root)",
+      attributes: {
+        id: "root",
+        address: "0x1234...abcd",
+        isRoot: true,
+        position: "root",
+        volume: 5000,
+        directReferrals: 2,
+        packageTier: 3,
+        isActive: true,
+        depth: 0,
+        totalEarnings: 2500,
+        leftVolume: 2000,
+        rightVolume: 3000
+      },
+      children: [
+        {
+          name: "Left Leg",
+          attributes: {
+            id: "left-1",
+            address: "0x2345...bcde", 
+            position: "left",
+            volume: 2000,
+            directReferrals: 2,
+            packageTier: 2,
+            isActive: true,
+            depth: 1,
+            totalEarnings: 800,
+            leftVolume: 800,
+            rightVolume: 1200
+          },
+          children: [
+            {
+              name: "L-Left",
+              attributes: {
+                id: "left-left-2",
+                address: "0x3456...cdef",
+                position: "left",
+                volume: 800,
+                directReferrals: 1,
+                packageTier: 1,
+                isActive: true,
+                depth: 2,
+                totalEarnings: 240,
+                leftVolume: 300,
+                rightVolume: 500
+              },
+              children: [
+                {
+                  name: "LL-Left",
+                  attributes: {
+                    id: "left-left-left-3",
+                    address: "0x4567...def0",
+                    position: "left",
+                    volume: 300,
+                    directReferrals: 0,
+                    packageTier: 1,
+                    isActive: true,
+                    depth: 3,
+                    totalEarnings: 90
+                  },
+                  children: []
+                },
+                {
+                  name: "LL-Right",
+                  attributes: {
+                    id: "left-left-right-3",
+                    address: "0x5678...ef01",
+                    position: "right",
+                    volume: 500,
+                    directReferrals: 0,
+                    packageTier: 2,
+                    isActive: true,
+                    depth: 3,
+                    totalEarnings: 150
+                  },
+                  children: []
+                }
+              ]
+            },
+            {
+              name: "L-Right",
+              attributes: {
+                id: "left-right-2",
+                address: "0x6789...f012",
+                position: "right",
+                volume: 1200,
+                directReferrals: 1,
+                packageTier: 3,
+                isActive: true,
+                depth: 2,
+                totalEarnings: 360,
+                leftVolume: 600,
+                rightVolume: 600
+              },
+              children: [
+                {
+                  name: "LR-Left",
+                  attributes: {
+                    id: "left-right-left-3",
+                    address: "0x789a...0123",
+                    position: "left",
+                    volume: 600,
+                    directReferrals: 0,
+                    packageTier: 2,
+                    isActive: true,
+                    depth: 3,
+                    totalEarnings: 180
+                  },
+                  children: []
+                },
+                {
+                  name: "LR-Right",
+                  attributes: {
+                    id: "left-right-right-3",
+                    address: "0x89ab...1234",
+                    position: "right",
+                    volume: 600,
+                    directReferrals: 0,
+                    packageTier: 2,
+                    isActive: true,
+                    depth: 3,
+                    totalEarnings: 180
+                  },
+                  children: []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          name: "Right Leg",
+          attributes: {
+            id: "right-1",
+            address: "0x9abc...2345",
+            position: "right",
+            volume: 3000,
+            directReferrals: 2,
+            packageTier: 4,
+            isActive: true,
+            depth: 1,
+            totalEarnings: 1200,
+            leftVolume: 1500,
+            rightVolume: 1500
+          },
+          children: [
+            {
+              name: "R-Left",
+              attributes: {
+                id: "right-left-2",
+                address: "0xabcd...3456",
+                position: "left",
+                volume: 1500,
+                directReferrals: 1,
+                packageTier: 3,
+                isActive: true,
+                depth: 2,
+                totalEarnings: 450,
+                leftVolume: 700,
+                rightVolume: 800
+              },
+              children: [
+                {
+                  name: "RL-Left",
+                  attributes: {
+                    id: "right-left-left-3",
+                    address: "0xbcde...4567",
+                    position: "left",
+                    volume: 700,
+                    directReferrals: 0,
+                    packageTier: 2,
+                    isActive: true,
+                    depth: 3,
+                    totalEarnings: 210
+                  },
+                  children: []
+                },
+                {
+                  name: "RL-Right",
+                  attributes: {
+                    id: "right-left-right-3",
+                    address: "0xcdef...5678",
+                    position: "right",
+                    volume: 800,
+                    directReferrals: 0,
+                    packageTier: 3,
+                    isActive: true,
+                    depth: 3,
+                    totalEarnings: 240
+                  },
+                  children: []
+                }
+              ]
+            },
+            {
+              name: "R-Right",
+              attributes: {
+                id: "right-right-2",
+                address: "0xdef0...6789",
+                position: "right",
+                volume: 1500,
+                directReferrals: 1,
+                packageTier: 4,
+                isActive: true,
+                depth: 2,
+                totalEarnings: 600,
+                leftVolume: 800,
+                rightVolume: 700
+              },
+              children: [
+                {
+                  name: "RR-Left",
+                  attributes: {
+                    id: "right-right-left-3",
+                    address: "0xef01...789a",
+                    position: "left",
+                    volume: 800,
+                    directReferrals: 0,
+                    packageTier: 3,
+                    isActive: true,
+                    depth: 3,
+                    totalEarnings: 240
+                  },
+                  children: []
+                },
+                {
+                  name: "RR-Right",
+                  attributes: {
+                    id: "right-right-right-3",
+                    address: "0xf012...89ab",
+                    position: "right",
+                    volume: 700,
+                    directReferrals: 0,
+                    packageTier: 2,
+                    isActive: true,
+                    depth: 3,
+                    totalEarnings: 210
+                  },
+                  children: []
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    };
+  }, []);
 
   /**
    * Main function to fetch all network data

@@ -596,6 +596,208 @@
 }
 
 /* ============================================================================
+   BINARY TREE SPECIFIC STYLES
+   ============================================================================ */
+
+/* Binary tree layout enhancements */
+.tree-container.binary-layout {
+  position: relative;
+}
+
+/* Binary tree connection lines */
+.rd3t-link.binary-tree-link {
+  stroke: var(--orphi-cyber-blue);
+  stroke-width: 2px;
+  fill: none;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.rd3t-link.binary-tree-link.left-leg {
+  stroke: var(--orphi-energy-orange);
+}
+
+.rd3t-link.binary-tree-link.right-leg {
+  stroke: var(--orphi-cyber-blue);
+}
+
+.rd3t-link.binary-tree-link:hover {
+  stroke-width: 3px;
+  opacity: 1;
+}
+
+/* Binary position indicators */
+.binary-position-indicator {
+  position: absolute;
+  top: -20px;
+  font-size: 10px;
+  font-weight: bold;
+  color: var(--orphi-cyber-blue);
+}
+
+.binary-position-indicator.left {
+  color: var(--orphi-energy-orange);
+  left: -20px;
+}
+
+.binary-position-indicator.right {
+  color: var(--orphi-cyber-blue);
+  right: -20px;
+}
+
+/* Enhanced stats display for binary tree */
+.tree-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--orphi-spacing-md);
+  padding: var(--orphi-spacing-lg);
+  background: linear-gradient(135deg, rgba(123, 44, 191, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+  border-radius: var(--orphi-radius-lg);
+  margin-bottom: var(--orphi-spacing-lg);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--orphi-spacing-md);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--orphi-radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: var(--orphi-spacing-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+}
+
+/* Binary leg specific styling */
+.stat-item .stat-value[style*="color: rgb(255, 107, 53)"] {
+  text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+}
+
+.stat-item .stat-value[style*="color: rgb(0, 212, 255)"] {
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+/* Tree legend updates for binary structure */
+.tree-legend {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: var(--orphi-spacing-md);
+  border-radius: var(--orphi-radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tree-legend h4 {
+  color: #fff;
+  font-size: 0.875rem;
+  margin-bottom: var(--orphi-spacing-sm);
+  text-align: center;
+}
+
+.legend-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--orphi-spacing-xs);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--orphi-spacing-xs);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Add binary leg indicators to legend */
+.legend-item.binary-leg {
+  border-left: 3px solid;
+  padding-left: var(--orphi-spacing-sm);
+}
+
+.legend-item.binary-leg.left-leg {
+  border-left-color: var(--orphi-energy-orange);
+}
+
+.legend-item.binary-leg.right-leg {
+  border-left-color: var(--orphi-cyber-blue);
+}
+
+/* Enhanced node hover effects for binary tree */
+.rd3t-node {
+  transition: all 0.3s ease;
+}
+
+.rd3t-node:hover {
+  filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+}
+
+.rd3t-node circle {
+  transition: all 0.3s ease;
+}
+
+.rd3t-node:hover circle {
+  stroke-width: 4;
+}
+
+/* Responsive adjustments for binary tree */
+@media (max-width: 768px) {
+  .tree-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--orphi-spacing-sm);
+    padding: var(--orphi-spacing-md);
+  }
+  
+  .stat-item {
+    padding: var(--orphi-spacing-sm);
+  }
+  
+  .stat-value {
+    font-size: 1rem;
+  }
+  
+  .tree-legend {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin-top: var(--orphi-spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .tree-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================================
    RESPONSIVE DESIGN
    ============================================================================ */
 

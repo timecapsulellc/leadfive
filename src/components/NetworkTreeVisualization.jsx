@@ -435,41 +435,79 @@ const NetworkTreeVisualization = ({
   const renderCustomNodeElement = useCallback((rd3tNodeProps) => {
     const { nodeDatum, toggleNode } = rd3tNodeProps;
     const isRoot = nodeDatum.attributes?.isRoot || nodeDatum.name === 'Root';
+    const position = nodeDatum.attributes?.position; // left, right, or root
     const packageTier = nodeDatum.attributes?.packageTier || 0;
     const packageColor = PACKAGE_TIER_COLORS[packageTier] || PACKAGE_TIER_COLORS[0];
     const isActive = nodeDatum.attributes?.isActive !== false;
+    const volume = nodeDatum.attributes?.volume || 0;
+    const earnings = nodeDatum.attributes?.totalEarnings || 0;
     
     return (
       <g>
+        {/* Position indicator for non-root nodes */}
+        {!isRoot && position && (
+          <text
+            fill={position === 'left' ? '#FF6B35' : '#00D4FF'}
+            textAnchor="middle"
+            y={-45}
+            fontSize={10}
+            fontWeight="bold"
+          >
+            {position.toUpperCase()} LEG
+          </text>
+        )}
+        
+        {/* Volume indicators for left/right legs */}
+        {!isRoot && (nodeDatum.attributes?.leftVolume || nodeDatum.attributes?.rightVolume) && (
+          <g>
+            <text
+              fill="#888"
+              textAnchor="middle"
+              y={-30}
+              fontSize={8}
+            >
+              L: ${(nodeDatum.attributes.leftVolume || 0)}
+            </text>
+            <text
+              fill="#888"
+              textAnchor="middle"
+              y={-20}
+              fontSize={8}
+            >
+              R: ${(nodeDatum.attributes.rightVolume || 0)}
+            </text>
+          </g>
+        )}
+        
         {/* Node circle */}
         <circle
-          r={isRoot ? 30 : 25}
+          r={isRoot ? 35 : 28}
           fill={isActive ? packageColor : '#6C757D'}
-          stroke="#fff"
-          strokeWidth={3}
+          stroke={position === 'left' ? '#FF6B35' : position === 'right' ? '#00D4FF' : '#fff'}
+          strokeWidth={position && !isRoot ? 4 : 3}
           opacity={isActive ? 1 : 0.6}
           style={{ cursor: 'pointer' }}
           onClick={toggleNode}
         />
         
-        {/* Node icon/text */}
+        {/* Node icon/content */}
         <text
           fill="#fff"
           textAnchor="middle"
           dy={5}
-          fontSize={isRoot ? 14 : 12}
+          fontSize={isRoot ? 16 : 14}
           fontWeight="bold"
           style={{ cursor: 'pointer' }}
           onClick={toggleNode}
         >
-          {isRoot ? '👑' : nodeDatum.name.charAt(2)}
+          {isRoot ? '👑' : position === 'left' ? 'L' : position === 'right' ? 'R' : nodeDatum.name.charAt(0)}
         </text>
         
         {/* Node name */}
         <text
           fill="#333"
           textAnchor="middle"
-          y={isRoot ? 45 : 40}
+          y={isRoot ? 50 : 45}
           fontSize={10}
           fontWeight="500"
         >
@@ -477,11 +515,11 @@ const NetworkTreeVisualization = ({
         </text>
         
         {/* Package tier */}
-        {!isRoot && (
+        {!isRoot && packageTier > 0 && (
           <text
             fill={packageColor}
             textAnchor="middle"
-            y={52}
+            y={57}
             fontSize={8}
             fontWeight="600"
           >
@@ -490,15 +528,39 @@ const NetworkTreeVisualization = ({
         )}
         
         {/* Volume */}
-        {nodeDatum.attributes?.volume > 0 && (
+        {volume > 0 && (
           <text
             fill="#666"
             textAnchor="middle"
-            y={64}
+            y={isRoot ? 67 : 69}
             fontSize={8}
           >
-            ${(nodeDatum.attributes.volume / 1000).toFixed(1)}K
+            ${volume.toLocaleString()}
           </text>
+        )}
+        
+        {/* Earnings */}
+        {earnings > 0 && (
+          <text
+            fill="#00AA00"
+            textAnchor="middle"
+            y={isRoot ? 79 : 81}
+            fontSize={8}
+            fontWeight="600"
+          >
+            💰 ${earnings}
+          </text>
+        )}
+        
+        {/* Binary position indicator */}
+        {!isRoot && (
+          <circle
+            cx={position === 'left' ? -15 : 15}
+            cy={-35}
+            r={6}
+            fill={position === 'left' ? '#FF6B35' : '#00D4FF'}
+            opacity={0.8}
+          />
         )}
       </g>
     );
@@ -547,23 +609,30 @@ const NetworkTreeVisualization = ({
     data: activeData,
     orientation: currentOrientation,
     pathFunc: "diagonal",
-    nodeSize: currentOrientation === 'vertical' ? nodeSize : { x: nodeSize.y, y: nodeSize.x },
-    separation,
+    nodeSize: currentOrientation === 'vertical' ? 
+      { x: 250, y: 180 } : // Increased spacing for binary tree
+      { x: 180, y: 250 },
+    separation: currentOrientation === 'vertical' ?
+      { siblings: 2, nonSiblings: 2.5 } : // Better separation for binary layout
+      { siblings: 1.8, nonSiblings: 2.2 },
     translate: currentOrientation === 'vertical' ? 
-      { x: 400, y: 100 } : 
-      { x: 150, y: 300 },
+      { x: 500, y: 120 } : // Adjusted for binary tree centering
+      { x: 200, y: 350 },
     zoom: currentZoom,
     scaleExtent,
     enableLegacyTransitions: true,
     transitionDuration: DEFAULT_CONFIG.transitionDuration,
     renderCustomNodeElement: renderCustomNodeElement || defaultNodeRenderer,
     collapsible,
-    initialDepth
+    initialDepth,
+    // Enhanced for binary tree visualization
+    pathClassFunc: (datum) => {
+      const position = datum.target?.data?.attributes?.position;
+      return position ? `binary-tree-link ${position}-leg` : 'binary-tree-link';
+    }
   }), [
     activeData,
     currentOrientation,
-    nodeSize,
-    separation,
     currentZoom,
     scaleExtent,
     renderCustomNodeElement,
@@ -586,25 +655,44 @@ const NetworkTreeVisualization = ({
         maxDepth: 0,
         totalVolume: 0,
         activeNodes: 0,
-        directChildren: 0
+        directChildren: 0,
+        leftLegVolume: 0,
+        rightLegVolume: 0,
+        leftLegNodes: 0,
+        rightLegNodes: 0
       };
     }
 
-    const calculateStats = (node, depth = 0) => {
+    const calculateStats = (node, depth = 0, legSide = null) => {
       let stats = {
         nodes: 1,
         maxDepth: depth,
         volume: node.attributes?.volume || 0,
-        active: node.attributes?.isActive !== false ? 1 : 0
+        active: node.attributes?.isActive !== false ? 1 : 0,
+        leftNodes: 0,
+        rightNodes: 0,
+        leftVolume: 0,
+        rightVolume: 0
       };
 
       if (node.children && node.children.length > 0) {
         node.children.forEach(child => {
-          const childStats = calculateStats(child, depth + 1);
+          const childPosition = child.attributes?.position;
+          const childStats = calculateStats(child, depth + 1, childPosition);
+          
           stats.nodes += childStats.nodes;
           stats.maxDepth = Math.max(stats.maxDepth, childStats.maxDepth);
           stats.volume += childStats.volume;
           stats.active += childStats.active;
+          
+          // Track left and right leg statistics
+          if (childPosition === 'left' || legSide === 'left') {
+            stats.leftNodes += childStats.nodes;
+            stats.leftVolume += childStats.volume;
+          } else if (childPosition === 'right' || legSide === 'right') {
+            stats.rightNodes += childStats.nodes;
+            stats.rightVolume += childStats.volume;
+          }
         });
       }
 
@@ -619,7 +707,11 @@ const NetworkTreeVisualization = ({
       maxDepth: stats.maxDepth,
       totalVolume: stats.volume,
       activeNodes: stats.active,
-      directChildren: directChildren
+      directChildren: directChildren,
+      leftLegVolume: stats.leftVolume,
+      rightLegVolume: stats.rightVolume,
+      leftLegNodes: stats.leftNodes,
+      rightLegNodes: stats.rightNodes
     };
   }, [activeData]);
 
@@ -654,16 +746,24 @@ const NetworkTreeVisualization = ({
               <span className="stat-value">{treeStats.totalNodes}</span>
             </div>
             <div className="stat-item">
-              <span className="stat-label">Max Depth</span>
+              <span className="stat-label">Tree Depth</span>
               <span className="stat-value">{treeStats.maxDepth}</span>
             </div>
             <div className="stat-item">
               <span className="stat-label">Total Volume</span>
-              <span className="stat-value">${(treeStats.totalVolume / 1000).toFixed(1)}K</span>
+              <span className="stat-value">${(treeStats.totalVolume || 0).toLocaleString()}</span>
             </div>
             <div className="stat-item">
-              <span className="stat-label">Direct Children</span>
-              <span className="stat-value">{treeStats.directChildren}</span>
+              <span className="stat-label">Left Leg</span>
+              <span className="stat-value" style={{color: '#FF6B35'}}>
+                {treeStats.leftLegNodes} nodes | ${(treeStats.leftLegVolume || 0).toLocaleString()}
+              </span>
+            </div>
+            <div className="stat-item">
+              <span className="stat-label">Right Leg</span>
+              <span className="stat-value" style={{color: '#00D4FF'}}>
+                {treeStats.rightLegNodes} nodes | ${(treeStats.rightLegVolume || 0).toLocaleString()}
+              </span>
             </div>
           </div>
         </div>
@@ -784,8 +884,27 @@ const NetworkTreeVisualization = ({
       {/* Legend */}
       {showLegend && (
         <div className="tree-legend">
-          <h4>Package Tiers</h4>
+          <h4>Binary Tree Structure</h4>
           <div className="legend-items">
+            {/* Binary Leg Indicators */}
+            <div className="legend-item binary-leg left-leg">
+              <div 
+                className="legend-color" 
+                style={{ backgroundColor: '#FF6B35' }}
+              ></div>
+              <span>Left Leg ({treeStats.leftLegNodes} nodes)</span>
+            </div>
+            <div className="legend-item binary-leg right-leg">
+              <div 
+                className="legend-color" 
+                style={{ backgroundColor: '#00D4FF' }}
+              ></div>
+              <span>Right Leg ({treeStats.rightLegNodes} nodes)</span>
+            </div>
+            
+            {/* Package Tiers */}
+            <hr style={{border: '1px solid rgba(255,255,255,0.2)', margin: '8px 0'}} />
+            <div style={{fontSize: '0.7rem', color: 'rgba(255,255,255,0.6)', marginBottom: '4px'}}>Package Tiers:</div>
             {Object.entries(PACKAGE_TIER_LABELS).map(([tier, label]) => (
               <div key={tier} className="legend-item">
                 <div 
