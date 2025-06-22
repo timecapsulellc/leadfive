@@ -20,7 +20,7 @@
           "preserve_path_prefix": false
         }
       ],
-      "environment_variables": [
+      "envs": [
         {
           "key": "NODE_ENV",
           "value": "production",
@@ -33,7 +33,7 @@
         },
         {
           "key": "VITE_CONTRACT_ADDRESS",
-          "value": "0x7FEEA22942407407801cCDA55a4392f25975D998",
+          "value": "0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569",
           "scope": "BUILD_TIME"
         },
         {

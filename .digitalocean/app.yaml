@@ -1,10 +1,10 @@
-name: orphi-crowdfund
+name: leadfive-production
 services:
 - name: web
   source_dir: /
   github:
-    repo: timecapsulellc/orphicrowdfund
-    branch: deployment
+    repo: timecapsulellc/leadfive
+    branch: main
   run_command: npm run start
   build_command: npm run build
   environment_slug: node-js
@@ -16,8 +16,12 @@ services:
   envs:
   - key: NODE_ENV
     value: production
-  - key: VITE_SUPABASE_URL
-    value: ${VITE_SUPABASE_URL}
+  - key: VITE_CONTRACT_ADDRESS
+    value: 0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569
+  - key: VITE_NETWORK_ID
+    value: "56"
+  - key: VITE_WEB3_PROVIDER_URL
+    value: https://bsc-dataseed.binance.org/
     type: SECRET
   - key: VITE_SUPABASE_ANON_KEY
     value: ${VITE_SUPABASE_ANON_KEY}
