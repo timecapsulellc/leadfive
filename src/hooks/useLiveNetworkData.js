@@ -172,30 +172,30 @@ export const useLiveNetworkData = (options = {}) => {
       const promises = [];
       const methodMap = {};
 
-      // Safely check and add method calls
-      if (contract.methods.totalUsers) {
+      // Safely check and add method calls - verify contract.methods exists
+      if (contract.methods.totalUsers && typeof contract.methods.totalUsers === 'function') {
         promises.push(contract.methods.totalUsers().call());
         methodMap[promises.length - 1] = 'totalUsers';
       }
 
-      if (contract.methods.owner) {
+      if (contract.methods.owner && typeof contract.methods.owner === 'function') {
         promises.push(contract.methods.owner().call());
         methodMap[promises.length - 1] = 'owner';
       }
 
-      if (contract.methods.paused) {
+      if (contract.methods.paused && typeof contract.methods.paused === 'function') {
         promises.push(contract.methods.paused().call());
         methodMap[promises.length - 1] = 'paused';
       }
 
-      // Try different possible USDT token method names
-      if (contract.methods.usdtToken) {
+      // Try different possible USDT token method names - check if methods exist
+      if (contract.methods.usdtToken && typeof contract.methods.usdtToken === 'function') {
         promises.push(contract.methods.usdtToken().call());
         methodMap[promises.length - 1] = 'usdtToken';
-      } else if (contract.methods.USDT) {
+      } else if (contract.methods.USDT && typeof contract.methods.USDT === 'function') {
         promises.push(contract.methods.USDT().call());
         methodMap[promises.length - 1] = 'USDT';
-      } else if (contract.methods.token) {
+      } else if (contract.methods.token && typeof contract.methods.token === 'function') {
         promises.push(contract.methods.token().call());
         methodMap[promises.length - 1] = 'token';
       }
@@ -234,14 +234,8 @@ export const useLiveNetworkData = (options = {}) => {
 
     } catch (err) {
       console.error('❌ Error fetching network stats:', err);
-      // Return default stats instead of throwing
-      return {
-        totalUsers: 0,
-        contractOwner: '0x0000000000000000000000000000000000000000',
-        isPaused: false,
-        usdtTokenAddress: '0x55d398326f99059fF775485246999027B3197955',
-        lastUpdated: new Date().toISOString()
-      };
+      // Return default stats instead of throwing - return with totalUsers: 0
+      return { totalUsers: 0, contractOwner: '0x0000000000000000000000000000000000000000', isPaused: false, usdtTokenAddress: '0x55d398326f99059fF775485246999027B3197955', lastUpdated: new Date().toISOString() };
     }
   }, [contract]);
 
@@ -362,6 +356,18 @@ export const useLiveNetworkData = (options = {}) => {
     } catch (err) {
       console.error('❌ Error fetching network data:', err);
       setError(err.message);
+      
+      // Set default stats on error to ensure UI doesn't break
+      setNetworkStats({
+        totalUsers: 0,
+        contractOwner: '0x0000000000000000000000000000000000000000',
+        isPaused: false,
+        usdtTokenAddress: '0x55d398326f99059fF775485246999027B3197955',
+        lastUpdated: new Date().toISOString()
+      });
+      
+      // Set empty network data
+      setNetworkData(null);
     } finally {
       setLoading(false);
     }

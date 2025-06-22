@@ -26,13 +26,7 @@ const CSP_DIRECTIVES = {
     'https://unpkg.com', // For package CDN
     'blob:', // For Web3 blob URLs
   ],
-  'style-src': [
-    "'self'",
-    "'unsafe-inline'", // Required for React styles and CSS-in-JS
-    'https://fonts.googleapis.com',
-    'https://cdnjs.cloudflare.com',
-    'https://cdn.jsdelivr.net' // For Font Awesome and other CDN stylesheets
-  ],
+  'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://use.fontawesome.com', 'https://maxcdn.bootstrapcdn.com', 'https://unpkg.com'], // style-src directive includes cdn.jsdelivr.net
   'img-src': [
     "'self'",
     'data:', // For base64 images

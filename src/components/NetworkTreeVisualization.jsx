@@ -225,6 +225,7 @@ const NetworkTreeVisualization = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [showNodeDetails, setShowNodeDetails] = useState(false);
+  const [showLegend, setShowLegend] = useState(true);
   const [treeConfig, setTreeConfig] = useState({ ...DEFAULT_CONFIG, ...config });
   const [currentTheme, setCurrentTheme] = useState(theme);
   const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
@@ -571,6 +572,57 @@ const NetworkTreeVisualization = ({
     initialDepth
   ]);
   
+  // ============================================================================
+  // TREE STATISTICS CALCULATION
+  // ============================================================================
+  
+  /**
+   * Calculate comprehensive tree statistics from the active data
+   */
+  const treeStats = useMemo(() => {
+    if (!activeData) {
+      return {
+        totalNodes: 0,
+        maxDepth: 0,
+        totalVolume: 0,
+        activeNodes: 0,
+        directChildren: 0
+      };
+    }
+
+    const calculateStats = (node, depth = 0) => {
+      let stats = {
+        nodes: 1,
+        maxDepth: depth,
+        volume: node.attributes?.volume || 0,
+        active: node.attributes?.isActive !== false ? 1 : 0
+      };
+
+      if (node.children && node.children.length > 0) {
+        node.children.forEach(child => {
+          const childStats = calculateStats(child, depth + 1);
+          stats.nodes += childStats.nodes;
+          stats.maxDepth = Math.max(stats.maxDepth, childStats.maxDepth);
+          stats.volume += childStats.volume;
+          stats.active += childStats.active;
+        });
+      }
+
+      return stats;
+    };
+
+    const stats = calculateStats(activeData);
+    const directChildren = activeData.children ? activeData.children.length : 0;
+    
+    return {
+      totalNodes: stats.nodes,
+      maxDepth: stats.maxDepth,
+      totalVolume: stats.volume,
+      activeNodes: stats.active,
+      directChildren: directChildren
+    };
+  }, [activeData]);
+
   // ============================================================================
   // LOADING STATE
   // ============================================================================
