@@ -41,15 +41,55 @@ export default defineConfig({
     sourcemap: false,
     minify: 'terser',
     target: 'es2020',
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          blockchain: ['ethers', 'web3'],
-          ui: ['lucide-react', 'framer-motion', 'react-icons'],
-          charts: ['chart.js', 'react-chartjs-2'],
-          utils: ['react-d3-tree', 'html2canvas', 'jspdf']
-        }
+        manualChunks: (id) => {
+          // More granular chunking for better caching and loading
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+              return 'react-vendor';
+            }
+            if (id.includes('ethers') || id.includes('web3')) {
+              return 'blockchain';
+            }
+            if (id.includes('chart') || id.includes('d3')) {
+              return 'charts';
+            }
+            if (id.includes('framer-motion') || id.includes('lucide') || id.includes('react-icons')) {
+              return 'ui';
+            }
+            if (id.includes('crypto') || id.includes('buffer') || id.includes('stream')) {
+              return 'polyfills';
+            }
+            return 'vendor';
+          }
+          
+          // App-specific chunks
+          if (id.includes('/pages/')) {
+            return 'pages';
+          }
+          if (id.includes('/components/')) {
+            return 'components';
+          }
+          if (id.includes('/utils/')) {
+            return 'utils';
+          }
+        },
+        // Optimize asset naming
+        assetFileNames: (assetInfo) => {
+          const info = assetInfo.name.split('.');
+          const ext = info[info.length - 1];
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
+            return `images/[name]-[hash][extname]`;
+          }
+          if (/woff2?|eot|ttf|otf/i.test(ext)) {
+            return `fonts/[name]-[hash][extname]`;
+          }
+          return `assets/[name]-[hash][extname]`;
+        },
+        chunkFileNames: 'js/[name]-[hash].js',
+        entryFileNames: 'js/[name]-[hash].js'
       },
       external: [],
       onwarn(warning, warn) {
@@ -63,6 +103,19 @@ export default defineConfig({
       transformMixedEsModules: true,
       include: [/node_modules/],
       exclude: [/node_modules\/core-js/],
+    },
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.trace'],
+      },
+      mangle: {
+        safari10: true,
+      },
+      format: {
+        comments: false,
+      },
     },
   },
   

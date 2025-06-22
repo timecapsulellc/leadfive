@@ -1,0 +1,336 @@
+/* Advanced Error Boundary Styles */
+.error-boundary-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.error-boundary-content {
+  max-width: 500px;
+  text-align: center;
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.error-icon {
+  color: #ef4444;
+  margin-bottom: 1.5rem;
+}
+
+.error-icon svg {
+  width: 64px;
+  height: 64px;
+  stroke-width: 1.5;
+}
+
+.error-boundary-content h2 {
+  color: #1f2937;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.error-boundary-content p {
+  color: #6b7280;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.error-details {
+  text-align: left;
+  margin: 1.5rem 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.error-details summary {
+  background: #f9fafb;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.error-details summary:hover {
+  background: #f3f4f6;
+}
+
+.error-info {
+  padding: 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.error-info h4 {
+  color: #dc2626;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.error-info pre {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+  color: #374151;
+}
+
+.error-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.retry-button,
+.reload-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-size: 0.875rem;
+}
+
+.retry-button {
+  background: #3b82f6;
+  color: white;
+}
+
+.retry-button:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.reload-button {
+  background: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.reload-button:hover {
+  background: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+.error-id {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-family: 'Monaco', 'Menlo', monospace;
+  background: #f9fafb;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #e5e7eb;
+}
+
+/* Fallback component styles */
+.default-error-fallback {
+  text-align: center;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  margin: 1rem;
+}
+
+.default-error-fallback h3 {
+  color: #dc2626;
+  margin-bottom: 1rem;
+}
+
+.default-error-fallback p {
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.default-error-fallback .error-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.default-error-fallback button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.default-error-fallback button:first-child {
+  background: #3b82f6;
+  color: white;
+}
+
+.default-error-fallback button:first-child:hover {
+  background: #2563eb;
+}
+
+.default-error-fallback button:last-child {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.default-error-fallback button:last-child:hover {
+  background: #e5e7eb;
+}
+
+.minimal-error-fallback {
+  text-align: center;
+  padding: 1rem;
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  margin: 0.5rem;
+}
+
+.minimal-error-fallback p {
+  color: #dc2626;
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.minimal-error-fallback button {
+  background: #dc2626;
+  color: white;
+  border: none;
+  padding: 0.375rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.minimal-error-fallback button:hover {
+  background: #b91c1c;
+}
+
+/* Mobile responsive */
+@media (max-width: 640px) {
+  .error-boundary-container {
+    padding: 1rem;
+    min-height: 300px;
+  }
+
+  .error-boundary-content {
+    padding: 1.5rem;
+  }
+
+  .error-icon svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .error-boundary-content h2 {
+    font-size: 1.25rem;
+  }
+
+  .error-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .retry-button,
+  .reload-button {
+    width: 100%;
+  }
+
+  .error-info pre {
+    font-size: 0.6875rem;
+    padding: 0.5rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .error-boundary-container {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  }
+
+  .error-boundary-content {
+    background: #1f2937;
+    border-color: #374151;
+    color: #f9fafb;
+  }
+
+  .error-boundary-content h2 {
+    color: #f9fafb;
+  }
+
+  .error-boundary-content p {
+    color: #d1d5db;
+  }
+
+  .error-details {
+    border-color: #374151;
+  }
+
+  .error-details summary {
+    background: #374151;
+    color: #f9fafb;
+    border-color: #4b5563;
+  }
+
+  .error-details summary:hover {
+    background: #4b5563;
+  }
+
+  .error-info pre {
+    background: #111827;
+    border-color: #374151;
+    color: #d1d5db;
+  }
+
+  .error-id {
+    background: #374151;
+    color: #9ca3af;
+    border-color: #4b5563;
+  }
+
+  .reload-button {
+    background: #374151;
+    color: #f9fafb;
+    border-color: #4b5563;
+  }
+
+  .reload-button:hover {
+    background: #4b5563;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .retry-button:hover,
+  .reload-button:hover {
+    transform: none;
+  }
+}
+
+/* Focus styles for keyboard navigation */
+.retry-button:focus,
+.reload-button:focus,
+.default-error-fallback button:focus,
+.minimal-error-fallback button:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.error-details summary:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: -2px;
+}

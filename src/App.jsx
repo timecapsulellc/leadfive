@@ -1,21 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import ErrorBoundary from './components/ErrorBoundary';
 import ProtectedRoute, { UserRoute, AdminRoute } from './components/ProtectedRoute';
+import { withLazyLoading, LoadingSpinner, preloadComponents } from './components/LazyLoader';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import MobileNav from './components/MobileNav';
-import Home from './pages/Home';
-import Register from './pages/Register';
-import Packages from './pages/Packages';
-import Referrals from './pages/Referrals';
-import Withdrawals from './pages/Withdrawals';
-import Security from './pages/Security';
-import About from './pages/About';
-import Dashboard from './pages/Dashboard';
-import Welcome from './pages/Welcome';
-import BrandGuide from './pages/BrandGuide';
-import Genealogy from './pages/Genealogy';
+
+// Lazy load components for better performance
+const Home = React.lazy(() => import('./pages/Home'));
+const Register = React.lazy(() => import('./pages/Register'));
+const Packages = React.lazy(() => import('./pages/Packages'));
+const Referrals = React.lazy(() => import('./pages/Referrals'));
+const Withdrawals = React.lazy(() => import('./pages/Withdrawals'));
+const Security = React.lazy(() => import('./pages/Security'));
+const About = React.lazy(() => import('./pages/About'));
+const Dashboard = React.lazy(() => import('./pages/Dashboard'));
+const Welcome = React.lazy(() => import('./pages/Welcome'));
+const BrandGuide = React.lazy(() => import('./pages/BrandGuide'));
+const Genealogy = React.lazy(() => import('./pages/Genealogy'));
 import { 
   storeWalletConnection, 
   autoReconnectWallet, 
@@ -131,6 +134,35 @@ function App() {
     };
   }, [account]);
 
+  // Preload critical components based on user state
+  useEffect(() => {
+    const preloadCriticalComponents = async () => {
+      try {
+        if (account) {
+          // Preload user-specific components
+          await preloadComponents([
+            () => import('./pages/Dashboard'),
+            () => import('./pages/Packages'),
+            () => import('./pages/Referrals')
+          ]);
+        } else {
+          // Preload public components
+          await preloadComponents([
+            () => import('./pages/Home'),
+            () => import('./pages/Register'),
+            () => import('./pages/About')
+          ]);
+        }
+      } catch (error) {
+        console.warn('Component preloading failed:', error);
+      }
+    };
+
+    // Delay preloading to not interfere with initial load
+    const timer = setTimeout(preloadCriticalComponents, 1000);
+    return () => clearTimeout(timer);
+  }, [account]);
+
   const checkExistingConnection = async () => {
     if (window.ethereum) {
       try {
@@ -207,11 +239,14 @@ function App() {
           onDisconnect={handleDisconnect}
         />
         {shouldShowWelcome ? (
-          <Routes>
-            <Route path="*" element={<Welcome />} />
-          </Routes>
+          <Suspense fallback={<LoadingSpinner message="Loading Welcome..." />}>
+            <Routes>
+              <Route path="*" element={<Welcome />} />
+            </Routes>
+          </Suspense>
         ) : (
-          <Routes>
+          <Suspense fallback={<LoadingSpinner message="Loading application..." />}>
+            <Routes>
             <Route path="/" element={
               <>
                 <Header 
@@ -449,6 +484,7 @@ function App() {
           </UserRoute>
         } />
       </Routes>
+      </Suspense>
       )}
     </Router>
     </ErrorBoundary>
