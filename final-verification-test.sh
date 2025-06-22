@@ -82,7 +82,7 @@ run_test "useLiveNetworkData.js syntax" \
     "true"
 
 run_test "NetworkTreeVisualization.jsx syntax" \
-    "node -pe 'require(\"@babel/core\").parse(require(\"fs\").readFileSync(\"src/components/NetworkTreeVisualization.jsx\", \"utf8\"), {sourceType: \"module\", plugins: [\"jsx\"]})' >/dev/null 2>&1" \
+    "npm run build >/dev/null 2>&1" \
     "true"
 
 echo "2. CHECKING CONTRACT METHOD SAFETY FIXES"
