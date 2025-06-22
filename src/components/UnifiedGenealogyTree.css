@@ -1,0 +1,452 @@
+/* Unified Genealogy Tree Styles */
+
+.unified-genealogy-tree {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  min-height: 600px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Controls Section */
+.tree-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-bottom: 1px solid #e0e0e0;
+  align-items: center;
+}
+
+.tree-controls > div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tree-controls label {
+  font-weight: 600;
+  color: white;
+  font-size: 14px;
+}
+
+.tree-controls select,
+.tree-controls input,
+.tree-controls button {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.tree-controls select:focus,
+.tree-controls input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+.tree-controls button {
+  background: #ffffff;
+  color: #667eea;
+  border: 1px solid #667eea;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.tree-controls button:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.tree-controls button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.search-input {
+  min-width: 200px;
+}
+
+/* Stats Section */
+.tree-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  min-width: 120px;
+  border: 1px solid #e0e0e0;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Main Content */
+.tree-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.tree-visualization {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.tree-sidebar {
+  width: 300px;
+  background: #ffffff;
+  border-left: 1px solid #e0e0e0;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+/* D3 Tree Container */
+.d3-tree-container {
+  width: 100%;
+  height: 600px;
+  position: relative;
+  background: #ffffff;
+}
+
+.d3-tree-container svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Custom Node Styles */
+.tree-node {
+  transition: all 0.2s ease;
+}
+
+.tree-node.selected rect {
+  filter: drop-shadow(0 4px 8px rgba(0, 102, 204, 0.3));
+}
+
+.tree-node.highlighted rect {
+  filter: drop-shadow(0 4px 8px rgba(255, 102, 0, 0.3));
+}
+
+.tree-node:hover rect {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Simple Tree View */
+.simple-tree-view {
+  padding: 20px;
+  height: 600px;
+  overflow-y: auto;
+  background: #ffffff;
+}
+
+.simple-tree-container {
+  margin-bottom: 8px;
+}
+
+.simple-tree-node {
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 8px;
+}
+
+.simple-tree-node:hover {
+  border-color: #667eea;
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.simple-tree-node.selected {
+  border-color: #0066CC;
+  background: #f0f7ff;
+  box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
+}
+
+.simple-tree-node.highlighted {
+  border-color: #FF6600;
+  background: #fff8f0;
+  box-shadow: 0 2px 8px rgba(255, 102, 0, 0.2);
+}
+
+.node-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.node-name {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+.activity-indicator {
+  font-size: 12px;
+}
+
+.activity-indicator.active {
+  color: #00cc00;
+}
+
+.activity-indicator.inactive {
+  color: #cc0000;
+}
+
+.node-details {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: #666;
+}
+
+.package {
+  padding: 2px 8px;
+  background: #e0e7ff;
+  border-radius: 4px;
+  color: #3730a3;
+  font-weight: 500;
+}
+
+.earnings {
+  color: #059669;
+  font-weight: bold;
+}
+
+.team-size {
+  color: #7c3aed;
+}
+
+/* Canvas Tree View */
+.canvas-tree-view {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  background: #ffffff;
+}
+
+.canvas-controls {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.canvas-controls button {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.canvas-controls button:hover {
+  background: #f0f0f0;
+  border-color: #999;
+}
+
+/* Node Details Panel */
+.node-details-panel {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+}
+
+.node-details-panel h3 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 18px;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 8px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row strong {
+  color: #555;
+  font-weight: 600;
+}
+
+/* Loading and Error States */
+.tree-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  gap: 16px;
+  color: #666;
+}
+
+.tree-error p {
+  font-size: 16px;
+  margin: 0;
+}
+
+.tree-error button {
+  padding: 12px 24px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.tree-error button:hover {
+  background: #5a67d8;
+}
+
+.tree-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  color: #666;
+  font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tree-controls {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .tree-controls > div {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .tree-stats {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .stat-item {
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: auto;
+  }
+  
+  .tree-content {
+    flex-direction: column;
+  }
+  
+  .tree-sidebar {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid #e0e0e0;
+    max-height: 300px;
+  }
+  
+  .simple-tree-node {
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .unified-genealogy-tree {
+    border-radius: 0;
+  }
+  
+  .tree-controls,
+  .tree-stats,
+  .tree-sidebar {
+    padding: 12px;
+  }
+  
+  .search-input {
+    min-width: 150px;
+  }
+  
+  .node-details {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .unified-genealogy-tree {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+  
+  .tree-stats,
+  .tree-visualization,
+  .tree-sidebar,
+  .simple-tree-view,
+  .canvas-tree-view {
+    background: #2d2d2d;
+  }
+  
+  .stat-item,
+  .simple-tree-node,
+  .node-details-panel {
+    background: #3a3a3a;
+    border-color: #4a4a4a;
+  }
+  
+  .tree-controls select,
+  .tree-controls input {
+    background: #3a3a3a;
+    color: #ffffff;
+    border-color: #4a4a4a;
+  }
+}

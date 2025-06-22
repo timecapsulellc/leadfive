@@ -428,78 +428,93 @@ const NetworkTreeVisualization = ({
   // CUSTOM NODE RENDERER
   // ============================================================================
   
-  const defaultNodeRenderer = useCallback((rd3tProps) => {
-    const { nodeDatum } = rd3tProps;
-    const isRoot = nodeDatum.attributes?.isRoot;
-    const radius = isRoot ? 30 : 25;
-    const color = isRoot ? '#00D4FF' : getPackageTierColor(nodeDatum.attributes?.packageTier);
-    const isSelected = selectedNode?.name === nodeDatum.name;
-    const isSearchMatch = searchResults.some(result => result.node.name === nodeDatum.name);
+  /**
+   * Renders custom styled nodes for the tree
+   */
+  const renderCustomNodeElement = useCallback((rd3tNodeProps) => {
+    const { nodeDatum, toggleNode } = rd3tNodeProps;
+    const isRoot = nodeDatum.attributes?.isRoot || nodeDatum.name === 'Root';
+    const packageTier = nodeDatum.attributes?.packageTier || 0;
+    const packageColor = PACKAGE_TIER_COLORS[packageTier] || PACKAGE_TIER_COLORS[0];
+    const isActive = nodeDatum.attributes?.isActive !== false;
     
     return (
-      <g onClick={() => handleNodeClick(nodeDatum)}>
-        {/* Node Circle */}
+      <g>
+        {/* Node circle */}
         <circle
-          r={radius}
-          fill={color}
-          stroke={isSearchMatch ? '#FFD700' : '#ffffff'}
-          strokeWidth={isSelected ? 4 : (isSearchMatch ? 3 : 2)}
-          style={{
-            cursor: 'pointer',
-            filter: isSelected ? 
-              'brightness(1.3) drop-shadow(0 0 8px rgba(255,255,255,0.6))' : 
-              'brightness(1) drop-shadow(0 0 8px rgba(255,255,255,0.4))'
-          }}
+          r={isRoot ? 30 : 25}
+          fill={isActive ? packageColor : '#6C757D'}
+          stroke="#fff"
+          strokeWidth={3}
+          opacity={isActive ? 1 : 0.6}
+          style={{ cursor: 'pointer' }}
+          onClick={toggleNode}
         />
-        {/* Center Icon */}
-        <text
-          fill="#ffffff"
-          fontSize={isRoot ? "16" : "14"}
-          textAnchor="middle"
-          y="5"
-          fontWeight="bold"
-        >
-          {isRoot ? '🏢' : '👤'}
-        </text>
-        {/* User Name */}
+        
+        {/* Node icon/text */}
         <text
           fill="#fff"
-          fontSize="18"
-          fontWeight="bold"
           textAnchor="middle"
-          y={radius + 22}
-          dominantBaseline="middle"
-          alignmentBaseline="middle"
-          stroke="#000"
-          strokeWidth="4"
-          paintOrder="stroke fill"
-          style={{
-            filter: 'drop-shadow(0 2px 2px #000)',
-            textShadow: '0 2px 8px #000, 0 0 4px #fff',
-            letterSpacing: '1px',
-            wordSpacing: '2px',
-          }}
+          dy={5}
+          fontSize={isRoot ? 14 : 12}
+          fontWeight="bold"
+          style={{ cursor: 'pointer' }}
+          onClick={toggleNode}
+        >
+          {isRoot ? '👑' : nodeDatum.name.charAt(2)}
+        </text>
+        
+        {/* Node name */}
+        <text
+          fill="#333"
+          textAnchor="middle"
+          y={isRoot ? 45 : 40}
+          fontSize={10}
+          fontWeight="500"
         >
           {nodeDatum.name}
         </text>
-        {/* Package Tier Label */}
+        
+        {/* Package tier */}
         {!isRoot && (
           <text
-            fill="#fff"
-            fontSize="14"
-            fontWeight="600"
+            fill={packageColor}
             textAnchor="middle"
-            y={radius + 42}
-            dominantBaseline="middle"
-            alignmentBaseline="middle"
+            y={52}
+            fontSize={8}
+            fontWeight="600"
           >
-            {getPackageTierLabel(nodeDatum.attributes?.packageTier)}
+            Tier {packageTier}
+          </text>
+        )}
+        
+        {/* Volume */}
+        {nodeDatum.attributes?.volume > 0 && (
+          <text
+            fill="#666"
+            textAnchor="middle"
+            y={64}
+            fontSize={8}
+          >
+            ${(nodeDatum.attributes.volume / 1000).toFixed(1)}K
           </text>
         )}
       </g>
     );
-  }, [selectedNode, searchResults]);
-  
+  }, []);
+
+  /**
+   * Default fallback node renderer
+   */
+  const defaultNodeRenderer = useCallback((props) => (
+    <g>
+      <circle r={20} fill="#00D4FF" />
+      <text fill="#fff" textAnchor="middle" dy={5}>
+        {props.nodeDatum.name}
+      </text>
+    </g>
+  ), []);
+
   // ============================================================================
   // EVENT HANDLERS
   // ============================================================================
