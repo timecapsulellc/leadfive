@@ -8,7 +8,7 @@ export default function handler(req, res) {
   // 3. Return the signed URL to the client
 
   // For development, we'll return a mock signed URL with API key and voice ID
-  const mockSignedUrl = `wss://api.elevenlabs.io/v1/text-to-speech/streaming?optimize_streaming_latency=4&output_format=mp3_44100_128&xi-api-key=***REMOVED***&voice_id=6F5Zhi321D3Oq7v1oNT4`;
+  const mockSignedUrl = `wss://api.elevenlabs.io/v1/text-to-speech/streaming?optimize_streaming_latency=4&output_format=mp3_44100_128&xi-api-key=YOUR_API_KEY_HERE&voice_id=6F5Zhi321D3Oq7v1oNT4`;
   
   // Log the request for debugging
   console.log('🎤 ElevenLabs signed URL requested');
