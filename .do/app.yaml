@@ -58,6 +58,24 @@ services:
     value: "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29"
   - key: VITE_FEE_RECIPIENT
     value: "0xeB652c4523f3Cf615D3F3694b14E551145953aD0"
+  - key: VITE_OPENAI_API_KEY
+    value: "***REMOVED***"
+  - key: VITE_OPENAI_MODEL
+    value: "gpt-3.5-turbo"
+  - key: VITE_OPENAI_MAX_TOKENS
+    value: "500"
+  - key: VITE_ELEVENLABS_API_KEY
+    value: "***REMOVED***"
+  - key: VITE_ELEVENLABS_VOICE_ID
+    value: "9PVP7ENhDskL0KYHAKtD"
+  - key: VITE_ELEVENLABS_MODEL
+    value: "eleven_multilingual_v2"
+  - key: VITE_ELEVENLABS_AGENT_ID
+    value: "***REMOVED***"
+  - key: VITE_ENABLE_AI_SYNTHESIS
+    value: "true"
+  - key: VITE_MAX_FILE_SIZE
+    value: "10485760"
   - key: NODE_OPTIONS
     value: "--max-old-space-size=2048"
 # static.json in project root ensures SPA routing for all paths

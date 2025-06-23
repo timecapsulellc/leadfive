@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Features Debug - LeadFive</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0f0f1f;
+            color: #fff;
+            padding: 2rem;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .debug-section {
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        .status {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .success { background: rgba(0, 255, 0, 0.1); border: 1px solid rgba(0, 255, 0, 0.3); }
+        .error { background: rgba(255, 0, 0, 0.1); border: 1px solid rgba(255, 0, 0, 0.3); }
+        .warning { background: rgba(255, 255, 0, 0.1); border: 1px solid rgba(255, 255, 0, 0.3); }
+        .info { background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.3); }
+        pre {
+            background: #000;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        button {
+            background: linear-gradient(135deg, #00D4FF 0%, #BA55D3 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 0.5rem;
+            font-size: 1rem;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 AI Features Debug Dashboard</h1>
+        
+        <div class="debug-section">
+            <h2>🎯 How AI Features Work in LeadFive</h2>
+            <div class="info status">
+                <h3>✨ AI Features Are INTERACTIVE and VISIBLE</h3>
+                <p><strong>The AI features are NOT background services</strong> - they are fully interactive components that users can see and use directly in the dashboard:</p>
+                
+                <h4>🤖 How Users Access AI Features:</h4>
+                <ol>
+                    <li><strong>Main Dashboard Sidebar:</strong> Click "AI Assistant" menu item</li>
+                    <li><strong>Dashboard Header:</strong> Click "AI Assistant" quick button</li>
+                    <li><strong>Overview Cards:</strong> AI components are embedded directly in dashboard</li>
+                    <li><strong>Quick Actions:</strong> "Generate AI Insights" and "AI Assistant" buttons</li>
+                </ol>
+                
+                <h4>🧠 What Users See:</h4>
+                <ul>
+                    <li><strong>AI Business Coach:</strong> Interactive panel with personalized advice</li>
+                    <li><strong>Earnings Prediction:</strong> Charts and forecasts with confidence levels</li>
+                    <li><strong>Transaction Helper:</strong> Smart recommendations for actions</li>
+                    <li><strong>Performance Insights:</strong> AI-generated analysis and tips</li>
+                    <li><strong>Voice Responses:</strong> AI speaks responses (when configured)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="debug-section">
+            <h2>🔧 Current Status Check</h2>
+            <div id="status-results">
+                <button onclick="checkAIStatus()">🔍 Check AI Implementation Status</button>
+            </div>
+        </div>
+
+        <div class="debug-section">
+            <h2>🚀 Test AI Features</h2>
+            <div class="info status">
+                <p>Click these buttons to test different AI access methods:</p>
+                <button onclick="goToDashboard()">📊 Open Main Dashboard</button>
+                <button onclick="goToAISection()">🤖 Go Directly to AI Assistant</button>
+                <button onclick="goToTestPage()">🧪 Open AI Test Page</button>
+                <button onclick="clearCache()">🗑️ Clear Cache & Reset</button>
+            </div>
+        </div>
+
+        <div class="debug-section" id="detailed-status" style="display: none;">
+            <h2>📋 Detailed Status Report</h2>
+            <pre id="status-output"></pre>
+        </div>
+
+        <div class="debug-section">
+            <h2>📖 User Instructions</h2>
+            <div class="success status">
+                <h3>How to See AI Features:</h3>
+                <ol>
+                    <li><strong>Go to Dashboard:</strong> <a href="/dashboard" style="color: #00D4FF;">http://localhost:5174/dashboard</a></li>
+                    <li><strong>Look for AI Assistant:</strong> In the left sidebar menu (should have AI badge)</li>
+                    <li><strong>Click AI Assistant:</strong> Opens tabbed AI interface with 4 tools</li>
+                    <li><strong>Use AI Cards:</strong> Scroll down in overview to see AI component cards</li>
+                    <li><strong>Try Quick Actions:</strong> Look for "Generate AI Insights" button</li>
+                </ol>
+                
+                <h3>If You Don't See AI Features:</h3>
+                <ul>
+                    <li>Clear browser cache (Cmd/Ctrl + Shift + R)</li>
+                    <li>Make sure you're connected to wallet</li>
+                    <li>Try the test page: <a href="/test-ai" style="color: #00D4FF;">/test-ai</a></li>
+                    <li>Check browser console for errors (F12)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkAIStatus() {
+            const statusDiv = document.getElementById('status-results');
+            const detailedDiv = document.getElementById('detailed-status');
+            const outputPre = document.getElementById('status-output');
+            
+            let report = '🔍 AI FEATURES STATUS REPORT\n';
+            report += '=' + '='.repeat(50) + '\n\n';
+            
+            // Check current page
+            report += `📍 Current Page: ${window.location.pathname}\n`;
+            report += `🌐 Full URL: ${window.location.href}\n\n`;
+            
+            // Check localStorage
+            const dashboardSection = localStorage.getItem('dashboardActiveSection');
+            const hasSeenWelcome = localStorage.getItem('hasSeenWelcome');
+            const hasSeenAIWelcome = localStorage.getItem('hasSeenAIWelcome');
+            
+            report += '💾 LOCAL STORAGE STATUS:\n';
+            report += `   Dashboard Section: ${dashboardSection || 'Not Set'}\n`;
+            report += `   Has Seen Welcome: ${hasSeenWelcome || 'Not Set'}\n`;
+            report += `   Has Seen AI Welcome: ${hasSeenAIWelcome || 'Not Set'}\n\n`;
+            
+            // Check if on dashboard
+            if (window.location.pathname.includes('dashboard')) {
+                report += '✅ ON DASHBOARD PAGE\n';
+                
+                // Check for AI elements
+                const checks = {
+                    'AI Menu Item': checkElement('.menu-item[data-section="ai-assistant"]'),
+                    'AI Assistant Button': checkElement('button:contains("AI Assistant")') || 
+                                         Array.from(document.querySelectorAll('button')).some(el => 
+                                           el.textContent.includes('AI Assistant')),
+                    'AI Badge': checkElement('.ai-badge'),
+                    'AI Status Indicator': checkElement('.ai-status-indicator'),
+                    'AI Section': checkElement('.ai-section'),
+                    'AI Coaching Panel': checkElement('.ai-coaching-panel') || 
+                                       checkElement('[class*="coaching"]'),
+                    'AI Cards': checkElement('.ai-card'),
+                    'Generate Insights Button': Array.from(document.querySelectorAll('button')).some(el => 
+                                              el.textContent.includes('Generate') && el.textContent.includes('Insights'))
+                };
+                
+                report += '🔍 AI ELEMENTS CHECK:\n';
+                Object.entries(checks).forEach(([name, found]) => {
+                    report += `   ${found ? '✅' : '❌'} ${name}\n`;
+                });
+                
+                // List all menu items
+                const menuItems = document.querySelectorAll('.menu-item');
+                if (menuItems.length > 0) {
+                    report += '\n📋 VISIBLE MENU ITEMS:\n';
+                    menuItems.forEach((item, index) => {
+                        const text = item.textContent.trim();
+                        const isAI = text.includes('AI');
+                        report += `   ${index + 1}. ${text} ${isAI ? '🤖' : ''}\n`;
+                    });
+                } else {
+                    report += '\n❌ NO MENU ITEMS FOUND\n';
+                }
+                
+                // List all buttons
+                const buttons = document.querySelectorAll('button');
+                const aiButtons = Array.from(buttons).filter(btn => 
+                    btn.textContent.includes('AI') || 
+                    btn.textContent.includes('Insights') ||
+                    btn.textContent.includes('Assistant')
+                );
+                
+                if (aiButtons.length > 0) {
+                    report += '\n🔘 AI-RELATED BUTTONS:\n';
+                    aiButtons.forEach((btn, index) => {
+                        report += `   ${index + 1}. "${btn.textContent.trim()}"\n`;
+                    });
+                } else {
+                    report += '\n❌ NO AI BUTTONS FOUND\n';
+                }
+                
+            } else {
+                report += '⚠️  NOT ON DASHBOARD PAGE\n';
+                report += '   Navigate to /dashboard first\n';
+            }
+            
+            report += '\n🎯 QUICK ACCESS METHODS:\n';
+            report += '   1. Go to /dashboard → Look for AI Assistant in sidebar\n';
+            report += '   2. Click AI Assistant button in header\n';
+            report += '   3. Use AI cards in overview section\n';
+            report += '   4. Visit /test-ai for full demo\n';
+            
+            report += '\n💡 TROUBLESHOOTING:\n';
+            report += '   • Clear cache: Cmd/Ctrl + Shift + R\n';
+            report += '   • Check console: F12 → Console tab\n';
+            report += '   • Try test page: /test-ai\n';
+            report += '   • Reset localStorage: Use clear cache button above\n';
+            
+            outputPre.textContent = report;
+            detailedDiv.style.display = 'block';
+            detailedDiv.scrollIntoView({ behavior: 'smooth' });
+            
+            // Visual feedback
+            if (window.location.pathname.includes('dashboard')) {
+                statusDiv.innerHTML = '<div class="success status"><h3>✅ Ready to check dashboard AI features</h3><p>Detailed report generated below. Check if AI elements are visible.</p></div>';
+            } else {
+                statusDiv.innerHTML = '<div class="warning status"><h3>⚠️ Navigate to dashboard first</h3><p>Click "Open Main Dashboard" button to check AI features.</p></div>';
+            }
+        }
+        
+        function checkElement(selector) {
+            try {
+                return document.querySelector(selector) !== null;
+            } catch (e) {
+                return false;
+            }
+        }
+        
+        function goToDashboard() {
+            window.location.href = '/dashboard';
+        }
+        
+        function goToAISection() {
+            localStorage.setItem('dashboardActiveSection', 'ai-assistant');
+            window.location.href = '/dashboard';
+        }
+        
+        function goToTestPage() {
+            window.location.href = '/test-ai';
+        }
+        
+        function clearCache() {
+            localStorage.clear();
+            sessionStorage.clear();
+            if ('caches' in window) {
+                caches.keys().then(names => {
+                    names.forEach(name => caches.delete(name));
+                });
+            }
+            alert('Cache cleared! Reloading page...');
+            location.reload(true);
+        }
+        
+        // Auto-check on page load if we're on dashboard
+        window.addEventListener('load', () => {
+            if (window.location.pathname.includes('dashboard')) {
+                setTimeout(checkAIStatus, 1000);
+            }
+        });
+    </script>
+</body>
+</html>

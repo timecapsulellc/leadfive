@@ -1,0 +1,568 @@
+/* ===================================
+   MOBILE-FIRST OPTIMIZATION FOR LEADFIVE DAPP
+   Expert UI/UX Engineering - Mobile Users Priority
+   =================================== */
+
+/* 1. MOBILE-FIRST BASE STYLES */
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Touch-friendly interactions */
+button, .clickable {
+  min-height: 44px;
+  min-width: 44px;
+  touch-action: manipulation;
+}
+
+/* 2. MOBILE DASHBOARD CONTAINER */
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 0;
+    gap: 0;
+  }
+
+  .dashboard-sidebar {
+    width: 100%;
+    height: auto;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: auto;
+    z-index: 1000;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-top: 1px solid rgba(0, 212, 255, 0.3);
+    border-right: none;
+    padding: 0;
+    overflow: visible;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .dashboard-sidebar.mobile-open {
+    transform: translateY(0);
+  }
+
+  /* Mobile Navigation Bar */
+  .mobile-nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-top: 1px solid rgba(0, 212, 255, 0.3);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 999;
+    padding: 0 1rem;
+  }
+
+  .mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem;
+    color: #B8C5D1;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 60px;
+  }
+
+  .mobile-nav-item.active {
+    color: #00D4FF;
+  }
+
+  .mobile-nav-item .icon {
+    font-size: 1.2rem;
+  }
+
+  .dashboard-main {
+    padding-bottom: 70px; /* Space for mobile nav */
+    width: 100%;
+  }
+
+  .dashboard-content {
+    padding: 1rem;
+    gap: 1rem;
+  }
+}
+
+/* 3. MOBILE STATS GRID OPTIMIZATION */
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .stat-card {
+    padding: 1rem;
+    min-height: 100px;
+    border-radius: 12px;
+  }
+
+  .stat-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+  }
+}
+
+/* 4. MOBILE OVERVIEW GRID */
+@media (max-width: 768px) {
+  .overview-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .overview-card {
+    padding: 1rem;
+    min-height: auto;
+  }
+
+  .overview-card h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* 5. MOBILE AI COMPONENTS */
+@media (max-width: 768px) {
+  .ai-features-grid,
+  .ai-insights-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .ai-chat-widget,
+  .ai-insights-card,
+  .ai-success-stories-card {
+    padding: 1rem;
+    min-height: auto;
+    border-radius: 12px;
+  }
+
+  .ai-coaching-panel {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  /* AI Assistant Panel Mobile */
+  .ai-assistant-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 70px; /* Above mobile nav */
+    width: 100%;
+    max-height: none;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 1001;
+    border-radius: 0;
+    padding: 1rem;
+  }
+
+  .ai-assistant-panel.mobile-open {
+    transform: translateX(0);
+  }
+}
+
+/* 6. MOBILE QUICK ACTIONS */
+@media (max-width: 768px) {
+  .quick-actions {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .quick-btn {
+    padding: 0.75rem;
+    font-size: 0.85rem;
+    min-height: 50px;
+    border-radius: 8px;
+  }
+}
+
+/* 7. MOBILE HEADER OPTIMIZATION */
+@media (max-width: 768px) {
+  .dashboard-header {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .header-title h1 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .header-actions {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .quick-action-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* 8. MOBILE CHARTS AND GRAPHS */
+@media (max-width: 768px) {
+  .earnings-chart-container {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .earnings-chart-container canvas {
+    max-height: 200px !important;
+  }
+
+  .earnings-summary {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .summary-card {
+    padding: 1rem;
+    min-height: 100px;
+  }
+
+  .summary-card .amount {
+    font-size: 1.2rem;
+  }
+}
+
+/* 9. MOBILE FORMS AND INPUTS */
+@media (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+    padding: 0.75rem;
+    border-radius: 8px;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* 10. MOBILE MODALS AND OVERLAYS */
+@media (max-width: 768px) {
+  .modal {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+  }
+
+  .modal-content {
+    padding: 1rem;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .modal-header {
+    padding: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .modal-footer {
+    padding: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* 11. MOBILE TABLES */
+@media (max-width: 768px) {
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 600px;
+    font-size: 0.85rem;
+  }
+
+  th, td {
+    padding: 0.5rem;
+    white-space: nowrap;
+  }
+}
+
+/* 12. MOBILE NOTIFICATIONS */
+@media (max-width: 768px) {
+  .notification {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+
+  .toast {
+    width: calc(100% - 2rem);
+    margin: 0 1rem;
+  }
+}
+
+/* 13. MOBILE LOADING STATES */
+@media (max-width: 768px) {
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+  }
+
+  .skeleton-loader {
+    border-radius: 8px;
+    height: 60px;
+    margin-bottom: 1rem;
+  }
+}
+
+/* 14. MOBILE ACCESSIBILITY */
+@media (max-width: 768px) {
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .focus-visible {
+    outline: 2px solid #00D4FF;
+    outline-offset: 2px;
+  }
+}
+
+/* 15. MOBILE PERFORMANCE OPTIMIZATIONS */
+@media (max-width: 768px) {
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  .smooth-scroll {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+}
+
+/* 16. MOBILE GESTURES */
+@media (max-width: 768px) {
+  .swipeable {
+    touch-action: pan-x;
+  }
+
+  .pinch-zoom {
+    touch-action: pinch-zoom;
+  }
+
+  .no-touch {
+    touch-action: none;
+  }
+}
+
+/* 17. MOBILE SAFE AREAS (iPhone X+) */
+@media (max-width: 768px) {
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-left {
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .safe-area-right {
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* 18. MOBILE DARK MODE OPTIMIZATIONS */
+@media (max-width: 768px) and (prefers-color-scheme: dark) {
+  .auto-dark {
+    background: #000;
+    color: #fff;
+  }
+
+  .auto-dark .card {
+    background: #1a1a1a;
+    border-color: #333;
+  }
+}
+
+/* 19. MOBILE LANDSCAPE OPTIMIZATIONS */
+@media (max-width: 768px) and (orientation: landscape) {
+  .dashboard-content {
+    padding: 0.5rem;
+  }
+
+  .mobile-nav-bar {
+    height: 60px;
+  }
+
+  .dashboard-main {
+    padding-bottom: 60px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 20. ULTRA-SMALL SCREENS (< 375px) */
+@media (max-width: 374px) {
+  .dashboard-content {
+    padding: 0.75rem;
+  }
+
+  .stat-card {
+    padding: 0.75rem;
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
+  }
+
+  .quick-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .earnings-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .mobile-nav-item {
+    min-width: 50px;
+    font-size: 0.7rem;
+  }
+
+  .mobile-nav-item .icon {
+    font-size: 1rem;
+  }
+}
+
+/* 21. MOBILE HOVER STATES (Touch Devices) */
+@media (hover: none) and (pointer: coarse) {
+  .hover-effect:hover {
+    transform: none;
+  }
+
+  .touch-feedback:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+/* 22. MOBILE ANIMATION PREFERENCES */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 23. MOBILE NETWORK OPTIMIZATIONS */
+@media (max-width: 768px) {
+  .lazy-load {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .lazy-load.loaded {
+    opacity: 1;
+  }
+
+  .preload-critical {
+    font-display: swap;
+  }
+}
+
+/* 24. MOBILE UTILITY CLASSES */
+@media (max-width: 768px) {
+  .mobile-hidden {
+    display: none !important;
+  }
+
+  .mobile-visible {
+    display: block !important;
+  }
+
+  .mobile-flex {
+    display: flex !important;
+  }
+
+  .mobile-grid {
+    display: grid !important;
+  }
+
+  .mobile-full-width {
+    width: 100% !important;
+  }
+
+  .mobile-center {
+    text-align: center !important;
+  }
+
+  .mobile-padding {
+    padding: 1rem !important;
+  }
+
+  .mobile-margin {
+    margin: 1rem !important;
+  }
+}
+
+/* 25. MOBILE DEBUGGING (Development Only) */
+@media (max-width: 768px) {
+  .debug-mobile {
+    outline: 2px solid red;
+  }
+
+  .debug-touch {
+    background: rgba(255, 0, 0, 0.1);
+  }
+}

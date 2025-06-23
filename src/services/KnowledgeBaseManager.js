@@ -7,9 +7,17 @@ import { APP_CONFIG } from '../config/app.js';
 
 class KnowledgeBaseManager {
     constructor() {
+        // Singleton pattern
+        if (KnowledgeBaseManager.instance) {
+            return KnowledgeBaseManager.instance;
+        }
+        
         this.documents = [];
         this.embeddings = null;
         this.vectorStore = null;
+        this.isEmbedded = false;
+        
+        KnowledgeBaseManager.instance = this;
         this.init();
     }
 
@@ -28,6 +36,11 @@ class KnowledgeBaseManager {
      * Embed marketing PDF and contract documentation
      */
     async embedMarketingMaterials() {
+        if (this.isEmbedded) {
+            console.log('📄 Marketing materials already embedded, skipping...');
+            return;
+        }
+        
         console.log('📄 Embedding marketing materials and contract documentation...');
         
         try {
@@ -70,6 +83,7 @@ class KnowledgeBaseManager {
             this.documents.push(marketingContent, contractContent, compensationContent);
             await this.indexDocuments();
             
+            this.isEmbedded = true;
             console.log('✅ Marketing materials embedded successfully');
             return { success: true, documentsCount: this.documents.length };
         } catch (error) {

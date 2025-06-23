@@ -5,18 +5,25 @@
 
 class SystemMonitor {
     constructor() {
+        // Singleton pattern
+        if (SystemMonitor.instance) {
+            return SystemMonitor.instance;
+        }
+        
         this.metrics = {};
         this.alerts = [];
         this.alertThresholds = {
             api_response_time: 2000, // ms
             contract_gas_usage: 500000, // gas units
             error_rate: 0.05, // 5%
-            memory_usage: 0.85, // 85%
-            cpu_usage: 0.80 // 80%
+            memory_usage: 0.95, // 95% - increased for development
+            cpu_usage: 0.90 // 90%
         };
         this.alertHandlers = [];
         this.isMonitoring = false;
         this.monitoringInterval = null;
+        
+        SystemMonitor.instance = this;
     }
 
     /**

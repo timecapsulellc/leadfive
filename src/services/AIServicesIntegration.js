@@ -10,29 +10,49 @@ import SystemMonitor from './SystemMonitor.js';
 
 class AIServicesIntegration {
     constructor() {
+        // Singleton pattern to prevent multiple instances
+        if (AIServicesIntegration.instance) {
+            return AIServicesIntegration.instance;
+        }
+        
         this.services = {};
         this.isInitialized = false;
-        this.init();
+        this.initPromise = null;
+        
+        AIServicesIntegration.instance = this;
+        
+        // Initialize only once
+        if (!this.initPromise) {
+            this.initPromise = this.init();
+        }
     }
 
     async init() {
+        if (this.isInitialized) {
+            return this;
+        }
+        
         console.log('🚀 Initializing AI Services Integration...');
         
         try {
-            // Initialize all services
-            this.services.compensation = new CompensationService();
-            this.services.validator = new AIAgentValidator();
-            this.services.knowledgeBase = new KnowledgeBaseManager();
-            this.services.monitor = new SystemMonitor();
+            // Initialize all services with singleton pattern
+            this.services.compensation = this.services.compensation || new CompensationService();
+            this.services.validator = this.services.validator || new AIAgentValidator();
+            this.services.knowledgeBase = this.services.knowledgeBase || new KnowledgeBaseManager();
+            this.services.monitor = this.services.monitor || new SystemMonitor();
 
             // Set up cross-service communication
             await this.setupIntegrations();
             
-            // Start monitoring
-            this.services.monitor.startMonitoring(30000); // 30 seconds
+            // Start monitoring only if not already started
+            if (!this.services.monitor.isMonitoring) {
+                this.services.monitor.startMonitoring(30000); // 30 seconds
+            }
 
-            // Embed initial knowledge
-            await this.services.knowledgeBase.embedMarketingMaterials();
+            // Embed initial knowledge only once
+            if (!this.services.knowledgeBase.isEmbedded) {
+                await this.services.knowledgeBase.embedMarketingMaterials();
+            }
 
             this.isInitialized = true;
             console.log('✅ AI Services Integration initialized successfully');
@@ -41,6 +61,8 @@ class AIServicesIntegration {
             console.error('❌ Failed to initialize AI Services Integration:', error);
             throw error;
         }
+        
+        return this;
     }
 
     async setupIntegrations() {

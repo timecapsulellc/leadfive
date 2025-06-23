@@ -47,7 +47,15 @@ const CSP_DIRECTIVES = {
     'https://api.coingecko.com', // Price data
     'https://*.infura.io', // Infura endpoints
     'https://*.alchemy.com', // Alchemy endpoints
+    'https://api.elevenlabs.io', // ElevenLabs API
+    'https://api.openai.com', // OpenAI API
     'blob:', // For Web3 blob connections
+  ],
+  'media-src': [
+    "'self'",
+    'blob:', // For audio blobs from ElevenLabs and speech synthesis
+    'data:', // For base64 audio
+    'https:', // For external audio (HTTPS only)
   ],
   'frame-ancestors': ["'none'"], // Prevent embedding in frames
   'form-action': ["'self'"], // Restrict form submissions

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Components Test - LeadFive</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0a0a0a;
+            color: white;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .test-card {
+            background: rgba(26, 26, 46, 0.8);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+        }
+        .test-card h3 {
+            color: #00D4FF;
+            margin-bottom: 15px;
+        }
+        .test-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #00D4FF, #7B2CBF);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            margin: 10px;
+            transition: transform 0.3s ease;
+        }
+        .test-link:hover {
+            transform: translateY(-2px);
+        }
+        .status-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .status-card {
+            background: rgba(22, 33, 62, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+        }
+        .status-good { border-color: #00ff00; }
+        .status-warning { border-color: #ffaa00; }
+        .status-error { border-color: #ff0000; }
+        .debug-console {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 LeadFive AI Components Test Page</h1>
+            <p>Use this page to verify AI components are working correctly</p>
+        </div>
+
+        <div class="test-grid">
+            <div class="test-card">
+                <h3>🎯 Main Dashboard</h3>
+                <p>Check if AI components appear in the main dashboard</p>
+                <a href="/dashboard" class="test-link">Go to Dashboard</a>
+            </div>
+
+            <div class="test-card">
+                <h3>🧪 AI Test Dashboard</h3>
+                <p>Dedicated page with isolated AI components</p>
+                <a href="/test-ai" class="test-link">Go to AI Test</a>
+            </div>
+
+            <div class="test-card">
+                <h3>🔧 Debug Tools</h3>
+                <p>AI debugging and verification tools</p>
+                <a href="/ai-verification-report.html" class="test-link" target="_blank">Debug Report</a>
+            </div>
+
+            <div class="test-card">
+                <h3>📊 Component Status</h3>
+                <p>Real-time component visibility check</p>
+                <button class="test-link" onclick="runComponentCheck()">Check Components</button>
+            </div>
+        </div>
+
+        <div class="status-grid">
+            <div class="status-card" id="server-status">
+                <h4>🖥️ Development Server</h4>
+                <p id="server-status-text">Checking...</p>
+            </div>
+
+            <div class="status-card" id="ai-status">
+                <h4>🤖 AI Components</h4>
+                <p id="ai-status-text">Checking...</p>
+            </div>
+        </div>
+
+        <div class="debug-console" id="debug-console">
+            <h4>🔍 Debug Console</h4>
+            <div id="console-output">Initializing...</div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <h3>Quick Actions</h3>
+            <button class="test-link" onclick="forceAIDisplay()">Force AI Display</button>
+            <button class="test-link" onclick="highlightAI()">Highlight AI Elements</button>
+            <button class="test-link" onclick="testAIComponents()">Test AI Components</button>
+            <button class="test-link" onclick="clearConsole()">Clear Console</button>
+        </div>
+    </div>
+
+    <script>
+        let consoleOutput = document.getElementById('console-output');
+        
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            consoleOutput.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        function clearConsole() {
+            consoleOutput.innerHTML = '';
+        }
+
+        function updateStatus(elementId, status, message) {
+            const element = document.getElementById(elementId);
+            element.className = `status-card status-${status}`;
+            document.getElementById(elementId + '-text').textContent = message;
+        }
+
+        function checkServerStatus() {
+            fetch('/dashboard')
+                .then(response => {
+                    if (response.ok) {
+                        updateStatus('server', 'good', 'Server running ✅');
+                        log('✅ Development server is running');
+                    } else {
+                        updateStatus('server', 'warning', 'Server issues ⚠️');
+                        log('⚠️ Server returned status: ' + response.status);
+                    }
+                })
+                .catch(error => {
+                    updateStatus('server', 'error', 'Server offline ❌');
+                    log('❌ Server check failed: ' + error.message);
+                });
+        }
+
+        function runComponentCheck() {
+            log('🔍 Running component check...');
+            
+            // Check if we're on a React page
+            if (typeof React !== 'undefined') {
+                log('✅ React is loaded');
+                updateStatus('ai', 'good', 'React loaded ✅');
+            } else {
+                log('❌ React not found');
+                updateStatus('ai', 'error', 'React not loaded ❌');
+                return;
+            }
+
+            // Check for AI component classes
+            const aiClasses = [
+                'ai-features-grid',
+                'ai-chat-widget', 
+                'ai-card',
+                'ai-insights-card'
+            ];
+
+            let foundComponents = 0;
+            aiClasses.forEach(className => {
+                const elements = document.getElementsByClassName(className);
+                if (elements.length > 0) {
+                    foundComponents++;
+                    log(`✅ Found ${elements.length} ${className} element(s)`);
+                } else {
+                    log(`❌ ${className} not found`);
+                }
+            });
+
+            if (foundComponents > 0) {
+                updateStatus('ai', 'good', `${foundComponents} AI components found ✅`);
+            } else {
+                updateStatus('ai', 'error', 'No AI components found ❌');
+            }
+        }
+
+        function forceAIDisplay() {
+            const style = document.createElement('style');
+            style.id = 'force-ai-style';
+            style.textContent = `
+                .ai-features-grid, .ai-chat-widget, .ai-card, 
+                .ai-insights-card, .ai-assistant-container {
+                    display: block !important;
+                    visibility: visible !important;
+                    opacity: 1 !important;
+                    background: rgba(0, 255, 0, 0.2) !important;
+                    border: 2px solid lime !important;
+                    min-height: 100px !important;
+                }
+            `;
+            
+            document.head.appendChild(style);
+            log('💪 Forced AI components to display');
+        }
+
+        function highlightAI() {
+            const style = document.createElement('style');
+            style.id = 'highlight-ai-style';
+            style.textContent = `
+                [class*="ai-"], [id*="ai-"] {
+                    outline: 3px solid red !important;
+                    outline-offset: 2px !important;
+                }
+            `;
+            
+            document.head.appendChild(style);
+            log('🎯 Highlighted AI elements');
+        }
+
+        function testAIComponents() {
+            log('🧪 Testing AI components...');
+            
+            // Try to load AI debug script
+            const script = document.createElement('script');
+            script.src = '/ai-component-check.js';
+            script.onload = () => log('✅ AI component check script loaded');
+            script.onerror = () => log('❌ Failed to load AI component check script');
+            document.head.appendChild(script);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            log('🚀 AI Test Page initialized');
+            checkServerStatus();
+            
+            // Auto-check components after a delay
+            setTimeout(() => {
+                if (window.location.pathname === '/ai-test.html') {
+                    runComponentCheck();
+                }
+            }, 2000);
+        });
+
+        // Reload page every 30 seconds to check for updates
+        setTimeout(() => {
+            log('🔄 Auto-refreshing page...');
+            window.location.reload();
+        }, 30000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,435 @@
+/* ===================================
+   EXPERT UI/UX DASHBOARD ALIGNMENT FIXES
+   PhD-Level Design System Implementation
+   =================================== */
+
+/* 1. CONTAINER SYSTEM - Perfect Grid Foundation */
+.dashboard-container {
+  display: flex;
+  min-height: calc(100vh - 140px);
+  background: #0A0A0A;
+  position: relative;
+  /* Ensure consistent spacing */
+  gap: 0;
+  align-items: stretch;
+}
+
+/* 2. MAIN CONTENT LAYOUT - Professional Grid System */
+.dashboard-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  /* Perfect padding system */
+  padding: 0;
+  margin: 0;
+}
+
+.dashboard-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  /* Grid container optimization */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* 3. STATS GRID - Perfect Card Alignment */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  /* Ensure equal height cards */
+  grid-auto-rows: 1fr;
+  align-items: stretch;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.95));
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 15px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+  /* Perfect height consistency */
+  min-height: 120px;
+  height: 100%;
+}
+
+/* 4. OVERVIEW GRID - Professional Layout System */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1.5rem;
+  /* Ensure equal height cards */
+  grid-auto-rows: 1fr;
+  align-items: stretch;
+}
+
+.overview-card {
+  background: rgba(26, 26, 46, 0.8);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  border-radius: 15px;
+  padding: 1.5rem;
+  /* Perfect height consistency */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 300px;
+}
+
+.overview-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  /* Consistent header height */
+  min-height: 2rem;
+}
+
+/* 5. AI FEATURES GRID - Expert Alignment */
+.ai-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  /* Perfect card alignment */
+  grid-auto-rows: 1fr;
+  align-items: stretch;
+}
+
+.ai-chat-widget,
+.ai-insights-card,
+.ai-success-stories-card {
+  background: rgba(16, 24, 38, 0.8);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  /* Ensure consistent height */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 280px;
+}
+
+/* 6. SIDEBAR ALIGNMENT - Perfect Positioning */
+.dashboard-sidebar {
+  width: 280px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-right: 1px solid rgba(0, 212, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 70px;
+  height: calc(100vh - 140px);
+  overflow-y: auto;
+  /* Perfect alignment */
+  flex-shrink: 0;
+}
+
+/* 7. AI ASSISTANT PANEL - Professional Positioning */
+.ai-assistant-panel {
+  position: fixed;
+  top: 50%;
+  right: 2rem;
+  transform: translateY(-50%);
+  width: 320px;
+  max-height: 80vh;
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.95));
+  border: 1px solid rgba(123, 44, 191, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  /* Perfect scrolling */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 8. EARNINGS SUMMARY - Perfect Grid */
+.earnings-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  /* Equal height cards */
+  grid-auto-rows: 1fr;
+  align-items: stretch;
+}
+
+.summary-card {
+  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.95));
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 15px;
+  padding: 1.5rem;
+  text-align: center;
+  /* Perfect height consistency */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  min-height: 140px;
+}
+
+/* 9. QUICK ACTIONS - Professional Button Grid */
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  /* Equal height buttons */
+  grid-auto-rows: 1fr;
+  align-items: stretch;
+}
+
+.quick-btn {
+  padding: 1rem;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 10px;
+  color: #00D4FF;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  /* Perfect button alignment */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  min-height: 60px;
+}
+
+/* 10. TOOLS GRID - Expert Layout */
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+  /* Perfect card alignment */
+  grid-auto-rows: 1fr;
+  align-items: stretch;
+}
+
+.tool-card {
+  background: rgba(26, 26, 46, 0.8);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  border-radius: 15px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  /* Perfect height consistency */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 200px;
+}
+
+/* 11. RESPONSIVE DESIGN - Mobile-First Approach */
+@media (max-width: 1200px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  
+  .dashboard-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    top: 0;
+  }
+  
+  .ai-assistant-panel {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    width: 100%;
+    max-height: none;
+    margin-top: 2rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .ai-features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .earnings-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .quick-actions {
+    grid-template-columns: 1fr;
+  }
+  
+  .tools-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .earnings-summary {
+    grid-template-columns: 1fr;
+  }
+  
+  .stat-card {
+    flex-direction: column;
+    text-align: center;
+    min-height: 140px;
+  }
+  
+  .stat-icon {
+    margin-bottom: 1rem;
+  }
+}
+
+/* 12. PERFORMANCE OPTIMIZATIONS */
+.dashboard-container * {
+  box-sizing: border-box;
+}
+
+/* Smooth scrolling */
+.dashboard-content {
+  scroll-behavior: smooth;
+}
+
+/* GPU acceleration for animations */
+.stat-card,
+.overview-card,
+.ai-chat-widget,
+.tool-card {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* 13. ACCESSIBILITY IMPROVEMENTS */
+.stat-card:focus,
+.overview-card:focus,
+.quick-btn:focus,
+.tool-card:focus {
+  outline: 2px solid #00D4FF;
+  outline-offset: 2px;
+}
+
+/* 14. VISUAL HIERARCHY - Perfect Spacing System */
+.section-spacing {
+  margin-bottom: 2rem;
+}
+
+.card-spacing {
+  margin-bottom: 1.5rem;
+}
+
+.element-spacing {
+  margin-bottom: 1rem;
+}
+
+/* 15. GRID DEBUGGING (Remove in production) */
+.debug-grid {
+  position: relative;
+}
+
+.debug-grid::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* 16. CONTENT ALIGNMENT - Perfect Text Flow */
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-start {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+/* 17. PERFECT SPACING SYSTEM */
+.p-0 { padding: 0; }
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+.p-4 { padding: 2rem; }
+
+.m-0 { margin: 0; }
+.m-1 { margin: 0.5rem; }
+.m-2 { margin: 1rem; }
+.m-3 { margin: 1.5rem; }
+.m-4 { margin: 2rem; }
+
+.gap-1 { gap: 0.5rem; }
+.gap-2 { gap: 1rem; }
+.gap-3 { gap: 1.5rem; }
+.gap-4 { gap: 2rem; }
+
+/* 18. FINAL POLISH - Micro-interactions */
+.hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}

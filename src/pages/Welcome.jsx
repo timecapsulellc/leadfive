@@ -7,9 +7,13 @@ const Welcome = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [progress, setProgress] = useState(0);
   const [showSkip, setShowSkip] = useState(false);
+  const [isSkipping, setIsSkipping] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Prevent multiple renders
+    if (isSkipping) return;
+    
     // Mark that user has visited the welcome page
     localStorage.setItem('hasVisitedWelcome', 'true');
     
@@ -28,34 +32,50 @@ const Welcome = () => {
       setCurrentSlide(prev => (prev + 1) % 3);
     }, 4000);
 
-    // Progress bar animation (5 seconds)
+    // Progress bar animation (8 seconds - more time to enjoy)
     const progressInterval = setInterval(() => {
       setProgress(prev => {
         if (prev >= 100) {
           clearInterval(progressInterval);
-          navigate('/home');
+          // Navigate to home after completion
+          if (!isSkipping) {
+            handleComplete();
+          }
           return 100;
         }
-        return prev + 2; // 100 / 50 = 2% every 100ms = 5 seconds total
+        return prev + 1.25; // 100 / 80 = 1.25% every 100ms = 8 seconds total
       });
     }, 100);
-
-    // Auto-redirect after 5 seconds
-    const redirectTimer = setTimeout(() => {
-      navigate('/home');
-    }, 5000);
 
     return () => {
       clearTimeout(timer);
       clearTimeout(skipTimer);
-      clearTimeout(redirectTimer);
       clearInterval(slideInterval);
       clearInterval(progressInterval);
     };
-  }, [navigate]);
+  }, [isSkipping]);
+
+  const handleComplete = () => {
+    if (isSkipping) return;
+    setIsSkipping(true);
+    
+    // Clear session storage to prevent re-showing
+    sessionStorage.removeItem('welcomeShown');
+    
+    // Navigate to home
+    navigate('/home', { replace: true });
+  };
 
   const handleSkip = () => {
-    navigate('/home');
+    if (isSkipping) return;
+    setIsSkipping(true);
+    
+    // Mark as completed
+    localStorage.setItem('hasVisitedWelcome', 'true');
+    sessionStorage.removeItem('welcomeShown');
+    
+    // Navigate to home
+    navigate('/home', { replace: true });
   };
 
   const slides = [

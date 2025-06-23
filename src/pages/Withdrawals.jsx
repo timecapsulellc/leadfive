@@ -4,6 +4,7 @@ import { ethers } from 'ethers';
 import { Web3 } from 'web3';
 import UnifiedWalletConnect from '../components/UnifiedWalletConnect';
 import { LEAD_FIVE_CONFIG, LEAD_FIVE_ABI } from '../contracts-leadfive.js';
+import { AITransactionExamples, AIIntegrationUtils } from '../hooks/useAIIntegration.js';
 import './Withdrawals.css';
 
 // USDT ABI for balance checking
@@ -112,9 +113,9 @@ export default function Withdrawals({ account, provider, signer, onConnect, onDi
       }
 
       setBalances({
-        USDT: ethers.utils.formatUnits(usdtBalance, 18),
-        BNB: ethers.utils.formatUnits(bnbBalance, 18),
-        available: ethers.utils.formatUnits(availableBalance, 18)
+        USDT: ethers.formatUnits(usdtBalance, 18),
+        BNB: ethers.formatUnits(bnbBalance, 18),
+        available: ethers.formatUnits(availableBalance, 18)
       });
 
       // Fetch withdrawal history
@@ -143,13 +144,13 @@ export default function Withdrawals({ account, provider, signer, onConnect, onDi
         history = [
           {
             timestamp: Math.floor(Date.now() / 1000) - 86400, // 1 day ago
-            amount: ethers.utils.parseUnits('100', 18),
+            amount: ethers.parseUnits('100', 18),
             status: 'Completed',
             txHash: '0x1234567890abcdef1234567890abcdef12345678'
           },
           {
             timestamp: Math.floor(Date.now() / 1000) - 172800, // 2 days ago
-            amount: ethers.utils.parseUnits('250', 18),
+            amount: ethers.parseUnits('250', 18),
             status: 'Completed',
             txHash: '0xabcdef1234567890abcdef1234567890abcdef12'
           }
@@ -182,9 +183,34 @@ export default function Withdrawals({ account, provider, signer, onConnect, onDi
       return;
     }
 
+    // AI-powered withdrawal explanation
+    try {
+      const gasFee = 2.50; // Estimated BSC gas fee
+      const withdrawalRate = 100; // Assuming 100% withdrawal rate for now
+      
+      const aiExplanation = await AITransactionExamples.withdrawalExplanation(
+        amount,
+        withdrawalRate,
+        gasFee
+      );
+      
+      if (aiExplanation && aiExplanation.text) {
+        toast.info(`🤖 AI Assistant: ${aiExplanation.text}`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+      }
+    } catch (error) {
+      console.log('AI explanation not available:', error);
+    }
+
     setIsWithdrawing(true);
     try {
-      const amountWei = ethers.utils.parseUnits(withdrawAmount, 18);
+      const amountWei = ethers.parseUnits(withdrawAmount, 18);
       
       // Call withdraw function on contract
       let txHash;
@@ -430,7 +456,7 @@ export default function Withdrawals({ account, provider, signer, onConnect, onDi
                           {new Date(item.timestamp * 1000).toLocaleDateString()}
                         </span>
                         <span className="amount">
-                          {ethers.utils.formatUnits(item.amount, 18)} USDT
+                          {ethers.formatUnits(item.amount, 18)} USDT
                         </span>
                         <span className={`status ${item.status.toLowerCase()}`}>
                           <div className="status-dot"></div>

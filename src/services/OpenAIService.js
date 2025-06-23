@@ -78,9 +78,10 @@ class OpenAIService {
 
     try {
       const systemPrompt = this.buildSystemPrompt(userContext);
+      const fullPrompt = `${systemPrompt}\n\nUser: ${userMessage}\nAssistant:`;
       
       const response = await this.openai.chat.completions.create({
-        model: "gpt-4-turbo-preview",
+        model: "gpt-4o-mini",
         messages: [
           {
             role: "system",
@@ -169,7 +170,7 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
         - Actionable advice
         Keep it under 100 words, exciting and FOMO-driven.`,
       
-      motivationalMessage: `Generate a motivational message for ORPHI users based on their mood: ${context.mood || 'neutral'}.
+      motivationalMessage: `Generate a motivational message for LeadFive users based on their mood: ${context.mood || 'neutral'}.
         - Address their current emotional state
         - Relate to Web3/crypto success
         - Include a call-to-action
@@ -186,7 +187,7 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
 
     try {
       const response = await this.openai.chat.completions.create({
-        model: "gpt-4-turbo-preview",
+        model: "gpt-4o-mini",
         messages: [
           {
             role: "system",
@@ -224,7 +225,7 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
         messages: [
           {
             role: "system",
-            content: `You are an expert compensation plan analyzer for ORPHI. Analyze the provided compensation plan and return a JSON response with:
+            content: `You are an expert compensation plan analyzer for LeadFive. Analyze the provided compensation plan and return a JSON response with:
             - summary: Brief overview (max 100 words)
             - keyPoints: Array of 3-5 main features
             - recommendations: Array of 3-4 actionable insights
@@ -296,7 +297,7 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
   getFallbackResponse(userMessage) {
     const fallbacks = [
       "Great question! 🚀 Based on current market trends, Web3 projects are showing 340% better performance. Ready to explore some high-ROI opportunities?",
-      "I love your enthusiasm! 💎 The top 10% of ORPHI users earn $15,000/month. Want me to show you the path to join them?",
+      "I love your enthusiasm! 💎 The top 10% of LeadFive users earn $15,000/month. Want me to show you the path to join them?",
       "Perfect timing! ⚡ Our AI analysis shows you're in an optimal decision-making state. This could be your breakthrough moment!",
       "That's exactly what successful investors ask! 🔥 With blockchain transparency and smart contracts, the opportunities are endless.",
       "Interesting point! 💰 Did you know 94% of our successful users started with questions just like yours? Your journey begins now!"
@@ -311,7 +312,7 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
         name: "Alex K.",
         earnings: "$34,500",
         timeframe: "4 months",
-        quote: "ORPHI's AI-powered insights helped me identify the perfect investment timing!"
+        quote: "LeadFive's AI-powered insights helped me identify the perfect investment timing!"
       },
       marketInsight: "🚀 Web3 networking is up 127% this quarter! AI-powered projects show 340% better success rates. The revolution is here!",
       motivationalMessage: "Every crypto success story started with a single click! 💎 Your breakthrough moment is waiting. Ready to join the top 10%?",
@@ -349,4 +350,4 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
 }
 
 // Export singleton instance
-export default new OpenAIService(); 
+export default new OpenAIService();

@@ -1,0 +1,36 @@
+/* Debug styles for AI components */
+.debug-box {
+  border: 3px solid red !important;
+  padding: 10px !important;
+  margin: 10px 0 !important;
+  background-color: rgba(255, 0, 0, 0.1) !important;
+  color: #ff0000 !important;
+  font-weight: bold !important;
+}
+
+.ai-component-debug {
+  position: relative !important;
+  border: 2px solid red !important;
+  min-height: 30px !important;
+  min-width: 30px !important;
+}
+
+.ai-component-debug::before {
+  content: attr(data-component-name) !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  background-color: red !important;
+  color: white !important;
+  padding: 2px 5px !important;
+  font-size: 10px !important;
+  z-index: 9999 !important;
+}
+
+/* Force display of potentially hidden elements */
+.force-display {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}

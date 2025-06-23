@@ -17,7 +17,10 @@ import {
   FaGift,
   FaClock,
   FaCheckCircle,
-  FaExclamationTriangle
+  FaExclamationTriangle,
+  FaRobot,
+  FaBrain,
+  FaLightbulb
 } from 'react-icons/fa';
 import MatrixVisualization from '../components/MatrixVisualization';
 import NetworkTreeVisualization from '../components/NetworkTreeVisualization';
@@ -28,7 +31,24 @@ import ActivityFeed from '../components/ActivityFeed';
 import PerformanceMetrics from '../components/PerformanceMetrics';
 import NotificationSystem from '../components/NotificationSystem';
 import PageWrapper from '../components/PageWrapper';
+// AI Components
+import AICoachingPanel from '../components/AICoachingPanel';
+import AIEarningsPrediction from '../components/AIEarningsPrediction';
+import AITransactionHelper from '../components/AITransactionHelper';
+import AIMarketInsights from '../components/AIMarketInsights';
+import AISuccessStories from '../components/AISuccessStories';
+import AIEmotionTracker from '../components/AIEmotionTracker';
+import ErrorBoundary from '../components/ErrorBoundary';
+import MobileNavigation from '../components/MobileNavigation';
+import ExtraordinaryAIAssistant from '../components/ExtraordinaryAIAssistant';
+import LeadFiveConversationalAI from '../components/LeadFiveConversationalAI';
+// AI Services
+import { elevenLabsService } from '../services/ElevenLabsOnlyService';
 import './Dashboard.css';
+import '../styles/dashboard-alignment-fixes.css';
+import '../styles/mobile-first-optimization.css';
+import '../styles/expert-dashboard-redesign.css';
+import '../styles/voice-assistant.css';
 
 export default function Dashboard({ account, provider, onDisconnect }) {
   const navigate = useNavigate();
@@ -44,6 +64,23 @@ export default function Dashboard({ account, provider, onDisconnect }) {
     dailyEarnings: 0
   });
   const [loading, setLoading] = useState(true);
+  
+  // AI Integration State
+  const [aiInsights, setAiInsights] = useState(null);
+  const [isAiLoading, setIsAiLoading] = useState(false);
+  const [hasPlayedWelcome, setHasPlayedWelcome] = useState(false);
+  const [audioNative, setAudioNative] = useState(null);
+
+  // Debug AI component imports
+  if (process.env.NODE_ENV === 'development') {
+    console.log('🚀 Dashboard AI Component Status:');
+    console.log('AICoachingPanel:', typeof AICoachingPanel, AICoachingPanel);
+    console.log('AIEarningsPrediction:', typeof AIEarningsPrediction, AIEarningsPrediction);
+    console.log('AITransactionHelper:', typeof AITransactionHelper, AITransactionHelper);
+    console.log('AIMarketInsights:', typeof AIMarketInsights, AIMarketInsights);
+    console.log('AISuccessStories:', typeof AISuccessStories, AISuccessStories);
+    console.log('AIEmotionTracker:', typeof AIEmotionTracker, AIEmotionTracker);
+  }
 
   useEffect(() => {
     if (!account) {
@@ -52,6 +89,23 @@ export default function Dashboard({ account, provider, onDisconnect }) {
     }
     loadDashboardData();
   }, [account, navigate]);
+
+  // ElevenLabs welcome message
+  useEffect(() => {
+    if (account && elevenLabsService && !loading && !hasPlayedWelcome && dashboardData.totalEarnings > 0) {
+      const userName = account.slice(0, 6) + '...' + account.slice(-4);
+      const userStats = {
+        totalEarnings: dashboardData.totalEarnings || '0',
+        teamSize: dashboardData.teamSize || '0'
+      };
+      
+      // Play welcome message after dashboard loads
+      setTimeout(() => {
+        elevenLabsService.readDashboardWelcome(userName, userStats);
+        setHasPlayedWelcome(true);
+      }, 3000);
+    }
+  }, [account, dashboardData, loading, hasPlayedWelcome]);
 
   const loadDashboardData = async () => {
     try {
@@ -78,6 +132,8 @@ export default function Dashboard({ account, provider, onDisconnect }) {
 
   const menuItems = [
     { id: 'overview', label: 'Overview', icon: FaChartLine },
+    { id: 'ai-insights', label: 'AI Insights', icon: FaRobot },
+    { id: 'voice-assistant', label: 'Voice Assistant', icon: FaBrain },
     { id: 'network', label: 'Network Tree', icon: FaNetworkWired },
     { id: 'earnings', label: 'Earnings', icon: FaDollarSign },
     { id: 'referrals', label: 'Referrals', icon: FaUsers },
@@ -90,11 +146,15 @@ export default function Dashboard({ account, provider, onDisconnect }) {
   const renderContent = () => {
     switch (activeSection) {
       case 'overview':
-        return <DashboardOverview data={dashboardData} />;
+        return <DashboardOverview data={dashboardData} account={account} />;
+      case 'ai-insights':
+        return <AIInsightsSection data={dashboardData} account={account} />;
+      case 'voice-assistant':
+        return <VoiceAssistantSection data={dashboardData} account={account} />;
       case 'network':
         return <NetworkSection account={account} />;
       case 'earnings':
-        return <EarningsSection data={dashboardData} />;
+        return <EarningsSection data={dashboardData} account={account} />;
       case 'referrals':
         return <ReferralsSection account={account} />;
       case 'withdrawals':
@@ -106,7 +166,7 @@ export default function Dashboard({ account, provider, onDisconnect }) {
       case 'settings':
         return <SettingsSection account={account} onDisconnect={onDisconnect} />;
       default:
-        return <DashboardOverview data={dashboardData} />;
+        return <DashboardOverview data={dashboardData} account={account} />;
     }
   };
 
@@ -183,13 +243,25 @@ export default function Dashboard({ account, provider, onDisconnect }) {
             {renderContent()}
           </div>
         </div>
+
+        {/* Extraordinary AI Assistant - Replaces overlapping components */}
+        <ExtraordinaryAIAssistant 
+          userStats={{
+            totalEarnings: dashboardData.totalEarnings,
+            teamSize: dashboardData.teamSize,
+            currentLevel: dashboardData.currentLevel,
+            dailyEarnings: dashboardData.dailyEarnings,
+            activeReferrals: dashboardData.activeReferrals
+          }}
+          account={account}
+        />
       </div>
     </PageWrapper>
   );
 }
 
-// Dashboard Overview Component
-function DashboardOverview({ data }) {
+// Dashboard Overview Component with AI Integration
+function DashboardOverview({ data, account }) {
   const stats = [
     {
       icon: FaDollarSign,
@@ -223,6 +295,26 @@ function DashboardOverview({ data }) {
 
   return (
     <div className="overview-section">
+      {/* AI Coaching Panel at the top */}
+      <ErrorBoundary>
+        <AICoachingPanel 
+          userStats={{
+            totalEarnings: data.totalEarnings,
+            teamSize: data.teamSize,
+            currentLevel: data.currentLevel,
+            dailyEarnings: data.dailyEarnings,
+            packageLevel: data.currentLevel * 30,
+            daysSinceLastLogin: 0,
+            teamGrowthRate: 12.5,
+            loginStreak: 7,
+            monthlyGoal: 5000,
+            daysSinceLastReferral: 2,
+            voiceEnabled: true
+          }}
+          account={account}
+        />
+      </ErrorBoundary>
+
       <div className="stats-grid">
         {stats.map((stat, index) => (
           <div key={index} className="stat-card">
@@ -270,7 +362,53 @@ function DashboardOverview({ data }) {
   );
 }
 
-// Network Section Component
+// New AI Insights Section
+function AIInsightsSection({ data, account }) {
+  return (
+    <div className="ai-insights-section">
+      <div className="ai-insights-header">
+        <h2><FaRobot /> AI-Powered Insights</h2>
+        <p>Get personalized recommendations and predictions powered by artificial intelligence</p>
+      </div>
+
+      <div className="ai-insights-grid">
+        <ErrorBoundary>
+          <AIEarningsPrediction 
+            userStats={{
+              totalEarnings: data.totalEarnings,
+              teamSize: data.teamSize,
+              currentLevel: data.currentLevel,
+              dailyEarnings: data.dailyEarnings,
+              monthlyEarnings: data.dailyEarnings * 30,
+              packageLevel: data.currentLevel * 30,
+              activeReferrals: data.activeReferrals
+            }}
+          />
+        </ErrorBoundary>
+
+        <ErrorBoundary>
+          <AIMarketInsights />
+        </ErrorBoundary>
+
+        <ErrorBoundary>
+          <AISuccessStories />
+        </ErrorBoundary>
+
+        <ErrorBoundary>
+          <AIEmotionTracker 
+            userActivity={{
+              totalEarnings: data.totalEarnings,
+              teamGrowth: 12.5,
+              recentActivity: 'high',
+              mood: 'positive'
+            }}
+          />
+        </ErrorBoundary>
+      </div>
+    </div>
+  );
+}
+
 // Network Section Component with Error Handling
 function NetworkSection({ account }) {
   const navigate = useNavigate();
@@ -365,9 +503,8 @@ function NetworkSection({ account }) {
   );
 }
 
-
-// Earnings Section Component
-function EarningsSection({ data }) {
+// Earnings Section Component with AI Integration
+function EarningsSection({ data, account }) {
   return (
     <div className="earnings-section">
       <div className="earnings-summary">
@@ -387,6 +524,21 @@ function EarningsSection({ data }) {
           <span className="trend positive">+22.1%</span>
         </div>
       </div>
+
+      {/* AI Earnings Prediction */}
+      <ErrorBoundary>
+        <AIEarningsPrediction 
+          userStats={{
+            totalEarnings: data.totalEarnings,
+            teamSize: data.teamSize,
+            currentLevel: data.currentLevel,
+            dailyEarnings: data.dailyEarnings,
+            monthlyEarnings: data.dailyEarnings * 30,
+            packageLevel: data.currentLevel * 30,
+            activeReferrals: data.activeReferrals
+          }}
+        />
+      </ErrorBoundary>
 
       <div className="earnings-chart-container">
         <h3>Earnings History</h3>
@@ -513,6 +665,73 @@ function PerformanceSection({ data }) {
   );
 }
 
+// Voice Assistant Section Component
+function VoiceAssistantSection({ data, account }) {
+  return (
+    <div className="voice-assistant-section">
+      <div className="voice-assistant-header">
+        <h2><FaBrain /> LeadFive Voice Assistant</h2>
+        <p>Experience natural voice conversations with AI-powered assistance for your LeadFive journey</p>
+      </div>
+
+      <div className="voice-assistant-container">
+        <div className="voice-assistant-main">
+          <ErrorBoundary>
+            <LeadFiveConversationalAI 
+              userStats={{
+                totalEarnings: data.totalEarnings,
+                teamSize: data.teamSize,
+                currentLevel: data.currentLevel,
+                dailyEarnings: data.dailyEarnings,
+                activeReferrals: data.activeReferrals,
+                pendingRewards: data.pendingRewards
+              }}
+              account={account}
+            />
+          </ErrorBoundary>
+        </div>
+      </div>
+
+      <div className="voice-features-grid">
+        <div className="voice-feature-card">
+          <FaLightbulb className="feature-icon" />
+          <h3>Smart Coaching</h3>
+          <p>Get personalized advice and strategies based on your performance data</p>
+        </div>
+        
+        <div className="voice-feature-card">
+          <FaChartLine className="feature-icon" />
+          <h3>Performance Analysis</h3>
+          <p>Ask about your earnings, team growth, and get detailed insights</p>
+        </div>
+        
+        <div className="voice-feature-card">
+          <FaUsers className="feature-icon" />
+          <h3>Team Management</h3>
+          <p>Discuss team strategies and get recommendations for growth</p>
+        </div>
+        
+        <div className="voice-feature-card">
+          <FaRocket className="feature-icon" />
+          <h3>Goal Setting</h3>
+          <p>Set and track your goals with AI-powered guidance</p>
+        </div>
+      </div>
+
+      <div className="voice-tips">
+        <h3>💡 Voice Assistant Tips</h3>
+        <ul>
+          <li>🎤 <strong>Ask about your performance:</strong> "How are my earnings this month?"</li>
+          <li>📈 <strong>Get growth advice:</strong> "What strategies can help me grow my team?"</li>
+          <li>💰 <strong>Discuss earnings:</strong> "When should I expect my next payout?"</li>
+          <li>🎯 <strong>Set goals:</strong> "Help me set a realistic monthly earning goal"</li>
+          <li>👥 <strong>Team insights:</strong> "How is my team performing compared to others?"</li>
+        </ul>
+      </div>
+    </div>
+  );
+}
+
 // Settings Section Component
 function SettingsSection({ account, onDisconnect }) {
   return (
@@ -527,6 +746,26 @@ function SettingsSection({ account, onDisconnect }) {
             Disconnect Wallet
           </button>
         </div>
+      </div>
+
+      <div className="settings-group">
+        <h4>AI Features</h4>
+        <label className="toggle-setting">
+          <input type="checkbox" defaultChecked />
+          <span>AI Coaching</span>
+        </label>
+        <label className="toggle-setting">
+          <input type="checkbox" defaultChecked />
+          <span>AI Earnings Predictions</span>
+        </label>
+        <label className="toggle-setting">
+          <input type="checkbox" defaultChecked />
+          <span>AI Transaction Helper</span>
+        </label>
+        <label className="toggle-setting">
+          <input type="checkbox" defaultChecked />
+          <span>Voice Assistant</span>
+        </label>
       </div>
 
       <div className="settings-group">

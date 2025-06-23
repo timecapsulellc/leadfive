@@ -20,6 +20,7 @@ const Dashboard = React.lazy(() => import('./pages/Dashboard'));
 const Welcome = React.lazy(() => import('./pages/Welcome'));
 const BrandGuide = React.lazy(() => import('./pages/BrandGuide'));
 const Genealogy = React.lazy(() => import('./pages/Genealogy'));
+const TestAIDashboard = React.lazy(() => import('./pages/TestAIDashboard'));
 import { 
   storeWalletConnection, 
   autoReconnectWallet, 
@@ -48,8 +49,19 @@ function App() {
   // Check if user should see welcome page
   useEffect(() => {
     const hasVisited = localStorage.getItem('hasVisitedWelcome');
+    const welcomeShown = sessionStorage.getItem('welcomeShown');
+    
+    // Clear stale states
+    if (welcomeShown) {
+      setShouldShowWelcome(false);
+      return;
+    }
+    
     if (!hasVisited) {
       setShouldShowWelcome(true);
+      sessionStorage.setItem('welcomeShown', 'true');
+    } else {
+      setShouldShowWelcome(false);
     }
   }, []);
 
@@ -231,6 +243,7 @@ function App() {
   };
 
   return (
+    <>
     <ErrorBoundary>
       <Router>
         <MobileNav 
@@ -246,247 +259,261 @@ function App() {
         ) : (
           <Suspense fallback={<LoadingSpinner message="Loading application..." />}>
             <Routes>
-            <Route path="/" element={
-              <>
-                <Header 
+              <Route path="/" element={
+                <>
+                  <Header 
+                    account={account} 
+                    onConnect={handleWalletConnect}
+                    onDisconnect={handleDisconnect} 
+                  />
+                  <div className="App">
+                    <Home 
+                      account={account}
+                      provider={provider}
+                      signer={signer}
+                      onConnect={handleWalletConnect}
+                      onDisconnect={handleDisconnect}
+                    />
+                  </div>
+                  <Footer />
+                </>
+              } />
+              <Route path="/welcome" element={<Welcome />} />
+              <Route path="/home" element={
+                <>
+                  <Header 
+                    account={account} 
+                    onConnect={handleWalletConnect}
+                    onDisconnect={handleDisconnect} 
+                  />
+                  <div className="App">
+                    <Home 
+                      account={account}
+                      provider={provider}
+                      signer={signer}
+                      onConnect={handleWalletConnect}
+                      onDisconnect={handleDisconnect}
+                    />
+                  </div>
+                  <Footer />
+                </>
+              } />
+              <Route path="/register" element={
+                <UserRoute 
                   account={account} 
-                  onConnect={handleWalletConnect}
-                  onDisconnect={handleDisconnect} 
-              />
-              <div className="App">
-                <Home 
-                  account={account}
-                  provider={provider}
-                  signer={signer}
-                  onConnect={handleWalletConnect}
-                  onDisconnect={handleDisconnect}
-                />
-              </div>
-              <Footer />
-            </>
-          } />
-          <Route path="/welcome" element={<Welcome />} />
-        <Route path="/home" element={
-          <>
-            <Header 
-              account={account} 
-              onConnect={handleWalletConnect}
-              onDisconnect={handleDisconnect} 
-            />
-            <div className="App">
-              <Home 
-                account={account}
-                provider={provider}
-                signer={signer}
-                onConnect={handleWalletConnect}
-                onDisconnect={handleDisconnect}
-              />
-            </div>
-            <Footer />
-          </>
-        } />
-        <Route path="/register" element={
-          <UserRoute 
-            account={account} 
-            isConnecting={isConnecting}
-            userRoles={userRoles}
-          >
-            <Header 
-              account={account} 
-              onConnect={handleWalletConnect}
-              onDisconnect={handleDisconnect} 
-            />
-            <div className="App">
-              <Register 
-                account={account}
-                provider={provider}
-                signer={signer}
-                onConnect={handleWalletConnect}
-                onDisconnect={handleDisconnect}
-              />
-            </div>
-            <Footer />
-          </UserRoute>
-        } />
-        <Route path="/packages" element={
-          <UserRoute 
-            account={account} 
-            isConnecting={isConnecting}
-            userRoles={userRoles}
-          >
-            <Header 
-              account={account} 
-              onConnect={handleWalletConnect}
-              onDisconnect={handleDisconnect} 
-            />
-            <div className="App">
-              <Packages 
-                account={account}
-                provider={provider}
-                signer={signer}
-                onConnect={handleWalletConnect}
-                onDisconnect={handleDisconnect}
-              />
-            </div>
-            <Footer />
-          </UserRoute>
-        } />
-        <Route path="/referrals" element={
-          <UserRoute 
-            account={account} 
-            isConnecting={isConnecting}
-            userRoles={userRoles}
-          >
-            <Header 
-              account={account} 
-              onConnect={handleWalletConnect}
-              onDisconnect={handleDisconnect} 
-            />
-            <div className="App">
-              <Referrals 
-                account={account}
-                provider={provider}
-                signer={signer}
-                onConnect={handleWalletConnect}
-                onDisconnect={handleDisconnect}
-              />
-            </div>
-            <Footer />
-          </UserRoute>
-        } />
-        <Route path="/genealogy" element={
-          <UserRoute 
-            account={account} 
-            isConnecting={isConnecting}
-            userRoles={userRoles}
-          >
-            <Header 
-              account={account} 
-              onConnect={handleWalletConnect}
-              onDisconnect={handleDisconnect} 
-            />
-            <div className="App">
-              <Genealogy 
-                account={account}
-                provider={provider}
-                signer={signer}
-                onConnect={handleWalletConnect}
-                onDisconnect={handleDisconnect}
-              />
-            </div>
-            <Footer />
-          </UserRoute>
-        } />
-        <Route path="/withdrawals" element={
-          <UserRoute 
-            account={account} 
-            isConnecting={isConnecting}
-            userRoles={userRoles}
-          >
-            <Header 
-              account={account} 
-              onConnect={handleWalletConnect}
-              onDisconnect={handleDisconnect} 
-            />
-            <div className="App">
-              <Withdrawals 
-                account={account}
-                provider={provider}
-                signer={signer}
-                onConnect={handleWalletConnect}
-                onDisconnect={handleDisconnect}
-              />
-            </div>
-            <Footer />
-          </UserRoute>
-        } />
-        <Route path="/security" element={
-          <UserRoute 
-            account={account} 
-            isConnecting={isConnecting}
-            userRoles={userRoles}
-          >
-            <Header 
-              account={account} 
-              onConnect={handleWalletConnect}
-              onDisconnect={handleDisconnect} 
-            />
-            <div className="App">
-              <Security 
-                account={account}
-                provider={provider}
-                signer={signer}
-                onConnect={handleWalletConnect}
-                onDisconnect={handleDisconnect}
-              />
-            </div>
-            <Footer />
-          </UserRoute>
-        } />
-        <Route path="/about" element={
-          <>
-            <Header 
-              account={account} 
-              onConnect={handleWalletConnect}
-              onDisconnect={handleDisconnect} 
-            />
-            <div className="App">
-              <About 
-                account={account}
-                provider={provider}
-                signer={signer}
-                onConnect={handleWalletConnect}
-                onDisconnect={handleDisconnect}
-              />
-            </div>
-            <Footer />
-          </>
-        } />
-        <Route path="/brand-guide" element={
-          <>
-            <Header 
-              account={account} 
-              onConnect={handleWalletConnect}
-              onDisconnect={handleDisconnect} 
-            />
-            <div className="App">
-              <BrandGuide 
-                account={account}
-                provider={provider}
-                signer={signer}
-                onConnect={handleWalletConnect}
-                onDisconnect={handleDisconnect}
-              />
-            </div>
-            <Footer />
-          </>
-        } />
-        <Route path="/dashboard" element={
-          <UserRoute 
-            account={account} 
-            isConnecting={isConnecting}
-            userRoles={userRoles}
-          >
-            <Header 
-              account={account} 
-              onConnect={handleWalletConnect}
-              onDisconnect={handleDisconnect} 
-            />
-            <div className="App">
-              <Dashboard 
-                account={account} 
-                provider={provider} 
-                signer={signer} 
-              />
-            </div>
-            <Footer />
-          </UserRoute>
-        } />
-      </Routes>
-      </Suspense>
-      )}
+                  isConnecting={isConnecting}
+                  userRoles={userRoles}
+                >
+                  <Header 
+                    account={account} 
+                    onConnect={handleWalletConnect}
+                    onDisconnect={handleDisconnect} 
+                  />
+                  <div className="App">
+                    <Register 
+                      account={account}
+                      provider={provider}
+                      signer={signer}
+                      onConnect={handleWalletConnect}
+                      onDisconnect={handleDisconnect}
+                    />
+                  </div>
+                  <Footer />
+                </UserRoute>
+              } />
+              <Route path="/packages" element={
+                <UserRoute 
+                  account={account} 
+                  isConnecting={isConnecting}
+                  userRoles={userRoles}
+                >
+                  <Header 
+                    account={account} 
+                    onConnect={handleWalletConnect}
+                    onDisconnect={handleDisconnect} 
+                  />
+                  <div className="App">
+                    <Packages 
+                      account={account}
+                      provider={provider}
+                      signer={signer}
+                      onConnect={handleWalletConnect}
+                      onDisconnect={handleDisconnect}
+                    />
+                  </div>
+                  <Footer />
+                </UserRoute>
+              } />
+              <Route path="/referrals" element={
+                <UserRoute 
+                  account={account} 
+                  isConnecting={isConnecting}
+                  userRoles={userRoles}
+                >
+                  <Header 
+                    account={account} 
+                    onConnect={handleWalletConnect}
+                    onDisconnect={handleDisconnect} 
+                  />
+                  <div className="App">
+                    <Referrals 
+                      account={account}
+                      provider={provider}
+                      signer={signer}
+                      onConnect={handleWalletConnect}
+                      onDisconnect={handleDisconnect}
+                    />
+                  </div>
+                  <Footer />
+                </UserRoute>
+              } />
+              <Route path="/genealogy" element={
+                <UserRoute 
+                  account={account} 
+                  isConnecting={isConnecting}
+                  userRoles={userRoles}
+                >
+                  <Header 
+                    account={account} 
+                    onConnect={handleWalletConnect}
+                    onDisconnect={handleDisconnect} 
+                  />
+                  <div className="App">
+                    <Genealogy 
+                      account={account}
+                      provider={provider}
+                      signer={signer}
+                      onConnect={handleWalletConnect}
+                      onDisconnect={handleDisconnect}
+                    />
+                  </div>
+                  <Footer />
+                </UserRoute>
+              } />
+              <Route path="/withdrawals" element={
+                <UserRoute 
+                  account={account} 
+                  isConnecting={isConnecting}
+                  userRoles={userRoles}
+                >
+                  <Header 
+                    account={account} 
+                    onConnect={handleWalletConnect}
+                    onDisconnect={handleDisconnect} 
+                  />
+                  <div className="App">
+                    <Withdrawals 
+                      account={account}
+                      provider={provider}
+                      signer={signer}
+                      onConnect={handleWalletConnect}
+                      onDisconnect={handleDisconnect}
+                    />
+                  </div>
+                  <Footer />
+                </UserRoute>
+              } />
+              <Route path="/security" element={
+                <UserRoute 
+                  account={account} 
+                  isConnecting={isConnecting}
+                  userRoles={userRoles}
+                >
+                  <Header 
+                    account={account} 
+                    onConnect={handleWalletConnect}
+                    onDisconnect={handleDisconnect} 
+                  />
+                  <div className="App">
+                    <Security 
+                      account={account}
+                      provider={provider}
+                      signer={signer}
+                      onConnect={handleWalletConnect}
+                      onDisconnect={handleDisconnect}
+                    />
+                  </div>
+                  <Footer />
+                </UserRoute>
+              } />
+              <Route path="/about" element={
+                <>
+                  <Header 
+                    account={account} 
+                    onConnect={handleWalletConnect}
+                    onDisconnect={handleDisconnect} 
+                  />
+                  <div className="App">
+                    <About 
+                      account={account}
+                      provider={provider}
+                      signer={signer}
+                      onConnect={handleWalletConnect}
+                      onDisconnect={handleDisconnect}
+                    />
+                  </div>
+                  <Footer />
+                </>
+              } />
+              <Route path="/brand-guide" element={
+                <>
+                  <Header 
+                    account={account} 
+                    onConnect={handleWalletConnect}
+                    onDisconnect={handleDisconnect} 
+                  />
+                  <div className="App">
+                    <BrandGuide 
+                      account={account}
+                      provider={provider}
+                      signer={signer}
+                      onConnect={handleWalletConnect}
+                      onDisconnect={handleDisconnect}
+                    />
+                  </div>
+                  <Footer />
+                </>
+              } />
+              <Route path="/dashboard" element={
+                <UserRoute 
+                  account={account} 
+                  isConnecting={isConnecting}
+                  userRoles={userRoles}
+                >
+                  <Header 
+                    account={account} 
+                    onConnect={handleWalletConnect}
+                    onDisconnect={handleDisconnect} 
+                  />
+                  <div className="App">
+                    <Dashboard 
+                      account={account} 
+                      provider={provider} 
+                      signer={signer} 
+                    />
+                  </div>
+                  <Footer />
+                </UserRoute>
+              } />
+              <Route path="/test-ai" element={
+                <>
+                  <Header 
+                    account={account} 
+                    onConnect={handleWalletConnect}
+                    onDisconnect={handleDisconnect} 
+                  />
+                  <div className="App">
+                    <TestAIDashboard />
+                  </div>
+                  <Footer />
+                </>
+              } />
+            </Routes>
+          </Suspense>
+        )}
     </Router>
     </ErrorBoundary>
+    </>
   );
 }
 
