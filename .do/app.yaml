@@ -10,8 +10,6 @@ services:
     deploy_on_push: true
   build_command: bash build.sh
   output_dir: dist
-  index_document: index.html
-  error_document: index.html
   routes:
   - path: /
     preserve_path_prefix: false
