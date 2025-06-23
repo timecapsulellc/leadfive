@@ -41,7 +41,7 @@ class ElevenLabsService {
     // Check if it's a placeholder or invalid key
     const invalidKeys = [
       'your-elevenlabs-api-key-here',
-      '***REMOVED***'
+      'YOUR_OPENAI_API_KEY_HERE'
     ];
     
     if (invalidKeys.includes(this.apiKey)) {

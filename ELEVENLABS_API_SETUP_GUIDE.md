@@ -24,7 +24,7 @@ Your current `.env` file has an incorrect ElevenLabs API key. Follow these steps
 Replace this line in your `.env` file:
 ```bash
 # ❌ WRONG (this is an OpenAI key)
-VITE_ELEVENLABS_API_KEY=***REMOVED***
+VITE_ELEVENLABS_API_KEY=YOUR_ELEVENLABS_API_KEY_HERE
 ```
 
 With your real ElevenLabs API key:

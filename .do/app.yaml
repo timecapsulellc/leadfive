@@ -59,19 +59,19 @@ services:
   - key: VITE_FEE_RECIPIENT
     value: "0xeB652c4523f3Cf615D3F3694b14E551145953aD0"
   - key: VITE_OPENAI_API_KEY
-    value: "***REMOVED***"
+    value: "YOUR_OPENAI_API_KEY"
   - key: VITE_OPENAI_MODEL
     value: "gpt-3.5-turbo"
   - key: VITE_OPENAI_MAX_TOKENS
     value: "500"
   - key: VITE_ELEVENLABS_API_KEY
-    value: "***REMOVED***"
+    value: "YOUR_ELEVENLABS_API_KEY"
   - key: VITE_ELEVENLABS_VOICE_ID
     value: "9PVP7ENhDskL0KYHAKtD"
   - key: VITE_ELEVENLABS_MODEL
     value: "eleven_multilingual_v2"
   - key: VITE_ELEVENLABS_AGENT_ID
-    value: "***REMOVED***"
+    value: "YOUR_ELEVENLABS_AGENT_ID"
   - key: VITE_ENABLE_AI_SYNTHESIS
     value: "true"
   - key: VITE_MAX_FILE_SIZE
