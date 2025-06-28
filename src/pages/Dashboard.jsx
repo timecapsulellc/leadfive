@@ -89,22 +89,6 @@ export default function Dashboard({ account, provider, onDisconnect }) {
     loadDashboardData();
   }, [account, navigate]);
 
-  // ElevenLabs welcome message
-  useEffect(() => {
-    if (account && elevenLabsService && !loading && !hasPlayedWelcome && dashboardData.totalEarnings > 0) {
-      const userName = account.slice(0, 6) + '...' + account.slice(-4);
-      const userStats = {
-        totalEarnings: dashboardData.totalEarnings || '0',
-        teamSize: dashboardData.teamSize || '0'
-      };
-      
-      // Play welcome message after dashboard loads
-      setTimeout(() => {
-        elevenLabsService.readDashboardWelcome(userName, userStats);
-        setHasPlayedWelcome(true);
-      }, 3000);
-    }
-  }, [account, dashboardData, loading, hasPlayedWelcome]);
 
   const loadDashboardData = async () => {
     try {
