@@ -1,0 +1,45 @@
+{
+  "timestamp": "2025-06-28T04:15:37.112Z",
+  "overallStatus": "PRODUCTION_READY",
+  "categories": {
+    "smartContract": {
+      "status": "READY",
+      "details": {
+        "address": "0x29dcCb502D10C042BcC6a02a7762C49595A9E498",
+        "implementation": "0x2cc37CB4e1F5D3D56E86c8792fD241d46064B2cF",
+        "owner": "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29",
+        "usdt": "0x55d398326f99059fF775485246999027B3197955",
+        "network": "56"
+      }
+    },
+    "environment": {
+      "status": "READY",
+      "details": {
+        "VITE_CONTRACT_ADDRESS": "SET",
+        "VITE_USDT_CONTRACT_ADDRESS": "SET",
+        "TREZOR_OWNER_ADDRESS": "SET",
+        "JWT_SECRET": "SET",
+        "DOMAIN": "SET",
+        "CLOUDFLARE_API_TOKEN": "SET",
+        "CLOUDFLARE_ZONE_ID": "SET",
+        "CLOUDFLARE_ACCOUNT_ID": "SET"
+      }
+    },
+    "frontend": {
+      "status": "READY"
+    },
+    "backend": {
+      "status": "READY"
+    },
+    "security": {
+      "status": "READY"
+    },
+    "cloudflare": {
+      "status": "READY_WITH_RESTRICTIONS",
+      "note": "API token works but has geographical restrictions"
+    },
+    "deployment": {
+      "status": "READY"
+    }
+  }
+}
