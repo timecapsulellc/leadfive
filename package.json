@@ -1,6 +1,6 @@
 {
   "name": "leadfive",
-  "version": "1.0.0",
+  "version": "1.10.1751087191077",
   "description": "LeadFive - The Decentralized Incentive Platform",
   "type": "module",
   "main": "src/main.jsx",
@@ -112,5 +112,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "deploymentTimestamp": 1751087191077
 }
