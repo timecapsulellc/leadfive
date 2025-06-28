@@ -18,7 +18,6 @@ import {
   FaExpand,
   FaCompress
 } from 'react-icons/fa';
-import { elevenLabsService } from '../services/ElevenLabsOnlyService';
 
 const ExtraordinaryAIAssistant = ({ userStats, account }) => {
   const [isOpen, setIsOpen] = useState(false);

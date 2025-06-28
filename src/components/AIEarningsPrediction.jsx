@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import OpenAIService from '../services/OpenAIService';
-import ElevenLabsService from '../services/ElevenLabsService';
-import { FaBrain, FaVolumeUp, FaChartLine, FaPercentage } from 'react-icons/fa';
+import { FaBrain, FaChartLine, FaPercentage } from 'react-icons/fa';
 import './AIEarningsPrediction.css';
 
 const AIEarningsPrediction = ({ userStats }) => {
@@ -85,7 +84,8 @@ const AIEarningsPrediction = ({ userStats }) => {
     const speech = `Your ${timeframe}-day earnings prediction: Conservative estimate is $${prediction.conservative}, optimistic estimate is $${prediction.optimistic}, with ${prediction.confidence}% confidence. ${prediction.reasoning}`;
     
     try {
-      await ElevenLabsService.generateSpeech(speech);
+      // Speech synthesis temporarily disabled - use AI chat instead
+      console.log('Speech text:', speech);
     } catch (error) {
       console.warn('Speech synthesis failed:', error);
     }

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import OpenAIService from '../services/OpenAIService';
-import ElevenLabsService from '../services/ElevenLabsService';
-import { FaRobot, FaQuestionCircle, FaVolumeUp, FaPaperPlane } from 'react-icons/fa';
+import { FaRobot, FaQuestionCircle, FaPaperPlane } from 'react-icons/fa';
 import './AITransactionHelper.css';
 
 const AITransactionHelper = () => {
@@ -60,12 +59,8 @@ const AITransactionHelper = () => {
 
       setMessages(prev => [...prev, aiMessage]);
 
-      // Generate speech for AI response
-      try {
-        await ElevenLabsService.generateSpeech(response);
-      } catch (speechError) {
-        console.warn('Speech synthesis failed:', speechError);
-      }
+      // Speech synthesis temporarily disabled - using AI chat instead
+      console.log('AI response available for text-to-speech:', response);
 
     } catch (error) {
       console.error('AI response error:', error);
@@ -86,7 +81,8 @@ const AITransactionHelper = () => {
 
   const speakMessage = async (content) => {
     try {
-      await ElevenLabsService.generateSpeech(content);
+      // Speech synthesis temporarily disabled - using AI chat instead
+      console.log('Speech text:', content);
     } catch (error) {
       console.warn('Speech synthesis failed:', error);
     }

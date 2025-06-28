@@ -145,10 +145,10 @@ const AICoachingPanel = ({ userStats, account }) => {
         <h3>AI Success Coach</h3>
         <div className="ai-status">
           <span className={`status-indicator ${aiStatus.openai ? 'active' : 'inactive'}`}>
-            <FaBrain /> GPT
+            <FaBrain /> AI Chat
           </span>
-          <span className={`status-indicator ${aiStatus.elevenlabs ? 'active' : 'inactive'}`}>
-            <FaVolumeUp /> Voice
+          <span className={`status-indicator ${aiStatus.aiChat ? 'active' : 'inactive'}`}>
+            <FaRobot /> Assistant
           </span>
           <button 
             className="refresh-btn" 

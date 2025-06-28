@@ -43,7 +43,6 @@ import MobileNavigation from '../components/MobileNavigation';
 import ExtraordinaryAIAssistant from '../components/ExtraordinaryAIAssistant';
 import LeadFiveConversationalAI from '../components/LeadFiveConversationalAI';
 // AI Services
-import { elevenLabsService } from '../services/ElevenLabsOnlyService';
 import './Dashboard.css';
 import '../styles/dashboard-alignment-fixes.css';
 import '../styles/mobile-first-optimization.css';

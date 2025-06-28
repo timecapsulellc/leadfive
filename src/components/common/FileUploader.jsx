@@ -7,7 +7,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import FileUploadService from '../../services/FileUploadService.js';
 import OpenAIService from '../../services/OpenAIService.js';
-import ElevenLabsService from '../../services/ElevenLabsService.js';
 
 const FileUploader = ({ 
   userId, 
@@ -116,10 +115,8 @@ const FileUploader = ({
             : upload
         ));
 
-        // Announce AI completion with voice
-        if (import.meta.env.VITE_ENABLE_VOICE_SYNTHESIS === 'true') {
-          ElevenLabsService.respondToChat("File analysis complete! I've extracted valuable insights from your document.");
-        }
+        // AI completion notification (voice synthesis disabled)
+        console.log("File analysis complete! I've extracted valuable insights from your document.");
       }
 
     } catch (error) {
