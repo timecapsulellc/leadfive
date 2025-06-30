@@ -57,12 +57,19 @@ export default defineConfig(({ mode }) => {
           if (id.includes('core-js/internals/')) {
             return true;
           }
+          // Exclude OpenAI module for build issues
+          if (id.includes('openai')) {
+            return true;
+          }
           return false;
         },
         output: {
           manualChunks: {
             vendor: ['react', 'react-dom', 'react-router-dom'],
             ethers: ['ethers']
+          },
+          globals: {
+            'openai': 'OpenAI'
           }
         }
       }
@@ -70,7 +77,7 @@ export default defineConfig(({ mode }) => {
     
     optimizeDeps: {
       include: ['ethers'],
-      exclude: ['core-js']
+      exclude: ['core-js', 'openai']
     },
   }
 })

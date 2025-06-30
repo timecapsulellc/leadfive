@@ -24,9 +24,9 @@
     "build:fast": "vite build --mode production",
     "clean": "rm -rf node_modules/.vite && rm -rf cache && rm -rf artifacts && rm -rf dist",
     "clean:all": "rm -rf node_modules && npm install",
-    "monitor:memory": "node memory-monitor.cjs",
-    "build:perf": "node build-performance.cjs",
-    "optimize": "node performance-optimizer.cjs"
+    "monitor:memory": "node scripts/memory-monitor.cjs",
+    "build:perf": "node scripts/build-performance.cjs",
+    "optimize": "node scripts/performance-optimizer.cjs"
   },
   "keywords": [
     "decentralized-platform",
