@@ -1,0 +1,418 @@
+.earnings-analytics {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 24px;
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.analytics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.analytics-header h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.analytics-controls {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.time-range-selector {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.time-range-selector option {
+  background: #333;
+  color: white;
+}
+
+.mode-tabs {
+  display: flex;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.mode-tabs button {
+  background: transparent;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.mode-tabs button.active {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-weight: 600;
+}
+
+.mode-tabs button:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* Overview Styles */
+.analytics-overview {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.earnings-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.earning-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.earning-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.earning-card.total {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  color: #333;
+}
+
+.earning-card.direct {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  color: #333;
+}
+
+.earning-card.matrix {
+  background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+  color: #333;
+}
+
+.earning-card.recycling {
+  background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+  color: white;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.growth-indicator {
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.growth-indicator.positive {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+}
+
+.card-value {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.card-subtitle {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.growth-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.metric-label {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.metric-value {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.metric-value.positive {
+  color: #4caf50;
+}
+
+/* Matrix Progress Styles */
+.matrix-progress h3 {
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+}
+
+.levels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.level-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.level-card.active {
+  border-color: #4caf50;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(76, 175, 80, 0.1));
+}
+
+.level-card.inactive {
+  opacity: 0.6;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.level-number {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.level-status {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.level-reward {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffd700;
+}
+
+.recycling-tracker {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.recycling-tracker h4 {
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+}
+
+.recycling-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: center;
+}
+
+.stat span:first-child {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.stat span:last-child {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffd700;
+}
+
+/* Predictive Analytics Styles */
+.predictive-analytics h3 {
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+}
+
+.predictions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.prediction-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.prediction-card h4 {
+  margin-bottom: 12px;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.prediction-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffd700;
+  margin-bottom: 8px;
+}
+
+.confidence {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.growth-factors {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.growth-factors h4 {
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+}
+
+.factors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.factor {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.factor span:first-child {
+  min-width: 140px;
+  font-size: 0.9rem;
+}
+
+.factor-bar {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.factor-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50, #8bc34a);
+  border-radius: 4px;
+  transition: width 0.8s ease;
+}
+
+.factor span:last-child {
+  min-width: 40px;
+  font-weight: 600;
+  color: #4caf50;
+}
+
+/* Loading State */
+.loading-state {
+  text-align: center;
+  padding: 40px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .analytics-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .analytics-controls {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .mode-tabs {
+    flex-direction: column;
+  }
+  
+  .earnings-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .levels-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .predictions {
+    grid-template-columns: 1fr;
+  }
+  
+  .factor {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  
+  .factor span:first-child {
+    min-width: auto;
+  }
+}

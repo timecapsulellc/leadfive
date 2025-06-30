@@ -8,6 +8,11 @@ import TeamOverview from './TeamOverview';
 import AdminDashboard from '../admin/AdminDashboard';
 import WalletConnection from '../web3/WalletConnection';
 import WelcomeAnimation from '../common/WelcomeAnimation';
+import MatrixPositionDisplay from '../MatrixPositionDisplay';
+import PartnerNetworkVisualizer from '../PartnerNetworkVisualizer';
+import EarningsAnalytics from '../EarningsAnalytics';
+import AdvancedAIBusinessCoach from '../AdvancedAIBusinessCoach';
+import GamificationSystem from '../GamificationSystem';
 import useWallet from '../../hooks/useWallet';
 import useContract from '../../hooks/useContract';
 import OrphiChainLogo from '../OrphiChainLogo';
@@ -57,10 +62,13 @@ const Dashboard = () => {
 
   const tabs = [
     { id: 'overview', label: '📊 Overview', icon: '📊' },
+    { id: 'analytics', label: '📈 Analytics', icon: '📈' },
     { id: 'matrix', label: '🌳 Matrix', icon: '🌳' },
     { id: 'genealogy', label: '👥 Genealogy', icon: '👥' },
     { id: 'team', label: '🏆 Team Stats', icon: '🏆' },
     { id: 'referrals', label: '🔗 Referrals', icon: '🔗' },
+    { id: 'ai-coach', label: '🤖 AI Coach', icon: '🤖' },
+    { id: 'gamification', label: '🎮 Achievements', icon: '🎮' },
     { id: 'withdraw', label: '💸 Withdraw', icon: '💸' },
     ...(isAdmin ? [{ id: 'admin', label: '🔧 Admin', icon: '🔧' }] : [])
   ];
@@ -112,15 +120,23 @@ const Dashboard = () => {
           </div>
         )}
 
-        {activeTab === 'matrix' && (
+        {activeTab === 'analytics' && (
           <div className="dashboard-single">
+            <EarningsAnalytics wallet={wallet} contract={contract} />
+          </div>
+        )}
+
+        {activeTab === 'matrix' && (
+          <div className="dashboard-grid">
+            <MatrixPositionDisplay wallet={wallet} contract={contract} />
             <MatrixVisualization wallet={wallet} contract={contract} />
           </div>
         )}
 
         {activeTab === 'genealogy' && (
-          <div className="dashboard-single">
+          <div className="dashboard-grid">
             <TeamGenealogy wallet={wallet} contract={contract} />
+            <PartnerNetworkVisualizer wallet={wallet} contract={contract} />
           </div>
         )}
 
@@ -133,6 +149,28 @@ const Dashboard = () => {
         {activeTab === 'referrals' && (
           <div className="dashboard-single">
             <ReferralManager wallet={wallet} contract={contract} />
+          </div>
+        )}
+
+        {activeTab === 'ai-coach' && (
+          <div className="dashboard-single">
+            <AdvancedAIBusinessCoach wallet={wallet} contract={contract} userStats={{
+              totalEarnings: 2850.75,
+              totalReferrals: 12,
+              matrixLevel: 4,
+              completedCycles: 3
+            }} />
+          </div>
+        )}
+
+        {activeTab === 'gamification' && (
+          <div className="dashboard-single">
+            <GamificationSystem wallet={wallet} contract={contract} userStats={{
+              totalEarnings: 2850.75,
+              totalReferrals: 12,
+              matrixLevel: 4,
+              completedCycles: 3
+            }} />
           </div>
         )}
 

@@ -1,0 +1,367 @@
+/* Matrix Position Display Styles */
+.matrix-position-display {
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.matrix-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.matrix-header h2 {
+  color: white;
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.total-earnings {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.earnings-label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.earnings-value {
+  color: #00ff88;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-shadow: 0 2px 10px rgba(0, 255, 136, 0.3);
+}
+
+/* Matrix Grid */
+.matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.matrix-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border: 3px solid;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.matrix-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+}
+
+.matrix-card-header {
+  padding: 1.5rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.matrix-icon {
+  font-size: 2.5rem;
+}
+
+.matrix-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.matrix-info p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
+/* Matrix Stats */
+.matrix-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.stat-item {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.stat-value {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+/* Matrix Levels */
+.matrix-levels {
+  padding: 1.5rem;
+}
+
+.matrix-levels h4 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.levels-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.level-slot {
+  padding: 1rem;
+  border-radius: 10px;
+  text-align: center;
+  border: 2px solid;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.level-slot.active {
+  border-color: #00ff88;
+  background: linear-gradient(135deg, #00ff88, #00cc6a);
+  color: white;
+}
+
+.level-slot.inactive {
+  border-color: #ddd;
+  background: #f8f9fa;
+  color: #666;
+}
+
+.level-slot.completed::after {
+  content: '✓';
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #fff;
+  color: #00ff88;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.level-number {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.level-price {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.8;
+}
+
+.level-details {
+  font-size: 0.8rem;
+}
+
+.level-earnings {
+  color: #00ff88;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.level-partners {
+  opacity: 0.8;
+}
+
+.upgrade-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upgrade-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.view-all-levels {
+  text-align: center;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 2px solid #667eea;
+  color: #667eea;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: #667eea;
+  color: white;
+}
+
+/* Progress Bar */
+.matrix-progress {
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.progress-bar {
+  height: 8px;
+  background: #eee;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  transition: width 0.5s ease;
+  border-radius: 4px;
+}
+
+.progress-text {
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 600;
+}
+
+/* Matrix Insights */
+.matrix-insights {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.matrix-insights h3 {
+  color: white;
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.insight-card {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1.5rem;
+  border-radius: 10px;
+  border-left: 4px solid #00ff88;
+}
+
+.insight-card h4 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.insight-card p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Loading State */
+.matrix-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  color: white;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .matrix-position-display {
+    padding: 1rem;
+  }
+  
+  .matrix-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .matrix-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .levels-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .matrix-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+}
