@@ -1,97 +1,121 @@
-const { ethers } = require('hardhat');
+#!/usr/bin/env node
+
+/**
+ * =====================================================
+ * 🔍 PROXY IMPLEMENTATION CHECKER - BSC TESTNET
+ * =====================================================
+ * 
+ * This script checks the proxy implementation address and tests
+ * calling the implementation directly.
+ */
+
 require('dotenv').config();
+const { ethers } = require('hardhat');
 
-async function checkProxyAndImplementation() {
-    console.log('🔍 CHECKING PROXY AND IMPLEMENTATION CONTRACTS');
-    console.log('='.repeat(60) + '\n');
+async function main() {
+    console.log('\n🔍 Checking Proxy Implementation...\n');
 
-    const contractAddress = process.env.VITE_CONTRACT_ADDRESS;
-    const provider = new ethers.JsonRpcProvider(process.env.BSC_MAINNET_RPC_URL);
+    const proxyAddress = '0x74bDd79552f00125ECD72F3a08aCB8EAf5e48Ce4';
+    const implementationAddress = '0x8f03305f8BAcC25bA4B9FF2c0010b0646a09Fd79';
+    
+    // Get deployer
+    const [deployer] = await ethers.getSigners();
+    const deployerAddress = await deployer.getAddress();
+    console.log(`👤 Deployer: ${deployerAddress}`);
 
-    console.log('📋 MAIN CONTRACT ANALYSIS');
-    console.log('=========================');
-    console.log('Contract Address:', contractAddress);
-    console.log();
+    console.log(`📍 Proxy Address: ${proxyAddress}`);
+    console.log(`🔧 Implementation: ${implementationAddress}`);
 
     try {
-        // Check if this is a proxy contract
-        const implementationSlot = '0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc';
-        const implementationAddress = await provider.getStorage(contractAddress, implementationSlot);
+        // Check implementation storage slot (EIP-1967)
+        const IMPLEMENTATION_SLOT = '0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc';
         
-        if (implementationAddress !== '0x0000000000000000000000000000000000000000000000000000000000000000') {
-            const actualImplementation = '0x' + implementationAddress.slice(-40);
-            console.log('🎯 PROXY CONTRACT DETECTED!');
-            console.log('===========================');
-            console.log('Proxy Address:', contractAddress);
-            console.log('Implementation Address:', actualImplementation);
-            console.log();
-            
-            // Check if implementation has different functions
-            console.log('🔍 CHECKING IMPLEMENTATION CONTRACT');
-            console.log('===================================');
-            console.log('Implementation BSCScan:');
-            console.log(`https://bscscan.com/address/${actualImplementation}#code`);
-            console.log();
-            console.log('Implementation Write Functions:');
-            console.log(`https://bscscan.com/address/${actualImplementation}#writeContract`);
-            console.log();
-            
+        console.log('\n🔍 Checking EIP-1967 Implementation Slot...');
+        const storedImpl = await ethers.provider.send("eth_getStorageAt", [proxyAddress, IMPLEMENTATION_SLOT, "latest"]);
+        const cleanImpl = '0x' + storedImpl.slice(-40);
+        console.log(`   Stored Implementation: ${cleanImpl}`);
+        console.log(`   Expected Implementation: ${implementationAddress.toLowerCase()}`);
+        
+        if (cleanImpl.toLowerCase() === implementationAddress.toLowerCase()) {
+            console.log('✅ Proxy is pointing to correct implementation');
         } else {
-            console.log('📄 STANDARD CONTRACT (No Proxy)');
-            console.log('=================================');
+            console.log('❌ Proxy is NOT pointing to correct implementation!');
         }
 
-        // Check for admin-related functions in main contract
-        const mainContractABI = [
-            'function owner() view returns (address)',
-            'function adminIds(uint256) view returns (address)',
-            'function adminFeeRecipient() view returns (address)'
-        ];
+        // Test calling implementation directly (this should fail for initializable contracts)
+        console.log('\n🧪 Testing Implementation Contract Directly...');
+        const LeadFive = await ethers.getContractFactory('LeadFive');
+        const implContract = LeadFive.attach(implementationAddress);
 
-        const contract = new ethers.Contract(contractAddress, mainContractABI, provider);
-        
-        console.log('🔐 MAIN CONTRACT STATE');
-        console.log('======================');
-        const owner = await contract.owner();
-        const feeRecipient = await contract.adminFeeRecipient();
-        
-        console.log('Owner:', owner);
-        console.log('Fee Recipient:', feeRecipient);
-        console.log();
+        try {
+            const owner = await implContract.owner();
+            console.log(`   Implementation Owner: ${owner}`);
+        } catch (e) {
+            console.log(`   ✅ Implementation owner call failed (expected): ${e.message.substring(0, 50)}...`);
+        }
 
-        // Check for InternalAdminManager
-        console.log('🎯 SEARCHING FOR ADMIN MANAGER');
-        console.log('==============================');
+        // Check proxy admin slot
+        const ADMIN_SLOT = '0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103';
+        console.log('\n🔍 Checking Proxy Admin...');
+        const storedAdmin = await ethers.provider.send("eth_getStorageAt", [proxyAddress, ADMIN_SLOT, "latest"]);
+        const cleanAdmin = '0x' + storedAdmin.slice(-40);
+        console.log(`   Proxy Admin: ${cleanAdmin}`);
+
+        // Try to call initialize on implementation directly (should fail)
+        console.log('\n🧪 Testing Initialize on Implementation (should fail)...');
+        try {
+            const initTx = await implContract.initialize('0x337610d27c682E347C9cD60BD4b3b107C9d34dDd');
+            console.log(`   ❌ Initialize succeeded (unexpected): ${initTx.hash}`);
+        } catch (e) {
+            console.log(`   ✅ Initialize failed on implementation (expected): ${e.message.substring(0, 50)}...`);
+        }
+
+        // Check if proxy has any code
+        console.log('\n🔍 Checking Proxy Code...');
+        const proxyCode = await ethers.provider.getCode(proxyAddress);
+        console.log(`   Proxy code length: ${proxyCode.length} chars`);
+        console.log(`   Proxy code preview: ${proxyCode.substring(0, 100)}...`);
+
+        // Check if implementation has code
+        console.log('\n🔍 Checking Implementation Code...');
+        const implCode = await ethers.provider.getCode(implementationAddress);
+        console.log(`   Implementation code length: ${implCode.length} chars`);
+        console.log(`   Implementation code preview: ${implCode.substring(0, 100)}...`);
+
+        // Try low-level call to proxy
+        console.log('\n🔍 Testing Low-Level Call to Proxy...');
+        const ownerSelector = '0x8da5cb5b'; // owner() function selector
         
-        // Try to find if InternalAdminManager is deployed separately
-        // Check deployment logs for InternalAdminManager address
-        
-        console.log('💡 POTENTIAL SOLUTIONS');
-        console.log('======================');
-        console.log();
-        console.log('Option 1: Check Implementation Contract');
-        console.log('- The implementation might have admin management functions');
-        console.log('- Check BSCScan for implementation contract functions');
-        console.log();
-        console.log('Option 2: InternalAdminManager Contract');
-        console.log('- Separate contract for managing admin IDs');
-        console.log('- Need to find its deployment address');
-        console.log();
-        console.log('Option 3: AdminFunctions Library');
-        console.log('- Admin functions might be in library');
-        console.log('- Accessible through delegatecall');
-        console.log();
-        
-        console.log('🔍 NEXT STEPS TO FIND ADMIN FUNCTIONS');
-        console.log('=====================================');
-        console.log('1. Check implementation contract on BSCScan');
-        console.log('2. Look for InternalAdminManager deployment');
-        console.log('3. Check if admin functions are inherited');
-        console.log('4. Review deployment logs for all contracts');
+        try {
+            const result = await ethers.provider.call({
+                to: proxyAddress,
+                data: ownerSelector
+            });
+            console.log(`   Raw result: ${result}`);
+            
+            if (result === '0x') {
+                console.log('   ❌ Proxy returns empty data for owner() call');
+            } else {
+                const decoded = ethers.AbiCoder.defaultAbiCoder().decode(['address'], result);
+                console.log(`   ✅ Owner decoded: ${decoded[0]}`);
+            }
+        } catch (e) {
+            console.log(`   ❌ Low-level call failed: ${e.message}`);
+        }
 
     } catch (error) {
-        console.error('❌ Error checking contracts:', error.message);
+        console.error('\n❌ Check failed:', error.message);
+        throw error;
     }
 }
 
-checkProxyAndImplementation().catch(console.error);
+// Execute check
+main()
+    .then(() => {
+        console.log('\n✅ Proxy implementation check completed!');
+        process.exit(0);
+    })
+    .catch((error) => {
+        console.error('\n💥 Check failed:', error.message);
+        process.exit(1);
+    });

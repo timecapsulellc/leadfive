@@ -2,859 +2,39 @@
   "manifestVersion": "3.2",
   "proxies": [
     {
-      "address": "0x4Db5C5C94e0e6eA5553f8432ca1D121DE350B732",
+      "address": "0x5cb32e2cCd59b60C45606487dB902160728f7528",
+      "txHash": "0x2bb80ec496b21545cb83d3a9c21b6916ca8a647cdfff014555303ead3a9d3273",
       "kind": "uups"
     },
     {
-      "address": "0x8ff99355F5eE1567F83B6001FFC4d52F52C1f5f4",
-      "txHash": "0xf95b3132b341fbcb5dd168e752cfe4419de8d7f8813fafd9c7fda19b110d173a",
+      "address": "0x0caF4e64903270704b45D1230CA6cBE7b1D8FC53",
+      "txHash": "0x5e9d526915fa3f70d54d2cc229c7c6bf2dd2e630807b49b4e87b090e199175d8",
       "kind": "uups"
     },
     {
-      "address": "0xE93db0753A90b495e8FE31f9793c9D4dbf2E29C7",
-      "txHash": "0x779caa40ed617932282adea0d573587c75d362696e0cde44be7010f131a02185",
+      "address": "0x86CCF0eb67a7aB09234d5F4aE265F9eFB8E8fb6c",
+      "txHash": "0x57b7513cd7bc580de545f1c229efb8c8da7071480330ed7f0041f581f1bca68d",
       "kind": "uups"
     },
     {
-      "address": "0xf9538Fe9FCF16C018E6057744555F2556f63cED9",
-      "txHash": "0x35b3553d8e4e254b10cb1c3e4ebe94696b576f7b2112d8a38961082ff03dccc5",
+      "address": "0x62e0394c2947D79E1Fd2F08d62D3A323cCc56623",
       "kind": "uups"
     },
     {
-      "address": "0x4965197b430343daec1042B413Dd6e20D06dAdba",
-      "txHash": "0xc3a1e4484440d6a77f6ac28d4eace5fc85833b6fced635d288c2e42de9e5db2e",
+      "address": "0x8BCB6bb3C1a688aB5b16b974824B47AD5B6820df",
+      "txHash": "0x552ba8cc2c2575ed00447d1a112d769b2c81f00de6ab8f68e212d9430ac26a71",
       "kind": "uups"
     },
     {
-      "address": "0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569",
-      "txHash": "0x34a604a03a76dd44380d8222a87fc9f22a48ded11657921bf29567da76ce720d",
+      "address": "0x29dcCb502D10C042BcC6a02a7762C49595A9E498",
+      "txHash": "0xf4b48a9958664ad1b11f384c15d4fbd7874b6a5b8acc0024242baa4520e62ccc",
       "kind": "uups"
     }
   ],
   "impls": {
-    "8ee30b981de4532bc9c12d49710b7d3b0d5e0f8f98bead84811e67a8bdf2e46a": {
-      "address": "0x4CE48E3565E85cF74794C245463878672627fc1D",
-      "layout": {
-        "solcVersion": "0.8.22",
-        "storage": [
-          {
-            "label": "usdtToken",
-            "offset": 0,
-            "slot": "0",
-            "type": "t_contract(IERC20)2259",
-            "contract": "OrphiCrowdFundMain",
-            "src": "contracts/OrphiCrowdFundMain.sol:100"
-          },
-          {
-            "label": "users",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_mapping(t_address,t_struct(User)2429_storage)",
-            "contract": "OrphiCrowdFundMain",
-            "src": "contracts/OrphiCrowdFundMain.sol:102"
-          },
-          {
-            "label": "directReferralsList",
-            "offset": 0,
-            "slot": "2",
-            "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
-            "contract": "OrphiCrowdFundMain",
-            "src": "contracts/OrphiCrowdFundMain.sol:103"
-          },
-          {
-            "label": "uplineChain",
-            "offset": 0,
-            "slot": "3",
-            "type": "t_mapping(t_address,t_array(t_address)30_storage)",
-            "contract": "OrphiCrowdFundMain",
-            "src": "contracts/OrphiCrowdFundMain.sol:104"
-          },
-          {
-            "label": "totalUsers",
-            "offset": 0,
-            "slot": "4",
-            "type": "t_uint256",
-            "contract": "OrphiCrowdFundMain",
-            "src": "contracts/OrphiCrowdFundMain.sol:106"
-          },
-          {
-            "label": "totalInvestments",
-            "offset": 0,
-            "slot": "5",
-            "type": "t_uint256",
-            "contract": "OrphiCrowdFundMain",
-            "src": "contracts/OrphiCrowdFundMain.sol:107"
-          },
-          {
-            "label": "totalWithdrawals",
-            "offset": 0,
-            "slot": "6",
-            "type": "t_uint256",
-            "contract": "OrphiCrowdFundMain",
-            "src": "contracts/OrphiCrowdFundMain.sol:108"
-          },
-          {
-            "label": "contractBalance",
-            "offset": 0,
-            "slot": "7",
-            "type": "t_uint256",
-            "contract": "OrphiCrowdFundMain",
-            "src": "contracts/OrphiCrowdFundMain.sol:109"
-          },
-          {
-            "label": "lastActionBlock",
-            "offset": 0,
-            "slot": "8",
-            "type": "t_mapping(t_address,t_uint256)",
-            "contract": "OrphiCrowdFundMain",
-            "src": "contracts/OrphiCrowdFundMain.sol:112"
-          }
-        ],
-        "types": {
-          "t_address": {
-            "label": "address",
-            "numberOfBytes": "20"
-          },
-          "t_bool": {
-            "label": "bool",
-            "numberOfBytes": "1"
-          },
-          "t_bytes32": {
-            "label": "bytes32",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_bool)": {
-            "label": "mapping(address => bool)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_bytes32,t_struct(RoleData)24_storage)": {
-            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
-            "numberOfBytes": "32"
-          },
-          "t_struct(AccessControlStorage)34_storage": {
-            "label": "struct AccessControlUpgradeable.AccessControlStorage",
-            "members": [
-              {
-                "label": "_roles",
-                "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(InitializableStorage)211_storage": {
-            "label": "struct Initializable.InitializableStorage",
-            "members": [
-              {
-                "label": "_initialized",
-                "type": "t_uint64",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "_initializing",
-                "type": "t_bool",
-                "offset": 8,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(OwnableStorage)151_storage": {
-            "label": "struct OwnableUpgradeable.OwnableStorage",
-            "members": [
-              {
-                "label": "_owner",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(PausableStorage)362_storage": {
-            "label": "struct PausableUpgradeable.PausableStorage",
-            "members": [
-              {
-                "label": "_paused",
-                "type": "t_bool",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(ReentrancyGuardStorage)426_storage": {
-            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
-            "members": [
-              {
-                "label": "_status",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(RoleData)24_storage": {
-            "label": "struct AccessControlUpgradeable.RoleData",
-            "members": [
-              {
-                "label": "hasRole",
-                "type": "t_mapping(t_address,t_bool)",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "adminRole",
-                "type": "t_bytes32",
-                "offset": 0,
-                "slot": "1"
-              }
-            ],
-            "numberOfBytes": "64"
-          },
-          "t_uint256": {
-            "label": "uint256",
-            "numberOfBytes": "32"
-          },
-          "t_uint64": {
-            "label": "uint64",
-            "numberOfBytes": "8"
-          },
-          "t_array(t_address)30_storage": {
-            "label": "address[30]",
-            "numberOfBytes": "960"
-          },
-          "t_array(t_address)dyn_storage": {
-            "label": "address[]",
-            "numberOfBytes": "32"
-          },
-          "t_contract(IERC20)2259": {
-            "label": "contract IERC20",
-            "numberOfBytes": "20"
-          },
-          "t_enum(LeaderRank)2395": {
-            "label": "enum OrphiCrowdFundMain.LeaderRank",
-            "members": [
-              "NONE",
-              "BRONZE",
-              "SILVER",
-              "GOLD"
-            ],
-            "numberOfBytes": "1"
-          },
-          "t_mapping(t_address,t_array(t_address)30_storage)": {
-            "label": "mapping(address => address[30])",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_array(t_address)dyn_storage)": {
-            "label": "mapping(address => address[])",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_struct(User)2429_storage)": {
-            "label": "mapping(address => struct OrphiCrowdFundMain.User)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_uint256)": {
-            "label": "mapping(address => uint256)",
-            "numberOfBytes": "32"
-          },
-          "t_struct(User)2429_storage": {
-            "label": "struct OrphiCrowdFundMain.User",
-            "members": [
-              {
-                "label": "sponsor",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "totalInvested",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "totalEarnings",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "withdrawableAmount",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "3"
-              },
-              {
-                "label": "totalWithdrawn",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "4"
-              },
-              {
-                "label": "registrationTime",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "5"
-              },
-              {
-                "label": "lastActivity",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "6"
-              },
-              {
-                "label": "leftChild",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "7"
-              },
-              {
-                "label": "rightChild",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "8"
-              },
-              {
-                "label": "teamSize",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "9"
-              },
-              {
-                "label": "directReferrals",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "10"
-              },
-              {
-                "label": "isActive",
-                "type": "t_bool",
-                "offset": 0,
-                "slot": "11"
-              },
-              {
-                "label": "isCapped",
-                "type": "t_bool",
-                "offset": 1,
-                "slot": "11"
-              },
-              {
-                "label": "leaderRank",
-                "type": "t_enum(LeaderRank)2395",
-                "offset": 2,
-                "slot": "11"
-              },
-              {
-                "label": "packageTier",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "12"
-              },
-              {
-                "label": "packageCount",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "13"
-              }
-            ],
-            "numberOfBytes": "448"
-          }
-        },
-        "namespaces": {
-          "erc7201:openzeppelin.storage.Pausable": [
-            {
-              "contract": "PausableUpgradeable",
-              "label": "_paused",
-              "type": "t_bool",
-              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.ReentrancyGuard": [
-            {
-              "contract": "ReentrancyGuardUpgradeable",
-              "label": "_status",
-              "type": "t_uint256",
-              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:43",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.AccessControl": [
-            {
-              "contract": "AccessControlUpgradeable",
-              "label": "_roles",
-              "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
-              "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.Ownable": [
-            {
-              "contract": "OwnableUpgradeable",
-              "label": "_owner",
-              "type": "t_address",
-              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.Initializable": [
-            {
-              "contract": "Initializable",
-              "label": "_initialized",
-              "type": "t_uint64",
-              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
-              "offset": 0,
-              "slot": "0"
-            },
-            {
-              "contract": "Initializable",
-              "label": "_initializing",
-              "type": "t_bool",
-              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
-              "offset": 8,
-              "slot": "0"
-            }
-          ]
-        }
-      },
-      "allAddresses": [
-        "0x4CE48E3565E85cF74794C245463878672627fc1D"
-      ]
-    },
-    "f45e857b0092c54d1b289ac2f68d6c9a13ebc5e1b969904279b97a19d38a2390": {
-      "address": "0x6D83948CBE4D267abe454FAcd64c1eF4e775d227",
-      "txHash": "0xdb4e986b3eb92c3b782bb5e1574ba3c10812e5930548a3662f1456103e45d494",
-      "layout": {
-        "solcVersion": "0.8.22",
-        "storage": [
-          {
-            "label": "usdtToken",
-            "offset": 0,
-            "slot": "0",
-            "type": "t_contract(IERC20)1878",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:35"
-          },
-          {
-            "label": "treasury",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_address",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:36"
-          },
-          {
-            "label": "platformWallet",
-            "offset": 0,
-            "slot": "2",
-            "type": "t_address",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:37"
-          },
-          {
-            "label": "distributorWallet",
-            "offset": 0,
-            "slot": "3",
-            "type": "t_address",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:38"
-          },
-          {
-            "label": "auditWallet",
-            "offset": 0,
-            "slot": "4",
-            "type": "t_address",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:39"
-          },
-          {
-            "label": "packageAmounts",
-            "offset": 0,
-            "slot": "5",
-            "type": "t_array(t_uint256)dyn_storage",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:42"
-          },
-          {
-            "label": "packageInvestments",
-            "offset": 0,
-            "slot": "6",
-            "type": "t_mapping(t_uint256,t_uint256)",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:43"
-          },
-          {
-            "label": "directBonus",
-            "offset": 0,
-            "slot": "7",
-            "type": "t_uint256",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:46"
-          },
-          {
-            "label": "levelBonuses",
-            "offset": 0,
-            "slot": "8",
-            "type": "t_mapping(t_uint256,t_uint256)",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:47"
-          },
-          {
-            "label": "ghpPercentage",
-            "offset": 0,
-            "slot": "9",
-            "type": "t_uint256",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:50"
-          },
-          {
-            "label": "ghpDistributionInterval",
-            "offset": 0,
-            "slot": "10",
-            "type": "t_uint256",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:51"
-          },
-          {
-            "label": "lastGHPDistribution",
-            "offset": 0,
-            "slot": "11",
-            "type": "t_uint256",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:52"
-          },
-          {
-            "label": "totalGHPPool",
-            "offset": 0,
-            "slot": "12",
-            "type": "t_uint256",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:53"
-          },
-          {
-            "label": "users",
-            "offset": 0,
-            "slot": "13",
-            "type": "t_mapping(t_address,t_struct(User)2395_storage)",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:68"
-          },
-          {
-            "label": "userReferrals",
-            "offset": 0,
-            "slot": "14",
-            "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:69"
-          },
-          {
-            "label": "allUsers",
-            "offset": 0,
-            "slot": "15",
-            "type": "t_array(t_address)dyn_storage",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:70"
-          },
-          {
-            "label": "userCount",
-            "offset": 0,
-            "slot": "16",
-            "type": "t_uint256",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:71"
-          },
-          {
-            "label": "earningsCap",
-            "offset": 0,
-            "slot": "17",
-            "type": "t_uint256",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:74"
-          },
-          {
-            "label": "userEarningsCap",
-            "offset": 0,
-            "slot": "18",
-            "type": "t_mapping(t_address,t_uint256)",
-            "contract": "OrphiCrowdFundTestnet",
-            "src": "contracts/OrphiCrowdFundTestnet.sol:75"
-          }
-        ],
-        "types": {
-          "t_address": {
-            "label": "address",
-            "numberOfBytes": "20"
-          },
-          "t_bool": {
-            "label": "bool",
-            "numberOfBytes": "1"
-          },
-          "t_bytes32": {
-            "label": "bytes32",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_bool)": {
-            "label": "mapping(address => bool)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_bytes32,t_struct(RoleData)24_storage)": {
-            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
-            "numberOfBytes": "32"
-          },
-          "t_struct(AccessControlStorage)34_storage": {
-            "label": "struct AccessControlUpgradeable.AccessControlStorage",
-            "members": [
-              {
-                "label": "_roles",
-                "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(InitializableStorage)211_storage": {
-            "label": "struct Initializable.InitializableStorage",
-            "members": [
-              {
-                "label": "_initialized",
-                "type": "t_uint64",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "_initializing",
-                "type": "t_bool",
-                "offset": 8,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(OwnableStorage)151_storage": {
-            "label": "struct OwnableUpgradeable.OwnableStorage",
-            "members": [
-              {
-                "label": "_owner",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(PausableStorage)362_storage": {
-            "label": "struct PausableUpgradeable.PausableStorage",
-            "members": [
-              {
-                "label": "_paused",
-                "type": "t_bool",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(ReentrancyGuardStorage)426_storage": {
-            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
-            "members": [
-              {
-                "label": "_status",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(RoleData)24_storage": {
-            "label": "struct AccessControlUpgradeable.RoleData",
-            "members": [
-              {
-                "label": "hasRole",
-                "type": "t_mapping(t_address,t_bool)",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "adminRole",
-                "type": "t_bytes32",
-                "offset": 0,
-                "slot": "1"
-              }
-            ],
-            "numberOfBytes": "64"
-          },
-          "t_uint256": {
-            "label": "uint256",
-            "numberOfBytes": "32"
-          },
-          "t_uint64": {
-            "label": "uint64",
-            "numberOfBytes": "8"
-          },
-          "t_array(t_address)dyn_storage": {
-            "label": "address[]",
-            "numberOfBytes": "32"
-          },
-          "t_array(t_uint256)dyn_storage": {
-            "label": "uint256[]",
-            "numberOfBytes": "32"
-          },
-          "t_contract(IERC20)1878": {
-            "label": "contract IERC20",
-            "numberOfBytes": "20"
-          },
-          "t_mapping(t_address,t_array(t_address)dyn_storage)": {
-            "label": "mapping(address => address[])",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_struct(User)2395_storage)": {
-            "label": "mapping(address => struct OrphiCrowdFundTestnet.User)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_uint256)": {
-            "label": "mapping(address => uint256)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint256,t_uint256)": {
-            "label": "mapping(uint256 => uint256)",
-            "numberOfBytes": "32"
-          },
-          "t_struct(User)2395_storage": {
-            "label": "struct OrphiCrowdFundTestnet.User",
-            "members": [
-              {
-                "label": "exists",
-                "type": "t_bool",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "referrer",
-                "type": "t_address",
-                "offset": 1,
-                "slot": "0"
-              },
-              {
-                "label": "totalInvestment",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "totalEarnings",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "directReferrals",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "3"
-              },
-              {
-                "label": "packageLevel",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "4"
-              },
-              {
-                "label": "isActive",
-                "type": "t_bool",
-                "offset": 0,
-                "slot": "5"
-              },
-              {
-                "label": "joinTime",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "6"
-              },
-              {
-                "label": "lastActivity",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "7"
-              }
-            ],
-            "numberOfBytes": "256"
-          }
-        },
-        "namespaces": {
-          "erc7201:openzeppelin.storage.Pausable": [
-            {
-              "contract": "PausableUpgradeable",
-              "label": "_paused",
-              "type": "t_bool",
-              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.ReentrancyGuard": [
-            {
-              "contract": "ReentrancyGuardUpgradeable",
-              "label": "_status",
-              "type": "t_uint256",
-              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:43",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.AccessControl": [
-            {
-              "contract": "AccessControlUpgradeable",
-              "label": "_roles",
-              "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
-              "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.Ownable": [
-            {
-              "contract": "OwnableUpgradeable",
-              "label": "_owner",
-              "type": "t_address",
-              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.Initializable": [
-            {
-              "contract": "Initializable",
-              "label": "_initialized",
-              "type": "t_uint64",
-              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
-              "offset": 0,
-              "slot": "0"
-            },
-            {
-              "contract": "Initializable",
-              "label": "_initializing",
-              "type": "t_bool",
-              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
-              "offset": 8,
-              "slot": "0"
-            }
-          ]
-        }
-      }
-    },
-    "211ceb6976fa2c10ec5202550aac327be0ccd90d6b9a45a3e6a90eb9ae3bea88": {
-      "address": "0xE9184176cbc9eF5635e47505dD2029C3d07Ea4DC",
-      "txHash": "0x2aea6c18cbed9da0971c900330f450824a128aa2fb0b20b322b39408cd5ee608",
+    "1009a92e887876fb9b73570e6536dd625dca7ae63025bef665bc3cebe80ed4e1": {
+      "address": "0xc58620dd8fD9d244453e421E700c2D3FCFB595b4",
+      "txHash": "0xe738f6339061951770da99354b9e4d240f5ce903583d273def514f3d104a83a8",
       "layout": {
         "solcVersion": "0.8.22",
         "storage": [
@@ -862,623 +42,225 @@
             "label": "users",
             "offset": 0,
             "slot": "0",
-            "type": "t_mapping(t_address,t_struct(User)9194_storage)",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:50"
-          },
-          {
-            "label": "userInvestments",
-            "offset": 0,
-            "slot": "1",
-            "type": "t_mapping(t_address,t_array(t_struct(Investment)9206_storage)dyn_storage)",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:51"
-          },
-          {
-            "label": "globalHelpPool",
-            "offset": 0,
-            "slot": "2",
-            "type": "t_struct(Pool)9217_storage",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:53"
-          },
-          {
-            "label": "clubPool",
-            "offset": 0,
-            "slot": "7",
-            "type": "t_struct(Pool)9217_storage",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:54"
-          },
-          {
-            "label": "leaderPool",
-            "offset": 0,
-            "slot": "12",
-            "type": "t_struct(Pool)9217_storage",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:55"
-          },
-          {
-            "label": "usdtToken",
-            "offset": 0,
-            "slot": "17",
-            "type": "t_contract(IERC20)2768",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:57"
-          },
-          {
-            "label": "priceOracle",
-            "offset": 0,
-            "slot": "18",
-            "type": "t_address",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:58"
-          },
-          {
-            "label": "treasury",
-            "offset": 0,
-            "slot": "19",
-            "type": "t_address",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:59"
-          },
-          {
-            "label": "totalUsers",
-            "offset": 0,
-            "slot": "20",
-            "type": "t_uint256",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:61"
-          },
-          {
-            "label": "totalInvestments",
-            "offset": 0,
-            "slot": "21",
-            "type": "t_uint256",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:62"
-          },
-          {
-            "label": "platformFeePercentage",
-            "offset": 0,
-            "slot": "22",
-            "type": "t_uint256",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:63"
-          },
-          {
-            "label": "registrationOpen",
-            "offset": 0,
-            "slot": "23",
-            "type": "t_bool",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:65"
-          }
-        ],
-        "types": {
-          "t_address": {
-            "label": "address",
-            "numberOfBytes": "20"
-          },
-          "t_bool": {
-            "label": "bool",
-            "numberOfBytes": "1"
-          },
-          "t_bytes32": {
-            "label": "bytes32",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_bool)": {
-            "label": "mapping(address => bool)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_bytes32,t_struct(RoleData)24_storage)": {
-            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
-            "numberOfBytes": "32"
-          },
-          "t_struct(AccessControlStorage)34_storage": {
-            "label": "struct AccessControlUpgradeable.AccessControlStorage",
-            "members": [
-              {
-                "label": "_roles",
-                "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(InitializableStorage)211_storage": {
-            "label": "struct Initializable.InitializableStorage",
-            "members": [
-              {
-                "label": "_initialized",
-                "type": "t_uint64",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "_initializing",
-                "type": "t_bool",
-                "offset": 8,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(OwnableStorage)151_storage": {
-            "label": "struct OwnableUpgradeable.OwnableStorage",
-            "members": [
-              {
-                "label": "_owner",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(PausableStorage)362_storage": {
-            "label": "struct PausableUpgradeable.PausableStorage",
-            "members": [
-              {
-                "label": "_paused",
-                "type": "t_bool",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(ReentrancyGuardStorage)426_storage": {
-            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
-            "members": [
-              {
-                "label": "_status",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "numberOfBytes": "32"
-          },
-          "t_struct(RoleData)24_storage": {
-            "label": "struct AccessControlUpgradeable.RoleData",
-            "members": [
-              {
-                "label": "hasRole",
-                "type": "t_mapping(t_address,t_bool)",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "adminRole",
-                "type": "t_bytes32",
-                "offset": 0,
-                "slot": "1"
-              }
-            ],
-            "numberOfBytes": "64"
-          },
-          "t_uint256": {
-            "label": "uint256",
-            "numberOfBytes": "32"
-          },
-          "t_uint64": {
-            "label": "uint64",
-            "numberOfBytes": "8"
-          },
-          "t_array(t_struct(Investment)9206_storage)dyn_storage": {
-            "label": "struct DataStructures.Investment[]",
-            "numberOfBytes": "32"
-          },
-          "t_contract(IERC20)2768": {
-            "label": "contract IERC20",
-            "numberOfBytes": "20"
-          },
-          "t_enum(LeaderRank)9141": {
-            "label": "enum DataStructures.LeaderRank",
-            "members": [
-              "NONE",
-              "BRONZE",
-              "SILVER",
-              "GOLD",
-              "PLATINUM",
-              "DIAMOND"
-            ],
-            "numberOfBytes": "1"
-          },
-          "t_enum(PackageTier)9134": {
-            "label": "enum DataStructures.PackageTier",
-            "members": [
-              "NONE",
-              "PACKAGE_1",
-              "PACKAGE_2",
-              "PACKAGE_3",
-              "PACKAGE_4",
-              "PACKAGE_5",
-              "PACKAGE_6",
-              "PACKAGE_7",
-              "PACKAGE_8"
-            ],
-            "numberOfBytes": "1"
-          },
-          "t_mapping(t_address,t_array(t_struct(Investment)9206_storage)dyn_storage)": {
-            "label": "mapping(address => struct DataStructures.Investment[])",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_struct(User)9194_storage)": {
-            "label": "mapping(address => struct DataStructures.User)",
-            "numberOfBytes": "32"
-          },
-          "t_struct(Investment)9206_storage": {
-            "label": "struct DataStructures.Investment",
-            "members": [
-              {
-                "label": "tier",
-                "type": "t_enum(PackageTier)9134",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "amount",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "timestamp",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "active",
-                "type": "t_bool",
-                "offset": 0,
-                "slot": "3"
-              },
-              {
-                "label": "earningsGenerated",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "4"
-              }
-            ],
-            "numberOfBytes": "160"
-          },
-          "t_struct(Pool)9217_storage": {
-            "label": "struct DataStructures.Pool",
-            "members": [
-              {
-                "label": "totalBalance",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "totalDistributed",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "lastDistribution",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "participantCount",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "3"
-              },
-              {
-                "label": "active",
-                "type": "t_bool",
-                "offset": 0,
-                "slot": "4"
-              }
-            ],
-            "numberOfBytes": "160"
-          },
-          "t_struct(User)9194_storage": {
-            "label": "struct DataStructures.User",
-            "members": [
-              {
-                "label": "isRegistered",
-                "type": "t_bool",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "sponsor",
-                "type": "t_address",
-                "offset": 1,
-                "slot": "0"
-              },
-              {
-                "label": "currentTier",
-                "type": "t_enum(PackageTier)9134",
-                "offset": 21,
-                "slot": "0"
-              },
-              {
-                "label": "totalInvestment",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "totalEarnings",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "withdrawableBalance",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "3"
-              },
-              {
-                "label": "directReferrals",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "4"
-              },
-              {
-                "label": "teamSize",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "5"
-              },
-              {
-                "label": "teamVolume",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "6"
-              },
-              {
-                "label": "registrationTime",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "7"
-              },
-              {
-                "label": "rank",
-                "type": "t_enum(LeaderRank)9141",
-                "offset": 0,
-                "slot": "8"
-              },
-              {
-                "label": "isActive",
-                "type": "t_bool",
-                "offset": 1,
-                "slot": "8"
-              },
-              {
-                "label": "isBlacklisted",
-                "type": "t_bool",
-                "offset": 2,
-                "slot": "8"
-              },
-              {
-                "label": "lastWithdrawal",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "9"
-              },
-              {
-                "label": "earningsCap",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "10"
-              },
-              {
-                "label": "leftChild",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "11"
-              },
-              {
-                "label": "rightChild",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "12"
-              },
-              {
-                "label": "leftVolume",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "13"
-              },
-              {
-                "label": "rightVolume",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "14"
-              },
-              {
-                "label": "clubMember",
-                "type": "t_bool",
-                "offset": 0,
-                "slot": "15"
-              },
-              {
-                "label": "clubJoinTime",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "16"
-              }
-            ],
-            "numberOfBytes": "544"
-          }
-        },
-        "namespaces": {
-          "erc7201:openzeppelin.storage.Pausable": [
-            {
-              "contract": "PausableUpgradeable",
-              "label": "_paused",
-              "type": "t_bool",
-              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.ReentrancyGuard": [
-            {
-              "contract": "ReentrancyGuardUpgradeable",
-              "label": "_status",
-              "type": "t_uint256",
-              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:43",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.AccessControl": [
-            {
-              "contract": "AccessControlUpgradeable",
-              "label": "_roles",
-              "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
-              "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.Ownable": [
-            {
-              "contract": "OwnableUpgradeable",
-              "label": "_owner",
-              "type": "t_address",
-              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24",
-              "offset": 0,
-              "slot": "0"
-            }
-          ],
-          "erc7201:openzeppelin.storage.Initializable": [
-            {
-              "contract": "Initializable",
-              "label": "_initialized",
-              "type": "t_uint64",
-              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
-              "offset": 0,
-              "slot": "0"
-            },
-            {
-              "contract": "Initializable",
-              "label": "_initializing",
-              "type": "t_bool",
-              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
-              "offset": 8,
-              "slot": "0"
-            }
-          ]
-        }
-      }
-    },
-    "9e83d5132a1477dc16e2d93108cd9e058f6e0a5eaad1413604d3e24ca98283c6": {
-      "address": "0x15F53E08a4F4732192778CCEB532694349D26684",
-      "txHash": "0xfd624b60b998767310b679414bfcfd512acd0fa4988d3ef4a96220a6928eee22",
-      "layout": {
-        "solcVersion": "0.8.22",
-        "storage": [
-          {
-            "label": "users",
-            "offset": 0,
-            "slot": "0",
-            "type": "t_mapping(t_address,t_struct(User)1855_storage)",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:48"
+            "type": "t_mapping(t_address,t_struct(PackedUser)4626_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:40"
           },
           {
             "label": "packages",
             "offset": 0,
             "slot": "1",
-            "type": "t_mapping(t_uint8,t_struct(Package)1870_storage)",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:49"
+            "type": "t_mapping(t_uint8,t_struct(PackedPackage)4641_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:41"
           },
           {
-            "label": "directReferrals",
+            "label": "directNetwork",
             "offset": 0,
             "slot": "2",
             "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:50"
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:42"
           },
           {
-            "label": "uplineChain",
+            "label": "smartTreeMatrix",
             "offset": 0,
             "slot": "3",
-            "type": "t_mapping(t_address,t_array(t_address)30_storage)",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:51"
+            "type": "t_mapping(t_address,t_array(t_address)2_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:43"
           },
           {
-            "label": "binaryMatrix",
+            "label": "userIds",
             "offset": 0,
             "slot": "4",
-            "type": "t_mapping(t_address,t_array(t_address)2_storage)",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:52"
+            "type": "t_mapping(t_uint32,t_address)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:44"
           },
           {
-            "label": "leaderPool",
+            "label": "leadershipPool",
             "offset": 0,
             "slot": "5",
-            "type": "t_struct(Pool)1877_storage",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:54"
+            "type": "t_struct(PackedPool)4650_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:47"
           },
           {
-            "label": "helpPool",
+            "label": "communityPool",
             "offset": 0,
             "slot": "6",
-            "type": "t_struct(Pool)1877_storage",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:55"
+            "type": "t_struct(PackedPool)4650_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:48"
           },
           {
             "label": "clubPool",
             "offset": 0,
             "slot": "7",
-            "type": "t_struct(Pool)1877_storage",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:56"
+            "type": "t_struct(PackedPool)4650_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:49"
           },
           {
-            "label": "usdt",
+            "label": "algorithmicPool",
             "offset": 0,
             "slot": "8",
-            "type": "t_contract(IERC20)1392",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:58"
+            "type": "t_struct(PackedPool)4650_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:50"
           },
           {
-            "label": "priceFeed",
+            "label": "oracles",
             "offset": 0,
             "slot": "9",
-            "type": "t_contract(IPriceFeed)1820",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:59"
+            "type": "t_array(t_struct(OracleData)5966_storage)dyn_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:53"
           },
           {
-            "label": "adminIds",
+            "label": "priceConfig",
             "offset": 0,
             "slot": "10",
-            "type": "t_array(t_address)16_storage",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:60"
+            "type": "t_struct(PriceConfig)5975_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:54"
+          },
+          {
+            "label": "leftLegVolume",
+            "offset": 0,
+            "slot": "13",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:57"
+          },
+          {
+            "label": "rightLegVolume",
+            "offset": 0,
+            "slot": "14",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:58"
+          },
+          {
+            "label": "networkSizeCache",
+            "offset": 0,
+            "slot": "15",
+            "type": "t_mapping(t_address,t_uint32)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:59"
+          },
+          {
+            "label": "lastNetworkUpdate",
+            "offset": 0,
+            "slot": "16",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:60"
+          },
+          {
+            "label": "isAdminAddress",
+            "offset": 0,
+            "slot": "17",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:63"
+          },
+          {
+            "label": "dailyWithdrawals",
+            "offset": 0,
+            "slot": "18",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:64"
+          },
+          {
+            "label": "lastWithdrawalDay",
+            "offset": 0,
+            "slot": "19",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:65"
+          },
+          {
+            "label": "userLastTx",
+            "offset": 0,
+            "slot": "20",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:66"
+          },
+          {
+            "label": "circuitBreakerThreshold",
+            "offset": 0,
+            "slot": "21",
+            "type": "t_uint256",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:69"
+          },
+          {
+            "label": "circuitBreakerTriggered",
+            "offset": 0,
+            "slot": "22",
+            "type": "t_bool",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:70"
           },
           {
             "label": "lastTxBlock",
             "offset": 0,
-            "slot": "26",
+            "slot": "23",
             "type": "t_uint256",
-            "contract": "OrphiCrowdFund",
-            "src": "contracts/OrphiCrowdFund.sol:64"
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:71"
+          },
+          {
+            "label": "totalUsers",
+            "offset": 0,
+            "slot": "24",
+            "type": "t_uint32",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:74"
+          },
+          {
+            "label": "totalPlatformFeesCollected",
+            "offset": 4,
+            "slot": "24",
+            "type": "t_uint96",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:75"
+          },
+          {
+            "label": "dailyWithdrawalLimit",
+            "offset": 0,
+            "slot": "25",
+            "type": "t_uint256",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:76"
+          },
+          {
+            "label": "usdt",
+            "offset": 0,
+            "slot": "26",
+            "type": "t_contract(IERC20)1392",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:77"
+          },
+          {
+            "label": "platformFeeRecipient",
+            "offset": 0,
+            "slot": "27",
+            "type": "t_address",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:78"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "28",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:81"
           }
         ],
         "types": {
@@ -1552,52 +334,92 @@
             "label": "uint64",
             "numberOfBytes": "8"
           },
-          "t_array(t_address)16_storage": {
-            "label": "address[16]",
-            "numberOfBytes": "512"
-          },
           "t_array(t_address)2_storage": {
             "label": "address[2]",
             "numberOfBytes": "64"
-          },
-          "t_array(t_address)30_storage": {
-            "label": "address[30]",
-            "numberOfBytes": "960"
           },
           "t_array(t_address)dyn_storage": {
             "label": "address[]",
             "numberOfBytes": "32"
           },
+          "t_array(t_struct(OracleData)5966_storage)dyn_storage": {
+            "label": "struct SecureOracle.OracleData[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
           "t_contract(IERC20)1392": {
             "label": "contract IERC20",
             "numberOfBytes": "20"
           },
-          "t_contract(IPriceFeed)1820": {
+          "t_contract(IPriceFeed)5957": {
             "label": "contract IPriceFeed",
             "numberOfBytes": "20"
           },
-          "t_mapping(t_address,t_array(t_address)2_storage)": {
-            "label": "mapping(address => address[2])",
+          "t_int256": {
+            "label": "int256",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_address,t_array(t_address)30_storage)": {
-            "label": "mapping(address => address[30])",
+          "t_mapping(t_address,t_array(t_address)2_storage)": {
+            "label": "mapping(address => address[2])",
             "numberOfBytes": "32"
           },
           "t_mapping(t_address,t_array(t_address)dyn_storage)": {
             "label": "mapping(address => address[])",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_address,t_struct(User)1855_storage)": {
-            "label": "mapping(address => struct OrphiCrowdFund.User)",
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint8,t_struct(Package)1870_storage)": {
-            "label": "mapping(uint8 => struct OrphiCrowdFund.Package)",
+          "t_mapping(t_address,t_struct(PackedUser)4626_storage)": {
+            "label": "mapping(address => struct CoreOptimized.PackedUser)",
             "numberOfBytes": "32"
           },
-          "t_struct(Package)1870_storage": {
-            "label": "struct OrphiCrowdFund.Package",
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint32)": {
+            "label": "mapping(address => uint32)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint32,t_address)": {
+            "label": "mapping(uint32 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint8,t_struct(PackedPackage)4641_storage)": {
+            "label": "mapping(uint8 => struct CoreOptimized.PackedPackage)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(OracleData)5966_storage": {
+            "label": "struct SecureOracle.OracleData",
+            "members": [
+              {
+                "label": "feed",
+                "type": "t_contract(IPriceFeed)5957",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isActive",
+                "type": "t_bool",
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "lastUpdate",
+                "type": "t_uint32",
+                "offset": 21,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(PackedPackage)4641_storage": {
+            "label": "struct CoreOptimized.PackedPackage",
             "members": [
               {
                 "label": "price",
@@ -1644,8 +466,8 @@
             ],
             "numberOfBytes": "32"
           },
-          "t_struct(Pool)1877_storage": {
-            "label": "struct OrphiCrowdFund.Pool",
+          "t_struct(PackedPool)4650_storage": {
+            "label": "struct CoreOptimized.PackedPool",
             "members": [
               {
                 "label": "balance",
@@ -1664,87 +486,159 @@
                 "type": "t_uint32",
                 "offset": 16,
                 "slot": "0"
+              },
+              {
+                "label": "totalDistributed",
+                "type": "t_uint96",
+                "offset": 20,
+                "slot": "0"
               }
             ],
             "numberOfBytes": "32"
           },
-          "t_struct(User)1855_storage": {
-            "label": "struct OrphiCrowdFund.User",
+          "t_struct(PackedUser)4626_storage": {
+            "label": "struct CoreOptimized.PackedUser",
             "members": [
               {
-                "label": "isRegistered",
-                "type": "t_bool",
+                "label": "flags",
+                "type": "t_uint8",
                 "offset": 0,
                 "slot": "0"
               },
               {
-                "label": "isBlacklisted",
-                "type": "t_bool",
+                "label": "packageLevel",
+                "type": "t_uint8",
                 "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "rank",
+                "type": "t_uint8",
+                "offset": 2,
+                "slot": "0"
+              },
+              {
+                "label": "withdrawalRate",
+                "type": "t_uint8",
+                "offset": 3,
+                "slot": "0"
+              },
+              {
+                "label": "directReferrals",
+                "type": "t_uint32",
+                "offset": 4,
+                "slot": "0"
+              },
+              {
+                "label": "teamSize",
+                "type": "t_uint32",
+                "offset": 8,
+                "slot": "0"
+              },
+              {
+                "label": "registrationTime",
+                "type": "t_uint32",
+                "offset": 12,
+                "slot": "0"
+              },
+              {
+                "label": "lastWithdrawal",
+                "type": "t_uint32",
+                "offset": 16,
+                "slot": "0"
+              },
+              {
+                "label": "matrixLevel",
+                "type": "t_uint32",
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "matrixCycles",
+                "type": "t_uint32",
+                "offset": 24,
                 "slot": "0"
               },
               {
                 "label": "referrer",
                 "type": "t_address",
-                "offset": 2,
-                "slot": "0"
+                "offset": 0,
+                "slot": "1"
               },
               {
                 "label": "balance",
                 "type": "t_uint96",
-                "offset": 0,
+                "offset": 20,
                 "slot": "1"
               },
               {
                 "label": "totalInvestment",
                 "type": "t_uint96",
-                "offset": 12,
-                "slot": "1"
+                "offset": 0,
+                "slot": "2"
               },
               {
                 "label": "totalEarnings",
                 "type": "t_uint96",
-                "offset": 0,
+                "offset": 12,
                 "slot": "2"
+              },
+              {
+                "label": "totalWithdrawn",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "3"
               },
               {
                 "label": "earningsCap",
                 "type": "t_uint96",
                 "offset": 12,
-                "slot": "2"
+                "slot": "3"
               },
               {
-                "label": "directReferrals",
-                "type": "t_uint32",
-                "offset": 24,
-                "slot": "2"
-              },
-              {
-                "label": "teamSize",
-                "type": "t_uint32",
-                "offset": 28,
-                "slot": "2"
-              },
-              {
-                "label": "packageLevel",
-                "type": "t_uint8",
+                "label": "leftLegVolume",
+                "type": "t_uint96",
                 "offset": 0,
-                "slot": "3"
+                "slot": "4"
               },
               {
-                "label": "rank",
-                "type": "t_uint8",
-                "offset": 1,
-                "slot": "3"
-              },
-              {
-                "label": "withdrawalRate",
-                "type": "t_uint8",
-                "offset": 2,
-                "slot": "3"
+                "label": "rightLegVolume",
+                "type": "t_uint96",
+                "offset": 12,
+                "slot": "4"
               }
             ],
-            "numberOfBytes": "128"
+            "numberOfBytes": "160"
+          },
+          "t_struct(PriceConfig)5975_storage": {
+            "label": "struct SecureOracle.PriceConfig",
+            "members": [
+              {
+                "label": "minPrice",
+                "type": "t_int256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "maxPrice",
+                "type": "t_int256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "maxStaleTime",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "minOracles",
+                "type": "t_uint8",
+                "offset": 4,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
           },
           "t_uint16": {
             "label": "uint16",
@@ -1815,9 +709,8 @@
         }
       }
     },
-    "f34df1bc4ebcbbcc978c4aa375e731b4ed10a9fb4c6196dcfd6f3af0b5dffb3f": {
-      "address": "0x7d27Ccbcf0EbB045136B5cfBAa9ef10D2ede2163",
-      "txHash": "0x5f6ee8c613815289e743b1415f1b7821a428ac74e1c11cd3d7c4904fe70ec8f2",
+    "c054830243f4f13bb68b36103c3814aa5d2fb2d7d7670a106417738d079a09a0": {
+      "address": "0x10965e40d90054FDE981dd1A470937C68719F707",
       "layout": {
         "solcVersion": "0.8.22",
         "storage": [
@@ -1825,289 +718,217 @@
             "label": "users",
             "offset": 0,
             "slot": "0",
-            "type": "t_mapping(t_address,t_struct(User)15623_storage)",
+            "type": "t_mapping(t_address,t_struct(PackedUser)4797_storage)",
             "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:32"
+            "src": "contracts/LeadFive.sol:38"
           },
           {
             "label": "packages",
             "offset": 0,
             "slot": "1",
-            "type": "t_mapping(t_uint8,t_struct(Package)3870_storage)",
+            "type": "t_mapping(t_uint8,t_struct(PackedPackage)4812_storage)",
             "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:33"
+            "src": "contracts/LeadFive.sol:39"
           },
           {
-            "label": "directReferrals",
+            "label": "directNetwork",
             "offset": 0,
             "slot": "2",
             "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
             "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:34"
+            "src": "contracts/LeadFive.sol:40"
           },
           {
-            "label": "referralCodeToUser",
+            "label": "smartTreeMatrix",
             "offset": 0,
             "slot": "3",
-            "type": "t_mapping(t_string_memory_ptr,t_address)",
+            "type": "t_mapping(t_address,t_array(t_address)2_storage)",
             "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:35"
+            "src": "contracts/LeadFive.sol:41"
           },
           {
-            "label": "leaderPool",
+            "label": "userIds",
             "offset": 0,
             "slot": "4",
-            "type": "t_struct(Pool)3877_storage",
+            "type": "t_mapping(t_uint32,t_address)",
             "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:56"
+            "src": "contracts/LeadFive.sol:42"
           },
           {
-            "label": "helpPool",
+            "label": "leadershipPool",
             "offset": 0,
             "slot": "5",
-            "type": "t_struct(Pool)3877_storage",
+            "type": "t_struct(PackedPool)4821_storage",
             "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:57"
+            "src": "contracts/LeadFive.sol:45"
+          },
+          {
+            "label": "communityPool",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_struct(PackedPool)4821_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:46"
           },
           {
             "label": "clubPool",
             "offset": 0,
-            "slot": "6",
-            "type": "t_struct(Pool)3877_storage",
+            "slot": "7",
+            "type": "t_struct(PackedPool)4821_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:47"
+          },
+          {
+            "label": "algorithmicPool",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_struct(PackedPool)4821_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:48"
+          },
+          {
+            "label": "leftLegVolume",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:51"
+          },
+          {
+            "label": "rightLegVolume",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:52"
+          },
+          {
+            "label": "networkSizeCache",
+            "offset": 0,
+            "slot": "11",
+            "type": "t_mapping(t_address,t_uint32)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:53"
+          },
+          {
+            "label": "lastNetworkUpdate",
+            "offset": 0,
+            "slot": "12",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:54"
+          },
+          {
+            "label": "isAdminAddress",
+            "offset": 0,
+            "slot": "13",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:57"
+          },
+          {
+            "label": "dailyWithdrawals",
+            "offset": 0,
+            "slot": "14",
+            "type": "t_mapping(t_address,t_uint256)",
             "contract": "LeadFive",
             "src": "contracts/LeadFive.sol:58"
           },
           {
-            "label": "usdt",
+            "label": "lastWithdrawalDay",
             "offset": 0,
-            "slot": "7",
-            "type": "t_contract(IERC20)2768",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:61"
-          },
-          {
-            "label": "priceFeed",
-            "offset": 0,
-            "slot": "8",
-            "type": "t_contract(IPriceFeed)3821",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:62"
-          },
-          {
-            "label": "priceOracles",
-            "offset": 0,
-            "slot": "9",
-            "type": "t_array(t_contract(IPriceFeed)3821)dyn_storage",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:63"
-          },
-          {
-            "label": "adminIds",
-            "offset": 0,
-            "slot": "10",
-            "type": "t_array(t_address)16_storage",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:64"
-          },
-          {
-            "label": "totalUsers",
-            "offset": 0,
-            "slot": "26",
-            "type": "t_uint32",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:74"
-          },
-          {
-            "label": "rootUser",
-            "offset": 4,
-            "slot": "26",
-            "type": "t_address",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:75"
-          },
-          {
-            "label": "rootUserSet",
-            "offset": 24,
-            "slot": "26",
-            "type": "t_bool",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:76"
-          },
-          {
-            "label": "adminFeeRecipient",
-            "offset": 0,
-            "slot": "27",
-            "type": "t_address",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:77"
-          },
-          {
-            "label": "totalAdminFeesCollected",
-            "offset": 20,
-            "slot": "27",
-            "type": "t_uint96",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:78"
-          },
-          {
-            "label": "lastTxBlock",
-            "offset": 0,
-            "slot": "28",
-            "type": "t_uint256",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:81"
-          },
-          {
-            "label": "matrixPositions",
-            "offset": 0,
-            "slot": "29",
-            "type": "t_mapping(t_address,t_struct(MatrixPosition)18105_storage)",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:87"
-          },
-          {
-            "label": "poolQualifications",
-            "offset": 0,
-            "slot": "30",
-            "type": "t_mapping(t_address,t_struct(PoolQualification)20926_storage)",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:88"
-          },
-          {
-            "label": "withdrawalStats",
-            "offset": 0,
-            "slot": "31",
-            "type": "t_mapping(t_address,t_struct(UserWithdrawalStats)25905_storage)",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:89"
-          },
-          {
-            "label": "userWithdrawalLimits",
-            "offset": 0,
-            "slot": "32",
-            "type": "t_mapping(t_address,t_struct(WithdrawalLimits)25918_storage)",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:90"
-          },
-          {
-            "label": "pendingCommissions",
-            "offset": 0,
-            "slot": "33",
+            "slot": "15",
             "type": "t_mapping(t_address,t_uint256)",
             "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:91"
+            "src": "contracts/LeadFive.sol:59"
           },
           {
-            "label": "pendingPoolRewards",
+            "label": "userLastTx",
             "offset": 0,
-            "slot": "34",
+            "slot": "16",
             "type": "t_mapping(t_address,t_uint256)",
             "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:92"
-          },
-          {
-            "label": "pendingMatrixBonuses",
-            "offset": 0,
-            "slot": "35",
-            "type": "t_mapping(t_address,t_uint256)",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:93"
-          },
-          {
-            "label": "userAchievements",
-            "offset": 0,
-            "slot": "36",
-            "type": "t_mapping(t_address,t_mapping(t_uint32,t_bool))",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:94"
-          },
-          {
-            "label": "leaderPoolSchedule",
-            "offset": 0,
-            "slot": "37",
-            "type": "t_struct(DistributionSchedule)20915_storage",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:97"
-          },
-          {
-            "label": "helpPoolSchedule",
-            "offset": 0,
-            "slot": "41",
-            "type": "t_struct(DistributionSchedule)20915_storage",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:98"
-          },
-          {
-            "label": "clubPoolSchedule",
-            "offset": 0,
-            "slot": "45",
-            "type": "t_struct(DistributionSchedule)20915_storage",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:99"
-          },
-          {
-            "label": "windowWithdrawals",
-            "offset": 0,
-            "slot": "49",
-            "type": "t_mapping(t_uint256,t_uint256)",
-            "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:102"
+            "src": "contracts/LeadFive.sol:60"
           },
           {
             "label": "circuitBreakerThreshold",
             "offset": 0,
-            "slot": "50",
+            "slot": "17",
             "type": "t_uint256",
             "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:103"
+            "src": "contracts/LeadFive.sol:63"
           },
           {
-            "label": "reserveFund",
+            "label": "circuitBreakerTriggered",
             "offset": 0,
-            "slot": "51",
+            "slot": "18",
+            "type": "t_bool",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:64"
+          },
+          {
+            "label": "lastTxBlock",
+            "offset": 0,
+            "slot": "19",
             "type": "t_uint256",
             "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:104"
+            "src": "contracts/LeadFive.sol:65"
           },
           {
-            "label": "totalDeposits",
+            "label": "totalUsers",
             "offset": 0,
-            "slot": "52",
+            "slot": "20",
+            "type": "t_uint32",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:68"
+          },
+          {
+            "label": "totalPlatformFeesCollected",
+            "offset": 4,
+            "slot": "20",
+            "type": "t_uint96",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:69"
+          },
+          {
+            "label": "dailyWithdrawalLimit",
+            "offset": 0,
+            "slot": "21",
             "type": "t_uint256",
             "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:105"
+            "src": "contracts/LeadFive.sol:70"
           },
           {
-            "label": "shiningStarLeaders",
+            "label": "usdt",
             "offset": 0,
-            "slot": "53",
-            "type": "t_array(t_address)dyn_storage",
+            "slot": "22",
+            "type": "t_contract(IERC20)1392",
             "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:108"
+            "src": "contracts/LeadFive.sol:71"
           },
           {
-            "label": "eligibleHelpPoolUsers",
+            "label": "platformFeeRecipient",
             "offset": 0,
-            "slot": "54",
-            "type": "t_array(t_address)dyn_storage",
+            "slot": "23",
+            "type": "t_address",
             "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:109"
+            "src": "contracts/LeadFive.sol:72"
           },
           {
-            "label": "notificationQueue",
-            "offset": 0,
-            "slot": "55",
-            "type": "t_struct(NotificationQueue)11307_storage",
+            "label": "usdtDecimals",
+            "offset": 20,
+            "slot": "23",
+            "type": "t_uint8",
             "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:112"
+            "src": "contracts/LeadFive.sol:75"
           },
           {
-            "label": "userNotifications",
+            "label": "__gap",
             "offset": 0,
-            "slot": "58",
-            "type": "t_mapping(t_address,t_struct(UserNotifications)11325_storage)",
+            "slot": "24",
+            "type": "t_array(t_uint256)49_storage",
             "contract": "LeadFive",
-            "src": "contracts/LeadFive.sol:113"
+            "src": "contracts/LeadFive.sol:78"
           }
         ],
         "types": {
@@ -2119,7 +940,7 @@
             "label": "bool",
             "numberOfBytes": "1"
           },
-          "t_struct(InitializableStorage)211_storage": {
+          "t_struct(InitializableStorage)73_storage": {
             "label": "struct Initializable.InitializableStorage",
             "members": [
               {
@@ -2137,7 +958,7 @@
             ],
             "numberOfBytes": "32"
           },
-          "t_struct(OwnableStorage)151_storage": {
+          "t_struct(OwnableStorage)13_storage": {
             "label": "struct OwnableUpgradeable.OwnableStorage",
             "members": [
               {
@@ -2149,7 +970,7 @@
             ],
             "numberOfBytes": "32"
           },
-          "t_struct(PausableStorage)362_storage": {
+          "t_struct(PausableStorage)224_storage": {
             "label": "struct PausableUpgradeable.PausableStorage",
             "members": [
               {
@@ -2161,7 +982,7 @@
             ],
             "numberOfBytes": "32"
           },
-          "t_struct(ReentrancyGuardStorage)426_storage": {
+          "t_struct(ReentrancyGuardStorage)288_storage": {
             "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
             "members": [
               {
@@ -2181,240 +1002,56 @@
             "label": "uint64",
             "numberOfBytes": "8"
           },
-          "t_array(t_address)16_storage": {
-            "label": "address[16]",
-            "numberOfBytes": "512"
+          "t_array(t_address)2_storage": {
+            "label": "address[2]",
+            "numberOfBytes": "64"
           },
           "t_array(t_address)dyn_storage": {
             "label": "address[]",
             "numberOfBytes": "32"
           },
-          "t_array(t_contract(IPriceFeed)3821)dyn_storage": {
-            "label": "contract IPriceFeed[]",
-            "numberOfBytes": "32"
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
           },
-          "t_array(t_uint256)dyn_storage": {
-            "label": "uint256[]",
-            "numberOfBytes": "32"
-          },
-          "t_contract(IERC20)2768": {
+          "t_contract(IERC20)1392": {
             "label": "contract IERC20",
             "numberOfBytes": "20"
           },
-          "t_contract(IPriceFeed)3821": {
-            "label": "contract IPriceFeed",
-            "numberOfBytes": "20"
-          },
-          "t_enum(NotificationType)15738": {
-            "label": "enum DataStructures.NotificationType",
-            "members": [
-              "Registration",
-              "Withdrawal",
-              "RankUpgrade",
-              "MatrixCompletion",
-              "PoolDistribution",
-              "Achievement"
-            ],
-            "numberOfBytes": "1"
+          "t_mapping(t_address,t_array(t_address)2_storage)": {
+            "label": "mapping(address => address[2])",
+            "numberOfBytes": "32"
           },
           "t_mapping(t_address,t_array(t_address)dyn_storage)": {
             "label": "mapping(address => address[])",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_address,t_mapping(t_uint32,t_bool))": {
-            "label": "mapping(address => mapping(uint32 => bool))",
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_address,t_struct(MatrixPosition)18105_storage)": {
-            "label": "mapping(address => struct MatrixManagementLib.MatrixPosition)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_struct(PoolQualification)20926_storage)": {
-            "label": "mapping(address => struct PoolDistributionLib.PoolQualification)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_struct(User)15623_storage)": {
-            "label": "mapping(address => struct DataStructures.User)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_struct(UserNotifications)11325_storage)": {
-            "label": "mapping(address => struct AdvancedFeaturesLib.UserNotifications)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_struct(UserWithdrawalStats)25905_storage)": {
-            "label": "mapping(address => struct WithdrawalSafetyLib.UserWithdrawalStats)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_address,t_struct(WithdrawalLimits)25918_storage)": {
-            "label": "mapping(address => struct WithdrawalSafetyLib.WithdrawalLimits)",
+          "t_mapping(t_address,t_struct(PackedUser)4797_storage)": {
+            "label": "mapping(address => struct CoreOptimized.PackedUser)",
             "numberOfBytes": "32"
           },
           "t_mapping(t_address,t_uint256)": {
             "label": "mapping(address => uint256)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_string_memory_ptr,t_address)": {
-            "label": "mapping(string => address)",
+          "t_mapping(t_address,t_uint32)": {
+            "label": "mapping(address => uint32)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint256,t_struct(Notification)11319_storage)": {
-            "label": "mapping(uint256 => struct AdvancedFeaturesLib.Notification)",
+          "t_mapping(t_uint32,t_address)": {
+            "label": "mapping(uint32 => address)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint256,t_uint256)": {
-            "label": "mapping(uint256 => uint256)",
+          "t_mapping(t_uint8,t_struct(PackedPackage)4812_storage)": {
+            "label": "mapping(uint8 => struct CoreOptimized.PackedPackage)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint32,t_bool)": {
-            "label": "mapping(uint32 => bool)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint8,t_struct(Package)3870_storage)": {
-            "label": "mapping(uint8 => struct LeadFive.Package)",
-            "numberOfBytes": "32"
-          },
-          "t_string_memory_ptr": {
-            "label": "string",
-            "numberOfBytes": "32"
-          },
-          "t_string_storage": {
-            "label": "string",
-            "numberOfBytes": "32"
-          },
-          "t_struct(DistributionSchedule)20915_storage": {
-            "label": "struct PoolDistributionLib.DistributionSchedule",
-            "members": [
-              {
-                "label": "lastDistribution",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "interval",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "nextDistribution",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "isActive",
-                "type": "t_bool",
-                "offset": 0,
-                "slot": "3"
-              }
-            ],
-            "numberOfBytes": "128"
-          },
-          "t_struct(MatrixPosition)18105_storage": {
-            "label": "struct MatrixManagementLib.MatrixPosition",
-            "members": [
-              {
-                "label": "sponsor",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "downline",
-                "type": "t_array(t_address)dyn_storage",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "level",
-                "type": "t_uint8",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "cycleCount",
-                "type": "t_uint32",
-                "offset": 1,
-                "slot": "2"
-              },
-              {
-                "label": "isComplete",
-                "type": "t_bool",
-                "offset": 5,
-                "slot": "2"
-              },
-              {
-                "label": "totalEarnings",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "3"
-              }
-            ],
-            "numberOfBytes": "128"
-          },
-          "t_struct(Notification)11319_storage": {
-            "label": "struct AdvancedFeaturesLib.Notification",
-            "members": [
-              {
-                "label": "user",
-                "type": "t_address",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "message",
-                "type": "t_string_storage",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "timestamp",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "2"
-              },
-              {
-                "label": "notificationType",
-                "type": "t_enum(NotificationType)15738",
-                "offset": 0,
-                "slot": "3"
-              },
-              {
-                "label": "isRead",
-                "type": "t_bool",
-                "offset": 1,
-                "slot": "3"
-              }
-            ],
-            "numberOfBytes": "128"
-          },
-          "t_struct(NotificationQueue)11307_storage": {
-            "label": "struct AdvancedFeaturesLib.NotificationQueue",
-            "members": [
-              {
-                "label": "head",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "label": "tail",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "notifications",
-                "type": "t_mapping(t_uint256,t_struct(Notification)11319_storage)",
-                "offset": 0,
-                "slot": "2"
-              }
-            ],
-            "numberOfBytes": "96"
-          },
-          "t_struct(Package)3870_storage": {
-            "label": "struct LeadFive.Package",
+          "t_struct(PackedPackage)4812_storage": {
+            "label": "struct CoreOptimized.PackedPackage",
             "members": [
               {
                 "label": "price",
@@ -2461,8 +1098,8 @@
             ],
             "numberOfBytes": "32"
           },
-          "t_struct(Pool)3877_storage": {
-            "label": "struct LeadFive.Pool",
+          "t_struct(PackedPool)4821_storage": {
+            "label": "struct CoreOptimized.PackedPool",
             "members": [
               {
                 "label": "balance",
@@ -2481,327 +1118,1408 @@
                 "type": "t_uint32",
                 "offset": 16,
                 "slot": "0"
+              },
+              {
+                "label": "totalDistributed",
+                "type": "t_uint96",
+                "offset": 20,
+                "slot": "0"
               }
             ],
             "numberOfBytes": "32"
           },
-          "t_struct(PoolQualification)20926_storage": {
-            "label": "struct PoolDistributionLib.PoolQualification",
+          "t_struct(PackedUser)4797_storage": {
+            "label": "struct CoreOptimized.PackedUser",
             "members": [
               {
-                "label": "isQualifiedLeader",
-                "type": "t_bool",
+                "label": "flags",
+                "type": "t_uint8",
                 "offset": 0,
                 "slot": "0"
               },
               {
-                "label": "isQualifiedHelp",
-                "type": "t_bool",
+                "label": "packageLevel",
+                "type": "t_uint8",
                 "offset": 1,
                 "slot": "0"
               },
               {
-                "label": "isQualifiedClub",
-                "type": "t_bool",
+                "label": "rank",
+                "type": "t_uint8",
                 "offset": 2,
                 "slot": "0"
               },
               {
-                "label": "lastQualificationCheck",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "1"
-              },
-              {
-                "label": "leaderTier",
+                "label": "withdrawalRate",
                 "type": "t_uint8",
-                "offset": 0,
-                "slot": "2"
-              }
-            ],
-            "numberOfBytes": "96"
-          },
-          "t_struct(User)15623_storage": {
-            "label": "struct DataStructures.User",
-            "members": [
-              {
-                "label": "isRegistered",
-                "type": "t_bool",
-                "offset": 0,
+                "offset": 3,
                 "slot": "0"
               },
               {
-                "label": "isBlacklisted",
-                "type": "t_bool",
-                "offset": 1,
+                "label": "directReferrals",
+                "type": "t_uint32",
+                "offset": 4,
+                "slot": "0"
+              },
+              {
+                "label": "teamSize",
+                "type": "t_uint32",
+                "offset": 8,
+                "slot": "0"
+              },
+              {
+                "label": "registrationTime",
+                "type": "t_uint32",
+                "offset": 12,
+                "slot": "0"
+              },
+              {
+                "label": "lastWithdrawal",
+                "type": "t_uint32",
+                "offset": 16,
+                "slot": "0"
+              },
+              {
+                "label": "matrixLevel",
+                "type": "t_uint32",
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "matrixCycles",
+                "type": "t_uint32",
+                "offset": 24,
                 "slot": "0"
               },
               {
                 "label": "referrer",
                 "type": "t_address",
-                "offset": 2,
-                "slot": "0"
+                "offset": 0,
+                "slot": "1"
               },
               {
                 "label": "balance",
                 "type": "t_uint96",
-                "offset": 0,
+                "offset": 20,
                 "slot": "1"
               },
               {
                 "label": "totalInvestment",
                 "type": "t_uint96",
-                "offset": 12,
-                "slot": "1"
+                "offset": 0,
+                "slot": "2"
               },
               {
                 "label": "totalEarnings",
                 "type": "t_uint96",
-                "offset": 0,
+                "offset": 12,
                 "slot": "2"
+              },
+              {
+                "label": "totalWithdrawn",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "3"
               },
               {
                 "label": "earningsCap",
                 "type": "t_uint96",
                 "offset": 12,
-                "slot": "2"
-              },
-              {
-                "label": "directReferrals",
-                "type": "t_uint32",
-                "offset": 24,
-                "slot": "2"
-              },
-              {
-                "label": "teamSize",
-                "type": "t_uint32",
-                "offset": 28,
-                "slot": "2"
-              },
-              {
-                "label": "packageLevel",
-                "type": "t_uint8",
-                "offset": 0,
                 "slot": "3"
-              },
-              {
-                "label": "rank",
-                "type": "t_uint8",
-                "offset": 1,
-                "slot": "3"
-              },
-              {
-                "label": "withdrawalRate",
-                "type": "t_uint8",
-                "offset": 2,
-                "slot": "3"
-              },
-              {
-                "label": "lastHelpPoolClaim",
-                "type": "t_uint32",
-                "offset": 3,
-                "slot": "3"
-              },
-              {
-                "label": "isEligibleForHelpPool",
-                "type": "t_bool",
-                "offset": 7,
-                "slot": "3"
-              },
-              {
-                "label": "matrixPosition",
-                "type": "t_uint32",
-                "offset": 8,
-                "slot": "3"
-              },
-              {
-                "label": "matrixLevel",
-                "type": "t_uint32",
-                "offset": 12,
-                "slot": "3"
-              },
-              {
-                "label": "registrationTime",
-                "type": "t_uint32",
-                "offset": 16,
-                "slot": "3"
-              },
-              {
-                "label": "referralCode",
-                "type": "t_string_storage",
-                "offset": 0,
-                "slot": "4"
-              },
-              {
-                "label": "pendingRewards",
-                "type": "t_uint96",
-                "offset": 0,
-                "slot": "5"
-              },
-              {
-                "label": "lastWithdrawal",
-                "type": "t_uint32",
-                "offset": 12,
-                "slot": "5"
-              },
-              {
-                "label": "matrixCycles",
-                "type": "t_uint32",
-                "offset": 16,
-                "slot": "5"
-              },
-              {
-                "label": "leaderRank",
-                "type": "t_uint8",
-                "offset": 20,
-                "slot": "5"
               },
               {
                 "label": "leftLegVolume",
                 "type": "t_uint96",
                 "offset": 0,
-                "slot": "6"
+                "slot": "4"
               },
               {
                 "label": "rightLegVolume",
                 "type": "t_uint96",
                 "offset": 12,
-                "slot": "6"
+                "slot": "4"
+              }
+            ],
+            "numberOfBytes": "160"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_uint96": {
+            "label": "uint96",
+            "numberOfBytes": "12"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Pausable": [
+            {
+              "contract": "PausableUpgradeable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.ReentrancyGuard": [
+            {
+              "contract": "ReentrancyGuardUpgradeable",
+              "label": "_status",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:43",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Ownable": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "086fc64bee3751a8fd13bcf70b810d4bde2efb8651a0ac30b667179b23b36f2d": {
+      "address": "0x621cdF7928B8EAd09dE4508aE6fCC3dbde9Cc58a",
+      "layout": {
+        "solcVersion": "0.8.22",
+        "storage": [
+          {
+            "label": "users",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_mapping(t_address,t_struct(PackedUser)10230_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:39"
+          },
+          {
+            "label": "packages",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint8,t_struct(PackedPackage)10245_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:40"
+          },
+          {
+            "label": "directNetwork",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:41"
+          },
+          {
+            "label": "smartTreeMatrix",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_array(t_address)2_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:42"
+          },
+          {
+            "label": "userIds",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_uint32,t_address)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:43"
+          },
+          {
+            "label": "leadershipPool",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_struct(PackedPool)10254_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:46"
+          },
+          {
+            "label": "communityPool",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_struct(PackedPool)10254_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:47"
+          },
+          {
+            "label": "clubPool",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_struct(PackedPool)10254_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:48"
+          },
+          {
+            "label": "algorithmicPool",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_struct(PackedPool)10254_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:49"
+          },
+          {
+            "label": "leftLegVolume",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:52"
+          },
+          {
+            "label": "rightLegVolume",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:53"
+          },
+          {
+            "label": "networkSizeCache",
+            "offset": 0,
+            "slot": "11",
+            "type": "t_mapping(t_address,t_uint32)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:54"
+          },
+          {
+            "label": "lastNetworkUpdate",
+            "offset": 0,
+            "slot": "12",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:55"
+          },
+          {
+            "label": "isAdminAddress",
+            "offset": 0,
+            "slot": "13",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:58"
+          },
+          {
+            "label": "dailyWithdrawals",
+            "offset": 0,
+            "slot": "14",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:59"
+          },
+          {
+            "label": "lastWithdrawalDay",
+            "offset": 0,
+            "slot": "15",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:60"
+          },
+          {
+            "label": "userLastTx",
+            "offset": 0,
+            "slot": "16",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:61"
+          },
+          {
+            "label": "circuitBreakerThreshold",
+            "offset": 0,
+            "slot": "17",
+            "type": "t_uint256",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:64"
+          },
+          {
+            "label": "circuitBreakerTriggered",
+            "offset": 0,
+            "slot": "18",
+            "type": "t_bool",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:65"
+          },
+          {
+            "label": "lastTxBlock",
+            "offset": 0,
+            "slot": "19",
+            "type": "t_uint256",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:66"
+          },
+          {
+            "label": "totalUsers",
+            "offset": 0,
+            "slot": "20",
+            "type": "t_uint32",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:69"
+          },
+          {
+            "label": "totalPlatformFeesCollected",
+            "offset": 4,
+            "slot": "20",
+            "type": "t_uint96",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:70"
+          },
+          {
+            "label": "dailyWithdrawalLimit",
+            "offset": 0,
+            "slot": "21",
+            "type": "t_uint256",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:71"
+          },
+          {
+            "label": "usdt",
+            "offset": 0,
+            "slot": "22",
+            "type": "t_contract(IERC20)2192",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:72"
+          },
+          {
+            "label": "platformFeeRecipient",
+            "offset": 0,
+            "slot": "23",
+            "type": "t_address",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:73"
+          },
+          {
+            "label": "usdtDecimals",
+            "offset": 20,
+            "slot": "23",
+            "type": "t_uint8",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:76"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "24",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:79"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_struct(InitializableStorage)73_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
               },
               {
-                "label": "fastStartExpiry",
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(OwnableStorage)13_storage": {
+            "label": "struct OwnableUpgradeable.OwnableStorage",
+            "members": [
+              {
+                "label": "_owner",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(PausableStorage)224_storage": {
+            "label": "struct PausableUpgradeable.PausableStorage",
+            "members": [
+              {
+                "label": "_paused",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ReentrancyGuardStorage)288_storage": {
+            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
+            "members": [
+              {
+                "label": "_status",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_address)2_storage": {
+            "label": "address[2]",
+            "numberOfBytes": "64"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_contract(IERC20)2192": {
+            "label": "contract IERC20",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_array(t_address)2_storage)": {
+            "label": "mapping(address => address[2])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_array(t_address)dyn_storage)": {
+            "label": "mapping(address => address[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(PackedUser)10230_storage)": {
+            "label": "mapping(address => struct CoreOptimized.PackedUser)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint32)": {
+            "label": "mapping(address => uint32)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint32,t_address)": {
+            "label": "mapping(uint32 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint8,t_struct(PackedPackage)10245_storage)": {
+            "label": "mapping(uint8 => struct CoreOptimized.PackedPackage)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(PackedPackage)10245_storage": {
+            "label": "struct CoreOptimized.PackedPackage",
+            "members": [
+              {
+                "label": "price",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "directBonus",
+                "type": "t_uint16",
+                "offset": 12,
+                "slot": "0"
+              },
+              {
+                "label": "levelBonus",
+                "type": "t_uint16",
+                "offset": 14,
+                "slot": "0"
+              },
+              {
+                "label": "uplineBonus",
+                "type": "t_uint16",
+                "offset": 16,
+                "slot": "0"
+              },
+              {
+                "label": "leaderBonus",
+                "type": "t_uint16",
+                "offset": 18,
+                "slot": "0"
+              },
+              {
+                "label": "helpBonus",
+                "type": "t_uint16",
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "clubBonus",
+                "type": "t_uint16",
+                "offset": 22,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(PackedPool)10254_storage": {
+            "label": "struct CoreOptimized.PackedPool",
+            "members": [
+              {
+                "label": "balance",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "lastDistribution",
+                "type": "t_uint32",
+                "offset": 12,
+                "slot": "0"
+              },
+              {
+                "label": "interval",
+                "type": "t_uint32",
+                "offset": 16,
+                "slot": "0"
+              },
+              {
+                "label": "totalDistributed",
+                "type": "t_uint96",
+                "offset": 20,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(PackedUser)10230_storage": {
+            "label": "struct CoreOptimized.PackedUser",
+            "members": [
+              {
+                "label": "flags",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "packageLevel",
+                "type": "t_uint8",
+                "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "rank",
+                "type": "t_uint8",
+                "offset": 2,
+                "slot": "0"
+              },
+              {
+                "label": "withdrawalRate",
+                "type": "t_uint8",
+                "offset": 3,
+                "slot": "0"
+              },
+              {
+                "label": "directReferrals",
+                "type": "t_uint32",
+                "offset": 4,
+                "slot": "0"
+              },
+              {
+                "label": "teamSize",
+                "type": "t_uint32",
+                "offset": 8,
+                "slot": "0"
+              },
+              {
+                "label": "registrationTime",
+                "type": "t_uint32",
+                "offset": 12,
+                "slot": "0"
+              },
+              {
+                "label": "lastWithdrawal",
+                "type": "t_uint32",
+                "offset": 16,
+                "slot": "0"
+              },
+              {
+                "label": "matrixLevel",
+                "type": "t_uint32",
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "matrixCycles",
                 "type": "t_uint32",
                 "offset": 24,
-                "slot": "6"
+                "slot": "0"
+              },
+              {
+                "label": "referrer",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "balance",
+                "type": "t_uint96",
+                "offset": 20,
+                "slot": "1"
+              },
+              {
+                "label": "totalInvestment",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "totalEarnings",
+                "type": "t_uint96",
+                "offset": 12,
+                "slot": "2"
+              },
+              {
+                "label": "totalWithdrawn",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "earningsCap",
+                "type": "t_uint96",
+                "offset": 12,
+                "slot": "3"
+              },
+              {
+                "label": "leftLegVolume",
+                "type": "t_uint96",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "rightLegVolume",
+                "type": "t_uint96",
+                "offset": 12,
+                "slot": "4"
+              }
+            ],
+            "numberOfBytes": "160"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_uint96": {
+            "label": "uint96",
+            "numberOfBytes": "12"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Pausable": [
+            {
+              "contract": "PausableUpgradeable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.ReentrancyGuard": [
+            {
+              "contract": "ReentrancyGuardUpgradeable",
+              "label": "_status",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:43",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Ownable": [
+            {
+              "contract": "OwnableUpgradeable",
+              "label": "_owner",
+              "type": "t_address",
+              "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "3143df0e49fc3d42633c223398c74dac700386b07bb03619e0a8bb8cef6f6986": {
+      "address": "0xA4AB35Ab2BA415E6CCf9559e8dcAB0661cC29e2b",
+      "txHash": "0xca074e67974d43b5b048902f23d9e50ce44774eb5b3cee2ad90bd01a0805d9df",
+      "layout": {
+        "solcVersion": "0.8.22",
+        "storage": [
+          {
+            "label": "users",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_mapping(t_address,t_struct(PackedUser)10587_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:55"
+          },
+          {
+            "label": "packages",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_mapping(t_uint8,t_struct(PackedPackage)10602_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:56"
+          },
+          {
+            "label": "directNetwork",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:57"
+          },
+          {
+            "label": "smartTreeMatrix",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_array(t_address)2_storage)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:58"
+          },
+          {
+            "label": "userIds",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_uint32,t_address)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:59"
+          },
+          {
+            "label": "leadershipPool",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_struct(PackedPool)10611_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:62"
+          },
+          {
+            "label": "communityPool",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_struct(PackedPool)10611_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:63"
+          },
+          {
+            "label": "clubPool",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_struct(PackedPool)10611_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:64"
+          },
+          {
+            "label": "algorithmicPool",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_struct(PackedPool)10611_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:65"
+          },
+          {
+            "label": "oracles",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_array(t_struct(OracleData)17003_storage)dyn_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:68"
+          },
+          {
+            "label": "priceConfig",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_struct(PriceConfig)17012_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:69"
+          },
+          {
+            "label": "leftLegVolume",
+            "offset": 0,
+            "slot": "13",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:72"
+          },
+          {
+            "label": "rightLegVolume",
+            "offset": 0,
+            "slot": "14",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:73"
+          },
+          {
+            "label": "networkSizeCache",
+            "offset": 0,
+            "slot": "15",
+            "type": "t_mapping(t_address,t_uint32)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:74"
+          },
+          {
+            "label": "lastNetworkUpdate",
+            "offset": 0,
+            "slot": "16",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:75"
+          },
+          {
+            "label": "isAdminAddress",
+            "offset": 0,
+            "slot": "17",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:78"
+          },
+          {
+            "label": "dailyWithdrawals",
+            "offset": 0,
+            "slot": "18",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:79"
+          },
+          {
+            "label": "lastWithdrawalDay",
+            "offset": 0,
+            "slot": "19",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:80"
+          },
+          {
+            "label": "userLastTx",
+            "offset": 0,
+            "slot": "20",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:81"
+          },
+          {
+            "label": "circuitBreakerThreshold",
+            "offset": 0,
+            "slot": "21",
+            "type": "t_uint256",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:84"
+          },
+          {
+            "label": "circuitBreakerTriggered",
+            "offset": 0,
+            "slot": "22",
+            "type": "t_bool",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:85"
+          },
+          {
+            "label": "lastTxBlock",
+            "offset": 0,
+            "slot": "23",
+            "type": "t_uint256",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:86"
+          },
+          {
+            "label": "totalUsers",
+            "offset": 0,
+            "slot": "24",
+            "type": "t_uint32",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:90"
+          },
+          {
+            "label": "totalPlatformFeesCollected",
+            "offset": 4,
+            "slot": "24",
+            "type": "t_uint96",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:90"
+          },
+          {
+            "label": "dailyWithdrawalLimit",
+            "offset": 0,
+            "slot": "25",
+            "type": "t_uint256",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:91"
+          },
+          {
+            "label": "usdt",
+            "offset": 0,
+            "slot": "26",
+            "type": "t_contract(IERC20)2192",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:93"
+          },
+          {
+            "label": "platformFeeRecipient",
+            "offset": 0,
+            "slot": "27",
+            "type": "t_address",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:93"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "28",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "LeadFive",
+            "src": "contracts/LeadFive.sol:96"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_struct(InitializableStorage)73_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(OwnableStorage)13_storage": {
+            "label": "struct OwnableUpgradeable.OwnableStorage",
+            "members": [
+              {
+                "label": "_owner",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(PausableStorage)224_storage": {
+            "label": "struct PausableUpgradeable.PausableStorage",
+            "members": [
+              {
+                "label": "_paused",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ReentrancyGuardStorage)288_storage": {
+            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
+            "members": [
+              {
+                "label": "_status",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_address)2_storage": {
+            "label": "address[2]",
+            "numberOfBytes": "64"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_struct(OracleData)17003_storage)dyn_storage": {
+            "label": "struct SecureOracle.OracleData[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_contract(IERC20)2192": {
+            "label": "contract IERC20",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IPriceFeed)16994": {
+            "label": "contract IPriceFeed",
+            "numberOfBytes": "20"
+          },
+          "t_int256": {
+            "label": "int256",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_array(t_address)2_storage)": {
+            "label": "mapping(address => address[2])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_array(t_address)dyn_storage)": {
+            "label": "mapping(address => address[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(PackedUser)10587_storage)": {
+            "label": "mapping(address => struct CoreOptimized.PackedUser)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint32)": {
+            "label": "mapping(address => uint32)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint32,t_address)": {
+            "label": "mapping(uint32 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint8,t_struct(PackedPackage)10602_storage)": {
+            "label": "mapping(uint8 => struct CoreOptimized.PackedPackage)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(OracleData)17003_storage": {
+            "label": "struct SecureOracle.OracleData",
+            "members": [
+              {
+                "label": "feed",
+                "type": "t_contract(IPriceFeed)16994",
+                "offset": 0,
+                "slot": "0"
               },
               {
                 "label": "isActive",
                 "type": "t_bool",
-                "offset": 28,
-                "slot": "6"
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "lastUpdate",
+                "type": "t_uint32",
+                "offset": 21,
+                "slot": "0"
               }
             ],
-            "numberOfBytes": "224"
+            "numberOfBytes": "32"
           },
-          "t_struct(UserNotifications)11325_storage": {
-            "label": "struct AdvancedFeaturesLib.UserNotifications",
+          "t_struct(PackedPackage)10602_storage": {
+            "label": "struct CoreOptimized.PackedPackage",
             "members": [
               {
-                "label": "notificationIds",
-                "type": "t_array(t_uint256)dyn_storage",
+                "label": "price",
+                "type": "t_uint96",
                 "offset": 0,
                 "slot": "0"
               },
               {
-                "label": "unreadCount",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "1"
+                "label": "directBonus",
+                "type": "t_uint16",
+                "offset": 12,
+                "slot": "0"
+              },
+              {
+                "label": "levelBonus",
+                "type": "t_uint16",
+                "offset": 14,
+                "slot": "0"
+              },
+              {
+                "label": "uplineBonus",
+                "type": "t_uint16",
+                "offset": 16,
+                "slot": "0"
+              },
+              {
+                "label": "leaderBonus",
+                "type": "t_uint16",
+                "offset": 18,
+                "slot": "0"
+              },
+              {
+                "label": "helpBonus",
+                "type": "t_uint16",
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "clubBonus",
+                "type": "t_uint16",
+                "offset": 22,
+                "slot": "0"
               }
             ],
-            "numberOfBytes": "64"
+            "numberOfBytes": "32"
           },
-          "t_struct(UserWithdrawalStats)25905_storage": {
-            "label": "struct WithdrawalSafetyLib.UserWithdrawalStats",
+          "t_struct(PackedPool)10611_storage": {
+            "label": "struct CoreOptimized.PackedPool",
             "members": [
               {
-                "label": "dailyWithdrawn",
-                "type": "t_uint256",
+                "label": "balance",
+                "type": "t_uint96",
                 "offset": 0,
                 "slot": "0"
               },
               {
-                "label": "weeklyWithdrawn",
-                "type": "t_uint256",
+                "label": "lastDistribution",
+                "type": "t_uint32",
+                "offset": 12,
+                "slot": "0"
+              },
+              {
+                "label": "interval",
+                "type": "t_uint32",
+                "offset": 16,
+                "slot": "0"
+              },
+              {
+                "label": "totalDistributed",
+                "type": "t_uint96",
+                "offset": 20,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(PackedUser)10587_storage": {
+            "label": "struct CoreOptimized.PackedUser",
+            "members": [
+              {
+                "label": "flags",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "packageLevel",
+                "type": "t_uint8",
+                "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "rank",
+                "type": "t_uint8",
+                "offset": 2,
+                "slot": "0"
+              },
+              {
+                "label": "withdrawalRate",
+                "type": "t_uint8",
+                "offset": 3,
+                "slot": "0"
+              },
+              {
+                "label": "directReferrals",
+                "type": "t_uint32",
+                "offset": 4,
+                "slot": "0"
+              },
+              {
+                "label": "teamSize",
+                "type": "t_uint32",
+                "offset": 8,
+                "slot": "0"
+              },
+              {
+                "label": "registrationTime",
+                "type": "t_uint32",
+                "offset": 12,
+                "slot": "0"
+              },
+              {
+                "label": "lastWithdrawal",
+                "type": "t_uint32",
+                "offset": 16,
+                "slot": "0"
+              },
+              {
+                "label": "matrixLevel",
+                "type": "t_uint32",
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "matrixCycles",
+                "type": "t_uint32",
+                "offset": 24,
+                "slot": "0"
+              },
+              {
+                "label": "referrer",
+                "type": "t_address",
                 "offset": 0,
                 "slot": "1"
               },
               {
-                "label": "monthlyWithdrawn",
-                "type": "t_uint256",
+                "label": "balance",
+                "type": "t_uint96",
+                "offset": 20,
+                "slot": "1"
+              },
+              {
+                "label": "totalInvestment",
+                "type": "t_uint96",
                 "offset": 0,
                 "slot": "2"
               },
               {
-                "label": "lastWithdrawalTime",
-                "type": "t_uint256",
+                "label": "totalEarnings",
+                "type": "t_uint96",
+                "offset": 12,
+                "slot": "2"
+              },
+              {
+                "label": "totalWithdrawn",
+                "type": "t_uint96",
                 "offset": 0,
                 "slot": "3"
               },
               {
-                "label": "lastDayReset",
-                "type": "t_uint256",
+                "label": "earningsCap",
+                "type": "t_uint96",
+                "offset": 12,
+                "slot": "3"
+              },
+              {
+                "label": "leftLegVolume",
+                "type": "t_uint96",
                 "offset": 0,
                 "slot": "4"
               },
               {
-                "label": "lastWeekReset",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "5"
-              },
-              {
-                "label": "lastMonthReset",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "6"
-              },
-              {
-                "label": "totalWithdrawals",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "7"
-              },
-              {
-                "label": "withdrawalCount",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "8"
+                "label": "rightLegVolume",
+                "type": "t_uint96",
+                "offset": 12,
+                "slot": "4"
               }
             ],
-            "numberOfBytes": "288"
+            "numberOfBytes": "160"
           },
-          "t_struct(WithdrawalLimits)25918_storage": {
-            "label": "struct WithdrawalSafetyLib.WithdrawalLimits",
+          "t_struct(PriceConfig)17012_storage": {
+            "label": "struct SecureOracle.PriceConfig",
             "members": [
               {
-                "label": "dailyLimit",
-                "type": "t_uint256",
+                "label": "minPrice",
+                "type": "t_int256",
                 "offset": 0,
                 "slot": "0"
               },
               {
-                "label": "weeklyLimit",
-                "type": "t_uint256",
+                "label": "maxPrice",
+                "type": "t_int256",
                 "offset": 0,
                 "slot": "1"
               },
               {
-                "label": "monthlyLimit",
-                "type": "t_uint256",
+                "label": "maxStaleTime",
+                "type": "t_uint32",
                 "offset": 0,
                 "slot": "2"
               },
               {
-                "label": "minimumInterval",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "3"
-              },
-              {
-                "label": "minimumAmount",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "4"
-              },
-              {
-                "label": "maximumAmount",
-                "type": "t_uint256",
-                "offset": 0,
-                "slot": "5"
+                "label": "minOracles",
+                "type": "t_uint8",
+                "offset": 4,
+                "slot": "2"
               }
             ],
-            "numberOfBytes": "192"
+            "numberOfBytes": "96"
           },
           "t_uint16": {
             "label": "uint16",

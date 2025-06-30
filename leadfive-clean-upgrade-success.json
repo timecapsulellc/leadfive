@@ -1,0 +1,23 @@
+{
+  "network": "BSC Mainnet",
+  "timestamp": "2025-06-25T22:49:54.330Z",
+  "proxyAddress": "0x62e0394c2947D79E1Fd2F08d62D3A323cCc56623",
+  "oldImplementation": "Previous implementation",
+  "newImplementation": "0x47ca3f6f4f8F341879db6d9eE0cfb11f156Dd63f",
+  "transactionHash": "0x1cfffcf57a688de4f6177df72d0422394b788eb32728d75ad76561fd205ea490",
+  "blockNumber": 52098312,
+  "gasUsed": "37865",
+  "upgradeType": "Clean Documentation v1.0.0",
+  "features": {
+    "packagePrices": [
+      "$30",
+      "$50",
+      "$100",
+      "$200"
+    ],
+    "registerFunction": "2 parameters (sponsor, packageLevel)",
+    "cleanDocumentation": true,
+    "businessLogicPreserved": true,
+    "securityFeaturesActive": true
+  }
+}

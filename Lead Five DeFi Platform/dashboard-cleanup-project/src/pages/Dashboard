@@ -1,0 +1,29 @@
+// This file serves as the main dashboard page component for the application.
+// It imports necessary components and sets up the layout for the dashboard.
+
+import React from 'react';
+import Header from '../components/layout/Header';
+import Sidebar from '../components/layout/Sidebar';
+import Footer from '../components/layout/Footer';
+import Analytics from '../components/dashboard/Analytics';
+import Charts from '../components/dashboard/Charts';
+import Widgets from '../components/dashboard/Widgets';
+
+const Dashboard = () => {
+    return (
+        <div className="dashboard">
+            <Header />
+            <div className="dashboard-content">
+                <Sidebar />
+                <main>
+                    <Analytics />
+                    <Charts />
+                    <Widgets />
+                </main>
+            </div>
+            <Footer />
+        </div>
+    );
+};
+
+export default Dashboard;

@@ -18,6 +18,8 @@ import {
   FaExpand,
   FaCompress
 } from 'react-icons/fa';
+import { elevenLabsService } from '../services/ElevenLabsOnlyService';
+import OpenAIService from '../services/OpenAIService';
 
 const ExtraordinaryAIAssistant = ({ userStats, account }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,8 +28,10 @@ const ExtraordinaryAIAssistant = ({ userStats, account }) => {
   const [inputMessage, setInputMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [currentTab, setCurrentTab] = useState('chat');
+  const [isProcessing, setIsProcessing] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const assistantInstanceRef = useRef('extraordinary_chat_' + Math.random().toString(36).substr(2, 9));
 
   // Initialize with welcome message
   useEffect(() => {
@@ -54,25 +58,44 @@ const ExtraordinaryAIAssistant = ({ userStats, account }) => {
   };
 
   const handleSendMessage = async () => {
-    if (!inputMessage.trim()) return;
+    if (!inputMessage.trim() || isProcessing) return;
 
+    const messageId = Date.now();
     const userMessage = {
-      id: Date.now(),
+      id: messageId,
       type: 'user',
-      content: inputMessage,
+      content: inputMessage.trim(),
       timestamp: new Date(),
       avatar: '👤'
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const currentMessage = inputMessage.trim();
     setInputMessage('');
     setIsTyping(true);
+    setIsProcessing(true);
 
-    // Simulate AI response
-    setTimeout(() => {
-      const aiResponse = generateAIResponse(inputMessage, userStats);
+    try {
+      // Enhanced user context with better data
+      const userContext = {
+        account,
+        earnings: userStats?.totalEarnings || '0',
+        teamSize: userStats?.teamSize || '0',
+        packageLevel: userStats?.currentLevel || '1',
+        dailyEarnings: userStats?.dailyEarnings || '0',
+        activeReferrals: userStats?.activeReferrals || '0',
+        isRegistered: !!account
+      };
+
+      console.log('🤖 Sending question to AI:', currentMessage);
+      console.log('📊 User context:', userContext);
+
+      const aiResponse = await OpenAIService.getChatResponse(currentMessage, userContext);
+      
+      console.log('🎯 AI Response received:', aiResponse);
+      
       const aiMessage = {
-        id: Date.now() + 1,
+        id: messageId + 1,
         type: 'ai',
         content: aiResponse,
         timestamp: new Date(),
@@ -80,35 +103,61 @@ const ExtraordinaryAIAssistant = ({ userStats, account }) => {
       };
       
       setMessages(prev => [...prev, aiMessage]);
-      setIsTyping(false);
 
-      // Read AI response with ElevenLabs
-      if (elevenLabsService) {
-        elevenLabsService.readText(aiResponse);
+      // Read AI response with ElevenLabs (only if this assistant instance initiated it)
+      if (elevenLabsService && isOpen) {
+        setTimeout(() => {
+          elevenLabsService.readText(aiResponse);
+        }, 500);
       }
-    }, 1500);
+    } catch (error) {
+      console.error('AI response error:', error);
+      const fallbackMessage = {
+        id: messageId + 1,
+        type: 'ai',
+        content: "I'm having trouble connecting right now. Please try again in a moment! 🤖",
+        timestamp: new Date(),
+        avatar: '🤖'
+      };
+      setMessages(prev => [...prev, fallbackMessage]);
+    } finally {
+      setIsTyping(false);
+      setIsProcessing(false);
+    }
   };
 
-  const generateAIResponse = (message, stats) => {
-    const lowerMessage = message.toLowerCase();
+  const handleQuickAction = async (type) => {
+    if (isProcessing) return;
     
-    if (lowerMessage.includes('earning') || lowerMessage.includes('income')) {
-      return `Based on your current earnings of $${stats?.totalEarnings || '0'}, I recommend focusing on team expansion. With your team of ${stats?.teamSize || '0'} members, you could potentially increase earnings by 25-40% by adding 5-10 more active referrals this month.`;
+    const actions = {
+      earnings: `Analyze my current earnings of $${userStats?.totalEarnings || '0'} and suggest improvements`,
+      team: `Help me optimize my team of ${userStats?.teamSize || '0'} members`,
+      withdrawal: 'What\'s the best withdrawal strategy for my current level?',
+      growth: 'Give me personalized growth tips for LeadFive success'
+    };
+    
+    const quickMessage = actions[type];
+    if (quickMessage) {
+      setInputMessage(quickMessage);
+      // Auto-send the quick action
+      setTimeout(() => {
+        handleSendMessage();
+      }, 100);
     }
-    
-    if (lowerMessage.includes('team') || lowerMessage.includes('referral')) {
-      return `Your team of ${stats?.teamSize || '0'} members is performing well! To optimize growth, focus on supporting your direct referrals. Active team members typically generate 3x more than inactive ones. Consider hosting weekly team calls or sharing success strategies.`;
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
     }
-    
-    if (lowerMessage.includes('strategy') || lowerMessage.includes('help')) {
-      return `Here's a personalized strategy for you: 1) Focus on quality referrals over quantity, 2) Engage with your team weekly, 3) Share your success story to inspire others, 4) Reinvest 20% of earnings for faster growth. Your current level ${stats?.currentLevel || '1'} shows great potential!`;
-    }
-    
-    if (lowerMessage.includes('withdraw') || lowerMessage.includes('payout')) {
-      return `For withdrawals, ensure you meet the minimum threshold. Based on your earnings pattern, I recommend withdrawing 70% and reinvesting 30% for compound growth. This strategy typically yields 40% better long-term results.`;
-    }
-    
-    return `I understand you're asking about "${message}". As your AI assistant, I'm here to help optimize your LeadFive experience. Would you like specific advice about earnings, team building, or platform features? I can provide personalized recommendations based on your current performance.`;
+  };
+
+  const formatTime = (timestamp) => {
+    return new Date(timestamp).toLocaleTimeString([], { 
+      hour: '2-digit', 
+      minute: '2-digit' 
+    });
   };
 
   const quickActions = [
@@ -133,32 +182,6 @@ const ExtraordinaryAIAssistant = ({ userStats, account }) => {
       action: () => handleQuickAction('growth')
     }
   ];
-
-  const handleQuickAction = (type) => {
-    const actions = {
-      earnings: `Analyze my current earnings of $${userStats?.totalEarnings || '0'} and suggest improvements`,
-      team: `Help me optimize my team of ${userStats?.teamSize || '0'} members`,
-      withdrawal: 'What\'s the best withdrawal strategy for my current level?',
-      growth: 'Give me personalized growth tips for LeadFive success'
-    };
-    
-    setInputMessage(actions[type]);
-    setTimeout(() => handleSendMessage(), 100);
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
-  };
-
-  const formatTime = (timestamp) => {
-    return new Date(timestamp).toLocaleTimeString([], { 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    });
-  };
 
   return (
     <>
@@ -273,7 +296,7 @@ const ExtraordinaryAIAssistant = ({ userStats, account }) => {
                     />
                     <button
                       onClick={handleSendMessage}
-                      disabled={!inputMessage.trim()}
+                      disabled={!inputMessage.trim() || isProcessing}
                       className="ai-send-btn"
                     >
                       <FaPaperPlane />
@@ -295,6 +318,7 @@ const ExtraordinaryAIAssistant = ({ userStats, account }) => {
                       key={index}
                       className="ai-quick-action-btn"
                       onClick={action.action}
+                      disabled={isProcessing}
                     >
                       <action.icon />
                       <span>{action.label}</span>

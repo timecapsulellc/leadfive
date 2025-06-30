@@ -1,0 +1,46 @@
+{
+  "network": "BSC Mainnet",
+  "chainId": "0x38",
+  "contracts": {
+    "leadfive": {
+      "address": "0x29dcCb502D10C042BcC6a02a7762C49595A9E498",
+      "type": "proxy",
+      "implementation": "0xA4AB35Ab2BA415E6CCf9559e8dcAB0661cC29e2b"
+    },
+    "usdt": {
+      "address": "0x55d398326f99059fF775485246999027B3197955",
+      "decimals": 18
+    }
+  },
+  "configuration": {
+    "sponsorAddress": "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29",
+    "packages": [
+      { "level": 1, "price": "30", "name": "Starter" },
+      { "level": 2, "price": "50", "name": "Bronze" },
+      { "level": 3, "price": "100", "name": "Silver" },
+      { "level": 4, "price": "200", "name": "Gold" }
+    ],
+    "limits": {
+      "dailyWithdrawal": "10000",
+      "earningsMultiplier": 4,
+      "minWithdrawal": "1"
+    }
+  },
+  "rpc": {
+    "primary": "https://bsc-dataseed.binance.org/",
+    "fallback": [
+      "https://bsc-dataseed1.defibit.io/",
+      "https://bsc-dataseed1.ninicoin.io/"
+    ]
+  },
+  "explorer": {
+    "url": "https://bscscan.com/",
+    "apiUrl": "https://api.bscscan.com/api"
+  },
+  "deployment": {
+    "date": "2025-01-27",
+    "version": "1.0.0",
+    "deployer": "0xCeaEfDaDE5a0D574bFd5577665dC58d132995335",
+    "verified": true
+  }
+}

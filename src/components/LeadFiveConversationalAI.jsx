@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { useConversation } from '@elevenlabs/react';
 import { FaMicrophone, FaMicrophoneSlash, FaRobot, FaPhone } from 'react-icons/fa';
 
@@ -17,6 +17,9 @@ const LeadFiveConversationalAI = ({ userStats, account, className = '' }) => {
   const [isPermissionGranted, setIsPermissionGranted] = useState(false);
   const [error, setError] = useState(null);
   const [messages, setMessages] = useState([]);
+  const [isActiveSession, setIsActiveSession] = useState(false);
+  const sessionRef = useRef(null);
+  const componentIdRef = useRef('voice_assistant_' + Math.random().toString(36).substr(2, 9));
 
   const conversation = useConversation({
     overrides: {
@@ -62,8 +65,10 @@ After you have delivered this greeting, your goal is to accurately answer the us
       }
     },
     onConnect: () => {
-      console.log('🤖 LeadFive AI connected');
+      console.log('🤖 LeadFive AI connected - Session:', componentIdRef.current);
       setError(null);
+      setIsActiveSession(true);
+      sessionRef.current = componentIdRef.current;
       setMessages(prev => [...prev, {
         type: 'system',
         content: 'Connected to AI assistant',
@@ -71,7 +76,9 @@ After you have delivered this greeting, your goal is to accurately answer the us
       }]);
     },
     onDisconnect: () => {
-      console.log('🤖 LeadFive AI disconnected');
+      console.log('🤖 LeadFive AI disconnected - Session:', componentIdRef.current);
+      setIsActiveSession(false);
+      sessionRef.current = null;
       setMessages(prev => [...prev, {
         type: 'system',
         content: 'Disconnected from AI assistant',
@@ -81,6 +88,7 @@ After you have delivered this greeting, your goal is to accurately answer the us
     onError: (error) => {
       console.error('🤖 LeadFive AI error:', error);
       setError(error.message || 'An error occurred during the conversation');
+      setIsActiveSession(false);
       setMessages(prev => [...prev, {
         type: 'error',
         content: `Error: ${error.message || 'Unknown error'}`,
@@ -88,16 +96,25 @@ After you have delivered this greeting, your goal is to accurately answer the us
       }]);
     },
     onMessage: (message) => {
-      console.log('🤖 LeadFive AI message received:', message);
-      setMessages(prev => [...prev, {
-        type: 'ai',
-        content: message.message || 'AI response received',
-        timestamp: new Date()
-      }]);
+      // Only process messages for this specific session
+      if (sessionRef.current === componentIdRef.current) {
+        console.log('🤖 LeadFive AI message received:', message);
+        setMessages(prev => [...prev, {
+          type: 'ai',
+          content: message.message || 'AI response received',
+          timestamp: new Date()
+        }]);
+      }
     },
   });
 
   const startConversation = useCallback(async () => {
+    // Prevent multiple sessions
+    if (isActiveSession || conversation.status === "connecting" || conversation.status === "connected") {
+      console.log('Voice assistant session already active, skipping...');
+      return;
+    }
+
     try {
       setError(null);
       
@@ -131,7 +148,7 @@ After you have delivered this greeting, your goal is to accurately answer the us
         agentId: agentId
       });
       
-      console.log('🤖 AI conversation started with ID:', conversationId);
+      console.log('🤖 AI conversation started with ID:', conversationId, 'Session:', componentIdRef.current);
       
       setMessages(prev => [...prev, {
         type: 'user',
@@ -142,12 +159,15 @@ After you have delivered this greeting, your goal is to accurately answer the us
     } catch (error) {
       console.error('Failed to start conversation:', error);
       setError(`Failed to start conversation: ${error.message || 'Unknown error'}`);
+      setIsActiveSession(false);
     }
-  }, [conversation, account, userStats]);
+  }, [conversation, account, userStats, isActiveSession]);
 
   const stopConversation = useCallback(async () => {
     try {
       await conversation.endSession();
+      setIsActiveSession(false);
+      sessionRef.current = null;
       setMessages(prev => [...prev, {
         type: 'user',
         content: 'Ended AI conversation',
@@ -156,21 +176,31 @@ After you have delivered this greeting, your goal is to accurately answer the us
     } catch (error) {
       console.error('Failed to stop conversation:', error);
       setError(`Failed to stop conversation: ${error.message}`);
+      setIsActiveSession(false);
     }
   }, [conversation]);
 
+  // Cleanup on component unmount
+  useEffect(() => {
+    return () => {
+      if (isActiveSession && conversation.status === "connected") {
+        conversation.endSession().catch(console.error);
+      }
+    };
+  }, [isActiveSession, conversation]);
+
   const getStatusText = () => {
-    if (conversation.status === "connected") {
+    if (isActiveSession && conversation.status === "connected") {
       return conversation.isSpeaking ? "AI is speaking..." : "AI is listening...";
     }
-    return "Disconnected";
+    return conversation.status === "connecting" ? "Connecting..." : "Disconnected";
   };
 
   const getStatusColor = () => {
-    if (conversation.status === "connected") {
+    if (isActiveSession && conversation.status === "connected") {
       return conversation.isSpeaking ? "#00D4FF" : "#BA55D3";
     }
-    return "#666";
+    return conversation.status === "connecting" ? "#FFD700" : "#666";
   };
 
   return (

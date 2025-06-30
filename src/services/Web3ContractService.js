@@ -2,7 +2,7 @@
  * Web3 Contract Service for LeadFive
  * 
  * Handles all blockchain interactions with the deployed contract
- * Contract Address: 0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569 (BSC Mainnet - NEW DEPLOYMENT)
+ * Contract Address: 0x29dcCb502D10C042BcC6a02a7762C49595A9E498 (BSC Mainnet - VERIFIED DEPLOYMENT v1.0.0)
  */
 
 import { ethers } from 'ethers';

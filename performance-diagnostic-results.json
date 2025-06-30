@@ -1,0 +1,66 @@
+{
+  "system": {
+    "memory": {
+      "heapUsed": "4 MB",
+      "heapTotal": "5 MB",
+      "external": "1 MB",
+      "percentage": 78
+    },
+    "cpu": {
+      "user": 22063,
+      "system": 35665
+    },
+    "nodeVersion": "v22.16.0",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "project": {
+    "nodeModulesSize": 1034,
+    "hasTypeScript": false,
+    "caches": {
+      "vite": true,
+      "hardhat": true
+    },
+    "sourceFiles": 194,
+    "dependencies": {
+      "prod": 30,
+      "dev": 22
+    },
+    "largeFiles": []
+  },
+  "recommendations": [
+    {
+      "category": "Dependencies",
+      "issue": "Large node_modules directory (>1GB)",
+      "solution": "Run npm prune and consider removing unused dependencies",
+      "priority": "MEDIUM"
+    },
+    {
+      "category": "VS Code",
+      "issue": "Multiple TypeScript language servers",
+      "solution": "Reload VS Code window (Cmd+Shift+P -> \"Developer: Reload Window\")",
+      "priority": "HIGH"
+    },
+    {
+      "category": "Performance",
+      "issue": "Cache directories present",
+      "solution": "Clear caches if experiencing build issues",
+      "priority": "LOW"
+    }
+  ],
+  "criticalIssues": [
+    "Large node_modules directory",
+    "Multiple TypeScript servers running"
+  ],
+  "vscode": {
+    "tsServerProcesses": 3,
+    "processes": [
+      "dadou            58783   4.3  1.1 1865121120 187040   ??  S    11:08PM   0:25.13 /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin) --max-old-space-size=3072 /Applications/Visual Studio Code.app/Contents/Resources/app/extensions/node_modules/typescript/lib/tsserver.js --useInferredProjectPerProjectRoot --enableTelemetry --cancellationPipeName /var/folders/5l/rq9zw8w52dv4z49grp4l4jcr0000gn/T/vscode-typescript501/8def1ef3430c1d9de004/tscancellation-02c18b455fe294447be2.tmp* --globalPlugins @vscode/copilot-typescript-server-plugin,@vsintellicode/typescript-intellicode-plugin,ms-vsintellicode-typescript --pluginProbeLocations /Users/dadou/.vscode/extensions/github.copilot-chat-0.28.2,/Users/dadou/.vscode/extensions/visualstudioexptteam.vscodeintellicode-1.3.2,/Users/dadou/.vscode/extensions/visualstudioexptteam.vscodeintellicode-1.3.2 --locale en --noGetErrOnBackgroundUpdate --canUseWatchEvents --validateDefaultNpmLocation --useNodeIpc",
+      "dadou            58808   0.0  0.3 1865102432  55056   ??  S    11:08PM   0:00.59 /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin) /Applications/Visual Studio Code.app/Contents/Resources/app/extensions/node_modules/typescript/lib/typingsInstaller.js --globalTypingsCacheLocation /Users/dadou/Library/Caches/typescript/5.8 --enableTelemetry --typesMapLocation /Applications/Visual Studio Code.app/Contents/Resources/app/extensions/node_modules/typescript/lib/typesMap.json --validateDefaultNpmLocation",
+      "dadou            58782   0.0  0.4 1865121120  59248   ??  S    11:08PM   0:02.77 /Applications/Visual Studio Code.app/Contents/Frameworks/Code Helper (Plugin).app/Contents/MacOS/Code Helper (Plugin) --max-old-space-size=3072 /Applications/Visual Studio Code.app/Contents/Resources/app/extensions/node_modules/typescript/lib/tsserver.js --serverMode partialSemantic --useInferredProjectPerProjectRoot --disableAutomaticTypingAcquisition --cancellationPipeName /var/folders/5l/rq9zw8w52dv4z49grp4l4jcr0000gn/T/vscode-typescript501/8def1ef3430c1d9de004/tscancellation-c248183bf8c58ca042c6.tmp* --globalPlugins @vscode/copilot-typescript-server-plugin,@vsintellicode/typescript-intellicode-plugin,ms-vsintellicode-typescript --pluginProbeLocations /Users/dadou/.vscode/extensions/github.copilot-chat-0.28.2,/Users/dadou/.vscode/extensions/visualstudioexptteam.vscodeintellicode-1.3.2,/Users/dadou/.vscode/extensions/visualstudioexptteam.vscodeintellicode-1.3.2 --locale en --noGetErrOnBackgroundUpdate --canUseWatchEvents --validateDefaultNpmLocation --useNodeIpc"
+    ],
+    "settings": {
+      "hasSettings": false
+    }
+  }
+}

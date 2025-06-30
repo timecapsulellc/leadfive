@@ -1,0 +1,814 @@
+{
+  "contractName": "LeadFive",
+  "generated": "2025-06-26T19:35:54.456Z",
+  "viewFunctions": [
+    {
+      "name": "algorithmicPool",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint96, uint32, uint32, uint96"
+    },
+    {
+      "name": "calculateNetworkSize",
+      "inputs": "address user",
+      "stateMutability": "view",
+      "outputs": "uint32"
+    },
+    {
+      "name": "calculateWithdrawalRate",
+      "inputs": "address user",
+      "stateMutability": "view",
+      "outputs": "uint8"
+    },
+    {
+      "name": "circuitBreakerThreshold",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "circuitBreakerTriggered",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "bool"
+    },
+    {
+      "name": "clubPool",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint96, uint32, uint32, uint96"
+    },
+    {
+      "name": "communityPool",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint96, uint32, uint32, uint96"
+    },
+    {
+      "name": "convertFromUSDT18",
+      "inputs": "uint256 amount18",
+      "stateMutability": "pure",
+      "outputs": "uint96"
+    },
+    {
+      "name": "convertToUSDT18",
+      "inputs": "uint96 amount6",
+      "stateMutability": "pure",
+      "outputs": "uint256"
+    },
+    {
+      "name": "dailyWithdrawalLimit",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "dailyWithdrawals",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "directNetwork",
+      "inputs": "address , uint256 ",
+      "stateMutability": "view",
+      "outputs": "address"
+    },
+    {
+      "name": "getContractBalance",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "getMatrixPosition",
+      "inputs": "address user",
+      "stateMutability": "view",
+      "outputs": "address, address"
+    },
+    {
+      "name": "getPackagePrice",
+      "inputs": "uint8 packageLevel",
+      "stateMutability": "view",
+      "outputs": "uint96"
+    },
+    {
+      "name": "getPoolBalance",
+      "inputs": "uint8 poolType",
+      "stateMutability": "view",
+      "outputs": "uint96"
+    },
+    {
+      "name": "getTotalUsers",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint32"
+    },
+    {
+      "name": "getUSDTBalance",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "getUSDTConfig",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "address, uint8, uint256"
+    },
+    {
+      "name": "getUSDTDecimals",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint8"
+    },
+    {
+      "name": "getUserBasicInfo",
+      "inputs": "address user",
+      "stateMutability": "view",
+      "outputs": "bool, uint8, uint96"
+    },
+    {
+      "name": "getUserEarnings",
+      "inputs": "address user",
+      "stateMutability": "view",
+      "outputs": "uint96, uint96, uint32"
+    },
+    {
+      "name": "getUserNetwork",
+      "inputs": "address user",
+      "stateMutability": "view",
+      "outputs": "address, uint32"
+    },
+    {
+      "name": "getVersion",
+      "inputs": "",
+      "stateMutability": "pure",
+      "outputs": "string"
+    },
+    {
+      "name": "isAdmin",
+      "inputs": "address user",
+      "stateMutability": "view",
+      "outputs": "bool"
+    },
+    {
+      "name": "isAdminAddress",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "bool"
+    },
+    {
+      "name": "isUSDTConfigured",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "bool"
+    },
+    {
+      "name": "lastNetworkUpdate",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "lastTxBlock",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "lastWithdrawalDay",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "leadershipPool",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint96, uint32, uint32, uint96"
+    },
+    {
+      "name": "leftLegVolume",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "networkSizeCache",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "uint32"
+    },
+    {
+      "name": "owner",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "address"
+    },
+    {
+      "name": "packages",
+      "inputs": "uint8 ",
+      "stateMutability": "view",
+      "outputs": "uint96, uint16, uint16, uint16, uint16, uint16, uint16"
+    },
+    {
+      "name": "paused",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "bool"
+    },
+    {
+      "name": "platformFeeRecipient",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "address"
+    },
+    {
+      "name": "proxiableUUID",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "bytes32"
+    },
+    {
+      "name": "rightLegVolume",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "smartTreeMatrix",
+      "inputs": "address , uint256 ",
+      "stateMutability": "view",
+      "outputs": "address"
+    },
+    {
+      "name": "totalPlatformFeesCollected",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint96"
+    },
+    {
+      "name": "totalUsers",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint32"
+    },
+    {
+      "name": "UPGRADE_INTERFACE_VERSION",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "string"
+    },
+    {
+      "name": "usdt",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "address"
+    },
+    {
+      "name": "usdtDecimals",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint8"
+    },
+    {
+      "name": "userIds",
+      "inputs": "uint32 ",
+      "stateMutability": "view",
+      "outputs": "address"
+    },
+    {
+      "name": "userLastTx",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "users",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "uint8, uint8, uint8, uint8, uint32, uint32, uint32, uint32, uint32, uint32, address, uint96, uint96, uint96, uint96, uint96, uint96, uint96"
+    }
+  ],
+  "writeFunctions": [
+    {
+      "name": "addAdmin",
+      "inputs": "address admin",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "distributePool",
+      "inputs": "uint8 poolType",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "emergencyPause",
+      "inputs": "",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "emergencySetUSDT",
+      "inputs": "address _usdt",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "emergencyUnpause",
+      "inputs": "",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "emergencyWithdraw",
+      "inputs": "",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "initialize",
+      "inputs": "address _usdt",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "initializeProduction",
+      "inputs": "",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "register",
+      "inputs": "address sponsor, uint8 packageLevel",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "removeAdmin",
+      "inputs": "address admin",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "renounceOwnership",
+      "inputs": "",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "setCircuitBreaker",
+      "inputs": "uint256 threshold",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "setPlatformFeeRecipient",
+      "inputs": "address _recipient",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "setUSDTAddress",
+      "inputs": "address _usdt",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "transferOwnership",
+      "inputs": "address newOwner",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "updatePackagePrices",
+      "inputs": "",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "upgradePackage",
+      "inputs": "uint8 newLevel",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "upgradeToAndCall",
+      "inputs": "address newImplementation, bytes data",
+      "stateMutability": "payable",
+      "outputs": ""
+    },
+    {
+      "name": "withdraw",
+      "inputs": "uint96 amount",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    }
+  ],
+  "allFunctions": [
+    {
+      "name": "UPGRADE_INTERFACE_VERSION",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "string"
+    },
+    {
+      "name": "addAdmin",
+      "inputs": "address admin",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "algorithmicPool",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint96, uint32, uint32, uint96"
+    },
+    {
+      "name": "calculateNetworkSize",
+      "inputs": "address user",
+      "stateMutability": "view",
+      "outputs": "uint32"
+    },
+    {
+      "name": "calculateWithdrawalRate",
+      "inputs": "address user",
+      "stateMutability": "view",
+      "outputs": "uint8"
+    },
+    {
+      "name": "circuitBreakerThreshold",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "circuitBreakerTriggered",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "bool"
+    },
+    {
+      "name": "clubPool",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint96, uint32, uint32, uint96"
+    },
+    {
+      "name": "communityPool",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint96, uint32, uint32, uint96"
+    },
+    {
+      "name": "convertFromUSDT18",
+      "inputs": "uint256 amount18",
+      "stateMutability": "pure",
+      "outputs": "uint96"
+    },
+    {
+      "name": "convertToUSDT18",
+      "inputs": "uint96 amount6",
+      "stateMutability": "pure",
+      "outputs": "uint256"
+    },
+    {
+      "name": "dailyWithdrawalLimit",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "dailyWithdrawals",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "directNetwork",
+      "inputs": "address , uint256 ",
+      "stateMutability": "view",
+      "outputs": "address"
+    },
+    {
+      "name": "distributePool",
+      "inputs": "uint8 poolType",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "emergencyPause",
+      "inputs": "",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "emergencySetUSDT",
+      "inputs": "address _usdt",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "emergencyUnpause",
+      "inputs": "",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "emergencyWithdraw",
+      "inputs": "",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "getContractBalance",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "getMatrixPosition",
+      "inputs": "address user",
+      "stateMutability": "view",
+      "outputs": "address, address"
+    },
+    {
+      "name": "getPackagePrice",
+      "inputs": "uint8 packageLevel",
+      "stateMutability": "view",
+      "outputs": "uint96"
+    },
+    {
+      "name": "getPoolBalance",
+      "inputs": "uint8 poolType",
+      "stateMutability": "view",
+      "outputs": "uint96"
+    },
+    {
+      "name": "getTotalUsers",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint32"
+    },
+    {
+      "name": "getUSDTBalance",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "getUSDTConfig",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "address, uint8, uint256"
+    },
+    {
+      "name": "getUSDTDecimals",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint8"
+    },
+    {
+      "name": "getUserBasicInfo",
+      "inputs": "address user",
+      "stateMutability": "view",
+      "outputs": "bool, uint8, uint96"
+    },
+    {
+      "name": "getUserEarnings",
+      "inputs": "address user",
+      "stateMutability": "view",
+      "outputs": "uint96, uint96, uint32"
+    },
+    {
+      "name": "getUserNetwork",
+      "inputs": "address user",
+      "stateMutability": "view",
+      "outputs": "address, uint32"
+    },
+    {
+      "name": "getVersion",
+      "inputs": "",
+      "stateMutability": "pure",
+      "outputs": "string"
+    },
+    {
+      "name": "initialize",
+      "inputs": "address _usdt",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "initializeProduction",
+      "inputs": "",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "isAdmin",
+      "inputs": "address user",
+      "stateMutability": "view",
+      "outputs": "bool"
+    },
+    {
+      "name": "isAdminAddress",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "bool"
+    },
+    {
+      "name": "isUSDTConfigured",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "bool"
+    },
+    {
+      "name": "lastNetworkUpdate",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "lastTxBlock",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "lastWithdrawalDay",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "leadershipPool",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint96, uint32, uint32, uint96"
+    },
+    {
+      "name": "leftLegVolume",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "networkSizeCache",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "uint32"
+    },
+    {
+      "name": "owner",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "address"
+    },
+    {
+      "name": "packages",
+      "inputs": "uint8 ",
+      "stateMutability": "view",
+      "outputs": "uint96, uint16, uint16, uint16, uint16, uint16, uint16"
+    },
+    {
+      "name": "paused",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "bool"
+    },
+    {
+      "name": "platformFeeRecipient",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "address"
+    },
+    {
+      "name": "proxiableUUID",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "bytes32"
+    },
+    {
+      "name": "register",
+      "inputs": "address sponsor, uint8 packageLevel",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "removeAdmin",
+      "inputs": "address admin",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "renounceOwnership",
+      "inputs": "",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "rightLegVolume",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "setCircuitBreaker",
+      "inputs": "uint256 threshold",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "setPlatformFeeRecipient",
+      "inputs": "address _recipient",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "setUSDTAddress",
+      "inputs": "address _usdt",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "smartTreeMatrix",
+      "inputs": "address , uint256 ",
+      "stateMutability": "view",
+      "outputs": "address"
+    },
+    {
+      "name": "totalPlatformFeesCollected",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint96"
+    },
+    {
+      "name": "totalUsers",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint32"
+    },
+    {
+      "name": "transferOwnership",
+      "inputs": "address newOwner",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "updatePackagePrices",
+      "inputs": "",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "upgradePackage",
+      "inputs": "uint8 newLevel",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    },
+    {
+      "name": "upgradeToAndCall",
+      "inputs": "address newImplementation, bytes data",
+      "stateMutability": "payable",
+      "outputs": ""
+    },
+    {
+      "name": "usdt",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "address"
+    },
+    {
+      "name": "usdtDecimals",
+      "inputs": "",
+      "stateMutability": "view",
+      "outputs": "uint8"
+    },
+    {
+      "name": "userIds",
+      "inputs": "uint32 ",
+      "stateMutability": "view",
+      "outputs": "address"
+    },
+    {
+      "name": "userLastTx",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "uint256"
+    },
+    {
+      "name": "users",
+      "inputs": "address ",
+      "stateMutability": "view",
+      "outputs": "uint8, uint8, uint8, uint8, uint32, uint32, uint32, uint32, uint32, uint32, address, uint96, uint96, uint96, uint96, uint96, uint96, uint96"
+    },
+    {
+      "name": "withdraw",
+      "inputs": "uint96 amount",
+      "stateMutability": "nonpayable",
+      "outputs": ""
+    }
+  ]
+}

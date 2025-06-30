@@ -1,0 +1,35 @@
+{
+  "name": "dashboard-optimization",
+  "version": "1.0.0",
+  "description": "A project for cleaning and optimizing the dashboard codebase.",
+  "main": "src/index.js",
+  "scripts": {
+    "analyze": "ts-node scripts/analyze.ts",
+    "backup": "ts-node scripts/backup.ts",
+    "cleanup": "ts-node scripts/cleanup.ts",
+    "validate": "ts-node scripts/validate.ts"
+  },
+  "dependencies": {
+    "typescript": "^4.5.4",
+    "ts-node": "^10.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/dashboard-optimization.git"
+  },
+  "keywords": [
+    "dashboard",
+    "optimization",
+    "cleanup",
+    "typescript"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yourusername/dashboard-optimization/issues"
+  },
+  "homepage": "https://github.com/yourusername/dashboard-optimization#readme"
+}

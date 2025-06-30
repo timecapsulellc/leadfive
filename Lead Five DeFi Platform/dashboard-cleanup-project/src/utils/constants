@@ -1,0 +1,20 @@
+export const CONSTANTS = {
+    API_BASE_URL: 'https://api.example.com',
+    DEFAULT_TIMEOUT: 5000,
+    MAX_RETRIES: 3,
+    ERROR_MESSAGES: {
+        NETWORK_ERROR: 'Network error, please try again later.',
+        UNAUTHORIZED: 'You are not authorized to perform this action.',
+        NOT_FOUND: 'The requested resource was not found.',
+        SERVER_ERROR: 'An unexpected error occurred, please try again later.',
+    },
+    SUCCESS_MESSAGES: {
+        DATA_LOADED: 'Data loaded successfully.',
+        ACTION_COMPLETED: 'Action completed successfully.',
+    },
+    THEME: {
+        PRIMARY_COLOR: '#3498db',
+        SECONDARY_COLOR: '#2ecc71',
+        ERROR_COLOR: '#e74c3c',
+    },
+};

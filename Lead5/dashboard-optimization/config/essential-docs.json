@@ -1,0 +1,8 @@
+{
+  "essentialDocs": [
+    "README.md",
+    "config/cleanup-rules.json",
+    "config/optimization-config.ts",
+    "src/analysis/documentation-audit.ts"
+  ]
+}

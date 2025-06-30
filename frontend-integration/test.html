@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadFive Contract Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .status {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #FFD700;
+        }
+        .success { border-left-color: #4CAF50; }
+        .error { border-left-color: #f44336; }
+        .warning { border-left-color: #ff9800; }
+        button {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: black;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .contract-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .info-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+        }
+        .info-card h3 {
+            margin: 0 0 10px 0;
+            color: #FFD700;
+        }
+        pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            font-size: 14px;
+        }
+        .test-results {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        @media (max-width: 768px) {
+            .contract-info {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 LeadFive Contract Test</h1>
+        
+        <div class="status" id="status">
+            <h3>📋 System Status</h3>
+            <p id="statusText">Initializing...</p>
+        </div>
+
+        <div class="contract-info">
+            <div class="info-card">
+                <h3>📍 Contract Addresses</h3>
+                <p><strong>Proxy:</strong><br><code>0x29dcCb502D10C042BcC6a02a7762C49595A9E498</code></p>
+                <p><strong>USDT:</strong><br><code>0x55d398326f99059fF775485246999027B3197955</code></p>
+                <p><strong>Sponsor:</strong><br><code>0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29</code> (Trezor)</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>🌐 Network Info</h3>
+                <p><strong>Network:</strong> BSC Mainnet</p>
+                <p><strong>Chain ID:</strong> 56</p>
+                <p><strong>Explorer:</strong> <a href="https://bscscan.com" target="_blank" style="color: #FFD700;">BSCScan</a></p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <button onclick="connectWallet()" id="connectBtn">🔗 Connect MetaMask</button>
+            <button onclick="testContract()" id="testBtn" disabled>🧪 Test Contract</button>
+            <button onclick="checkPackages()" id="packageBtn" disabled>💰 Check Packages</button>
+        </div>
+
+        <div class="status test-results" id="results" style="display: none;">
+            <h3>📊 Test Results</h3>
+            <pre id="resultsText"></pre>
+        </div>
+    </div>
+
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
+    <script>
+        let provider = null;
+        let contract = null;
+        let userAccount = null;
+
+        const PROXY_ADDRESS = '0x29dcCb502D10C042BcC6a02a7762C49595A9E498';
+        const USDT_ADDRESS = '0x55d398326f99059fF775485246999027B3197955';
+        const SPONSOR_ADDRESS = '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29'; // Trezor Wallet
+
+        const contractABI = [
+            "function owner() view returns (address)",
+            "function getTotalUsers() view returns (uint32)",
+            "function usdt() view returns (address)",
+            "function dailyWithdrawalLimit() view returns (uint256)",
+            "function paused() view returns (bool)",
+            "function getPackagePrice(uint8 packageLevel) view returns (uint96)",
+            "function getUserBasicInfo(address user) view returns (bool, uint8, uint96)",
+            "function getContractBalance() view returns (uint256)",
+            "function getUSDTBalance() view returns (uint256)"
+        ];
+
+        function updateStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            const statusText = document.getElementById('statusText');
+            statusText.textContent = message;
+            statusDiv.className = `status ${type}`;
+        }
+
+        function logResult(message) {
+            const resultsDiv = document.getElementById('results');
+            const resultsText = document.getElementById('resultsText');
+            resultsDiv.style.display = 'block';
+            resultsText.textContent += message + '\n';
+        }
+
+        function clearResults() {
+            const resultsText = document.getElementById('resultsText');
+            resultsText.textContent = '';
+        }
+
+        async function connectWallet() {
+            try {
+                if (typeof window.ethereum === 'undefined') {
+                    updateStatus('❌ MetaMask not detected. Please install MetaMask.', 'error');
+                    return;
+                }
+
+                updateStatus('🔄 Connecting to MetaMask...', 'warning');
+
+                // Request account access
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                userAccount = accounts[0];
+
+                // Initialize provider
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                
+                // Check network
+                const network = await provider.getNetwork();
+                if (network.chainId !== 56) {
+                    updateStatus('⚠️ Please switch to BSC Mainnet (Chain ID: 56)', 'warning');
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0x38' }]
+                        });
+                    } catch (switchError) {
+                        if (switchError.code === 4902) {
+                            await window.ethereum.request({
+                                method: 'wallet_addEthereumChain',
+                                params: [{
+                                    chainId: '0x38',
+                                    chainName: 'BNB Smart Chain',
+                                    rpcUrls: ['https://bsc-dataseed.binance.org/'],
+                                    nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
+                                    blockExplorerUrls: ['https://bscscan.com/']
+                                }]
+                            });
+                        }
+                    }
+                }
+
+                // Initialize contract
+                contract = new ethers.Contract(PROXY_ADDRESS, contractABI, provider);
+
+                updateStatus(`✅ Connected: ${userAccount.substring(0, 6)}...${userAccount.substring(38)}`, 'success');
+                
+                document.getElementById('testBtn').disabled = false;
+                document.getElementById('packageBtn').disabled = false;
+                document.getElementById('connectBtn').textContent = '✅ Connected';
+
+            } catch (error) {
+                updateStatus(`❌ Connection failed: ${error.message}`, 'error');
+                console.error('Connection error:', error);
+            }
+        }
+
+        async function testContract() {
+            if (!contract) {
+                updateStatus('❌ Please connect wallet first', 'error');
+                return;
+            }
+
+            clearResults();
+            updateStatus('🔄 Testing contract...', 'warning');
+
+            try {
+                logResult('🔍 LEADFIVE CONTRACT TEST RESULTS');
+                logResult('=' + '='.repeat(50));
+                
+                const owner = await contract.owner();
+                logResult(`✅ Contract Owner: ${owner}`);
+                
+                const totalUsers = await contract.getTotalUsers();
+                logResult(`✅ Total Users: ${totalUsers.toString()}`);
+                
+                const usdtAddr = await contract.usdt();
+                logResult(`✅ USDT Token: ${usdtAddr}`);
+                
+                const isPaused = await contract.paused();
+                logResult(`✅ Contract Paused: ${isPaused}`);
+                
+                const withdrawalLimit = await contract.dailyWithdrawalLimit();
+                logResult(`✅ Daily Limit: ${ethers.utils.formatUnits(withdrawalLimit, 18)} USDT`);
+
+                const contractBalance = await contract.getContractBalance();
+                logResult(`✅ Contract BNB: ${ethers.utils.formatEther(contractBalance)} BNB`);
+
+                const usdtBalance = await contract.getUSDTBalance();
+                logResult(`✅ Contract USDT: ${ethers.utils.formatUnits(usdtBalance, 18)} USDT`);
+
+                // Test user info if connected
+                if (userAccount) {
+                    try {
+                        const userInfo = await contract.getUserBasicInfo(userAccount);
+                        logResult(`✅ User Registered: ${userInfo[0]}`);
+                        if (userInfo[0]) {
+                            logResult(`✅ User Package: Level ${userInfo[1]}`);
+                            logResult(`✅ User Balance: ${ethers.utils.formatUnits(userInfo[2], 18)} USDT`);
+                        }
+                    } catch (e) {
+                        logResult(`⚠️ User Info: Not available`);
+                    }
+                }
+
+                logResult('\n🎉 Contract test completed successfully!');
+                updateStatus('✅ Contract test completed successfully!', 'success');
+
+            } catch (error) {
+                logResult(`❌ Contract test failed: ${error.message}`);
+                updateStatus(`❌ Contract test failed: ${error.message}`, 'error');
+                console.error('Contract test error:', error);
+            }
+        }
+
+        async function checkPackages() {
+            if (!contract) {
+                updateStatus('❌ Please connect wallet first', 'error');
+                return;
+            }
+
+            clearResults();
+            updateStatus('🔄 Checking package prices...', 'warning');
+
+            try {
+                logResult('💰 LEADFIVE PACKAGE PRICES');
+                logResult('=' + '='.repeat(30));
+                
+                for (let level = 1; level <= 4; level++) {
+                    try {
+                        const price = await contract.getPackagePrice(level);
+                        const priceUSD = ethers.utils.formatUnits(price, 18);
+                        logResult(`✅ Level ${level}: ${priceUSD} USDT`);
+                    } catch (e) {
+                        logResult(`❌ Level ${level}: Failed to fetch price`);
+                    }
+                }
+
+                logResult('\n📋 REGISTRATION INFORMATION:');
+                logResult(`✅ Sponsor Address: ${SPONSOR_ADDRESS}`);
+                logResult(`✅ USDT Contract: ${USDT_ADDRESS}`);
+                logResult('✅ Use sponsor address above for new registrations');
+
+                updateStatus('✅ Package prices loaded successfully!', 'success');
+
+            } catch (error) {
+                logResult(`❌ Package check failed: ${error.message}`);
+                updateStatus(`❌ Package check failed: ${error.message}`, 'error');
+                console.error('Package check error:', error);
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            updateStatus('🔧 Ready to connect. Click "Connect MetaMask" to start.', 'info');
+        });
+    </script>
+</body>
+</html>

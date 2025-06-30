@@ -1,0 +1,26 @@
+// This file defines the Card component for displaying content in a card format.
+
+import React from 'react';
+import './Card.css'; // Assuming there is a CSS file for styling the Card component
+
+interface CardProps {
+    title: string;
+    content: string;
+    footer?: React.ReactNode;
+}
+
+const Card: React.FC<CardProps> = ({ title, content, footer }) => {
+    return (
+        <div className="card">
+            <div className="card-header">
+                <h2>{title}</h2>
+            </div>
+            <div className="card-content">
+                <p>{content}</p>
+            </div>
+            {footer && <div className="card-footer">{footer}</div>}
+        </div>
+    );
+};
+
+export default Card;

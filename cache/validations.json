@@ -2,137 +2,6 @@
   "version": "3.4",
   "log": [
     {
-      "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:AccessControlUpgradeable": {
-        "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:50",
-        "inherit": [
-          "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:ERC165Upgradeable",
-          "@openzeppelin/contracts/utils/introspection/IERC165.sol:IERC165",
-          "@openzeppelin/contracts/access/IAccessControl.sol:IAccessControl",
-          "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:ContextUpgradeable",
-          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
-        ],
-        "libraries": [],
-        "methods": [
-          "supportsInterface(bytes4)",
-          "hasRole(bytes32,address)",
-          "getRoleAdmin(bytes32)",
-          "grantRole(bytes32,address)",
-          "revokeRole(bytes32,address)",
-          "renounceRole(bytes32,address)"
-        ],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {
-            "t_address": {
-              "label": "address",
-              "numberOfBytes": "20"
-            },
-            "t_bool": {
-              "label": "bool",
-              "numberOfBytes": "1"
-            },
-            "t_bytes32": {
-              "label": "bytes32",
-              "numberOfBytes": "32"
-            },
-            "t_mapping(t_address,t_bool)": {
-              "label": "mapping(address => bool)",
-              "numberOfBytes": "32"
-            },
-            "t_mapping(t_bytes32,t_struct(RoleData)24_storage)": {
-              "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
-              "numberOfBytes": "32"
-            },
-            "t_struct(AccessControlStorage)34_storage": {
-              "label": "struct AccessControlUpgradeable.AccessControlStorage",
-              "members": [
-                {
-                  "label": "_roles",
-                  "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
-                  "offset": 0,
-                  "slot": "0"
-                }
-              ],
-              "numberOfBytes": "32"
-            },
-            "t_struct(InitializableStorage)211_storage": {
-              "label": "struct Initializable.InitializableStorage",
-              "members": [
-                {
-                  "label": "_initialized",
-                  "type": "t_uint64",
-                  "offset": 0,
-                  "slot": "0"
-                },
-                {
-                  "label": "_initializing",
-                  "type": "t_bool",
-                  "offset": 8,
-                  "slot": "0"
-                }
-              ],
-              "numberOfBytes": "32"
-            },
-            "t_struct(RoleData)24_storage": {
-              "label": "struct AccessControlUpgradeable.RoleData",
-              "members": [
-                {
-                  "label": "hasRole",
-                  "type": "t_mapping(t_address,t_bool)",
-                  "offset": 0,
-                  "slot": "0"
-                },
-                {
-                  "label": "adminRole",
-                  "type": "t_bytes32",
-                  "offset": 0,
-                  "slot": "1"
-                }
-              ],
-              "numberOfBytes": "64"
-            },
-            "t_uint64": {
-              "label": "uint64",
-              "numberOfBytes": "8"
-            }
-          },
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {
-            "erc7201:openzeppelin.storage.AccessControl": [
-              {
-                "contract": "AccessControlUpgradeable",
-                "label": "_roles",
-                "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
-                "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "erc7201:openzeppelin.storage.Initializable": [
-              {
-                "contract": "Initializable",
-                "label": "_initialized",
-                "type": "t_uint64",
-                "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "contract": "Initializable",
-                "label": "_initializing",
-                "type": "t_bool",
-                "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
-                "offset": 8,
-                "slot": "0"
-              }
-            ]
-          }
-        },
-        "solcVersion": "0.8.22"
-      },
       "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:OwnableUpgradeable": {
         "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21",
         "inherit": [
@@ -158,7 +27,7 @@
               "label": "bool",
               "numberOfBytes": "1"
             },
-            "t_struct(InitializableStorage)211_storage": {
+            "t_struct(InitializableStorage)73_storage": {
               "label": "struct Initializable.InitializableStorage",
               "members": [
                 {
@@ -176,7 +45,7 @@
               ],
               "numberOfBytes": "32"
             },
-            "t_struct(OwnableStorage)151_storage": {
+            "t_struct(OwnableStorage)13_storage": {
               "label": "struct OwnableUpgradeable.OwnableStorage",
               "members": [
                 {
@@ -242,7 +111,7 @@
               "label": "bool",
               "numberOfBytes": "1"
             },
-            "t_struct(InitializableStorage)211_storage": {
+            "t_struct(InitializableStorage)73_storage": {
               "label": "struct Initializable.InitializableStorage",
               "members": [
                 {
@@ -317,7 +186,7 @@
               "label": "bool",
               "numberOfBytes": "1"
             },
-            "t_struct(InitializableStorage)211_storage": {
+            "t_struct(InitializableStorage)73_storage": {
               "label": "struct Initializable.InitializableStorage",
               "members": [
                 {
@@ -381,7 +250,7 @@
               "label": "bool",
               "numberOfBytes": "1"
             },
-            "t_struct(InitializableStorage)211_storage": {
+            "t_struct(InitializableStorage)73_storage": {
               "label": "struct Initializable.InitializableStorage",
               "members": [
                 {
@@ -448,7 +317,7 @@
               "label": "bool",
               "numberOfBytes": "1"
             },
-            "t_struct(InitializableStorage)211_storage": {
+            "t_struct(InitializableStorage)73_storage": {
               "label": "struct Initializable.InitializableStorage",
               "members": [
                 {
@@ -466,7 +335,7 @@
               ],
               "numberOfBytes": "32"
             },
-            "t_struct(PausableStorage)362_storage": {
+            "t_struct(PausableStorage)224_storage": {
               "label": "struct PausableUpgradeable.PausableStorage",
               "members": [
                 {
@@ -534,7 +403,7 @@
               "label": "bool",
               "numberOfBytes": "1"
             },
-            "t_struct(InitializableStorage)211_storage": {
+            "t_struct(InitializableStorage)73_storage": {
               "label": "struct Initializable.InitializableStorage",
               "members": [
                 {
@@ -552,7 +421,7 @@
               ],
               "numberOfBytes": "32"
             },
-            "t_struct(ReentrancyGuardStorage)426_storage": {
+            "t_struct(ReentrancyGuardStorage)288_storage": {
               "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
               "members": [
                 {
@@ -608,95 +477,6 @@
         },
         "solcVersion": "0.8.22"
       },
-      "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:ERC165Upgradeable": {
-        "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:21",
-        "inherit": [
-          "@openzeppelin/contracts/utils/introspection/IERC165.sol:IERC165",
-          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
-        ],
-        "libraries": [],
-        "methods": [
-          "supportsInterface(bytes4)"
-        ],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {
-            "t_bool": {
-              "label": "bool",
-              "numberOfBytes": "1"
-            },
-            "t_struct(InitializableStorage)211_storage": {
-              "label": "struct Initializable.InitializableStorage",
-              "members": [
-                {
-                  "label": "_initialized",
-                  "type": "t_uint64",
-                  "offset": 0,
-                  "slot": "0"
-                },
-                {
-                  "label": "_initializing",
-                  "type": "t_bool",
-                  "offset": 8,
-                  "slot": "0"
-                }
-              ],
-              "numberOfBytes": "32"
-            },
-            "t_uint64": {
-              "label": "uint64",
-              "numberOfBytes": "8"
-            }
-          },
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {
-            "erc7201:openzeppelin.storage.Initializable": [
-              {
-                "contract": "Initializable",
-                "label": "_initialized",
-                "type": "t_uint64",
-                "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "contract": "Initializable",
-                "label": "_initializing",
-                "type": "t_bool",
-                "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
-                "offset": 8,
-                "slot": "0"
-              }
-            ]
-          }
-        },
-        "solcVersion": "0.8.22"
-      },
-      "@openzeppelin/contracts/access/IAccessControl.sol:IAccessControl": {
-        "src": "@openzeppelin/contracts/access/IAccessControl.sol:9",
-        "inherit": [],
-        "libraries": [],
-        "methods": [
-          "hasRole(bytes32,address)",
-          "getRoleAdmin(bytes32)",
-          "grantRole(bytes32,address)",
-          "revokeRole(bytes32,address)",
-          "renounceRole(bytes32,address)"
-        ],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
       "@openzeppelin/contracts/access/Ownable.sol:Ownable": {
         "src": "@openzeppelin/contracts/access/Ownable.sol:20",
         "inherit": [
@@ -735,32 +515,6 @@
           },
           "layoutVersion": "1.2",
           "flat": true,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "@openzeppelin/contracts/interfaces/IERC1363.sol:IERC1363": {
-        "src": "@openzeppelin/contracts/interfaces/IERC1363.sol:16",
-        "inherit": [
-          "@openzeppelin/contracts/utils/introspection/IERC165.sol:IERC165",
-          "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20"
-        ],
-        "libraries": [],
-        "methods": [
-          "transferAndCall(address,uint256)",
-          "transferAndCall(address,uint256,bytes)",
-          "transferFromAndCall(address,address,uint256)",
-          "transferFromAndCall(address,address,uint256,bytes)",
-          "approveAndCall(address,uint256)",
-          "approveAndCall(address,uint256,bytes)"
-        ],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
           "namespaces": {}
         },
         "solcVersion": "0.8.22"
@@ -850,7 +604,7 @@
       "@openzeppelin/contracts/proxy/ERC1967/ERC1967Utils.sol:ERC1967Utils": {
         "src": "@openzeppelin/contracts/proxy/ERC1967/ERC1967Utils.sol:15",
         "version": {
-          "withMetadata": "7e7795e18d772e653b448696536d77261502f00a6e81e96fc3acd093534acc25",
+          "withMetadata": "c18401848e06bfd9d2dd9f1fb3115d9d928def55ca8781860a810c1494a59f8b",
           "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
           "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
         },
@@ -1042,31 +796,10 @@
         },
         "solcVersion": "0.8.22"
       },
-      "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20": {
-        "src": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:18",
-        "version": {
-          "withMetadata": "6b562c9a3070e17ccc2b4102216af7ed90b527060308075b0db056e8003414cd",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
-        },
-        "inherit": [],
-        "libraries": [],
-        "methods": [],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
       "@openzeppelin/contracts/utils/Address.sol:Address": {
         "src": "@openzeppelin/contracts/utils/Address.sol:11",
         "version": {
-          "withMetadata": "8db3d73a56996d569507dd82abdfe9dea55597d74dd8310c6e009a1be9cc924f",
+          "withMetadata": "d1d01ca8b4e19122bd36243ed6da536e6e767c0c0400b2502d66b76c10bd4881",
           "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
           "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
         },
@@ -1110,7 +843,7 @@
       "@openzeppelin/contracts/utils/Errors.sol:Errors": {
         "src": "@openzeppelin/contracts/utils/Errors.sol:14",
         "version": {
-          "withMetadata": "5d3dc056d3f1e21cb70cb4fd6b55f27f24a74a29a2694774371eb986b33ba971",
+          "withMetadata": "473d60c0451a5db8c737caf5fa65b6c6bd0f4a946a43fd052a6204a641b40854",
           "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
           "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
         },
@@ -1124,42 +857,6 @@
           "types": {},
           "layoutVersion": "1.2",
           "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "@openzeppelin/contracts/utils/ReentrancyGuard.sol:ReentrancyGuard": {
-        "src": "@openzeppelin/contracts/utils/ReentrancyGuard.sol:25",
-        "inherit": [],
-        "libraries": [],
-        "methods": [],
-        "linkReferences": [],
-        "errors": [
-          {
-            "kind": "constructor",
-            "contract": "ReentrancyGuard",
-            "src": "@openzeppelin/contracts/utils/ReentrancyGuard.sol:47"
-          }
-        ],
-        "layout": {
-          "storage": [
-            {
-              "label": "_status",
-              "offset": 0,
-              "slot": "0",
-              "type": "t_uint256",
-              "contract": "ReentrancyGuard",
-              "src": "@openzeppelin/contracts/utils/ReentrancyGuard.sol:40"
-            }
-          ],
-          "types": {
-            "t_uint256": {
-              "label": "uint256",
-              "numberOfBytes": "32"
-            }
-          },
-          "layoutVersion": "1.2",
-          "flat": true,
           "namespaces": {}
         },
         "solcVersion": "0.8.22"
@@ -1167,31 +864,13 @@
       "@openzeppelin/contracts/utils/StorageSlot.sol:StorageSlot": {
         "src": "@openzeppelin/contracts/utils/StorageSlot.sol:34",
         "version": {
-          "withMetadata": "e411b9c92770002ec22ec07d147a0a43b56b7dfb13454d50271e61ea602d52ab",
+          "withMetadata": "e85c0d8abaf275d0aed943cf4804f4d1746226744376f5126f3e5378de017d3a",
           "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
           "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
         },
         "inherit": [],
         "libraries": [],
         "methods": [],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "@openzeppelin/contracts/utils/introspection/IERC165.sol:IERC165": {
-        "src": "@openzeppelin/contracts/utils/introspection/IERC165.sol:15",
-        "inherit": [],
-        "libraries": [],
-        "methods": [
-          "supportsInterface(bytes4)"
-        ],
         "linkReferences": [],
         "errors": [],
         "layout": {
@@ -1222,30 +901,12 @@
         },
         "solcVersion": "0.8.22"
       },
-      "contracts/LeadFive.sol:IPriceFeed": {
-        "src": "contracts/LeadFive.sol:18",
-        "inherit": [],
-        "libraries": [],
-        "methods": [
-          "latestRoundData()"
-        ],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
       "contracts/LeadFive.sol:LeadFive": {
-        "src": "contracts/LeadFive.sol:26",
+        "src": "contracts/LeadFive.sol:43",
         "version": {
-          "withMetadata": "919b05c4e7868e83cbfa68f869771a16d4468efc085d435c6c5de5d438db9966",
-          "withoutMetadata": "06fabc7185b8a5720234ebe0564fea64213883deee8a8fda5b6cdc28e558be5a",
-          "linkedWithoutMetadata": "06fabc7185b8a5720234ebe0564fea64213883deee8a8fda5b6cdc28e558be5a"
+          "withMetadata": "f818b006b3ec320c8fc3b91a8d734410fc2a196af3b5f0976ae1d2b604d74375",
+          "withoutMetadata": "3143df0e49fc3d42633c223398c74dac700386b07bb03619e0a8bb8cef6f6986",
+          "linkedWithoutMetadata": "3143df0e49fc3d42633c223398c74dac700386b07bb03619e0a8bb8cef6f6986"
         },
         "inherit": [
           "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:PausableUpgradeable",
@@ -1257,437 +918,272 @@
           "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
         ],
         "libraries": [
-          "contracts/libraries/DataStructures.sol:DataStructures",
-          "contracts/libraries/PoolDistributionLib.sol:PoolDistributionLib",
-          "contracts/libraries/BusinessLogicLib.sol:BusinessLogicLib",
-          "contracts/libraries/AdvancedFeaturesLib.sol:AdvancedFeaturesLib",
-          "contracts/libraries/WithdrawalSafetyLib.sol:WithdrawalSafetyLib"
+          "contracts/libraries/CoreOptimized.sol:CoreOptimized",
+          "contracts/libraries/SecureOracle.sol:SecureOracle",
+          "contracts/libraries/Errors.sol:Errors"
         ],
         "methods": [
           "initialize(address,address)",
           "register(address,uint8,bool)",
           "upgradePackage(uint8,bool)",
+          "distributePool(uint8)",
+          "calculateNetworkSize(address)",
           "withdraw(uint96)",
-          "claimAllRewards()",
-          "withdrawWithSafety()",
-          "triggerPoolDistributions()",
-          "checkUserAchievements(address)",
-          "getUserInfo(address)",
-          "getPendingRewards(address)",
-          "getPoolBalances()",
-          "getContractHealth()",
-          "setAdminFeeRecipient(address)",
+          "calculateWithdrawalRate(address)",
+          "setPlatformFeeRecipient(address)",
+          "addAdmin(address)",
+          "removeAdmin(address)",
           "addOracle(address)",
-          "removeOracle(address)",
-          "setPriceFeed(address)",
-          "blacklistUser(address,bool)",
-          "updateReserveFund()",
-          "setCircuitBreakerThreshold(uint256)",
-          "pause()",
-          "unpause()",
-          "emergencyWithdraw(uint256)",
-          "recoverUSDT(uint256)",
+          "setCircuitBreaker(uint256)",
+          "emergencyPause()",
+          "emergencyUnpause()",
+          "emergencyWithdrawUSDT()",
+          "setDailyWithdrawalLimit(uint256)",
+          "getUserBasicInfo(address)",
+          "getUserEarnings(address)",
+          "getUserNetwork(address)",
+          "getPoolBalance(uint8)",
+          "getMatrixPosition(address)",
+          "getContractBalance()",
+          "getTotalUsers()",
+          "getPackagePrice(uint8)",
+          "getCurrentBNBPrice()",
+          "isAdmin(address)",
+          "getTotalPlatformFees()",
+          "getUSDTBalance()",
+          "verifyPackageAllocations(uint8)",
+          "getSystemHealth()",
+          "emergencyWithdraw()",
           "()",
-          "getOracleCount()",
-          "getEmergencyPrice()"
+          "()"
         ],
-        "linkReferences": [
-          {
-            "src": "contracts/libraries/AdvancedFeaturesLib.sol",
-            "name": "AdvancedFeaturesLib",
-            "length": 20,
-            "start": 1006,
-            "placeholder": "__$dd4a1495704125b887753eb8571c12dcb8$__"
-          },
-          {
-            "src": "contracts/libraries/AdvancedFeaturesLib.sol",
-            "name": "AdvancedFeaturesLib",
-            "length": 20,
-            "start": 5495,
-            "placeholder": "__$dd4a1495704125b887753eb8571c12dcb8$__"
-          },
-          {
-            "src": "contracts/libraries/AdvancedFeaturesLib.sol",
-            "name": "AdvancedFeaturesLib",
-            "length": 20,
-            "start": 14266,
-            "placeholder": "__$dd4a1495704125b887753eb8571c12dcb8$__"
-          },
-          {
-            "src": "contracts/libraries/AdvancedFeaturesLib.sol",
-            "name": "AdvancedFeaturesLib",
-            "length": 20,
-            "start": 17536,
-            "placeholder": "__$dd4a1495704125b887753eb8571c12dcb8$__"
-          },
-          {
-            "src": "contracts/libraries/BusinessLogicLib.sol",
-            "name": "BusinessLogicLib",
-            "length": 20,
-            "start": 2054,
-            "placeholder": "__$463a1e87c900ce9034b3025c98f573e8fb$__"
-          },
-          {
-            "src": "contracts/libraries/BusinessLogicLib.sol",
-            "name": "BusinessLogicLib",
-            "length": 20,
-            "start": 5600,
-            "placeholder": "__$463a1e87c900ce9034b3025c98f573e8fb$__"
-          },
-          {
-            "src": "contracts/libraries/BusinessLogicLib.sol",
-            "name": "BusinessLogicLib",
-            "length": 20,
-            "start": 8424,
-            "placeholder": "__$463a1e87c900ce9034b3025c98f573e8fb$__"
-          },
-          {
-            "src": "contracts/libraries/PoolDistributionLib.sol",
-            "name": "PoolDistributionLib",
-            "length": 20,
-            "start": 3713,
-            "placeholder": "__$b990f9fb5b40d4f2139385488c0f0d5942$__"
-          },
-          {
-            "src": "contracts/libraries/PoolDistributionLib.sol",
-            "name": "PoolDistributionLib",
-            "length": 20,
-            "start": 13599,
-            "placeholder": "__$b990f9fb5b40d4f2139385488c0f0d5942$__"
-          },
-          {
-            "src": "contracts/libraries/PoolDistributionLib.sol",
-            "name": "PoolDistributionLib",
-            "length": 20,
-            "start": 16832,
-            "placeholder": "__$b990f9fb5b40d4f2139385488c0f0d5942$__"
-          },
-          {
-            "src": "contracts/libraries/WithdrawalSafetyLib.sol",
-            "name": "WithdrawalSafetyLib",
-            "length": 20,
-            "start": 5286,
-            "placeholder": "__$19daffe583346935ad653a6f34ff3e1c47$__"
-          },
-          {
-            "src": "contracts/libraries/WithdrawalSafetyLib.sol",
-            "name": "WithdrawalSafetyLib",
-            "length": 20,
-            "start": 6843,
-            "placeholder": "__$19daffe583346935ad653a6f34ff3e1c47$__"
-          }
-        ],
-        "errors": [
-          {
-            "kind": "external-library-linking",
-            "name": "AdvancedFeaturesLib",
-            "src": "contracts/libraries/AdvancedFeaturesLib.sol"
-          },
-          {
-            "kind": "external-library-linking",
-            "name": "BusinessLogicLib",
-            "src": "contracts/libraries/BusinessLogicLib.sol"
-          },
-          {
-            "kind": "external-library-linking",
-            "name": "PoolDistributionLib",
-            "src": "contracts/libraries/PoolDistributionLib.sol"
-          },
-          {
-            "kind": "external-library-linking",
-            "name": "WithdrawalSafetyLib",
-            "src": "contracts/libraries/WithdrawalSafetyLib.sol"
-          }
-        ],
+        "linkReferences": [],
+        "errors": [],
         "layout": {
           "storage": [
             {
               "label": "users",
               "offset": 0,
               "slot": "0",
-              "type": "t_mapping(t_address,t_struct(User)15623_storage)",
+              "type": "t_mapping(t_address,t_struct(PackedUser)10587_storage)",
               "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:32"
+              "src": "contracts/LeadFive.sol:55"
             },
             {
               "label": "packages",
               "offset": 0,
               "slot": "1",
-              "type": "t_mapping(t_uint8,t_struct(Package)3870_storage)",
-              "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:33"
-            },
-            {
-              "label": "directReferrals",
-              "offset": 0,
-              "slot": "2",
-              "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
-              "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:34"
-            },
-            {
-              "label": "referralCodeToUser",
-              "offset": 0,
-              "slot": "3",
-              "type": "t_mapping(t_string_memory_ptr,t_address)",
-              "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:35"
-            },
-            {
-              "label": "leaderPool",
-              "offset": 0,
-              "slot": "4",
-              "type": "t_struct(Pool)3877_storage",
+              "type": "t_mapping(t_uint8,t_struct(PackedPackage)10602_storage)",
               "contract": "LeadFive",
               "src": "contracts/LeadFive.sol:56"
             },
             {
-              "label": "helpPool",
+              "label": "directNetwork",
               "offset": 0,
-              "slot": "5",
-              "type": "t_struct(Pool)3877_storage",
+              "slot": "2",
+              "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
               "contract": "LeadFive",
               "src": "contracts/LeadFive.sol:57"
             },
             {
-              "label": "clubPool",
+              "label": "smartTreeMatrix",
               "offset": 0,
-              "slot": "6",
-              "type": "t_struct(Pool)3877_storage",
+              "slot": "3",
+              "type": "t_mapping(t_address,t_array(t_address)2_storage)",
               "contract": "LeadFive",
               "src": "contracts/LeadFive.sol:58"
             },
             {
-              "label": "usdt",
+              "label": "userIds",
               "offset": 0,
-              "slot": "7",
-              "type": "t_contract(IERC20)2768",
+              "slot": "4",
+              "type": "t_mapping(t_uint32,t_address)",
               "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:61"
+              "src": "contracts/LeadFive.sol:59"
             },
             {
-              "label": "priceFeed",
+              "label": "leadershipPool",
               "offset": 0,
-              "slot": "8",
-              "type": "t_contract(IPriceFeed)3821",
+              "slot": "5",
+              "type": "t_struct(PackedPool)10611_storage",
               "contract": "LeadFive",
               "src": "contracts/LeadFive.sol:62"
             },
             {
-              "label": "priceOracles",
+              "label": "communityPool",
               "offset": 0,
-              "slot": "9",
-              "type": "t_array(t_contract(IPriceFeed)3821)dyn_storage",
+              "slot": "6",
+              "type": "t_struct(PackedPool)10611_storage",
               "contract": "LeadFive",
               "src": "contracts/LeadFive.sol:63"
             },
             {
-              "label": "adminIds",
+              "label": "clubPool",
               "offset": 0,
-              "slot": "10",
-              "type": "t_array(t_address)16_storage",
+              "slot": "7",
+              "type": "t_struct(PackedPool)10611_storage",
               "contract": "LeadFive",
               "src": "contracts/LeadFive.sol:64"
             },
             {
-              "label": "totalUsers",
+              "label": "algorithmicPool",
               "offset": 0,
-              "slot": "26",
-              "type": "t_uint32",
+              "slot": "8",
+              "type": "t_struct(PackedPool)10611_storage",
+              "contract": "LeadFive",
+              "src": "contracts/LeadFive.sol:65"
+            },
+            {
+              "label": "oracles",
+              "offset": 0,
+              "slot": "9",
+              "type": "t_array(t_struct(OracleData)17003_storage)dyn_storage",
+              "contract": "LeadFive",
+              "src": "contracts/LeadFive.sol:68"
+            },
+            {
+              "label": "priceConfig",
+              "offset": 0,
+              "slot": "10",
+              "type": "t_struct(PriceConfig)17012_storage",
+              "contract": "LeadFive",
+              "src": "contracts/LeadFive.sol:69"
+            },
+            {
+              "label": "leftLegVolume",
+              "offset": 0,
+              "slot": "13",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "LeadFive",
+              "src": "contracts/LeadFive.sol:72"
+            },
+            {
+              "label": "rightLegVolume",
+              "offset": 0,
+              "slot": "14",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "LeadFive",
+              "src": "contracts/LeadFive.sol:73"
+            },
+            {
+              "label": "networkSizeCache",
+              "offset": 0,
+              "slot": "15",
+              "type": "t_mapping(t_address,t_uint32)",
               "contract": "LeadFive",
               "src": "contracts/LeadFive.sol:74"
             },
             {
-              "label": "rootUser",
-              "offset": 4,
-              "slot": "26",
-              "type": "t_address",
+              "label": "lastNetworkUpdate",
+              "offset": 0,
+              "slot": "16",
+              "type": "t_mapping(t_address,t_uint256)",
               "contract": "LeadFive",
               "src": "contracts/LeadFive.sol:75"
             },
             {
-              "label": "rootUserSet",
-              "offset": 24,
-              "slot": "26",
-              "type": "t_bool",
-              "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:76"
-            },
-            {
-              "label": "adminFeeRecipient",
+              "label": "isAdminAddress",
               "offset": 0,
-              "slot": "27",
-              "type": "t_address",
-              "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:77"
-            },
-            {
-              "label": "totalAdminFeesCollected",
-              "offset": 20,
-              "slot": "27",
-              "type": "t_uint96",
+              "slot": "17",
+              "type": "t_mapping(t_address,t_bool)",
               "contract": "LeadFive",
               "src": "contracts/LeadFive.sol:78"
             },
             {
-              "label": "lastTxBlock",
+              "label": "dailyWithdrawals",
               "offset": 0,
-              "slot": "28",
-              "type": "t_uint256",
+              "slot": "18",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "LeadFive",
+              "src": "contracts/LeadFive.sol:79"
+            },
+            {
+              "label": "lastWithdrawalDay",
+              "offset": 0,
+              "slot": "19",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "LeadFive",
+              "src": "contracts/LeadFive.sol:80"
+            },
+            {
+              "label": "userLastTx",
+              "offset": 0,
+              "slot": "20",
+              "type": "t_mapping(t_address,t_uint256)",
               "contract": "LeadFive",
               "src": "contracts/LeadFive.sol:81"
             },
             {
-              "label": "matrixPositions",
+              "label": "circuitBreakerThreshold",
               "offset": 0,
-              "slot": "29",
-              "type": "t_mapping(t_address,t_struct(MatrixPosition)18105_storage)",
+              "slot": "21",
+              "type": "t_uint256",
               "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:87"
+              "src": "contracts/LeadFive.sol:84"
             },
             {
-              "label": "poolQualifications",
+              "label": "circuitBreakerTriggered",
               "offset": 0,
-              "slot": "30",
-              "type": "t_mapping(t_address,t_struct(PoolQualification)20926_storage)",
+              "slot": "22",
+              "type": "t_bool",
               "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:88"
+              "src": "contracts/LeadFive.sol:85"
             },
             {
-              "label": "withdrawalStats",
+              "label": "lastTxBlock",
               "offset": 0,
-              "slot": "31",
-              "type": "t_mapping(t_address,t_struct(UserWithdrawalStats)25905_storage)",
+              "slot": "23",
+              "type": "t_uint256",
               "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:89"
+              "src": "contracts/LeadFive.sol:86"
             },
             {
-              "label": "userWithdrawalLimits",
+              "label": "totalUsers",
               "offset": 0,
-              "slot": "32",
-              "type": "t_mapping(t_address,t_struct(WithdrawalLimits)25918_storage)",
+              "slot": "24",
+              "type": "t_uint32",
               "contract": "LeadFive",
               "src": "contracts/LeadFive.sol:90"
             },
             {
-              "label": "pendingCommissions",
+              "label": "totalPlatformFeesCollected",
+              "offset": 4,
+              "slot": "24",
+              "type": "t_uint96",
+              "contract": "LeadFive",
+              "src": "contracts/LeadFive.sol:90"
+            },
+            {
+              "label": "dailyWithdrawalLimit",
               "offset": 0,
-              "slot": "33",
-              "type": "t_mapping(t_address,t_uint256)",
+              "slot": "25",
+              "type": "t_uint256",
               "contract": "LeadFive",
               "src": "contracts/LeadFive.sol:91"
             },
             {
-              "label": "pendingPoolRewards",
+              "label": "usdt",
               "offset": 0,
-              "slot": "34",
-              "type": "t_mapping(t_address,t_uint256)",
-              "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:92"
-            },
-            {
-              "label": "pendingMatrixBonuses",
-              "offset": 0,
-              "slot": "35",
-              "type": "t_mapping(t_address,t_uint256)",
+              "slot": "26",
+              "type": "t_contract(IERC20)2192",
               "contract": "LeadFive",
               "src": "contracts/LeadFive.sol:93"
             },
             {
-              "label": "userAchievements",
+              "label": "platformFeeRecipient",
               "offset": 0,
-              "slot": "36",
-              "type": "t_mapping(t_address,t_mapping(t_uint32,t_bool))",
+              "slot": "27",
+              "type": "t_address",
               "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:94"
+              "src": "contracts/LeadFive.sol:93"
             },
             {
-              "label": "leaderPoolSchedule",
+              "label": "__gap",
               "offset": 0,
-              "slot": "37",
-              "type": "t_struct(DistributionSchedule)20915_storage",
+              "slot": "28",
+              "type": "t_array(t_uint256)50_storage",
               "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:97"
-            },
-            {
-              "label": "helpPoolSchedule",
-              "offset": 0,
-              "slot": "41",
-              "type": "t_struct(DistributionSchedule)20915_storage",
-              "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:98"
-            },
-            {
-              "label": "clubPoolSchedule",
-              "offset": 0,
-              "slot": "45",
-              "type": "t_struct(DistributionSchedule)20915_storage",
-              "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:99"
-            },
-            {
-              "label": "windowWithdrawals",
-              "offset": 0,
-              "slot": "49",
-              "type": "t_mapping(t_uint256,t_uint256)",
-              "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:102"
-            },
-            {
-              "label": "circuitBreakerThreshold",
-              "offset": 0,
-              "slot": "50",
-              "type": "t_uint256",
-              "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:103"
-            },
-            {
-              "label": "reserveFund",
-              "offset": 0,
-              "slot": "51",
-              "type": "t_uint256",
-              "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:104"
-            },
-            {
-              "label": "totalDeposits",
-              "offset": 0,
-              "slot": "52",
-              "type": "t_uint256",
-              "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:105"
-            },
-            {
-              "label": "shiningStarLeaders",
-              "offset": 0,
-              "slot": "53",
-              "type": "t_array(t_address)dyn_storage",
-              "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:108"
-            },
-            {
-              "label": "eligibleHelpPoolUsers",
-              "offset": 0,
-              "slot": "54",
-              "type": "t_array(t_address)dyn_storage",
-              "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:109"
-            },
-            {
-              "label": "notificationQueue",
-              "offset": 0,
-              "slot": "55",
-              "type": "t_struct(NotificationQueue)11307_storage",
-              "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:112"
-            },
-            {
-              "label": "userNotifications",
-              "offset": 0,
-              "slot": "58",
-              "type": "t_mapping(t_address,t_struct(UserNotifications)11325_storage)",
-              "contract": "LeadFive",
-              "src": "contracts/LeadFive.sol:113"
+              "src": "contracts/LeadFive.sol:96"
             }
           ],
           "types": {
@@ -1699,7 +1195,7 @@
               "label": "bool",
               "numberOfBytes": "1"
             },
-            "t_struct(InitializableStorage)211_storage": {
+            "t_struct(InitializableStorage)73_storage": {
               "label": "struct Initializable.InitializableStorage",
               "members": [
                 {
@@ -1717,7 +1213,7 @@
               ],
               "numberOfBytes": "32"
             },
-            "t_struct(OwnableStorage)151_storage": {
+            "t_struct(OwnableStorage)13_storage": {
               "label": "struct OwnableUpgradeable.OwnableStorage",
               "members": [
                 {
@@ -1729,7 +1225,7 @@
               ],
               "numberOfBytes": "32"
             },
-            "t_struct(PausableStorage)362_storage": {
+            "t_struct(PausableStorage)224_storage": {
               "label": "struct PausableUpgradeable.PausableStorage",
               "members": [
                 {
@@ -1741,7 +1237,7 @@
               ],
               "numberOfBytes": "32"
             },
-            "t_struct(ReentrancyGuardStorage)426_storage": {
+            "t_struct(ReentrancyGuardStorage)288_storage": {
               "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
               "members": [
                 {
@@ -1761,240 +1257,92 @@
               "label": "uint64",
               "numberOfBytes": "8"
             },
-            "t_array(t_address)16_storage": {
-              "label": "address[16]",
-              "numberOfBytes": "512"
+            "t_array(t_address)2_storage": {
+              "label": "address[2]",
+              "numberOfBytes": "64"
             },
             "t_array(t_address)dyn_storage": {
               "label": "address[]",
               "numberOfBytes": "32"
             },
-            "t_array(t_contract(IPriceFeed)3821)dyn_storage": {
-              "label": "contract IPriceFeed[]",
+            "t_array(t_struct(OracleData)17003_storage)dyn_storage": {
+              "label": "struct SecureOracle.OracleData[]",
               "numberOfBytes": "32"
             },
-            "t_array(t_uint256)dyn_storage": {
-              "label": "uint256[]",
-              "numberOfBytes": "32"
+            "t_array(t_uint256)50_storage": {
+              "label": "uint256[50]",
+              "numberOfBytes": "1600"
             },
-            "t_contract(IERC20)2768": {
+            "t_contract(IERC20)2192": {
               "label": "contract IERC20",
               "numberOfBytes": "20"
             },
-            "t_contract(IPriceFeed)3821": {
+            "t_contract(IPriceFeed)16994": {
               "label": "contract IPriceFeed",
               "numberOfBytes": "20"
             },
-            "t_enum(NotificationType)15738": {
-              "label": "enum DataStructures.NotificationType",
-              "members": [
-                "Registration",
-                "Withdrawal",
-                "RankUpgrade",
-                "MatrixCompletion",
-                "PoolDistribution",
-                "Achievement"
-              ],
-              "numberOfBytes": "1"
+            "t_int256": {
+              "label": "int256",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_array(t_address)2_storage)": {
+              "label": "mapping(address => address[2])",
+              "numberOfBytes": "32"
             },
             "t_mapping(t_address,t_array(t_address)dyn_storage)": {
               "label": "mapping(address => address[])",
               "numberOfBytes": "32"
             },
-            "t_mapping(t_address,t_mapping(t_uint32,t_bool))": {
-              "label": "mapping(address => mapping(uint32 => bool))",
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)",
               "numberOfBytes": "32"
             },
-            "t_mapping(t_address,t_struct(MatrixPosition)18105_storage)": {
-              "label": "mapping(address => struct MatrixManagementLib.MatrixPosition)",
-              "numberOfBytes": "32"
-            },
-            "t_mapping(t_address,t_struct(PoolQualification)20926_storage)": {
-              "label": "mapping(address => struct PoolDistributionLib.PoolQualification)",
-              "numberOfBytes": "32"
-            },
-            "t_mapping(t_address,t_struct(User)15623_storage)": {
-              "label": "mapping(address => struct DataStructures.User)",
-              "numberOfBytes": "32"
-            },
-            "t_mapping(t_address,t_struct(UserNotifications)11325_storage)": {
-              "label": "mapping(address => struct AdvancedFeaturesLib.UserNotifications)",
-              "numberOfBytes": "32"
-            },
-            "t_mapping(t_address,t_struct(UserWithdrawalStats)25905_storage)": {
-              "label": "mapping(address => struct WithdrawalSafetyLib.UserWithdrawalStats)",
-              "numberOfBytes": "32"
-            },
-            "t_mapping(t_address,t_struct(WithdrawalLimits)25918_storage)": {
-              "label": "mapping(address => struct WithdrawalSafetyLib.WithdrawalLimits)",
+            "t_mapping(t_address,t_struct(PackedUser)10587_storage)": {
+              "label": "mapping(address => struct CoreOptimized.PackedUser)",
               "numberOfBytes": "32"
             },
             "t_mapping(t_address,t_uint256)": {
               "label": "mapping(address => uint256)",
               "numberOfBytes": "32"
             },
-            "t_mapping(t_string_memory_ptr,t_address)": {
-              "label": "mapping(string => address)",
+            "t_mapping(t_address,t_uint32)": {
+              "label": "mapping(address => uint32)",
               "numberOfBytes": "32"
             },
-            "t_mapping(t_uint256,t_struct(Notification)11319_storage)": {
-              "label": "mapping(uint256 => struct AdvancedFeaturesLib.Notification)",
+            "t_mapping(t_uint32,t_address)": {
+              "label": "mapping(uint32 => address)",
               "numberOfBytes": "32"
             },
-            "t_mapping(t_uint256,t_uint256)": {
-              "label": "mapping(uint256 => uint256)",
+            "t_mapping(t_uint8,t_struct(PackedPackage)10602_storage)": {
+              "label": "mapping(uint8 => struct CoreOptimized.PackedPackage)",
               "numberOfBytes": "32"
             },
-            "t_mapping(t_uint32,t_bool)": {
-              "label": "mapping(uint32 => bool)",
-              "numberOfBytes": "32"
-            },
-            "t_mapping(t_uint8,t_struct(Package)3870_storage)": {
-              "label": "mapping(uint8 => struct LeadFive.Package)",
-              "numberOfBytes": "32"
-            },
-            "t_string_memory_ptr": {
-              "label": "string",
-              "numberOfBytes": "32"
-            },
-            "t_string_storage": {
-              "label": "string",
-              "numberOfBytes": "32"
-            },
-            "t_struct(DistributionSchedule)20915_storage": {
-              "label": "struct PoolDistributionLib.DistributionSchedule",
+            "t_struct(OracleData)17003_storage": {
+              "label": "struct SecureOracle.OracleData",
               "members": [
                 {
-                  "label": "lastDistribution",
-                  "type": "t_uint256",
+                  "label": "feed",
+                  "type": "t_contract(IPriceFeed)16994",
                   "offset": 0,
                   "slot": "0"
-                },
-                {
-                  "label": "interval",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "1"
-                },
-                {
-                  "label": "nextDistribution",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "2"
                 },
                 {
                   "label": "isActive",
                   "type": "t_bool",
-                  "offset": 0,
-                  "slot": "3"
-                }
-              ],
-              "numberOfBytes": "128"
-            },
-            "t_struct(MatrixPosition)18105_storage": {
-              "label": "struct MatrixManagementLib.MatrixPosition",
-              "members": [
-                {
-                  "label": "sponsor",
-                  "type": "t_address",
-                  "offset": 0,
+                  "offset": 20,
                   "slot": "0"
                 },
                 {
-                  "label": "downline",
-                  "type": "t_array(t_address)dyn_storage",
-                  "offset": 0,
-                  "slot": "1"
-                },
-                {
-                  "label": "level",
-                  "type": "t_uint8",
-                  "offset": 0,
-                  "slot": "2"
-                },
-                {
-                  "label": "cycleCount",
+                  "label": "lastUpdate",
                   "type": "t_uint32",
-                  "offset": 1,
-                  "slot": "2"
-                },
-                {
-                  "label": "isComplete",
-                  "type": "t_bool",
-                  "offset": 5,
-                  "slot": "2"
-                },
-                {
-                  "label": "totalEarnings",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "3"
-                }
-              ],
-              "numberOfBytes": "128"
-            },
-            "t_struct(Notification)11319_storage": {
-              "label": "struct AdvancedFeaturesLib.Notification",
-              "members": [
-                {
-                  "label": "user",
-                  "type": "t_address",
-                  "offset": 0,
+                  "offset": 21,
                   "slot": "0"
-                },
-                {
-                  "label": "message",
-                  "type": "t_string_storage",
-                  "offset": 0,
-                  "slot": "1"
-                },
-                {
-                  "label": "timestamp",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "2"
-                },
-                {
-                  "label": "notificationType",
-                  "type": "t_enum(NotificationType)15738",
-                  "offset": 0,
-                  "slot": "3"
-                },
-                {
-                  "label": "isRead",
-                  "type": "t_bool",
-                  "offset": 1,
-                  "slot": "3"
                 }
               ],
-              "numberOfBytes": "128"
+              "numberOfBytes": "32"
             },
-            "t_struct(NotificationQueue)11307_storage": {
-              "label": "struct AdvancedFeaturesLib.NotificationQueue",
-              "members": [
-                {
-                  "label": "head",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "0"
-                },
-                {
-                  "label": "tail",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "1"
-                },
-                {
-                  "label": "notifications",
-                  "type": "t_mapping(t_uint256,t_struct(Notification)11319_storage)",
-                  "offset": 0,
-                  "slot": "2"
-                }
-              ],
-              "numberOfBytes": "96"
-            },
-            "t_struct(Package)3870_storage": {
-              "label": "struct LeadFive.Package",
+            "t_struct(PackedPackage)10602_storage": {
+              "label": "struct CoreOptimized.PackedPackage",
               "members": [
                 {
                   "label": "price",
@@ -2041,8 +1389,8 @@
               ],
               "numberOfBytes": "32"
             },
-            "t_struct(Pool)3877_storage": {
-              "label": "struct LeadFive.Pool",
+            "t_struct(PackedPool)10611_storage": {
+              "label": "struct CoreOptimized.PackedPool",
               "members": [
                 {
                   "label": "balance",
@@ -2061,327 +1409,159 @@
                   "type": "t_uint32",
                   "offset": 16,
                   "slot": "0"
+                },
+                {
+                  "label": "totalDistributed",
+                  "type": "t_uint96",
+                  "offset": 20,
+                  "slot": "0"
                 }
               ],
               "numberOfBytes": "32"
             },
-            "t_struct(PoolQualification)20926_storage": {
-              "label": "struct PoolDistributionLib.PoolQualification",
+            "t_struct(PackedUser)10587_storage": {
+              "label": "struct CoreOptimized.PackedUser",
               "members": [
                 {
-                  "label": "isQualifiedLeader",
-                  "type": "t_bool",
+                  "label": "flags",
+                  "type": "t_uint8",
                   "offset": 0,
                   "slot": "0"
                 },
                 {
-                  "label": "isQualifiedHelp",
-                  "type": "t_bool",
+                  "label": "packageLevel",
+                  "type": "t_uint8",
                   "offset": 1,
                   "slot": "0"
                 },
                 {
-                  "label": "isQualifiedClub",
-                  "type": "t_bool",
+                  "label": "rank",
+                  "type": "t_uint8",
                   "offset": 2,
                   "slot": "0"
                 },
                 {
-                  "label": "lastQualificationCheck",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "1"
-                },
-                {
-                  "label": "leaderTier",
+                  "label": "withdrawalRate",
                   "type": "t_uint8",
-                  "offset": 0,
-                  "slot": "2"
-                }
-              ],
-              "numberOfBytes": "96"
-            },
-            "t_struct(User)15623_storage": {
-              "label": "struct DataStructures.User",
-              "members": [
-                {
-                  "label": "isRegistered",
-                  "type": "t_bool",
-                  "offset": 0,
+                  "offset": 3,
                   "slot": "0"
                 },
                 {
-                  "label": "isBlacklisted",
-                  "type": "t_bool",
-                  "offset": 1,
+                  "label": "directReferrals",
+                  "type": "t_uint32",
+                  "offset": 4,
+                  "slot": "0"
+                },
+                {
+                  "label": "teamSize",
+                  "type": "t_uint32",
+                  "offset": 8,
+                  "slot": "0"
+                },
+                {
+                  "label": "registrationTime",
+                  "type": "t_uint32",
+                  "offset": 12,
+                  "slot": "0"
+                },
+                {
+                  "label": "lastWithdrawal",
+                  "type": "t_uint32",
+                  "offset": 16,
+                  "slot": "0"
+                },
+                {
+                  "label": "matrixLevel",
+                  "type": "t_uint32",
+                  "offset": 20,
+                  "slot": "0"
+                },
+                {
+                  "label": "matrixCycles",
+                  "type": "t_uint32",
+                  "offset": 24,
                   "slot": "0"
                 },
                 {
                   "label": "referrer",
                   "type": "t_address",
-                  "offset": 2,
-                  "slot": "0"
+                  "offset": 0,
+                  "slot": "1"
                 },
                 {
                   "label": "balance",
                   "type": "t_uint96",
-                  "offset": 0,
+                  "offset": 20,
                   "slot": "1"
                 },
                 {
                   "label": "totalInvestment",
                   "type": "t_uint96",
-                  "offset": 12,
-                  "slot": "1"
+                  "offset": 0,
+                  "slot": "2"
                 },
                 {
                   "label": "totalEarnings",
                   "type": "t_uint96",
-                  "offset": 0,
+                  "offset": 12,
                   "slot": "2"
+                },
+                {
+                  "label": "totalWithdrawn",
+                  "type": "t_uint96",
+                  "offset": 0,
+                  "slot": "3"
                 },
                 {
                   "label": "earningsCap",
                   "type": "t_uint96",
                   "offset": 12,
-                  "slot": "2"
-                },
-                {
-                  "label": "directReferrals",
-                  "type": "t_uint32",
-                  "offset": 24,
-                  "slot": "2"
-                },
-                {
-                  "label": "teamSize",
-                  "type": "t_uint32",
-                  "offset": 28,
-                  "slot": "2"
-                },
-                {
-                  "label": "packageLevel",
-                  "type": "t_uint8",
-                  "offset": 0,
                   "slot": "3"
-                },
-                {
-                  "label": "rank",
-                  "type": "t_uint8",
-                  "offset": 1,
-                  "slot": "3"
-                },
-                {
-                  "label": "withdrawalRate",
-                  "type": "t_uint8",
-                  "offset": 2,
-                  "slot": "3"
-                },
-                {
-                  "label": "lastHelpPoolClaim",
-                  "type": "t_uint32",
-                  "offset": 3,
-                  "slot": "3"
-                },
-                {
-                  "label": "isEligibleForHelpPool",
-                  "type": "t_bool",
-                  "offset": 7,
-                  "slot": "3"
-                },
-                {
-                  "label": "matrixPosition",
-                  "type": "t_uint32",
-                  "offset": 8,
-                  "slot": "3"
-                },
-                {
-                  "label": "matrixLevel",
-                  "type": "t_uint32",
-                  "offset": 12,
-                  "slot": "3"
-                },
-                {
-                  "label": "registrationTime",
-                  "type": "t_uint32",
-                  "offset": 16,
-                  "slot": "3"
-                },
-                {
-                  "label": "referralCode",
-                  "type": "t_string_storage",
-                  "offset": 0,
-                  "slot": "4"
-                },
-                {
-                  "label": "pendingRewards",
-                  "type": "t_uint96",
-                  "offset": 0,
-                  "slot": "5"
-                },
-                {
-                  "label": "lastWithdrawal",
-                  "type": "t_uint32",
-                  "offset": 12,
-                  "slot": "5"
-                },
-                {
-                  "label": "matrixCycles",
-                  "type": "t_uint32",
-                  "offset": 16,
-                  "slot": "5"
-                },
-                {
-                  "label": "leaderRank",
-                  "type": "t_uint8",
-                  "offset": 20,
-                  "slot": "5"
                 },
                 {
                   "label": "leftLegVolume",
                   "type": "t_uint96",
                   "offset": 0,
-                  "slot": "6"
+                  "slot": "4"
                 },
                 {
                   "label": "rightLegVolume",
                   "type": "t_uint96",
                   "offset": 12,
-                  "slot": "6"
+                  "slot": "4"
+                }
+              ],
+              "numberOfBytes": "160"
+            },
+            "t_struct(PriceConfig)17012_storage": {
+              "label": "struct SecureOracle.PriceConfig",
+              "members": [
+                {
+                  "label": "minPrice",
+                  "type": "t_int256",
+                  "offset": 0,
+                  "slot": "0"
                 },
                 {
-                  "label": "fastStartExpiry",
+                  "label": "maxPrice",
+                  "type": "t_int256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "maxStaleTime",
                   "type": "t_uint32",
-                  "offset": 24,
-                  "slot": "6"
-                },
-                {
-                  "label": "isActive",
-                  "type": "t_bool",
-                  "offset": 28,
-                  "slot": "6"
-                }
-              ],
-              "numberOfBytes": "224"
-            },
-            "t_struct(UserNotifications)11325_storage": {
-              "label": "struct AdvancedFeaturesLib.UserNotifications",
-              "members": [
-                {
-                  "label": "notificationIds",
-                  "type": "t_array(t_uint256)dyn_storage",
-                  "offset": 0,
-                  "slot": "0"
-                },
-                {
-                  "label": "unreadCount",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "1"
-                }
-              ],
-              "numberOfBytes": "64"
-            },
-            "t_struct(UserWithdrawalStats)25905_storage": {
-              "label": "struct WithdrawalSafetyLib.UserWithdrawalStats",
-              "members": [
-                {
-                  "label": "dailyWithdrawn",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "0"
-                },
-                {
-                  "label": "weeklyWithdrawn",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "1"
-                },
-                {
-                  "label": "monthlyWithdrawn",
-                  "type": "t_uint256",
                   "offset": 0,
                   "slot": "2"
                 },
                 {
-                  "label": "lastWithdrawalTime",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "3"
-                },
-                {
-                  "label": "lastDayReset",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "4"
-                },
-                {
-                  "label": "lastWeekReset",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "5"
-                },
-                {
-                  "label": "lastMonthReset",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "6"
-                },
-                {
-                  "label": "totalWithdrawals",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "7"
-                },
-                {
-                  "label": "withdrawalCount",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "8"
-                }
-              ],
-              "numberOfBytes": "288"
-            },
-            "t_struct(WithdrawalLimits)25918_storage": {
-              "label": "struct WithdrawalSafetyLib.WithdrawalLimits",
-              "members": [
-                {
-                  "label": "dailyLimit",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "0"
-                },
-                {
-                  "label": "weeklyLimit",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "1"
-                },
-                {
-                  "label": "monthlyLimit",
-                  "type": "t_uint256",
-                  "offset": 0,
+                  "label": "minOracles",
+                  "type": "t_uint8",
+                  "offset": 4,
                   "slot": "2"
-                },
-                {
-                  "label": "minimumInterval",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "3"
-                },
-                {
-                  "label": "minimumAmount",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "4"
-                },
-                {
-                  "label": "maximumAmount",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "5"
                 }
               ],
-              "numberOfBytes": "192"
+              "numberOfBytes": "96"
             },
             "t_uint16": {
               "label": "uint16",
@@ -2455,118 +1635,108 @@
         },
         "solcVersion": "0.8.22"
       },
-      "contracts/MockInterfaces.sol:AutomationCompatibleInterface": {
-        "src": "contracts/MockInterfaces.sol:14",
-        "inherit": [],
-        "libraries": [],
-        "methods": [
-          "checkUpkeep(bytes)",
-          "performUpkeep(bytes)"
-        ],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/MockInterfaces.sol:IERC20": {
-        "src": "contracts/MockInterfaces.sol:5",
-        "inherit": [],
-        "libraries": [],
-        "methods": [
-          "totalSupply()",
-          "balanceOf(address)",
-          "transfer(address,uint256)",
-          "allowance(address,address)",
-          "approve(address,uint256)",
-          "transferFrom(address,address,uint256)"
-        ],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/MockInterfaces.sol:Ownable": {
-        "src": "contracts/MockInterfaces.sol:31",
+      "contracts/MockERC20.sol:MockERC20": {
+        "src": "contracts/MockERC20.sol:6",
         "version": {
-          "withMetadata": "9b1f7e6a8c2a963ee3eb27884af8246e7c9bba2b0b6f63a8a5e2b0328ccce70e",
-          "withoutMetadata": "18830a6df5b12f2c8aadebf32be2f15ded2764376cc3ca5a5a55177c5a77d05d",
-          "linkedWithoutMetadata": "18830a6df5b12f2c8aadebf32be2f15ded2764376cc3ca5a5a55177c5a77d05d"
+          "withMetadata": "33927f350ee30e95f9d01ff2c0773bfeec91b6431111ace72858d2e69ccd27b2",
+          "withoutMetadata": "d6ae176349a1fadaeaa613c9b551e3315aa35eb6dfa7cdebd48eb0005d04e228",
+          "linkedWithoutMetadata": "d6ae176349a1fadaeaa613c9b551e3315aa35eb6dfa7cdebd48eb0005d04e228"
         },
-        "inherit": [],
+        "inherit": [
+          "@openzeppelin/contracts/token/ERC20/ERC20.sol:ERC20",
+          "@openzeppelin/contracts/interfaces/draft-IERC6093.sol:IERC20Errors",
+          "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol:IERC20Metadata",
+          "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20",
+          "@openzeppelin/contracts/utils/Context.sol:Context"
+        ],
         "libraries": [],
         "methods": [
-          "(address)",
-          "owner()"
+          "(string,string,uint8)",
+          "mint(address,uint256)",
+          "decimals()"
         ],
         "linkReferences": [],
         "errors": [
           {
             "kind": "constructor",
-            "contract": "Ownable",
-            "src": "contracts/MockInterfaces.sol:34"
+            "contract": "MockERC20",
+            "src": "contracts/MockERC20.sol:9"
           }
         ],
         "layout": {
           "storage": [
             {
-              "label": "_owner",
+              "label": "_balances",
               "offset": 0,
               "slot": "0",
-              "type": "t_address",
-              "contract": "Ownable",
-              "src": "contracts/MockInterfaces.sol:32"
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "ERC20",
+              "src": "@openzeppelin/contracts/token/ERC20/ERC20.sol:30"
+            },
+            {
+              "label": "_allowances",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+              "contract": "ERC20",
+              "src": "@openzeppelin/contracts/token/ERC20/ERC20.sol:32"
+            },
+            {
+              "label": "_totalSupply",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_uint256",
+              "contract": "ERC20",
+              "src": "@openzeppelin/contracts/token/ERC20/ERC20.sol:34"
+            },
+            {
+              "label": "_name",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_string_storage",
+              "contract": "ERC20",
+              "src": "@openzeppelin/contracts/token/ERC20/ERC20.sol:36"
+            },
+            {
+              "label": "_symbol",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_string_storage",
+              "contract": "ERC20",
+              "src": "@openzeppelin/contracts/token/ERC20/ERC20.sol:37"
+            },
+            {
+              "label": "_decimals",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_uint8",
+              "contract": "MockERC20",
+              "src": "contracts/MockERC20.sol:7"
             }
           ],
           "types": {
             "t_address": {
               "label": "address",
               "numberOfBytes": "20"
-            }
-          },
-          "layoutVersion": "1.2",
-          "flat": true,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/MockInterfaces.sol:Pausable": {
-        "src": "contracts/MockInterfaces.sol:65",
-        "version": {
-          "withMetadata": "44e2408a7fc6bf02601e4f046590a2194dfe5b671c173f4b6037fa5309de0892",
-          "withoutMetadata": "db12cee82c0b61d41a3f406731f32d59d43e3328864896b25d38f32824fd2bb5",
-          "linkedWithoutMetadata": "db12cee82c0b61d41a3f406731f32d59d43e3328864896b25d38f32824fd2bb5"
-        },
-        "inherit": [],
-        "libraries": [],
-        "methods": [],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [
-            {
-              "label": "_paused",
-              "offset": 0,
-              "slot": "0",
-              "type": "t_bool",
-              "contract": "Pausable",
-              "src": "contracts/MockInterfaces.sol:66"
-            }
-          ],
-          "types": {
-            "t_bool": {
-              "label": "bool",
+            },
+            "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+              "label": "mapping(address => mapping(address => uint256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
               "numberOfBytes": "1"
             }
           },
@@ -2576,142 +1746,158 @@
         },
         "solcVersion": "0.8.22"
       },
-      "contracts/MockInterfaces.sol:ReentrancyGuard": {
-        "src": "contracts/MockInterfaces.sol:48",
+      "contracts/MockPriceFeed.sol:MockPriceFeed": {
+        "src": "contracts/MockPriceFeed.sol:10",
         "version": {
-          "withMetadata": "c608106657b96c3740e1f422cb5729e360ede41be470dfb4f2d4de142305ac76",
-          "withoutMetadata": "3877f64209c035f6d0104d20cc666a451f77f482f4aa2070aaa93986a64d93dd",
-          "linkedWithoutMetadata": "3877f64209c035f6d0104d20cc666a451f77f482f4aa2070aaa93986a64d93dd"
-        },
-        "inherit": [],
-        "libraries": [],
-        "methods": [
-          "()"
-        ],
-        "linkReferences": [],
-        "errors": [
-          {
-            "kind": "constructor",
-            "contract": "ReentrancyGuard",
-            "src": "contracts/MockInterfaces.sol:53"
-          }
-        ],
-        "layout": {
-          "storage": [
-            {
-              "label": "_status",
-              "offset": 0,
-              "slot": "0",
-              "type": "t_uint256",
-              "contract": "ReentrancyGuard",
-              "src": "contracts/MockInterfaces.sol:51"
-            }
-          ],
-          "types": {
-            "t_uint256": {
-              "label": "uint256",
-              "numberOfBytes": "32"
-            }
-          },
-          "layoutVersion": "1.2",
-          "flat": true,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/MockInterfaces.sol:SafeERC20": {
-        "src": "contracts/MockInterfaces.sol:20",
-        "version": {
-          "withMetadata": "9d3351695fbc0ccb8b092620ce185f32441ffb162545b06ae5f6ce8e02a13cef",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
-        },
-        "inherit": [],
-        "libraries": [],
-        "methods": [],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/MockPriceOracle.sol:IPriceOracle": {
-        "src": "contracts/MockPriceOracle.sol:5",
-        "inherit": [],
-        "libraries": [],
-        "methods": [
-          "getPrice(address)",
-          "isHealthy()"
-        ],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/MockPriceOracle.sol:MockPriceOracle": {
-        "src": "contracts/MockPriceOracle.sol:10",
-        "version": {
-          "withMetadata": "d03efb550077c2744beeb5f70590de276fb3b78c5e77593b9cf47470ed4e4679",
-          "withoutMetadata": "88fce1f9b8295f51d879ebfbd8d9a6f738d523db13d3f144c9218783f1e9c47f",
-          "linkedWithoutMetadata": "88fce1f9b8295f51d879ebfbd8d9a6f738d523db13d3f144c9218783f1e9c47f"
+          "withMetadata": "285aab4aac709fad44264256e1cd4e74be66e35a54cd34f09cf535b36b95ef2e",
+          "withoutMetadata": "657163f4747f768f30ce4c80d3ada8eee5b199ddc01dc7de77d82b05e63626f7",
+          "linkedWithoutMetadata": "657163f4747f768f30ce4c80d3ada8eee5b199ddc01dc7de77d82b05e63626f7"
         },
         "inherit": [
-          "contracts/MockPriceOracle.sol:IPriceOracle"
+          "contracts/IPriceOracle.sol:IPriceOracle"
         ],
         "libraries": [],
         "methods": [
           "()",
           "getPrice(address)",
           "isHealthy()",
-          "setPrice(uint256)",
-          "setHealthy(bool)"
+          "decimals()",
+          "description()",
+          "getLastUpdated()",
+          "updatePrice(int256)",
+          "setStalePrice()",
+          "simulatePriceMovement()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "MockPriceFeed",
+            "src": "contracts/MockPriceFeed.sol:16"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "_price",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_int256",
+              "contract": "MockPriceFeed",
+              "src": "contracts/MockPriceFeed.sol:11"
+            },
+            {
+              "label": "_lastUpdate",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_uint256",
+              "contract": "MockPriceFeed",
+              "src": "contracts/MockPriceFeed.sol:12"
+            },
+            {
+              "label": "_decimals",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_uint8",
+              "contract": "MockPriceFeed",
+              "src": "contracts/MockPriceFeed.sol:13"
+            },
+            {
+              "label": "_description",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_string_storage",
+              "contract": "MockPriceFeed",
+              "src": "contracts/MockPriceFeed.sol:14"
+            }
+          ],
+          "types": {
+            "t_int256": {
+              "label": "int256",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.22"
+      },
+      "contracts/MockPriceOracle.sol:MockPriceOracle": {
+        "src": "contracts/MockPriceOracle.sol:8",
+        "version": {
+          "withMetadata": "3a9c16a2e0b8333597a0497e1d70f7ff0de8063eacf4ee973c309019089ddb25",
+          "withoutMetadata": "c067610a77dfcf359d512656b769dd82cb5644de7bf053d360a415bd133e3005",
+          "linkedWithoutMetadata": "c067610a77dfcf359d512656b769dd82cb5644de7bf053d360a415bd133e3005"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "()",
+          "getPrice()",
+          "setPrice(int256)",
+          "decimals()",
+          "lastUpdate()"
         ],
         "linkReferences": [],
         "errors": [
           {
             "kind": "constructor",
             "contract": "MockPriceOracle",
-            "src": "contracts/MockPriceOracle.sol:14"
+            "src": "contracts/MockPriceOracle.sol:13"
           }
         ],
         "layout": {
           "storage": [
             {
-              "label": "price",
+              "label": "_price",
               "offset": 0,
               "slot": "0",
-              "type": "t_uint256",
+              "type": "t_int256",
               "contract": "MockPriceOracle",
-              "src": "contracts/MockPriceOracle.sol:11"
+              "src": "contracts/MockPriceOracle.sol:9"
             },
             {
-              "label": "healthy",
+              "label": "_lastUpdate",
               "offset": 0,
               "slot": "1",
-              "type": "t_bool",
+              "type": "t_uint256",
               "contract": "MockPriceOracle",
-              "src": "contracts/MockPriceOracle.sol:12"
+              "src": "contracts/MockPriceOracle.sol:10"
+            },
+            {
+              "label": "_decimals",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_uint8",
+              "contract": "MockPriceOracle",
+              "src": "contracts/MockPriceOracle.sol:11"
             }
           ],
           "types": {
-            "t_bool": {
-              "label": "bool",
-              "numberOfBytes": "1"
+            "t_int256": {
+              "label": "int256",
+              "numberOfBytes": "32"
             },
             "t_uint256": {
               "label": "uint256",
               "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
             }
           },
           "layoutVersion": "1.2",
@@ -2721,11 +1907,110 @@
         "solcVersion": "0.8.22"
       },
       "contracts/MockUSDT.sol:MockUSDT": {
-        "src": "contracts/MockUSDT.sol:12",
+        "src": "contracts/MockUSDT.sol:6",
         "version": {
-          "withMetadata": "e3be249602ae10d8e3af7dedeb9e21be728bc68b6eb881e37cdf9a2d3743c467",
-          "withoutMetadata": "b1d30e5efd577238f3511a1e5f5e14f94d3ac4d986e5b0d2a6f741b055365f84",
-          "linkedWithoutMetadata": "b1d30e5efd577238f3511a1e5f5e14f94d3ac4d986e5b0d2a6f741b055365f84"
+          "withMetadata": "903b7c34b8c0cc6acf4c3ef4f01800bdc3e55b4fa17fd4e1b2e7225928e665bc",
+          "withoutMetadata": "2d6922ec085f168e301114c679733c5861ce43285f7685061f65108c9dbf1563",
+          "linkedWithoutMetadata": "2d6922ec085f168e301114c679733c5861ce43285f7685061f65108c9dbf1563"
+        },
+        "inherit": [
+          "@openzeppelin/contracts/token/ERC20/ERC20.sol:ERC20",
+          "@openzeppelin/contracts/interfaces/draft-IERC6093.sol:IERC20Errors",
+          "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol:IERC20Metadata",
+          "@openzeppelin/contracts/token/ERC20/IERC20.sol:IERC20",
+          "@openzeppelin/contracts/utils/Context.sol:Context"
+        ],
+        "libraries": [],
+        "methods": [
+          "()",
+          "mint(address,uint256)",
+          "faucet()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "MockUSDT",
+            "src": "contracts/MockUSDT.sol:7"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "_balances",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_address,t_uint256)",
+              "contract": "ERC20",
+              "src": "@openzeppelin/contracts/token/ERC20/ERC20.sol:30"
+            },
+            {
+              "label": "_allowances",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_mapping(t_address,t_mapping(t_address,t_uint256))",
+              "contract": "ERC20",
+              "src": "@openzeppelin/contracts/token/ERC20/ERC20.sol:32"
+            },
+            {
+              "label": "_totalSupply",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_uint256",
+              "contract": "ERC20",
+              "src": "@openzeppelin/contracts/token/ERC20/ERC20.sol:34"
+            },
+            {
+              "label": "_name",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_string_storage",
+              "contract": "ERC20",
+              "src": "@openzeppelin/contracts/token/ERC20/ERC20.sol:36"
+            },
+            {
+              "label": "_symbol",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_string_storage",
+              "contract": "ERC20",
+              "src": "@openzeppelin/contracts/token/ERC20/ERC20.sol:37"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_mapping(t_address,t_mapping(t_address,t_uint256))": {
+              "label": "mapping(address => mapping(address => uint256))",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_uint256)": {
+              "label": "mapping(address => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.22"
+      },
+      "contracts/MockWBNB.sol:MockWBNB": {
+        "src": "contracts/MockWBNB.sol:12",
+        "version": {
+          "withMetadata": "2180da2fedc3c31c9b61d122e67aa858e35ddefbc84460ebadc529accd29d21d",
+          "withoutMetadata": "2f75d801287f693652b3b91007c348a55bca743daf9c1b3bf9e71a17674614d0",
+          "linkedWithoutMetadata": "2f75d801287f693652b3b91007c348a55bca743daf9c1b3bf9e71a17674614d0"
         },
         "inherit": [
           "@openzeppelin/contracts/access/Ownable.sol:Ownable",
@@ -2739,16 +2024,21 @@
         "methods": [
           "()",
           "decimals()",
+          "deposit()",
+          "()",
+          "withdraw(uint256)",
           "mint(address,uint256)",
-          "burn(uint256)",
-          "faucet(address,uint256)"
+          "mintBatch(address[],uint256[])",
+          "faucet()",
+          "drain(address)",
+          "getInfo()"
         ],
         "linkReferences": [],
         "errors": [
           {
             "kind": "constructor",
-            "contract": "MockUSDT",
-            "src": "contracts/MockUSDT.sol:15"
+            "contract": "MockWBNB",
+            "src": "contracts/MockWBNB.sol:15"
           }
         ],
         "layout": {
@@ -2806,8 +2096,8 @@
               "offset": 20,
               "slot": "5",
               "type": "t_uint8",
-              "contract": "MockUSDT",
-              "src": "contracts/MockUSDT.sol:13"
+              "contract": "MockWBNB",
+              "src": "contracts/MockWBNB.sol:13"
             }
           ],
           "types": {
@@ -2842,39 +2132,36 @@
         },
         "solcVersion": "0.8.22"
       },
-      "contracts/TestContract.sol:TestContract": {
-        "src": "contracts/TestContract.sol:4",
+      "contracts/SimpleUSDTSetter.sol:SimpleUSDTSetter": {
+        "src": "contracts/SimpleUSDTSetter.sol:8",
         "version": {
-          "withMetadata": "75c8321d852e0da99b8c74131c9d0d5e2ba45be3fe9af76ad3619349e441ece7",
-          "withoutMetadata": "23e8dab8fda4644e85f962613c682c48f44410c3206b5b86b8507bb3b837c7dd",
-          "linkedWithoutMetadata": "23e8dab8fda4644e85f962613c682c48f44410c3206b5b86b8507bb3b837c7dd"
+          "withMetadata": "a859307e4f89b125782880299776e09f0b566b953b68c171728f222a5b16ce7e",
+          "withoutMetadata": "b54294c162a97bca7a56ed7a566f2ffe3a17533117883e20b8e9eaad17cd1bd7",
+          "linkedWithoutMetadata": "b54294c162a97bca7a56ed7a566f2ffe3a17533117883e20b8e9eaad17cd1bd7"
         },
         "inherit": [],
         "libraries": [],
-        "methods": [],
-        "linkReferences": [],
-        "errors": [
-          {
-            "kind": "state-variable-assignment",
-            "name": "name",
-            "src": "contracts/TestContract.sol:5"
-          }
+        "methods": [
+          "setUSDT(address)",
+          "getUSDT()"
         ],
+        "linkReferences": [],
+        "errors": [],
         "layout": {
           "storage": [
             {
-              "label": "name",
+              "label": "usdt",
               "offset": 0,
               "slot": "0",
-              "type": "t_string_storage",
-              "contract": "TestContract",
-              "src": "contracts/TestContract.sol:5"
+              "type": "t_address",
+              "contract": "SimpleUSDTSetter",
+              "src": "contracts/SimpleUSDTSetter.sol:11"
             }
           ],
           "types": {
-            "t_string_storage": {
-              "label": "string",
-              "numberOfBytes": "32"
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
             }
           },
           "layoutVersion": "1.2",
@@ -2883,12 +2170,17 @@
         },
         "solcVersion": "0.8.22"
       },
-      "contracts/archive/20250619-124520/OrphiCrowdFund.sol:IPriceFeed": {
-        "src": "contracts/archive/20250619-124520/OrphiCrowdFund.sol:11",
+      "contracts/StorageSetter.sol:StorageSetter": {
+        "src": "contracts/StorageSetter.sol:8",
+        "version": {
+          "withMetadata": "dedc90e1f3e0c06605c8a75aeb80251c6defee474ab781e4a076e6a63426b0df",
+          "withoutMetadata": "a9935db936b43cee502fb5d39b8fdda0d820b049da451c5d43015466a8d3c805",
+          "linkedWithoutMetadata": "a9935db936b43cee502fb5d39b8fdda0d820b049da451c5d43015466a8d3c805"
+        },
         "inherit": [],
         "libraries": [],
         "methods": [
-          "latestRoundData()"
+          "setStorageSlot(address,uint256,bytes32)"
         ],
         "linkReferences": [],
         "errors": [],
@@ -2897,759 +2189,6 @@
           "types": {},
           "layoutVersion": "1.2",
           "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/archive/20250619-124520/OrphiCrowdFund.sol:OrphiCrowdFund": {
-        "src": "contracts/archive/20250619-124520/OrphiCrowdFund.sol:15",
-        "version": {
-          "withMetadata": "ef93ea67e954c6b6124e6c42da0cbc901f9e54c113350f03da72250a9341b522",
-          "withoutMetadata": "9d32f5b9b4224f20e107042ac0095a0a5d29b20e38a68a1d2426aaa928f110a6",
-          "linkedWithoutMetadata": "9d32f5b9b4224f20e107042ac0095a0a5d29b20e38a68a1d2426aaa928f110a6"
-        },
-        "inherit": [
-          "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:PausableUpgradeable",
-          "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:ReentrancyGuardUpgradeable",
-          "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:OwnableUpgradeable",
-          "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:ContextUpgradeable",
-          "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:UUPSUpgradeable",
-          "@openzeppelin/contracts/interfaces/draft-IERC1822.sol:IERC1822Proxiable",
-          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
-        ],
-        "libraries": [],
-        "methods": [
-          "initialize(address,address,address[16])",
-          "register(address,uint8,bool)",
-          "upgradePackage(uint8,bool)",
-          "withdraw(uint96)",
-          "distributePools()",
-          "blacklistUser(address,bool)",
-          "updateWithdrawalRate(address,uint8)",
-          "updateUserRank(address,uint8)",
-          "emergencyWithdraw(uint256)",
-          "recoverUSDT(uint256)",
-          "getUserInfo(address)",
-          "getDirectReferrals(address)",
-          "getUplineChain(address)",
-          "getBinaryMatrix(address)",
-          "getPoolBalances()",
-          "()"
-        ],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [
-            {
-              "label": "users",
-              "offset": 0,
-              "slot": "0",
-              "type": "t_mapping(t_address,t_struct(User)6736_storage)",
-              "contract": "OrphiCrowdFund",
-              "src": "contracts/archive/20250619-124520/OrphiCrowdFund.sol:48"
-            },
-            {
-              "label": "packages",
-              "offset": 0,
-              "slot": "1",
-              "type": "t_mapping(t_uint8,t_struct(Package)6751_storage)",
-              "contract": "OrphiCrowdFund",
-              "src": "contracts/archive/20250619-124520/OrphiCrowdFund.sol:49"
-            },
-            {
-              "label": "directReferrals",
-              "offset": 0,
-              "slot": "2",
-              "type": "t_mapping(t_address,t_array(t_address)dyn_storage)",
-              "contract": "OrphiCrowdFund",
-              "src": "contracts/archive/20250619-124520/OrphiCrowdFund.sol:50"
-            },
-            {
-              "label": "uplineChain",
-              "offset": 0,
-              "slot": "3",
-              "type": "t_mapping(t_address,t_array(t_address)30_storage)",
-              "contract": "OrphiCrowdFund",
-              "src": "contracts/archive/20250619-124520/OrphiCrowdFund.sol:51"
-            },
-            {
-              "label": "binaryMatrix",
-              "offset": 0,
-              "slot": "4",
-              "type": "t_mapping(t_address,t_array(t_address)2_storage)",
-              "contract": "OrphiCrowdFund",
-              "src": "contracts/archive/20250619-124520/OrphiCrowdFund.sol:52"
-            },
-            {
-              "label": "leaderPool",
-              "offset": 0,
-              "slot": "5",
-              "type": "t_struct(Pool)6758_storage",
-              "contract": "OrphiCrowdFund",
-              "src": "contracts/archive/20250619-124520/OrphiCrowdFund.sol:54"
-            },
-            {
-              "label": "helpPool",
-              "offset": 0,
-              "slot": "6",
-              "type": "t_struct(Pool)6758_storage",
-              "contract": "OrphiCrowdFund",
-              "src": "contracts/archive/20250619-124520/OrphiCrowdFund.sol:55"
-            },
-            {
-              "label": "clubPool",
-              "offset": 0,
-              "slot": "7",
-              "type": "t_struct(Pool)6758_storage",
-              "contract": "OrphiCrowdFund",
-              "src": "contracts/archive/20250619-124520/OrphiCrowdFund.sol:56"
-            },
-            {
-              "label": "usdt",
-              "offset": 0,
-              "slot": "8",
-              "type": "t_contract(IERC20)2768",
-              "contract": "OrphiCrowdFund",
-              "src": "contracts/archive/20250619-124520/OrphiCrowdFund.sol:58"
-            },
-            {
-              "label": "priceFeed",
-              "offset": 0,
-              "slot": "9",
-              "type": "t_contract(IPriceFeed)6701",
-              "contract": "OrphiCrowdFund",
-              "src": "contracts/archive/20250619-124520/OrphiCrowdFund.sol:59"
-            },
-            {
-              "label": "adminIds",
-              "offset": 0,
-              "slot": "10",
-              "type": "t_array(t_address)16_storage",
-              "contract": "OrphiCrowdFund",
-              "src": "contracts/archive/20250619-124520/OrphiCrowdFund.sol:60"
-            },
-            {
-              "label": "lastTxBlock",
-              "offset": 0,
-              "slot": "26",
-              "type": "t_uint256",
-              "contract": "OrphiCrowdFund",
-              "src": "contracts/archive/20250619-124520/OrphiCrowdFund.sol:64"
-            }
-          ],
-          "types": {
-            "t_address": {
-              "label": "address",
-              "numberOfBytes": "20"
-            },
-            "t_bool": {
-              "label": "bool",
-              "numberOfBytes": "1"
-            },
-            "t_struct(InitializableStorage)211_storage": {
-              "label": "struct Initializable.InitializableStorage",
-              "members": [
-                {
-                  "label": "_initialized",
-                  "type": "t_uint64",
-                  "offset": 0,
-                  "slot": "0"
-                },
-                {
-                  "label": "_initializing",
-                  "type": "t_bool",
-                  "offset": 8,
-                  "slot": "0"
-                }
-              ],
-              "numberOfBytes": "32"
-            },
-            "t_struct(OwnableStorage)151_storage": {
-              "label": "struct OwnableUpgradeable.OwnableStorage",
-              "members": [
-                {
-                  "label": "_owner",
-                  "type": "t_address",
-                  "offset": 0,
-                  "slot": "0"
-                }
-              ],
-              "numberOfBytes": "32"
-            },
-            "t_struct(PausableStorage)362_storage": {
-              "label": "struct PausableUpgradeable.PausableStorage",
-              "members": [
-                {
-                  "label": "_paused",
-                  "type": "t_bool",
-                  "offset": 0,
-                  "slot": "0"
-                }
-              ],
-              "numberOfBytes": "32"
-            },
-            "t_struct(ReentrancyGuardStorage)426_storage": {
-              "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
-              "members": [
-                {
-                  "label": "_status",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "0"
-                }
-              ],
-              "numberOfBytes": "32"
-            },
-            "t_uint256": {
-              "label": "uint256",
-              "numberOfBytes": "32"
-            },
-            "t_uint64": {
-              "label": "uint64",
-              "numberOfBytes": "8"
-            },
-            "t_array(t_address)16_storage": {
-              "label": "address[16]",
-              "numberOfBytes": "512"
-            },
-            "t_array(t_address)2_storage": {
-              "label": "address[2]",
-              "numberOfBytes": "64"
-            },
-            "t_array(t_address)30_storage": {
-              "label": "address[30]",
-              "numberOfBytes": "960"
-            },
-            "t_array(t_address)dyn_storage": {
-              "label": "address[]",
-              "numberOfBytes": "32"
-            },
-            "t_contract(IERC20)2768": {
-              "label": "contract IERC20",
-              "numberOfBytes": "20"
-            },
-            "t_contract(IPriceFeed)6701": {
-              "label": "contract IPriceFeed",
-              "numberOfBytes": "20"
-            },
-            "t_mapping(t_address,t_array(t_address)2_storage)": {
-              "label": "mapping(address => address[2])",
-              "numberOfBytes": "32"
-            },
-            "t_mapping(t_address,t_array(t_address)30_storage)": {
-              "label": "mapping(address => address[30])",
-              "numberOfBytes": "32"
-            },
-            "t_mapping(t_address,t_array(t_address)dyn_storage)": {
-              "label": "mapping(address => address[])",
-              "numberOfBytes": "32"
-            },
-            "t_mapping(t_address,t_struct(User)6736_storage)": {
-              "label": "mapping(address => struct OrphiCrowdFund.User)",
-              "numberOfBytes": "32"
-            },
-            "t_mapping(t_uint8,t_struct(Package)6751_storage)": {
-              "label": "mapping(uint8 => struct OrphiCrowdFund.Package)",
-              "numberOfBytes": "32"
-            },
-            "t_struct(Package)6751_storage": {
-              "label": "struct OrphiCrowdFund.Package",
-              "members": [
-                {
-                  "label": "price",
-                  "type": "t_uint96",
-                  "offset": 0,
-                  "slot": "0"
-                },
-                {
-                  "label": "directBonus",
-                  "type": "t_uint16",
-                  "offset": 12,
-                  "slot": "0"
-                },
-                {
-                  "label": "levelBonus",
-                  "type": "t_uint16",
-                  "offset": 14,
-                  "slot": "0"
-                },
-                {
-                  "label": "uplineBonus",
-                  "type": "t_uint16",
-                  "offset": 16,
-                  "slot": "0"
-                },
-                {
-                  "label": "leaderBonus",
-                  "type": "t_uint16",
-                  "offset": 18,
-                  "slot": "0"
-                },
-                {
-                  "label": "helpBonus",
-                  "type": "t_uint16",
-                  "offset": 20,
-                  "slot": "0"
-                },
-                {
-                  "label": "clubBonus",
-                  "type": "t_uint16",
-                  "offset": 22,
-                  "slot": "0"
-                }
-              ],
-              "numberOfBytes": "32"
-            },
-            "t_struct(Pool)6758_storage": {
-              "label": "struct OrphiCrowdFund.Pool",
-              "members": [
-                {
-                  "label": "balance",
-                  "type": "t_uint96",
-                  "offset": 0,
-                  "slot": "0"
-                },
-                {
-                  "label": "lastDistribution",
-                  "type": "t_uint32",
-                  "offset": 12,
-                  "slot": "0"
-                },
-                {
-                  "label": "interval",
-                  "type": "t_uint32",
-                  "offset": 16,
-                  "slot": "0"
-                }
-              ],
-              "numberOfBytes": "32"
-            },
-            "t_struct(User)6736_storage": {
-              "label": "struct OrphiCrowdFund.User",
-              "members": [
-                {
-                  "label": "isRegistered",
-                  "type": "t_bool",
-                  "offset": 0,
-                  "slot": "0"
-                },
-                {
-                  "label": "isBlacklisted",
-                  "type": "t_bool",
-                  "offset": 1,
-                  "slot": "0"
-                },
-                {
-                  "label": "referrer",
-                  "type": "t_address",
-                  "offset": 2,
-                  "slot": "0"
-                },
-                {
-                  "label": "balance",
-                  "type": "t_uint96",
-                  "offset": 0,
-                  "slot": "1"
-                },
-                {
-                  "label": "totalInvestment",
-                  "type": "t_uint96",
-                  "offset": 12,
-                  "slot": "1"
-                },
-                {
-                  "label": "totalEarnings",
-                  "type": "t_uint96",
-                  "offset": 0,
-                  "slot": "2"
-                },
-                {
-                  "label": "earningsCap",
-                  "type": "t_uint96",
-                  "offset": 12,
-                  "slot": "2"
-                },
-                {
-                  "label": "directReferrals",
-                  "type": "t_uint32",
-                  "offset": 24,
-                  "slot": "2"
-                },
-                {
-                  "label": "teamSize",
-                  "type": "t_uint32",
-                  "offset": 28,
-                  "slot": "2"
-                },
-                {
-                  "label": "packageLevel",
-                  "type": "t_uint8",
-                  "offset": 0,
-                  "slot": "3"
-                },
-                {
-                  "label": "rank",
-                  "type": "t_uint8",
-                  "offset": 1,
-                  "slot": "3"
-                },
-                {
-                  "label": "withdrawalRate",
-                  "type": "t_uint8",
-                  "offset": 2,
-                  "slot": "3"
-                }
-              ],
-              "numberOfBytes": "128"
-            },
-            "t_uint16": {
-              "label": "uint16",
-              "numberOfBytes": "2"
-            },
-            "t_uint32": {
-              "label": "uint32",
-              "numberOfBytes": "4"
-            },
-            "t_uint8": {
-              "label": "uint8",
-              "numberOfBytes": "1"
-            },
-            "t_uint96": {
-              "label": "uint96",
-              "numberOfBytes": "12"
-            }
-          },
-          "layoutVersion": "1.2",
-          "flat": true,
-          "namespaces": {
-            "erc7201:openzeppelin.storage.Pausable": [
-              {
-                "contract": "PausableUpgradeable",
-                "label": "_paused",
-                "type": "t_bool",
-                "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "erc7201:openzeppelin.storage.ReentrancyGuard": [
-              {
-                "contract": "ReentrancyGuardUpgradeable",
-                "label": "_status",
-                "type": "t_uint256",
-                "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:43",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "erc7201:openzeppelin.storage.Ownable": [
-              {
-                "contract": "OwnableUpgradeable",
-                "label": "_owner",
-                "type": "t_address",
-                "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:24",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "erc7201:openzeppelin.storage.Initializable": [
-              {
-                "contract": "Initializable",
-                "label": "_initialized",
-                "type": "t_uint64",
-                "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "contract": "Initializable",
-                "label": "_initializing",
-                "type": "t_bool",
-                "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
-                "offset": 8,
-                "slot": "0"
-              }
-            ]
-          }
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/core/OrphiCommissions.sol:OrphiCommissions": {
-        "src": "contracts/core/OrphiCommissions.sol:15",
-        "version": {
-          "withMetadata": "62305b8c8c9881ae9bc9fbfab951ad95fd7253a73f815f300bccd4e35480f9b8",
-          "withoutMetadata": "a4051ab2b1195d8f77eb659be3a0ece08cc818483716438820b0bb5845a469af",
-          "linkedWithoutMetadata": "a4051ab2b1195d8f77eb659be3a0ece08cc818483716438820b0bb5845a469af"
-        },
-        "inherit": [
-          "@openzeppelin/contracts/utils/ReentrancyGuard.sol:ReentrancyGuard",
-          "@openzeppelin/contracts/access/Ownable.sol:Ownable",
-          "@openzeppelin/contracts/utils/Context.sol:Context"
-        ],
-        "libraries": [
-          "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol:SafeERC20"
-        ],
-        "methods": [
-          "(address,address,address)",
-          "setMatrixContract(address)",
-          "setPoolContract(address)",
-          "setCommissionTier((uint256,uint256,uint256,uint256,uint256))",
-          "registerUser(address,address,uint256,uint256)",
-          "distributeCommissions(address,uint256)",
-          "getTotalUserEarnings(address)",
-          "getUserCommissionInfo(address)",
-          "getWithdrawalRate(address)",
-          "emergencyWithdraw(address,uint256)"
-        ],
-        "linkReferences": [],
-        "errors": [
-          {
-            "kind": "constructor",
-            "contract": "OrphiCommissions",
-            "src": "contracts/core/OrphiCommissions.sol:120"
-          },
-          {
-            "kind": "state-variable-assignment",
-            "name": "LEVEL_PERCENTAGES",
-            "src": "contracts/core/OrphiCommissions.sol:43"
-          },
-          {
-            "kind": "state-variable-assignment",
-            "name": "defaultTier",
-            "src": "contracts/core/OrphiCommissions.sol:51"
-          }
-        ],
-        "layout": {
-          "storage": [
-            {
-              "label": "_owner",
-              "offset": 0,
-              "slot": "0",
-              "type": "t_address",
-              "contract": "Ownable",
-              "src": "@openzeppelin/contracts/access/Ownable.sol:21"
-            },
-            {
-              "label": "_status",
-              "offset": 0,
-              "slot": "1",
-              "type": "t_uint256",
-              "contract": "ReentrancyGuard",
-              "src": "@openzeppelin/contracts/utils/ReentrancyGuard.sol:40"
-            },
-            {
-              "label": "LEVEL_PERCENTAGES",
-              "offset": 0,
-              "slot": "2",
-              "type": "t_array(t_uint256)10_storage",
-              "contract": "OrphiCommissions",
-              "src": "contracts/core/OrphiCommissions.sol:43"
-            },
-            {
-              "label": "paymentToken",
-              "offset": 0,
-              "slot": "12",
-              "type": "t_contract(IERC20)2768",
-              "contract": "OrphiCommissions",
-              "src": "contracts/core/OrphiCommissions.sol:46"
-            },
-            {
-              "label": "adminReserve",
-              "offset": 0,
-              "slot": "13",
-              "type": "t_address",
-              "contract": "OrphiCommissions",
-              "src": "contracts/core/OrphiCommissions.sol:47"
-            },
-            {
-              "label": "matrixContract",
-              "offset": 0,
-              "slot": "14",
-              "type": "t_address",
-              "contract": "OrphiCommissions",
-              "src": "contracts/core/OrphiCommissions.sol:48"
-            },
-            {
-              "label": "poolContract",
-              "offset": 0,
-              "slot": "15",
-              "type": "t_address",
-              "contract": "OrphiCommissions",
-              "src": "contracts/core/OrphiCommissions.sol:49"
-            },
-            {
-              "label": "defaultTier",
-              "offset": 0,
-              "slot": "16",
-              "type": "t_struct(CommissionTier)8428_storage",
-              "contract": "OrphiCommissions",
-              "src": "contracts/core/OrphiCommissions.sol:51"
-            },
-            {
-              "label": "userCommissions",
-              "offset": 0,
-              "slot": "21",
-              "type": "t_mapping(t_address,t_struct(UserCommissions)8447_storage)",
-              "contract": "OrphiCommissions",
-              "src": "contracts/core/OrphiCommissions.sol:60"
-            },
-            {
-              "label": "userSponsor",
-              "offset": 0,
-              "slot": "22",
-              "type": "t_mapping(t_address,t_address)",
-              "contract": "OrphiCommissions",
-              "src": "contracts/core/OrphiCommissions.sol:61"
-            },
-            {
-              "label": "userPackageLevel",
-              "offset": 0,
-              "slot": "23",
-              "type": "t_mapping(t_address,t_uint256)",
-              "contract": "OrphiCommissions",
-              "src": "contracts/core/OrphiCommissions.sol:62"
-            },
-            {
-              "label": "userDirectSponsors",
-              "offset": 0,
-              "slot": "24",
-              "type": "t_mapping(t_address,t_uint256)",
-              "contract": "OrphiCommissions",
-              "src": "contracts/core/OrphiCommissions.sol:63"
-            }
-          ],
-          "types": {
-            "t_address": {
-              "label": "address",
-              "numberOfBytes": "20"
-            },
-            "t_array(t_uint256)10_storage": {
-              "label": "uint256[10]",
-              "numberOfBytes": "320"
-            },
-            "t_bool": {
-              "label": "bool",
-              "numberOfBytes": "1"
-            },
-            "t_contract(IERC20)2768": {
-              "label": "contract IERC20",
-              "numberOfBytes": "20"
-            },
-            "t_mapping(t_address,t_address)": {
-              "label": "mapping(address => address)",
-              "numberOfBytes": "32"
-            },
-            "t_mapping(t_address,t_struct(UserCommissions)8447_storage)": {
-              "label": "mapping(address => struct OrphiCommissions.UserCommissions)",
-              "numberOfBytes": "32"
-            },
-            "t_mapping(t_address,t_uint256)": {
-              "label": "mapping(address => uint256)",
-              "numberOfBytes": "32"
-            },
-            "t_struct(CommissionTier)8428_storage": {
-              "label": "struct OrphiCommissions.CommissionTier",
-              "members": [
-                {
-                  "label": "sponsorRate",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "0"
-                },
-                {
-                  "label": "levelBonusRate",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "1"
-                },
-                {
-                  "label": "uplineRate",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "2"
-                },
-                {
-                  "label": "leaderRate",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "3"
-                },
-                {
-                  "label": "helpPoolRate",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "4"
-                }
-              ],
-              "numberOfBytes": "160"
-            },
-            "t_struct(UserCommissions)8447_storage": {
-              "label": "struct OrphiCommissions.UserCommissions",
-              "members": [
-                {
-                  "label": "totalSponsorEarned",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "0"
-                },
-                {
-                  "label": "totalLevelEarned",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "1"
-                },
-                {
-                  "label": "totalUplineEarned",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "2"
-                },
-                {
-                  "label": "totalLeaderEarned",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "3"
-                },
-                {
-                  "label": "totalHelpPoolEarned",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "4"
-                },
-                {
-                  "label": "withdrawableAmount",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "5"
-                },
-                {
-                  "label": "isCapped",
-                  "type": "t_bool",
-                  "offset": 0,
-                  "slot": "6"
-                },
-                {
-                  "label": "totalInvested",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "7"
-                },
-                {
-                  "label": "earningsCap",
-                  "type": "t_uint256",
-                  "offset": 0,
-                  "slot": "8"
-                }
-              ],
-              "numberOfBytes": "288"
-            },
-            "t_uint256": {
-              "label": "uint256",
-              "numberOfBytes": "32"
-            }
-          },
-          "layoutVersion": "1.2",
-          "flat": true,
           "namespaces": {}
         },
         "solcVersion": "0.8.22"
@@ -3696,114 +2235,12 @@
         },
         "solcVersion": "0.8.22"
       },
-      "contracts/libraries/AdminFunctions.sol:AdminFunctions": {
-        "src": "contracts/libraries/AdminFunctions.sol:12",
-        "version": {
-          "withMetadata": "c0c0436b58ed58088607f4ede78542393acbf75451eb372972b0380d19840dec",
-          "withoutMetadata": "9597030849813daf88c7b96cdbec56b97041a268595ada3d98c42d6fdacfc892",
-          "linkedWithoutMetadata": "9597030849813daf88c7b96cdbec56b97041a268595ada3d98c42d6fdacfc892"
-        },
-        "inherit": [],
-        "libraries": [
-          "contracts/libraries/DataStructures.sol:DataStructures"
-        ],
-        "methods": [
-          "addPackage(mapping(uint256 => struct DataStructures.Package) storage,uint256,uint96,uint16,uint16,uint16)",
-          "distributeManualBonus(mapping(address => struct DataStructures.User) storage,address,uint256,string,address)",
-          "emergencyWithdraw(address,uint256,address)",
-          "recoverToken(address,uint256,address,address)",
-          "updateBlacklist(mapping(address => struct DataStructures.User) storage,address,bool,string)",
-          "updateOracle(address,address)",
-          "setOraclePrice(uint256)"
-        ],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/libraries/AdminOperations.sol:AdminOperations": {
-        "src": "contracts/libraries/AdminOperations.sol:11",
-        "version": {
-          "withMetadata": "d8fbe39657aec8ab6e575ed45b41327341381494c90c5326cb570784b1eeea2c",
-          "withoutMetadata": "cc5dd671ec5d7421b34463f92f1125843757be64282e6cf7a66d3d7df31cee99",
-          "linkedWithoutMetadata": "cc5dd671ec5d7421b34463f92f1125843757be64282e6cf7a66d3d7df31cee99"
-        },
-        "inherit": [],
-        "libraries": [],
-        "methods": [
-          "blacklistUser(mapping(address => struct DataStructures.User) storage,address,string)",
-          "unblacklistUser(mapping(address => struct DataStructures.User) storage,address)",
-          "setEarningsCap(mapping(address => struct DataStructures.User) storage,address,uint256,string)",
-          "changeSponsor(mapping(address => struct DataStructures.User) storage,address,address,string)",
-          "manualBonusDistribution(mapping(address => struct DataStructures.User) storage,address,uint256,string)",
-          "emergencyWithdrawal(address payable,uint256)",
-          "initializeAdminPrivilegeIDs(address[16] storage,address[16])"
-        ],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/libraries/AdvancedCompensationLogic.sol:AdvancedCompensationLogic": {
-        "src": "contracts/libraries/AdvancedCompensationLogic.sol:8",
-        "version": {
-          "withMetadata": "78a6306ef895f18ff5d5a0f8f59e1357f414c1ece10add523dabe2537e457082",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
-        },
-        "inherit": [],
-        "libraries": [],
-        "methods": [],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/libraries/AdvancedFeatures.sol:AdvancedFeatures": {
-        "src": "contracts/libraries/AdvancedFeatures.sol:10",
-        "version": {
-          "withMetadata": "cc24c98f212cede07df1215be406438954f387f1ff63c677646b3caa133c4883",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
-        },
-        "inherit": [],
-        "libraries": [],
-        "methods": [],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
       "contracts/libraries/AdvancedFeaturesLib.sol:AdvancedFeaturesLib": {
         "src": "contracts/libraries/AdvancedFeaturesLib.sol:10",
         "version": {
-          "withMetadata": "4a9acda16fda2c05630027e66760c61425415f0c84f838f3d0cd996e06c0c644",
-          "withoutMetadata": "a4daa20cdb8b5ee490ec044de1220412b7cb05247b2f4f01be97ff6d2bbad499",
-          "linkedWithoutMetadata": "a4daa20cdb8b5ee490ec044de1220412b7cb05247b2f4f01be97ff6d2bbad499"
+          "withMetadata": "dad26c7a159f71af0d102a89f28b8a1707aadb2eb1b4d64a04260d20ffa22705",
+          "withoutMetadata": "865d9286749a30f2c0ffc73b8607f670af912ec37edaf9e95d335a57080e01cb",
+          "linkedWithoutMetadata": "865d9286749a30f2c0ffc73b8607f670af912ec37edaf9e95d335a57080e01cb"
         },
         "inherit": [],
         "libraries": [
@@ -3812,7 +2249,6 @@
         "methods": [
           "checkCircuitBreaker(uint256,uint256,uint256,mapping(uint256 => uint256) storage)",
           "checkAchievements(DataStructures.User storage,mapping(address => mapping(uint32 => bool)) storage,address)",
-          "calculateFastStartBonus(DataStructures.User storage,uint256)",
           "calculateMatchingBonus(DataStructures.User storage,uint256)",
           "calculateBinaryBonus(uint256,uint256,uint256)",
           "sendNotification(mapping(address => struct AdvancedFeaturesLib.UserNotifications) storage,AdvancedFeaturesLib.NotificationQueue storage,address,uint8,string)",
@@ -3820,7 +2256,11 @@
           "claimAllRewards(DataStructures.User storage,mapping(address => uint256) storage,mapping(address => uint256) storage,mapping(address => uint256) storage,address)",
           "getPendingRewardsSummary(DataStructures.User storage,mapping(address => uint256) storage,mapping(address => uint256) storage,mapping(address => uint256) storage,address)",
           "updateLegVolumes(DataStructures.User storage,uint256,bool)",
-          "checkRankQualification(DataStructures.User storage)"
+          "checkRankQualification(DataStructures.User storage)",
+          "unlockAchievement(mapping(address => struct DataStructures.User) storage,address,uint32)",
+          "getAchievements(mapping(address => struct DataStructures.User) storage,address)",
+          "getTopPerformers(mapping(address => struct DataStructures.User) storage,uint8,uint32)",
+          "getRankDistribution(mapping(address => struct DataStructures.User) storage,uint32)"
         ],
         "linkReferences": [],
         "errors": [],
@@ -3833,16 +2273,21 @@
         },
         "solcVersion": "0.8.22"
       },
-      "contracts/libraries/AssemblyLib.sol:AssemblyLib": {
-        "src": "contracts/libraries/AssemblyLib.sol:4",
+      "contracts/libraries/BonusDistributionLib.sol:BonusDistributionLib": {
+        "src": "contracts/libraries/BonusDistributionLib.sol:11",
         "version": {
-          "withMetadata": "f663a36fb8b4ec0c58c41899ce49b479c00ab77905e885f6a92590f37052fbfd",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
+          "withMetadata": "a19b8f77bebfeb469c58368cc89f32758669e9d5cdf2e06d24e35003cf87b367",
+          "withoutMetadata": "92a763ee0a41ac8962ddd7f237ef3ac05488abf2288df4053af5f273c32dc3b3",
+          "linkedWithoutMetadata": "92a763ee0a41ac8962ddd7f237ef3ac05488abf2288df4053af5f273c32dc3b3"
         },
         "inherit": [],
         "libraries": [],
-        "methods": [],
+        "methods": [
+          "distribute10LevelBonus(mapping(address => struct DataStructures.User) storage,address,uint96)",
+          "distributeUplineBonus(mapping(address => struct DataStructures.User) storage,address,uint96)",
+          "addEarningsWithCap(mapping(address => struct DataStructures.User) storage,address,uint96,uint8)",
+          "distributeReinvestment(mapping(address => struct DataStructures.User) storage,uint96,address)"
+        ],
         "linkReferences": [],
         "errors": [],
         "layout": {
@@ -3857,48 +2302,13 @@
       "contracts/libraries/BusinessLogic.sol:BusinessLogic": {
         "src": "contracts/libraries/BusinessLogic.sol:10",
         "version": {
-          "withMetadata": "2da8e9ea696f72232567289d47954f2431d380684e0d5b739a896c97bbf1e2f3",
+          "withMetadata": "818f9297270eecee99a52e9db39ba42fd8a38f3a1d9b918f45ec3641420d2caa",
           "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
           "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
         },
         "inherit": [],
         "libraries": [],
         "methods": [],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/libraries/BusinessLogicLib.sol:BusinessLogicLib": {
-        "src": "contracts/libraries/BusinessLogicLib.sol:10",
-        "version": {
-          "withMetadata": "e4a2846d7f854f2fb21fa4a1b51d6df715331467c50089412d921ee37c2c5ec8",
-          "withoutMetadata": "819594fd35b529193053d18efc8ff71c5eba7945dbcc0265c65983941ed8c89b",
-          "linkedWithoutMetadata": "819594fd35b529193053d18efc8ff71c5eba7945dbcc0265c65983941ed8c89b"
-        },
-        "inherit": [],
-        "libraries": [
-          "contracts/libraries/DataStructures.sol:DataStructures"
-        ],
-        "methods": [
-          "flushUser(DataStructures.User storage,mapping(address => address[]) storage,address)",
-          "compressNetwork(mapping(address => struct DataStructures.User) storage,mapping(address => address[30]) storage,address)",
-          "handleOrphan(DataStructures.User storage,DataStructures.User storage,mapping(address => address[]) storage,address,address)",
-          "redistributeCommissions(DataStructures.User storage,mapping(address => struct DataStructures.User) storage,mapping(address => address[30]) storage,address,uint256)",
-          "adjustCommissionRates(uint256,uint256,uint256)",
-          "updateReserveFund(uint256,uint256)",
-          "checkEmergencyConditions(uint256,uint256,uint256,uint256,uint256)",
-          "calculateWithdrawalRate(uint32,uint32,uint8)",
-          "calculateEarningsCap(uint256,uint32,uint8)",
-          "balanceNetworkVolumes(mapping(address => struct DataStructures.User) storage,address,uint256,bool)",
-          "processRankAdvancement(DataStructures.User storage,uint8)"
-        ],
         "linkReferences": [],
         "errors": [],
         "layout": {
@@ -3913,53 +2323,9 @@
       "contracts/libraries/CommissionLib.sol:CommissionLib": {
         "src": "contracts/libraries/CommissionLib.sol:10",
         "version": {
-          "withMetadata": "a15cad77d5d66d71fc4cc00cd741c4bd21d760ad7957b6eba1bc7555df12503a",
+          "withMetadata": "2667fe89f6439570bb4dbc5ef9caf131b3caf6c83dd772ba43d05d830ccece1c",
           "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
           "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
-        },
-        "inherit": [],
-        "libraries": [
-          "contracts/libraries/DataStructures.sol:DataStructures"
-        ],
-        "methods": [],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/libraries/CommissionLibrary.sol:CommissionLibrary": {
-        "src": "contracts/libraries/CommissionLibrary.sol:8",
-        "version": {
-          "withMetadata": "c76e8ff0c110863d926190bbd5ff55d02299d9cb3b7984bfe8061354bb7c212f",
-          "withoutMetadata": "9a6fc3e081f4e58c254bbeeba8ec610734af3d0d0d368814fbb1af139da073f5",
-          "linkedWithoutMetadata": "9a6fc3e081f4e58c254bbeeba8ec610734af3d0d0d368814fbb1af139da073f5"
-        },
-        "inherit": [],
-        "libraries": [],
-        "methods": [],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/libraries/CompensationLogic.sol:CompensationLogic": {
-        "src": "contracts/libraries/CompensationLogic.sol:10",
-        "version": {
-          "withMetadata": "6cbaffca7f63aeb30807c9fd5534f521f465459f3f0923124dd317bd78c607a3",
-          "withoutMetadata": "3d8cf3edf06d3c86341588b416001b462c426f93d803016394dc24e59a34fa63",
-          "linkedWithoutMetadata": "3d8cf3edf06d3c86341588b416001b462c426f93d803016394dc24e59a34fa63"
         },
         "inherit": [],
         "libraries": [
@@ -3980,13 +2346,17 @@
       "contracts/libraries/ConstantsLib.sol:ConstantsLib": {
         "src": "contracts/libraries/ConstantsLib.sol:8",
         "version": {
-          "withMetadata": "b352cecf7ebc27ea6377f1b3f81c4304afb8505df9d346b84a11c013c9372add",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
+          "withMetadata": "5c43dc474fe07c8ec1f577a348bd64fe81d175fc2c3f1d1d9f6b18e89f861699",
+          "withoutMetadata": "2d262ce11f51b7ed9e48414f443097822bdeac76a71629ce9c2502bc9b150172",
+          "linkedWithoutMetadata": "2d262ce11f51b7ed9e48414f443097822bdeac76a71629ce9c2502bc9b150172"
         },
         "inherit": [],
         "libraries": [],
-        "methods": [],
+        "methods": [
+          "getBasisPoints()",
+          "getAdminFeeRate()",
+          "getEarningsMultiplier()"
+        ],
         "linkReferences": [],
         "errors": [],
         "layout": {
@@ -3998,15 +2368,45 @@
         },
         "solcVersion": "0.8.22"
       },
-      "contracts/libraries/CoreLib.sol:CoreLib": {
-        "src": "contracts/libraries/CoreLib.sol:6",
+      "contracts/libraries/CoreOperationsLib.sol:CoreOperationsLib": {
+        "src": "contracts/libraries/CoreOperationsLib.sol:11",
         "version": {
-          "withMetadata": "83d97f4f6d4887d3d3dea139cca0a437cc523b3983320e4d824512377d0500d4",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
+          "withMetadata": "ab2da242c82e3fc0a112a6733fc326bb4da173c73bdcd7e99c1e86998e2268f5",
+          "withoutMetadata": "85cd0cc7a7a3a532be12ebd54be4b445265a28c60caad03602ad68fbde9f6f4e",
+          "linkedWithoutMetadata": "85cd0cc7a7a3a532be12ebd54be4b445265a28c60caad03602ad68fbde9f6f4e"
         },
         "inherit": [],
-        "libraries": [],
+        "libraries": [
+          "contracts/libraries/DataStructures.sol:DataStructures"
+        ],
+        "methods": [
+          "processRegistration(address,address,uint8,uint96,uint32)",
+          "addEarnings(DataStructures.User storage,uint96,uint8)",
+          "processWithdrawal(DataStructures.User storage,uint96,uint8,address,address)",
+          "calculateBonusDistributions(uint96,uint16,uint16,uint16,uint16,uint16)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.22"
+      },
+      "contracts/libraries/CoreOptimized.sol:CoreOptimized": {
+        "src": "contracts/libraries/CoreOptimized.sol:11",
+        "version": {
+          "withMetadata": "09a586dfeb2db6f77b7af2d2f74d84d5b4a3d466c7b74119cf5b3c7b124973c6",
+          "withoutMetadata": "a8ac0cb896e223eceb0096c5604cda68527cf447511e4546d10917a916ed6106",
+          "linkedWithoutMetadata": "a8ac0cb896e223eceb0096c5604cda68527cf447511e4546d10917a916ed6106"
+        },
+        "inherit": [],
+        "libraries": [
+          "contracts/libraries/Errors.sol:Errors"
+        ],
         "methods": [],
         "linkReferences": [],
         "errors": [],
@@ -4022,7 +2422,7 @@
       "contracts/libraries/DataStructures.sol:DataStructures": {
         "src": "contracts/libraries/DataStructures.sol:41",
         "version": {
-          "withMetadata": "33b91f090c44d804258d8fd089cf7a66ca2f2bcb8674dc07d813f956be1f7e3d",
+          "withMetadata": "b274d89ba665fe77aabbc40b8a441712227b20d402cec648bc52db47bf748d58",
           "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
           "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
         },
@@ -4040,10 +2440,10 @@
         },
         "solcVersion": "0.8.22"
       },
-      "contracts/libraries/DataTypes.sol:DataTypes": {
-        "src": "contracts/libraries/DataTypes.sol:8",
+      "contracts/libraries/Errors.sol:Errors": {
+        "src": "contracts/libraries/Errors.sol:9",
         "version": {
-          "withMetadata": "3665395d2791a47508a93831c7ace7053d16f00fc597690283691517ff64efdc",
+          "withMetadata": "0370482ea11a2b8d798156c1aa88c4ea0abdf649141052d66dee66f2d4aacedf",
           "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
           "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
         },
@@ -4061,43 +2461,17 @@
         },
         "solcVersion": "0.8.22"
       },
-      "contracts/libraries/EventsLib.sol:EventsLib": {
-        "src": "contracts/libraries/EventsLib.sol:8",
+      "contracts/libraries/LeadFiveCore.sol:LeadFiveCore": {
+        "src": "contracts/libraries/LeadFiveCore.sol:12",
         "version": {
-          "withMetadata": "f04f5220c5cb56fa184211c606b19c8fefb4d5e82311c7baaca8bddf0a26e948",
-          "withoutMetadata": "8318c3de7eda210b7f670f66ab906586332ef18937e493c757ca792f27c8b150",
-          "linkedWithoutMetadata": "8318c3de7eda210b7f670f66ab906586332ef18937e493c757ca792f27c8b150"
+          "withMetadata": "024fe2010a51cd57d0b0a7fecdb4231e73cb3bc2817568cbcc66dd7fc1c6ef21",
+          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
+          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
         },
         "inherit": [],
-        "libraries": [],
-        "methods": [
-          "emitUserRegistered(address,address,uint8)",
-          "emitContributionMade(address,uint256,uint8)",
-          "emitFundsWithdrawn(address,uint256)",
-          "emitBonusDistributed(address,address,uint256,uint8,string)",
-          "emitCommissionPaid(address,address,uint256,uint8)",
-          "emitMatrixPlacement(address,address,uint8)"
+        "libraries": [
+          "contracts/libraries/Errors.sol:Errors"
         ],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/libraries/LeaderManagement.sol:LeaderManagement": {
-        "src": "contracts/libraries/LeaderManagement.sol:8",
-        "version": {
-          "withMetadata": "7ac14c947a20efae3530af3dfbcbf49253fcc6059502333c198972cd2bc93e9c",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
-        },
-        "inherit": [],
-        "libraries": [],
         "methods": [],
         "linkReferences": [],
         "errors": [],
@@ -4110,39 +2484,60 @@
         },
         "solcVersion": "0.8.22"
       },
-      "contracts/libraries/MatrixLib.sol:MatrixLib": {
-        "src": "contracts/libraries/MatrixLib.sol:8",
+      "contracts/libraries/LeaderPoolLib.sol:LeaderPoolLib": {
+        "src": "contracts/libraries/LeaderPoolLib.sol:13",
         "version": {
-          "withMetadata": "7e2dff6664a281cc120f7c4661057b7ac5d6b9861299a07d4362e09c6a33f1be",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
+          "withMetadata": "3effa9e990be22ffb2ced812b4d5796ab809cf7eaf86f842384c267e05ab47bb",
+          "withoutMetadata": "959cd942deb90cbb7dca04ed41020864c745e13b167a1deb23c8b8ab546d1d0e",
+          "linkedWithoutMetadata": "959cd942deb90cbb7dca04ed41020864c745e13b167a1deb23c8b8ab546d1d0e"
         },
         "inherit": [],
-        "libraries": [],
-        "methods": [],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/libraries/MatrixManagement.sol:MatrixManagement": {
-        "src": "contracts/libraries/MatrixManagement.sol:10",
-        "version": {
-          "withMetadata": "c4548182a76ea3bbfca98eac9e4e4cd7a9d115ab6db0f7968d44136b60bf6940",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
-        },
-        "inherit": [],
-        "libraries": [],
-        "methods": [],
-        "linkReferences": [],
-        "errors": [],
+        "libraries": [
+          "contracts/libraries/BonusDistributionLib.sol:BonusDistributionLib"
+        ],
+        "methods": [
+          "updateLeaderQualifications(mapping(address => struct DataStructures.User) storage,address,address[] storage)",
+          "distributeLeaderPoolRewards(mapping(address => struct DataStructures.User) storage,address[] storage,uint96)",
+          "distributeHelpPoolRewards(mapping(address => struct DataStructures.User) storage,address[] storage,uint96)",
+          "distributeClubPoolRewards(mapping(address => struct DataStructures.User) storage,address[] storage,uint96)"
+        ],
+        "linkReferences": [
+          {
+            "src": "contracts/libraries/BonusDistributionLib.sol",
+            "name": "BonusDistributionLib",
+            "length": 20,
+            "start": 600,
+            "placeholder": "__$ee93c7068d5cbd12b0e0fbf9bc718b7978$__"
+          },
+          {
+            "src": "contracts/libraries/BonusDistributionLib.sol",
+            "name": "BonusDistributionLib",
+            "length": 20,
+            "start": 876,
+            "placeholder": "__$ee93c7068d5cbd12b0e0fbf9bc718b7978$__"
+          },
+          {
+            "src": "contracts/libraries/BonusDistributionLib.sol",
+            "name": "BonusDistributionLib",
+            "length": 20,
+            "start": 1307,
+            "placeholder": "__$ee93c7068d5cbd12b0e0fbf9bc718b7978$__"
+          },
+          {
+            "src": "contracts/libraries/BonusDistributionLib.sol",
+            "name": "BonusDistributionLib",
+            "length": 20,
+            "start": 2142,
+            "placeholder": "__$ee93c7068d5cbd12b0e0fbf9bc718b7978$__"
+          }
+        ],
+        "errors": [
+          {
+            "kind": "external-library-linking",
+            "name": "BonusDistributionLib",
+            "src": "contracts/libraries/BonusDistributionLib.sol"
+          }
+        ],
         "layout": {
           "storage": [],
           "types": {},
@@ -4153,28 +2548,22 @@
         "solcVersion": "0.8.22"
       },
       "contracts/libraries/MatrixManagementLib.sol:MatrixManagementLib": {
-        "src": "contracts/libraries/MatrixManagementLib.sol:10",
+        "src": "contracts/libraries/MatrixManagementLib.sol:12",
         "version": {
-          "withMetadata": "10087ec2edfd2c4192461995409184221c18e00338adb01d3e4d2fd251cd4fbc",
-          "withoutMetadata": "bb0abfb24224db882f57fdc7d380c626b11bd07d117f00bc33c994cf56bd92b6",
-          "linkedWithoutMetadata": "bb0abfb24224db882f57fdc7d380c626b11bd07d117f00bc33c994cf56bd92b6"
+          "withMetadata": "a1013b89bd1aa792d5a9964be90004fb26b86343795b1c72bfb4e2ba5cd95254",
+          "withoutMetadata": "f39192ea946e246f39237b3d884df2f521b9081ca5d48f121e9713487e761b8e",
+          "linkedWithoutMetadata": "f39192ea946e246f39237b3d884df2f521b9081ca5d48f121e9713487e761b8e"
         },
         "inherit": [],
-        "libraries": [
-          "contracts/libraries/DataStructures.sol:DataStructures"
-        ],
+        "libraries": [],
         "methods": [
-          "placeInMatrix(mapping(address => struct MatrixManagementLib.MatrixPosition) storage,mapping(address => address[]) storage,address,address)",
-          "findSpilloverPosition(mapping(address => struct MatrixManagementLib.MatrixPosition) storage,address)",
-          "checkMatrixCompletion(mapping(address => struct MatrixManagementLib.MatrixPosition) storage,address,uint8)",
-          "calculateCycleBonus(uint8,uint256)",
-          "processCycleCompletion(mapping(address => struct MatrixManagementLib.MatrixPosition) storage,mapping(address => struct MatrixManagementLib.MatrixCycle[]) storage,address,uint8,uint256)",
-          "handleMatrixReentry(mapping(address => struct MatrixManagementLib.MatrixPosition) storage,mapping(address => address[]) storage,address,address)",
-          "getMatrixStats(mapping(address => struct MatrixManagementLib.MatrixPosition) storage,mapping(address => struct MatrixManagementLib.MatrixCycle[]) storage,address)",
-          "getUserCycles(mapping(address => struct MatrixManagementLib.MatrixCycle[]) storage,address)",
-          "calculateMatrixEarnings(mapping(address => struct MatrixManagementLib.MatrixCycle[]) storage,address,uint256,uint256)",
-          "checkMatrixAdvancementEligibility(mapping(address => struct MatrixManagementLib.MatrixPosition) storage,address,uint32,uint32)",
-          "distributeMatrixRewards(mapping(address => struct MatrixManagementLib.MatrixPosition) storage,mapping(address => struct DataStructures.User) storage,address,uint256)"
+          "initializePosition(MatrixManagementLib.MatrixPosition storage,address,uint8)",
+          "addDownline(MatrixManagementLib.MatrixPosition storage,address)",
+          "updateEarnings(MatrixManagementLib.MatrixPosition storage,uint256)",
+          "setPositionActive(MatrixManagementLib.MatrixPosition storage,bool)",
+          "getPositionInfo(MatrixManagementLib.MatrixPosition storage)",
+          "getDownlines(MatrixManagementLib.MatrixPosition storage)",
+          "findOptimalUpline(mapping(address => struct MatrixManagementLib.MatrixPosition) storage,address,uint256)"
         ],
         "linkReferences": [],
         "errors": [],
@@ -4187,10 +2576,67 @@
         },
         "solcVersion": "0.8.22"
       },
-      "contracts/libraries/NetworkAnalytics.sol:NetworkAnalytics": {
-        "src": "contracts/libraries/NetworkAnalytics.sol:8",
+      "contracts/libraries/MatrixRewardsLib.sol:MatrixRewardsLib": {
+        "src": "contracts/libraries/MatrixRewardsLib.sol:13",
         "version": {
-          "withMetadata": "7b1ac41807e855dcc9732bf358b924a3159319c2fa18ebe16f2289bb15c00d5b",
+          "withMetadata": "8713a0f98e9c0bb98a940ab2f17cc090abdcc0a8dbac8f79d9a78620f927d01c",
+          "withoutMetadata": "510b0e0bbfafe263748febe2b59dc8539b8f9ba69d81250164a502e969a9299f",
+          "linkedWithoutMetadata": "510b0e0bbfafe263748febe2b59dc8539b8f9ba69d81250164a502e969a9299f"
+        },
+        "inherit": [],
+        "libraries": [
+          "contracts/libraries/BonusDistributionLib.sol:BonusDistributionLib"
+        ],
+        "methods": [
+          "checkMatrixTierRewards(mapping(address => struct DataStructures.User) storage,address)",
+          "advanceUserMatrix(mapping(address => struct DataStructures.User) storage,address,uint8)",
+          "getMatrixRewards(mapping(address => struct DataStructures.User) storage,address,mapping(address => struct MatrixManagementLib.MatrixPosition) storage)",
+          "calculateAndClaimMatrixRewards(mapping(address => struct DataStructures.User) storage,address,mapping(address => struct MatrixManagementLib.MatrixPosition) storage)",
+          "triggerMatrixCycle(mapping(address => struct DataStructures.User) storage,address,mapping(address => struct MatrixManagementLib.MatrixPosition) storage)"
+        ],
+        "linkReferences": [
+          {
+            "src": "contracts/libraries/BonusDistributionLib.sol",
+            "name": "BonusDistributionLib",
+            "length": 20,
+            "start": 959,
+            "placeholder": "__$ee93c7068d5cbd12b0e0fbf9bc718b7978$__"
+          },
+          {
+            "src": "contracts/libraries/BonusDistributionLib.sol",
+            "name": "BonusDistributionLib",
+            "length": 20,
+            "start": 1351,
+            "placeholder": "__$ee93c7068d5cbd12b0e0fbf9bc718b7978$__"
+          },
+          {
+            "src": "contracts/libraries/BonusDistributionLib.sol",
+            "name": "BonusDistributionLib",
+            "length": 20,
+            "start": 1920,
+            "placeholder": "__$ee93c7068d5cbd12b0e0fbf9bc718b7978$__"
+          }
+        ],
+        "errors": [
+          {
+            "kind": "external-library-linking",
+            "name": "BonusDistributionLib",
+            "src": "contracts/libraries/BonusDistributionLib.sol"
+          }
+        ],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.22"
+      },
+      "contracts/libraries/NetworkAnalytics.sol:NetworkAnalytics": {
+        "src": "contracts/libraries/NetworkAnalytics.sol:10",
+        "version": {
+          "withMetadata": "67b9e0f5c5cedf34e4265f65699d899ea66589afed246e76dc115723e8a614fe",
           "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
           "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
         },
@@ -4209,15 +2655,14 @@
         "solcVersion": "0.8.22"
       },
       "contracts/libraries/OperationsLib.sol:OperationsLib": {
-        "src": "contracts/libraries/OperationsLib.sol:7",
+        "src": "contracts/libraries/OperationsLib.sol:6",
         "version": {
-          "withMetadata": "e6a351d0ff50c8f4a3e03ea98539480ae73a2e57c6a9e3e1aeee81f61b5d8c75",
+          "withMetadata": "10cec36d2529f13442c692163a71dec792378e2a4367c9d6986f4b063b5d647f",
           "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
           "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
         },
         "inherit": [],
         "libraries": [
-          "contracts/libraries/CoreLib.sol:CoreLib",
           "contracts/libraries/DataStructures.sol:DataStructures"
         ],
         "methods": [],
@@ -4232,29 +2677,8 @@
         },
         "solcVersion": "0.8.22"
       },
-      "contracts/libraries/OptimizedLib.sol:OptimizedLib": {
-        "src": "contracts/libraries/OptimizedLib.sol:7",
-        "version": {
-          "withMetadata": "590fb53f1da02626423fcc277b9abf1c50b174a5b97cade6a5ef892d33da1c8e",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
-        },
-        "inherit": [],
-        "libraries": [],
-        "methods": [],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/libraries/OracleLib.sol:IPriceFeed": {
-        "src": "contracts/libraries/OracleLib.sol:4",
+      "contracts/libraries/OracleManagementLib.sol:IPriceFeed": {
+        "src": "contracts/libraries/OracleManagementLib.sol:4",
         "inherit": [],
         "libraries": [],
         "methods": [
@@ -4271,55 +2695,19 @@
         },
         "solcVersion": "0.8.22"
       },
-      "contracts/libraries/OracleLib.sol:IPriceOracleMinimal": {
-        "src": "contracts/libraries/OracleLib.sol:8",
+      "contracts/libraries/OracleManagementLib.sol:OracleManagementLib": {
+        "src": "contracts/libraries/OracleManagementLib.sol:12",
+        "version": {
+          "withMetadata": "e252ae449614c91a8d97253e5ac39fe655a9dd95b2e856af5973af5002173d35",
+          "withoutMetadata": "fe0449f5e79e8d3169c7032f87d7e30fa72db1b62d951ccb06978cbe2001b74b",
+          "linkedWithoutMetadata": "fe0449f5e79e8d3169c7032f87d7e30fa72db1b62d951ccb06978cbe2001b74b"
+        },
         "inherit": [],
         "libraries": [],
         "methods": [
-          "getPrice(address)"
+          "getSecurePrice(contract IPriceFeed[] storage)",
+          "calculateBNBRequired(uint96,int256)"
         ],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/libraries/OracleLib.sol:OracleLib": {
-        "src": "contracts/libraries/OracleLib.sol:12",
-        "version": {
-          "withMetadata": "07199229a7a3cd4c8edc0c2ffb29bf6e5c73ea370a8fa0b213aede35736bbc39",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
-        },
-        "inherit": [],
-        "libraries": [],
-        "methods": [],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/libraries/PoolDistribution.sol:PoolDistribution": {
-        "src": "contracts/libraries/PoolDistribution.sol:10",
-        "version": {
-          "withMetadata": "91008f0580f461dbec793ebacd6e14dbfe232919e5b01df44deb63d184e38503",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
-        },
-        "inherit": [],
-        "libraries": [],
-        "methods": [],
         "linkReferences": [],
         "errors": [],
         "layout": {
@@ -4332,49 +2720,21 @@
         "solcVersion": "0.8.22"
       },
       "contracts/libraries/PoolDistributionLib.sol:PoolDistributionLib": {
-        "src": "contracts/libraries/PoolDistributionLib.sol:10",
+        "src": "contracts/libraries/PoolDistributionLib.sol:11",
         "version": {
-          "withMetadata": "532035e0ac3bdbf88582a0b86ba1980da948b93421dd7efcc77be0dac04cbf80",
-          "withoutMetadata": "b8042136a9dae57b752bdc9e584f40f44ede0c51dcdcd2a049c23b6a486e850b",
-          "linkedWithoutMetadata": "b8042136a9dae57b752bdc9e584f40f44ede0c51dcdcd2a049c23b6a486e850b"
-        },
-        "inherit": [],
-        "libraries": [
-          "contracts/libraries/DataStructures.sol:DataStructures"
-        ],
-        "methods": [
-          "initializeSchedules(PoolDistributionLib.DistributionSchedule storage,PoolDistributionLib.DistributionSchedule storage,PoolDistributionLib.DistributionSchedule storage)",
-          "isDistributionDue(PoolDistributionLib.DistributionSchedule storage)",
-          "updateDistributionSchedule(PoolDistributionLib.DistributionSchedule storage)",
-          "updatePoolQualifications(mapping(address => struct DataStructures.User) storage,mapping(address => struct PoolDistributionLib.PoolQualification) storage,address)",
-          "distributeLeaderPool(mapping(address => struct DataStructures.User) storage,mapping(address => struct PoolDistributionLib.PoolQualification) storage,address[] storage,uint256)",
-          "distributeHelpPool(mapping(address => struct DataStructures.User) storage,address[] storage,uint256,uint256)",
-          "distributeClubPool(mapping(address => struct DataStructures.User) storage,mapping(address => struct PoolDistributionLib.PoolQualification) storage,address[] storage,uint256)",
-          "getUserPoolStatus(mapping(address => struct PoolDistributionLib.PoolQualification) storage,address)",
-          "getNextDistributionTimes(PoolDistributionLib.DistributionSchedule storage,PoolDistributionLib.DistributionSchedule storage,PoolDistributionLib.DistributionSchedule storage)",
-          "emergencyDistribution(mapping(address => struct DataStructures.User) storage,address[],uint256[])"
-        ],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/libraries/PoolLib.sol:PoolLib": {
-        "src": "contracts/libraries/PoolLib.sol:10",
-        "version": {
-          "withMetadata": "51adfbcefacba73cbc8dee8a585a3d2daa01baef9ba52a7db9bc967bbdaf95e4",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
+          "withMetadata": "e3cc59dedc467f37e678bc60da1b6dd26a2379e749ec580ee920edd7d246bc9d",
+          "withoutMetadata": "590fd298815b00cb408256ac255194c6d24099c4273757979bab597cece95bc8",
+          "linkedWithoutMetadata": "590fd298815b00cb408256ac255194c6d24099c4273757979bab597cece95bc8"
         },
         "inherit": [],
         "libraries": [],
-        "methods": [],
+        "methods": [
+          "initializeSchedule(PoolDistributionLib.DistributionSchedule storage,uint32,uint96)",
+          "isDistributionDue(PoolDistributionLib.DistributionSchedule storage)",
+          "updateNextDistribution(PoolDistributionLib.DistributionSchedule storage)",
+          "setScheduleActive(PoolDistributionLib.DistributionSchedule storage,bool)",
+          "getDistributionInfo(PoolDistributionLib.DistributionSchedule storage)"
+        ],
         "linkReferences": [],
         "errors": [],
         "layout": {
@@ -4387,9 +2747,9 @@
         "solcVersion": "0.8.22"
       },
       "contracts/libraries/ReferralLib.sol:ReferralLib": {
-        "src": "contracts/libraries/ReferralLib.sol:4",
+        "src": "contracts/libraries/ReferralLib.sol:6",
         "version": {
-          "withMetadata": "2b219bbcf9c9a073f18fff2697d89812ddcff8619a8f896db3458e4e1cdeff20",
+          "withMetadata": "cbf33ffcb4534d10335487eeeb0f6080d413241028bd5286d9b306c0b7e5058f",
           "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
           "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
         },
@@ -4407,16 +2767,76 @@
         },
         "solcVersion": "0.8.22"
       },
-      "contracts/libraries/UserManagement.sol:UserManagementLib": {
-        "src": "contracts/libraries/UserManagement.sol:7",
+      "contracts/libraries/SecureOracle.sol:IPriceFeed": {
+        "src": "contracts/libraries/SecureOracle.sol:6",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "latestRoundData()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.22"
+      },
+      "contracts/libraries/SecureOracle.sol:SecureOracle": {
+        "src": "contracts/libraries/SecureOracle.sol:21",
         "version": {
-          "withMetadata": "b586ae928f57ae0bb4b2f478457fa21c1796308238cde417d2f9e21d60f0b146",
+          "withMetadata": "600c8e1d1cbdfbdd27b4f8f4d68e1276e189dabec118af0725902fb44bcb9330",
           "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
           "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
         },
         "inherit": [],
         "libraries": [
-          "contracts/libraries/DataStructures.sol:DataStructures"
+          "contracts/libraries/Errors.sol:Errors"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.22"
+      },
+      "contracts/libraries/SecureOracleManager.sol:IPriceFeed": {
+        "src": "contracts/libraries/SecureOracleManager.sol:141",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "latestRoundData()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false,
+          "namespaces": {}
+        },
+        "solcVersion": "0.8.22"
+      },
+      "contracts/libraries/SecureOracleManager.sol:SecureOracleManager": {
+        "src": "contracts/libraries/SecureOracleManager.sol:12",
+        "version": {
+          "withMetadata": "1d42f1944ff27f64fc8de0a1fbb30e187877601a906a72a800d2b8d43fa79a81",
+          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
+          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
+        },
+        "inherit": [],
+        "libraries": [
+          "contracts/libraries/Errors.sol:Errors",
+          "contracts/libraries/LeadFiveCore.sol:LeadFiveCore"
         ],
         "methods": [],
         "linkReferences": [],
@@ -4433,92 +2853,21 @@
       "contracts/libraries/UserManagementLib.sol:UserManagementLib": {
         "src": "contracts/libraries/UserManagementLib.sol:7",
         "version": {
-          "withMetadata": "1e5e5d05ede423b66ac466fbe831c2fa2649b1dff10c473a247cc33022dd5793",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
-        },
-        "inherit": [],
-        "libraries": [
-          "contracts/libraries/DataStructures.sol:DataStructures"
-        ],
-        "methods": [],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/libraries/UserManagementLibSimple.sol:UserManagementLibSimple": {
-        "src": "contracts/libraries/UserManagementLibSimple.sol:11",
-        "version": {
-          "withMetadata": "59ece0ddd97202ad0b0000dc6e6c7ffb730e896991ce93af9eb5d2bf2969af61",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
-        },
-        "inherit": [],
-        "libraries": [
-          "contracts/libraries/MatrixLib.sol:MatrixLib"
-        ],
-        "methods": [],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/libraries/UserManagementOperations.sol:UserManagementOperations": {
-        "src": "contracts/libraries/UserManagementOperations.sol:10",
-        "version": {
-          "withMetadata": "1a5fdda6c48d8443f0e1368b3b4895902f71012e9e8f83940b2cfcc5b5d547ae",
-          "withoutMetadata": "8e55d832f0926293f793fdae89ffd4851523371d9d7439270f6ab2e140b8eff0",
-          "linkedWithoutMetadata": "8e55d832f0926293f793fdae89ffd4851523371d9d7439270f6ab2e140b8eff0"
-        },
-        "inherit": [],
-        "libraries": [],
-        "methods": [
-          "getUser(mapping(address => struct DataTypes.User) storage,address)",
-          "getUserBonuses(mapping(address => struct DataTypes.User) storage,address)",
-          "getUserMatrix(mapping(address => struct DataTypes.User) storage,address)",
-          "registerFreeAdminUser(mapping(address => struct DataTypes.User) storage,mapping(uint256 => address) storage,address[] storage,address,address,uint256,uint8)",
-          "initializeLevelBonuses(mapping(uint256 => uint256) storage)"
-        ],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/libraries/UserOperations.sol:UserOperations": {
-        "src": "contracts/libraries/UserOperations.sol:11",
-        "version": {
-          "withMetadata": "dd839b1d145ee9731bb1b5483b2dc9828da256e3c5979001ccf5ab807639f7b4",
-          "withoutMetadata": "8d1e8235ff227278dd8b41ca3c02f099d79548cb9b19effaae67314138f05e2e",
-          "linkedWithoutMetadata": "8d1e8235ff227278dd8b41ca3c02f099d79548cb9b19effaae67314138f05e2e"
+          "withMetadata": "d9fbd56606c7c7af6415bc6f43325f655a20d3b64eb29419c1f8b4861021a9a4",
+          "withoutMetadata": "0da0b0cf4a263853b1ffe04318f0e8449d9e11169bac3ea151cf298389d16d18",
+          "linkedWithoutMetadata": "0da0b0cf4a263853b1ffe04318f0e8449d9e11169bac3ea151cf298389d16d18"
         },
         "inherit": [],
         "libraries": [
           "contracts/libraries/DataStructures.sol:DataStructures"
         ],
         "methods": [
-          "getUserEarnings(mapping(address => struct DataStructures.User) storage,address)",
-          "updateUserInvestment(mapping(address => struct DataStructures.User) storage,address,uint96,uint8)",
-          "addEarnings(mapping(address => struct DataStructures.User) storage,address,uint96)",
-          "processWithdrawal(mapping(address => struct DataStructures.User) storage,address,uint96)"
+          "getGenealogyTree(mapping(address => struct DataStructures.User) storage,address,uint8,mapping(address => address[]) storage)",
+          "getReferralStats(mapping(address => struct DataStructures.User) storage,address,mapping(address => address[]) storage)",
+          "getNetworkStats(mapping(address => struct DataStructures.User) storage,uint32)",
+          "processNetworkCompression(mapping(address => struct DataStructures.User) storage,mapping(address => address[]) storage)",
+          "flushUser(mapping(address => struct DataStructures.User) storage,address,mapping(address => address[]) storage)",
+          "reassignOrphan(mapping(address => struct DataStructures.User) storage,address,address,mapping(address => address[]) storage)"
         ],
         "linkReferences": [],
         "errors": [],
@@ -4531,374 +2880,29 @@
         },
         "solcVersion": "0.8.22"
       },
-      "contracts/libraries/UserStorage.sol:UserStorage": {
-        "src": "contracts/libraries/UserStorage.sol:8",
+      "contracts/libraries/ViewFunctionsLib.sol:ViewFunctionsLib": {
+        "src": "contracts/libraries/ViewFunctionsLib.sol:12",
         "version": {
-          "withMetadata": "923daaeddaf22da42365968f0e83501ea16627f4dba6d428156fe8fd77dd34a3",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
-        },
-        "inherit": [],
-        "libraries": [],
-        "methods": [],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/libraries/WithdrawalSafety.sol:WithdrawalSafety": {
-        "src": "contracts/libraries/WithdrawalSafety.sol:8",
-        "version": {
-          "withMetadata": "d11d2f796b3abb1911e7126398f57b4f4ee9a9f70c96e2240d62f7fca03709d8",
-          "withoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a",
-          "linkedWithoutMetadata": "e2a89a66865458f0d9fedd4bc7faf0ee62e4c341d176ab79d29bd77a1bdfc32a"
-        },
-        "inherit": [],
-        "libraries": [],
-        "methods": [],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/libraries/WithdrawalSafetyLib.sol:WithdrawalSafetyLib": {
-        "src": "contracts/libraries/WithdrawalSafetyLib.sol:10",
-        "version": {
-          "withMetadata": "1f45ef0a0ad8d84deac09bd8d3f1018e13203570c32f4be78e514cdbb1a3768f",
-          "withoutMetadata": "258800955ebd512658794d18a543fb605c9d52788243b78f3148cbfcd7998a29",
-          "linkedWithoutMetadata": "258800955ebd512658794d18a543fb605c9d52788243b78f3148cbfcd7998a29"
-        },
-        "inherit": [],
-        "libraries": [
-          "contracts/libraries/DataStructures.sol:DataStructures"
-        ],
-        "methods": [
-          "initializeUserLimits(uint8)",
-          "checkWithdrawalAllowed(WithdrawalSafetyLib.UserWithdrawalStats storage,WithdrawalSafetyLib.WithdrawalLimits storage,uint256,uint256)",
-          "updateWithdrawalStats(WithdrawalSafetyLib.UserWithdrawalStats storage,uint256)",
-          "getAvailableWithdrawal(WithdrawalSafetyLib.UserWithdrawalStats storage,WithdrawalSafetyLib.WithdrawalLimits storage,uint256)",
-          "checkReserveProtection(uint256,uint256,uint256)",
-          "calculateDynamicLimits(DataStructures.User storage,uint256)",
-          "getWithdrawalInfo(WithdrawalSafetyLib.UserWithdrawalStats storage,WithdrawalSafetyLib.WithdrawalLimits storage)",
-          "updateWithdrawalLimits(WithdrawalSafetyLib.WithdrawalLimits storage,uint256,uint256,uint256,uint256)",
-          "checkEmergencyWithdrawal(WithdrawalSafetyLib.UserWithdrawalStats storage,uint256,uint256,bool)",
-          "calculateWithdrawalFee(WithdrawalSafetyLib.UserWithdrawalStats storage,uint256,uint256)"
-        ],
-        "linkReferences": [],
-        "errors": [],
-        "layout": {
-          "storage": [],
-          "types": {},
-          "layoutVersion": "1.2",
-          "flat": false,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/mocks/MockPriceFeed.sol:MockPriceFeed": {
-        "src": "contracts/mocks/MockPriceFeed.sol:4",
-        "version": {
-          "withMetadata": "a5ca98de2ab54c1ac9e370f06fd6764393cd5fab3523213e44307dd5feb69c8d",
-          "withoutMetadata": "565eff95bccffbcde822389b66106cb5c5e761cd3c11fbaf493d8c45bd067d4a",
-          "linkedWithoutMetadata": "565eff95bccffbcde822389b66106cb5c5e761cd3c11fbaf493d8c45bd067d4a"
+          "withMetadata": "0a60c0008b3928a00cb579e82a765c3eedd85bd6ab09d1cf4b370b8374668e70",
+          "withoutMetadata": "d6eea837bea59830a2d1f87e4740f7c1720bfeaf35674730e3d62ce5564e9022",
+          "linkedWithoutMetadata": "d6eea837bea59830a2d1f87e4740f7c1720bfeaf35674730e3d62ce5564e9022"
         },
         "inherit": [],
         "libraries": [],
         "methods": [
-          "latestRoundData()",
-          "setPrice(int256)"
-        ],
-        "linkReferences": [],
-        "errors": [
-          {
-            "kind": "state-variable-assignment",
-            "name": "price",
-            "src": "contracts/mocks/MockPriceFeed.sol:5"
-          }
-        ],
-        "layout": {
-          "storage": [
-            {
-              "label": "price",
-              "offset": 0,
-              "slot": "0",
-              "type": "t_int256",
-              "contract": "MockPriceFeed",
-              "src": "contracts/mocks/MockPriceFeed.sol:5"
-            }
-          ],
-          "types": {
-            "t_int256": {
-              "label": "int256",
-              "numberOfBytes": "32"
-            }
-          },
-          "layoutVersion": "1.2",
-          "flat": true,
-          "namespaces": {}
-        },
-        "solcVersion": "0.8.22"
-      },
-      "contracts/modules/InternalAdminManager.sol:InternalAdminManager": {
-        "src": "contracts/modules/InternalAdminManager.sol:19",
-        "version": {
-          "withMetadata": "79d2e91bcaf50675a7e7f5da5b07f890a9a97412e89bc49a4546d03064931c86",
-          "withoutMetadata": "96ae197f7fca254010488197e25620f583839cb47b1673ad1f08f98e691c0102",
-          "linkedWithoutMetadata": "96ae197f7fca254010488197e25620f583839cb47b1673ad1f08f98e691c0102"
-        },
-        "inherit": [
-          "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:PausableUpgradeable",
-          "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:AccessControlUpgradeable",
-          "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:ERC165Upgradeable",
-          "@openzeppelin/contracts/utils/introspection/IERC165.sol:IERC165",
-          "@openzeppelin/contracts/access/IAccessControl.sol:IAccessControl",
-          "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:ContextUpgradeable",
-          "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:Initializable"
-        ],
-        "libraries": [],
-        "methods": [
-          "initialize(address,address,address)",
-          "addInternalAdmin(address)",
-          "removeInternalAdmin(address)",
-          "replaceInternalAdmin(address,address)",
-          "bulkAddInternalAdmins(address[])",
-          "trackAdminActivity(address,string)",
-          "getAllInternalAdmins()",
-          "getInternalAdminCount()",
-          "getInternalAdminAt(uint256)",
-          "checkIsInternalAdmin(address)",
-          "getAdminStats(address)",
-          "getAdminManagerInfo()",
-          "updateEmergencyAdmin(address)",
-          "updateOrphiContract(address)",
-          "emergencyPause()",
-          "emergencyUnpause()",
-          "emergencyClearAllAdmins()",
-          "validateInternalAdmin(address)",
-          "getRandomInternalAdmin()",
-          "version()"
+          "getLeaderStats(mapping(address => struct DataStructures.User) storage,address[] storage,PoolDistributionLib.DistributionSchedule storage,PoolDistributionLib.DistributionSchedule storage)",
+          "getUserLeaderInfo(mapping(address => struct DataStructures.User) storage,address)",
+          "getUserAnalytics(mapping(address => struct DataStructures.User) storage,address)",
+          "getUserDetails(mapping(address => struct DataStructures.User) storage,address)"
         ],
         "linkReferences": [],
         "errors": [],
         "layout": {
-          "storage": [
-            {
-              "label": "internalAdmins",
-              "offset": 0,
-              "slot": "0",
-              "type": "t_array(t_address)dyn_storage",
-              "contract": "InternalAdminManager",
-              "src": "contracts/modules/InternalAdminManager.sol:36"
-            },
-            {
-              "label": "isInternalAdmin",
-              "offset": 0,
-              "slot": "1",
-              "type": "t_mapping(t_address,t_bool)",
-              "contract": "InternalAdminManager",
-              "src": "contracts/modules/InternalAdminManager.sol:39"
-            },
-            {
-              "label": "adminIndex",
-              "offset": 0,
-              "slot": "2",
-              "type": "t_mapping(t_address,t_uint256)",
-              "contract": "InternalAdminManager",
-              "src": "contracts/modules/InternalAdminManager.sol:42"
-            },
-            {
-              "label": "orphiContract",
-              "offset": 0,
-              "slot": "3",
-              "type": "t_address",
-              "contract": "InternalAdminManager",
-              "src": "contracts/modules/InternalAdminManager.sol:45"
-            },
-            {
-              "label": "emergencyAdmin",
-              "offset": 0,
-              "slot": "4",
-              "type": "t_address",
-              "contract": "InternalAdminManager",
-              "src": "contracts/modules/InternalAdminManager.sol:48"
-            },
-            {
-              "label": "lastAdminUpdate",
-              "offset": 0,
-              "slot": "5",
-              "type": "t_uint256",
-              "contract": "InternalAdminManager",
-              "src": "contracts/modules/InternalAdminManager.sol:51"
-            },
-            {
-              "label": "adminLastActivity",
-              "offset": 0,
-              "slot": "6",
-              "type": "t_mapping(t_address,t_uint256)",
-              "contract": "InternalAdminManager",
-              "src": "contracts/modules/InternalAdminManager.sol:54"
-            },
-            {
-              "label": "adminActionCount",
-              "offset": 0,
-              "slot": "7",
-              "type": "t_mapping(t_address,t_uint256)",
-              "contract": "InternalAdminManager",
-              "src": "contracts/modules/InternalAdminManager.sol:55"
-            }
-          ],
-          "types": {
-            "t_address": {
-              "label": "address",
-              "numberOfBytes": "20"
-            },
-            "t_bool": {
-              "label": "bool",
-              "numberOfBytes": "1"
-            },
-            "t_bytes32": {
-              "label": "bytes32",
-              "numberOfBytes": "32"
-            },
-            "t_mapping(t_address,t_bool)": {
-              "label": "mapping(address => bool)",
-              "numberOfBytes": "32"
-            },
-            "t_mapping(t_bytes32,t_struct(RoleData)24_storage)": {
-              "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
-              "numberOfBytes": "32"
-            },
-            "t_struct(AccessControlStorage)34_storage": {
-              "label": "struct AccessControlUpgradeable.AccessControlStorage",
-              "members": [
-                {
-                  "label": "_roles",
-                  "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
-                  "offset": 0,
-                  "slot": "0"
-                }
-              ],
-              "numberOfBytes": "32"
-            },
-            "t_struct(InitializableStorage)211_storage": {
-              "label": "struct Initializable.InitializableStorage",
-              "members": [
-                {
-                  "label": "_initialized",
-                  "type": "t_uint64",
-                  "offset": 0,
-                  "slot": "0"
-                },
-                {
-                  "label": "_initializing",
-                  "type": "t_bool",
-                  "offset": 8,
-                  "slot": "0"
-                }
-              ],
-              "numberOfBytes": "32"
-            },
-            "t_struct(PausableStorage)362_storage": {
-              "label": "struct PausableUpgradeable.PausableStorage",
-              "members": [
-                {
-                  "label": "_paused",
-                  "type": "t_bool",
-                  "offset": 0,
-                  "slot": "0"
-                }
-              ],
-              "numberOfBytes": "32"
-            },
-            "t_struct(RoleData)24_storage": {
-              "label": "struct AccessControlUpgradeable.RoleData",
-              "members": [
-                {
-                  "label": "hasRole",
-                  "type": "t_mapping(t_address,t_bool)",
-                  "offset": 0,
-                  "slot": "0"
-                },
-                {
-                  "label": "adminRole",
-                  "type": "t_bytes32",
-                  "offset": 0,
-                  "slot": "1"
-                }
-              ],
-              "numberOfBytes": "64"
-            },
-            "t_uint64": {
-              "label": "uint64",
-              "numberOfBytes": "8"
-            },
-            "t_array(t_address)dyn_storage": {
-              "label": "address[]",
-              "numberOfBytes": "32"
-            },
-            "t_mapping(t_address,t_uint256)": {
-              "label": "mapping(address => uint256)",
-              "numberOfBytes": "32"
-            },
-            "t_uint256": {
-              "label": "uint256",
-              "numberOfBytes": "32"
-            }
-          },
+          "storage": [],
+          "types": {},
           "layoutVersion": "1.2",
-          "flat": true,
-          "namespaces": {
-            "erc7201:openzeppelin.storage.Pausable": [
-              {
-                "contract": "PausableUpgradeable",
-                "label": "_paused",
-                "type": "t_bool",
-                "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "erc7201:openzeppelin.storage.AccessControl": [
-              {
-                "contract": "AccessControlUpgradeable",
-                "label": "_roles",
-                "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
-                "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61",
-                "offset": 0,
-                "slot": "0"
-              }
-            ],
-            "erc7201:openzeppelin.storage.Initializable": [
-              {
-                "contract": "Initializable",
-                "label": "_initialized",
-                "type": "t_uint64",
-                "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
-                "offset": 0,
-                "slot": "0"
-              },
-              {
-                "contract": "Initializable",
-                "label": "_initializing",
-                "type": "t_bool",
-                "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
-                "offset": 8,
-                "slot": "0"
-              }
-            ]
-          }
+          "flat": false,
+          "namespaces": {}
         },
         "solcVersion": "0.8.22"
       }

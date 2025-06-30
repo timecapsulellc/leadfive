@@ -1,0 +1,26 @@
+// Sidebar component for the dashboard layout
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import './Sidebar.css'; // Assuming there's a CSS file for styling
+
+const Sidebar = () => {
+    return (
+        <aside className="sidebar">
+            <nav>
+                <ul>
+                    <li>
+                        <NavLink to="/dashboard" activeClassName="active">Dashboard</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/reports" activeClassName="active">Reports</NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/settings" activeClassName="active">Settings</NavLink>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+    );
+};
+
+export default Sidebar;

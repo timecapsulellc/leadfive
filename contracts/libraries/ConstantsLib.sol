@@ -140,4 +140,17 @@ library ConstantsLib {
     function calculateMinimumGHPPayout(uint256 poolBalance) internal pure returns (uint256) {
         return (poolBalance * GHP_MINIMUM_PAYOUT_FRACTION) / BASIS_POINTS;
     }
+
+    // Getter functions for compatibility
+    function getBasisPoints() external pure returns (uint256) {
+        return BASIS_POINTS;
+    }
+    
+    function getAdminFeeRate() external pure returns (uint256) {
+        return MAX_FEE_RATE; // 5% admin fee
+    }
+    
+    function getEarningsMultiplier() external pure returns (uint256) {
+        return EARNINGS_CAP_MULTIPLIER; // 4x earnings cap
+    }
 }

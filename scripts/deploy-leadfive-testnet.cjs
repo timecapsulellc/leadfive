@@ -1,205 +1,149 @@
 const { ethers, upgrades } = require("hardhat");
-require('dotenv').config();
 
 async function main() {
-    console.log("🧪 LEADFIVE BSC TESTNET DEPLOYMENT");
-    console.log("=" * 60);
+    console.log("🚀 Deploying LeadFivePhaseOne to BSC Testnet...");
+    console.log("📅 Date:", new Date().toISOString());
 
-    // Get the deployer account
-    const [deployer] = await ethers.getSigners();
-    console.log("📋 Deploying with account:", deployer.address);
-    console.log("💰 Account balance:", ethers.formatEther(await deployer.provider.getBalance(deployer.address)), "BNB");
-
-    // BSC Testnet contract addresses
-    const USDT_TESTNET_ADDRESS = "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd"; // BSC Testnet USDT
-    const PRICE_FEED_TESTNET_ADDRESS = "0x2514895c72f50D8bd4B4F9b1110F0D6bD2c97526"; // BNB/USD Testnet Price Feed
+    // Load environment
+    require('dotenv').config();
+    const privateKey = process.env.DEPLOYER_PRIVATE_KEY;
     
-    console.log("🌐 Network: BSC Testnet");
-    console.log("💰 USDT Address:", USDT_TESTNET_ADDRESS);
-    console.log("📊 Price Feed:", PRICE_FEED_TESTNET_ADDRESS);
+    if (!privateKey || privateKey.length !== 64) {
+        console.log("❌ Invalid DEPLOYER_PRIVATE_KEY in .env file");
+        console.log("💡 Expected: 64-character hex string (without 0x prefix)");
+        return;
+    }
 
-    // Admin addresses - deployer gets all admin rights initially
-    const ADMIN_ADDRESSES = Array(16).fill(deployer.address);
+    // Connect to BSC Testnet
+    const provider = new ethers.JsonRpcProvider("https://data-seed-prebsc-1-s1.binance.org:8545/");
+    const wallet = new ethers.Wallet(`0x${privateKey}`, provider);
+    
+    console.log("👤 Deployer address:", wallet.address);
+
+    // Check balance
+    const balance = await provider.getBalance(wallet.address);
+    console.log("💰 Deployer balance:", ethers.formatEther(balance), "BNB");
+
+    if (balance < ethers.parseEther("0.1")) {
+        console.log("❌ Insufficient BNB balance for deployment");
+        console.log("💡 Get testnet BNB from: https://testnet.bnbchain.org/faucet-smart");
+        return;
+    }
 
     try {
-        // Get the contract factory (using compact version)
-        console.log("\n📦 Getting LeadFive contract factory...");
-        const LeadFive = await ethers.getContractFactory("LeadFive");
+        console.log("\n📋 Step 1: Creating contract factory...");
+        const LeadFivePhaseOne = await ethers.getContractFactory("LeadFivePhaseOne", wallet);
+        console.log("✅ Contract factory created successfully");
 
-        // Deploy the contract using OpenZeppelin upgrades
-        console.log("🚀 Deploying LeadFive contract (optimized for size, all features) to BSC Testnet...");
-        const leadFive = await upgrades.deployProxy(
-            LeadFive,
-            [USDT_TESTNET_ADDRESS, PRICE_FEED_TESTNET_ADDRESS, ADMIN_ADDRESSES],
-            {
-                initializer: "initialize",
-                kind: "uups"
-            }
-        );
+        console.log("\n📋 Step 2: Preparing deployment parameters...");
+        
+        // BSC Testnet addresses
+        const testnetUSDT = "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd"; // BSC Testnet USDT
+        const testnetOracle = "0x2514895c72f50D8bd4B4F9b1110F0D6bD2c97526"; // Chainlink BNB/USD testnet
+        
+        console.log("💱 USDT Token:", testnetUSDT);
+        console.log("🔮 Price Oracle:", testnetOracle);
 
-        await leadFive.waitForDeployment();
-        const contractAddress = await leadFive.getAddress();
+        console.log("\n📋 Step 3: Deploying proxy contract...");
+        
+        const proxy = await upgrades.deployProxy(LeadFivePhaseOne, [
+            testnetUSDT,
+            testnetOracle
+        ], {
+            initializer: 'initialize',
+            kind: 'uups'
+        });
+        
+        console.log("⏳ Waiting for deployment...");
+        await proxy.waitForDeployment();
+        
+        const proxyAddress = await proxy.getAddress();
+        console.log("✅ Proxy deployed to:", proxyAddress);
 
-        console.log("\n✅ LEADFIVE TESTNET DEPLOYMENT SUCCESSFUL!");
-        console.log("📍 Proxy Address:", contractAddress);
-
-        // Get implementation address
-        const implementationAddress = await upgrades.erc1967.getImplementationAddress(contractAddress);
-        console.log("🔧 Implementation Address:", implementationAddress);
-
-        // Verify deployment
-        console.log("\n🔍 Verifying deployment...");
-        const owner = await leadFive.owner();
-        console.log("👤 Contract Owner:", owner);
-        console.log("🔐 Admin Control: Deployer has all 16 admin positions");
-
-        const usdtToken = await leadFive.usdt();
-        console.log("💰 USDT Token:", usdtToken);
-
-        const priceFeed = await leadFive.priceFeed();
-        console.log("📊 Price Feed:", priceFeed);
-
-        // Test package configuration
-        console.log("\n📦 Package Configuration:");
-        for (let i = 1; i <= 4; i++) {
-            try {
-                const packageInfo = await leadFive.packages(i);
-                console.log(`Package ${i}: ${ethers.formatEther(packageInfo.price)} USDT`);
-            } catch (error) {
-                console.log(`Package ${i}: Error reading package info`);
-            }
-        }
-
-        // Test admin functions
-        console.log("\n🔧 Testing admin functions...");
+        console.log("\n📋 Step 4: Initializing Phase One features...");
         try {
-            // Test setting admin fee recipient
-            await leadFive.setAdminFeeRecipient(deployer.address);
-            console.log("✅ Admin fee recipient set successfully");
-
-            // Get admin fee info
-            const adminFeeInfo = await leadFive.getAdminFeeInfo();
-            console.log("💰 Admin fee recipient:", adminFeeInfo[0]);
-            console.log("💰 Admin fee rate:", adminFeeInfo[2].toString(), "basis points (5%)");
-
+            const initTx = await proxy.initializePhaseOne();
+            await initTx.wait();
+            console.log("✅ Phase One initialization complete");
         } catch (error) {
-            console.log("⚠️  Admin function test failed:", error.message);
+            console.log("ℹ️ Phase One features already initialized or not available");
         }
 
-        // Generate deployment summary
+        console.log("\n📋 Step 5: Verification checks...");
+        
+        // Verify deployment
+        const owner = await proxy.owner();
+        const usdtToken = await proxy.usdtToken();
+        
+        console.log("🔐 Contract owner:", owner);
+        console.log("💲 USDT token address:", usdtToken);
+        
+        // Test basic function
+        try {
+            const packageDetails = await proxy.getPackageDetails(1);
+            console.log("📦 Package 1 price:", ethers.formatEther(packageDetails[0]), "USDT");
+        } catch (error) {
+            console.log("ℹ️ Package details not accessible (may be expected)");
+        }
+
+        console.log("\n🎉 DEPLOYMENT SUCCESSFUL!");
+        console.log("📋 Contract Address:", proxyAddress);
+        console.log("🌐 BSCScan Testnet:", `https://testnet.bscscan.com/address/${proxyAddress}`);
+        console.log("🔗 Network: BSC Testnet (Chain ID: 97)");
+        
+        // Save deployment info
+        const fs = require('fs');
         const deploymentInfo = {
             network: "BSC Testnet",
-            chainId: 97,
-            contractName: "LeadFiveModular", // Updated to correct contract name
-            contractVersion: "MODULAR", // Indicate this is the modular version
-            proxyAddress: contractAddress,
-            implementationAddress: implementationAddress,
-            deployer: deployer.address,
-            usdtAddress: USDT_TESTNET_ADDRESS,
-            priceFeedAddress: PRICE_FEED_TESTNET_ADDRESS,
+            contractName: "LeadFivePhaseOne",
+            contractAddress: proxyAddress,
+            deployer: wallet.address,
+            deployerBalance: ethers.formatEther(balance),
             timestamp: new Date().toISOString(),
-            blockNumber: await deployer.provider.getBlockNumber(),
-            testnetExplorer: `https://testnet.bscscan.com/address/${contractAddress}`,
-            writeContractUrl: `https://testnet.bscscan.com/address/${contractAddress}#writeContract`,
-            adminPositions: "All 16 positions controlled by deployer",
-            adminFeeRecipient: deployer.address,
-            packages: [
-                { level: 1, price: "30 USDT" },
-                { level: 2, price: "50 USDT" },
-                { level: 3, price: "100 USDT" },
-                { level: 4, price: "200 USDT" }
-            ],
-            features: {
-                basicMLM: "✅ Deployed",
-                pools: "✅ Deployed", 
-                adminFees: "✅ Deployed",
-                matrix: "✅ Deployed",
-                gasOptimized: "✅ Deployed",
-                libraries: "✅ Deployed",
-                upgradeable: "✅ Deployed",
-                security: "✅ Deployed",
-                payments: "✅ Deployed",
-                modularDesign: "✅ Deployed"
-            }
+            chainId: 97,
+            explorer: `https://testnet.bscscan.com/address/${proxyAddress}`,
+            usdtToken: testnetUSDT,
+            priceOracle: testnetOracle,
+            txHash: null // Will be updated if needed
         };
-
-        // Save deployment info to file
-        const fs = require('fs');
-        fs.writeFileSync(
-            'leadfive-testnet-deployment.json',
-            JSON.stringify(deploymentInfo, null, 2)
-        );
-
-        console.log("\n" + "=" * 60);
-        console.log("🎉 LEADFIVE MODULAR TESTNET DEPLOYMENT COMPLETE!");
-        console.log("=" * 60);
-        console.log("📍 Contract Address:", contractAddress);
-        console.log("🔗 Testnet Explorer:", `https://testnet.bscscan.com/address/${contractAddress}`);
-        console.log("✍️  Write Contract:", `https://testnet.bscscan.com/address/${contractAddress}#writeContract`);
-        console.log("📄 Deployment Info saved to: leadfive-testnet-deployment.json");
-        console.log("🚀 Contract Version: MODULAR (Core MLM features + Gas optimized)");
-
-        // Update .env with testnet addresses
-        console.log("\n🔄 Updating .env with testnet addresses...");
-        console.log("Add these to your .env file:");
-        console.log(`LEADFIVE_TESTNET_PROXY=${contractAddress}`);
-        console.log(`LEADFIVE_TESTNET_IMPLEMENTATION=${implementationAddress}`);
-
-        // Frontend configuration for testnet
-        console.log("\n🌐 Frontend Configuration for Testnet:");
-        const testnetConfig = `
-// LeadFive Testnet Configuration
-export const LEAD_FIVE_TESTNET_CONFIG = {
-    address: "${contractAddress}",
-    implementationAddress: "${implementationAddress}",
-    network: "BSC Testnet",
-    chainId: 97,
-    usdtAddress: "${USDT_TESTNET_ADDRESS}",
-    rpcUrl: "https://data-seed-prebsc-1-s1.binance.org:8545/",
-    blockExplorer: "https://testnet.bscscan.com",
-    contractUrl: "https://testnet.bscscan.com/address/${contractAddress}",
-    writeContractUrl: "https://testnet.bscscan.com/address/${contractAddress}#writeContract"
-};`;
-
-        console.log(testnetConfig);
+        
+        fs.writeFileSync('leadfive-testnet-deployment.json', JSON.stringify(deploymentInfo, null, 2));
+        console.log("💾 Deployment info saved to leadfive-testnet-deployment.json");
 
         console.log("\n📋 NEXT STEPS:");
-        console.log("1. ✅ LeadFiveModular contract deployed to BSC Testnet (Core MLM features)");
-        console.log("2. 🧪 Test all functions on testnet");
-        console.log("3. 🔍 Verify contract on testnet explorer");
-        console.log("4. 🌐 Update frontend for testnet testing");
-        console.log("5. 👥 Invite users for testnet testing");
-        console.log("6. 🚀 Deploy to mainnet after successful testing");
-
-        console.log("\n🧪 CORE FEATURES TO TEST:");
-        console.log("- User Registration (register function)");
-        console.log("- Package Upgrades (upgradePackage)");
-        console.log("- Direct Referral Bonuses");
-        console.log("- Level Bonuses (10 levels)");
-        console.log("- Upline Bonuses (30 levels)");
-        console.log("- Pool Distribution (Leader/Help/Club)");
-        console.log("- Progressive Withdrawal (70-80%)");
-        console.log("- Admin Fee Collection (5%)");
-        console.log("- Binary Matrix Placement");
-        console.log("- Gas-Optimized Operations");
-
-        console.log("\n🧪 TESTNET TESTING COMMANDS:");
-        console.log("# Get testnet BNB from faucet:");
-        console.log("https://testnet.binance.org/faucet-smart");
-        console.log("\n# Test registration:");
-        console.log("npx hardhat run scripts/test-registration.js --network bscTestnet");
-
-        console.log("\n✅ LEADFIVE MODULAR TESTNET IS READY FOR TESTING!");
-
+        console.log("1. Verify contract on BSCScan");
+        console.log("2. Test registration and basic functions");
+        console.log("3. If successful, proceed with mainnet upgrade");
+        
+        return proxyAddress;
+        
     } catch (error) {
-        console.error("❌ Testnet deployment failed:", error);
-        process.exit(1);
+        console.error("\n❌ Deployment failed:", error.message);
+        
+        if (error.code === 'UNPREDICTABLE_GAS_LIMIT') {
+            console.log("\n💡 Possible solutions:");
+            console.log("- Check if contract size is under 24KB limit");
+            console.log("- Verify all imported contracts exist");
+            console.log("- Check network connectivity");
+        }
+        
+        if (error.message.includes('nonce')) {
+            console.log("\n💡 Nonce issue detected. Try running the deployment again.");
+        }
+        
+        throw error;
     }
 }
 
 main()
-    .then(() => process.exit(0))
+    .then((address) => {
+        if (address) {
+            console.log(`\n✅ Deployment completed successfully!`);
+            console.log(`📋 Contract deployed at: ${address}`);
+        }
+        process.exit(0);
+    })
     .catch((error) => {
-        console.error("❌ Script failed:", error);
+        console.error("\n💥 Script failed:", error);
         process.exit(1);
     });

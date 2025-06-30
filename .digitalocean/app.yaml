@@ -17,7 +17,7 @@ services:
   - key: NODE_ENV
     value: production
   - key: VITE_CONTRACT_ADDRESS
-    value: 0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569
+    value: 0x86CCF0eb67a7aB09234d5F4aE265F9eFB8E8fb6c
   - key: VITE_NETWORK_ID
     value: "56"
   - key: VITE_WEB3_PROVIDER_URL

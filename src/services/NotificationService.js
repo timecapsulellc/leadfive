@@ -1,7 +1,7 @@
-// OrphiChain PWA Push Notification Service
+// LeadFive PWA Push Notification Service
 // Handles PWA notifications with Web3 integration and brand consistency
 
-class OrphiChainNotificationService {
+class LeadFiveNotificationService {
   constructor() {
     this.registration = null;
     this.permission = 'default';

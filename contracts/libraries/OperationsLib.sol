@@ -2,10 +2,8 @@
 pragma solidity ^0.8.22;
 
 import "./DataStructures.sol";
-import "./CoreLib.sol";
 
 library OperationsLib {
-    using CoreLib for *;
 
     // Optimized user registration
     function registerUser(
@@ -43,7 +41,6 @@ library OperationsLib {
             leaderRank: 0,
             leftLegVolume: 0,
             rightLegVolume: 0,
-            fastStartExpiry: uint32(block.timestamp + 48 hours),
             isActive: true
         });
         

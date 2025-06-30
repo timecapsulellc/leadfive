@@ -10,7 +10,8 @@ export const APP_CONFIG = {
   
   // Smart Contract Configuration
   contract: {
-    address: '0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569', // ✅ NEW MAINNET DEPLOYMENT
+    address: '0x29dcCb502D10C042BcC6a02a7762C49595A9E498', // ✅ MAINNET PROXY ADDRESS
+    implementation: '0xA4AB35Ab2BA415E6CCf9559e8dcAB0661cC29e2b', // ✅ MAINNET IMPLEMENTATION
     network: {
       name: 'BSC Mainnet',
       chainId: 56,
@@ -26,8 +27,9 @@ export const APP_CONFIG = {
       }
     },
     admin: {
-      owner: '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29',
-      feeRecipient: '0xeB652c4523f3Cf615D3F3694b14E551145953aD0'
+      owner: '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29', // ✅ TREZOR WALLET (NEW OWNER)
+      sponsorAddress: '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29', // ✅ TREZOR WALLET FOR NEW REGISTRATIONS
+      feeRecipient: '0xCeaEfDaDE5a0D574bFd5577665dC58d132995335' // ✅ DEPLOYER FOR PLATFORM FEES (can be changed by Trezor)
     }
   },
   

@@ -1,0 +1,22 @@
+{
+  "cleanupRules": {
+    "retain": [
+      "src/**/*.ts",
+      "config/essential-docs.json",
+      "README.md"
+    ],
+    "remove": [
+      "src/**/*.test.ts",
+      "src/**/*.spec.ts",
+      "src/**/*.bak",
+      "src/**/*.tmp",
+      "reports/**/*",
+      "backup/**/*"
+    ],
+    "ignore": [
+      "node_modules",
+      ".git",
+      ".gitkeep"
+    ]
+  }
+}

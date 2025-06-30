@@ -1,0 +1,39 @@
+{
+  "contractAddress": "0x29dcCb502D10C042BcC6a02a7762C49595A9E498",
+  "network": "BSC Mainnet",
+  "chainId": 56,
+  "timestamp": "2025-06-26T23:36:04.720Z",
+  "configuration": {
+    "dailyWithdrawalLimit": "10000.0",
+    "circuitBreakerThreshold": "10.0",
+    "packages": [
+      {
+        "level": 1,
+        "price": "30 USDT"
+      },
+      {
+        "level": 2,
+        "price": "50 USDT"
+      },
+      {
+        "level": 3,
+        "price": "100 USDT"
+      },
+      {
+        "level": 4,
+        "price": "200 USDT"
+      }
+    ],
+    "withdrawalRates": "70-80% based on referrals",
+    "platformFee": "5%",
+    "earningsCap": "4x investment"
+  },
+  "security": {
+    "circuitBreaker": "Normal",
+    "contractPaused": false,
+    "systemOperational": true,
+    "emergencyControls": "Available"
+  },
+  "readyForProduction": true,
+  "readyForOwnershipTransfer": true
+}

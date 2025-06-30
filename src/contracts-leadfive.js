@@ -1,24 +1,20 @@
-// LEAD FIVE Contract Configuration
-// Updated for NEW MAINNET DEPLOYMENT: 2025-06-21
-// Contract Address: 0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569
-// Network: BSC Mainnet (Chain ID: 56)
-// Status: PRODUCTION READY ✅
+// LeadFive Contract Integration - LATEST VERIFIED DEPLOYMENT
+// Generated: 2025-06-29T00:00:00.000Z
 
+export const LEADFIVE_CONTRACT_ADDRESS = '0x29dcCb502D10C042BcC6a02a7762C49595A9E498';
+
+// Frontend configuration object
 export const LEAD_FIVE_CONFIG = {
-    address: "0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569", // ✅ NEW MAINNET DEPLOYED
-    implementationAddress: "0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569",
-    network: "BSC Mainnet",
-    chainId: 56,
-    usdtAddress: "0x55d398326f99059fF775485246999027B3197955",
-    rpcUrl: "https://bsc-dataseed.binance.org/",
-    blockExplorer: "https://bscscan.com",
-    contractUrl: "https://bscscan.com/address/0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569", // ✅ NEW MAINNET DEPLOYED
-    writeContractUrl: "https://bscscan.com/address/0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569#writeContract", // ✅ NEW MAINNET DEPLOYED
-    owner: "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29", // ✅ TREZOR WALLET
-    feeRecipient: "0xeB652c4523f3Cf615D3F3694b14E551145953aD0" // ✅ REVENUE COLLECTION ACTIVE
+  address: '0x29dcCb502D10C042BcC6a02a7762C49595A9E498',
+  usdt: '0x55d398326f99059fF775485246999027B3197955',
+  usdtAddress: '0x55d398326f99059fF775485246999027B3197955',
+  rpcUrl: 'https://bsc-dataseed.binance.org/',
+  chainId: 56,
+  networkName: 'BSC Mainnet',
+  explorerUrl: 'https://bscscan.com'
 };
 
-export const LEAD_FIVE_ABI = [
+export const LEADFIVE_ABI = [
   {
     "inputs": [
       {
@@ -28,6 +24,11 @@ export const LEAD_FIVE_ABI = [
       }
     ],
     "name": "AddressEmptyCode",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "CircuitBreakerActivated",
     "type": "error"
   },
   {
@@ -62,13 +63,82 @@ export const LEAD_FIVE_ABI = [
     "type": "error"
   },
   {
+    "inputs": [
+      {
+        "internalType": "uint96",
+        "name": "available",
+        "type": "uint96"
+      },
+      {
+        "internalType": "uint96",
+        "name": "required",
+        "type": "uint96"
+      }
+    ],
+    "name": "InsufficientBalance",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "validCount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "required",
+        "type": "uint256"
+      }
+    ],
+    "name": "InsufficientOracleData",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "InvalidAmount",
+    "type": "error"
+  },
+  {
     "inputs": [],
     "name": "InvalidInitialization",
     "type": "error"
   },
   {
     "inputs": [],
+    "name": "InvalidInput",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "level",
+        "type": "uint8"
+      }
+    ],
+    "name": "InvalidPackageLevel",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidValue",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "NotInitializing",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "OperationFailed",
     "type": "error"
   },
   {
@@ -115,22 +185,43 @@ export const LEAD_FIVE_ABI = [
     "type": "error"
   },
   {
-    "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "uint96",
-        "name": "amount",
-        "type": "uint96"
-      },
-      {
-        "indexed": true,
         "internalType": "address",
         "name": "user",
         "type": "address"
       }
     ],
-    "name": "AdminFeeCollected",
+    "name": "UserBlacklisted",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "UserNotRegistered",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ZeroAddress",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "admin",
+        "type": "address"
+      }
+    ],
+    "name": "AdminAdded",
     "type": "event"
   },
   {
@@ -139,23 +230,11 @@ export const LEAD_FIVE_ABI = [
       {
         "indexed": true,
         "internalType": "address",
-        "name": "recipient",
+        "name": "admin",
         "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint96",
-        "name": "amount",
-        "type": "uint96"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint8",
-        "name": "bonusType",
-        "type": "uint8"
       }
     ],
-    "name": "BonusDistributed",
+    "name": "AdminRemoved",
     "type": "event"
   },
   {
@@ -169,18 +248,56 @@ export const LEAD_FIVE_ABI = [
       },
       {
         "indexed": false,
-        "internalType": "uint8",
-        "name": "level",
-        "type": "uint8"
+        "internalType": "uint96",
+        "name": "amount",
+        "type": "uint96"
+      }
+    ],
+    "name": "AlgorithmicBonusDistributed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [],
+    "name": "CircuitBreakerReset",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
       },
       {
         "indexed": false,
-        "internalType": "string",
-        "name": "bonusType",
-        "type": "string"
+        "internalType": "uint256",
+        "name": "threshold",
+        "type": "uint256"
       }
     ],
-    "name": "GasLimitReached",
+    "name": "CircuitBreakerTriggered",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint96",
+        "name": "exceededAmount",
+        "type": "uint96"
+      }
+    ],
+    "name": "EarningsCapReached",
     "type": "event"
   },
   {
@@ -194,6 +311,70 @@ export const LEAD_FIVE_ABI = [
       }
     ],
     "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "cycle",
+        "type": "uint256"
+      }
+    ],
+    "name": "MatrixCycleCompleted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint32",
+        "name": "position",
+        "type": "uint32"
+      }
+    ],
+    "name": "NetworkPositionAssigned",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "oracle",
+        "type": "address"
+      }
+    ],
+    "name": "OracleAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "oracle",
+        "type": "address"
+      }
+    ],
+    "name": "OracleRemoved",
     "type": "event"
   },
   {
@@ -257,7 +438,26 @@ export const LEAD_FIVE_ABI = [
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "uint96",
+        "name": "amount",
+        "type": "uint96"
+      },
+      {
         "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "PlatformFeeCollected",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
         "internalType": "uint8",
         "name": "poolType",
         "type": "uint8"
@@ -270,6 +470,31 @@ export const LEAD_FIVE_ABI = [
       }
     ],
     "name": "PoolDistributed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "recipient",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint96",
+        "name": "amount",
+        "type": "uint96"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "rewardType",
+        "type": "uint8"
+      }
+    ],
+    "name": "RewardDistributed",
     "type": "event"
   },
   {
@@ -310,7 +535,7 @@ export const LEAD_FIVE_ABI = [
       {
         "indexed": true,
         "internalType": "address",
-        "name": "referrer",
+        "name": "sponsor",
         "type": "address"
       },
       {
@@ -345,8 +570,12 @@ export const LEAD_FIVE_ABI = [
         "type": "uint96"
       }
     ],
-    "name": "Withdrawal",
+    "name": "UserWithdrawal",
     "type": "event"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "fallback"
   },
   {
     "inputs": [],
@@ -362,56 +591,54 @@ export const LEAD_FIVE_ABI = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "admin",
+        "type": "address"
+      }
+    ],
+    "name": "addAdmin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "oracle",
+        "type": "address"
+      }
+    ],
+    "name": "addOracle",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
-    "name": "adminFeeRecipient",
+    "name": "algorithmicPool",
     "outputs": [
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "adminIds",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
+        "internalType": "uint96",
+        "name": "balance",
+        "type": "uint96"
       },
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "binaryMatrix",
-    "outputs": [
+        "internalType": "uint32",
+        "name": "lastDistribution",
+        "type": "uint32"
+      },
       {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
+        "internalType": "uint32",
+        "name": "interval",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint96",
+        "name": "totalDistributed",
+        "type": "uint96"
       }
     ],
     "stateMutability": "view",
@@ -423,16 +650,62 @@ export const LEAD_FIVE_ABI = [
         "internalType": "address",
         "name": "user",
         "type": "address"
-      },
+      }
+    ],
+    "name": "calculateNetworkSize",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "calculateWithdrawalRate",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "circuitBreakerThreshold",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "circuitBreakerTriggered",
+    "outputs": [
       {
         "internalType": "bool",
-        "name": "status",
+        "name": "",
         "type": "bool"
       }
     ],
-    "name": "blacklistUser",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -453,6 +726,71 @@ export const LEAD_FIVE_ABI = [
         "internalType": "uint32",
         "name": "interval",
         "type": "uint32"
+      },
+      {
+        "internalType": "uint96",
+        "name": "totalDistributed",
+        "type": "uint96"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "communityPool",
+    "outputs": [
+      {
+        "internalType": "uint96",
+        "name": "balance",
+        "type": "uint96"
+      },
+      {
+        "internalType": "uint32",
+        "name": "lastDistribution",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "interval",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint96",
+        "name": "totalDistributed",
+        "type": "uint96"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "dailyWithdrawalLimit",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "dailyWithdrawals",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -471,7 +809,7 @@ export const LEAD_FIVE_ABI = [
         "type": "uint256"
       }
     ],
-    "name": "directReferrals",
+    "name": "directNetwork",
     "outputs": [
       {
         "internalType": "address",
@@ -483,39 +821,34 @@ export const LEAD_FIVE_ABI = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "distributePools",
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "poolType",
+        "type": "uint8"
+      }
+    ],
+    "name": "distributePool",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "eligibleHelpPoolUsers",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
+    "inputs": [],
+    "name": "emergencyPause",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
+    "inputs": [],
+    "name": "emergencyUnpause",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "emergencyWithdraw",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -523,18 +856,8 @@ export const LEAD_FIVE_ABI = [
   },
   {
     "inputs": [],
-    "name": "getAdminFeeInfo",
+    "name": "getContractBalance",
     "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint96",
-        "name": "",
-        "type": "uint96"
-      },
       {
         "internalType": "uint256",
         "name": "",
@@ -546,17 +869,111 @@ export const LEAD_FIVE_ABI = [
   },
   {
     "inputs": [],
-    "name": "getPoolBalances",
+    "name": "getCurrentBNBPrice",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "",
+        "type": "int256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "getMatrixPosition",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "packageLevel",
+        "type": "uint8"
+      }
+    ],
+    "name": "getPackagePrice",
     "outputs": [
       {
         "internalType": "uint96",
         "name": "",
         "type": "uint96"
-      },
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "poolType",
+        "type": "uint8"
+      }
+    ],
+    "name": "getPoolBalance",
+    "outputs": [
       {
         "internalType": "uint96",
         "name": "",
         "type": "uint96"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTotalUsers",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserBasicInfo",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
       },
       {
         "internalType": "uint96",
@@ -575,126 +992,45 @@ export const LEAD_FIVE_ABI = [
         "type": "address"
       }
     ],
-    "name": "getUserInfo",
+    "name": "getUserEarnings",
     "outputs": [
       {
-        "components": [
-          {
-            "internalType": "bool",
-            "name": "isRegistered",
-            "type": "bool"
-          },
-          {
-            "internalType": "bool",
-            "name": "isBlacklisted",
-            "type": "bool"
-          },
-          {
-            "internalType": "address",
-            "name": "referrer",
-            "type": "address"
-          },
-          {
-            "internalType": "uint96",
-            "name": "balance",
-            "type": "uint96"
-          },
-          {
-            "internalType": "uint96",
-            "name": "totalInvestment",
-            "type": "uint96"
-          },
-          {
-            "internalType": "uint96",
-            "name": "totalEarnings",
-            "type": "uint96"
-          },
-          {
-            "internalType": "uint96",
-            "name": "earningsCap",
-            "type": "uint96"
-          },
-          {
-            "internalType": "uint32",
-            "name": "directReferrals",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "teamSize",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint8",
-            "name": "packageLevel",
-            "type": "uint8"
-          },
-          {
-            "internalType": "uint8",
-            "name": "rank",
-            "type": "uint8"
-          },
-          {
-            "internalType": "uint8",
-            "name": "withdrawalRate",
-            "type": "uint8"
-          },
-          {
-            "internalType": "uint32",
-            "name": "lastHelpPoolClaim",
-            "type": "uint32"
-          },
-          {
-            "internalType": "bool",
-            "name": "isEligibleForHelpPool",
-            "type": "bool"
-          },
-          {
-            "internalType": "uint32",
-            "name": "matrixPosition",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "matrixLevel",
-            "type": "uint32"
-          },
-          {
-            "internalType": "uint32",
-            "name": "registrationTime",
-            "type": "uint32"
-          },
-          {
-            "internalType": "string",
-            "name": "referralCode",
-            "type": "string"
-          }
-        ],
-        "internalType": "struct CommissionLib.User",
+        "internalType": "uint96",
         "name": "",
-        "type": "tuple"
+        "type": "uint96"
+      },
+      {
+        "internalType": "uint96",
+        "name": "",
+        "type": "uint96"
+      },
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
       }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "helpPool",
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserNetwork",
     "outputs": [
       {
-        "internalType": "uint96",
-        "name": "balance",
-        "type": "uint96"
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       },
       {
         "internalType": "uint32",
-        "name": "lastDistribution",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint32",
-        "name": "interval",
+        "name": "",
         "type": "uint32"
       }
     ],
@@ -710,13 +1046,8 @@ export const LEAD_FIVE_ABI = [
       },
       {
         "internalType": "address",
-        "name": "_priceFeed",
+        "name": "_initialOracle",
         "type": "address"
-      },
-      {
-        "internalType": "address[16]",
-        "name": "_adminIds",
-        "type": "address[16]"
       }
     ],
     "name": "initialize",
@@ -725,8 +1056,97 @@ export const LEAD_FIVE_ABI = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "isAdmin",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "isAdminAddress",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "lastNetworkUpdate",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [],
-    "name": "leaderPool",
+    "name": "lastTxBlock",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "lastWithdrawalDay",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "leadershipPool",
     "outputs": [
       {
         "internalType": "uint96",
@@ -741,6 +1161,49 @@ export const LEAD_FIVE_ABI = [
       {
         "internalType": "uint32",
         "name": "interval",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint96",
+        "name": "totalDistributed",
+        "type": "uint96"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "leftLegVolume",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "networkSizeCache",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
         "type": "uint32"
       }
     ],
@@ -776,41 +1239,34 @@ export const LEAD_FIVE_ABI = [
         "type": "uint96"
       },
       {
-        "components": [
-          {
-            "internalType": "uint16",
-            "name": "directBonus",
-            "type": "uint16"
-          },
-          {
-            "internalType": "uint16",
-            "name": "levelBonus",
-            "type": "uint16"
-          },
-          {
-            "internalType": "uint16",
-            "name": "uplineBonus",
-            "type": "uint16"
-          },
-          {
-            "internalType": "uint16",
-            "name": "leaderBonus",
-            "type": "uint16"
-          },
-          {
-            "internalType": "uint16",
-            "name": "helpBonus",
-            "type": "uint16"
-          },
-          {
-            "internalType": "uint16",
-            "name": "clubBonus",
-            "type": "uint16"
-          }
-        ],
-        "internalType": "struct CommissionLib.CommissionRates",
-        "name": "rates",
-        "type": "tuple"
+        "internalType": "uint16",
+        "name": "directBonus",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "levelBonus",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "uplineBonus",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "leaderBonus",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "helpBonus",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "clubBonus",
+        "type": "uint16"
       }
     ],
     "stateMutability": "view",
@@ -831,12 +1287,40 @@ export const LEAD_FIVE_ABI = [
   },
   {
     "inputs": [],
-    "name": "priceFeed",
+    "name": "platformFeeRecipient",
     "outputs": [
       {
-        "internalType": "contract IPriceFeed",
+        "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "priceConfig",
+    "outputs": [
+      {
+        "internalType": "int256",
+        "name": "minPrice",
+        "type": "int256"
+      },
+      {
+        "internalType": "int256",
+        "name": "maxPrice",
+        "type": "int256"
+      },
+      {
+        "internalType": "uint32",
+        "name": "maxStaleTime",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint8",
+        "name": "minOracles",
+        "type": "uint8"
       }
     ],
     "stateMutability": "view",
@@ -858,27 +1342,8 @@ export const LEAD_FIVE_ABI = [
   {
     "inputs": [
       {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "name": "referralCodeToUser",
-    "outputs": [
-      {
         "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "referrer",
+        "name": "sponsor",
         "type": "address"
       },
       {
@@ -898,8 +1363,53 @@ export const LEAD_FIVE_ABI = [
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "admin",
+        "type": "address"
+      }
+    ],
+    "name": "removeAdmin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "rightLegVolume",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "threshold",
+        "type": "uint256"
+      }
+    ],
+    "name": "setCircuitBreaker",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -912,7 +1422,7 @@ export const LEAD_FIVE_ABI = [
         "type": "address"
       }
     ],
-    "name": "setAdminFeeRecipient",
+    "name": "setPlatformFeeRecipient",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -920,55 +1430,22 @@ export const LEAD_FIVE_ABI = [
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "shiningStarLeaders",
-    "outputs": [
-      {
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
+      },
       {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
     ],
-    "name": "silverStarLeaders",
+    "name": "smartTreeMatrix",
     "outputs": [
       {
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "spilloverCounter",
-    "outputs": [
-      {
-        "internalType": "uint32",
-        "name": "",
-        "type": "uint32"
       }
     ],
     "stateMutability": "view",
@@ -976,7 +1453,7 @@ export const LEAD_FIVE_ABI = [
   },
   {
     "inputs": [],
-    "name": "totalAdminFeesCollected",
+    "name": "totalPlatformFeesCollected",
     "outputs": [
       {
         "internalType": "uint96",
@@ -1016,6 +1493,24 @@ export const LEAD_FIVE_ABI = [
   {
     "inputs": [
       {
+        "internalType": "uint8",
+        "name": "newLevel",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bool",
+        "name": "useUSDT",
+        "type": "bool"
+      }
+    ],
+    "name": "upgradePackage",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "newImplementation",
         "type": "address"
@@ -1029,30 +1524,6 @@ export const LEAD_FIVE_ABI = [
     "name": "upgradeToAndCall",
     "outputs": [],
     "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "uplineChain",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1071,6 +1542,44 @@ export const LEAD_FIVE_ABI = [
   {
     "inputs": [
       {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "name": "userIds",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "userLastTx",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "",
         "type": "address"
@@ -1079,14 +1588,54 @@ export const LEAD_FIVE_ABI = [
     "name": "users",
     "outputs": [
       {
-        "internalType": "bool",
-        "name": "isRegistered",
-        "type": "bool"
+        "internalType": "uint8",
+        "name": "flags",
+        "type": "uint8"
       },
       {
-        "internalType": "bool",
-        "name": "isBlacklisted",
-        "type": "bool"
+        "internalType": "uint8",
+        "name": "packageLevel",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "rank",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint8",
+        "name": "withdrawalRate",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint32",
+        "name": "directReferrals",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "teamSize",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "registrationTime",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "lastWithdrawal",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "matrixLevel",
+        "type": "uint32"
+      },
+      {
+        "internalType": "uint32",
+        "name": "matrixCycles",
+        "type": "uint32"
       },
       {
         "internalType": "address",
@@ -1110,63 +1659,23 @@ export const LEAD_FIVE_ABI = [
       },
       {
         "internalType": "uint96",
+        "name": "totalWithdrawn",
+        "type": "uint96"
+      },
+      {
+        "internalType": "uint96",
         "name": "earningsCap",
         "type": "uint96"
       },
       {
-        "internalType": "uint32",
-        "name": "directReferrals",
-        "type": "uint32"
+        "internalType": "uint96",
+        "name": "leftLegVolume",
+        "type": "uint96"
       },
       {
-        "internalType": "uint32",
-        "name": "teamSize",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint8",
-        "name": "packageLevel",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "rank",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint8",
-        "name": "withdrawalRate",
-        "type": "uint8"
-      },
-      {
-        "internalType": "uint32",
-        "name": "lastHelpPoolClaim",
-        "type": "uint32"
-      },
-      {
-        "internalType": "bool",
-        "name": "isEligibleForHelpPool",
-        "type": "bool"
-      },
-      {
-        "internalType": "uint32",
-        "name": "matrixPosition",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint32",
-        "name": "matrixLevel",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint32",
-        "name": "registrationTime",
-        "type": "uint32"
-      },
-      {
-        "internalType": "string",
-        "name": "referralCode",
-        "type": "string"
+        "internalType": "uint96",
+        "name": "rightLegVolume",
+        "type": "uint96"
       }
     ],
     "stateMutability": "view",
@@ -1191,59 +1700,19 @@ export const LEAD_FIVE_ABI = [
   }
 ];
 
-// Package Tiers - PDF Specification: Only 4 packages
-export const PACKAGE_TIERS = {
-    NONE: 0,
-    PACKAGE_30: 1,   // Entry Level - Web3 Starter
-    PACKAGE_50: 2,   // Standard - Community Builder  
-    PACKAGE_100: 3,  // Advanced - DAO Contributor
-    PACKAGE_200: 4   // Premium - Ecosystem Pioneer
-};
-
-// Package Amounts (USDT with 18 decimals for LeadFive contract) - PDF Specification
-export const PACKAGE_AMOUNTS = {
-    [PACKAGE_TIERS.PACKAGE_30]: "30000000000000000000",     // 30 USDT - Entry Level
-    [PACKAGE_TIERS.PACKAGE_50]: "50000000000000000000",     // 50 USDT - Standard
-    [PACKAGE_TIERS.PACKAGE_100]: "100000000000000000000",   // 100 USDT - Advanced
-    [PACKAGE_TIERS.PACKAGE_200]: "200000000000000000000"    // 200 USDT - Premium
-};
-
-// Package Display Information - PDF Specification
-export const PACKAGES = [
-    { 
-        id: 1, 
-        price: 30, 
-        name: "Entry Level", 
-        subtitle: "Web3 Starter",
-        description: "BSC Powered blockchain participation"
-    },
-    { 
-        id: 2, 
-        price: 50, 
-        name: "Standard", 
-        subtitle: "Community Builder",
-        description: "BSC Powered community engagement"
-    },
-    { 
-        id: 3, 
-        price: 100, 
-        name: "Advanced", 
-        subtitle: "DAO Contributor",
-        description: "BSC Powered DAO governance"
-    },
-    { 
-        id: 4, 
-        price: 200, 
-        name: "Premium", 
-        subtitle: "Ecosystem Pioneer",
-        description: "BSC Powered ecosystem leadership"
-    }
-];
-
 export default {
-    LEAD_FIVE_CONFIG,
-    LEAD_FIVE_ABI,
-    PACKAGE_TIERS,
-    PACKAGE_AMOUNTS,
-    PACKAGES
+  address: LEADFIVE_CONTRACT_ADDRESS,
+  abi: LEADFIVE_ABI
+};
+
+// Export aliases for frontend compatibility
+export const LEAD_FIVE_ABI = LEADFIVE_ABI;
+export const LEAD_FIVE_CONTRACT_ADDRESS = LEADFIVE_CONTRACT_ADDRESS;
+
+// Package configurations for frontend
+export const PACKAGES = {
+  1: { price: 30, name: "Starter Package", priceWei: "30000000" },
+  2: { price: 50, name: "Growth Package", priceWei: "50000000" },
+  3: { price: 100, name: "Professional Package", priceWei: "100000000" },
+  4: { price: 200, name: "Elite Package", priceWei: "200000000" }
 };

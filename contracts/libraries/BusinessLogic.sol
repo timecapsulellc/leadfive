@@ -13,7 +13,6 @@ library BusinessLogic {
     event NetworkCompressed(address indexed user, address indexed newUpline);
     event OrphanReassigned(address indexed orphan, address indexed newSponsor);
     event RankUpgraded(address indexed user, uint8 oldRank, uint8 newRank);
-    event FastStartBonus(address indexed user, uint256 bonus, uint256 timeframe);
     
     /**
      * @dev Flush user when earnings cap is reached
@@ -121,26 +120,6 @@ library BusinessLogic {
         }
         
         return user.rank;
-    }
-    
-    /**
-     * @dev Calculate fast start bonus for new registrations
-     */
-    function calculateFastStartBonus(
-        DataStructures.User storage sponsor,
-        uint256 packagePrice,
-        uint256 registrationTime
-    ) internal returns (uint256 bonus) {
-        // Fast start bonus: 10% extra if referred within 48 hours of sponsor registration
-        if (block.timestamp <= registrationTime + 48 hours) {
-            bonus = (packagePrice * 1000) / 10000; // 10%
-            sponsor.balance += uint96(bonus);
-            
-            emit FastStartBonus(msg.sender, bonus, 48 hours);
-            return bonus;
-        }
-        
-        return 0;
     }
     
     /**

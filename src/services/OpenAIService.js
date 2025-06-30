@@ -78,7 +78,11 @@ class OpenAIService {
 
     try {
       const systemPrompt = this.buildSystemPrompt(userContext);
-      const fullPrompt = `${systemPrompt}\n\nUser: ${userMessage}\nAssistant:`;
+      
+      // Add question analysis to help AI understand context
+      const enhancedMessage = `Question: ${userMessage}
+
+Please provide a specific, contextual response based on the exact topic asked about. Do not give generic answers.`;
       
       const response = await this.openai.chat.completions.create({
         model: "gpt-4o-mini",
@@ -89,20 +93,69 @@ class OpenAIService {
           },
           {
             role: "user",
-            content: userMessage
+            content: enhancedMessage
           }
         ],
-        temperature: 0.8,
+        temperature: 0.7,
         max_tokens: 200,
         presence_penalty: 0.6,
-        frequency_penalty: 0.3
+        frequency_penalty: 0.3,
+        stop: ["\n\nUser:", "User:", "Human:", "Question:"] // Prevent echoing user input
       });
 
-      return response.choices[0].message.content;
+      let responseContent = response.choices[0].message.content.trim();
+      
+      // Remove any accidental user input echoing
+      const echoPatterns = [
+        new RegExp(`Question:\\s*${userMessage.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'gi'),
+        new RegExp(`${userMessage.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\\?`, 'gi'),
+        /^(User|Human|Question):\s*/gi,
+        /^\s*".*?"\s*$/gi // Remove quotes if the entire response is quoted
+      ];
+      
+      echoPatterns.forEach(pattern => {
+        responseContent = responseContent.replace(pattern, '').trim();
+      });
+      
+      // Ensure response doesn't start with user's question
+      if (responseContent.toLowerCase().startsWith(userMessage.toLowerCase().substring(0, 20))) {
+        responseContent = responseContent.substring(userMessage.length).trim();
+      }
+      
+      // Fallback if response is empty or too short after cleaning
+      if (!responseContent || responseContent.length < 10) {
+        return this.getContextualFallback(userMessage, userContext);
+      }
+
+      return responseContent;
     } catch (error) {
       console.error('OpenAI API error:', error);
-      return this.getFallbackResponse(userMessage);
+      return this.getContextualFallback(userMessage, userContext);
     }
+  }
+
+  // Contextual fallback based on question topic
+  getContextualFallback(userMessage, userContext = {}) {
+    const lowerMessage = userMessage.toLowerCase();
+    const { earnings = '0', teamSize = '0', packageLevel = '1' } = userContext;
+    
+    if (lowerMessage.includes('package')) {
+      return `LeadFive offers multiple package levels, each with increasing benefits! 📦 Package 1 starts at $50 with 2% commissions, while higher packages offer up to 15% commissions and exclusive features. Your current Level ${packageLevel} gives you access to specific tools and earning potential. Consider upgrading to unlock higher commission rates and advanced features! 🚀`;
+    }
+    
+    if (lowerMessage.includes('earning') || lowerMessage.includes('income')) {
+      return `Based on your current earnings of $${earnings}, let's optimize your income strategy! 💰 Focus on building your team of ${teamSize} members through quality referrals. Active team members typically generate 3x more than inactive ones. Consider reinvesting 20% of earnings for compound growth! 📈`;
+    }
+    
+    if (lowerMessage.includes('team') || lowerMessage.includes('referral')) {
+      return `Your team of ${teamSize} members has great potential! 👥 Focus on supporting your direct referrals with weekly check-ins and success strategies. Host team calls, share resources, and provide guidance. Quality over quantity - one active referral is worth more than five inactive ones! 🎯`;
+    }
+    
+    if (lowerMessage.includes('withdraw')) {
+      return `For withdrawals, ensure you meet the minimum threshold and have completed KYC verification! 💳 Timing matters - most successful members withdraw 70% and reinvest 30% for compound growth. Check your dashboard for available balance and withdrawal options! ⚡`;
+    }
+    
+    return `I'm here to help with your LeadFive journey! 🤖 Whether you need advice on packages, earnings optimization, team building, or platform features, I can provide personalized guidance based on your current performance. What specific aspect would you like to explore? 🚀`;
   }
 
   // Build system prompt based on user context
@@ -115,39 +168,45 @@ class OpenAIService {
       isRegistered = false 
     } = userContext;
 
-    return `You are LeadFive's AI assistant - a witty, motivational, and FOMO-driven Web3 networking expert.
+    return `You are LeadFive's AI assistant - a professional, helpful blockchain and Web3 business expert.
 
-BRAND PERSONALITY:
-- Enthusiastic about blockchain and Web3 innovation
-- Uses crypto slang naturally ("diamond hands", "to the moon", "HODL")
-- Creates urgency with limited-time opportunities
-- Celebrates successes and motivates during challenges
-- Developed by LEAD 5 - young blockchain engineers
+CRITICAL INSTRUCTIONS:
+- Provide specific, contextual answers based on the user's exact question
+- NEVER repeat or echo the user's question
+- NEVER give generic responses - tailor each answer to the specific topic asked
+- Analyze the question topic and provide relevant, specific information
+- Give concise, actionable advice (under 150 words)
+
+RESPONSE GUIDELINES BY TOPIC:
+- PACKAGES: Explain specific package benefits, levels, costs, ROI potential
+- EARNINGS: Analyze current performance, suggest improvement strategies
+- TEAM: Provide team building tactics, leadership advice, growth strategies
+- WITHDRAWALS: Explain withdrawal process, timing, requirements, tax considerations
+- PLATFORM: Detail specific features, how to use them, benefits
+- STRATEGY: Give personalized action plans based on user's current status
+- GENERAL: Provide helpful guidance related to the specific question asked
 
 USER CONTEXT:
 - Wallet: ${account ? account.slice(0, 8) + '...' : 'Not connected'}
-- Status: ${isRegistered ? 'Active Investor' : 'Potential Investor'}
-- Earnings: $${earnings}
-- Team Size: ${teamSize}
+- Status: ${isRegistered ? 'Active Member' : 'Potential Member'}
+- Current Earnings: $${earnings}
+- Team Size: ${teamSize} members
 - Package Level: ${packageLevel}
 
 RESPONSE STYLE:
-- Keep responses under 150 words
-- Include relevant emojis (🚀💎🔥⚡💰)
-- Mention specific opportunities when relevant
-- Use FOMO triggers: "limited spots", "exclusive access", "top 10% earners"
-- Reference success stories: "$47K in 3 months", "$23.5K in 6 weeks"
-- Always end with a call-to-action
+- Be specific and directly answer what was asked
+- Include relevant emojis (🚀💎🔥⚡💰📊🎯)
+- Reference user's actual stats when relevant
+- Provide actionable next steps
+- Keep professional yet engaging tone
 
-TOPICS TO FOCUS ON:
-- Web3 networking opportunities
-- Investment strategies and portfolio growth
-- Team building and referral rewards
-- Blockchain technology education
-- Success stories and achievements
-- Market insights and predictions
+EXAMPLE RESPONSES:
+- If asked about packages: Detail specific package levels, costs, benefits, ROI
+- If asked about earnings: Analyze their $${earnings}, suggest growth strategies
+- If asked about team: Give specific advice for their ${teamSize} member team
+- If asked about withdrawals: Explain process, minimums, timing, requirements
 
-Remember: Be helpful, motivational, and always encourage action while maintaining professionalism.`;
+Remember: Always provide specific, contextual answers that directly address the user's question.`;
   }
 
   // Generate dynamic content

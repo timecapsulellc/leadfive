@@ -1,4 +1,18 @@
 import React from 'react';
+import './About.css';
+
+// Analytics tracking function
+const trackDownload = (resourceName, fileSize) => {
+  if (window.gtag) {
+    window.gtag('event', 'download', {
+      event_category: 'Marketing Resources',
+      event_label: resourceName,
+      custom_parameter_1: fileSize,
+      value: 1
+    });
+  }
+  console.log(`📊 Downloaded: ${resourceName} (${fileSize})`);
+};
 
 export default function About({ account, provider, signer, onConnect, onDisconnect }) {
   const securityFeatures = [
@@ -126,6 +140,181 @@ export default function About({ account, provider, signer, onConnect, onDisconne
           </div>
         </section>
 
+        <section className="marketing-resources-section">
+          <h2>📚 Download Our Latest Marketing Resources</h2>
+          <p className="resources-intro">
+            Access our growing library of essential marketing materials, all available as downloadable PDFs. 
+            We regularly update this page with new content to support your efforts.
+          </p>
+          
+          <div className="resources-content">
+            <div className="current-resources">
+              <h3>🎯 Current Resources Available:</h3>
+              <div className="resources-grid">
+                <div className="resource-item available">
+                  <div className="resource-icon">🎬</div>
+                  <div className="resource-info">
+                    <h4>Promotional Videos & Scripts</h4>
+                    <p>Professional video content and ready-to-use scripts for your marketing campaigns</p>
+                    <button 
+                      className="download-btn" 
+                      onClick={() => {
+                        trackDownload('Promotional Videos & Scripts', '2.1MB');
+                        window.open('/resources/promotional-videos.pdf', '_blank');
+                      }}
+                    >
+                      Download PDF <span className="file-size">(2.1MB)</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="resource-item available">
+                  <div className="resource-icon">📊</div>
+                  <div className="resource-info">
+                    <h4>Business Presentations & Templates</h4>
+                    <p>Complete presentation decks and customizable templates for client meetings</p>
+                    <button 
+                      className="download-btn" 
+                      onClick={() => {
+                        trackDownload('Business Presentations & Templates', '3.5MB');
+                        window.open('/resources/business-presentations.pdf', '_blank');
+                      }}
+                    >
+                      Download PDF <span className="file-size">(3.5MB)</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="resource-item available">
+                  <div className="resource-icon">👨‍💼</div>
+                  <div className="resource-info">
+                    <h4>Leadership Training Guides</h4>
+                    <p>Comprehensive workbooks for developing leadership skills and team management</p>
+                    <button 
+                      className="download-btn" 
+                      onClick={() => {
+                        trackDownload('Leadership Training Guides', '4.2MB');
+                        window.open('/resources/leadership-training.pdf', '_blank');
+                      }}
+                    >
+                      Download PDF <span className="file-size">(4.2MB)</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="resource-item available">
+                  <div className="resource-icon">💪</div>
+                  <div className="resource-info">
+                    <h4>Personal Motivation Programs</h4>
+                    <p>Proven exercises and programs to maintain motivation and drive success</p>
+                    <button 
+                      className="download-btn" 
+                      onClick={() => {
+                        trackDownload('Personal Motivation Programs', '1.8MB');
+                        window.open('/resources/motivation-programs.pdf', '_blank');
+                      }}
+                    >
+                      Download PDF <span className="file-size">(1.8MB)</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="resource-item available">
+                  <div className="resource-icon">🤖</div>
+                  <div className="resource-info">
+                    <h4>AI Coaching Playbooks</h4>
+                    <p>Best practices for leveraging AI tools and coaching methodologies</p>
+                    <button 
+                      className="download-btn" 
+                      onClick={() => {
+                        trackDownload('AI Coaching Playbooks', '2.7MB');
+                        window.open('/resources/ai-coaching-playbooks.pdf', '_blank');
+                      }}
+                    >
+                      Download PDF <span className="file-size">(2.7MB)</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="coming-soon-resources">
+              <h3>🚀 What Else You'll Find (Coming Soon!):</h3>
+              <p>We're constantly expanding our collection. Look out for additions like:</p>
+              <div className="coming-soon-grid">
+                <div className="resource-item coming-soon">
+                  <div className="resource-icon">📄</div>
+                  <div className="resource-info">
+                    <h4>Whitepapers & Industry Reports</h4>
+                    <span className="coming-soon-badge">Coming Soon</span>
+                  </div>
+                </div>
+
+                <div className="resource-item coming-soon">
+                  <div className="resource-icon">📈</div>
+                  <div className="resource-info">
+                    <h4>Case Studies & Success Stories</h4>
+                    <span className="coming-soon-badge">Coming Soon</span>
+                  </div>
+                </div>
+
+                <div className="resource-item coming-soon">
+                  <div className="resource-icon">📱</div>
+                  <div className="resource-info">
+                    <h4>Social Media Content Calendars</h4>
+                    <span className="coming-soon-badge">Coming Soon</span>
+                  </div>
+                </div>
+
+                <div className="resource-item coming-soon">
+                  <div className="resource-icon">📧</div>
+                  <div className="resource-info">
+                    <h4>Email Marketing Campaign Guides</h4>
+                    <span className="coming-soon-badge">Coming Soon</span>
+                  </div>
+                </div>
+
+                <div className="resource-item coming-soon">
+                  <div className="resource-icon">🎯</div>
+                  <div className="resource-info">
+                    <h4>Sales Enablement Kits & Battle Cards</h4>
+                    <span className="coming-soon-badge">Coming Soon</span>
+                  </div>
+                </div>
+
+                <div className="resource-item coming-soon">
+                  <div className="resource-icon">🎨</div>
+                  <div className="resource-info">
+                    <h4>Brand Guidelines & Asset Kits</h4>
+                    <span className="coming-soon-badge">Coming Soon</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="resources-cta">
+              <div className="cta-content">
+                <h3>🎯 Ready to Accelerate Your Success?</h3>
+                <p>Browse the categories above and download the PDFs you need to take your business to the next level!</p>
+                <div className="cta-stats">
+                  <div className="stat">
+                    <span className="stat-number">1000+</span>
+                    <span className="stat-label">Downloads</span>
+                  </div>
+                  <div className="stat">
+                    <span className="stat-number">5</span>
+                    <span className="stat-label">Categories</span>
+                  </div>
+                  <div className="stat">
+                    <span className="stat-number">95%</span>
+                    <span className="stat-label">Success Rate</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="technology-section">
           <h2>⚙️ Technology Stack</h2>
           <div className="tech-features">
@@ -157,7 +346,7 @@ export default function About({ account, provider, signer, onConnect, onDisconne
           <div className="contract-info">
             <div className="contract-detail">
               <strong>Contract Address:</strong>
-              <code>0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569</code>
+              <code>0x29dcCb502D10C042BcC6a02a7762C49595A9E498</code>
             </div>
             <div className="contract-detail">
               <strong>Network:</strong>
@@ -169,7 +358,7 @@ export default function About({ account, provider, signer, onConnect, onDisconne
             </div>
             <div className="contract-links">
               <a 
-                href="https://bscscan.com/address/0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569" 
+                href="https://bscscan.com/address/0x29dcCb502D10C042BcC6a02a7762C49595A9E498" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="contract-link"

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.22;
 
+import "./DataStructures.sol";
+
 /**
  * @title Network Analytics Library
  * @dev Handles network analysis and binary tree operations
@@ -104,5 +106,105 @@ library NetworkAnalytics {
         }
         
         return upline;
+    }
+    
+    /**
+     * @dev Initialize network data for a user
+     */
+    function initializeNetworkData(NetworkData storage data, address user) internal {
+        data.networkDepth = 0;
+        data.leftChild = address(0);
+        data.rightChild = address(0);
+        data.leftVolume = 0;
+        data.rightVolume = 0;
+        data.binaryQualified = false;
+    }
+    
+    /**
+     * @dev Update network data when new user joins
+     */
+    function updateNetworkData(
+        NetworkData storage data,
+        mapping(address => DataStructures.User) storage users,
+        mapping(address => address[]) storage directReferrals,
+        address user
+    ) internal {
+        // Update network depth
+        data.networkDepth = calculateNetworkDepth(users, user);
+        
+        // Update binary tree structure
+        updateBinaryTree(data, directReferrals, user);
+        
+        // Check binary qualification
+        data.binaryQualified = checkBinaryQualification(data, users[user]);
+    }
+    
+    /**
+     * @dev Calculate binary bonus for user
+     */
+    function calculateBinaryBonus(NetworkData storage data, DataStructures.User storage user) internal view returns (uint256 bonus, uint256 carryForward) {
+        if (!data.binaryQualified) {
+            return (0, 0);
+        }
+        
+        uint256 matchingVolume = data.leftVolume < data.rightVolume ? data.leftVolume : data.rightVolume;
+        bonus = (matchingVolume * getBinaryBonusRate(user.packageLevel)) / 10000;
+        carryForward = data.leftVolume > data.rightVolume ? data.leftVolume - matchingVolume : data.rightVolume - matchingVolume;
+        
+        return (bonus, carryForward);
+    }
+    
+    /**
+     * @dev Calculate network depth
+     */
+    function calculateNetworkDepth(mapping(address => DataStructures.User) storage users, address user) internal view returns (uint256) {
+        uint256 depth = 0;
+        address current = users[user].referrer;
+        
+        while (current != address(0) && depth < 50) { // Prevent infinite loops
+            depth++;
+            current = users[current].referrer;
+        }
+        
+        return depth;
+    }
+    
+    /**
+     * @dev Update binary tree structure
+     */
+    function updateBinaryTree(
+        NetworkData storage data,
+        mapping(address => address[]) storage directReferrals,
+        address user
+    ) internal {
+        address[] memory refs = directReferrals[user];
+        
+        if (refs.length > 0) {
+            data.leftChild = refs[0];
+            if (refs.length > 1) {
+                data.rightChild = refs[1];
+            }
+        }
+    }
+    
+    /**
+     * @dev Check if user qualifies for binary bonus
+     */
+    function checkBinaryQualification(NetworkData storage data, DataStructures.User storage user) internal view returns (bool) {
+        return user.directReferrals >= 2 && 
+               user.packageLevel >= 2 && 
+               data.leftVolume > 0 && 
+               data.rightVolume > 0;
+    }
+    
+    /**
+     * @dev Get binary bonus rate based on package level
+     */
+    function getBinaryBonusRate(uint8 packageLevel) internal pure returns (uint256) {
+        if (packageLevel == 1) return 1000; // 10%
+        if (packageLevel == 2) return 1200; // 12%
+        if (packageLevel == 3) return 1500; // 15%
+        if (packageLevel == 4) return 2000; // 20%
+        return 1000; // Default 10%
     }
 }

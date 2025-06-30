@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadFive Platform - Web3 Integration Demo</title>
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 30px;
+            text-align: center;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .section:hover {
+            border-color: #4facfe;
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.2);
+        }
+        
+        .section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .status.connected {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.disconnected {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        input {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            margin: 5px;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #4facfe;
+        }
+        
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .package-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .package-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .package-card h4 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        
+        .package-card .price {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .info-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .info-item strong {
+            color: #4facfe;
+            font-size: 1.2em;
+        }
+        
+        #log {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 15px;
+            height: 200px;
+            overflow-y: auto;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+        }
+        
+        .footer a {
+            color: #4facfe;
+            text-decoration: none;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 LeadFive Platform</h1>
+            <p>Decentralized Incentive Platform on BSC Mainnet</p>
+        </div>
+        
+        <div class="content">
+            <!-- Connection Status -->
+            <div class="section">
+                <h3>🔗 Wallet Connection</h3>
+                <div id="connectionStatus" class="status disconnected">
+                    Not connected. Please connect your wallet to get started.
+                </div>
+                <button id="connectBtn" onclick="connectWallet()">Connect MetaMask</button>
+                <button id="disconnectBtn" onclick="disconnectWallet()" style="display:none;">Disconnect</button>
+            </div>
+            
+            <!-- User Information -->
+            <div class="section" id="userInfoSection" style="display:none;">
+                <h3>👤 User Information</h3>
+                <div id="userInfo" class="info-grid"></div>
+                <button onclick="refreshUserInfo()">🔄 Refresh</button>
+            </div>
+            
+            <!-- Registration -->
+            <div class="section" id="registrationSection" style="display:none;">
+                <h3>📝 Register Now</h3>
+                <p>Choose a package to get started with LeadFive:</p>
+                <div class="package-grid">
+                    <div class="package-card">
+                        <h4>🥉 Starter</h4>
+                        <div class="price">30 USDT</div>
+                        <button onclick="registerPackage(1)">Register Level 1</button>
+                    </div>
+                    <div class="package-card">
+                        <h4>🥈 Basic</h4>
+                        <div class="price">50 USDT</div>
+                        <button onclick="registerPackage(2)">Register Level 2</button>
+                    </div>
+                    <div class="package-card">
+                        <h4>🥇 Premium</h4>
+                        <div class="price">100 USDT</div>
+                        <button onclick="registerPackage(3)">Register Level 3</button>
+                    </div>
+                    <div class="package-card">
+                        <h4>💎 VIP</h4>
+                        <div class="price">200 USDT</div>
+                        <button onclick="registerPackage(4)">Register Level 4</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Withdrawal -->
+            <div class="section" id="withdrawalSection" style="display:none;">
+                <h3>💰 Withdraw Funds</h3>
+                <p>Available Balance: <span id="availableBalance">0</span> USDT</p>
+                <p>Withdrawal Rate: <span id="withdrawalRate">0</span>%</p>
+                <div style="margin-top: 15px;">
+                    <input type="number" id="withdrawAmount" placeholder="Amount to withdraw" step="0.01" min="1">
+                    <button onclick="withdrawFunds()">Withdraw</button>
+                </div>
+            </div>
+            
+            <!-- Activity Log -->
+            <div class="section">
+                <h3>📋 Activity Log</h3>
+                <div id="log"></div>
+                <button onclick="clearLog()">Clear Log</button>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>
+                <strong>Contract:</strong> 0x29dcCb502D10C042BcC6a02a7762C49595A9E498 |
+                <strong>Network:</strong> BSC Mainnet |
+                <a href="https://bscscan.com/address/0x29dcCb502D10C042BcC6a02a7762C49595A9E498" target="_blank">View on BSCScan</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize LeadFive Web3 integration
+        let leadFive;
+        let isProcessing = false;
+
+        // Initialize when page loads
+        window.addEventListener('load', async () => {
+            log('🚀 LeadFive Platform loaded');
+            
+            // Import our Web3 class
+            if (typeof LeadFiveWeb3 === 'undefined') {
+                // If not loaded via script tag, create it inline
+                await loadLeadFiveWeb3();
+            }
+            
+            leadFive = new LeadFiveWeb3();
+            
+            // Check if already connected
+            if (window.ethereum && window.ethereum.selectedAddress) {
+                await connectWallet();
+            }
+        });
+
+        // Connect wallet
+        async function connectWallet() {
+            if (isProcessing) return;
+            isProcessing = true;
+            
+            try {
+                log('🔄 Connecting to wallet...');
+                const result = await leadFive.connect();
+                
+                if (result.success) {
+                    updateConnectionStatus(true, result.account);
+                    await loadUserData();
+                    log(`✅ Connected to ${leadFive.formatAddress(result.account)}`);
+                } else {
+                    log(`❌ Connection failed: ${result.error}`);
+                    updateConnectionStatus(false);
+                }
+            } catch (error) {
+                log(`❌ Connection error: ${error.message}`);
+                updateConnectionStatus(false);
+            } finally {
+                isProcessing = false;
+            }
+        }
+
+        // Disconnect wallet
+        function disconnectWallet() {
+            leadFive = new LeadFiveWeb3();
+            updateConnectionStatus(false);
+            document.getElementById('userInfoSection').style.display = 'none';
+            document.getElementById('registrationSection').style.display = 'none';
+            document.getElementById('withdrawalSection').style.display = 'none';
+            log('🔌 Wallet disconnected');
+        }
+
+        // Update connection status UI
+        function updateConnectionStatus(connected, account = '') {
+            const status = document.getElementById('connectionStatus');
+            const connectBtn = document.getElementById('connectBtn');
+            const disconnectBtn = document.getElementById('disconnectBtn');
+            
+            if (connected) {
+                status.className = 'status connected';
+                status.textContent = `✅ Connected to ${leadFive.formatAddress(account)}`;
+                connectBtn.style.display = 'none';
+                disconnectBtn.style.display = 'inline-block';
+            } else {
+                status.className = 'status disconnected';
+                status.textContent = '❌ Not connected. Please connect your wallet.';
+                connectBtn.style.display = 'inline-block';
+                disconnectBtn.style.display = 'none';
+            }
+        }
+
+        // Load user data
+        async function loadUserData() {
+            try {
+                log('📊 Loading user data...');
+                
+                const [userInfo, usdtBalance] = await Promise.all([
+                    leadFive.getUserInfo(),
+                    leadFive.getUsdtBalance()
+                ]);
+                
+                displayUserInfo(userInfo, usdtBalance);
+                
+                // Show appropriate sections
+                if (userInfo.isRegistered) {
+                    document.getElementById('userInfoSection').style.display = 'block';
+                    document.getElementById('registrationSection').style.display = 'none';
+                    
+                    if (parseFloat(userInfo.balance) > 0) {
+                        document.getElementById('withdrawalSection').style.display = 'block';
+                        document.getElementById('availableBalance').textContent = parseFloat(userInfo.balance).toFixed(6);
+                        document.getElementById('withdrawalRate').textContent = userInfo.withdrawalRate;
+                    }
+                } else {
+                    document.getElementById('registrationSection').style.display = 'block';
+                    document.getElementById('userInfoSection').style.display = 'none';
+                    document.getElementById('withdrawalSection').style.display = 'none';
+                }
+                
+                log('✅ User data loaded successfully');
+                
+            } catch (error) {
+                log(`❌ Failed to load user data: ${error.message}`);
+            }
+        }
+
+        // Display user information
+        function displayUserInfo(userInfo, usdtBalance) {
+            const container = document.getElementById('userInfo');
+            container.innerHTML = `
+                <div class="info-item">
+                    <div>Registration Status</div>
+                    <strong>${userInfo.isRegistered ? '✅ Registered' : '❌ Not Registered'}</strong>
+                </div>
+                <div class="info-item">
+                    <div>Package Level</div>
+                    <strong>${userInfo.packageLevel} (${leadFive.getPackageInfo(userInfo.packageLevel)?.name || 'N/A'})</strong>
+                </div>
+                <div class="info-item">
+                    <div>Available Balance</div>
+                    <strong>${parseFloat(userInfo.balance).toFixed(6)} USDT</strong>
+                </div>
+                <div class="info-item">
+                    <div>Total Earnings</div>
+                    <strong>${parseFloat(userInfo.totalEarnings).toFixed(6)} USDT</strong>
+                </div>
+                <div class="info-item">
+                    <div>Earnings Cap</div>
+                    <strong>${parseFloat(userInfo.earningsCap).toFixed(6)} USDT</strong>
+                </div>
+                <div class="info-item">
+                    <div>Direct Referrals</div>
+                    <strong>${userInfo.directReferrals}</strong>
+                </div>
+                <div class="info-item">
+                    <div>Withdrawal Rate</div>
+                    <strong>${userInfo.withdrawalRate}%</strong>
+                </div>
+                <div class="info-item">
+                    <div>USDT Balance</div>
+                    <strong>${parseFloat(usdtBalance).toFixed(2)} USDT</strong>
+                </div>
+            `;
+        }
+
+        // Register for a package
+        async function registerPackage(level) {
+            if (isProcessing) return;
+            isProcessing = true;
+            
+            try {
+                log(`🔄 Starting registration for Level ${level}...`);
+                
+                const result = await leadFive.register(level, null, (status) => {
+                    log(`📝 ${status}`);
+                });
+                
+                if (result.success) {
+                    log(`✅ Registration successful! TX: ${result.transactionHash}`);
+                    log(`🎉 Welcome to LeadFive Level ${result.packageLevel}!`);
+                    await loadUserData();
+                } else {
+                    log(`❌ Registration failed`);
+                }
+                
+            } catch (error) {
+                log(`❌ Registration error: ${error.message}`);
+            } finally {
+                isProcessing = false;
+            }
+        }
+
+        // Withdraw funds
+        async function withdrawFunds() {
+            if (isProcessing) return;
+            
+            const amount = document.getElementById('withdrawAmount').value;
+            if (!amount || parseFloat(amount) <= 0) {
+                log('❌ Please enter a valid withdrawal amount');
+                return;
+            }
+            
+            isProcessing = true;
+            
+            try {
+                log(`🔄 Processing withdrawal of ${amount} USDT...`);
+                
+                const result = await leadFive.withdraw(amount, (status) => {
+                    log(`💰 ${status}`);
+                });
+                
+                if (result.success) {
+                    log(`✅ Withdrawal successful! TX: ${result.transactionHash}`);
+                    log(`💸 Withdrawn: ${result.amount} USDT`);
+                    document.getElementById('withdrawAmount').value = '';
+                    await loadUserData();
+                } else {
+                    log(`❌ Withdrawal failed`);
+                }
+                
+            } catch (error) {
+                log(`❌ Withdrawal error: ${error.message}`);
+            } finally {
+                isProcessing = false;
+            }
+        }
+
+        // Refresh user info
+        async function refreshUserInfo() {
+            if (leadFive.isConnected()) {
+                await loadUserData();
+            }
+        }
+
+        // Logging function
+        function log(message) {
+            const logElement = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logElement.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+
+        // Clear log
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        // Load LeadFive Web3 class if not available
+        async function loadLeadFiveWeb3() {
+            // This would be loaded from the separate file in production
+            window.LeadFiveWeb3 = class LeadFiveWeb3 {
+                constructor() {
+                    this.contractAddress = '0x29dcCb502D10C042BcC6a02a7762C49595A9E498';
+                    this.usdtAddress = '0x55d398326f99059fF775485246999027B3197955';
+                    this.sponsorAddress = '0xCeaEfDaDE5a0D574bFd5577665dC58d132995335';
+                    this.provider = null;
+                    this.signer = null;
+                    this.contract = null;
+                    this.usdtContract = null;
+                    this.account = '';
+
+                    this.contractABI = [
+                        "function register(address sponsor, uint8 packageLevel, bool useUSDT) payable",
+                        "function getUserBasicInfo(address user) view returns (bool, uint8, uint256)",
+                        "function getUserEarnings(address user) view returns (uint256, uint256, uint32)",
+                        "function getPackagePrice(uint8 packageLevel) view returns (uint256)",
+                        "function withdraw(uint256 amount)",
+                        "function calculateWithdrawalRate(address user) view returns (uint8)"
+                    ];
+
+                    this.usdtABI = [
+                        "function balanceOf(address owner) view returns (uint256)",
+                        "function approve(address spender, uint256 amount) returns (bool)",
+                        "function allowance(address owner, address spender) view returns (uint256)"
+                    ];
+
+                    this.packages = {
+                        1: { name: 'Starter', price: '30' },
+                        2: { name: 'Basic', price: '50' },
+                        3: { name: 'Premium', price: '100' },
+                        4: { name: 'VIP', price: '200' }
+                    };
+                }
+
+                async connect() {
+                    try {
+                        if (typeof window.ethereum === 'undefined') {
+                            throw new Error('MetaMask not found. Please install MetaMask.');
+                        }
+
+                        const accounts = await window.ethereum.request({
+                            method: 'eth_requestAccounts'
+                        });
+
+                        this.provider = new ethers.providers.Web3Provider(window.ethereum);
+                        this.signer = this.provider.getSigner();
+                        this.account = accounts[0];
+
+                        const network = await this.provider.getNetwork();
+                        if (network.chainId !== 56) {
+                            throw new Error('Please switch to BSC Mainnet (Chain ID: 56)');
+                        }
+
+                        this.contract = new ethers.Contract(this.contractAddress, this.contractABI, this.signer);
+                        this.usdtContract = new ethers.Contract(this.usdtAddress, this.usdtABI, this.signer);
+
+                        return { success: true, account: this.account };
+
+                    } catch (error) {
+                        return { success: false, error: error.message };
+                    }
+                }
+
+                async getUserInfo(userAddress = null) {
+                    const address = userAddress || this.account;
+                    if (!this.contract || !address) {
+                        throw new Error('Contract not connected or address not provided');
+                    }
+
+                    const [basicInfo, earnings] = await Promise.all([
+                        this.contract.getUserBasicInfo(address),
+                        this.contract.getUserEarnings(address)
+                    ]);
+
+                    let withdrawalRate = 0;
+                    if (basicInfo[0]) {
+                        withdrawalRate = await this.contract.calculateWithdrawalRate(address);
+                    }
+
+                    return {
+                        isRegistered: basicInfo[0],
+                        packageLevel: basicInfo[1].toNumber(),
+                        balance: ethers.utils.formatUnits(basicInfo[2], 18),
+                        totalEarnings: ethers.utils.formatUnits(earnings[0], 18),
+                        earningsCap: ethers.utils.formatUnits(earnings[1], 18),
+                        directReferrals: earnings[2].toNumber(),
+                        withdrawalRate: withdrawalRate.toNumber()
+                    };
+                }
+
+                async getUsdtBalance(userAddress = null) {
+                    const address = userAddress || this.account;
+                    if (!this.usdtContract || !address) {
+                        throw new Error('USDT contract not connected or address not provided');
+                    }
+
+                    const balance = await this.usdtContract.balanceOf(address);
+                    return ethers.utils.formatUnits(balance, 18);
+                }
+
+                async register(packageLevel, sponsorAddress = null, progressCallback = null) {
+                    if (!this.contract || !this.usdtContract) {
+                        throw new Error('Contracts not connected');
+                    }
+
+                    const sponsor = sponsorAddress || this.sponsorAddress;
+                    
+                    if (progressCallback) progressCallback('Getting package price...');
+                    const packagePrice = await this.contract.getPackagePrice(packageLevel);
+                    
+                    if (progressCallback) progressCallback('Checking USDT balance...');
+                    const balance = await this.usdtContract.balanceOf(this.account);
+                    if (balance.lt(packagePrice)) {
+                        throw new Error(`Insufficient USDT balance. Need ${ethers.utils.formatUnits(packagePrice, 18)} USDT`);
+                    }
+
+                    if (progressCallback) progressCallback('Checking USDT allowance...');
+                    const allowance = await this.usdtContract.allowance(this.account, this.contractAddress);
+                    
+                    if (allowance.lt(packagePrice)) {
+                        if (progressCallback) progressCallback('Approving USDT...');
+                        const approveTx = await this.usdtContract.approve(this.contractAddress, packagePrice);
+                        await approveTx.wait();
+                    }
+
+                    if (progressCallback) progressCallback('Registering user...');
+                    const tx = await this.contract.register(sponsor, packageLevel, true);
+                    
+                    if (progressCallback) progressCallback('Waiting for confirmation...');
+                    const receipt = await tx.wait();
+
+                    return {
+                        success: true,
+                        transactionHash: receipt.transactionHash,
+                        packageLevel: packageLevel,
+                        price: ethers.utils.formatUnits(packagePrice, 18)
+                    };
+                }
+
+                async withdraw(amount, progressCallback = null) {
+                    if (!this.contract) {
+                        throw new Error('Contract not connected');
+                    }
+
+                    if (progressCallback) progressCallback('Processing withdrawal...');
+                    const amountWei = ethers.utils.parseUnits(amount.toString(), 18);
+                    const tx = await this.contract.withdraw(amountWei);
+                    
+                    if (progressCallback) progressCallback('Waiting for confirmation...');
+                    const receipt = await tx.wait();
+
+                    return {
+                        success: true,
+                        transactionHash: receipt.transactionHash,
+                        amount: amount
+                    };
+                }
+
+                getPackageInfo(level) {
+                    return this.packages[level] || null;
+                }
+
+                formatAddress(address) {
+                    if (!address) return '';
+                    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+                }
+
+                isConnected() {
+                    return !!(this.provider && this.signer && this.account);
+                }
+            };
+        }
+    </script>
+</body>
+</html>
