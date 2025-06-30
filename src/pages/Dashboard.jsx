@@ -41,13 +41,14 @@ import AIEmotionTracker from '../components/AIEmotionTracker';
 import ErrorBoundary from '../components/ErrorBoundary';
 import MobileNavigation from '../components/MobileNavigation';
 import ExtraordinaryAIAssistant from '../components/ExtraordinaryAIAssistant';
-import LeadFiveConversationalAI from '../components/LeadFiveConversationalAI';
 // AI Services
+import { elevenLabsService } from '../services/ElevenLabsOnlyService';
 import './Dashboard.css';
 import '../styles/dashboard-alignment-fixes.css';
 import '../styles/mobile-first-optimization.css';
 import '../styles/expert-dashboard-redesign.css';
 import '../styles/voice-assistant.css';
+import '../styles/dashboard-layout-fix.css';
 
 export default function Dashboard({ account, provider, onDisconnect }) {
   const navigate = useNavigate();
@@ -227,17 +228,20 @@ export default function Dashboard({ account, provider, onDisconnect }) {
           </div>
         </div>
 
-        {/* Extraordinary AI Assistant - Replaces overlapping components */}
-        <ExtraordinaryAIAssistant 
-          userStats={{
-            totalEarnings: dashboardData.totalEarnings,
-            teamSize: dashboardData.teamSize,
-            currentLevel: dashboardData.currentLevel,
-            dailyEarnings: dashboardData.dailyEarnings,
-            activeReferrals: dashboardData.activeReferrals
-          }}
-          account={account}
-        />
+        {/* Extraordinary AI Assistant - Fixed position chat assistant */}
+        {activeSection !== 'voice-assistant' && (
+          <ExtraordinaryAIAssistant 
+            userStats={{
+              totalEarnings: dashboardData.totalEarnings,
+              teamSize: dashboardData.teamSize,
+              currentLevel: dashboardData.currentLevel,
+              dailyEarnings: dashboardData.dailyEarnings,
+              activeReferrals: dashboardData.activeReferrals
+            }}
+            account={account}
+          />
+        )}
+
       </div>
     </PageWrapper>
   );
@@ -653,25 +657,21 @@ function VoiceAssistantSection({ data, account }) {
   return (
     <div className="voice-assistant-section">
       <div className="voice-assistant-header">
-        <h2><FaBrain /> LeadFive Voice Assistant</h2>
-        <p>Experience natural voice conversations with AI-powered assistance for your LeadFive journey</p>
+        <h2><FaBrain /> AI Chat & Voice Assistant</h2>
+        <p>Experience natural conversations with AI-powered assistance for your LeadFive journey. Use the floating AI button in the bottom right corner to start chatting!</p>
       </div>
 
-      <div className="voice-assistant-container">
-        <div className="voice-assistant-main">
-          <ErrorBoundary>
-            <LeadFiveConversationalAI 
-              userStats={{
-                totalEarnings: data.totalEarnings,
-                teamSize: data.teamSize,
-                currentLevel: data.currentLevel,
-                dailyEarnings: data.dailyEarnings,
-                activeReferrals: data.activeReferrals,
-                pendingRewards: data.pendingRewards
-              }}
-              account={account}
-            />
-          </ErrorBoundary>
+      <div className="voice-assistant-info">
+        <div className="info-card">
+          <FaRobot className="info-icon" />
+          <h3>Smart AI Chat</h3>
+          <p>Click the AI button (💬) in the bottom right corner to open the chat interface. Ask questions about your earnings, team, or get strategic advice.</p>
+        </div>
+        
+        <div className="info-card">
+          <FaBrain className="info-icon" />
+          <h3>Voice Recognition</h3>
+          <p>Use the microphone feature within the chat to speak your questions. The AI will respond with both text and voice.</p>
         </div>
       </div>
 

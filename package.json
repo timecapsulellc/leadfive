@@ -19,7 +19,14 @@
     "verify": "hardhat verify --network bsc",
     "verify:simple": "hardhat run scripts/verify-simple.cjs --network bsc",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "lint:fix": "eslint . --ext js,jsx --fix"
+    "lint:fix": "eslint . --ext js,jsx --fix",
+    "dev:fast": "vite --host 0.0.0.0 --port 5173 --force",
+    "build:fast": "vite build --mode production",
+    "clean": "rm -rf node_modules/.vite && rm -rf cache && rm -rf artifacts && rm -rf dist",
+    "clean:all": "rm -rf node_modules && npm install",
+    "monitor:memory": "node scripts/memory-monitor.cjs",
+    "build:perf": "node scripts/build-performance.cjs",
+    "optimize": "node scripts/performance-optimizer.cjs"
   },
   "keywords": [
     "decentralized-platform",
@@ -45,6 +52,7 @@
   "dependencies": {
     "@elevenlabs/elevenlabs-js": "^2.3.0",
     "@elevenlabs/react": "^0.1.7",
+    "@nomicfoundation/hardhat-toolbox": "^6.0.0",
     "@react-three/drei": "^9.88.13",
     "@react-three/fiber": "^8.15.19",
     "@vitejs/plugin-react": "^4.0.3",
@@ -52,7 +60,7 @@
     "crypto-browserify": "^3.12.1",
     "elevenlabs": "^1.59.0",
     "elevenlabs-node": "^2.0.3",
-    "ethers": "^6.8.1",
+    "ethers": "^6.14.4",
     "events": "^3.3.0",
     "framer-motion": "^10.18.0",
     "html2canvas": "^1.4.1",
@@ -88,7 +96,7 @@
     "buffer": "^6.0.3",
     "dotenv": "^16.5.0",
     "happy-dom": "^18.0.1",
-    "hardhat": "^2.24.3",
+    "hardhat": "^2.25.0",
     "hardhat-contract-sizer": "^2.10.0",
     "jest-environment-jsdom": "^30.0.2",
     "jsdom": "^26.1.0",

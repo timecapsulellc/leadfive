@@ -5,7 +5,7 @@ import "./DataStructures.sol";
 
 /**
  * @title AdvancedFeaturesLib
- * @dev Library for advanced MLM features: notifications, achievements, circuit breaker, rewards
+ * @dev Library for advanced platform features: notifications, achievements, circuit breaker, rewards
  */
 library AdvancedFeaturesLib {
     using DataStructures for DataStructures.User;
@@ -107,19 +107,6 @@ library AdvancedFeaturesLib {
         }
         
         return rewards;
-    }
-    
-    /**
-     * @dev Calculate fast start bonus (first 48 hours)
-     */
-    function calculateFastStartBonus(
-        DataStructures.User storage user,
-        uint256 amount
-    ) external view returns (uint256) {
-        if (block.timestamp <= user.fastStartExpiry) {
-            return (amount * 10) / 100; // 10% fast start bonus
-        }
-        return 0;
     }
     
     /**
@@ -313,5 +300,113 @@ library AdvancedFeaturesLib {
         }
         
         return 0; // No rank
+    }
+    
+    /**
+     * @dev Unlock achievement for user
+     */
+    function unlockAchievement(
+        mapping(address => DataStructures.User) storage users,
+        address user,
+        uint32 achievementId
+    ) external returns (uint256 reward) {
+        // Define achievement rewards
+        if(achievementId == 1) reward = 10e18;  // First referral - $10
+        else if(achievementId == 2) reward = 25e18;  // 5 referrals - $25
+        else if(achievementId == 3) reward = 50e18;  // 10 referrals - $50
+        else if(achievementId == 4) reward = 100e18; // Leader rank - $100
+        else if(achievementId == 5) reward = 200e18; // Top performer - $200
+        
+        return reward;
+    }
+    
+    /**
+     * @dev Get user achievements
+     */
+    function getAchievements(
+        mapping(address => DataStructures.User) storage users,
+        address user
+    ) external view returns (
+        uint32[] memory unlockedAchievements,
+        uint256[] memory achievementRewards,
+        uint32[] memory availableAchievements
+    ) {
+        DataStructures.User memory userData = users[user];
+        
+        // Simple implementation - check based on user stats
+        uint32[] memory unlocked = new uint32[](5);
+        uint256[] memory rewards = new uint256[](5);
+        uint32[] memory available = new uint32[](5);
+        
+        uint32 unlockedCount = 0;
+        uint32 availableCount = 0;
+        
+        // Check achievements based on referrals
+        if(userData.directReferrals >= 1) {
+            unlocked[unlockedCount] = 1;
+            rewards[unlockedCount] = 10e18;
+            unlockedCount++;
+        } else {
+            available[availableCount] = 1;
+            availableCount++;
+        }
+        
+        if(userData.directReferrals >= 5) {
+            unlocked[unlockedCount] = 2;
+            rewards[unlockedCount] = 25e18;
+            unlockedCount++;
+        } else if(userData.directReferrals >= 1) {
+            available[availableCount] = 2;
+            availableCount++;
+        }
+        
+        // Resize arrays to actual lengths
+        assembly {
+            mstore(unlocked, unlockedCount)
+            mstore(rewards, unlockedCount)
+            mstore(available, availableCount)
+        }
+        
+        return (unlocked, rewards, available);
+    }
+    
+    /**
+     * @dev Get top performers
+     */
+    function getTopPerformers(
+        mapping(address => DataStructures.User) storage users,
+        uint8 count,
+        uint32 totalUsers
+    ) external view returns (
+        address[] memory performers,
+        uint96[] memory volumes,
+        uint32[] memory teamSizes
+    ) {
+        // Simplified implementation - would need more complex sorting in production
+        performers = new address[](count);
+        volumes = new uint96[](count);
+        teamSizes = new uint32[](count);
+        
+        // This would require iterating through all users and sorting
+        // For now, return empty arrays
+        return (performers, volumes, teamSizes);
+    }
+    
+    /**
+     * @dev Get rank distribution
+     */
+    function getRankDistribution(
+        mapping(address => DataStructures.User) storage users,
+        uint32 totalUsers
+    ) external view returns (
+        uint32[] memory rankCounts,
+        uint96[] memory rankVolumes
+    ) {
+        rankCounts = new uint32[](6); // 6 ranks (0-5)
+        rankVolumes = new uint96[](6);
+        
+        // This would require iterating through all users
+        // For now, return empty arrays for gas efficiency
+        return (rankCounts, rankVolumes);
     }
 }

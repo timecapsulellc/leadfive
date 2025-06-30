@@ -8,7 +8,7 @@ pragma solidity ^0.8.22;
  * 
  * OPTIMIZATION FEATURES:
  * =====================
- * 1. Split User struct into smaller components (UserCore, UserFinancials, UserNetwork, UserBonuses)
+ * 1. Split User struct into smaller components (UserCore, UserFinancials, UserPlatform, UserBonuses)
  *    - Reduces stack depth issues in complex functions
  *    - Allows more granular access to user data
  *    - Maintains backward compatibility with full User struct
@@ -95,9 +95,9 @@ library DataStructures {
     }
     
     /**
-     * @dev User network data
+     * @dev User platform data
      */
-    struct UserNetwork {
+    struct UserPlatform {
         address[] directReferrals;
         address[] matrixReferrals;
         uint256 totalReferrals;
@@ -133,7 +133,6 @@ library DataStructures {
         uint8 leaderRank; // 0=none, 1=silver, 2=gold, 3=diamond
         uint96 leftLegVolume;
         uint96 rightLegVolume;
-        uint32 fastStartExpiry;
         bool isActive;
     }
 

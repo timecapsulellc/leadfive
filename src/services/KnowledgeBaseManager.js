@@ -118,7 +118,7 @@ class KnowledgeBaseManager {
         - Rank Advancement: Increased earning potential with higher ranks
 
         TECHNOLOGY STACK:
-        - Smart Contract: BSC Mainnet (0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569)
+        - Smart Contract: BSC Mainnet (0x29dcCb502D10C042BcC6a02a7762C49595A9E498)
         - Frontend: React + Vite + Web3 integration
         - Payment Methods: BNB and USDT accepted
         - Security: Audited smart contracts with emergency controls

@@ -1,6 +1,8 @@
-// LeadFive Contract Configuration - Updated with NEW mainnet address and ABI
-export const CONTRACT_ADDRESS = '0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569';
-export const USDT_ADDRESS = '0x55d398326f99059fF775485246999027B3197955';
+// LeadFive Contract Configuration - Updated with MAINNET PRODUCTION addresses
+export const CONTRACT_ADDRESS = '0x29dcCb502D10C042BcC6a02a7762C49595A9E498'; // MAINNET PROXY
+export const IMPLEMENTATION_ADDRESS = '0xA4AB35Ab2BA415E6CCf9559e8dcAB0661cC29e2b'; // MAINNET IMPLEMENTATION
+export const USDT_ADDRESS = '0x55d398326f99059fF775485246999027B3197955'; // BSC MAINNET USDT
+export const SPONSOR_ADDRESS = '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29'; // TREZOR WALLET (NEW OWNER)
 
 // Network configuration
 export const SUPPORTED_NETWORKS = {
@@ -9,7 +11,9 @@ export const SUPPORTED_NETWORKS = {
     name: 'BNB Smart Chain',
     rpcUrl: 'https://bsc-dataseed.binance.org/',
     blockExplorer: 'https://bscscan.com/',
-    contractAddress: '0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569'
+    contractAddress: '0x29dcCb502D10C042BcC6a02a7762C49595A9E498',
+    usdtAddress: '0x55d398326f99059fF775485246999027B3197955',
+    sponsorAddress: '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29'
   }
   // Testnet removed for production deployment
 };

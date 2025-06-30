@@ -18,6 +18,8 @@ library CommissionLib {
         uint16 leaderBonus;
         uint16 helpBonus;
         uint16 clubBonus;
+        uint16 binaryBonus;
+        uint16 matrixBonus;
     }
     
     struct Package {
@@ -188,6 +190,56 @@ library CommissionLib {
             
             currentUpline = users[currentUpline].referrer;
             level++;
+        }
+    }
+    
+    /**
+     * @dev Calculate commission based on rates and level
+     */
+    function calculateCommission(CommissionRates memory rates, uint256 amount, uint8 level) internal pure returns (uint256) {
+        uint16 rate;
+        
+        if (level == 1) {
+            rate = rates.directBonus;
+        } else if (level <= 10) {
+            rate = rates.levelBonus;
+        } else if (level <= 20) {
+            rate = rates.uplineBonus;
+        } else {
+            return 0; // No commission beyond level 20
+        }
+        
+        return (amount * rate) / BASIS_POINTS;
+    }
+    
+    /**
+     * @dev Calculate binary bonus
+     */
+    function calculateBinaryCommission(CommissionRates memory rates, uint256 amount) internal pure returns (uint256) {
+        return (amount * rates.binaryBonus) / BASIS_POINTS;
+    }
+    
+    /**
+     * @dev Calculate matrix bonus
+     */
+    function calculateMatrixCommission(CommissionRates memory rates, uint256 amount) internal pure returns (uint256) {
+        return (amount * rates.matrixBonus) / BASIS_POINTS;
+    }
+    
+    /**
+     * @dev Get default commission rates for a package level
+     */
+    function getDefaultRates(uint8 packageLevel) internal pure returns (CommissionRates memory) {
+        if (packageLevel == 1) {
+            return CommissionRates(3000, 800, 800, 800, 2500, 0, 1500, 1000);
+        } else if (packageLevel == 2) {
+            return CommissionRates(3500, 900, 900, 900, 2800, 0, 1800, 1200);
+        } else if (packageLevel == 3) {
+            return CommissionRates(4000, 1000, 1000, 1000, 3000, 0, 2000, 1500);
+        } else if (packageLevel == 4) {
+            return CommissionRates(4500, 1100, 1100, 1100, 3200, 0, 2200, 1800);
+        } else {
+            return CommissionRates(4000, 1000, 1000, 1000, 3000, 0, 2000, 1500);
         }
     }
 }

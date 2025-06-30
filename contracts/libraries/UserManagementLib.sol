@@ -159,7 +159,6 @@ library UserManagementLib {
             leaderRank: 0,
             leftLegVolume: 0,
             rightLegVolume: 0,
-            fastStartExpiry: uint32(block.timestamp + 48 hours),
             isActive: true
         });
     }
@@ -202,5 +201,156 @@ library UserManagementLib {
         if (position <= 14) return 3;
         if (position <= 30) return 4;
         return 5; // Max level
+    }
+
+    /**
+     * @dev Get genealogy tree information
+     */
+    function getGenealogyTree(
+        mapping(address => DataStructures.User) storage users,
+        address user,
+        uint8 depth,
+        mapping(address => address[]) storage directReferrals
+    ) external view returns (
+        address[] memory upline,
+        address[] memory downline,
+        uint32[] memory teamSizes
+    ) {
+        upline = new address[](depth);
+        teamSizes = new uint32[](depth + 1);
+        
+        // Get upline
+        address current = users[user].referrer;
+        for(uint8 i = 0; i < depth && current != address(0); i++) {
+            upline[i] = current;
+            teamSizes[i] = users[current].teamSize;
+            current = users[current].referrer;
+        }
+        
+        // Get downline (direct referrals for now)
+        downline = directReferrals[user];
+        teamSizes[depth] = users[user].teamSize;
+        
+        return (upline, downline, teamSizes);
+    }
+    
+    /**
+     * @dev Get referral statistics
+     */
+    function getReferralStats(
+        mapping(address => DataStructures.User) storage users,
+        address user,
+        mapping(address => address[]) storage directReferrals
+    ) external view returns (
+        uint32 totalReferrals,
+        uint32 activeReferrals,
+        uint96 totalReferralVolume,
+        uint96 totalReferralEarnings
+    ) {
+        address[] memory refs = directReferrals[user];
+        totalReferrals = uint32(refs.length);
+        
+        for(uint i = 0; i < refs.length; i++) {
+            if(users[refs[i]].isActive) {
+                activeReferrals++;
+            }
+            totalReferralVolume += uint96(users[refs[i]].totalInvestment);
+        }
+        
+        totalReferralEarnings = uint96(users[user].totalEarnings);
+        
+        return (totalReferrals, activeReferrals, totalReferralVolume, totalReferralEarnings);
+    }
+    
+    /**
+     * @dev Get network statistics
+     */
+    function getNetworkStats(
+        mapping(address => DataStructures.User) storage users,
+        uint32 totalUsers
+    ) external view returns (
+        uint32 totalActiveUsers,
+        uint32 totalInactiveUsers,
+        uint96 totalNetworkVolume,
+        uint96 totalCommissionsPaid,
+        uint32 averageTeamSize
+    ) {
+        // This would require iterating through all users
+        // For gas efficiency, we'll return simplified stats
+        totalActiveUsers = totalUsers; // Simplified
+        totalInactiveUsers = 0;
+        totalNetworkVolume = 0;
+        totalCommissionsPaid = 0;
+        averageTeamSize = 0;
+        
+        return (totalActiveUsers, totalInactiveUsers, totalNetworkVolume, totalCommissionsPaid, averageTeamSize);
+    }
+    
+    /**
+     * @dev Process network compression (remove inactive users)
+     */
+    function processNetworkCompression(
+        mapping(address => DataStructures.User) storage users,
+        mapping(address => address[]) storage directReferrals
+    ) external {
+        // Implementation would be complex, placeholder for now
+        // This would identify and remove inactive users, compress network
+    }
+    
+    /**
+     * @dev Flush user when earnings cap reached
+     */
+    function flushUser(
+        mapping(address => DataStructures.User) storage users,
+        address user,
+        mapping(address => address[]) storage directReferrals
+    ) external {
+        users[user].isActive = false;
+        users[user].totalEarnings = users[user].earningsCap;
+        
+        // Remove from referrer's direct list
+        address referrer = users[user].referrer;
+        if(referrer != address(0)) {
+            address[] storage refs = directReferrals[referrer];
+            for(uint i = 0; i < refs.length; i++) {
+                if(refs[i] == user) {
+                    refs[i] = refs[refs.length - 1];
+                    refs.pop();
+                    break;
+                }
+            }
+        }
+    }
+    
+    /**
+     * @dev Reassign orphan user to new sponsor
+     */
+    function reassignOrphan(
+        mapping(address => DataStructures.User) storage users,
+        address orphan,
+        address newSponsor,
+        mapping(address => address[]) storage directReferrals
+    ) external {
+        address oldSponsor = users[orphan].referrer;
+        
+        // Remove from old sponsor
+        if(oldSponsor != address(0)) {
+            address[] storage oldRefs = directReferrals[oldSponsor];
+            for(uint i = 0; i < oldRefs.length; i++) {
+                if(oldRefs[i] == orphan) {
+                    oldRefs[i] = oldRefs[oldRefs.length - 1];
+                    oldRefs.pop();
+                    break;
+                }
+            }
+            users[oldSponsor].directReferrals--;
+            users[oldSponsor].teamSize--;
+        }
+        
+        // Assign to new sponsor
+        users[orphan].referrer = newSponsor;
+        directReferrals[newSponsor].push(orphan);
+        users[newSponsor].directReferrals++;
+        users[newSponsor].teamSize++;
     }
 }

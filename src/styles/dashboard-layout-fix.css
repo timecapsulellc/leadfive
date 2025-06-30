@@ -1,0 +1,104 @@
+/* Dashboard Layout Fix - Resolves AI Component Conflicts */
+
+/* Ensure proper container hierarchy */
+.dashboard-container {
+  position: relative !important;
+  overflow: hidden;
+  height: calc(100vh - 140px);
+}
+
+/* Fix main content scrolling */
+.dashboard-main {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  overflow: hidden;
+}
+
+.dashboard-content {
+  height: calc(100% - 80px); /* Account for header */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 2rem;
+}
+
+/* Ensure AI Assistant doesn't interfere with layout */
+.ai-assistant-container {
+  position: fixed !important;
+  bottom: 30px !important;
+  right: 30px !important;
+  z-index: 9999 !important;
+  pointer-events: auto;
+}
+
+/* Fix sidebar positioning */
+.dashboard-sidebar {
+  position: sticky !important;
+  top: 70px;
+  height: calc(100vh - 140px);
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+/* Voice assistant section specific styles */
+.voice-assistant-section {
+  padding: 2rem;
+  max-width: 100%;
+}
+
+.voice-assistant-container {
+  position: relative !important;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.voice-assistant-main {
+  position: relative !important;
+  z-index: 1;
+}
+
+/* Prevent layout breaks on mobile */
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+    height: auto;
+    min-height: calc(100vh - 140px);
+  }
+  
+  .dashboard-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    order: -1;
+  }
+  
+  .dashboard-main {
+    height: auto;
+    min-height: calc(100vh - 200px);
+  }
+  
+  .ai-assistant-container {
+    bottom: 20px !important;
+    right: 20px !important;
+  }
+}
+
+/* Fix any lingering z-index conflicts */
+.PageWrapper {
+  position: relative;
+  z-index: 0;
+}
+
+/* Ensure proper stacking context */
+.overview-section,
+.ai-insights-section,
+.earnings-section,
+.network-section,
+.referrals-section,
+.withdrawals-section,
+.activity-section,
+.performance-section,
+.settings-section {
+  position: relative;
+  z-index: 1;
+}

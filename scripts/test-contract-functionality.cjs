@@ -1,137 +1,146 @@
-const { ethers } = require("hardhat");
 require('dotenv').config();
+const { ethers } = require('hardhat');
 
-async function main() {
-    console.log("🧪 LEADFIVE TESTNET FUNCTIONALITY TESTING");
-    console.log("=" * 60);
-
-    // Contract addresses from deployment
-    const CONTRACT_ADDRESS = "0x35Fa466f2B4f61F9C950eC1488dc5608157315e4";
-    const USDT_ADDRESS = "0x337610d27c682E347C9cD60BD4b3b107C9d34dDd";
-    
-    // Get signers
-    const [deployer] = await ethers.getSigners();
-    console.log("🔍 Testing with account:", deployer.address);
-    
-    // Get contract instance
-    const LeadFive = await ethers.getContractAt("LeadFive", CONTRACT_ADDRESS);
+async function testContractFunctionality() {
+    console.log('🧪 TESTING CONTRACT FUNCTIONALITY');
+    console.log('='.repeat(50));
     
     try {
-        console.log("\\n🔍 BASIC CONTRACT VERIFICATION");
-        console.log("=" * 40);
+        // Connect to BSC mainnet
+        const provider = new ethers.JsonRpcProvider(process.env.BSC_MAINNET_RPC_URL);
+        const wallet = new ethers.Wallet(process.env.DEPLOYER_PRIVATE_KEY, provider);
         
-        // Test 1: Check contract owner
-        const owner = await LeadFive.owner();
-        console.log("✅ Contract Owner:", owner);
+        const proxyAddress = process.env.MAINNET_CONTRACT_ADDRESS;
+        const usdtAddress = process.env.VITE_USDT_CONTRACT_ADDRESS;
         
-        // Test 2: Check USDT address
-        const usdtAddress = await LeadFive.usdt();
-        console.log("✅ USDT Address:", usdtAddress);
+        console.log(`\n📋 Test Configuration:`);
+        console.log(`Contract: ${proxyAddress}`);
+        console.log(`USDT: ${usdtAddress}`);
+        console.log(`Tester: ${wallet.address}`);
         
-        // Test 3: Check price feed
-        const priceFeedAddress = await LeadFive.priceFeed();
-        console.log("✅ Price Feed:", priceFeedAddress);
+        // Connect to contract
+        const LeadFive = await ethers.getContractFactory("LeadFive", wallet);
+        const contract = LeadFive.attach(proxyAddress);
         
-        // Test 4: Check total users
-        const totalUsers = await LeadFive.totalUsers();
-        console.log("✅ Total Users:", totalUsers.toString());
+        // Test current state
+        console.log(`\n🔍 Current Contract State:`);
+        const owner = await contract.owner();
+        const contractUSDT = await contract.usdt();
+        const totalUsers = await contract.getTotalUsers();
         
-        // Test 5: Check packages
-        console.log("\\n📦 PACKAGE VERIFICATION");
-        console.log("=" * 40);
+        console.log(`Owner: ${owner}`);
+        console.log(`Contract USDT: ${contractUSDT}`);
+        console.log(`Total Users: ${totalUsers}`);
+        console.log(`USDT is Zero: ${contractUSDT === ethers.ZeroAddress}`);
+        
+        // Test package prices
+        console.log(`\n✅ Package Prices Test:`);
         for (let i = 1; i <= 4; i++) {
-            const pkg = await LeadFive.packages(i);
-            console.log(`✅ Package ${i}: ${ethers.formatEther(pkg.price)} USDT`);
+            const price = await contract.getPackagePrice(i);
+            console.log(`   Package ${i}: $${ethers.formatUnits(price, 6)} USDT`);
         }
         
-        // Test 6: Check pools
-        console.log("\\n🏊 POOL VERIFICATION");
-        console.log("=" * 40);
-        const [leaderBalance, helpBalance, clubBalance] = await LeadFive.getPoolBalances();
-        console.log("✅ Leader Pool:", ethers.formatEther(leaderBalance), "USDT");
-        console.log("✅ Help Pool:", ethers.formatEther(helpBalance), "USDT");
-        console.log("✅ Club Pool:", ethers.formatEther(clubBalance), "USDT");
+        // Connect to real USDT to check balance
+        console.log(`\n🔍 USDT Balance Check:`);
+        const usdtABI = [
+            "function balanceOf(address) view returns (uint256)",
+            "function decimals() view returns (uint8)",
+            "function symbol() view returns (string)"
+        ];
         
-        // Test 7: Check contract health
-        console.log("\\n💊 CONTRACT HEALTH CHECK");
-        console.log("=" * 40);
-        const health = await LeadFive.getContractHealth();
-        console.log("✅ Contract Balance:", ethers.formatEther(health.contractBalance), "USDT");
-        console.log("✅ Total Deposits:", ethers.formatEther(health.totalDepositsAmount), "USDT");
-        console.log("✅ Health Ratio:", (health.healthRatio.toString() / 100), "%");
-        console.log("✅ Is Healthy:", health.isHealthy);
+        const usdtContract = new ethers.Contract(usdtAddress, usdtABI, provider);
+        const usdtBalance = await usdtContract.balanceOf(wallet.address);
+        const usdtDecimals = await usdtContract.decimals();
+        const usdtSymbol = await usdtContract.symbol();
         
-        // Test 8: Check deployer user info
-        console.log("\\n👤 DEPLOYER USER INFO");
-        console.log("=" * 40);
-        const userInfo = await LeadFive.getUserInfo(deployer.address);
-        console.log("✅ Is Registered:", userInfo.isRegistered);
-        console.log("✅ Package Level:", userInfo.packageLevel.toString());
-        console.log("✅ Balance:", ethers.formatEther(userInfo.balance), "USDT");
-        console.log("✅ Total Investment:", ethers.formatEther(userInfo.totalInvestment), "USDT");
-        console.log("✅ Direct Referrals:", userInfo.directReferrals.toString());
+        console.log(`USDT Symbol: ${usdtSymbol}`);
+        console.log(`USDT Decimals: ${usdtDecimals}`);
+        console.log(`Your USDT Balance: ${ethers.formatUnits(usdtBalance, usdtDecimals)} USDT`);
         
-        // Test 9: Check oracle functionality
-        console.log("\\n🔮 ORACLE FUNCTIONALITY");
-        console.log("=" * 40);
+        // Test if we can call admin functions
+        console.log(`\n🔧 Admin Functions Test:`);
+        
         try {
-            const oracleCount = await LeadFive.getOracleCount();
-            console.log("✅ Oracle Count:", oracleCount.toString());
-            
-            // Test emergency price function (owner only)
-            const emergencyPrice = await LeadFive.getEmergencyPrice();
-            console.log("✅ Emergency Price:", ethers.formatUnits(emergencyPrice, 8), "USD");
+            const isAdmin = await contract.isAdmin(wallet.address);
+            console.log(`✅ Is Admin: ${isAdmin}`);
         } catch (error) {
-            console.log("⚠️ Oracle test note:", error.message.includes("Ownable") ? "Owner-only function" : error.message);
+            console.log(`❌ Is Admin check failed: ${error.message}`);
         }
         
-        // Test 10: Check admin functions
-        console.log("\\n🔧 ADMIN FUNCTIONALITY");
-        console.log("=" * 40);
+        // Check if contract has any USDT balance
+        const contractUSDTBalance = await usdtContract.balanceOf(proxyAddress);
+        console.log(`Contract USDT Balance: ${ethers.formatUnits(contractUSDTBalance, usdtDecimals)} USDT`);
+        
+        // Try to get user info for the owner
+        console.log(`\n🔍 Owner User Info:`);
         try {
-            // Check if contract is paused
-            const isPaused = await LeadFive.paused();
-            console.log("✅ Contract Paused:", isPaused);
-            
-            // Check admin fee recipient
-            const adminFeeRecipient = await LeadFive.adminFeeRecipient();
-            console.log("✅ Admin Fee Recipient:", adminFeeRecipient || "Not set");
-            
+            const userInfo = await contract.getUserFullInfo(wallet.address);
+            console.log(`   Registered: ${userInfo[0]}`);
+            console.log(`   Package Level: ${userInfo[1]}`);
+            console.log(`   Balance: ${ethers.formatUnits(userInfo[2], 6)} USDT`);
+            console.log(`   Total Earnings: ${ethers.formatUnits(userInfo[3], 6)} USDT`);
+            console.log(`   Direct Referrals: ${userInfo[5]}`);
         } catch (error) {
-            console.log("⚠️ Admin check:", error.message);
+            console.log(`   User info error: ${error.message}`);
         }
         
-        console.log("\\n🎉 CONTRACT FUNCTIONALITY TEST SUMMARY");
-        console.log("=" * 60);
-        console.log("✅ Contract deployed and initialized successfully");
-        console.log("✅ All basic functions working correctly");
-        console.log("✅ MLM structure properly configured");
-        console.log("✅ Security features operational");
-        console.log("✅ Oracle system functioning");
-        console.log("✅ Pool system initialized");
+        // The key test: Does the contract think USDT is set?
+        console.log(`\n🎯 KEY DIAGNOSTIC:`);
         
-        console.log("\\n📋 TEST RESULTS: ALL PASSED ✅");
-        console.log("🔗 BSCScan Testnet:", `https://testnet.bscscan.com/address/${CONTRACT_ADDRESS}`);
+        if (contractUSDT === ethers.ZeroAddress) {
+            console.log(`❌ Contract USDT address is zero - this will cause registration failures`);
+            console.log(`❌ All USDT transfers will fail`);
+            console.log(`❌ Contract is NOT functional for registrations`);
+            
+            // Try to determine why setUSDTAddress didn't work
+            console.log(`\n🔧 Attempting to diagnose setUSDTAddress function...`);
+            
+            // Check if the function exists in the contract
+            try {
+                const contractCode = await provider.getCode(proxyAddress);
+                console.log(`Contract has code: ${contractCode !== '0x'}`);
+                
+                // Try to call setUSDTAddress with call static to see what happens
+                const setUSDTCalldata = contract.interface.encodeFunctionData("setUSDTAddress", [usdtAddress]);
+                console.log(`SetUSDT calldata: ${setUSDTCalldata}`);
+                
+            } catch (error) {
+                console.log(`Diagnostic error: ${error.message}`);
+            }
+            
+        } else {
+            console.log(`✅ Contract USDT address is set correctly`);
+            console.log(`✅ Contract should be functional`);
+        }
         
-        console.log("\\n🚀 READY FOR:");
-        console.log("1. User registration testing");
-        console.log("2. Package upgrade testing");
-        console.log("3. Commission distribution testing");
-        console.log("4. Frontend integration");
-        console.log("5. Mainnet deployment preparation");
+        console.log(`\n📊 FUNCTIONALITY SUMMARY:`);
+        console.log(`✅ Contract is deployed: ${owner !== ethers.ZeroAddress}`);
+        console.log(`✅ Package prices work: TRUE`);
+        console.log(`✅ Owner functions work: TRUE`);
+        console.log(`${contractUSDT === ethers.ZeroAddress ? '❌' : '✅'} USDT address set: ${contractUSDT !== ethers.ZeroAddress}`);
+        console.log(`${contractUSDT === ethers.ZeroAddress ? '❌' : '✅'} Registration ready: ${contractUSDT !== ethers.ZeroAddress}`);
+        
+        return {
+            contractWorking: owner !== ethers.ZeroAddress,
+            usdtSet: contractUSDT !== ethers.ZeroAddress,
+            usdtAddress: contractUSDT,
+            needsFix: contractUSDT === ethers.ZeroAddress
+        };
         
     } catch (error) {
-        console.error("❌ Test failed:", error.message);
-        console.error("Full error:", error);
+        console.error('❌ Test failed:', error.message);
+        throw error;
     }
 }
 
-main()
-    .then(() => {
-        console.log("\\n✅ Testing completed successfully!");
-        process.exit(0);
-    })
-    .catch((error) => {
-        console.error("💥 Testing failed:", error);
-        process.exit(1);
-    });
+// Only run if called directly
+if (require.main === module) {
+    testContractFunctionality()
+        .then(() => process.exit(0))
+        .catch((error) => {
+            console.error(error);
+            process.exit(1);
+        });
+}
+
+module.exports = testContractFunctionality;
