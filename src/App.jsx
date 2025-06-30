@@ -51,17 +51,18 @@ function App() {
     const hasVisited = localStorage.getItem('hasVisitedWelcome');
     const welcomeShown = sessionStorage.getItem('welcomeShown');
     
-    // Clear stale states
-    if (welcomeShown) {
-      setShouldShowWelcome(false);
-      return;
+    // CRITICAL FIX: Always allow dashboard access
+    // Welcome page should never block user navigation
+    setShouldShowWelcome(false);
+    
+    // Mark as visited to prevent future blocking
+    if (!hasVisited) {
+      localStorage.setItem('hasVisitedWelcome', 'true');
     }
     
-    if (!hasVisited) {
-      setShouldShowWelcome(true);
-      sessionStorage.setItem('welcomeShown', 'true');
-    } else {
-      setShouldShowWelcome(false);
+    // Clear any blocking session storage
+    if (welcomeShown) {
+      sessionStorage.removeItem('welcomeShown');
     }
   }, []);
 

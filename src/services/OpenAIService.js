@@ -1,4 +1,19 @@
-import OpenAI from 'openai';
+// Conditional import to prevent build issues
+let OpenAI = null;
+
+// Dynamically import OpenAI only when needed
+const importOpenAI = async () => {
+  if (!OpenAI) {
+    try {
+      // Use dynamic import to prevent build issues
+      const module = await import('openai');
+      OpenAI = module.default || module.OpenAI || module;
+    } catch (error) {
+      console.warn('OpenAI module not available:', error);
+    }
+  }
+  return OpenAI;
+};
 
 class OpenAIService {
   constructor() {
@@ -13,22 +28,28 @@ class OpenAIService {
   }
 
   // Auto-initialize from environment variables
-  autoInitialize() {
+  async autoInitialize() {
     const envApiKey = import.meta.env.VITE_OPENAI_API_KEY;
     if (envApiKey && envApiKey !== 'sk-your-openai-key-here') {
-      this.initialize(envApiKey);
+      await this.initialize(envApiKey);
     }
   }
 
   // Initialize OpenAI with API key
-  initialize(apiKey) {
+  async initialize(apiKey) {
     if (!apiKey) {
       console.warn('OpenAI API key not provided');
       return false;
     }
 
     try {
-      this.openai = new OpenAI({
+      const OpenAIClass = await importOpenAI();
+      if (!OpenAIClass) {
+        console.warn('OpenAI module not available');
+        return false;
+      }
+
+      this.openai = new OpenAIClass({
         apiKey: apiKey,
         dangerouslyAllowBrowser: true // For client-side usage
       });
