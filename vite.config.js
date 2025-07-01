@@ -33,13 +33,51 @@ export default defineConfig(({ mode }) => {
     server: {
       host: '0.0.0.0',
       port: 5177,
-      // Force clear browser cache on start
-      force: true
+      force: true,
+      hmr: {
+        protocol: 'ws',
+        host: 'localhost',
+        port: 5177,
+        clientPort: 5177
+      },
+      // Clear cache headers
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate'
+      }
     },
     
     preview: {
       host: '0.0.0.0',
       port: 8080,
+    },
+    
+    // Optimize dependencies to prevent loading issues
+    optimizeDeps: {
+      include: [
+        'react',
+        'react-dom',
+        'react-dom/client',
+        'react-router-dom',
+        'ethers',
+        'react-icons/fa',
+        'react-icons/md',
+        'react-icons/hi',
+        'react-icons/bs',
+        'react-chartjs-2',
+        'chart.js',
+        'chart.js/auto',
+        'd3',
+        'react-d3-tree',
+        'gsap',
+        'react-hot-toast'
+      ],
+      exclude: [
+        'openai', // Exclude problematic dependencies
+        'fs',
+        'path',
+        'crypto'
+      ],
+      force: true // Force dependency optimization
     },
     
     define: {
@@ -73,11 +111,6 @@ export default defineConfig(({ mode }) => {
           }
         }
       }
-    },
-    
-    optimizeDeps: {
-      include: ['ethers'],
-      exclude: ['core-js', 'openai']
     },
   }
 })

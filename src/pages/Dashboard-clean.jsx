@@ -74,7 +74,7 @@ export default function Dashboard({ account, provider, signer }) {
           <h1 className="dashboard-title">Member Dashboard</h1>
           <div className="user-info">
             <div className="wallet-address">
-              {account && typeof account === 'string' ? `${account.slice(0, 6)}...${account.slice(-4)}` : 'Unknown'}
+              {account?.slice(0, 6)}...{account?.slice(-4)}
             </div>
             <div className="user-rank">{userStats.rank}</div>
           </div>

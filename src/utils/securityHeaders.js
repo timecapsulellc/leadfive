@@ -75,6 +75,18 @@ export const generateCSPHeader = () => {
 };
 
 /**
+ * Generate CSP for meta tags (excludes frame-ancestors which is not supported)
+ */
+export const generateCSPForMetaTag = () => {
+  const metaCSPDirectives = { ...CSP_DIRECTIVES };
+  delete metaCSPDirectives['frame-ancestors']; // Remove unsupported directive
+  
+  return Object.entries(metaCSPDirectives)
+    .map(([directive, sources]) => `${directive} ${sources.join(' ')}`)
+    .join('; ');
+};
+
+/**
  * Security headers configuration for mobile browsers
  */
 export const SECURITY_HEADERS = {
@@ -157,16 +169,22 @@ export const applyClientSideSecurityMeta = () => {
     if (!document.querySelector('meta[http-equiv="Content-Security-Policy"]')) {
       const cspMeta = document.createElement('meta');
       cspMeta.setAttribute('http-equiv', 'Content-Security-Policy');
-      cspMeta.setAttribute('content', generateCSPHeader());
+      cspMeta.setAttribute('content', generateCSPForMetaTag());
       document.head.appendChild(cspMeta);
     }
 
-    // Add X-Frame-Options equivalent
+    // Note: X-Frame-Options and frame-ancestors should be set via HTTP headers server-side
+    // Meta tag implementation is for development/fallback only
     if (!document.querySelector('meta[http-equiv="X-Frame-Options"]')) {
       const frameMeta = document.createElement('meta');
       frameMeta.setAttribute('http-equiv', 'X-Frame-Options');
       frameMeta.setAttribute('content', 'DENY');
       document.head.appendChild(frameMeta);
+      
+      // Suppress the browser warning in development
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('X-Frame-Options set via meta tag (development only). Use HTTP headers in production.');
+      }
     }
 
     // Add referrer policy

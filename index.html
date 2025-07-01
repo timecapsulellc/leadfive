@@ -3,12 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/leadfive-logo.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-    <meta name="theme-color" content="#1a1a2e" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
+    <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: light)" />
+    <meta name="color-scheme" content="dark light" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="LeadFive" />
     <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no, email=no, address=no" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="msapplication-TileColor" content="#1a1a2e" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- iOS App Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png" />
+    
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="https://bsc-dataseed.binance.org" />
+    
+    <!-- Vite HMR Fix for localhost -->
+    <script>
+      if (window.location.hostname === 'localhost') {
+        window.__vite_plugin_react_preamble_installed__ = true;
+        
+        // Enhanced HMR fix
+        if (typeof window !== 'undefined') {
+          window.global = window.global || window;
+          window.process = window.process || { env: {} };
+        }
+        
+        // Fix WebSocket connection issues
+        if (import.meta.hot) {
+          import.meta.hot.on('vite:error', (err) => {
+            console.warn('Vite HMR Error:', err);
+            // Reload on HMR errors to prevent stuck states
+            setTimeout(() => window.location.reload(), 1000);
+          });
+        }
+      }
+    </script>
     
     <!-- SEO Meta Tags -->
     <meta name="description" content="LeadFive - Revolutionary Blockchain Platform. Smart contract-powered decentralized incentive system with automated rewards, genealogy tree, and transparent earnings on BSC." />

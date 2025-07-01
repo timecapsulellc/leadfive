@@ -1,56 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  FaTrophy, 
-  FaMedal, 
-  FaCrown, 
-  FaStar, 
-  FaFire, 
-  FaRocket,
-  FaChartLine,
-  FaUsers,
-  FaGift,
-  FaBolt,
-  FaGem,
-  FaShieldAlt,
-  FaWallet,
-  FaHandshake,
-  FaCalendarAlt,
-  FaBullseye,
-  FaDollarSign
-} from 'react-icons/fa';
 import './GamificationSystem.css';
 
-/**
- * 🎮 ENHANCED GAMIFICATION SYSTEM
- * Advanced gamification with real-time achievements, challenges,
- * leaderboards, and sophisticated progression tracking
- */
-const GamificationSystem = ({ 
-  wallet, 
-  contract, 
-  userStats, 
-  account,
-  onAchievementUnlock,
-  onChallengeComplete 
-}) => {
-  const [activeTab, setActiveTab] = useState('achievements');
+const GamificationSystem = ({ wallet, contract, userStats }) => {
   const [userLevel, setUserLevel] = useState(1);
   const [currentXP, setCurrentXP] = useState(0);
   const [nextLevelXP, setNextLevelXP] = useState(100);
   const [achievements, setAchievements] = useState([]);
-  const [unlockedAchievements, setUnlockedAchievements] = useState([]);
   const [dailyQuests, setDailyQuests] = useState([]);
-  const [weeklyQuests, setWeeklyQuests] = useState([]);
   const [leaderboard, setLeaderboard] = useState([]);
   const [showAchievementModal, setShowAchievementModal] = useState(false);
   const [newAchievement, setNewAchievement] = useState(null);
-  const [streaks, setStreaks] = useState({
-    daily: 0,
-    withdrawal: 0,
-    referral: 0
-  });
-  const [userRank, setUserRank] = useState(0);
-  const [totalXP, setTotalXP] = useState(0);
 
   const levels = {
     1: { name: 'Newcomer', icon: '🌱', color: '#27ae60', requiredXP: 0 },
@@ -62,317 +21,48 @@ const GamificationSystem = ({
     7: { name: 'Legend', icon: '💎', color: '#8e44ad', requiredXP: 2500 }
   };
 
-  // Enhanced Achievement System with sophisticated tracking
-  const ENHANCED_ACHIEVEMENTS = {
+  const achievementCategories = {
     earnings: {
-      name: 'Earnings Mastery',
+      name: 'Earnings Milestones',
       icon: '💰',
-      color: '#27ae60',
       achievements: [
-        { 
-          id: 'first_dollar', 
-          name: 'First Step', 
-          description: 'Earn your first $1', 
-          reward: 50, 
-          icon: FaDollarSign,
-          requirement: { type: 'total_earnings', value: 1 },
-          tier: 'bronze',
-          badge: '💰'
-        },
-        { 
-          id: 'hundred_club', 
-          name: 'Hundred Club', 
-          description: 'Earn $100 total', 
-          reward: 100, 
-          icon: FaTrophy,
-          requirement: { type: 'total_earnings', value: 100 },
-          tier: 'silver',
-          badge: '💯'
-        },
-        { 
-          id: 'thousand_master', 
-          name: 'Thousand Master', 
-          description: 'Earn $1,000 total', 
-          reward: 250, 
-          icon: FaCrown,
-          requirement: { type: 'total_earnings', value: 1000 },
-          tier: 'gold',
-          badge: '👑'
-        },
-        { 
-          id: 'five_k_legend', 
-          name: 'Five K Legend', 
-          description: 'Earn $5,000 total', 
-          reward: 500, 
-          icon: FaGem,
-          requirement: { type: 'total_earnings', value: 5000 },
-          tier: 'diamond',
-          badge: '💎'
-        },
-        { 
-          id: 'daily_earner', 
-          name: 'Daily Grinder', 
-          description: 'Earn money for 7 consecutive days', 
-          reward: 200, 
-          icon: FaFire,
-          requirement: { type: 'daily_streak', value: 7 },
-          tier: 'silver',
-          badge: '🔥'
-        }
+        { id: 'first_earning', name: 'First Blood', description: 'Earn your first $1', reward: 50, icon: '🎯' },
+        { id: 'hundred_club', name: 'Hundred Club', description: 'Earn $100 total', reward: 100, icon: '💯' },
+        { id: 'thousand_club', name: 'Thousand Club', description: 'Earn $1,000 total', reward: 200, icon: '🎖️' },
+        { id: 'ten_k_club', name: 'Elite Earner', description: 'Earn $10,000 total', reward: 500, icon: '👑' }
       ]
     },
-    
-    team: {
-      name: 'Team Building Excellence',
-      icon: '👥',
-      color: '#3498db',
+    referrals: {
+      name: 'Network Building',
+      icon: '🤝',
       achievements: [
-        { 
-          id: 'first_referral', 
-          name: 'Team Starter', 
-          description: 'Get your first referral', 
-          reward: 75, 
-          icon: FaUsers,
-          requirement: { type: 'direct_referrals', value: 1 },
-          tier: 'bronze',
-          badge: '👥'
-        },
-        { 
-          id: 'team_builder', 
-          name: 'Team Builder', 
-          description: 'Build a team of 10 members', 
-          reward: 200, 
-          icon: FaRocket,
-          requirement: { type: 'team_size', value: 10 },
-          tier: 'silver',
-          badge: '🚀'
-        },
-        { 
-          id: 'network_master', 
-          name: 'Network Master', 
-          description: 'Build a team of 50 members', 
-          reward: 400, 
-          icon: FaShieldAlt,
-          requirement: { type: 'team_size', value: 50 },
-          tier: 'gold',
-          badge: '🛡️'
-        },
-        { 
-          id: 'empire_builder', 
-          name: 'Empire Builder', 
-          description: 'Build a team of 100 members', 
-          reward: 750, 
-          icon: FaCrown,
-          requirement: { type: 'team_size', value: 100 },
-          tier: 'diamond',
-          badge: '🏰'
-        },
-        { 
-          id: 'premium_attractor', 
-          name: 'Premium Attractor', 
-          description: 'Attract 5 premium package members', 
-          reward: 300, 
-          icon: FaGem,
-          requirement: { type: 'premium_referrals', value: 5 },
-          tier: 'gold',
-          badge: '💎'
-        }
+        { id: 'first_referral', name: 'Connector', description: 'Get your first referral', reward: 75, icon: '🔗' },
+        { id: 'ten_referrals', name: 'Team Builder', description: 'Get 10 referrals', reward: 150, icon: '🏗️' },
+        { id: 'fifty_referrals', name: 'Network Master', description: 'Get 50 referrals', reward: 300, icon: '🕸️' },
+        { id: 'hundred_referrals', name: 'Empire Builder', description: 'Get 100 referrals', reward: 600, icon: '🏰' }
       ]
     },
-
+    matrix: {
+      name: 'Matrix Mastery',
+      icon: '🌳',
+      achievements: [
+        { id: 'first_cycle', name: 'Cycle Starter', description: 'Complete first matrix cycle', reward: 100, icon: '♻️' },
+        { id: 'level_climber', name: 'Level Climber', description: 'Reach matrix level 3', reward: 150, icon: '🧗' },
+        { id: 'recycling_pro', name: 'Recycling Pro', description: 'Complete 5 recycling cycles', reward: 250, icon: '🔄' },
+        { id: 'matrix_master', name: 'Matrix Master', description: 'Reach matrix level 6', reward: 500, icon: '🎯' }
+      ]
+    },
     engagement: {
-      name: 'Platform Mastery',
+      name: 'Platform Engagement',
       icon: '⚡',
-      color: '#e74c3c',
       achievements: [
-        { 
-          id: 'daily_warrior', 
-          name: 'Daily Warrior', 
-          description: 'Login 30 days in a row', 
-          reward: 300, 
-          icon: FaFire,
-          requirement: { type: 'login_streak', value: 30 },
-          tier: 'gold',
-          badge: '🔥'
-        },
-        { 
-          id: 'withdrawal_master', 
-          name: 'Withdrawal Master', 
-          description: 'Complete 20 withdrawals', 
-          reward: 250, 
-          icon: FaWallet,
-          requirement: { type: 'withdrawal_count', value: 20 },
-          tier: 'silver',
-          badge: '💳'
-        },
-        { 
-          id: 'social_butterfly', 
-          name: 'Social Butterfly', 
-          description: 'Share referral link 50 times', 
-          reward: 150, 
-          icon: FaHandshake,
-          requirement: { type: 'share_count', value: 50 },
-          tier: 'bronze',
-          badge: '🤝'
-        },
-        { 
-          id: 'ai_explorer', 
-          name: 'AI Explorer', 
-          description: 'Use AI assistant 100 times', 
-          reward: 200, 
-          icon: FaBolt,
-          requirement: { type: 'ai_interactions', value: 100 },
-          tier: 'silver',
-          badge: '🤖'
-        }
-      ]
-    },
-
-    investment: {
-      name: 'Investment Wisdom',
-      icon: '📈',
-      color: '#9b59b6',
-      achievements: [
-        { 
-          id: 'package_upgrader', 
-          name: 'Package Upgrader', 
-          description: 'Upgrade to $50 package', 
-          reward: 150, 
-          icon: FaRocket,
-          requirement: { type: 'package_tier', value: 2 },
-          tier: 'bronze',
-          badge: '📦'
-        },
-        { 
-          id: 'premium_investor', 
-          name: 'Premium Investor', 
-          description: 'Upgrade to $100 package', 
-          reward: 300, 
-          icon: FaStar,
-          requirement: { type: 'package_tier', value: 3 },
-          tier: 'silver',
-          badge: '⭐'
-        },
-        { 
-          id: 'elite_investor', 
-          name: 'Elite Investor', 
-          description: 'Upgrade to $200 package', 
-          reward: 500, 
-          icon: FaGem,
-          requirement: { type: 'package_tier', value: 4 },
-          tier: 'gold',
-          badge: '💎'
-        },
-        { 
-          id: 'roi_master', 
-          name: 'ROI Master', 
-          description: 'Achieve 2x ROI on any package', 
-          reward: 400, 
-          icon: FaChartLine,
-          requirement: { type: 'roi_multiplier', value: 2 },
-          tier: 'gold',
-          badge: '📈'
-        }
+        { id: 'daily_login', name: 'Consistency', description: 'Login 7 days in a row', reward: 50, icon: '📅' },
+        { id: 'social_sharer', name: 'Social Butterfly', description: 'Share LeadFive 10 times', reward: 100, icon: '📢' },
+        { id: 'early_adopter', name: 'Early Bird', description: 'Join in the first month', reward: 200, icon: '🐦' },
+        { id: 'platform_expert', name: 'Platform Expert', description: 'Use all dashboard features', reward: 150, icon: '🎛️' }
       ]
     }
   };
-
-  // Enhanced Daily Challenges with dynamic rewards
-  const ENHANCED_DAILY_CHALLENGES = [
-    {
-      id: 'daily_login',
-      title: 'Daily Check-in',
-      description: 'Login to your dashboard',
-      reward: 15,
-      completed: false,
-      icon: FaCalendarAlt,
-      category: 'engagement'
-    },
-    {
-      id: 'earnings_check',
-      title: 'Earnings Review',
-      description: 'Check your earnings breakdown',
-      reward: 20,
-      completed: false,
-      icon: FaChartLine,
-      category: 'engagement'
-    },
-    {
-      id: 'team_visit',
-      title: 'Team Management',
-      description: 'Visit your team section',
-      reward: 25,
-      completed: false,
-      icon: FaUsers,
-      category: 'team'
-    },
-    {
-      id: 'share_link',
-      title: 'Share Your Success',
-      description: 'Share your referral link',
-      reward: 30,
-      completed: false,
-      icon: FaHandshake,
-      category: 'marketing'
-    },
-    {
-      id: 'ai_interaction',
-      title: 'AI Consultation',
-      description: 'Ask the AI assistant a question',
-      reward: 25,
-      completed: false,
-      icon: FaBolt,
-      category: 'engagement'
-    }
-  ];
-
-  // Weekly Challenges with higher rewards
-  const ENHANCED_WEEKLY_CHALLENGES = [
-    {
-      id: 'weekly_earnings',
-      title: 'Weekly Earner',
-      description: 'Earn $100 this week',
-      progress: 0,
-      target: 100,
-      reward: 200,
-      completed: false,
-      icon: FaTrophy,
-      category: 'earnings'
-    },
-    {
-      id: 'weekly_referrals',
-      title: 'Team Expansion',
-      description: 'Add 3 new team members this week',
-      progress: 0,
-      target: 3,
-      reward: 300,
-      completed: false,
-      icon: FaUsers,
-      category: 'team'
-    },
-    {
-      id: 'weekly_engagement',
-      title: 'Platform Explorer',
-      description: 'Complete all daily challenges 5 days',
-      progress: 0,
-      target: 5,
-      reward: 150,
-      completed: false,
-      icon: FaBullseye,
-      category: 'engagement'
-    },
-    {
-      id: 'weekly_social',
-      title: 'Social Media Maven',
-      description: 'Share your link 20 times this week',
-      progress: 0,
-      target: 20,
-      reward: 100,
-      completed: false,
-      icon: FaHandshake,
-      category: 'marketing'
-    }
-  ];
 
   useEffect(() => {
     initializeGamification();
@@ -415,65 +105,47 @@ const GamificationSystem = ({
     const earned = [];
     const existingAchievements = JSON.parse(localStorage.getItem('leadfive_achievements') || '[]');
     
-    Object.values(ENHANCED_ACHIEVEMENTS).forEach(category => {
+    Object.values(achievementCategories).forEach(category => {
       category.achievements.forEach(achievement => {
         if (!existingAchievements.includes(achievement.id)) {
           let shouldEarn = false;
           
           switch (achievement.id) {
-            case 'first_dollar':
+            case 'first_earning':
               shouldEarn = (stats?.totalEarnings || 0) >= 1;
               break;
             case 'hundred_club':
               shouldEarn = (stats?.totalEarnings || 0) >= 100;
               break;
-            case 'thousand_master':
+            case 'thousand_club':
               shouldEarn = (stats?.totalEarnings || 0) >= 1000;
               break;
-            case 'five_k_legend':
-              shouldEarn = (stats?.totalEarnings || 0) >= 5000;
-              break;
-            case 'daily_earner':
-              shouldEarn = (streaks.daily || 0) >= 7;
+            case 'ten_k_club':
+              shouldEarn = (stats?.totalEarnings || 0) >= 10000;
               break;
             case 'first_referral':
               shouldEarn = (stats?.totalReferrals || 0) >= 1;
               break;
-            case 'team_builder':
-              shouldEarn = (stats?.teamSize || 0) >= 10;
+            case 'ten_referrals':
+              shouldEarn = (stats?.totalReferrals || 0) >= 10;
               break;
-            case 'network_master':
-              shouldEarn = (stats?.teamSize || 0) >= 50;
+            case 'fifty_referrals':
+              shouldEarn = (stats?.totalReferrals || 0) >= 50;
               break;
-            case 'empire_builder':
-              shouldEarn = (stats?.teamSize || 0) >= 100;
+            case 'hundred_referrals':
+              shouldEarn = (stats?.totalReferrals || 0) >= 100;
               break;
-            case 'premium_attractor':
-              shouldEarn = (stats?.premiumReferrals || 0) >= 5;
+            case 'first_cycle':
+              shouldEarn = (stats?.completedCycles || 0) >= 1;
               break;
-            case 'daily_warrior':
-              shouldEarn = (streaks.daily || 0) >= 30;
+            case 'level_climber':
+              shouldEarn = (stats?.matrixLevel || 1) >= 3;
               break;
-            case 'withdrawal_master':
-              shouldEarn = (stats?.withdrawalCount || 0) >= 20;
+            case 'recycling_pro':
+              shouldEarn = (stats?.completedCycles || 0) >= 5;
               break;
-            case 'social_butterfly':
-              shouldEarn = (stats?.shareCount || 0) >= 50;
-              break;
-            case 'ai_explorer':
-              shouldEarn = (stats?.aiInteractions || 0) >= 100;
-              break;
-            case 'package_upgrader':
-              shouldEarn = (stats?.packageTier || 0) >= 2;
-              break;
-            case 'premium_investor':
-              shouldEarn = (stats?.packageTier || 0) >= 3;
-              break;
-            case 'elite_investor':
-              shouldEarn = (stats?.packageTier || 0) >= 4;
-              break;
-            case 'roi_master':
-              shouldEarn = (stats?.roiMultiplier || 1) >= 2;
+            case 'matrix_master':
+              shouldEarn = (stats?.matrixLevel || 1) >= 6;
               break;
             default:
               break;
@@ -630,7 +302,7 @@ const GamificationSystem = ({
         <div className="section achievements">
           <h3>🏆 Achievements</h3>
           <div className="achievement-categories">
-            {Object.entries(ENHANCED_ACHIEVEMENTS).map(([key, category]) => (
+            {Object.entries(achievementCategories).map(([key, category]) => (
               <div key={key} className="achievement-category">
                 <h4>{category.icon} {category.name}</h4>
                 <div className="achievements-grid">

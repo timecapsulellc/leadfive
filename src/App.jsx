@@ -7,24 +7,35 @@ import { withLazyLoading, LoadingSpinner, preloadComponents } from './components
 import Header from './components/Header';
 import Footer from './components/Footer';
 import MobileNav from './components/MobileNav';
+import MobilePWAPrompt from './components/MobilePWAPrompt';
+import MobilePerformanceMonitor from './components/MobilePerformanceMonitor';
 import { storeWalletConnection, clearWalletConnection, extendSession } from './utils/walletPersistence';
 import { runWalletDiagnostics } from './utils/walletDebug';
 
-// Lazy load components for better performance
-const Home = React.lazy(() => import('./pages/Home'));
-const Register = React.lazy(() => import('./pages/Register'));
-const Packages = React.lazy(() => import('./pages/Packages'));
-const Referrals = React.lazy(() => import('./pages/Referrals'));
-const Withdrawals = React.lazy(() => import('./pages/Withdrawals'));
-const Security = React.lazy(() => import('./pages/Security'));
-const About = React.lazy(() => import('./pages/About'));
-const Dashboard = React.lazy(() => import('./pages/Dashboard'));
-const Welcome = React.lazy(() => import('./pages/Welcome'));
-const BrandGuide = React.lazy(() => import('./pages/BrandGuide'));
-const Genealogy = React.lazy(() => import('./pages/Genealogy'));
-const TestAIDashboard = React.lazy(() => import('./pages/TestAIDashboard'));
-const BusinessPresentation = React.lazy(() => import('./pages/BusinessPresentation'));
-const BusinessPresentationSlides = React.lazy(() => import('./pages/BusinessPresentationSlides'));
+// Lazy load components for better performance with enhanced error handling
+const createLazyComponent = (importFunc, componentName) => {
+  return React.lazy(() => 
+    importFunc().catch(error => {
+      console.error(`Failed to load ${componentName}:`, error);
+      return import('./components/ErrorFallback');
+    })
+  );
+};
+
+const Home = createLazyComponent(() => import('./pages/Home'), 'Home');
+const Register = createLazyComponent(() => import('./pages/Register'), 'Register');
+const Packages = createLazyComponent(() => import('./pages/Packages'), 'Packages');
+const Referrals = createLazyComponent(() => import('./pages/Referrals'), 'Referrals');
+const Withdrawals = createLazyComponent(() => import('./pages/Withdrawals'), 'Withdrawals');
+const Security = createLazyComponent(() => import('./pages/Security'), 'Security');
+const About = createLazyComponent(() => import('./pages/About'), 'About');
+const Dashboard = createLazyComponent(() => import('./pages/Dashboard'), 'Dashboard');
+const Welcome = createLazyComponent(() => import('./pages/Welcome'), 'Welcome');
+const BrandGuide = createLazyComponent(() => import('./pages/BrandGuide'), 'BrandGuide');
+const Genealogy = createLazyComponent(() => import('./pages/Genealogy'), 'Genealogy');
+const TestAIDashboard = createLazyComponent(() => import('./pages/TestAIDashboard'), 'TestAIDashboard');
+const BusinessPresentation = createLazyComponent(() => import('./pages/BusinessPresentation'), 'BusinessPresentation');
+const BusinessPresentationSlides = createLazyComponent(() => import('./pages/BusinessPresentationSlides'), 'BusinessPresentationSlides');
 import { 
   autoReconnectWallet
 } from './utils/walletPersistence';
@@ -323,11 +334,18 @@ function App() {
   return (
     <>
     <ErrorBoundary>
+      {/* Mobile Performance Monitoring */}
+      <MobilePerformanceMonitor />
+      
       <Router>
         <MobileNav 
           account={account} 
           onDisconnect={handleDisconnect}
         />
+        
+        {/* PWA Install Prompt for Mobile */}
+        <MobilePWAPrompt />
+        
         {shouldShowWelcome ? (
           <Suspense fallback={<LoadingSpinner message="Loading Welcome..." />}>
             <Routes>

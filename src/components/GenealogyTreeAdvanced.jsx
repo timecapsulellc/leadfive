@@ -28,7 +28,7 @@ const GenealogyTree = ({ account, contract }) => {
       
       // Enhanced mock data for react-d3-tree format
       const mockTreeData = {
-        name: `${String(account).slice(0, 6)}...${String(account).slice(-4)}`,
+        name: `${account.slice(0, 6)}...${account.slice(-4)}`,
         attributes: {
           id: account,
           package: 'Premium',

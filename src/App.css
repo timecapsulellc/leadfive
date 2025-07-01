@@ -1,5 +1,7 @@
 /* Import mobile responsiveness enhancements */
 @import './styles/mobile-responsive.css';
+@import './styles/advanced-mobile-optimization.css';
+@import './styles/next-gen-mobile-optimization.css';
 
 /* App Root Styles */
 .App {

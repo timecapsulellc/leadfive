@@ -15,23 +15,45 @@
     {
       "src": "leadfive-icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable any"
     },
     {
       "src": "leadfive-icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable any"
     }
   ],
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#00D4FF",
   "background_color": "#0a0a0a",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
   "description": "LeadFive - Smart Rewards, Powered by Blockchain. Autonomous, Transparent, Decentralized Incentive Platform on BSC with Network Rewards System",
   "dir": "ltr",
   "lang": "en-US",
   "categories": ["finance", "business", "productivity"],
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "View your LeadFive dashboard",
+      "url": "/dashboard",
+      "icons": [{ "src": "leadfive-icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Network Tree",
+      "short_name": "Network",
+      "description": "View your network genealogy",
+      "url": "/genealogy",
+      "icons": [{ "src": "leadfive-icon-192.png", "sizes": "192x192" }]
+    }
+  ],
   "screenshots": [
     {
       "src": "screenshot-wide.png",
