@@ -382,7 +382,7 @@ function DirectReferralsSection({ data, account }) {
             <div className="referral-link">
               <input 
                 type="text" 
-                value={`https://leadfive.com/ref/${account?.slice(0, 8)}`}
+                value={`https://leadfive.com/ref/${account && typeof account === 'string' ? account.slice(0, 8) : 'guest'}`}
                 readOnly 
               />
               <button className="copy-btn">Copy</button>

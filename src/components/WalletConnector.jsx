@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { ethers } from 'ethers';
+import { getWalletErrorMessage, isValidEthereumAddress } from '../utils/walletValidation';
 
 // Wallet connector icons
 const WalletIcons = {
@@ -225,6 +226,11 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         throw new Error('No accounts found or access denied');
       }
 
+      // Validate the account address
+      if (!isValidEthereumAddress(accounts[0])) {
+        throw new Error('Invalid account address returned from wallet');
+      }
+
       console.log('✅ Account access granted:', accounts[0]);
 
       // Switch to BSC Mainnet
@@ -234,9 +240,6 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
       const ethersProvider = new ethers.BrowserProvider(provider);
       const signer = await ethersProvider.getSigner();
       const address = await signer.getAddress();
-
-      console.log('🎉 Wallet connected successfully:', address);
-      console.log('📞 Calling onConnect callback with data:', { address, walletType: walletId });
 
       // Store wallet info
       localStorage.setItem('leadfive_wallet', JSON.stringify({
@@ -249,14 +252,15 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
       console.log('🎉 Wallet connected successfully:', address);
       console.log('📞 Calling onConnect callback with data:', { address, provider: ethersProvider, signer, walletType: walletId });
 
-      // Call parent callback
+      // Call parent callback with standardized format
       if (onConnect) {
         console.log('✅ Executing onConnect callback...');
         await onConnect({
           address,
           provider: ethersProvider,
           signer,
-          walletType: walletId
+          walletType: walletId,
+          chainId: BSC_CONFIG.chainId
         });
         console.log('✅ onConnect callback completed successfully');
       } else {
@@ -269,17 +273,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
     } catch (error) {
       console.error(`❌ Error connecting ${walletId}:`, error);
       
-      let errorMessage = error.message;
-      if (error.code === 4001) {
-        errorMessage = 'Connection rejected by user';
-      } else if (error.code === -32002) {
-        errorMessage = 'Connection request already pending. Please check your wallet.';
-      } else if (error.code === 4902) {
-        errorMessage = 'Please add BSC Mainnet to your wallet';
-      } else if (error.message.includes('timeout')) {
-        errorMessage = 'Connection timed out. Please try again.';
-      }
-      
+      const errorMessage = getWalletErrorMessage(error);
       setError(errorMessage);
     } finally {
       setConnecting(false);

@@ -7,6 +7,8 @@ import { withLazyLoading, LoadingSpinner, preloadComponents } from './components
 import Header from './components/Header';
 import Footer from './components/Footer';
 import MobileNav from './components/MobileNav';
+import { storeWalletConnection, clearWalletConnection, extendSession } from './utils/walletPersistence';
+import { runWalletDiagnostics } from './utils/walletDebug';
 
 // Lazy load components for better performance
 const Home = React.lazy(() => import('./pages/Home'));
@@ -24,10 +26,7 @@ const TestAIDashboard = React.lazy(() => import('./pages/TestAIDashboard'));
 const BusinessPresentation = React.lazy(() => import('./pages/BusinessPresentation'));
 const BusinessPresentationSlides = React.lazy(() => import('./pages/BusinessPresentationSlides'));
 import { 
-  storeWalletConnection, 
-  autoReconnectWallet, 
-  clearWalletConnection, 
-  extendSession 
+  autoReconnectWallet
 } from './utils/walletPersistence';
 import { initializeMobileSecurity } from './utils/securityHeaders';
 import './App.css';
@@ -206,23 +205,32 @@ function App() {
     setIsConnecting(true);
     try {
       // Handle both old format (separate params) and new format (object)
-      let connectedAccount, web3Provider, web3Signer;
+      let connectedAccount, web3Provider, web3Signer, walletType, chainId;
       
       if (typeof connectionData === 'object' && connectionData.address) {
-        // New format from WalletConnector
+        // New format from UnifiedWalletConnect and WalletConnector
         connectedAccount = connectionData.address;
         web3Provider = connectionData.provider;
         web3Signer = connectionData.signer;
+        walletType = connectionData.walletType || 'unknown';
+        chainId = connectionData.chainId;
       } else if (typeof connectionData === 'string') {
         // Old format from account change events
         connectedAccount = connectionData;
         web3Provider = arguments[1];
         web3Signer = arguments[2];
+        walletType = 'metamask'; // Assume MetaMask for legacy calls
       } else {
         // Fallback for direct parameters
         connectedAccount = arguments[0];
         web3Provider = arguments[1];
         web3Signer = arguments[2];
+        walletType = 'unknown';
+      }
+
+      // Validate account format - ensure it's a string
+      if (!connectedAccount || typeof connectedAccount !== 'string') {
+        throw new Error('Invalid account address provided');
       }
 
       if (connectedAccount && web3Provider && web3Signer) {
@@ -233,12 +241,23 @@ function App() {
         setUserRoles({ user: true, admin: false }); // TODO: Fetch actual roles
         
         // Store connection for persistence
-        const network = await web3Provider.getNetwork();
-        storeWalletConnection(connectedAccount, network.chainId.toString(), 'metamask');
+        if (!chainId) {
+          const network = await web3Provider.getNetwork();
+          chainId = network.chainId.toString();
+        }
+        storeWalletConnection(connectedAccount, chainId, walletType);
         
-        console.log('✅ Wallet connected successfully:', connectedAccount);
+        console.log('✅ Wallet connected successfully:', {
+          account: connectedAccount,
+          walletType: walletType,
+          chainId: chainId
+        });
       } else if (connectedAccount && !web3Provider) {
         // Account changed event - recreate provider and signer
+        if (!window.ethereum) {
+          throw new Error('No Ethereum provider available');
+        }
+        
         const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
         const network = await provider.getNetwork();
@@ -249,12 +268,18 @@ function App() {
         setUserRoles({ user: true, admin: false }); // TODO: Fetch actual roles
         
         // Store connection for persistence
-        storeWalletConnection(connectedAccount, network.chainId.toString(), 'metamask');
+        storeWalletConnection(connectedAccount, network.chainId.toString(), walletType);
         
         console.log('✅ Wallet reconnected successfully:', connectedAccount);
       }
     } catch (error) {
       console.error('Error in wallet connect:', error);
+      // Show user-friendly error message
+      if (error.message.includes('User rejected')) {
+        console.log('User rejected wallet connection');
+      } else {
+        alert(`Wallet connection failed: ${error.message}`);
+      }
     } finally {
       setIsConnecting(false);
     }
@@ -268,6 +293,32 @@ function App() {
     setIsConnecting(false);
     clearWalletConnection();
   };
+
+  // Debug function for development
+  const debugWalletConnection = async () => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log('🔍 Running wallet diagnostics...');
+      const results = await runWalletDiagnostics();
+      console.log('📊 Diagnostic results:', results);
+      return results;
+    }
+  };
+
+  // Add debug tools to global scope in development
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      window.leadfiveDebug = {
+        debugWallet: debugWalletConnection,
+        currentState: {
+          account,
+          isConnecting,
+          userRoles,
+          hasProvider: !!provider,
+          hasSigner: !!signer
+        }
+      };
+    }
+  }, [account, isConnecting, userRoles, provider, signer]);
 
   return (
     <>

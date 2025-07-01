@@ -35,7 +35,7 @@ const useGenealogyData = (account, options = {}) => {
   const generateMockData = useCallback(() => {
     const mockData = {
       id: account,
-      name: `${account?.slice(0, 6)}...${account?.slice(-4)}` || 'Demo User',
+      name: account && typeof account === 'string' ? `${account.slice(0, 6)}...${account.slice(-4)}` : 'Demo User',
       attributes: {
         address: account || '0x0000000000000000000000000000000000000000',
         package: 'Premium',

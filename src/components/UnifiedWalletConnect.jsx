@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { BrowserProvider } from 'ethers';
+import { getWalletErrorMessage, isValidEthereumAddress, safeFormatAddress } from '../utils/walletValidation';
 import './UnifiedWalletConnect.css';
 
 // BSC Mainnet configuration
@@ -119,10 +120,15 @@ const UnifiedWalletConnect = ({
     } else if (accounts[0] !== connectedAccount) {
       setConnectedAccount(accounts[0]);
       if (onConnect && provider && signer) {
-        onConnect(accounts[0], provider, signer);
+        onConnect({
+          address: accounts[0],
+          provider: provider,
+          signer: signer,
+          walletType: connectedWallet?.id || 'injected'
+        });
       }
     }
-  }, [connectedAccount, provider, signer, onConnect]);
+  }, [connectedAccount, provider, signer, onConnect, connectedWallet]);
 
   // Handle chain changes
   const handleChainChanged = useCallback((chainId) => {
@@ -137,20 +143,26 @@ const UnifiedWalletConnect = ({
 
   // Format address for display
   const formatAddress = (address) => {
-    if (!address) return '';
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+    return safeFormatAddress(address);
   };
 
   // Switch or add BSC network
   const switchToBSCNetwork = async () => {
+    if (!window.ethereum) {
+      setNetworkError('No Ethereum provider found');
+      return false;
+    }
+
     try {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: BSC_MAINNET_CONFIG.chainId }],
       });
       setNetworkError(null);
+      console.log('✅ Successfully switched to BSC Mainnet');
       return true;
     } catch (switchError) {
+      console.log('⚠️ Network switch failed, attempting to add BSC:', switchError.code);
       if (switchError.code === 4902) {
         try {
           await window.ethereum.request({
@@ -158,15 +170,21 @@ const UnifiedWalletConnect = ({
             params: [BSC_MAINNET_CONFIG],
           });
           setNetworkError(null);
+          console.log('✅ BSC network added and switched successfully');
           return true;
         } catch (addError) {
           console.error('Failed to add BSC network:', addError);
-          setNetworkError('Failed to add BSC network');
+          setNetworkError('Failed to add BSC network. Please add it manually in your wallet.');
           return false;
         }
+      } else if (switchError.code === 4001) {
+        // User rejected the request
+        console.log('User rejected network switch');
+        setNetworkError('Please switch to BSC Mainnet to continue');
+        return false;
       } else {
         console.error('Failed to switch to BSC network:', switchError);
-        setNetworkError('Failed to switch to BSC network');
+        setNetworkError('Failed to switch to BSC network. Please switch manually.');
         return false;
       }
     }
@@ -215,6 +233,11 @@ const UnifiedWalletConnect = ({
         throw new Error('No accounts returned');
       }
 
+      // Validate the returned account
+      if (!isValidEthereumAddress(accounts[0])) {
+        throw new Error('Invalid account address returned from wallet');
+      }
+
       // Check and switch to BSC network
       const chainId = await ethProvider.request({ method: 'eth_chainId' });
       if (chainId !== BSC_MAINNET_CONFIG.chainId) {
@@ -235,16 +258,26 @@ const UnifiedWalletConnect = ({
       setSigner(web3Signer);
       setIsModalOpen(false);
 
-      // Notify parent component
+      // Notify parent component with standardized format
       if (onConnect) {
-        onConnect(accounts[0], web3Provider, web3Signer);
+        onConnect({
+          address: accounts[0],
+          provider: web3Provider,
+          signer: web3Signer,
+          walletType: walletId,
+          chainId: chainId
+        });
       }
 
     } catch (error) {
       console.error('Wallet connection failed:', error);
-      const errorMessage = error.message || 'Failed to connect wallet';
+      const errorMessage = getWalletErrorMessage(error);
+      
       onError?.(errorMessage);
       setNetworkError(errorMessage);
+      
+      // Show user-friendly notification instead of alert
+      console.error(`🚨 Wallet Connection Failed: ${errorMessage}`);
     } finally {
       setIsConnecting(false);
     }
@@ -276,6 +309,23 @@ const UnifiedWalletConnect = ({
       onCloseModal();
     }
   };
+
+  // Test wallet connection for debugging
+  const testWalletConnection = () => {
+    console.log('🧪 Testing wallet connection...');
+    console.log('Window.ethereum available:', !!window.ethereum);
+    console.log('MetaMask detected:', !!window.ethereum?.isMetaMask);
+    console.log('Trust Wallet detected:', !!window.ethereum?.isTrust);
+    console.log('Current account:', connectedAccount);
+    console.log('Provider available:', !!provider);
+    console.log('Signer available:', !!signer);
+    console.log('OnConnect callback available:', !!onConnect);
+  };
+
+  // Add test button in development mode
+  if (process.env.NODE_ENV === 'development') {
+    window.testWalletConnection = testWalletConnection;
+  }
 
   return (
     <>

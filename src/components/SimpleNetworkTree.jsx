@@ -11,7 +11,7 @@ const SimpleNetworkTree = ({ account }) => {
       color: 'white'
     }}>
       <h2>🌐 Your Network Tree</h2>
-      <p>Connected Account: {account && typeof account === 'string' ? `${account.slice(0,6)}...${account.slice(-4)}` : 'Unknown'}</p>
+      <p>Connected Account: {account && typeof account === 'string' ? `${account.slice(0,6)}...${account.slice(-4)}` : 'Not Connected'}</p>
       
       <div style={{ 
         marginTop: '2rem',
