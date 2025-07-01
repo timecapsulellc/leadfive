@@ -5,13 +5,13 @@ const EarningsAnalytics = ({ wallet, contract }) => {
   const [earningsData, setEarningsData] = useState({
     totalEarnings: 0,
     directSales: 0,
-    matrixEarnings: 0,
+    levelEarnings: 0,
     recyclingBonus: 0,
     weeklyGrowth: 0,
     monthlyGrowth: 0,
     projectedAnnual: 0,
     recyclingCount: 0,
-    matrixLevel: 1,
+    currentLevel: 1,
     completedCycles: 0,
     activeLevels: []
   });
@@ -33,13 +33,13 @@ const EarningsAnalytics = ({ wallet, contract }) => {
       const mockData = {
         totalEarnings: 2850.75,
         directSales: 1200.00,
-        matrixEarnings: 1350.75,
+        levelEarnings: 1350.75,
         recyclingBonus: 300.00,
         weeklyGrowth: 12.5,
         monthlyGrowth: 48.2,
         projectedAnnual: 15420.00,
         recyclingCount: 3,
-        matrixLevel: 4,
+        currentLevel: 4,
         completedCycles: 7,
         activeLevels: [1, 2, 3, 4]
       };
@@ -87,17 +87,17 @@ const EarningsAnalytics = ({ wallet, contract }) => {
           <div className="card-subtitle">From direct referrals</div>
         </div>
 
-        <div className="earning-card matrix">
+        <div className="earning-card level">
           <div className="card-header">
-            <h3>🌳 Matrix Earnings</h3>
+            <h3>🌳 Level Earnings</h3>
           </div>
-          <div className="card-value">{formatCurrency(earningsData.matrixEarnings)}</div>
-          <div className="card-subtitle">Matrix level {earningsData.matrixLevel}</div>
+          <div className="card-value">{formatCurrency(earningsData.levelEarnings)}</div>
+          <div className="card-subtitle">Level {earningsData.currentLevel}</div>
         </div>
 
-        <div className="earning-card recycling">
+        <div className="earning-card help-pool">
           <div className="card-header">
-            <h3>♻️ Recycling Bonus</h3>
+            <h3>🎁 Help Pool Bonus</h3>
           </div>
           <div className="card-value">{formatCurrency(earningsData.recyclingBonus)}</div>
           <div className="card-subtitle">{earningsData.recyclingCount} cycles completed</div>
@@ -121,9 +121,9 @@ const EarningsAnalytics = ({ wallet, contract }) => {
     </div>
   );
 
-  const renderMatrixProgress = () => (
-    <div className="matrix-progress">
-      <h3>🌳 Matrix Progress</h3>
+  const renderLevelProgress = () => (
+    <div className="level-progress">
+      <h3>🌳 Level Progress</h3>
       <div className="levels-grid">
         {[1, 2, 3, 4, 5, 6].map(level => (
           <div 
@@ -142,19 +142,19 @@ const EarningsAnalytics = ({ wallet, contract }) => {
       </div>
       
       <div className="recycling-tracker">
-        <h4>♻️ Recycling Tracker</h4>
-        <div className="recycling-stats">
+        <h4>🎁 Help Pool Tracker</h4>
+        <div className="help-pool-stats">
           <div className="stat">
-            <span>Completed Cycles</span>
+            <span>Pool Qualifications</span>
             <span>{earningsData.completedCycles}</span>
           </div>
           <div className="stat">
             <span>Current Level</span>
-            <span>Level {earningsData.matrixLevel}</span>
+            <span>Level {earningsData.currentLevel}</span>
           </div>
           <div className="stat">
-            <span>Next Recycling</span>
-            <span>2 positions remaining</span>
+            <span>Next Qualification</span>
+            <span>2 referrals remaining</span>
           </div>
         </div>
       </div>
@@ -193,14 +193,14 @@ const EarningsAnalytics = ({ wallet, contract }) => {
             <span>75%</span>
           </div>
           <div className="factor">
-            <span>🌳 Matrix Position</span>
+            <span>🌳 Level Position</span>
             <div className="factor-bar">
               <div className="factor-fill" style={{ width: '60%' }}></div>
             </div>
             <span>60%</span>
           </div>
           <div className="factor">
-            <span>♻️ Recycling Rate</span>
+            <span>🎁 Help Pool Rate</span>
             <div className="factor-bar">
               <div className="factor-fill" style={{ width: '85%' }}></div>
             </div>
@@ -246,10 +246,10 @@ const EarningsAnalytics = ({ wallet, contract }) => {
               📊 Overview
             </button>
             <button 
-              className={analyticsMode === 'matrix' ? 'active' : ''}
-              onClick={() => setAnalyticsMode('matrix')}
+              className={analyticsMode === 'level' ? 'active' : ''}
+              onClick={() => setAnalyticsMode('level')}
             >
-              🌳 Matrix
+              🌳 Level
             </button>
             <button 
               className={analyticsMode === 'predictions' ? 'active' : ''}
@@ -263,7 +263,7 @@ const EarningsAnalytics = ({ wallet, contract }) => {
 
       <div className="analytics-content">
         {analyticsMode === 'overview' && renderOverview()}
-        {analyticsMode === 'matrix' && renderMatrixProgress()}
+        {analyticsMode === 'level' && renderLevelProgress()}
         {analyticsMode === 'predictions' && renderPredictiveAnalytics()}
       </div>
     </div>

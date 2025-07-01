@@ -228,7 +228,7 @@ class MarketingPrepSystem {
         duration: '60 seconds',
         script: `
           [0-5s] Hook: "What if your business platform could think, learn, and help you succeed?"
-          [5-15s] Problem: "Traditional MLM platforms leave you guessing - confusing transactions, no guidance, missed opportunities"
+          [5-15s] Problem: "Traditional business platforms leave you guessing - confusing transactions, no guidance, missed opportunities"
           [15-30s] Solution: "LeadFive changes everything with AI that explains every transaction, coaches your success, and predicts your earnings"
           [30-45s] Demo clips: Show AI assistant in action with real transactions
           [45-55s] Results: "Users see 40% higher engagement, 25% more transactions completed, 35% better retention"
@@ -343,7 +343,7 @@ class MarketingPrepSystem {
       ],
       messaging: {
         primary: 'Finally, a platform that works as smart as you do',
-        secondary: 'AI that understands network marketing and helps you scale',
+        secondary: 'AI that understands digital business and helps you scale',
         proof_points: ['25% faster team training', '40% better retention', 'Predictive earnings']
       },
       channels: ['LinkedIn', 'Facebook Groups', 'Industry Events', 'Webinars']
@@ -380,7 +380,7 @@ class MarketingPrepSystem {
         'Desire to be first with cutting-edge technology'
       ],
       ai_benefits: [
-        'Cutting-edge AI specifically trained for network marketing',
+        'Cutting-edge AI specifically trained for digital business',
         'Voice-enabled interactions and accessibility',
         'Machine learning that improves with usage',
         'Integration of multiple AI technologies'

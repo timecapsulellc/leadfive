@@ -1,4 +1,4 @@
-name: Deploy to DigitalOcean
+name: Deploy Lead Five to DigitalOcean
 
 on:
   push:
@@ -33,18 +33,18 @@ jobs:
         key: ${{ secrets.DO_SSH_KEY }}
         port: ${{ secrets.DO_PORT || 22 }}
         script: |
-          cd /var/www/orphi-crowdfund
+          cd /var/www/leadfive
           git pull origin ${{ github.ref_name }}
           npm install
           npm run build
           sudo systemctl reload nginx
-          echo "✅ Deployment completed successfully!"
+          echo "✅ Lead Five deployment completed successfully!"
           
     - name: Notify deployment status
       if: always()
       run: |
         if [ ${{ job.status }} == 'success' ]; then
-          echo "🎉 ORPHI CrowdFund deployed successfully to DigitalOcean!"
+          echo "🎉 Lead Five deployed successfully to DigitalOcean!"
         else
-          echo "❌ Deployment failed"
+          echo "❌ Lead Five deployment failed"
         fi 

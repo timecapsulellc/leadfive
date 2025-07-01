@@ -58,7 +58,7 @@ const PWAInstallPrompt = ({ onInstall, onDismiss }) => {
       exit={{ opacity: 0, y: 50 }}
     >
       <div className="pwa-install-content">
-        <h3>Install OrphiChain App</h3>
+        <h3>Install Lead Five App</h3>
         <p>Get the best experience by installing our app on your device.</p>
         <div className="pwa-install-features">
           <div className="feature">

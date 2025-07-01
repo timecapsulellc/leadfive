@@ -19,7 +19,7 @@ import {
   FaCompress
 } from 'react-icons/fa';
 import { elevenLabsService } from '../services/ElevenLabsOnlyService';
-import OpenAIService from '../services/OpenAIService';
+import EnhancedOpenAIService from '../services/EnhancedOpenAIService';
 
 const ExtraordinaryAIAssistant = ({ userStats, account }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -90,16 +90,21 @@ const ExtraordinaryAIAssistant = ({ userStats, account }) => {
       console.log('🤖 Sending question to AI:', currentMessage);
       console.log('📊 User context:', userContext);
 
-      const aiResponse = await OpenAIService.getChatResponse(currentMessage, userContext);
+      const aiResponseData = await EnhancedOpenAIService.getEnhancedChatResponse(currentMessage, userContext);
       
-      console.log('🎯 AI Response received:', aiResponse);
+      console.log('🎯 AI Response received:', aiResponseData);
+      
+      // Extract the response content from the enhanced format
+      const aiResponseContent = aiResponseData?.response || aiResponseData;
+      const knowledgeUsed = aiResponseData?.knowledgeUsed || [];
       
       const aiMessage = {
         id: messageId + 1,
         type: 'ai',
-        content: aiResponse,
+        content: aiResponseContent,
         timestamp: new Date(),
-        avatar: '🤖'
+        avatar: '🤖',
+        knowledgeUsed: knowledgeUsed // Store knowledge used for reference
       };
       
       setMessages(prev => [...prev, aiMessage]);
@@ -107,7 +112,7 @@ const ExtraordinaryAIAssistant = ({ userStats, account }) => {
       // Read AI response with ElevenLabs (only if this assistant instance initiated it)
       if (elevenLabsService && isOpen) {
         setTimeout(() => {
-          elevenLabsService.readText(aiResponse);
+          elevenLabsService.readText(aiResponseContent);
         }, 500);
       }
     } catch (error) {

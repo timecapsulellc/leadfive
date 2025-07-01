@@ -1,4 +1,4 @@
-const CACHE_NAME = 'orphichain-v1';
+const CACHE_NAME = 'leadfive-v1';
 const urlsToCache = [
   '/',
   '/index.html',

@@ -1,9 +1,9 @@
-// OrphiCrowdFund Contract Configuration for Vercel Deployment
-// Auto-generated on 2025-06-10T15:45:00.000Z
+// Lead Five Contract Configuration for Production Deployment
+// Auto-generated on 2025-07-01T00:00:00.000Z
 
-window.ORPHI_CROWDFUND_CONFIG = {
-    address: "0x8F826B18096Dcf7AF4515B06Cb563475d189ab50",
-    implementationAddress: "0xE9d76e821790c64d7563F6022b5F73eEAE57DB6C",
+window.LEADFIVE_CONTRACT_CONFIG = {
+    address: "0x29dcCb502D10C042BcC6a02a7762C49595A9E498",
+    implementationAddress: "0xA4AB35Ab2BA415E6CCf9559e8dcAB0661cC29e2b",
     network: "BSC Mainnet",
     chainId: 56,
     usdtAddress: "0x55d398326f99059fF775485246999027B3197955",
@@ -56,4 +56,4 @@ window.CONTRACT_ABI = [
     "event CommissionDistributed(address indexed recipient, address indexed payer, uint256 indexed amount, uint8 poolType, string poolName, uint256 timestamp)"
 ];
 
-console.log('✅ OrphiChain Contract Configuration Loaded');
+console.log('✅ Lead Five Contract Configuration Loaded');

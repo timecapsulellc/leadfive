@@ -36,13 +36,13 @@ const AITransactionHelper = () => {
     setIsLoading(true);
 
     try {
-      const prompt = `You are a helpful AI assistant for LeadFive, a blockchain-based network marketing platform. 
+      const prompt = `You are a helpful AI assistant for LeadFive, a blockchain-based digital business platform. 
       
       User question: "${message}"
       
       Provide a helpful, accurate response about:
       - LeadFive platform features
-      - Network marketing strategies
+      - Digital business strategies
       - Blockchain/crypto transactions
       - Earnings optimization
       - Team building tips

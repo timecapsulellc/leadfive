@@ -14,7 +14,7 @@ const AIEarningsPrediction = ({ userStats }) => {
     setError(null);
     
     try {
-      const prompt = `As a network marketing AI analyst, predict earnings for a LeadFive user with these metrics:
+      const prompt = `As a digital business AI analyst, predict earnings for a LeadFive user with these metrics:
       
       Current Performance:
       - Team Size: ${userStats?.teamSize || 0} members

@@ -198,7 +198,7 @@ class AIEnhancedFeatures {
         - Account age: ${userData.accountAge || 0} days
 
         Predict realistic 30-day, 90-day, and 12-month earnings with confidence levels.
-        Consider MLM industry standards and sustainable growth patterns.
+        Consider digital business industry standards and sustainable growth patterns.
         
         Format as JSON: {
           "predictions": {
@@ -265,7 +265,7 @@ class AIEnhancedFeatures {
 
       // AI-powered coaching if available
       if (this.openai.isInitialized) {
-        const prompt = `Act as a motivational MLM success coach for a LeadFive member:
+        const prompt = `Act as a motivational digital business success coach for a LeadFive member:
 
         Member Profile:
         - Activity level: ${context.mood}
@@ -329,7 +329,7 @@ class AIEnhancedFeatures {
       return {
         message: "Keep building your LeadFive business one step at a time!",
         action: "Focus on referring one new member this week.",
-        motivation: "Success in network marketing comes from consistent daily action.",
+        motivation: "Success in digital business comes from consistent daily action.",
         priority: 'medium',
         error: error.message
       };

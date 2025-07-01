@@ -44,7 +44,7 @@ function MainDashboard() {
         <div className="dashboard-header">
           <div className="header-content">
             <h1 className="dashboard-title">
-              OrphiCrowdFund Dashboard
+              Lead Five Dashboard
               <span className="version-badge">v2.1.0</span>
             </h1>
             

@@ -98,9 +98,9 @@ class KnowledgeBaseManager {
         LEAD FIVE: The Decentralized Incentive Platform
 
         BUSINESS MODEL:
-        - Multi-level marketing (MLM) structure with 4 package levels
+        - Multi-level compensation structure with 4 package levels
         - Direct referral bonuses: 20% for level 1, decreasing by level
-        - Matrix spillover system for fair distribution
+        - Level income system for fair distribution
         - Pool-based rewards: Leader Pool, Help Pool, Club Pool
         - Smart contract automation for transparency
 
@@ -113,7 +113,7 @@ class KnowledgeBaseManager {
         COMPENSATION STRUCTURE:
         - Direct Referral Commission: 20% of package price
         - Level Commissions: Decreasing percentages per level
-        - Matrix Bonuses: Spillover system ensuring fair distribution
+        - Level Income: $5 per registration system ensuring fair distribution
         - Pool Distributions: Shared rewards from platform success
         - Rank Advancement: Increased earning potential with higher ranks
 
@@ -124,7 +124,7 @@ class KnowledgeBaseManager {
         - Security: Audited smart contracts with emergency controls
 
         TARGET MARKET:
-        - Network marketing professionals
+        - Digital business professionals
         - Cryptocurrency enthusiasts
         - Income opportunity seekers
         - Blockchain technology adopters
@@ -198,11 +198,11 @@ class KnowledgeBaseManager {
         - 4th Level: 3% of 3rd level earnings
         - 5th Level: 2% of 4th level earnings
         
-        MATRIX SYSTEM:
-        - 3x3 Matrix structure
-        - Spillover system for fair distribution
-        - Position cycling for continuous earning
-        - Matrix completion bonuses
+        LEVEL INCOME SYSTEM:
+        - 10-level deep structure
+        - $5 per registration system for fair distribution
+        - Level advancement for continuous earning
+        - Level completion bonuses
         
         POOL DISTRIBUTIONS:
         - Leader Pool: 2% of all transactions

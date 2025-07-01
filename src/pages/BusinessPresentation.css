@@ -1,0 +1,322 @@
+/**
+ * Business Presentation Page Styles
+ * SEO-optimized and accessible styles
+ */
+
+.business-presentation-page {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* SEO-friendly hidden content */
+.presentation-header,
+.presentation-footer {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.seo-content {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+.seo-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1.5rem 0 1rem 0;
+  color: #2d3748;
+}
+
+.seo-content ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.seo-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.footer-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 1rem 0 0.5rem 0;
+  color: #2d3748;
+}
+
+.footer-content h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 1.5rem 0 0.5rem 0;
+  color: #4a5568;
+}
+
+.footer-content p {
+  line-height: 1.6;
+  margin: 1rem 0;
+  color: #4a5568;
+}
+
+/* Ensure full page coverage for the dashboard */
+.business-presentation-page main {
+  width: 100%;
+  height: 100vh;
+}
+
+/* Presentation Options Section */
+.presentation-options {
+  background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%); /* Deep Space to Midnight Blue */
+  padding: 4rem 2rem;
+  margin: 2rem 0;
+  border-radius: 20px;
+  color: white;
+  text-align: center;
+}
+
+.options-container h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.options-container p {
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.option-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 15px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.option-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.option-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.option-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.option-card p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.option-btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  text-align: center;
+  cursor: pointer;
+}
+
+.option-btn.primary {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  box-shadow: 0 8px 25px rgba(240, 147, 251, 0.3);
+}
+
+.option-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(240, 147, 251, 0.4);
+}
+
+.option-btn.secondary {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.option-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.option-btn.tertiary {
+  background: transparent;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.option-btn.tertiary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: white;
+  transform: translateY(-2px);
+}
+
+.quick-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fact-item {
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.fact-item strong {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.fact-item span {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Responsive design for SEO content */
+@media (max-width: 768px) {
+  .seo-content h2 {
+    font-size: 1.25rem;
+  }
+  
+  .footer-content h3 {
+    font-size: 1.1rem;
+  }
+  
+  .footer-content h4 {
+    font-size: 1rem;
+  }
+
+  .presentation-options {
+    padding: 2rem 1rem;
+    margin: 1rem;
+    border-radius: 15px;
+  }
+
+  .options-container h2 {
+    font-size: 2rem;
+  }
+
+  .options-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .option-card {
+    padding: 1.5rem;
+  }
+
+  .quick-facts {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+/* Print styles for SEO content */
+@media print {
+  .presentation-header,
+  .presentation-footer {
+    position: static;
+    left: auto;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    display: block;
+  }
+  
+  .business-knowledge-dashboard {
+    display: none;
+  }
+  
+  .seo-content {
+    color: #000;
+  }
+  
+  .seo-content h2,
+  .footer-content h3,
+  .footer-content h4 {
+    color: #000;
+    page-break-after: avoid;
+  }
+  
+  .seo-content ul,
+  .footer-content ul {
+    page-break-inside: avoid;
+  }
+}
+
+@media (max-width: 480px) {
+  .presentation-options {
+    padding: 1.5rem 0.5rem;
+  }
+
+  .options-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .options-container p {
+    font-size: 1rem;
+  }
+
+  .option-card {
+    padding: 1rem;
+  }
+
+  .option-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .quick-facts {
+    grid-template-columns: 1fr;
+  }
+
+  .fact-item strong {
+    font-size: 1.2rem;
+  }
+}

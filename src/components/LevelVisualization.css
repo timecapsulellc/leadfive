@@ -1,0 +1,201 @@
+.level-visualization {
+  padding: 20px;
+  background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%); /* Deep Space to Midnight Blue */
+  border-radius: 15px;
+  color: white;
+  margin: 20px 0;
+}
+
+.level-visualization.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.loading-spinner {
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+.level-header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.level-header h3 {
+  margin: 0 0 15px 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.level-stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.stat-item .label {
+  font-size: 12px;
+  opacity: 0.8;
+  margin-bottom: 5px;
+}
+
+.stat-item .value {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.levels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.level-card {
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.level-card.active {
+  background: rgba(0, 255, 136, 0.2); /* Success Green */
+  border-color: #00FF88; /* Success Green */
+  box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+}
+
+.level-card.inactive {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+  opacity: 0.6;
+}
+
+.level-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.level-number {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.level-status {
+  margin-bottom: 10px;
+}
+
+.status-active {
+  color: #00FF88; /* Success Green */
+  font-weight: 500;
+}
+
+.status-inactive {
+  color: #B8C5D1; /* Silver Mist */
+  font-weight: 500;
+}
+
+.level-earnings {
+  font-size: 20px;
+  font-weight: 600;
+  color: #FFD700; /* Premium Gold */
+  margin-bottom: 8px;
+}
+
+.level-referrals {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 8px;
+}
+
+.level-info {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.level-explanation {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+
+.level-explanation h4 {
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.level-explanation ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.level-explanation li {
+  padding: 8px 0;
+  padding-left: 20px;
+  position: relative;
+}
+
+.level-explanation li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #00FF88; /* Success Green */
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .level-visualization {
+    padding: 15px;
+    margin: 15px 0;
+  }
+  
+  .level-header h3 {
+    font-size: 20px;
+  }
+  
+  .levels-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  
+  .level-card {
+    padding: 15px;
+  }
+  
+  .level-stats {
+    gap: 15px;
+  }
+  
+  .stat-item {
+    padding: 8px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .levels-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .level-stats {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

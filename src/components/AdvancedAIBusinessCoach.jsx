@@ -89,7 +89,7 @@ What would you like to focus on today?`,
         id: 3,
         type: 'education',
         title: 'Market Trend Alert',
-        description: 'Current market conditions favor network marketing. Perfect timing for expansion.',
+        description: 'Current market conditions favor digital business platforms. Perfect timing for expansion.',
         action: 'Learn More',
         urgency: 'low'
       }
@@ -102,20 +102,20 @@ What would you like to focus on today?`,
     // Simulate AI processing with contextual responses
     const responses = {
       strategic: [
-        "🎯 Based on your current matrix level, I recommend focusing on building your direct referral network. Here's a 30-day action plan:\n\n1. Contact 5 new prospects daily\n2. Leverage social proof from your earnings\n3. Focus on warm market first\n4. Use the recycling momentum to your advantage",
-        "🎯 Your growth trajectory shows strong potential. Consider these strategic moves:\n\n• Diversify your referral sources\n• Create educational content about LeadFive\n• Build a personal brand in network marketing\n• Focus on relationship building over selling"
+        "🎯 Based on your current level, I recommend focusing on building your direct referral network. Here's a 30-day action plan:\n\n1. Contact 5 new prospects daily\n2. Leverage social proof from your earnings\n3. Focus on warm market first\n4. Use the level income momentum to your advantage",
+        "🎯 Your growth trajectory shows strong potential. Consider these strategic moves:\n\n• Diversify your referral sources\n• Create educational content about LeadFive\n• Build a personal brand in digital business\n• Focus on relationship building over selling"
       ],
       motivation: [
         "💪 Remember, every successful leader started where you are now! Your current earnings show you're on the right track. \n\nKey mindset shifts:\n• Focus on serving others, not just earning\n• Celebrate small wins daily\n• Visualize your financial freedom\n• Stay consistent even when results aren't immediate",
-        "💪 Success in network marketing is 80% mindset, 20% strategy. You've got the strategy down with LeadFive's system.\n\nDaily practices:\n• Morning visualization (5 min)\n• Gratitude journaling\n• Skill development (15 min)\n• Connect with 3 new people"
+        "💪 Success in digital business is 80% mindset, 20% strategy. You've got the strategy down with LeadFive's system.\n\nDaily practices:\n• Morning visualization (5 min)\n• Gratitude journaling\n• Skill development (15 min)\n• Connect with 3 new people"
       ],
       technical: [
-        "⚙️ To maximize your LeadFive dashboard:\n\n1. Check your matrix daily for recycling opportunities\n2. Use the genealogy tree to identify active partners\n3. Monitor your earnings analytics for growth patterns\n4. Set up withdrawal schedules for consistent cash flow",
-        "⚙️ Pro tips for platform optimization:\n\n• Enable notifications for matrix upgrades\n• Use the referral tracker to identify top performers\n• Leverage the team overview for mentoring opportunities\n• Export earnings data for tax planning"
+        "⚙️ To maximize your LeadFive dashboard:\n\n1. Check your level income daily for new registrations\n2. Use the genealogy tree to identify active partners\n3. Monitor your earnings analytics for growth patterns\n4. Set up withdrawal schedules for consistent cash flow",
+        "⚙️ Pro tips for platform optimization:\n\n• Enable notifications for level upgrades\n• Use the referral tracker to identify top performers\n• Leverage the team overview for mentoring opportunities\n• Export earnings data for tax planning"
       ],
       market: [
-        "📈 Current market analysis shows:\n\n• Network marketing industry growing 6.2% annually\n• Digital platforms seeing 40% increase in adoption\n• Cryptocurrency integration driving new demographics\n• LeadFive positioned well in the automated matrix space",
-        "📈 Market opportunities for you:\n\n• Crypto-curious demographics (25-40 age group)\n• Remote workers seeking passive income\n• Traditional MLM users looking for transparency\n• Tech-savvy entrepreneurs wanting automation"
+        "📈 Current market analysis shows:\n\n• Digital business industry growing 6.2% annually\n• Blockchain platforms seeing 40% increase in adoption\n• Cryptocurrency integration driving new demographics\n• LeadFive positioned well in the automated level income space",
+        "📈 Market opportunities for you:\n\n• Crypto-curious demographics (25-40 age group)\n• Remote workers seeking passive income\n• Traditional business users looking for transparency\n• Tech-savvy entrepreneurs wanting automation"
       ]
     };
 
@@ -176,9 +176,9 @@ What would you like to focus on today?`,
 
     setTimeout(() => {
       const responses = {
-        'Matrix Position Optimization': "🌳 Matrix optimization strategy:\n\n1. Your current positions are at levels 3 and 4\n2. Recycling now will trigger automatic re-entry\n3. This creates compound earnings through the spillover effect\n4. Best time to recycle is during high-activity periods\n\nWould you like me to guide you through the recycling process?",
+        'Level Position Optimization': "🌳 Level income optimization strategy:\n\n1. Your current positions are at levels 3 and 4\n2. Building now will trigger higher level earnings\n3. This creates compound earnings through the level system\n4. Best time to expand is during high-activity periods\n\nWould you like me to guide you through the optimization process?",
         'Referral Acceleration': "🚀 Referral acceleration plan:\n\n1. Audit your current outreach methods\n2. Create a compelling personal story\n3. Use the 3-foot rule consistently\n4. Leverage LeadFive's success stories\n5. Follow up systematically\n\nI can help you create scripts and track your progress.",
-        'Market Trend Alert': "📊 Market trends working in your favor:\n\n• Increased interest in passive income (↑ 45%)\n• Crypto adoption mainstream (↑ 67%)\n• Network marketing legitimacy growing\n• Automated systems preferred by new generation\n\nThis is an optimal time to scale your efforts."
+        'Market Trend Alert': "📊 Market trends working in your favor:\n\n• Increased interest in passive income (↑ 45%)\n• Crypto adoption mainstream (↑ 67%)\n• Digital business legitimacy growing\n• Automated systems preferred by new generation\n\nThis is an optimal time to scale your efforts."
       };
 
       const aiMessage = {

@@ -144,7 +144,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
       <div className="step-content">
         <div className="step-icon">🔗</div>
         <h3>Connect Your Wallet</h3>
-        <p>Connect your MetaMask wallet to get started with OrphiCrowdFund</p>
+        <p>Connect your MetaMask wallet to get started with Lead Five</p>
         
         <div className={`wallet-status ${formData.walletConnected ? 'connected' : ''}`}>
           {formData.walletConnected ? (
@@ -309,7 +309,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
     <div className="onboarding-wizard">
       <div className="wizard-container">
         <div className="wizard-header">
-          <h1>Welcome to OrphiCrowdFund</h1>
+          <h1>Welcome to Lead Five</h1>
           <p>Complete your registration in 4 simple steps</p>
         </div>
 

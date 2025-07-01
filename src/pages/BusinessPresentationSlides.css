@@ -1,0 +1,1085 @@
+/**
+ * Business Presentation Slides - Exact PDF Replica Styles
+ * Complete styling to match the original presentation design
+ */
+
+.presentation-container {
+  min-height: 100vh;
+  background: #1A1A2E; /* Deep Space */
+  color: #FFFFFF; /* Pure White */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.presentation-container.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+}
+
+/* Header Controls */
+.presentation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(16, 33, 62, 0.9); /* Midnight Blue with transparency */
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.3); /* Cyber Blue border */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-left h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #00D4FF 0%, #7B2CBF 100%); /* Cyber Blue to Royal Purple */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.slide-counter {
+  font-size: 0.9rem;
+  color: #B8C5D1; /* Silver Mist */
+  margin-left: 1rem;
+}
+
+.header-controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.control-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #00D4FF 0%, #7B2CBF 100%); /* Cyber Blue to Royal Purple */
+  border: none;
+  border-radius: 8px;
+  color: #FFFFFF; /* Pure White */
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4); /* Cyber Blue glow */
+}
+
+.download-btn {
+  background: linear-gradient(135deg, #FF6B35 0%, #FFD700 100%); /* Energy Orange to Premium Gold */
+}
+
+.download-btn:hover {
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4); /* Energy Orange glow */
+}
+
+/* Main Slide Display */
+.slide-display {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide-display::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(1px);
+}
+
+.slide-content {
+  max-width: 1200px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  background: rgba(26, 26, 46, 0.8); /* Deep Space with transparency */
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 3rem;
+  border: 1px solid rgba(0, 212, 255, 0.3); /* Cyber Blue border */
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+/* Slide Header */
+.slide-header {
+  margin-bottom: 2rem;
+}
+
+.slide-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  color: #00D4FF; /* Cyber Blue */
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+.slide-title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 0 0 0.5rem 0;
+  background: linear-gradient(135deg, #00D4FF 0%, #7B2CBF 100%); /* Cyber Blue to Royal Purple */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  line-height: 1.2;
+}
+
+.slide-subtitle {
+  font-size: 1.5rem;
+  color: #B8C5D1; /* Silver Mist */
+  margin: 0 0 2rem 0;
+  font-weight: 300;
+}
+
+/* Slide Body */
+.slide-body {
+  text-align: left;
+}
+
+.content-headline {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  background: linear-gradient(135deg, #00D4FF 0%, #FF6B35 100%); /* Cyber Blue to Energy Orange */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+}
+
+.content-description {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #B8C5D1; /* Silver Mist */
+}
+
+/* Features Grid */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.feature-item {
+  background: rgba(16, 33, 62, 0.6); /* Midnight Blue with transparency */
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 212, 255, 0.3); /* Cyber Blue border */
+  font-size: 1.1rem;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  color: #FFFFFF; /* Pure White */
+}
+
+.feature-item:hover {
+  background: rgba(0, 212, 255, 0.2); /* Cyber Blue hover */
+  transform: translateY(-2px);
+  border-color: rgba(0, 212, 255, 0.6);
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+}
+
+/* Matrix Information */
+.matrix-info {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 15px;
+  margin: 2rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.matrix-info h4 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  text-align: center;
+}
+
+.matrix-grid > div {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.matrix-total {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, #00FF88 0%, #FFD700 100%) !important; /* Success Green to Premium Gold */
+  font-size: 1.2rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Packages Section */
+.packages-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.package-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.package-card.popular::before {
+  content: '⭐ POPULAR';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #FFD700 0%, #FF6B35 100%); /* Premium Gold to Energy Orange */
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.package-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.package-card h4 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.package-price {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #00D4FF 0%, #7B2CBF 100%); /* Cyber Blue to Royal Purple */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.package-card ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+.package-card li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.package-card li:last-child {
+  border-bottom: none;
+}
+
+/* Package Max Earnings Display */
+.package-max-earnings {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #FFD700; /* Premium Gold */
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  background: rgba(255, 215, 0, 0.1); /* Premium Gold with transparency */
+  border-radius: 8px;
+  border: 1px solid rgba(255, 215, 0, 0.3); /* Premium Gold border */
+  text-align: center;
+}
+
+/* Statistics Grid */
+.statistics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.stat-item {
+  text-align: center;
+  background: rgba(16, 33, 62, 0.6); /* Midnight Blue */
+  padding: 2rem;
+  border-radius: 15px;
+  border: 1px solid rgba(0, 212, 255, 0.3); /* Cyber Blue border */
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+  background: rgba(0, 212, 255, 0.2); /* Cyber Blue hover */
+  border-color: rgba(0, 212, 255, 0.6);
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
+}
+
+.stat-value {
+  font-size: 3rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #00D4FF 0%, #7B2CBF 100%); /* Cyber Blue to Royal Purple */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+/* Revenue Streams */
+.streams-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.stream-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.stream-card:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.stream-card h4 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.stream-card p {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.stream-potential {
+  font-weight: bold;
+  color: #00FF88; /* Success Green */
+  font-size: 1.1rem;
+}
+
+/* Advantages Grid */
+.advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.advantage-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.advantage-card:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.advantage-card h4 {
+  color: #fff;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.advantage-card p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+/* Growth Phases */
+.phases-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.phase-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.phase-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.phase-number {
+  background: linear-gradient(135deg, #00D4FF 0%, #7B2CBF 100%); /* Cyber Blue to Royal Purple */
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin: 0 auto 1rem auto;
+  font-size: 1.1rem;
+}
+
+.phase-card h4 {
+  color: #fff;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.phase-card ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+.phase-card li {
+  padding: 0.5rem 0;
+  color: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.phase-card li:last-child {
+  border-bottom: none;
+}
+
+/* Roadmap Section */
+.roadmap-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.roadmap-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.roadmap-item:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.quarter-label {
+  background: linear-gradient(135deg, #7B2CBF 0%, #FF6B35 100%); /* Royal Purple to Energy Orange */
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  display: inline-block;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.roadmap-item ul {
+  list-style: none;
+  padding: 0;
+}
+
+.roadmap-item li {
+  padding: 0.3rem 0;
+  color: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.roadmap-item li:last-child {
+  border-bottom: none;
+}
+
+.vision-statement {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Metrics Grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.metric-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.metric-value {
+  font-size: 3rem;
+  font-weight: bold;
+  background: linear-gradient(135deg, #00D4FF 0%, #7B2CBF 100%); /* Cyber Blue to Royal Purple */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.metric-name {
+  font-size: 1.2rem;
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.metric-description {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+}
+
+/* Navigation Controls */
+.navigation-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgba(16, 33, 62, 0.9); /* Midnight Blue */
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(0, 212, 255, 0.3); /* Cyber Blue border */
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
+}
+
+.nav-btn {
+  background: linear-gradient(135deg, #00D4FF 0%, #7B2CBF 100%); /* Cyber Blue to Royal Purple */
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  color: #FFFFFF; /* Pure White */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  margin: 0 1rem;
+}
+
+.nav-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4); /* Cyber Blue glow */
+}
+
+.slide-indicators {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(184, 197, 209, 0.3); /* Silver Mist with transparency */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.indicator.active {
+  background: linear-gradient(135deg, #00D4FF 0%, #7B2CBF 100%); /* Cyber Blue to Royal Purple */
+  transform: scale(1.2);
+  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+}
+
+.indicator:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Slide Thumbnails */
+.slide-thumbnails {
+  position: fixed;
+  left: -300px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 280px;
+  max-height: 80vh;
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(20px);
+  border-radius: 0 15px 15px 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  z-index: 200;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.slide-thumbnails::-webkit-scrollbar {
+  width: 6px;
+}
+
+.slide-thumbnails::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.slide-thumbnails::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.presentation-container:hover .slide-thumbnails {
+  left: 0;
+}
+
+.thumbnail {
+  height: 100px;
+  margin: 0.5rem;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.thumbnail.active {
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: scale(1.02);
+}
+
+.thumbnail:hover {
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.thumbnail-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.thumbnail-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.3rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.thumbnail-title {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* PDF Download CTA */
+.pdf-cta {
+  background: linear-gradient(135deg, #00D4FF 0%, #7B2CBF 100%); /* Cyber Blue to Royal Purple */
+  padding: 3rem 2rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.cta-content h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.cta-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.download-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #FF6B35 0%, #FFD700 100%); /* Energy Orange to Premium Gold */
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3); /* Energy Orange shadow */
+}
+
+.download-cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(240, 147, 251, 0.4);
+}
+
+/* Level Income Styles */
+.level-income-info {
+  margin: 2rem 0;
+  padding: 2rem;
+  background: rgba(16, 33, 62, 0.8); /* Midnight Blue */
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 212, 255, 0.4); /* Cyber Blue border */
+}
+
+.level-income-info h4 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+  color: #00D4FF; /* Cyber Blue */
+  text-align: center;
+}
+
+.level-income-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.income-detail {
+  padding: 1rem;
+  background: rgba(26, 26, 46, 0.6); /* Deep Space */
+  border-radius: 10px;
+  border: 1px solid rgba(0, 212, 255, 0.3); /* Cyber Blue border */
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.income-detail:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.4); /* Cyber Blue glow */
+  border-color: rgba(0, 212, 255, 0.6);
+}
+
+.income-detail strong {
+  display: block;
+  font-size: 0.9rem;
+  color: #00D4FF; /* Cyber Blue */
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.income-total {
+  grid-column: 1 / -1;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #FFD700 0%, #FF6B35 100%); /* Premium Gold to Energy Orange */
+  border-radius: 15px;
+  text-align: center;
+  font-size: 1.2rem;
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4); /* Premium Gold glow */
+  animation: pulse 2s infinite;
+}
+
+.income-total strong {
+  color: #0A0A0A; /* True Black for contrast */
+  font-size: 1.4rem;
+  text-shadow: none;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4); /* Premium Gold */
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 12px 35px rgba(255, 215, 0, 0.6); /* Premium Gold enhanced */
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .presentation-header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .header-controls {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .control-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .slide-content {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .slide-title {
+    font-size: 2rem;
+  }
+
+  .slide-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .content-headline {
+    font-size: 1.5rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .packages-section {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .statistics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .stat-value {
+    font-size: 2rem;
+  }
+
+  .navigation-controls {
+    padding: 1rem;
+  }
+
+  .slide-indicators {
+    margin: 0 1rem;
+  }
+
+  .slide-thumbnails {
+    width: 250px;
+    left: -270px;
+  }
+
+  .presentation-container:hover .slide-thumbnails {
+    left: 0;
+  }
+
+  .pdf-cta {
+    padding: 2rem 1rem;
+  }
+
+  .cta-content h3 {
+    font-size: 1.5rem;
+  }
+
+  .cta-content p {
+    font-size: 1rem;
+  }
+
+  .level-income-info {
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .slide-content {
+    padding: 1rem;
+  }
+
+  .slide-title {
+    font-size: 1.5rem;
+  }
+
+  .slide-subtitle {
+    font-size: 1rem;
+  }
+
+  .content-headline {
+    font-size: 1.2rem;
+  }
+
+  .feature-item {
+    font-size: 1rem;
+    padding: 0.8rem;
+  }
+
+  .statistics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metric-value {
+    font-size: 2rem;
+  }
+
+  .slide-thumbnails {
+    display: none; /* Hide thumbnails on very small screens */
+  }
+}
+
+/* Print Styles */
+@media print {
+  .presentation-header,
+  .navigation-controls,
+  .slide-thumbnails,
+  .pdf-cta {
+    display: none !important;
+  }
+
+  .slide-display {
+    page-break-after: always;
+    min-height: 100vh;
+    background: white !important;
+    color: black !important;
+  }
+
+  .slide-content {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+
+  .slide-title,
+  .slide-subtitle,
+  .content-headline {
+    color: black !important;
+    text-shadow: none !important;
+  }
+
+  .feature-item,
+  .package-card,
+  .stat-item,
+  .stream-card,
+  .advantage-card,
+  .phase-card,
+  .roadmap-item,
+  .metric-card {
+    background: #f5f5f5 !important;
+    color: black !important;
+    border: 1px solid #ddd !important;
+  }
+}
+
+/* Loading Animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-content {
+  animation: slideIn 0.5s ease-out;
+}
+
+/* Hover Effects */
+.feature-item:hover,
+.package-card:hover,
+.stat-item:hover,
+.stream-card:hover,
+.advantage-card:hover,
+.phase-card:hover,
+.roadmap-item:hover,
+.metric-card:hover {
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+}
+
+/* Focus States for Accessibility */
+.control-btn:focus,
+.nav-btn:focus,
+.indicator:focus,
+.thumbnail:focus,
+.download-cta-btn:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .slide-content {
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid white;
+  }
+
+  .feature-item,
+  .package-card,
+  .stat-item,
+  .stream-card,
+  .advantage-card,
+  .phase-card,
+  .roadmap-item,
+  .metric-card {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid white;
+  }
+}

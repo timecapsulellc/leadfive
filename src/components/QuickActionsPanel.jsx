@@ -104,11 +104,11 @@ const QuickActionsPanel = ({ userInfo, onAction }) => {
   const simulateShareReferral = () => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        const referralLink = `https://orphicrowdfund.com/ref/${userInfo?.id || 'demo123'}`;
+        const referralLink = `https://leadfive.today/ref/${userInfo?.id || 'demo123'}`;
         if (navigator.share) {
           navigator.share({
-            title: 'Join OrphiCrowdFund',
-            text: 'Join my team on OrphiCrowdFund!',
+            title: 'Join Lead Five',
+            text: 'Join my team on Lead Five!',
             url: referralLink
           });
         } else {

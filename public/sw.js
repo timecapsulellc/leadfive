@@ -1,7 +1,7 @@
 // LeadFive PWA Service Worker
 // Version 1.0.0 - Production Ready
 
-const CACHE_NAME = 'leadfive-crowdfund-v1.0.0';
+const CACHE_NAME = 'leadfive-v1.0.0';
 const RUNTIME_CACHE = 'leadfive-runtime-v1.0.0';
 const OFFLINE_CACHE = 'leadfive-offline-v1.0.0';
 
@@ -204,11 +204,11 @@ self.addEventListener('push', event => {
     
     // Fallback notification
     event.waitUntil(
-      self.registration.showNotification('OrphiChain Notification', {
+      self.registration.showNotification('Lead Five Notification', {
         body: 'You have a new update',
         icon: '/icons/icon-192x192.png',
         badge: '/icons/icon-72x72.png',
-        tag: 'orphi-fallback'
+        tag: 'leadfive-fallback'
       })
     );
   }
@@ -526,7 +526,7 @@ async function handleLeadFiveApiRequest(request) {
     }
     
     return new Response(JSON.stringify({ 
-      error: 'OrphiChain data not available offline',
+      error: 'Lead Five data not available offline',
       offline: true 
     }), {
       status: 503,
@@ -571,7 +571,7 @@ async function handleContractEvent(event) {
     
     // Show notification for important events
     if (event.type === 'WithdrawalMade' || event.type === 'UserRegistered') {
-      await self.registration.showNotification('OrphiChain Update', {
+      await self.registration.showNotification('Lead Five Update', {
         body: `${event.type} event received`,
         icon: '/icons/icon-192x192.png',
         badge: '/icons/icon-72x72.png',
@@ -587,7 +587,7 @@ async function handleContractEvent(event) {
 async function cleanupOldCaches() {
   const cacheNames = await caches.keys();
   const oldCaches = cacheNames.filter(name => 
-    name.startsWith('orphi-') && 
+    name.startsWith('leadfive-') && 
     name !== CACHE_NAME && 
     name !== RUNTIME_CACHE &&
     name !== OFFLINE_CACHE
@@ -677,7 +677,7 @@ async function syncRegistrations() {
 // IndexedDB helpers for offline storage
 async function getStoredData(storeName) {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('orphi-offline-db', 1);
+    const request = indexedDB.open('leadfive-offline-db', 1);
     
     request.onerror = () => reject(request.error);
     
@@ -702,7 +702,7 @@ async function getStoredData(storeName) {
 
 async function removeStoredData(storeName, id) {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('orphi-offline-db', 1);
+    const request = indexedDB.open('leadfive-offline-db', 1);
     
     request.onsuccess = () => {
       const db = request.result;
@@ -719,7 +719,7 @@ async function removeStoredData(storeName, id) {
 // Enhanced IndexedDB helpers
 async function getCachedData(storeName, key) {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('orphi-cache-db', 1);
+    const request = indexedDB.open('leadfive-cache-db', 1);
     
     request.onerror = () => reject(request.error);
     
@@ -744,7 +744,7 @@ async function getCachedData(storeName, key) {
 
 async function setCachedData(storeName, key, data) {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('orphi-cache-db', 1);
+    const request = indexedDB.open('leadfive-cache-db', 1);
     
     request.onerror = () => reject(request.error);
     
@@ -769,7 +769,7 @@ async function setCachedData(storeName, key, data) {
 
 async function addStoredData(storeName, data) {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('orphi-offline-db', 1);
+    const request = indexedDB.open('leadfive-offline-db', 1);
     
     request.onerror = () => reject(request.error);
     

@@ -136,7 +136,7 @@ const Welcome = () => {
           </div>
           <div className="brand-animation">
             <div className="brand-line"></div>
-            <p className="welcome-tagline">Revolutionary Network Marketing</p>
+            <p className="welcome-tagline">Revolutionary Digital Business Platform</p>
             <div className="brand-line"></div>
           </div>
         </div>

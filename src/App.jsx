@@ -21,6 +21,8 @@ const Welcome = React.lazy(() => import('./pages/Welcome'));
 const BrandGuide = React.lazy(() => import('./pages/BrandGuide'));
 const Genealogy = React.lazy(() => import('./pages/Genealogy'));
 const TestAIDashboard = React.lazy(() => import('./pages/TestAIDashboard'));
+const BusinessPresentation = React.lazy(() => import('./pages/BusinessPresentation'));
+const BusinessPresentationSlides = React.lazy(() => import('./pages/BusinessPresentationSlides'));
 import { 
   storeWalletConnection, 
   autoReconnectWallet, 
@@ -508,6 +510,22 @@ function App() {
                   </div>
                   <Footer />
                 </>
+              } />
+              <Route path="/business-presentation" element={
+                <>
+                  <Header 
+                    account={account} 
+                    onConnect={handleWalletConnect}
+                    onDisconnect={handleDisconnect} 
+                  />
+                  <div className="App">
+                    <BusinessPresentation />
+                  </div>
+                  <Footer />
+                </>
+              } />
+              <Route path="/business-slides" element={
+                <BusinessPresentationSlides />
               } />
             </Routes>
           </Suspense>

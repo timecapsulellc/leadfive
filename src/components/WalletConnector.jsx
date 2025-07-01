@@ -512,7 +512,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
                 lineHeight: '1.5',
                 textAlign: 'center',
               }}>
-                Choose your preferred wallet to connect to ORPHI CrowdFund on BSC Mainnet
+                Choose your preferred wallet to connect to Lead Five on BSC Mainnet
               </p>
 
               {/* Detection Status */}

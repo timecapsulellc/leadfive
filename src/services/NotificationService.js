@@ -61,7 +61,7 @@ class LeadFiveNotificationService {
       this.isEnabled = true;
       
       // Show welcome notification
-      await this.showNotification('🎉 OrphiChain Notifications Enabled', {
+      await this.showNotification('🎉 Lead Five Notifications Enabled', {
         body: 'You\'ll receive real-time updates about your Web3 activities',
         icon: '/icons/icon-192x192.png',
         badge: '/icons/icon-72x72.png',
@@ -143,13 +143,13 @@ class LeadFiveNotificationService {
     const defaultOptions = {
       icon: '/icons/icon-192x192.png',
       badge: '/icons/icon-72x72.png',
-      tag: 'orphi-notification',
+      tag: 'leadfive-notification',
       requireInteraction: false,
       timestamp: Date.now(),
       vibrate: [200, 100, 200],
       data: {
         timestamp: Date.now(),
-        source: 'OrphiChain'
+        source: 'Lead Five'
       }
     };
 
@@ -171,7 +171,7 @@ class LeadFiveNotificationService {
     }
   }
 
-  // Predefined OrphiChain notification types
+  // Predefined Lead Five notification types
   async showWeb3Notification(type, data = {}) {
     const notifications = {
       'user-registered': {
@@ -373,7 +373,7 @@ class LeadFiveNotificationService {
     await this.requestPermission();
     await this.subscribe();
     await this.showNotification('🔔 Test Push Notification', {
-      body: 'This is a test push notification from OrphiChain.',
+      body: 'This is a test push notification from Lead Five.',
       tag: 'test-push',
       requireInteraction: false
     });
@@ -447,11 +447,11 @@ class LeadFiveNotificationService {
 }
 
 // Create global instance
-window.OrphiNotifications = new OrphiChainNotificationService();
+window.LeadFiveNotifications = new LeadFiveNotificationService();
 
 // Export for module usage
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = OrphiChainNotificationService;
+  module.exports = LeadFiveNotificationService;
 }
 
-console.log('🔔 OrphiChain Notification Service loaded');
+console.log('🔔 Lead Five Notification Service loaded');
