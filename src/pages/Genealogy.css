@@ -1,63 +1,104 @@
-/* Unified Genealogy Page Styles */
+/* Genealogy Page - Same styling as Dashboard */
 .genealogy-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #0A0A0A;
   color: white;
+  padding: 2rem;
 }
 
-/* Header Section */
+/* Header Section - Simple like dashboard */
 .genealogy-header {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.header-content {
+  margin-bottom: 2rem;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 16px;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.title-section h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin: 0 0 8px 0;
-  background: linear-gradient(135deg, #ffffff, #e0e7ff);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.back-to-dashboard-btn {
+  background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  width: fit-content;
 }
 
-.title-section p {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1.1rem;
+.back-to-dashboard-btn:hover {
+  background: linear-gradient(135deg, #0099CC 0%, #007399 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+}
+
+.genealogy-header h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+  color: #00D4FF;
+}
+
+.genealogy-header p {
+  color: #B0B0B0;
+  font-size: 1rem;
   margin: 0;
 }
 
-.header-controls {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  flex-wrap: wrap;
+/* Team Structure Section - Exactly like dashboard */
+.genealogy-page .team-structure-section {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 12px;
+  padding: 2rem;
 }
 
-.control-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.genealogy-page .team-overview h3 {
+  color: #00D4FF;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
 }
 
-.control-group label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 14px;
-  cursor: pointer;
+.genealogy-page .team-overview p {
+  color: #B0B0B0;
+  font-size: 0.9rem;
+  margin: 0 0 2rem 0;
+}
+
+.genealogy-page .team-visualization {
+  margin-bottom: 2rem;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
+  background: rgba(0, 212, 255, 0.05);
+  min-height: 600px;
+}
+
+.genealogy-page .team-stats h3 {
+  color: #00D4FF;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .genealogy-page {
+    padding: 1rem;
+  }
+  
+  .genealogy-page .team-structure-section {
+    padding: 1rem;
+  }
+  
+  .genealogy-page .team-visualization {
+    min-height: 400px;
+  }
 }
 
 .control-group input[type="checkbox"] {

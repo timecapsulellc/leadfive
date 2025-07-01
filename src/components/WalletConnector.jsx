@@ -239,27 +239,32 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
       console.log('📞 Calling onConnect callback with data:', { address, walletType: walletId });
 
       // Store wallet info
-      localStorage.setItem('orphi_wallet', JSON.stringify({
+      localStorage.setItem('leadfive_wallet', JSON.stringify({
         type: walletId,
         address: address,
         connected: true,
         timestamp: Date.now()
       }));
 
+      console.log('🎉 Wallet connected successfully:', address);
+      console.log('📞 Calling onConnect callback with data:', { address, provider: ethersProvider, signer, walletType: walletId });
+
       // Call parent callback
       if (onConnect) {
         console.log('✅ Executing onConnect callback...');
-        onConnect({
+        await onConnect({
           address,
           provider: ethersProvider,
           signer,
           walletType: walletId
         });
+        console.log('✅ onConnect callback completed successfully');
       } else {
         console.warn('⚠️ No onConnect callback provided!');
       }
 
       setShowModal(false);
+      setError(null);
 
     } catch (error) {
       console.error(`❌ Error connecting ${walletId}:`, error);
@@ -284,7 +289,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
 
   const disconnectWallet = () => {
     console.log('🔌 Disconnecting wallet...');
-    localStorage.removeItem('orphi_wallet');
+    localStorage.removeItem('leadfive_wallet');
     if (onDisconnect) {
       onDisconnect();
     }
@@ -356,7 +361,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
           <div className="wallet-status">
             <span className="status-text">Connected</span>
             <span className="wallet-address">
-              {String(currentAccount).slice(0, 6)}...{String(currentAccount).slice(-4)}
+              {currentAccount.slice(0, 6)}...{currentAccount.slice(-4)}
             </span>
             <span className="network-status">BSC Mainnet ✅</span>
           </div>

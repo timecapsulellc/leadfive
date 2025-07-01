@@ -202,9 +202,29 @@ function App() {
     }
   };
 
-  const handleWalletConnect = async (connectedAccount, web3Provider, web3Signer) => {
+  const handleWalletConnect = async (connectionData) => {
     setIsConnecting(true);
     try {
+      // Handle both old format (separate params) and new format (object)
+      let connectedAccount, web3Provider, web3Signer;
+      
+      if (typeof connectionData === 'object' && connectionData.address) {
+        // New format from WalletConnector
+        connectedAccount = connectionData.address;
+        web3Provider = connectionData.provider;
+        web3Signer = connectionData.signer;
+      } else if (typeof connectionData === 'string') {
+        // Old format from account change events
+        connectedAccount = connectionData;
+        web3Provider = arguments[1];
+        web3Signer = arguments[2];
+      } else {
+        // Fallback for direct parameters
+        connectedAccount = arguments[0];
+        web3Provider = arguments[1];
+        web3Signer = arguments[2];
+      }
+
       if (connectedAccount && web3Provider && web3Signer) {
         // Direct connection with provided parameters
         setAccount(connectedAccount);
@@ -215,6 +235,8 @@ function App() {
         // Store connection for persistence
         const network = await web3Provider.getNetwork();
         storeWalletConnection(connectedAccount, network.chainId.toString(), 'metamask');
+        
+        console.log('✅ Wallet connected successfully:', connectedAccount);
       } else if (connectedAccount && !web3Provider) {
         // Account changed event - recreate provider and signer
         const provider = new ethers.BrowserProvider(window.ethereum);
@@ -228,6 +250,8 @@ function App() {
         
         // Store connection for persistence
         storeWalletConnection(connectedAccount, network.chainId.toString(), 'metamask');
+        
+        console.log('✅ Wallet reconnected successfully:', connectedAccount);
       }
     } catch (error) {
       console.error('Error in wallet connect:', error);
