@@ -52,7 +52,7 @@ export default function Footer() {
         <div className="footer-contract">
           <div className="contract-badge">
             <span className="contract-label">Contract:</span>
-            <code className="contract-address">0x423f...569</code>
+            <code className="contract-address">0x29dc...E498</code>
           </div>
           <div className="network-badge">
             <span className="network-indicator">🟢</span>
