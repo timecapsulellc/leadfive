@@ -1918,3 +1918,136 @@
 .menu-item[data-section="gamification"]:hover {
   background: linear-gradient(135deg, rgba(255, 167, 38, 0.2), rgba(0, 212, 255, 0.2));
 }
+
+/* Team Structure Section Enhancements */
+.team-structure-section .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.team-structure-section .header-content h3 {
+  margin: 0 0 0.5rem 0;
+  color: #00D4FF;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.team-structure-section .header-content p {
+  margin: 0;
+  color: #B0B0B0;
+  font-size: 0.9rem;
+}
+
+.full-genealogy-btn {
+  background: linear-gradient(135deg, #00D4FF 0%, #0099CC 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.full-genealogy-btn:hover {
+  background: linear-gradient(135deg, #0099CC 0%, #007399 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+}
+
+.team-visualization {
+  margin-bottom: 2rem;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
+  background: rgba(0, 212, 255, 0.05);
+}
+
+.genealogy-teaser {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(123, 44, 191, 0.1) 100%);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 12px;
+}
+
+.genealogy-teaser .teaser-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.genealogy-teaser .teaser-icon {
+  font-size: 2rem;
+  color: #00D4FF;
+  flex-shrink: 0;
+}
+
+.genealogy-teaser .teaser-text {
+  flex: 1;
+  min-width: 200px;
+}
+
+.genealogy-teaser .teaser-text h4 {
+  margin: 0 0 0.5rem 0;
+  color: #00D4FF;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.genealogy-teaser .teaser-text p {
+  margin: 0;
+  color: #B0B0B0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.genealogy-teaser .teaser-btn {
+  background: linear-gradient(135deg, #7B2CBF 0%, #BD00FF 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.genealogy-teaser .teaser-btn:hover {
+  background: linear-gradient(135deg, #BD00FF 0%, #9A00D4 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(189, 0, 255, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .team-structure-section .section-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .full-genealogy-btn {
+    justify-content: center;
+  }
+  
+  .genealogy-teaser .teaser-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .genealogy-teaser .teaser-icon {
+    font-size: 1.5rem;
+  }
+}

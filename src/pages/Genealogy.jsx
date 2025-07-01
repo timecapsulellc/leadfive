@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PageWrapper from '../components/PageWrapper';
 import UnifiedWalletConnect from '../components/UnifiedWalletConnect';
-import UnifiedGenealogyTree from '../components/UnifiedGenealogyTree';
+import NetworkTreeVisualization from '../components/NetworkTreeVisualization';
 import GenealogyAnalytics from '../components/GenealogyAnalytics';
 import UserProfileModal from '../components/UserProfileModal';
 import ExportModal from '../components/ExportModal';
@@ -155,18 +155,20 @@ const Genealogy = ({ account, provider, signer, onConnect, onDisconnect }) => {
         
         {/* Main Tree Visualization */}
         <div className="tree-section">
-          <UnifiedGenealogyTree
+          <NetworkTreeVisualization
             account={account}
-            useMockData={useMockData}
-            viewMode={viewMode}
             orientation="vertical"
-            autoRefresh={realtimeEnabled}
-            onNodeClick={handleNodeClick}
-            onNodeHover={handleNodeHover}
+            enableExport={true}
             showControls={true}
             showStats={true}
-            enableExport={true}
+            showSearch={true}
+            showFilters={true}
+            collapsible={true}
+            zoomable={true}
             className="main-genealogy-tree"
+            onNodeClick={handleNodeClick}
+            onNodeHover={handleNodeHover}
+            style={{ minHeight: '600px', width: '100%' }}
           />
         </div>
         

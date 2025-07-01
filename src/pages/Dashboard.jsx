@@ -875,20 +875,56 @@ function WithdrawalsSection({ data, account }) {
 
 // Team Structure Section
 function TeamStructureSection({ account }) {
+  const navigate = useNavigate();
+  
   return (
     <div className="team-structure-section">
       <div className="team-overview">
-        <h3>My Team Structure</h3>
-        <p>Visualize your network and team growth</p>
+        <div className="section-header">
+          <div className="header-content">
+            <h3>My Team Structure</h3>
+            <p>Visualize your network and team growth</p>
+          </div>
+          <button 
+            className="full-genealogy-btn"
+            onClick={() => navigate('/genealogy')}
+            title="Open Full Network Genealogy View"
+          >
+            <FaNetworkWired />
+            Full Genealogy View
+          </button>
+        </div>
       </div>
 
       <div className="team-visualization">
-        <NetworkTreeVisualization account={account} />
+        <NetworkTreeVisualization 
+          account={account} 
+          compact={true}
+          maxDepth={3}
+          showControls={false}
+          style={{ maxHeight: '400px' }}
+        />
       </div>
 
       <div className="team-stats">
         <h3>Team Statistics</h3>
         <PerformanceMetrics account={account} />
+      </div>
+      
+      <div className="genealogy-teaser">
+        <div className="teaser-content">
+          <FaNetworkWired className="teaser-icon" />
+          <div className="teaser-text">
+            <h4>Want to see your complete network?</h4>
+            <p>View your full genealogy tree with advanced controls, search, and analytics</p>
+          </div>
+          <button 
+            className="teaser-btn"
+            onClick={() => navigate('/genealogy')}
+          >
+            Explore Full Tree
+          </button>
+        </div>
       </div>
     </div>
   );

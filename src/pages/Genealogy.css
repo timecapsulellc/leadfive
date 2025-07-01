@@ -870,92 +870,151 @@
   overflow: hidden;
 }
 
-/* Responsive D3 Tree */
+/* Enhanced Tree Section for Full Genealogy View */
+.genealogy-page .tree-section {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: 70vh;
+  position: relative;
+}
+
+.genealogy-page .main-genealogy-tree {
+  height: 100%;
+  min-height: 600px;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Tree controls overlay */
+.genealogy-page .tree-controls {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.genealogy-page .tree-control-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.genealogy-page .tree-control-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Tree stats display */
+.genealogy-page .tree-stats {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 1rem;
+  border-radius: 8px;
+  min-width: 200px;
+  z-index: 10;
+}
+
+.genealogy-page .tree-stats h4 {
+  margin: 0 0 0.5rem 0;
+  color: #00D4FF;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.genealogy-page .tree-stats .stat-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.genealogy-page .tree-stats .stat-item .stat-value {
+  color: #00D4FF;
+  font-weight: 500;
+}
+
+/* Make sure the tree fills the container properly */
+.genealogy-page .tree-section .rd3t-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 600px !important;
+}
+
+.genealogy-page .tree-section .rd3t-svg {
+  background: transparent !important;
+  border-radius: 12px;
+}
+
+/* Custom node styling for genealogy view */
+.genealogy-page .tree-section .rd3t-node {
+  cursor: pointer;
+}
+
+.genealogy-page .tree-section .rd3t-node circle {
+  fill: #00D4FF;
+  stroke: #0099CC;
+  stroke-width: 2;
+  transition: all 0.3s ease;
+}
+
+.genealogy-page .tree-section .rd3t-node:hover circle {
+  fill: #BD00FF;
+  stroke: #9A00D4;
+  transform: scale(1.1);
+}
+
+.genealogy-page .tree-section .rd3t-node text {
+  fill: white;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+}
+
+.genealogy-page .tree-section .rd3t-link {
+  stroke: rgba(0, 212, 255, 0.6);
+  stroke-width: 2;
+  fill: none;
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .d3-tree-container {
-    height: 400px !important;
+  .genealogy-page .tree-section {
+    padding: 1rem;
+    min-height: 50vh;
   }
   
-  .tree-orientation-controls {
-    flex-direction: column;
-    gap: 5px;
+  .genealogy-page .main-genealogy-tree {
+    min-height: 400px;
   }
   
-  .orientation-btn {
-    padding: 6px 12px;
-    font-size: 12px;
-  }
-  
-  .custom-node .node-name {
-    font-size: 10px;
-  }
-  
-  .custom-node .node-earnings {
-    font-size: 8px;
-  }
-}
-
-@media (max-width: 480px) {
-  .d3-tree-container {
-    height: 350px !important;
-  }
-  
-  .genealogy-controls {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .view-controls {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 1200px) {
-  .node-details-panel {
+  .genealogy-page .tree-controls {
     position: relative;
     top: auto;
     right: auto;
-    transform: none;
-    width: 100%;
-    margin-top: 2rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .genealogy-page {
-    padding: 1rem;
-  }
-  
-  .page-title {
-    font-size: 2.5rem;
-  }
-  
-  .genealogy-controls {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  .view-controls {
+    margin-bottom: 1rem;
     justify-content: center;
   }
   
-  .tree-controls {
-    justify-content: center;
-  }
-  
-  .node-card {
-    min-width: 250px;
-    max-width: 280px;
-  }
-  
-  .children-grid.horizontal {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .genealogy-stats {
-    grid-template-columns: 1fr;
+  .genealogy-page .tree-stats {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    margin-top: 1rem;
   }
 }
 
