@@ -8,6 +8,7 @@ import { ethers } from 'ethers';
 class LeadFiveContractService {
   constructor() {
     this.contract = null;
+    this.readOnlyContract = null;
     this.provider = null;
     this.signer = null;
     this.account = null;
@@ -26,20 +27,43 @@ class LeadFiveContractService {
       this.account = account;
       this.signer = provider.getSigner();
 
-      // Create contract instance
-      const contractAddress = window.LEADFIVE_CONTRACT_CONFIG?.address;
+      // Create contract instance with fallback configuration
+      let contractAddress = window.LEADFIVE_CONTRACT_CONFIG?.address;
+      let contractABI = window.CONTRACT_ABI;
+      
+      // Fallback configuration if scripts didn't load
       if (!contractAddress) {
-        throw new Error('Contract address not configured');
+        console.warn('⚠️ Contract config not loaded from window, using fallback...');
+        contractAddress = "0x29dcCb502D10C042BcC6a02a7762C49595A9E498"; // BSC Mainnet
+        contractABI = [
+          "function registerUser(address sponsor, uint8 packageTier) external",
+          "function withdraw(uint256 amount) external",
+          "function upgradePackage(uint8 newTier) external",
+          "function getUserInfo(address user) external view returns (uint256 totalInvested, uint256 registrationTime, uint256 teamSize, uint256 totalEarnings, uint256 withdrawableAmount, uint8 packageTier, uint8 leaderRank, bool isCapped, bool isActive, address sponsor, uint32 directReferrals)",
+          "function getPoolEarnings(address user) external view returns (uint128[5] memory)",
+          "function getDirectReferrals(address user) external view returns (address[] memory)",
+          "function getWithdrawalRate(address user) external view returns (uint256)",
+          "function isUserRegistered(address user) external view returns (bool)",
+          "function totalUsers() external view returns (uint256)",
+          "function totalVolume() external view returns (uint256)"
+        ];
       }
 
       this.contract = new ethers.Contract(
         contractAddress,
-        window.CONTRACT_ABI,
+        contractABI,
         this.signer
       );
 
+      // Create read-only contract for view functions (ethers v6 compatibility)
+      this.readOnlyContract = new ethers.Contract(
+        contractAddress,
+        contractABI,
+        this.provider
+      );
+
       this.isInitialized = true;
-      console.log('✅ LeadFive Contract Service initialized');
+      console.log('✅ LeadFive Contract Service initialized with address:', contractAddress);
       return true;
     } catch (error) {
       console.error('❌ Failed to initialize contract service:', error);
@@ -52,8 +76,15 @@ class LeadFiveContractService {
    */
   async isUserRegistered(userAddress = null) {
     const address = userAddress || this.account;
+    
+    // Validate address format
+    if (!address || typeof address !== 'string' || !address.startsWith('0x')) {
+      console.warn('⚠️ Invalid address provided to isUserRegistered:', address);
+      return false;
+    }
+    
     return this.executeWithRetry(async () => {
-      return await this.contract.isUserRegistered(address);
+      return await this.readOnlyContract.isUserRegistered(address);
     });
   }
 
@@ -62,8 +93,15 @@ class LeadFiveContractService {
    */
   async getUserInfo(userAddress = null) {
     const address = userAddress || this.account;
+    
+    // Validate address format
+    if (!address || typeof address !== 'string' || !address.startsWith('0x')) {
+      console.warn('⚠️ Invalid address provided to getUserInfo:', address);
+      throw new Error('Invalid wallet address');
+    }
+    
     return this.executeWithRetry(async () => {
-      const result = await this.contract.getUserInfo(address);
+      const result = await this.readOnlyContract.getUserInfo(address);
       
       return {
         totalInvested: ethers.formatUnits(result[0], 6), // USDT has 6 decimals
@@ -87,7 +125,7 @@ class LeadFiveContractService {
   async getPoolEarnings(userAddress = null) {
     const address = userAddress || this.account;
     return this.executeWithRetry(async () => {
-      const result = await this.contract.getPoolEarnings(address);
+      const result = await this.readOnlyContract.getPoolEarnings(address);
       
       return {
         directReferral: ethers.formatUnits(result[0], 6),
@@ -108,7 +146,7 @@ class LeadFiveContractService {
   async getDirectReferrals(userAddress = null) {
     const address = userAddress || this.account;
     return this.executeWithRetry(async () => {
-      const referrals = await this.contract.getDirectReferrals(address);
+      const referrals = await this.readOnlyContract.getDirectReferrals(address);
       
       // Get detailed info for each referral
       const referralDetails = await Promise.all(
@@ -141,7 +179,7 @@ class LeadFiveContractService {
   async getWithdrawalRate(userAddress = null) {
     const address = userAddress || this.account;
     return this.executeWithRetry(async () => {
-      const rate = await this.contract.getWithdrawalRate(address);
+      const rate = await this.readOnlyContract.getWithdrawalRate(address);
       return Number(rate);
     });
   }
@@ -152,10 +190,10 @@ class LeadFiveContractService {
   async getPlatformStats() {
     return this.executeWithRetry(async () => {
       const [totalUsers, totalVolume, globalHelpBalance, leaderBonusBalance] = await Promise.all([
-        this.contract.totalUsers(),
-        this.contract.totalVolume(),
-        this.contract.globalHelpPoolBalance(),
-        this.contract.leaderBonusPoolBalance()
+        this.readOnlyContract.totalUsers(),
+        this.readOnlyContract.totalVolume(),
+        this.readOnlyContract.globalHelpPoolBalance(),
+        this.readOnlyContract.leaderBonusPoolBalance()
       ]);
 
       return {
@@ -306,7 +344,18 @@ class LeadFiveContractService {
       try {
         return await fn();
       } catch (error) {
-        if (i === retries - 1) throw error;
+        // Don't retry certain types of errors
+        if (error.message?.includes('invalid address') || 
+            error.message?.includes('network changed') ||
+            error.reason === 'invalid address') {
+          console.error('❌ Non-retryable error:', error.message);
+          throw this.formatError(error);
+        }
+        
+        if (i === retries - 1) {
+          console.error('❌ Max retries reached for contract call:', error.message);
+          throw this.formatError(error);
+        }
         
         console.warn(`Retry ${i + 1}/${retries} after error:`, error.message);
         await new Promise(resolve => setTimeout(resolve, this.retryDelay * (i + 1)));
@@ -324,11 +373,20 @@ class LeadFiveContractService {
     if (error.code === 'USER_REJECTED') {
       return new Error('Transaction was rejected by user');
     }
+    if (error.code === 'UNSUPPORTED_OPERATION') {
+      return new Error('Contract operation not supported by current provider');
+    }
+    if (error.message?.includes('could not decode result data')) {
+      return new Error('Contract data could not be decoded. Please check contract address and ABI.');
+    }
     if (error.message?.includes('already registered')) {
       return new Error('User is already registered');
     }
     if (error.message?.includes('invalid sponsor')) {
       return new Error('Invalid sponsor address');
+    }
+    if (error.message?.includes('invalid address')) {
+      return new Error('Invalid wallet address provided');
     }
     if (error.message?.includes('insufficient withdrawal amount')) {
       return new Error('Insufficient withdrawal amount');

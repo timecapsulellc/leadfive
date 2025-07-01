@@ -356,7 +356,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
           <div className="wallet-status">
             <span className="status-text">Connected</span>
             <span className="wallet-address">
-              {currentAccount.slice(0, 6)}...{currentAccount.slice(-4)}
+              {String(currentAccount).slice(0, 6)}...{String(currentAccount).slice(-4)}
             </span>
             <span className="network-status">BSC Mainnet ✅</span>
           </div>

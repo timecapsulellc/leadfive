@@ -153,6 +153,14 @@ export function useLeadFive() {
     } catch (error) {
       console.error('Failed to load user data:', error);
       setError('Failed to load user data from blockchain');
+      
+      // Temporary fallback: Allow dashboard access even if contract calls fail
+      // This ensures users can see the interface while contract integration is being fixed
+      if (error.message.includes('contract runner does not support calling') || 
+          error.message.includes('could not decode result data')) {
+        console.log('⚠️ Contract call failed, allowing dashboard access with fallback data');
+        setIsRegistered(true); // Allow dashboard access
+      }
     } finally {
       setIsLoading(false);
     }

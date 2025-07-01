@@ -71,7 +71,7 @@ const MobileNav = ({ account, onDisconnect }) => {
               <div className="user-avatar">👤</div>
               <div className="user-details">
                 <p className="user-address">
-                  {account.slice(0, 6)}...{account.slice(-4)}
+                  {String(account).slice(0, 6)}...{String(account).slice(-4)}
                 </p>
                 <span className="user-status">Connected</span>
               </div>

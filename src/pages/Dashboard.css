@@ -777,6 +777,89 @@
   font-size: 0.9rem;
 }
 
+.achievement-item small {
+  color: #FFA726;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.achievement-progress {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  border-radius: 12px;
+}
+
+.achievement-progress h4 {
+  color: #00D4FF;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.next-achievement {
+  background: rgba(255, 167, 38, 0.1);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.achievement-target {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.target-icon {
+  font-size: 2rem;
+  min-width: 40px;
+}
+
+.target-info {
+  flex: 1;
+}
+
+.target-info h5 {
+  color: #fff;
+  margin-bottom: 0.25rem;
+  font-size: 1.1rem;
+}
+
+.target-info p {
+  color: #B8C5D1;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.target-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.target-progress .progress-bar {
+  flex: 1;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.target-progress .progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #FFA726, #FF6B35);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.target-progress span {
+  color: #FFA726;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
 /* Settings Section */
 .settings-section {
   animation: fadeIn 0.5s ease-in-out;
@@ -1588,4 +1671,250 @@
 .upgrade-package-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+}
+
+/* Gamification Section Styles */
+.gamification-section {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.gamification-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.gamification-header h2 {
+  color: #00D4FF;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.gamification-header p {
+  color: #B8C5D1;
+  font-size: 1.1rem;
+}
+
+.gamification-benefits {
+  margin: 2rem 0;
+  background: rgba(26, 26, 46, 0.8);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  border-radius: 15px;
+  padding: 2rem;
+}
+
+.gamification-benefits h3 {
+  color: #00D4FF;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.benefit-card {
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.benefit-card:hover {
+  background: rgba(0, 212, 255, 0.1);
+  transform: translateY(-5px);
+}
+
+.benefit-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.benefit-card h4 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.benefit-card p {
+  color: #B8C5D1;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.progress-overview {
+  background: rgba(26, 26, 46, 0.8);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  border-radius: 15px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.progress-overview h3 {
+  color: #00D4FF;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.progress-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.progress-stat {
+  background: rgba(0, 212, 255, 0.05);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.progress-stat h4 {
+  color: #00D4FF;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.progress-stat span {
+  color: #B8C5D1;
+  font-size: 0.9rem;
+}
+
+/* Achievements Preview in Overview */
+.achievements-preview {
+  padding: 0;
+}
+
+.achievement-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+}
+
+.achievement-count {
+  text-align: center;
+}
+
+.achievement-count .count {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #00D4FF;
+}
+
+.achievement-count .label {
+  font-size: 0.8rem;
+  color: #B8C5D1;
+}
+
+.level-display {
+  text-align: center;
+}
+
+.level-display .level {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #FFA726;
+  margin-bottom: 0.5rem;
+}
+
+.level-progress-mini {
+  width: 80px;
+}
+
+.progress-bar-mini {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill-mini {
+  height: 100%;
+  background: linear-gradient(90deg, #FFA726, #FF6B35);
+  transition: width 0.3s ease;
+}
+
+.recent-achievement {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: rgba(255, 167, 38, 0.1);
+  border-radius: 8px;
+}
+
+.recent-achievement .achievement-icon {
+  font-size: 1.5rem;
+}
+
+.achievement-text span {
+  display: block;
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.achievement-text small {
+  color: #B8C5D1;
+  font-size: 0.8rem;
+}
+
+.view-all-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: linear-gradient(135deg, #00D4FF, #0099CC);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-all-btn:hover {
+  background: linear-gradient(135deg, #0099CC, #00D4FF);
+  transform: translateY(-2px);
+}
+
+/* Mobile Responsive Gamification */
+@media (max-width: 768px) {
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .progress-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .achievement-summary {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* Gamification Menu Item Highlight */
+.menu-item[data-section="gamification"] {
+  background: linear-gradient(135deg, rgba(255, 167, 38, 0.1), rgba(0, 212, 255, 0.1));
+  border-left: 3px solid #FFA726;
+}
+
+.menu-item[data-section="gamification"]:hover {
+  background: linear-gradient(135deg, rgba(255, 167, 38, 0.2), rgba(0, 212, 255, 0.2));
 }

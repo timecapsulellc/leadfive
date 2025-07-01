@@ -69,7 +69,7 @@ class WalletService {
 
       // Set up provider and account
       this.provider = provider;
-      this.account = accounts[0];
+      this.account = typeof accounts[0] === 'string' ? accounts[0] : String(accounts[0]);
       this.walletType = walletType;
       this.isConnected = true;
 
@@ -264,7 +264,7 @@ class WalletService {
     if (accounts.length === 0) {
       this.disconnect();
     } else if (accounts[0] !== this.account) {
-      this.account = accounts[0];
+      this.account = typeof accounts[0] === 'string' ? accounts[0] : String(accounts[0]);
       localStorage.setItem('leadfive_wallet_account', this.account);
       
       // Reinitialize contract service with new account

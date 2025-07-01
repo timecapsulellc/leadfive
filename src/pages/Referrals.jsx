@@ -16,7 +16,7 @@ export default function Referrals({ account, provider, signer, onConnect, onDisc
   useEffect(() => {
     if (account) {
       // Generate referral link
-      setReferralLink(`https://leadfive.today/register?ref=${account.slice(2, 8)}`);
+      setReferralLink(`https://leadfive.today/register?ref=${String(account).slice(2, 8)}`);
       
       // Mock team stats - replace with actual contract calls
       setTeamStats({

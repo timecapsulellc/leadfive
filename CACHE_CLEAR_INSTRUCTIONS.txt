@@ -1,0 +1,26 @@
+
+🔧 COMPLETE CACHE CLEARING INSTRUCTIONS:
+
+1. **Close ALL browser tabs/windows for localhost**
+2. **Clear browser cache completely:**
+   - Chrome: DevTools → Application → Storage → Clear Site Data
+   - Firefox: DevTools → Storage → Clear All
+   - Safari: Develop → Empty Caches
+
+3. **Clear service worker:**
+   - Chrome: DevTools → Application → Service Workers → Unregister
+   - Firefox: DevTools → Application → Service Workers → Unregister
+
+4. **Hard refresh:**
+   - Ctrl+Shift+R (Windows/Linux)
+   - Cmd+Shift+R (Mac)
+
+5. **Access the NEW server URL:**
+   - ❌ OLD: http://localhost:5179 
+   - ✅ NEW: http://localhost:5180
+
+6. **If still seeing OrphiChain:**
+   - Open Developer Tools
+   - Go to Network tab
+   - Check "Disable cache"
+   - Refresh page

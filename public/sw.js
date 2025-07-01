@@ -1,35 +1,21 @@
 // LeadFive PWA Service Worker
 // Version 1.0.0 - Production Ready
 
-const CACHE_NAME = 'leadfive-v1.0.0';
-const RUNTIME_CACHE = 'leadfive-runtime-v1.0.0';
-const OFFLINE_CACHE = 'leadfive-offline-v1.0.0';
+const CACHE_NAME = 'leadfive-v1751336400000';
+const RUNTIME_CACHE = 'leadfive-runtime-v1.2.0';
+const OFFLINE_CACHE = 'leadfive-offline-v1.2.0';
 
-// Assets to cache for offline usage
+// Assets to cache for offline usage (only files that actually exist)
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/onboarding-wizard.html',
-  '/enhanced-withdrawal.html',
-  '/user-dashboard.html',
-  '/matrix-dashboard.html',
-  '/testnet-home.html',
   '/offline.html',
   '/manifest.json',
   '/favicon.svg',
-  '/icons/icon-72x72.png',
-  '/icons/icon-96x96.png',
-  '/icons/icon-128x128.png',
+  '/favicon.png',
+  '/leadfive-logo.svg',
   '/icons/icon-192x192.png',
-  '/icons/icon-512x512.png',
-  '/src/main.jsx',
-  '/src/App.jsx',
-  '/src/web3.js',
-  '/src/contracts.js',
-  '/src/components/PWAInstallPrompt.jsx',
-  '/src/components/MobileNavigation.jsx',
-  '/src/components/RealTimeDashboard.jsx',
-  '/src/components/RealTimeDashboard.css'
+  '/icons/icon-512x512.png'
 ];
 
 // Cache strategies
@@ -476,9 +462,8 @@ async function handleWeb3Request(request) {
     
     if (request.method === 'POST') {
       const body = await request.clone().text();
-      const parsedBody = JSON.parse(body);
-      const cacheKey = `web3-${JSON.stringify(parsedBody)}`;
-      const cached = await getCachedData(ORPHI_CACHE_STRATEGIES.WEB3_CACHE, cacheKey);
+      const parsedBody = JSON.parse(body);        const cacheKey = `web3-${JSON.stringify(parsedBody)}`;
+        const cached = await getCachedData(LEADFIVE_CACHE_STRATEGIES.WEB3_CACHE, cacheKey);
       
       if (cached) {
         return new Response(JSON.stringify(cached.data), {
@@ -538,7 +523,7 @@ async function handleLeadFiveApiRequest(request) {
 // Cache real-time dashboard data
 async function cacheRealtimeData(data) {
   try {
-    await setCachedData(ORPHI_CACHE_STRATEGIES.REALTIME_CACHE, 'dashboard-data', {
+    await setCachedData(LEADFIVE_CACHE_STRATEGIES.REALTIME_CACHE, 'dashboard-data', {
       ...data,
       timestamp: Date.now()
     });
@@ -550,7 +535,7 @@ async function cacheRealtimeData(data) {
 // Cache Web3 transaction data
 async function cacheWeb3Data(data) {
   try {
-    await setCachedData(ORPHI_CACHE_STRATEGIES.WEB3_CACHE, `tx-${data.hash}`, {
+    await setCachedData(LEADFIVE_CACHE_STRATEGIES.WEB3_CACHE, `tx-${data.hash}`, {
       ...data,
       timestamp: Date.now()
     });
@@ -586,16 +571,22 @@ async function handleContractEvent(event) {
 
 async function cleanupOldCaches() {
   const cacheNames = await caches.keys();
-  const oldCaches = cacheNames.filter(name => 
-    name.startsWith('leadfive-') && 
-    name !== CACHE_NAME && 
-    name !== RUNTIME_CACHE &&
-    name !== OFFLINE_CACHE
+  
+  // Delete ALL existing caches to force fresh content
+  const allOldCaches = cacheNames.filter(name => 
+    name.startsWith('leadfive-') || 
+    name.startsWith('orphichain-') ||
+    name.includes('orphi') ||
+    (name !== CACHE_NAME && 
+     name !== RUNTIME_CACHE &&
+     name !== OFFLINE_CACHE)
   );
   
+  console.log('🗑️ Service Worker: Force clearing all old caches:', allOldCaches);
+  
   return Promise.all(
-    oldCaches.map(cacheName => {
-      console.log(`🗑️ Service Worker: Deleting old cache ${cacheName}`);
+    allOldCaches.map(cacheName => {
+      console.log(`🗑️ Service Worker: Deleting cache ${cacheName}`);
       return caches.delete(cacheName);
     })
   );

@@ -21,7 +21,9 @@ import {
   FaRobot,
   FaBrain,
   FaLightbulb,
-  FaGamepad // Add gamification icon
+  FaPlug,
+  FaSpinner,
+  FaBolt
 } from 'react-icons/fa';
 import LevelVisualization from '../components/LevelVisualization';
 import NetworkTreeVisualization from '../components/NetworkTreeVisualization';
@@ -42,8 +44,12 @@ import AIEmotionTracker from '../components/AIEmotionTracker';
 import ErrorBoundary from '../components/ErrorBoundary';
 import MobileNavigation from '../components/MobileNavigation';
 import ExtraordinaryAIAssistant from '../components/ExtraordinaryAIAssistant';
-// Gamification System
+// Advanced Components
+import RealTimeBlockchainMonitor from '../components/RealTimeBlockchainMonitor';
 import GamificationSystem from '../components/GamificationSystem';
+import PredictiveAnalytics from '../components/PredictiveAnalytics';
+// Real Contract Integration
+import useLeadFive from '../hooks/useLeadFive';
 // AI Services
 import { elevenLabsService } from '../services/ElevenLabsOnlyService';
 import './Dashboard.css';
@@ -52,38 +58,54 @@ import '../styles/mobile-first-optimization.css';
 import '../styles/expert-dashboard-redesign.css';
 import '../styles/voice-assistant.css';
 import '../styles/dashboard-layout-fix.css';
+import '../styles/dashboard-quick-fix.css';
 import '../styles/lead-five-dashboard-sections.css';
+import '../styles/smart-contract-integration.css';
 
-export default function Dashboard({ account, provider, onDisconnect }) {
+export default function Dashboard({ account: propAccount, provider: propProvider, onDisconnect }) {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('overview');
-  const [dashboardData, setDashboardData] = useState({
-    totalEarnings: 0,
-    directReferralEarnings: 0, // 40%
-    levelBonusEarnings: 0, // 10%
-    uplineBonusEarnings: 0, // 10%
-    leaderPoolEarnings: 0, // 10%
-    helpPoolEarnings: 0, // 30%
-    teamSize: 0,
-    directReferrals: 0,
-    activeReferrals: 0,
-    currentPackage: 0, // $30, $50, $100, $200
-    maxEarnings: 0, // 4x package value
-    currentTier: 1,
-    currentLevel: 1,
-    dailyEarnings: 0,
-    pendingRewards: 0,
-    withdrawalRatio: { withdraw: 70, reinvest: 30 }, // Based on referrals
-    helpPoolEligible: true,
-    leaderRank: 'none' // 'shining-star' or 'silver-star'
-  });
-  const [loading, setLoading] = useState(true);
+  
+  // 🔗 REAL BLOCKCHAIN INTEGRATION - Replace mock data with smart contract
+  const {
+    // Wallet state
+    isConnected,
+    account,
+    provider,
+    chainId,
+    walletType,
+    
+    // Application state
+    isLoading,
+    error,
+    dashboardData,
+    isRegistered,
+    
+    // Real-time state
+    realtimeEarnings,
+    liveEvents,
+    achievements,
+    
+    // Actions
+    connectWallet,
+    disconnectWallet,
+    registerUser,
+    withdraw,
+    upgradePackage,
+    refreshData,
+    clearError,
+    addLiveEvent,
+    addAchievement
+  } = useLeadFive();
   
   // AI Integration State
   const [aiInsights, setAiInsights] = useState(null);
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [hasPlayedWelcome, setHasPlayedWelcome] = useState(false);
   const [audioNative, setAudioNative] = useState(null);
+  
+  // Show connection prompt if not connected
+  const [showWalletConnect, setShowWalletConnect] = useState(false);
 
   // Debug AI component imports
   if (process.env.NODE_ENV === 'development') {
@@ -94,47 +116,171 @@ export default function Dashboard({ account, provider, onDisconnect }) {
     console.log('AIMarketInsights:', typeof AIMarketInsights, AIMarketInsights);
     console.log('AISuccessStories:', typeof AISuccessStories, AISuccessStories);
     console.log('AIEmotionTracker:', typeof AIEmotionTracker, AIEmotionTracker);
+    
+    // Debug connection and registration status
+    console.log('📊 Dashboard Status Debug:');
+    console.log('isConnected:', isConnected);
+    console.log('account:', account);
+    console.log('isRegistered:', isRegistered);
+    console.log('isLoading:', isLoading);
+    console.log('error:', error);
+    console.log('dashboardData:', dashboardData);
   }
 
   useEffect(() => {
-    if (!account) {
-      navigate('/');
-      return;
+    // Check for existing wallet connection or prompt for connection
+    if (!isConnected && !propAccount) {
+      setShowWalletConnect(true);
+    } else if (!isConnected && propAccount && propProvider) {
+      // Legacy prop-based connection - trigger wallet service connection
+      const initConnection = async () => {
+        try {
+          await connectWallet('metamask');
+        } catch (error) {
+          console.error('Failed to initialize connection:', error);
+          setShowWalletConnect(true);
+        }
+      };
+      initConnection();
     }
-    loadDashboardData();
-  }, [account, navigate]);
+  }, [isConnected, propAccount, propProvider, connectWallet]);
+
+  // Handle errors with user-friendly messages
+  useEffect(() => {
+    if (error) {
+      console.error('Dashboard error:', error);
+      // Show error notification to user
+      // You can integrate with your notification system here
+    }
+  }, [error]);
+
+  // Auto-refresh data periodically
+  useEffect(() => {
+    if (isConnected && isRegistered) {
+      const refreshInterval = setInterval(() => {
+        refreshData();
+      }, 60000); // Refresh every minute
+
+      return () => clearInterval(refreshInterval);
+    }
+  }, [isConnected, isRegistered, refreshData]);
 
 
-  const loadDashboardData = async () => {
+  // Transform real contract data to dashboard format for backwards compatibility
+  const transformedDashboardData = React.useMemo(() => {
+    // Provide demo/fallback data when real data isn't available
+    // This ensures the dashboard always shows content
+    if (!dashboardData) {
+      return {
+        totalEarnings: 0,
+        directReferralEarnings: 0,
+        levelBonusEarnings: 0,
+        uplineBonusEarnings: 0,
+        leaderPoolEarnings: 0,
+        helpPoolEarnings: 0,
+        teamSize: 0,
+        directReferrals: 0,
+        activeReferrals: 0,
+        currentPackage: 0,
+        maxEarnings: 100, // Set a default cap
+        currentTier: 1,
+        currentLevel: 1,
+        dailyEarnings: 0,
+        pendingRewards: 0,
+        withdrawalRatio: { withdraw: 70, reinvest: 30 },
+        helpPoolEligible: false,
+        leaderRank: 'none'
+      };
+    }
+
+    return {
+      // Real earnings from contract
+      totalEarnings: dashboardData.earnings.total,
+      directReferralEarnings: dashboardData.earnings.pools.directReferral,
+      levelBonusEarnings: dashboardData.earnings.pools.levelCommission,
+      uplineBonusEarnings: 0, // Calculate from level commission if needed
+      leaderPoolEarnings: dashboardData.earnings.pools.leaderBonus,
+      helpPoolEarnings: dashboardData.earnings.pools.globalHelp,
+      
+      // Real team data
+      teamSize: dashboardData.team.size,
+      directReferrals: dashboardData.team.directReferrals,
+      activeReferrals: dashboardData.team.referralDetails.filter(ref => ref.isActive).length,
+      
+      // Real package and user data
+      currentPackage: dashboardData.profile.packageAmount,
+      maxEarnings: dashboardData.earnings.capStatus.capLimit,
+      currentTier: dashboardData.profile.packageTier,
+      currentLevel: 1, // Calculate based on team size
+      
+      // Performance metrics
+      dailyEarnings: dashboardData.performance.dailyEarnings,
+      pendingRewards: dashboardData.earnings.withdrawable,
+      
+      // Withdrawal settings
+      withdrawalRatio: { withdraw: dashboardData.withdrawal.rate, reinvest: 100 - dashboardData.withdrawal.rate },
+      
+      // Status flags
+      helpPoolEligible: dashboardData.earnings.pools.globalHelp > 0,
+      leaderRank: dashboardData.leadership.rankName.toLowerCase().replace(' ', '-')
+    };
+  }, [dashboardData]);
+
+  // Handle wallet connection
+  const handleWalletConnect = async () => {
     try {
-      setLoading(true);
-      // Simulate loading Lead Five dashboard data
-      setTimeout(() => {
-        setDashboardData({
-          totalEarnings: 456.78,
-          directReferralEarnings: 240.00, // 40% of commissions
-          levelBonusEarnings: 60.00, // 10% distributed across levels
-          uplineBonusEarnings: 45.30, // 10% from upline structure
-          leaderPoolEarnings: 0.00, // 10% - not qualified yet
-          helpPoolEarnings: 111.48, // 30% from weekly distributions
-          teamSize: 25,
-          directReferrals: 3,
-          activeReferrals: 2,
-          currentPackage: 100, // $100 package
-          maxEarnings: 400, // 4x $100 = $400
-          currentTier: 1,
-          currentLevel: 1,
-          dailyEarnings: 15.23,
-          pendingRewards: 25.50,
-          withdrawalRatio: { withdraw: 70, reinvest: 30 }, // 0 referrals = 70/30
-          helpPoolEligible: true,
-          leaderRank: 'none' // Not qualified for leader status yet
-        });
-        setLoading(false);
-      }, 1000);
+      await connectWallet('metamask');
+      setShowWalletConnect(false);
     } catch (error) {
-      console.error('Error loading dashboard:', error);
-      setLoading(false);
+      console.error('Wallet connection failed:', error);
+    }
+  };
+
+  // Handle wallet disconnect
+  const handleWalletDisconnect = async () => {
+    try {
+      await disconnectWallet();
+      if (onDisconnect) {
+        onDisconnect();
+      }
+      navigate('/');
+    } catch (error) {
+      console.error('Wallet disconnect failed:', error);
+    }
+  };
+
+  // Handle transaction actions
+  const handleWithdraw = async (amount) => {
+    try {
+      const result = await withdraw(amount);
+      // Show success notification
+      addLiveEvent({
+        type: 'withdrawal',
+        amount: amount,
+        timestamp: Date.now(),
+        txHash: result.transactionHash
+      });
+      return result;
+    } catch (error) {
+      console.error('Withdrawal failed:', error);
+      throw error;
+    }
+  };
+
+  const handlePackageUpgrade = async (newTier) => {
+    try {
+      const result = await upgradePackage(newTier);
+      // Show success notification
+      addLiveEvent({
+        type: 'package_upgrade',
+        newTier: newTier,
+        timestamp: Date.now(),
+        txHash: result.transactionHash
+      });
+      return result;
+    } catch (error) {
+      console.error('Package upgrade failed:', error);
+      throw error;
     }
   };
 
@@ -150,50 +296,263 @@ export default function Dashboard({ account, provider, onDisconnect }) {
     { id: 'community-tiers', label: 'Community Tiers', icon: FaShieldAlt },
     { id: 'withdrawals', label: 'Withdrawals', icon: FaWallet },
     { id: 'team-structure', label: 'My Team', icon: FaUsers },
-    { id: 'gamification', label: 'Achievements & Rewards', icon: FaGamepad },
     { id: 'reports', label: 'Reports', icon: FaHistory },
     { id: 'ai-insights', label: 'AI Assistant', icon: FaRobot },
+    { id: 'predictive-analytics', label: '🔮 Predictive Analytics', icon: FaBrain },
+    { id: 'real-time-monitor', label: '⚡ Live Monitor', icon: FaBell },
+    { id: 'gamification', label: '🎮 Achievements', icon: FaTrophy },
     { id: 'settings', label: 'Settings', icon: FaCog }
   ];
 
   const renderContent = () => {
-    switch (activeSection) {
-      case 'overview':
-        return <DashboardOverview data={dashboardData} account={account} />;
-      case 'earnings':
-        return <EarningsBreakdown data={dashboardData} account={account} />;
+    // Show wallet connection prompt if not connected
+    if (showWalletConnect || !isConnected) {
+      return <WalletConnectionPrompt onConnect={handleWalletConnect} />;
+    }
+
+    // Show loading state while fetching data
+    if (isLoading) {
+      return <LoadingDashboard />;
+    }
+
+    // Show error state if there's an error
+    if (error) {
+      return <ErrorDashboard error={error} onRetry={refreshData} onClearError={clearError} />;
+    }
+
+    // For now, show dashboard content even if registration status is unclear
+    // This allows users to see the dashboard while we fix registration checking
+    // TODO: Re-enable registration check once contract integration is stable
+    
+    // Show registration prompt only if we definitively know user is not registered
+    // and there's no dashboard data available
+    if (isConnected && isRegistered === false && !dashboardData && !isLoading) {
+      return <RegistrationPrompt onRegister={registerUser} account={account} />;
+    }
+
+    // DEBUG: Log what section is active
+    console.log('🎯 Rendering section:', activeSection);
+
+    // Main dashboard content with real data
+    try {
+      switch (activeSection) {
+        case 'overview':
+          console.log('📊 Rendering DashboardOverview with data:', transformedDashboardData);
+          return (
+            <div className="dashboard-overview-container">
+              <h2>Dashboard Overview</h2>
+              <div className="quick-stats">
+                <div className="stat-card">
+                  <h3>Total Earnings</h3>
+                  <p>${transformedDashboardData.totalEarnings.toFixed(2)}</p>
+                </div>
+                <div className="stat-card">
+                  <h3>Direct Referrals</h3>
+                  <p>{transformedDashboardData.directReferrals}</p>
+                </div>
+                <div className="stat-card">
+                  <h3>Team Size</h3>
+                  <p>{transformedDashboardData.teamSize}</p>
+                </div>
+                <div className="stat-card">
+                  <h3>Pending Rewards</h3>
+                  <p>${transformedDashboardData.pendingRewards.toFixed(2)}</p>
+                </div>
+              </div>
+              <DashboardOverview 
+                data={transformedDashboardData} 
+                realData={dashboardData}
+                account={account}
+                realtimeEarnings={realtimeEarnings}
+                achievements={achievements}
+              />
+            </div>
+          );
+        case 'earnings':
+          return <EarningsBreakdown 
+            data={transformedDashboardData} 
+            realData={dashboardData}
+            account={account} 
+          />;
       case 'direct-referrals':
-        return <DirectReferralsSection data={dashboardData} account={account} />;
+        return <DirectReferralsSection 
+          data={transformedDashboardData} 
+          realData={dashboardData}
+          account={account} 
+        />;
       case 'level-bonus':
-        return <LevelBonusSection data={dashboardData} account={account} />;
+        return <LevelBonusSection 
+          data={transformedDashboardData} 
+          realData={dashboardData}
+          account={account} 
+        />;
       case 'upline-bonus':
-        return <UplineBonusSection data={dashboardData} account={account} />;
+        return <UplineBonusSection 
+          data={transformedDashboardData} 
+          realData={dashboardData}
+          account={account} 
+        />;
       case 'leader-pool':
-        return <LeaderPoolSection data={dashboardData} account={account} />;
+        return <LeaderPoolSection 
+          data={transformedDashboardData} 
+          realData={dashboardData}
+          account={account} 
+        />;
       case 'help-pool':
-        return <HelpPoolSection data={dashboardData} account={account} />;
+        return <HelpPoolSection 
+          data={transformedDashboardData} 
+          realData={dashboardData}
+          account={account} 
+        />;
       case 'packages':
-        return <PackagesSection data={dashboardData} account={account} />;
+        return <PackagesSection 
+          data={transformedDashboardData} 
+          realData={dashboardData}
+          account={account}
+          onUpgrade={handlePackageUpgrade}
+        />;
       case 'community-tiers':
-        return <CommunityTiersSection data={dashboardData} account={account} />;
+        return <CommunityTiersSection 
+          data={transformedDashboardData} 
+          realData={dashboardData}
+          account={account} 
+        />;
       case 'withdrawals':
-        return <WithdrawalsSection data={dashboardData} account={account} />;
+        return <WithdrawalsSection 
+          data={transformedDashboardData} 
+          realData={dashboardData}
+          account={account}
+          onWithdraw={handleWithdraw}
+        />;
       case 'team-structure':
-        return <TeamStructureSection account={account} />;
-      case 'gamification':
-        return <GamificationSection data={dashboardData} account={account} />;
+        return <TeamStructureSection 
+          account={account} 
+          realData={dashboardData}
+        />;
       case 'reports':
-        return <ReportsSection account={account} />;
+        return <ReportsSection 
+          account={account} 
+          realData={dashboardData}
+        />;
       case 'ai-insights':
-        return <AIInsightsSection data={dashboardData} account={account} />;
+        return <AIInsightsSection 
+          data={transformedDashboardData} 
+          realData={dashboardData}
+          account={account} 
+        />;
+      case 'predictive-analytics':
+        return (
+          <PredictiveAnalytics 
+            userStats={transformedDashboardData}
+            realData={dashboardData}
+            historicalData={{
+              earnings: generateMockHistoricalData('earnings'),
+              team: generateMockHistoricalData('team'),
+              withdrawals: generateMockHistoricalData('withdrawals')
+            }}
+            teamData={dashboardData?.team?.referralDetails || []}
+            account={account}
+            contract={null}
+          />
+        );
+      case 'real-time-monitor':
+        return (
+          <RealTimeBlockchainMonitor 
+            account={account}
+            provider={provider}
+            onEarningsUpdate={addLiveEvent}
+            onNewAchievement={addAchievement}
+          />
+        );
+      case 'gamification':
+        return (
+          <GamificationSystem 
+            userStats={transformedDashboardData}
+            realData={dashboardData}
+            achievements={achievements}
+            onAchievementUnlocked={addAchievement}
+            account={account}
+          />
+        );
       case 'settings':
-        return <SettingsSection account={account} onDisconnect={onDisconnect} />;
+        return <SettingsSection account={account} onDisconnect={handleWalletDisconnect} />;
       default:
-        return <DashboardOverview data={dashboardData} account={account} />;
+        console.log('📊 Rendering default DashboardOverview');
+        return <DashboardOverview 
+          data={transformedDashboardData} 
+          realData={dashboardData}
+          account={account}
+          realtimeEarnings={realtimeEarnings}
+          achievements={achievements}
+        />;
+    }
+    } catch (error) {
+      console.error('❌ Error rendering dashboard content:', error);
+      return (
+        <div style={{ padding: '20px', textAlign: 'center' }}>
+          <h3>⚠️ Dashboard Content Error</h3>
+          <p>There was an error loading this section. Please try refreshing the page.</p>
+          <button onClick={() => window.location.reload()}>Refresh Page</button>
+        </div>
+      );
     }
   };
 
-  if (loading) {
+  // Helper functions for generating mock data for advanced analytics
+  const generateMockHistoricalData = (type) => {
+    const days = 60; // Last 60 days
+    const data = [];
+    
+    for (let i = days; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      
+      let value;
+      switch (type) {
+        case 'earnings':
+          value = Math.random() * 20 + (Math.sin(i / 7) + 1) * 10; // Weekly patterns
+          break;
+        case 'team':
+          value = Math.floor(Math.random() * 3) + (i < 30 ? 1 : 0); // Growth trend
+          break;
+        case 'withdrawals':
+          value = Math.random() > 0.8 ? Math.random() * 100 : 0; // Sporadic withdrawals
+          break;
+        default:
+          value = Math.random() * 10;
+      }
+      
+      data.push({
+        date: date.toISOString(),
+        value: parseFloat(value.toFixed(2)),
+        timestamp: date.getTime()
+      });
+    }
+    
+    return data;
+  };
+
+  const generateMockTeamData = () => {
+    const teamMembers = [];
+    const memberCount = dashboardData.teamSize || 25;
+    
+    for (let i = 0; i < memberCount; i++) {
+      teamMembers.push({
+        id: `member_${i}`,
+        address: `0x${Math.random().toString(16).substr(2, 8)}...${Math.random().toString(16).substr(2, 4)}`,
+        joinDate: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
+        packageTier: Math.floor(Math.random() * 4) + 1,
+        totalEarnings: Math.random() * 1000,
+        directReferrals: Math.floor(Math.random() * 10),
+        isActive: Math.random() > 0.3,
+        level: Math.floor(Math.random() * 5) + 1
+      });
+    }
+    
+    return teamMembers;
+  };
+
+  if (isLoading) {
     return (
       <PageWrapper>
         <div className="dashboard-loading">
@@ -212,9 +571,36 @@ export default function Dashboard({ account, provider, onDisconnect }) {
             <FaUserCircle className="user-avatar" />
             <div className="user-info">
               <h3>Welcome to Lead Five!</h3>
-              <p>{account ? `${account.slice(0, 6)}...${account.slice(-4)}` : 'User'}</p>
-              <span className="user-tier">Tier {dashboardData.currentTier}</span>
-              <span className="user-package">${dashboardData.currentPackage} Package</span>
+              <div className="connection-status">
+                {isConnected ? (
+                  <>
+                    <div className="wallet-connected">
+                      <FaCheckCircle className="status-icon connected" />
+                      <span>{account ? `${String(account).slice(0, 6)}...${String(account).slice(-4)}` : 'Connected'}</span>
+                    </div>
+                    {chainId === 56 ? (
+                      <div className="network-status connected">
+                        <span>🔗 BSC Mainnet</span>
+                      </div>
+                    ) : (
+                      <div className="network-status wrong">
+                        <FaExclamationTriangle /> Wrong Network
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="wallet-disconnected">
+                    <FaExclamationTriangle className="status-icon disconnected" />
+                    <span>Wallet Not Connected</span>
+                  </div>
+                )}
+              </div>
+              {isRegistered && dashboardData && (
+                <>
+                  <span className="user-tier">Tier {transformedDashboardData.currentTier}</span>
+                  <span className="user-package">${transformedDashboardData.currentPackage} Package</span>
+                </>
+              )}
             </div>
           </div>
 
@@ -232,22 +618,36 @@ export default function Dashboard({ account, provider, onDisconnect }) {
           </nav>
 
           <div className="sidebar-footer">
-            <div className="earnings-cap-tracker">
-              <FaShieldAlt className="cap-icon" />
-              <div>
-                <p>4X Earnings Cap</p>
-                <div className="cap-progress-bar">
-                  <div 
-                    className="cap-progress" 
-                    style={{ width: `${(dashboardData.totalEarnings / dashboardData.maxEarnings) * 100}%` }}
-                  ></div>
+            {isRegistered && dashboardData && (
+              <div className="earnings-cap-tracker">
+                <FaShieldAlt className="cap-icon" />
+                <div>
+                  <p>4X Earnings Cap</p>
+                  <div className="cap-progress-bar">
+                    <div 
+                      className="cap-progress" 
+                      style={{ 
+                        width: `${Math.min(
+                          (transformedDashboardData.totalEarnings / transformedDashboardData.maxEarnings) * 100,
+                          100
+                        )}%` 
+                      }}
+                    ></div>
+                  </div>
+                  <span>
+                    ${transformedDashboardData.totalEarnings.toFixed(2)} / ${transformedDashboardData.maxEarnings.toFixed(2)}
+                  </span>
                 </div>
-                <span>${dashboardData.totalEarnings} / ${dashboardData.maxEarnings}</span>
               </div>
-            </div>
+            )}
             <div className="bsc-badge">
               <span>🔗 Powered by Binance Smart Chain</span>
             </div>
+            {isConnected && (
+              <button className="disconnect-btn" onClick={handleWalletDisconnect}>
+                <FaPlug /> Disconnect
+              </button>
+            )}
           </div>
         </div>
 
@@ -256,13 +656,15 @@ export default function Dashboard({ account, provider, onDisconnect }) {
             <h1>{menuItems.find(item => item.id === activeSection)?.label || 'Dashboard'}</h1>
             <div className="header-actions">
               <NotificationSystem account={account} provider={provider} />
-              <button 
-                className="quick-action-btn"
-                onClick={() => navigate('/packages')}
-              >
-                <FaRocket />
-                Upgrade Package
-              </button>
+              {isRegistered && (
+                <button 
+                  className="quick-action-btn"
+                  onClick={() => navigate('/packages')}
+                >
+                  <FaRocket />
+                  Upgrade Package
+                </button>
+              )}
             </div>
           </div>
 
@@ -272,14 +674,14 @@ export default function Dashboard({ account, provider, onDisconnect }) {
         </div>
 
         {/* Extraordinary AI Assistant - Fixed position chat assistant */}
-        {activeSection !== 'voice-assistant' && (
+        {activeSection !== 'voice-assistant' && isRegistered && (
           <ExtraordinaryAIAssistant 
             userStats={{
-              totalEarnings: dashboardData.totalEarnings,
-              teamSize: dashboardData.teamSize,
-              currentLevel: dashboardData.currentLevel,
-              dailyEarnings: dashboardData.dailyEarnings,
-              activeReferrals: dashboardData.activeReferrals
+              totalEarnings: transformedDashboardData.totalEarnings,
+              teamSize: transformedDashboardData.teamSize,
+              currentLevel: transformedDashboardData.currentLevel,
+              dailyEarnings: transformedDashboardData.dailyEarnings,
+              activeReferrals: transformedDashboardData.activeReferrals
             }}
             account={account}
           />
@@ -289,6 +691,88 @@ export default function Dashboard({ account, provider, onDisconnect }) {
     </PageWrapper>
   );
 }
+
+// Helper Components for Dashboard States
+const WalletConnectionPrompt = ({ onConnect }) => (
+  <div className="wallet-connection-prompt">
+    <div className="connection-card">
+      <FaPlug className="connection-icon" />
+      <h2>Connect Your Wallet</h2>
+      <p>Please connect your wallet to access your Lead Five dashboard and view your real earnings.</p>
+      <button className="connect-wallet-btn" onClick={onConnect}>
+        <FaWallet /> Connect MetaMask
+      </button>
+      <div className="connection-features">
+        <div className="feature">
+          <FaShieldAlt className="feature-icon" />
+          <span>Secure & Safe</span>
+        </div>
+        <div className="feature">
+          <FaBolt className="feature-icon" />
+          <span>Real-time Data</span>
+        </div>
+        <div className="feature">
+          <FaTrophy className="feature-icon" />
+          <span>Live Earnings</span>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+const RegistrationPrompt = ({ onRegister, account }) => {
+  const navigate = useNavigate();
+  
+  return (
+    <div className="registration-prompt">
+      <div className="registration-card">
+        <FaRocket className="registration-icon" />
+        <h2>Welcome to Lead Five!</h2>
+        <p>Your wallet is connected, but you're not registered yet. Join Lead Five to start earning!</p>
+        <div className="wallet-info">
+          <FaUserCircle className="wallet-icon" />
+          <span>Connected: {account && typeof account === 'string' ? `${account.slice(0, 6)}...${account.slice(-4)}` : 'Unknown'}</span>
+        </div>
+        <button className="register-btn" onClick={() => navigate('/register')}>
+          <FaRocket /> Start Your Journey
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const LoadingDashboard = () => (
+  <div className="loading-dashboard">
+    <div className="loading-card">
+      <FaSpinner className="loading-spinner" />
+      <h3>Loading Your Dashboard...</h3>
+      <p>Fetching your real-time data from the blockchain</p>
+      <div className="loading-steps">
+        <div className="step">✓ Wallet Connected</div>
+        <div className="step">✓ Contract Initialized</div>
+        <div className="step active">📊 Loading Data...</div>
+      </div>
+    </div>
+  </div>
+);
+
+const ErrorDashboard = ({ error, onRetry, onClearError }) => (
+  <div className="error-dashboard">
+    <div className="error-card">
+      <FaExclamationTriangle className="error-icon" />
+      <h3>Unable to Load Dashboard</h3>
+      <p>{error}</p>
+      <div className="error-actions">
+        <button className="retry-btn" onClick={onRetry}>
+          <FaRocket /> Retry
+        </button>
+        <button className="clear-error-btn" onClick={onClearError}>
+          Clear Error
+        </button>
+      </div>
+    </div>
+  </div>
+);
 
 // Earnings Breakdown Component
 function EarningsBreakdown({ data, account }) {
@@ -382,7 +866,7 @@ function DirectReferralsSection({ data, account }) {
             <div className="referral-link">
               <input 
                 type="text" 
-                value={`https://leadfive.com/ref/${account?.slice(0, 8)}`}
+                value={`https://leadfive.com/ref/${account && typeof account === 'string' ? account.slice(0, 8) : 'unknown'}`}
                 readOnly 
               />
               <button className="copy-btn">Copy</button>
@@ -966,18 +1450,31 @@ function AIInsightsSection({ data, account }) {
 
 // Dashboard Overview Component with AI Integration
 function DashboardOverview({ data, account }) {
+  console.log('🎯 DashboardOverview rendering with data:', data);
+  console.log('🎯 DashboardOverview account:', account);
+  
+  // Simple fallback if data is not available
+  if (!data) {
+    return (
+      <div style={{ padding: '20px' }}>
+        <h2>Dashboard Overview</h2>
+        <p>Loading dashboard data...</p>
+      </div>
+    );
+  }
+  
   const stats = [
     {
       icon: FaDollarSign,
       label: 'Total Earnings',
-      value: `$${data.totalEarnings.toFixed(2)}`,
+      value: `$${(data.totalEarnings || 0).toFixed(2)}`,
       change: '+12.5%',
       positive: true
     },
     {
       icon: FaUsers,
       label: 'Direct Referrals',
-      value: data.directReferrals,
+      value: data.directReferrals || 0,
       change: '+2',
       positive: true
     },
@@ -1048,39 +1545,8 @@ function DashboardOverview({ data, account }) {
         </div>
 
         <div className="overview-card">
-          <h3><FaTrophy /> Achievements & Progress</h3>
-          <div className="achievements-preview">
-            <div className="achievement-summary">
-              <div className="achievement-count">
-                <span className="count">{JSON.parse(localStorage.getItem('leadfive_achievements') || '[]').length}</span>
-                <span className="label">Achievements Earned</span>
-              </div>
-              <div className="level-display">
-                <span className="level">Level {data.currentLevel}</span>
-                <div className="level-progress-mini">
-                  <div className="progress-bar-mini">
-                    <div 
-                      className="progress-fill-mini" 
-                      style={{ width: `${(data.totalEarnings / (data.currentLevel * 1000)) * 100}%` }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="recent-achievement">
-              <div className="achievement-icon">🏆</div>
-              <div className="achievement-text">
-                <span>Recent: Network Builder</span>
-                <small>Reached {data.teamSize}+ team members</small>
-              </div>
-            </div>
-            <button 
-              className="view-all-btn"
-              onClick={() => setActiveSection('gamification')}
-            >
-              View All Achievements
-            </button>
-          </div>
+          <h3><FaTrophy /> Performance Metrics</h3>
+          <PerformanceMetrics />
         </div>
 
         <div className="overview-card">
@@ -1255,51 +1721,55 @@ function EarningsSection({ data, account }) {
         </div>
       </div>
     </div>
-  );
 }
 
-// Referrals Section Component
-function ReferralsSection({ account }) {
+// Earnings Section Component with AI Integration
+function EarningsSection({ data, account }) {
   return (
-    <div className="referrals-section">
-      <ReferralStats account={account} />
-      
-      <div className="referral-tools">
-        <h3>Referral Tools</h3>
-        <div className="tools-grid">
-          <div className="tool-card">
-            <FaUsers />
-            <h4>Invite Link</h4>
-            <p>Share your unique referral link</p>
-            <button>Copy Link</button>
-          </div>
-          <div className="tool-card">
-            <FaChartLine />
-            <h4>Track Progress</h4>
-            <p>Monitor your referral performance</p>
-            <button>View Stats</button>
-          </div>
-          <div className="tool-card">
-            <FaGift />
-            <h4>Bonus Tracker</h4>
-            <p>See your referral bonuses</p>
-            <button>View Bonuses</button>
-          </div>
+    <div className="earnings-section">
+      <div className="earnings-summary">
+        <div className="summary-card">
+          <h3>Today's Earnings</h3>
+          <p className="amount">${data.dailyEarnings.toFixed(2)}</p>
+          <span className="trend positive">+15.2%</span>
+        </div>
+        <div className="summary-card">
+          <h3>This Week</h3>
+          <p className="amount">${(data.dailyEarnings * 7).toFixed(2)}</p>
+          <span className="trend positive">+8.7%</span>
+        </div>
+        <div className="summary-card">
+          <h3>This Month</h3>
+          <p className="amount">${(data.dailyEarnings * 30).toFixed(2)}</p>
+          <span className="trend positive">+22.1%</span>
         </div>
       </div>
-    </div>
-  );
-}
 
-// Activity Section Component
-function ActivitySection({ account }) {
-  return (
-    <div className="activity-section">
-      <h3>Recent Activity</h3>
-      <ActivityFeed />
+      {/* AI Earnings Prediction */}
+      <ErrorBoundary>
+        <AIEarningsPrediction 
+          userStats={{
+            totalEarnings: data.totalEarnings,
+            teamSize: data.teamSize,
+            currentLevel: data.currentLevel,
+            dailyEarnings: data.dailyEarnings,
+            monthlyEarnings: data.dailyEarnings * 30,
+            packageLevel: data.currentLevel * 30,
+            activeReferrals: data.activeReferrals
+          }}
+        />
+      </ErrorBoundary>
     </div>
   );
 }
+      </ErrorBoundary>itySection({ account }) {
+
+      <div className="earnings-chart-container">lassName="activity-section">
+        <h3>Earnings History</h3>  <h3>Recent Activity</h3>
+        <EarningsChart detailed={true} />     <ActivityFeed />
+      </div>    </div>
+
+      <div className="earnings-breakdown">
 
 // Performance Section Component
 function PerformanceSection({ data }) {
@@ -1315,8 +1785,7 @@ function PerformanceSection({ data }) {
             <FaTrophy className="gold" />
             <div>
               <h4>Network Builder</h4>
-              <p>Reached {data.teamSize}+ team members</p>
-              <small>+100 XP earned</small>
+              <p>Reached 100+ team members</p>
             </div>
           </div>
           <div className="achievement-item">
@@ -1324,37 +1793,13 @@ function PerformanceSection({ data }) {
             <div>
               <h4>Consistent Earner</h4>
               <p>30 days of continuous earnings</p>
-              <small>+75 XP earned</small>
             </div>
           </div>
           <div className="achievement-item">
             <FaTrophy className="bronze" />
             <div>
               <h4>Quick Starter</h4>
-              <p>{data.directReferrals} referrals in first week</p>
-              <small>+50 XP earned</small>
-            </div>
-          </div>
-        </div>
-        
-        <div className="achievement-progress">
-          <h4>🎯 Next Achievement</h4>
-          <div className="next-achievement">
-            <div className="achievement-target">
-              <span className="target-icon">👑</span>
-              <div className="target-info">
-                <h5>Leader Status</h5>
-                <p>Reach 10 direct referrals</p>
-                <div className="target-progress">
-                  <div className="progress-bar">
-                    <div 
-                      className="progress-fill"
-                      style={{ width: `${(data.directReferrals / 10) * 100}%` }}
-                    ></div>
-                  </div>
-                  <span>{data.directReferrals}/10 referrals</span>
-                </div>
-              </div>
+              <p>5 referrals in first week</p>
             </div>
           </div>
         </div>
@@ -1435,7 +1880,7 @@ function SettingsSection({ account, onDisconnect }) {
       <div className="settings-group">
         <h4>Wallet Connection</h4>
         <div className="wallet-info">
-          <p>Connected: {account ? `${account.slice(0, 6)}...${account.slice(-4)}` : 'Not connected'}</p>
+          <p>Connected: {account ? `${String(account).slice(0, 6)}...${String(account).slice(-4)}` : 'Not connected'}</p>
           <button onClick={onDisconnect} className="disconnect-btn">
             Disconnect Wallet
           </button>
@@ -1478,107 +1923,6 @@ function SettingsSection({ account, onDisconnect }) {
         <h4>Security</h4>
         <button className="security-btn">Enable 2FA</button>
         <button className="security-btn">Change Password</button>
-      </div>
-
-      <div className="settings-group">
-        <h4>Gamification</h4>
-        <label className="toggle-setting">
-          <input type="checkbox" defaultChecked />
-          <span>Enable Achievement Notifications</span>
-        </label>
-        <label className="toggle-setting">
-          <input type="checkbox" defaultChecked />
-          <span>Show Progress Animations</span>
-        </label>
-        <label className="toggle-setting">
-          <input type="checkbox" defaultChecked />
-          <span>Daily Quest Reminders</span>
-        </label>
-      </div>
-    </div>
-  );
-}
-
-// Gamification Section Component
-function GamificationSection({ data, account }) {
-  const userStats = {
-    totalEarnings: data.totalEarnings,
-    totalReferrals: data.directReferrals,
-    teamSize: data.teamSize,
-    matrixLevel: data.currentLevel,
-    completedCycles: Math.floor(data.totalEarnings / (data.currentPackage * 4)) || 0,
-    daysSinceJoining: 30, // Mock data
-    monthlyEarnings: data.dailyEarnings * 30,
-    weeklyEarnings: data.dailyEarnings * 7,
-    activeReferrals: data.activeReferrals,
-    packageLevel: data.currentPackage
-  };
-
-  return (
-    <div className="gamification-section">
-      <div className="gamification-header">
-        <h2>🎮 Achievements & Rewards Center</h2>
-        <p>Track your progress, earn achievements, and climb the leaderboards!</p>
-      </div>
-
-      <ErrorBoundary>
-        <GamificationSystem 
-          wallet={{ account }}
-          contract={null}
-          userStats={userStats}
-        />
-      </ErrorBoundary>
-
-      <div className="gamification-benefits">
-        <h3>🏆 Why Achievements Matter</h3>
-        <div className="benefits-grid">
-          <div className="benefit-card">
-            <div className="benefit-icon">🎯</div>
-            <h4>Goal Setting</h4>
-            <p>Achievements help you set and reach meaningful milestones in your Lead Five journey</p>
-          </div>
-          <div className="benefit-card">
-            <div className="benefit-icon">⚡</div>
-            <h4>Motivation</h4>
-            <p>Daily quests and challenges keep you engaged and motivated to grow your business</p>
-          </div>
-          <div className="benefit-card">
-            <div className="benefit-icon">🏅</div>
-            <h4>Recognition</h4>
-            <p>Show off your achievements and compete with other top performers on the leaderboard</p>
-          </div>
-          <div className="benefit-card">
-            <div className="benefit-icon">💎</div>
-            <h4>Rewards</h4>
-            <p>Earn XP points and unlock special badges for completing achievements and challenges</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="progress-overview">
-        <h3>📊 Your Progress Overview</h3>
-        <div className="progress-stats">
-          <div className="progress-stat">
-            <h4>Total Achievements</h4>
-            <div className="stat-value">{JSON.parse(localStorage.getItem('leadfive_achievements') || '[]').length}</div>
-            <span>out of 16 available</span>
-          </div>
-          <div className="progress-stat">
-            <h4>Current Level</h4>
-            <div className="stat-value">{data.currentLevel}</div>
-            <span>Keep growing!</span>
-          </div>
-          <div className="progress-stat">
-            <h4>Team Members</h4>
-            <div className="stat-value">{data.teamSize}</div>
-            <span>in your network</span>
-          </div>
-          <div className="progress-stat">
-            <h4>Total Earnings</h4>
-            <div className="stat-value">${data.totalEarnings.toFixed(0)}</div>
-            <span>lifetime earnings</span>
-          </div>
-        </div>
       </div>
     </div>
   );

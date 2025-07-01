@@ -89,7 +89,7 @@ export default function Security({ account, provider, signer, onConnect, onDisco
                 <span className="status-icon">🟢</span>
                 <span>All Systems Secure</span>
               </div>
-              <p>Wallet: {account.slice(0, 6)}...{account.slice(-4)}</p>
+              <p>Wallet: {String(account).slice(0, 6)}...{String(account).slice(-4)}</p>
             </div>
           </div>
         )}
