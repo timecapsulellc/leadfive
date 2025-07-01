@@ -42,6 +42,7 @@ import AIEmotionTracker from '../components/AIEmotionTracker';
 import ErrorBoundary from '../components/ErrorBoundary';
 import MobileNavigation from '../components/MobileNavigation';
 import ExtraordinaryAIAssistant from '../components/ExtraordinaryAIAssistant';
+import UnifiedChatbot from '../components/UnifiedChatbot';
 // Gamification System
 import GamificationSystem from '../components/GamificationSystem';
 // AI Services
@@ -284,6 +285,25 @@ export default function Dashboard({ account, provider, onDisconnect }) {
             account={account}
           />
         )}
+
+        {/* AIRA Unified Chatbot - Main AI Chat Interface */}
+        <ErrorBoundary>
+          <UnifiedChatbot 
+            userStats={{
+              earnings: dashboardData.totalEarnings,
+              teamSize: dashboardData.teamSize,
+              currentLevel: dashboardData.currentLevel,
+              dailyEarnings: dashboardData.dailyEarnings
+            }}
+            account={account}
+            userInfo={{
+              directCount: dashboardData.directReferrals,
+              teamSize: dashboardData.teamSize,
+              tier: dashboardData.currentTier,
+              package: dashboardData.currentPackage
+            }}
+          />
+        </ErrorBoundary>
 
       </div>
     </PageWrapper>
