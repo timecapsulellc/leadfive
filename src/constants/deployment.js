@@ -11,7 +11,7 @@ export const DEPLOYMENT_INFO = {
   // CORE CONTRACT ADDRESSES
   // =====================
   PROXY_ADDRESS: '0x29dcCb502D10C042BcC6a02a7762C49595A9E498',
-  IMPLEMENTATION_ADDRESS: '0xA4AB35Ab2BA415E6CCf9559e8dcAB0661cC29e2b',
+  IMPLEMENTATION_ADDRESS: '0x2cc37CB4e1F5D3D56E86c8792fD241d46064B2cF',
   CONTRACT_OWNER: '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29', // Trezor Hardware Wallet
   
   // =====================
@@ -61,7 +61,7 @@ export const DEPLOYMENT_INFO = {
   // =====================
   VERIFICATION: {
     proxy: 'https://bscscan.com/address/0x29dcCb502D10C042BcC6a02a7762C49595A9E498#code',
-    implementation: 'https://bscscan.com/address/0xA4AB35Ab2BA415E6CCf9559e8dcAB0661cC29e2b#code',
+    implementation: 'https://bscscan.com/address/0x2cc37CB4e1F5D3D56E86c8792fD241d46064B2cF#code',
     owner: 'https://bscscan.com/address/0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29'
   },
   

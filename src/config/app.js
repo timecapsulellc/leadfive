@@ -11,7 +11,7 @@ export const APP_CONFIG = {
   // Smart Contract Configuration
   contract: {
     address: '0x29dcCb502D10C042BcC6a02a7762C49595A9E498', // ✅ MAINNET PROXY ADDRESS
-    implementation: '0xA4AB35Ab2BA415E6CCf9559e8dcAB0661cC29e2b', // ✅ MAINNET IMPLEMENTATION
+    implementation: '0x2cc37CB4e1F5D3D56E86c8792fD241d46064B2cF', // ✅ MAINNET IMPLEMENTATION v1.10
     network: {
       name: 'BSC Mainnet',
       chainId: 56,
