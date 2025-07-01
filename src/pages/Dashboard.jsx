@@ -41,6 +41,10 @@ import AIEmotionTracker from '../components/AIEmotionTracker';
 import ErrorBoundary from '../components/ErrorBoundary';
 import MobileNavigation from '../components/MobileNavigation';
 import ExtraordinaryAIAssistant from '../components/ExtraordinaryAIAssistant';
+// Advanced Components
+import RealTimeBlockchainMonitor from '../components/RealTimeBlockchainMonitor';
+import GamificationSystem from '../components/GamificationSystem';
+import PredictiveAnalytics from '../components/PredictiveAnalytics';
 // AI Services
 import { elevenLabsService } from '../services/ElevenLabsOnlyService';
 import './Dashboard.css';
@@ -149,6 +153,9 @@ export default function Dashboard({ account, provider, onDisconnect }) {
     { id: 'team-structure', label: 'My Team', icon: FaUsers },
     { id: 'reports', label: 'Reports', icon: FaHistory },
     { id: 'ai-insights', label: 'AI Assistant', icon: FaRobot },
+    { id: 'predictive-analytics', label: '🔮 Predictive Analytics', icon: FaBrain },
+    { id: 'real-time-monitor', label: '⚡ Live Monitor', icon: FaBell },
+    { id: 'gamification', label: '🎮 Achievements', icon: FaTrophy },
     { id: 'settings', label: 'Settings', icon: FaCog }
   ];
 
@@ -180,11 +187,99 @@ export default function Dashboard({ account, provider, onDisconnect }) {
         return <ReportsSection account={account} />;
       case 'ai-insights':
         return <AIInsightsSection data={dashboardData} account={account} />;
+      case 'predictive-analytics':
+        return (
+          <PredictiveAnalytics 
+            userStats={dashboardData}
+            historicalData={{
+              earnings: generateMockHistoricalData('earnings'),
+              team: generateMockHistoricalData('team'),
+              withdrawals: generateMockHistoricalData('withdrawals')
+            }}
+            teamData={generateMockTeamData()}
+            account={account}
+            contract={null}
+          />
+        );
+      case 'real-time-monitor':
+        return (
+          <RealTimeBlockchainMonitor 
+            account={account}
+            provider={provider}
+            onEarningsUpdate={(data) => console.log('Earnings update:', data)}
+            onNewAchievement={(achievement) => console.log('New achievement:', achievement)}
+          />
+        );
+      case 'gamification':
+        return (
+          <GamificationSystem 
+            wallet={account}
+            contract={null}
+            userStats={dashboardData}
+            account={account}
+            onAchievementUnlock={(achievement) => console.log('Achievement unlocked:', achievement)}
+            onChallengeComplete={(challenge) => console.log('Challenge completed:', challenge)}
+          />
+        );
       case 'settings':
         return <SettingsSection account={account} onDisconnect={onDisconnect} />;
       default:
         return <DashboardOverview data={dashboardData} account={account} />;
     }
+  };
+
+  // Helper functions for generating mock data for advanced analytics
+  const generateMockHistoricalData = (type) => {
+    const days = 60; // Last 60 days
+    const data = [];
+    
+    for (let i = days; i >= 0; i--) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      
+      let value;
+      switch (type) {
+        case 'earnings':
+          value = Math.random() * 20 + (Math.sin(i / 7) + 1) * 10; // Weekly patterns
+          break;
+        case 'team':
+          value = Math.floor(Math.random() * 3) + (i < 30 ? 1 : 0); // Growth trend
+          break;
+        case 'withdrawals':
+          value = Math.random() > 0.8 ? Math.random() * 100 : 0; // Sporadic withdrawals
+          break;
+        default:
+          value = Math.random() * 10;
+      }
+      
+      data.push({
+        date: date.toISOString(),
+        value: parseFloat(value.toFixed(2)),
+        timestamp: date.getTime()
+      });
+    }
+    
+    return data;
+  };
+
+  const generateMockTeamData = () => {
+    const teamMembers = [];
+    const memberCount = dashboardData.teamSize || 25;
+    
+    for (let i = 0; i < memberCount; i++) {
+      teamMembers.push({
+        id: `member_${i}`,
+        address: `0x${Math.random().toString(16).substr(2, 8)}...${Math.random().toString(16).substr(2, 4)}`,
+        joinDate: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000),
+        packageTier: Math.floor(Math.random() * 4) + 1,
+        totalEarnings: Math.random() * 1000,
+        directReferrals: Math.floor(Math.random() * 10),
+        isActive: Math.random() > 0.3,
+        level: Math.floor(Math.random() * 5) + 1
+      });
+    }
+    
+    return teamMembers;
   };
 
   if (loading) {
