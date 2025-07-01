@@ -9,14 +9,13 @@ import {
   FaChartLine,
   FaUsers,
   FaGift,
-  FaLightning,
+  FaBolt,
   FaGem,
   FaShieldAlt,
   FaWallet,
   FaHandshake,
   FaCalendarAlt,
-  FaTarget,
-  FaBolt,
+  FaBullseye,
   FaDollarSign
 } from 'react-icons/fa';
 import './GamificationSystem.css';
@@ -359,7 +358,7 @@ const GamificationSystem = ({
       target: 5,
       reward: 150,
       completed: false,
-      icon: FaTarget,
+      icon: FaBullseye,
       category: 'engagement'
     },
     {

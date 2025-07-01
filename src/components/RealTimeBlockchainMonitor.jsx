@@ -8,7 +8,6 @@ import {
   FaMedal,
   FaCrown,
   FaRocket,
-  FaLightning,
   FaChartLine
 } from 'react-icons/fa';
 import './RealTimeBlockchainMonitor.css';
@@ -84,7 +83,7 @@ export default function RealTimeBlockchainMonitor({
     contract.on(commissionFilter, (recipient, payer, amount, poolType, poolName, timestamp, event) => {
       const earningData = {
         type: 'earning',
-        amount: ethers.utils.formatUnits(amount, 6), // USDT has 6 decimals
+        amount: ethers.formatUnits(amount, 6), // USDT has 6 decimals
         poolName,
         poolType: parseInt(poolType),
         timestamp: parseInt(timestamp) * 1000,
@@ -116,7 +115,7 @@ export default function RealTimeBlockchainMonitor({
           type: 'new_referral',
           user,
           packageTier: parseInt(packageTier),
-          amount: ethers.utils.formatUnits(amount, 6),
+          amount: ethers.formatUnits(amount, 6),
           timestamp: parseInt(timestamp) * 1000,
           txHash: event.transactionHash
         };
@@ -131,8 +130,8 @@ export default function RealTimeBlockchainMonitor({
     contract.on(withdrawalFilter, (user, amount, reinvestmentAmount, timestamp, event) => {
       const withdrawalData = {
         type: 'withdrawal',
-        amount: ethers.utils.formatUnits(amount, 6),
-        reinvestmentAmount: ethers.utils.formatUnits(reinvestmentAmount, 6),
+        amount: ethers.formatUnits(amount, 6),
+        reinvestmentAmount: ethers.formatUnits(reinvestmentAmount, 6),
         timestamp: parseInt(timestamp) * 1000,
         txHash: event.transactionHash
       };
@@ -298,7 +297,7 @@ export default function RealTimeBlockchainMonitor({
       case 'earning': return <FaBolt className="event-icon earning" />;
       case 'new_referral': return <FaRocket className="event-icon referral" />;
       case 'withdrawal': return <FaChartLine className="event-icon withdrawal" />;
-      default: return <FaLightning className="event-icon default" />;
+      default: return <FaBolt className="event-icon default" />;
     }
   };
 

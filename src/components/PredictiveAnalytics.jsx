@@ -3,10 +3,10 @@ import {
   FaBrain, 
   FaChartLine, 
   FaRocket, 
-  FaTrendingUp,
+  FaArrowUp,
   FaClock,
   FaCalendarAlt,
-  FaTarget,
+  FaBullseye,
   FaLightbulb,
   FaUsers,
   FaDollarSign,
@@ -691,7 +691,7 @@ export default function PredictiveAnalytics({
       {predictions.optimalStrategy && (
         <div className="strategy-optimization">
           <div className="section-header">
-            <FaTarget className="header-icon" />
+            <FaBullseye className="header-icon" />
             <h3>🎯 Optimal Strategy Recommendation</h3>
           </div>
 
