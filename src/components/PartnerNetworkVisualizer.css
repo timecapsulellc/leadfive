@@ -1,7 +1,7 @@
 /* Partner Network Visualizer Styles */
 .partner-network-visualizer {
   padding: 2rem;
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  background: var(--gradient-primary);
   min-height: 100vh;
   color: white;
 }
@@ -43,7 +43,7 @@
 .view-btn.active,
 .view-btn:hover {
   background: rgba(255, 255, 255, 0.2);
-  border-color: #00ff88;
+  border-color: var(--color-success);
   transform: translateY(-2px);
 }
 
@@ -85,7 +85,7 @@
 .stat-number {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #00ff88;
+  color: var(--color-success);
   line-height: 1;
 }
 
@@ -126,7 +126,7 @@
   margin: 0 0 1rem 0;
   font-size: 1.3rem;
   font-weight: 600;
-  color: #00ff88;
+  color: var(--color-success);
 }
 
 .detail-grid {
@@ -154,11 +154,11 @@
 }
 
 .detail-value.active {
-  color: #00ff88;
+  color: var(--color-success);
 }
 
 .detail-value.inactive {
-  color: #ff6b6b;
+  color: var(--color-error);
 }
 
 /* Network Insights */
@@ -189,7 +189,7 @@
   padding: 1.5rem;
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-  border-left: 4px solid #00ff88;
+  border-left: 4px solid var(--color-success);
   transition: transform 0.3s ease;
 }
 
@@ -208,7 +208,7 @@
   margin: 0 0 0.5rem 0;
   font-size: 1.1rem;
   font-weight: 600;
-  color: #00ff88;
+  color: var(--color-success);
 }
 
 .insight-content p {
@@ -305,10 +305,10 @@
 }
 
 .insights-list::-webkit-scrollbar-thumb {
-  background: #00ff88;
+  background: var(--color-success);
   border-radius: 3px;
 }
 
 .insights-list::-webkit-scrollbar-thumb:hover {
-  background: #00cc6a;
+  background: var(--color-success-dark);
 }

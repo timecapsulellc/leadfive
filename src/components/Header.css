@@ -1,26 +1,60 @@
+/* Header - Brand Color Implementation */
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1rem 2rem;
-  background-color: #16213e;
-  color: #ffffff;
+  background: var(--bg-secondary); /* Midnight Blue */
+  color: var(--text-primary); /* Pure White */
+  border-bottom: 1px solid var(--border-primary); /* Cyber Blue Alpha */
+  box-shadow: var(--shadow-brand-sm);
 }
+
 .nav-links a {
   margin: 0 0.75rem;
-  color: #ffffff;
+  color: var(--text-secondary); /* Silver Mist */
   text-decoration: none;
   font-weight: 500;
+  transition: all 0.3s ease;
 }
+
+.nav-links a:hover {
+  color: var(--text-accent); /* Cyber Blue */
+}
+
+.nav-links a.active {
+  color: var(--text-accent); /* Cyber Blue */
+  position: relative;
+}
+
+.nav-links a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--brand-cyber-blue);
+}
+
 .wallet-info {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
+
 .wallet-info button {
   background: transparent;
-  border: 1px solid #ffffff;
-  color: #ffffff;
+  border: 1px solid var(--border-primary); /* Cyber Blue Alpha */
+  color: var(--text-accent); /* Cyber Blue */
   padding: 0.5rem 1rem;
   cursor: pointer;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.wallet-info button:hover {
+  background: var(--brand-cyber-blue-alpha-10);
+  border-color: var(--brand-cyber-blue);
+  box-shadow: var(--shadow-brand-sm);
 }

@@ -1,0 +1,483 @@
+/**
+ * LeadFive Brand Color System
+ * PhD-level Color Theory Implementation
+ * 
+ * This file implements the complete LeadFive brand color palette
+ * with semantic color variables and psychological color applications
+ * based on brand guidelines and color psychology principles.
+ */
+
+:root {
+  /* ============================================================================
+     PRIMARY BRAND COLORS - Core Brand Identity
+     ============================================================================ */
+  
+  /* Trust and Innovation - Primary Brand Color */
+  --brand-cyber-blue: #00D4FF;
+  --brand-cyber-blue-light: #33DDFF;
+  --brand-cyber-blue-dark: #0099CC;
+  --brand-cyber-blue-alpha-10: rgba(0, 212, 255, 0.1);
+  --brand-cyber-blue-alpha-20: rgba(0, 212, 255, 0.2);
+  --brand-cyber-blue-alpha-30: rgba(0, 212, 255, 0.3);
+  --brand-cyber-blue-alpha-50: rgba(0, 212, 255, 0.5);
+  
+  /* Premium Quality and Sophistication */
+  --brand-royal-purple: #7B2CBF;
+  --brand-royal-purple-light: #9B4CDF;
+  --brand-royal-purple-dark: #5B1C8F;
+  --brand-royal-purple-alpha-10: rgba(123, 44, 191, 0.1);
+  --brand-royal-purple-alpha-20: rgba(123, 44, 191, 0.2);
+  --brand-royal-purple-alpha-30: rgba(123, 44, 191, 0.3);
+  --brand-royal-purple-alpha-50: rgba(123, 44, 191, 0.5);
+  
+  /* Enthusiasm and Growth Potential */
+  --brand-energy-orange: #FF6B35;
+  --brand-energy-orange-light: #FF8B55;
+  --brand-energy-orange-dark: #CC5522;
+  --brand-energy-orange-alpha-10: rgba(255, 107, 53, 0.1);
+  --brand-energy-orange-alpha-20: rgba(255, 107, 53, 0.2);
+  --brand-energy-orange-alpha-30: rgba(255, 107, 53, 0.3);
+  --brand-energy-orange-alpha-50: rgba(255, 107, 53, 0.5);
+
+  /* ============================================================================
+     SECONDARY COLORS - Environmental and Structural
+     ============================================================================ */
+  
+  /* Primary Background - Deep Space */
+  --brand-deep-space: #1A1A2E;
+  --brand-deep-space-light: #242442;
+  --brand-deep-space-dark: #111124;
+  --brand-deep-space-alpha-80: rgba(26, 26, 46, 0.8);
+  --brand-deep-space-alpha-90: rgba(26, 26, 46, 0.9);
+  
+  /* Secondary Background - Midnight Blue */
+  --brand-midnight-blue: #16213E;
+  --brand-midnight-blue-light: #1F2A47;
+  --brand-midnight-blue-dark: #0D1829;
+  --brand-midnight-blue-alpha-80: rgba(22, 33, 62, 0.8);
+  --brand-midnight-blue-alpha-90: rgba(22, 33, 62, 0.9);
+  
+  /* Readable Text - Silver Mist */
+  --brand-silver-mist: #B8C5D1;
+  --brand-silver-mist-light: #C8D5E1;
+  --brand-silver-mist-dark: #A8B5C1;
+  --brand-silver-mist-alpha-70: rgba(184, 197, 209, 0.7);
+  --brand-silver-mist-alpha-50: rgba(184, 197, 209, 0.5);
+
+  /* ============================================================================
+     ACCENT COLORS - Semantic and Functional
+     ============================================================================ */
+  
+  /* Positive Metrics and Achievements */
+  --brand-success-green: #00FF88;
+  --brand-success-green-light: #33FFA8;
+  --brand-success-green-dark: #00CC66;
+  --brand-success-green-alpha-10: rgba(0, 255, 136, 0.1);
+  --brand-success-green-alpha-20: rgba(0, 255, 136, 0.2);
+  --brand-success-green-alpha-30: rgba(0, 255, 136, 0.3);
+  
+  /* Urgent Calls-to-Action */
+  --brand-alert-red: #FF4757;
+  --brand-alert-red-light: #FF6777;
+  --brand-alert-red-dark: #CC3644;
+  --brand-alert-red-alpha-10: rgba(255, 71, 87, 0.1);
+  --brand-alert-red-alpha-20: rgba(255, 71, 87, 0.2);
+  --brand-alert-red-alpha-30: rgba(255, 71, 87, 0.3);
+  
+  /* VIP Tiers and Special Offers */
+  --brand-premium-gold: #FFD700;
+  --brand-premium-gold-light: #FFDF33;
+  --brand-premium-gold-dark: #CCAC00;
+  --brand-premium-gold-alpha-10: rgba(255, 215, 0, 0.1);
+  --brand-premium-gold-alpha-20: rgba(255, 215, 0, 0.2);
+  --brand-premium-gold-alpha-30: rgba(255, 215, 0, 0.3);
+
+  /* ============================================================================
+     NEUTRAL COLORS - Foundation and Typography
+     ============================================================================ */
+  
+  --brand-pure-white: #FFFFFF;
+  --brand-charcoal-gray: #2D3748;
+  --brand-true-black: #0A0A0A;
+  
+  /* Extended neutrals for better design flexibility */
+  --brand-charcoal-gray-light: #4A5568;
+  --brand-charcoal-gray-dark: #1A202C;
+  --brand-off-white: #F7FAFC;
+  --brand-light-gray: #E2E8F0;
+
+  /* ============================================================================
+     SEMANTIC COLOR APPLICATIONS - Psychology-Based Usage
+     ============================================================================ */
+  
+  /* Text Colors */
+  --text-primary: var(--brand-pure-white);
+  --text-secondary: var(--brand-silver-mist);
+  --text-muted: var(--brand-silver-mist-alpha-70);
+  --text-accent: var(--brand-cyber-blue);
+  --text-success: var(--brand-success-green);
+  --text-warning: var(--brand-energy-orange);
+  --text-error: var(--brand-alert-red);
+  --text-premium: var(--brand-premium-gold);
+  
+  /* Background Colors */
+  --bg-primary: var(--brand-deep-space);
+  --bg-secondary: var(--brand-midnight-blue);
+  --bg-surface: var(--brand-deep-space-alpha-80);
+  --bg-elevated: var(--brand-midnight-blue-alpha-80);
+  --bg-overlay: var(--brand-true-black);
+  
+  /* Border Colors */
+  --border-primary: var(--brand-cyber-blue-alpha-20);
+  --border-secondary: var(--brand-silver-mist-alpha-50);
+  --border-accent: var(--brand-royal-purple-alpha-30);
+  --border-success: var(--brand-success-green-alpha-20);
+  --border-warning: var(--brand-energy-orange-alpha-20);
+  --border-error: var(--brand-alert-red-alpha-20);
+  
+  /* Interactive States */
+  --interactive-primary: var(--brand-cyber-blue);
+  --interactive-primary-hover: var(--brand-cyber-blue-light);
+  --interactive-primary-active: var(--brand-cyber-blue-dark);
+  --interactive-secondary: var(--brand-royal-purple);
+  --interactive-secondary-hover: var(--brand-royal-purple-light);
+  --interactive-secondary-active: var(--brand-royal-purple-dark);
+
+  /* ============================================================================
+     GRADIENT COMBINATIONS - Brand-Approved Gradients
+     ============================================================================ */
+  
+  /* Primary Brand Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--brand-cyber-blue) 0%, var(--brand-royal-purple) 100%);
+  --gradient-primary-vertical: linear-gradient(to bottom, var(--brand-cyber-blue) 0%, var(--brand-royal-purple) 100%);
+  --gradient-primary-radial: radial-gradient(circle, var(--brand-cyber-blue) 0%, var(--brand-royal-purple) 100%);
+  
+  /* Energy and Growth Gradients */
+  --gradient-energy: linear-gradient(135deg, var(--brand-energy-orange) 0%, var(--brand-premium-gold) 100%);
+  --gradient-energy-reverse: linear-gradient(135deg, var(--brand-premium-gold) 0%, var(--brand-energy-orange) 100%);
+  
+  /* Success and Achievement Gradients */
+  --gradient-success: linear-gradient(135deg, var(--brand-success-green) 0%, var(--brand-cyber-blue) 100%);
+  --gradient-success-alt: linear-gradient(135deg, var(--brand-success-green) 0%, var(--brand-premium-gold) 100%);
+  
+  /* Background Gradients */
+  --gradient-background: linear-gradient(135deg, var(--brand-deep-space) 0%, var(--brand-midnight-blue) 100%);
+  --gradient-background-subtle: linear-gradient(135deg, var(--brand-deep-space-alpha-90) 0%, var(--brand-midnight-blue-alpha-90) 100%);
+  
+  /* Premium and VIP Gradients */
+  --gradient-premium: linear-gradient(135deg, var(--brand-premium-gold) 0%, var(--brand-royal-purple) 100%);
+  --gradient-vip: linear-gradient(135deg, var(--brand-royal-purple) 0%, var(--brand-premium-gold) 100%);
+
+  /* ============================================================================
+     SHADOW SYSTEM - Elevation and Depth
+     ============================================================================ */
+  
+  --shadow-brand-sm: 0 1px 3px var(--brand-cyber-blue-alpha-10);
+  --shadow-brand-md: 0 4px 12px var(--brand-cyber-blue-alpha-20);
+  --shadow-brand-lg: 0 10px 25px var(--brand-cyber-blue-alpha-30);
+  --shadow-brand-xl: 0 20px 40px var(--brand-cyber-blue-alpha-30);
+  
+  --shadow-purple-sm: 0 1px 3px var(--brand-royal-purple-alpha-10);
+  --shadow-purple-md: 0 4px 12px var(--brand-royal-purple-alpha-20);
+  --shadow-purple-lg: 0 10px 25px var(--brand-royal-purple-alpha-30);
+  
+  --shadow-success-sm: 0 1px 3px var(--brand-success-green-alpha-10);
+  --shadow-success-md: 0 4px 12px var(--brand-success-green-alpha-20);
+  
+  --shadow-premium-sm: 0 1px 3px var(--brand-premium-gold-alpha-10);
+  --shadow-premium-md: 0 4px 12px var(--brand-premium-gold-alpha-20);
+
+  /* ============================================================================
+     COMPONENT-SPECIFIC APPLICATIONS
+     ============================================================================ */
+  
+  /* Dashboard Cards */
+  --card-background: var(--bg-secondary);
+  --card-border: var(--border-primary);
+  --card-shadow: var(--shadow-brand-md);
+  --card-hover-shadow: var(--shadow-brand-lg);
+  
+  /* Buttons */
+  --btn-primary-bg: var(--gradient-primary);
+  --btn-primary-border: var(--border-primary);
+  --btn-primary-shadow: var(--shadow-brand-sm);
+  --btn-primary-hover-shadow: var(--shadow-brand-md);
+  
+  --btn-secondary-bg: transparent;
+  --btn-secondary-border: var(--border-accent);
+  --btn-secondary-color: var(--text-accent);
+  
+  --btn-success-bg: var(--gradient-success);
+  --btn-success-shadow: var(--shadow-success-sm);
+  
+  --btn-premium-bg: var(--gradient-premium);
+  --btn-premium-shadow: var(--shadow-premium-sm);
+  
+  /* Forms and Inputs */
+  --input-background: var(--bg-surface);
+  --input-border: var(--border-secondary);
+  --input-border-focus: var(--border-primary);
+  --input-text: var(--text-primary);
+  --input-placeholder: var(--text-muted);
+  
+  /* Navigation */
+  --nav-background: var(--bg-primary);
+  --nav-item-hover: var(--bg-elevated);
+  --nav-item-active: var(--gradient-primary);
+  --nav-border: var(--border-primary);
+  
+  /* Metrics and Data */
+  --metric-positive: var(--text-success);
+  --metric-negative: var(--text-error);
+  --metric-neutral: var(--text-secondary);
+  --metric-premium: var(--text-premium);
+}
+
+/* ============================================================================
+   UTILITY CLASSES - Quick Application
+   ============================================================================ */
+
+/* Background Utilities */
+.bg-brand-primary { background: var(--bg-primary) !important; }
+.bg-brand-secondary { background: var(--bg-secondary) !important; }
+.bg-gradient-primary { background: var(--gradient-primary) !important; }
+.bg-gradient-success { background: var(--gradient-success) !important; }
+.bg-gradient-premium { background: var(--gradient-premium) !important; }
+
+/* Text Color Utilities */
+.text-brand-primary { color: var(--text-primary) !important; }
+.text-brand-accent { color: var(--text-accent) !important; }
+.text-brand-success { color: var(--text-success) !important; }
+.text-brand-premium { color: var(--text-premium) !important; }
+.text-brand-warning { color: var(--text-warning) !important; }
+
+/* Border Utilities */
+.border-brand-primary { border-color: var(--border-primary) !important; }
+.border-brand-accent { border-color: var(--border-accent) !important; }
+.border-brand-success { border-color: var(--border-success) !important; }
+
+/* Shadow Utilities */
+.shadow-brand { box-shadow: var(--shadow-brand-md) !important; }
+.shadow-brand-lg { box-shadow: var(--shadow-brand-lg) !important; }
+.shadow-success { box-shadow: var(--shadow-success-md) !important; }
+.shadow-premium { box-shadow: var(--shadow-premium-md) !important; }
+
+/* ============================================================================
+   ENHANCED ACCESSIBILITY & INTERACTIVE STATES
+   ============================================================================ */
+
+/* Focus States - High Contrast for Accessibility */
+.focus-primary:focus,
+.btn-primary:focus,
+button:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.3);
+}
+
+.focus-success:focus {
+  outline: 2px solid var(--color-success);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.3);
+}
+
+.focus-error:focus {
+  outline: 2px solid var(--color-error);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.3);
+}
+
+/* Hover States with Brand Colors */
+.hover-primary:hover {
+  background-color: var(--color-primary);
+  color: white;
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+.hover-secondary:hover {
+  background-color: var(--color-secondary);
+  color: white;
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+.hover-success:hover {
+  background-color: var(--color-success);
+  color: white;
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+.hover-premium:hover {
+  background-color: var(--color-premium);
+  color: var(--color-text-primary);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+}
+
+/* Interactive Elements */
+.interactive-primary {
+  background-color: var(--color-primary);
+  color: white;
+  border: 2px solid var(--color-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.interactive-primary:hover {
+  background-color: transparent;
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 212, 255, 0.2);
+}
+
+.interactive-secondary {
+  background-color: var(--color-secondary);
+  color: white;
+  border: 2px solid var(--color-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.interactive-secondary:hover {
+  background-color: transparent;
+  color: var(--color-secondary);
+  border-color: var(--color-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(123, 44, 191, 0.2);
+}
+
+.interactive-success {
+  background-color: var(--color-success);
+  color: white;
+  border: 2px solid var(--color-success);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.interactive-success:hover {
+  background-color: transparent;
+  color: var(--color-success);
+  border-color: var(--color-success);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
+}
+
+/* Premium Interactive Elements */
+.premium-button {
+  background: var(--gradient-premium);
+  color: var(--color-text-primary);
+  border: 2px solid var(--color-premium);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.premium-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(255, 215, 0, 0.4);
+  border-color: var(--color-premium);
+}
+
+.premium-button:focus {
+  outline: 3px solid var(--color-premium);
+  outline-offset: 3px;
+}
+
+/* VIP Feature Elements */
+.vip-element {
+  background: var(--gradient-premium);
+  border: 2px solid var(--color-premium);
+  border-radius: 12px;
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.vip-element::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+  animation: vip-shine 3s infinite;
+}
+
+@keyframes vip-shine {
+  0% { left: -100%; }
+  50% { left: 100%; }
+  100% { left: 100%; }
+}
+
+/* Enhanced Button States */
+.btn-enhanced {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-enhanced::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-enhanced:hover::before {
+  left: 100%;
+}
+
+/* Accessibility Enhancements */
+@media (prefers-reduced-motion: reduce) {
+  .hover-primary:hover,
+  .hover-secondary:hover,
+  .hover-success:hover,
+  .hover-premium:hover,
+  .interactive-primary:hover,
+  .interactive-secondary:hover,
+  .interactive-success:hover,
+  .premium-button:hover {
+    transform: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  
+  .vip-element::before {
+    animation: none;
+  }
+  
+  .btn-enhanced::before {
+    transition: none;
+  }
+}
+
+@media (prefers-contrast: high) {
+  :root {
+    --color-primary: #0099CC;
+    --color-secondary: #663399;
+    --color-success: #00CC77;
+    --color-error: #CC3300;
+    --color-premium: #FFCC00;
+    --color-text-primary: #000000;
+    --color-text-secondary: #333333;
+  }
+  
+  .focus-primary:focus,
+  .focus-success:focus,
+  .focus-error:focus {
+    outline-width: 3px;
+    outline-offset: 3px;
+  }
+}

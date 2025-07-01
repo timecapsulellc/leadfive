@@ -2,88 +2,44 @@
  * NetworkTreeVisualization.css
  * 
  * Professional styling for the Network Tree Visualization component
- * Consolidated from multiple genealogy tree CSS implementations
+ * Updated with LeadFive Brand Color System
  * 
  * @features
- * - OrphiChain brand-compliant color scheme
+ * - Brand-compliant color scheme implementation
+ * - Psychology-based color applications
  * - Responsive design with mobile support
  * - Dark/light theme variants
  * - Smooth animations and transitions
  * - Accessible UI controls
  * 
  * @author OrphiChain Development Team
- * @version 2.0.0
- * @since 2025-06-14
+ * @version 3.0.0 - Brand Color System Integration
+ * @since 2025-07-01
  */
 
 /* ============================================================================
-   CSS CUSTOM PROPERTIES (DESIGN TOKENS)
-   ============================================================================ */
-
-:root {
-  /* OrphiChain Brand Colors */
-  --orphi-royal-purple: #7B2CBF;
-  --orphi-cyber-blue: #00D4FF;
-  --orphi-energy-orange: #FF6B35;
-  --orphi-success-green: #00FF88;
-  --orphi-silver-mist: #C0C0C0;
-  
-  /* Background Gradients */
-  --orphi-primary-gradient: linear-gradient(135deg, var(--orphi-royal-purple) 0%, var(--orphi-cyber-blue) 100%);
-  --orphi-accent-gradient: linear-gradient(135deg, var(--orphi-energy-orange) 0%, var(--orphi-success-green) 100%);
-  
-  /* Typography */
-  --orphi-font-primary: 'Inter', 'Segoe UI', system-ui, sans-serif;
-  --orphi-font-secondary: 'Roboto Mono', 'Consolas', monospace;
-  
-  /* Spacing Scale */
-  --orphi-spacing-xs: 0.25rem;
-  --orphi-spacing-sm: 0.5rem;
-  --orphi-spacing-md: 1rem;
-  --orphi-spacing-lg: 1.5rem;
-  --orphi-spacing-xl: 2rem;
-  --orphi-spacing-xxl: 3rem;
-  
-  /* Border Radius */
-  --orphi-radius-sm: 0.375rem;
-  --orphi-radius-md: 0.5rem;
-  --orphi-radius-lg: 0.75rem;
-  --orphi-radius-xl: 1rem;
-  
-  /* Shadows */
-  --orphi-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --orphi-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --orphi-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --orphi-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  
-  /* Transitions */
-  --orphi-transition-fast: 0.15s ease-in-out;
-  --orphi-transition-normal: 0.3s ease-in-out;
-  --orphi-transition-slow: 0.5s ease-in-out;
-}
-
-/* ============================================================================
-   MAIN COMPONENT CONTAINER - Improved Alignment
+   MAIN COMPONENT CONTAINER - Enhanced Brand Colors
    ============================================================================ */
 
 .network-tree-visualization {
   position: relative;
   width: 100%;
   min-height: 600px;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: var(--orphi-radius-xl);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-elevated); /* Midnight Blue Alpha */
+  border-radius: 12px;
+  border: 1px solid var(--border-primary); /* Cyber Blue Alpha */
   overflow: hidden;
-  font-family: var(--orphi-font-primary);
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  box-shadow: var(--shadow-brand-md);
 }
 
 .network-tree-visualization.theme-light {
-  background: rgba(0, 0, 0, 0.02);
-  border-color: rgba(0, 0, 0, 0.1);
+  background: var(--brand-off-white);
+  border-color: var(--brand-light-gray);
 }
 
 /* Tree container alignment */
@@ -106,7 +62,7 @@
 }
 
 /* ============================================================================
-   LOADING STATE
+   LOADING STATE - Brand Colors
    ============================================================================ */
 
 .network-tree-loading {
@@ -115,36 +71,36 @@
   align-items: center;
   justify-content: center;
   height: 400px;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: var(--orphi-radius-xl);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-elevated);
+  border-radius: 12px;
+  border: 1px solid var(--border-primary);
 }
 
 .network-tree-loading.theme-light {
-  background: rgba(0, 0, 0, 0.02);
-  border-color: rgba(0, 0, 0, 0.1);
+  background: var(--brand-off-white);
+  border-color: var(--brand-light-gray);
 }
 
 .loading-spinner {
   position: relative;
   width: 60px;
   height: 60px;
-  margin-bottom: var(--orphi-spacing-lg);
+  margin-bottom: 1.5rem;
 }
 
 .spinner-ring {
   position: absolute;
   width: 100%;
   height: 100%;
-  border: 4px solid rgba(255, 255, 255, 0.1);
-  border-top: 4px solid var(--orphi-cyber-blue);
+  border: 4px solid var(--brand-cyber-blue-alpha-10);
+  border-top: 4px solid var(--brand-cyber-blue);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
 
 .theme-light .spinner-ring {
-  border-color: rgba(0, 0, 0, 0.1);
-  border-top-color: var(--orphi-cyber-blue);
+  border-color: var(--brand-light-gray);
+  border-top-color: var(--brand-cyber-blue);
 }
 
 @keyframes spin {
@@ -153,7 +109,7 @@
 }
 
 .network-tree-loading p {
-  color: var(--orphi-cyber-blue);
+  color: var(--text-accent); /* Cyber Blue */
   font-weight: 600;
   margin: 0;
 }

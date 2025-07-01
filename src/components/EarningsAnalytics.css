@@ -1,5 +1,5 @@
 .earnings-analytics {
-  background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%); /* Deep Space to Midnight Blue */
+  background: var(--gradient-background);
   border-radius: 16px;
   padding: 24px;
   color: white;
@@ -142,7 +142,7 @@
 
 .growth-indicator.positive {
   background: rgba(76, 175, 80, 0.2);
-  color: #4caf50;
+  color: var(--color-success);
 }
 
 .card-value {
@@ -182,7 +182,7 @@
 }
 
 .metric-value.positive {
-  color: #4caf50;
+  color: var(--color-success);
 }
 
 /* Matrix Progress Styles */
@@ -208,7 +208,7 @@
 }
 
 .level-card.active {
-  border-color: #4caf50;
+  border-color: var(--color-success);
   background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(76, 175, 80, 0.1));
 }
 
@@ -231,7 +231,7 @@
 .level-reward {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #ffd700;
+  color: var(--color-premium);
 }
 
 .recycling-tracker {
@@ -266,7 +266,7 @@
 .stat span:last-child {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #ffd700;
+  color: var(--color-premium);
 }
 
 /* Predictive Analytics Styles */
@@ -299,7 +299,7 @@
 .prediction-value {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #ffd700;
+  color: var(--color-premium);
   margin-bottom: 8px;
 }
 
@@ -346,7 +346,7 @@
 
 .factor-fill {
   height: 100%;
-  background: linear-gradient(90deg, #4caf50, #8bc34a);
+  background: linear-gradient(90deg, var(--color-success), #8bc34a);
   border-radius: 4px;
   transition: width 0.8s ease;
 }
@@ -354,7 +354,7 @@
 .factor span:last-child {
   min-width: 40px;
   font-weight: 600;
-  color: #4caf50;
+  color: var(--color-success);
 }
 
 /* Loading State */

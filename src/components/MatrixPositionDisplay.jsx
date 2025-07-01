@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import './MatrixPositionDisplay.css';
+import '../styles/brand-colors.css';
 
 const MatrixPositionDisplay = ({ account, provider, signer, contractAddress, contractABI }) => {
   const [matrixData, setMatrixData] = useState({

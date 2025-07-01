@@ -1,14 +1,17 @@
+/* Import brand colors system - PhD-level color theory implementation */
+@import './styles/brand-colors.css';
+
 /* Import mobile responsiveness enhancements */
 @import './styles/mobile-responsive.css';
 @import './styles/advanced-mobile-optimization.css';
 @import './styles/next-gen-mobile-optimization.css';
 
-/* App Root Styles */
+/* App Root Styles - Updated with Brand Colors */
 .App {
   min-height: 100vh;
   width: 100%;
-  background: #0A0A0A;
-  color: #ffffff;
+  background: var(--bg-primary); /* Deep Space */
+  color: var(--text-primary); /* Pure White */
   position: relative;
   margin: 0;
   padding: 0;
@@ -17,7 +20,7 @@
 
 #root {
   width: 100%;
-  background: #0A0A0A;
+  background: var(--bg-primary); /* Deep Space */
   margin: 0;
   padding: 0;
 }

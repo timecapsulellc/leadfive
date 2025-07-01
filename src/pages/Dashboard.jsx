@@ -41,7 +41,6 @@ import AISuccessStories from '../components/AISuccessStories';
 import AIEmotionTracker from '../components/AIEmotionTracker';
 import ErrorBoundary from '../components/ErrorBoundary';
 import MobileNavigation from '../components/MobileNavigation';
-import ExtraordinaryAIAssistant from '../components/ExtraordinaryAIAssistant';
 import UnifiedChatbot from '../components/UnifiedChatbot';
 // Gamification System
 import GamificationSystem from '../components/GamificationSystem';
@@ -271,20 +270,6 @@ export default function Dashboard({ account, provider, onDisconnect }) {
             {renderContent()}
           </div>
         </div>
-
-        {/* Extraordinary AI Assistant - Fixed position chat assistant */}
-        {activeSection !== 'voice-assistant' && (
-          <ExtraordinaryAIAssistant 
-            userStats={{
-              totalEarnings: dashboardData.totalEarnings,
-              teamSize: dashboardData.teamSize,
-              currentLevel: dashboardData.currentLevel,
-              dailyEarnings: dashboardData.dailyEarnings,
-              activeReferrals: dashboardData.activeReferrals
-            }}
-            account={account}
-          />
-        )}
 
         {/* AIRA Unified Chatbot - Main AI Chat Interface */}
         <ErrorBoundary>

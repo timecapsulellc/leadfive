@@ -1,26 +1,26 @@
-/* Dashboard Container */
+/* Dashboard Container - Brand Color Implementation */
 .dashboard-container {
   display: flex;
   min-height: calc(100vh - 140px);
-  background: #0A0A0A;
+  background: var(--bg-primary); /* Deep Space */
   position: relative;
 }
 
-/* Loading State */
+/* Loading State - Brand Colors */
 .dashboard-loading {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - 140px);
-  background: #0A0A0A;
+  background: var(--bg-primary); /* Deep Space */
 }
 
 .loading-spinner {
   width: 50px;
   height: 50px;
-  border: 3px solid rgba(0, 212, 255, 0.1);
-  border-top-color: #00D4FF;
+  border: 3px solid var(--brand-cyber-blue-alpha-10);
+  border-top-color: var(--brand-cyber-blue);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -29,11 +29,11 @@
   to { transform: rotate(360deg); }
 }
 
-/* Sidebar */
+/* Sidebar - Brand Gradient Background */
 .dashboard-sidebar {
   width: 280px;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-  border-right: 1px solid rgba(0, 212, 255, 0.2);
+  background: var(--gradient-background); /* Deep Space to Midnight Blue */
+  border-right: 1px solid var(--border-primary); /* Cyber Blue Alpha */
   display: flex;
   flex-direction: column;
   position: sticky;
@@ -44,7 +44,7 @@
 
 .sidebar-header {
   padding: 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--border-secondary); /* Silver Mist Alpha */
   text-align: center;
 }
 
@@ -89,7 +89,7 @@
   padding: 1rem 2rem;
   background: none;
   border: none;
-  color: #B8C5D1;
+  color: var(--text-secondary); /* Silver Mist */
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -97,13 +97,13 @@
 }
 
 .menu-item:hover {
-  color: #00D4FF;
-  background: rgba(0, 212, 255, 0.1);
+  color: var(--text-accent); /* Cyber Blue */
+  background: var(--brand-cyber-blue-alpha-10);
 }
 
 .menu-item.active {
-  color: #00D4FF;
-  background: rgba(0, 212, 255, 0.1);
+  color: var(--text-accent); /* Cyber Blue */
+  background: var(--brand-cyber-blue-alpha-10);
 }
 
 .menu-item.active::before {
@@ -113,7 +113,7 @@
   top: 0;
   bottom: 0;
   width: 4px;
-  background: #00D4FF;
+  background: var(--brand-cyber-blue);
 }
 
 .menu-icon {
@@ -349,7 +349,7 @@
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
 }
 
-/* Dashboard Content */
+/* Dashboard Content - Brand Colors */
 .dashboard-content {
   flex: 1;
   padding: 2rem;
@@ -369,14 +369,21 @@
 }
 
 .stat-card {
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.95));
-  border: 1px solid rgba(0, 212, 255, 0.2);
+  background: var(--gradient-background-subtle); /* Deep Space to Midnight Blue Alpha */
+  border: 1px solid var(--border-primary); /* Cyber Blue Alpha */
   border-radius: 15px;
   padding: 1.5rem;
   display: flex;
   align-items: center;
   gap: 1.5rem;
   transition: all 0.3s ease;
+  box-shadow: var(--shadow-brand-sm);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-brand-md);
+  border-color: var(--brand-cyber-blue);
 }
 
 .stat-card:hover {
@@ -522,23 +529,23 @@
 
 .full-view-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
+  box-shadow: var(--shadow-brand-lg);
 }
 
 .view-toggle button {
   padding: 0.5rem 1rem;
-  background: rgba(0, 212, 255, 0.1);
-  border: 1px solid rgba(0, 212, 255, 0.3);
-  color: #B8C5D1;
+  background: var(--brand-cyber-blue-alpha-10);
+  border: 1px solid var(--brand-cyber-blue-alpha-30);
+  color: var(--text-secondary); /* Silver Mist */
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .view-toggle button.active {
-  background: rgba(0, 212, 255, 0.3);
-  color: #00D4FF;
-  border-color: #00D4FF;
+  background: var(--brand-cyber-blue-alpha-30);
+  color: var(--text-accent); /* Cyber Blue */
+  border-color: var(--brand-cyber-blue);
 }
 
 /* Earnings Section */
