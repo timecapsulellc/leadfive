@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ethers } from 'ethers';
+import contractService from '../services/ContractService.js';
 import { 
   FaBolt, 
   FaFire, 
@@ -41,32 +42,34 @@ export default function RealTimeBlockchainMonitor({
   const wsRef = useRef(null);
   const contractRef = useRef(null);
 
-  // Initialize WebSocket connection for real-time updates
+  // Initialize real-time monitoring with actual contract data
   useEffect(() => {
     if (!provider || !account) return;
 
     const initializeRealTimeMonitoring = async () => {
       try {
-        // Set up contract instance
-        const contractAddress = window.LEADFIVE_CONTRACT_CONFIG?.address;
-        if (contractAddress) {
-          const contract = new ethers.Contract(
-            contractAddress,
-            window.CONTRACT_ABI,
-            provider
-          );
-          contractRef.current = contract;
-
-          // Listen to contract events
-          setupContractEventListeners(contract);
+        // Initialize contract service if not already done
+        if (!contractService.isInitialized) {
+          await contractService.initialize(provider, account);
         }
 
-        // Initialize WebSocket for real-time data
-        initializeWebSocket();
+        // Set up contract event listeners for real-time updates
+        setupContractEventListeners();
+
+        // Load initial network stats
+        await loadNetworkStats();
+        
+        // Set up periodic updates
+        const statsInterval = setInterval(loadNetworkStats, 30000); // Update every 30 seconds
         
         setIsConnected(true);
+
+        return () => {
+          clearInterval(statsInterval);
+        };
       } catch (error) {
         console.error('Failed to initialize real-time monitoring:', error);
+        setIsConnected(false);
       }
     };
 
@@ -77,40 +80,36 @@ export default function RealTimeBlockchainMonitor({
     };
   }, [provider, account]);
 
-  const setupContractEventListeners = (contract) => {
-    // Listen for commission distributions to user
-    const commissionFilter = contract.filters.CommissionDistributed(account);
-    contract.on(commissionFilter, (recipient, payer, amount, poolType, poolName, timestamp, event) => {
-      const earningData = {
-        type: 'earning',
-        amount: ethers.formatUnits(amount, 6), // USDT has 6 decimals
-        poolName,
-        poolType: parseInt(poolType),
-        timestamp: parseInt(timestamp) * 1000,
-        txHash: event.transactionHash,
-        blockNumber: event.blockNumber
-      };
+  const setupContractEventListeners = () => {
+    // Set up event listeners using contract service
+    contractService.setupEventListeners({
+      onEarning: (recipient, payer, amount, poolType, poolName, timestamp, event) => {
+        const earningData = {
+          type: 'earning',
+          amount: ethers.formatUnits(amount, 6), // USDT has 6 decimals
+          poolName,
+          poolType: parseInt(poolType),
+          timestamp: parseInt(timestamp) * 1000,
+          txHash: event.transactionHash,
+          blockNumber: event.blockNumber
+        };
 
-      // Add to live events
-      setLiveEvents(prev => [earningData, ...prev.slice(0, 49)]);
-      
-      // Update real-time earnings
-      updateRealtimeEarnings(parseFloat(earningData.amount));
-      
-      // Check for achievements
-      checkForAchievements(earningData);
-      
-      // Notify parent component
-      if (onEarningsUpdate) {
-        onEarningsUpdate(earningData);
-      }
-    });
+        // Add to live events
+        setLiveEvents(prev => [earningData, ...prev.slice(0, 49)]);
+        
+        // Update real-time earnings
+        updateRealtimeEarnings(parseFloat(earningData.amount));
+        
+        // Check for achievements
+        checkForAchievements(earningData);
+        
+        // Notify parent component
+        if (onEarningsUpdate) {
+          onEarningsUpdate(earningData);
+        }
+      },
 
-    // Listen for new user registrations in your network
-    const registrationFilter = contract.filters.UserRegistered();
-    contract.on(registrationFilter, (user, sponsor, packageTier, amount, timestamp, event) => {
-      // Check if this affects user's network
-      if (sponsor === account) {
+      onNewReferral: (user, sponsor, packageTier, amount, timestamp, event) => {
         const registrationData = {
           type: 'new_referral',
           user,
@@ -122,22 +121,39 @@ export default function RealTimeBlockchainMonitor({
 
         setLiveEvents(prev => [registrationData, ...prev.slice(0, 49)]);
         checkForAchievements(registrationData);
+      },
+
+      onWithdrawal: (user, amount, reinvestmentAmount, timestamp, event) => {
+        const withdrawalData = {
+          type: 'withdrawal',
+          amount: ethers.formatUnits(amount, 6),
+          reinvestmentAmount: ethers.formatUnits(reinvestmentAmount, 6),
+          timestamp: parseInt(timestamp) * 1000,
+          txHash: event.transactionHash
+        };
+
+        setLiveEvents(prev => [withdrawalData, ...prev.slice(0, 49)]);
       }
     });
+  };
 
-    // Listen for withdrawals
-    const withdrawalFilter = contract.filters.WithdrawalProcessed(account);
-    contract.on(withdrawalFilter, (user, amount, reinvestmentAmount, timestamp, event) => {
-      const withdrawalData = {
-        type: 'withdrawal',
-        amount: ethers.formatUnits(amount, 6),
-        reinvestmentAmount: ethers.formatUnits(reinvestmentAmount, 6),
-        timestamp: parseInt(timestamp) * 1000,
-        txHash: event.transactionHash
-      };
+  const loadNetworkStats = async () => {
+    try {
+      // Get real network data
+      const [gasPrice, blockNumber] = await Promise.all([
+        contractService.getGasPrice(),
+        contractService.getBlockNumber()
+      ]);
 
-      setLiveEvents(prev => [withdrawalData, ...prev.slice(0, 49)]);
-    });
+      setNetworkStats({
+        gasPrice: parseFloat(gasPrice).toFixed(1),
+        blockNumber,
+        networkLoad: gasPrice > 10 ? 'high' : gasPrice > 5 ? 'medium' : 'optimal',
+        avgTransactionTime: gasPrice > 10 ? '10s' : gasPrice > 5 ? '5s' : '3s'
+      });
+    } catch (error) {
+      console.error('Failed to load network stats:', error);
+    }
   };
 
   const initializeWebSocket = () => {
@@ -287,8 +303,8 @@ export default function RealTimeBlockchainMonitor({
     if (wsRef.current) {
       wsRef.current.close();
     }
-    if (contractRef.current) {
-      contractRef.current.removeAllListeners();
+    if (contractService.isInitialized) {
+      contractService.cleanup();
     }
   };
 
