@@ -5,6 +5,7 @@ import NetworkTreeVisualization from '../components/NetworkTreeVisualization';
 import PerformanceMetrics from '../components/PerformanceMetrics';
 import { FaArrowLeft, FaNetworkWired } from 'react-icons/fa';
 import './Genealogy.css';
+import '../styles/genealogy-layout-fixes.css';
 
 const Genealogy = ({ account, provider, signer, onConnect, onDisconnect }) => {
   const navigate = useNavigate();

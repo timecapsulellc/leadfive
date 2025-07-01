@@ -700,8 +700,8 @@ const NetworkTreeVisualization = ({
       { siblings: 1.8, nonSiblings: 2.2 } : // Perfect separation for node alignment
       { siblings: 1.6, nonSiblings: 2.0 },
     translate: currentOrientation === 'vertical' ? 
-      { x: dimensions.width / 2, y: 100 } : // Dynamic centering for all screen sizes
-      { x: 150, y: dimensions.height / 2 },
+      { x: Math.max(dimensions.width / 2, 150), y: 80 } : // Better centering with minimum offset
+      { x: 120, y: Math.max(dimensions.height / 2, 150) },
     zoom: currentZoom,
     scaleExtent,
     enableLegacyTransitions: true,

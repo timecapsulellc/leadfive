@@ -1,0 +1,130 @@
+/**
+ * Genealogy Layout Fixes
+ * Additional CSS to fix alignment and layout issues in genealogy/team structure
+ */
+
+/* Container alignment fixes */
+.genealogy-page .team-structure-section {
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Tree visualization container fixes */
+.genealogy-page .team-visualization {
+  overflow: hidden;
+  position: relative;
+}
+
+.genealogy-page .team-visualization > div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* SVG positioning fixes */
+.genealogy-page .team-visualization svg {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Performance metrics alignment */
+.genealogy-page .team-stats .performance-metrics {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Grid container fixes */
+.genealogy-page .team-stats .metrics-grid {
+  justify-items: center;
+  align-items: stretch;
+}
+
+.genealogy-page .team-stats .metric-category {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Responsive layout improvements */
+@media (max-width: 1024px) {
+  .genealogy-page .team-structure-section {
+    padding: 1.5rem;
+  }
+  
+  .genealogy-page .team-visualization {
+    min-height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .genealogy-page .team-structure-section {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+  
+  .genealogy-page .team-visualization {
+    min-height: 400px;
+    padding: 0.5rem;
+  }
+  
+  .genealogy-page .team-stats .category-items {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .genealogy-page .team-structure-section {
+    padding: 0.75rem;
+    gap: 1rem;
+  }
+  
+  .genealogy-page .team-visualization {
+    min-height: 350px;
+    padding: 0.25rem;
+  }
+  
+  .genealogy-page .team-overview h3 {
+    font-size: 1.3rem;
+  }
+  
+  .genealogy-page .team-stats h3 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Fix for mobile landscape */
+@media (max-width: 768px) and (orientation: landscape) {
+  .genealogy-page .team-visualization {
+    min-height: 300px;
+  }
+}
+
+/* Fix for very small screens */
+@media (max-width: 320px) {
+  .genealogy-page {
+    padding: 0.5rem;
+  }
+  
+  .genealogy-page .team-structure-section {
+    padding: 0.5rem;
+    gap: 0.75rem;
+  }
+  
+  .genealogy-page .team-visualization {
+    min-height: 300px;
+  }
+  
+  .genealogy-header {
+    gap: 0.75rem;
+  }
+  
+  .genealogy-header h1 {
+    font-size: 1.2rem;
+  }
+  
+  .genealogy-header p {
+    font-size: 0.8rem;
+  }
+}

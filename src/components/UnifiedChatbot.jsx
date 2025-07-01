@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { FaRobot, FaPaperPlane, FaMicrophone, FaTimes, FaMinimize, FaExpand } from 'react-icons/fa';
+import { FaRobot, FaPaperPlane, FaMicrophone, FaTimes, FaMinus, FaExpand } from 'react-icons/fa';
 import './UnifiedChatbot.css';
 
 const UnifiedChatbot = ({ userStats, account, userInfo }) => {
@@ -118,7 +118,7 @@ const UnifiedChatbot = ({ userStats, account, userInfo }) => {
                 onClick={() => setIsMinimized(!isMinimized)}
                 title={isMinimized ? "Expand" : "Minimize"}
               >
-                {isMinimized ? <FaExpand /> : <FaMinimize />}
+                {isMinimized ? <FaExpand /> : <FaMinus />}
               </button>
               <button 
                 onClick={() => setIsOpen(false)}
