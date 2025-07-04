@@ -19,7 +19,7 @@ services:
   - key: VITE_APP_ENV
     value: production
   - key: VITE_CONTRACT_ADDRESS
-    value: "0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569"
+    value: "0x29dcCb502D10C042BcC6a02a7762C49595A9E498"
   - key: VITE_NETWORK_ID
     value: "56"
   - key: VITE_WEB3_PROVIDER_URL
@@ -54,20 +54,20 @@ services:
     value: "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29"
   - key: VITE_FEE_RECIPIENT
     value: "0xeB652c4523f3Cf615D3F3694b14E551145953aD0"
-  - key: VITE_OPENAI_API_KEY
-    value: "YOUR_OPENAI_API_KEY"
-  - key: VITE_OPENAI_MODEL
-    value: "gpt-3.5-turbo"
-  - key: VITE_OPENAI_MAX_TOKENS
-    value: "500"
-  - key: VITE_ELEVENLABS_API_KEY
-    value: "YOUR_ELEVENLABS_API_KEY"
-  - key: VITE_ELEVENLABS_VOICE_ID
-    value: "9PVP7ENhDskL0KYHAKtD"
-  - key: VITE_ELEVENLABS_MODEL
-    value: "eleven_multilingual_v2"
-  - key: VITE_ELEVENLABS_AGENT_ID
-    value: "YOUR_ELEVENLABS_AGENT_ID"
+  - key: VITE_DEFAULT_REFERRAL_CODE
+    value: "K9NBHT"
+  - key: VITE_DEFAULT_SPONSOR
+    value: "0xCeaEfDaDE5a0D574bFd5577665dC58d132995335"
+  - key: VITE_TREASURY_WALLET
+    value: "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29"
+  - key: VITE_ENABLE_AI_FEATURES
+    value: "true"
+  - key: VITE_ENABLE_PRICE_TICKER
+    value: "true"
+  - key: VITE_ENABLE_PORTFOLIO_TRACKING
+    value: "true"
+  - key: VITE_ENABLE_MARKET_WIDGETS
+    value: "true"
   - key: VITE_ENABLE_AI_SYNTHESIS
     value: "true"
   - key: VITE_MAX_FILE_SIZE
