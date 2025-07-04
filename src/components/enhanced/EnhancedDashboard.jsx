@@ -59,6 +59,11 @@ import EnhancedKPICards from './EnhancedKPICards';
 import LiveNotifications from './LiveNotifications';
 import QuickActionsPanel from './QuickActionsPanel';
 
+// CoinMarketCap API Integration
+import PriceTicker from '../PriceTicker';
+import PortfolioValue, { EarningsDisplay } from '../PortfolioValue';
+import { MarketSummaryCard } from '../MarketDataWidget';
+
 import './EnhancedDashboard.css';
 
 export default function EnhancedDashboard({ account, provider, onDisconnect }) {
@@ -162,6 +167,12 @@ export default function EnhancedDashboard({ account, provider, onDisconnect }) {
   const EnhancedDashboardOverview = ({ data, account }) => {
     return (
       <div className="enhanced-dashboard-section">
+        {/* NEW: Real-time Market Data */}
+        <div className="market-data-section">
+          <PriceTicker symbols={['USDT', 'BNB', 'BTC', 'ETH']} autoRefresh={true} />
+          <MarketSummaryCard compact={true} />
+        </div>
+        
         {/* NEW: Enhanced KPI Cards on top of your existing welcome banner */}
         <EnhancedKPICards data={data} />
         
@@ -228,6 +239,16 @@ export default function EnhancedDashboard({ account, provider, onDisconnect }) {
             mode="enhanced"
             showControls={true}
             initialDepth={3}
+          />
+        </div>
+
+        {/* NEW: Portfolio Value Section */}
+        <div className="portfolio-section">
+          <PortfolioValue 
+            account={account} 
+            provider={provider} 
+            refreshInterval={30000}
+            showDetailed={true}
           />
         </div>
 
