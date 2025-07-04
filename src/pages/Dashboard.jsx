@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';
 import PageWrapper from '../components/PageWrapper';
 import ErrorBoundary from '../components/ErrorBoundary';
-import ComprehensiveDashboard from '../components/enhanced/ComprehensiveDashboard';
+import EnhancedDashboard from '../components/enhanced/EnhancedDashboard';
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from '../config/contracts';
 import '../styles/brandColors.css';
 import './Dashboard.css';
@@ -33,11 +33,10 @@ export default function Dashboard({ account, provider, onDisconnect }) {
   return (
     <PageWrapper>
       <ErrorBoundary>
-        <ComprehensiveDashboard 
-          userAddress={account}
-          contractInstance={contractInstance}
-          web3={provider}
+        <EnhancedDashboard 
           account={account}
+          provider={provider}
+          onDisconnect={onDisconnect}
         />
       </ErrorBoundary>
     </PageWrapper>

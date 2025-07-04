@@ -28,7 +28,7 @@ import {
   FaCopy,
   FaExpand,
   FaCompress,
-  FaRefresh
+  FaSync
 } from 'react-icons/fa';
 
 // Import ALL your existing components - PRESERVED
@@ -513,7 +513,7 @@ export default function EnhancedDashboard({ account, provider, onDisconnect }) {
               className={`toolbar-btn ${liveMode ? 'active' : ''}`}
               onClick={() => setLiveMode(!liveMode)}
             >
-              <FaRefresh />
+              <FaSync />
               {liveMode ? 'Live' : 'Refresh'}
             </button>
           </div>
