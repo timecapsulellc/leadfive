@@ -157,6 +157,8 @@
   padding: 80px 0 20px 0; /* Account for toolbar */
   transition: all 0.3s ease;
   overflow-y: auto;
+  z-index: 999;
+  position: relative;
 }
 
 .sidebar-header {
@@ -210,6 +212,9 @@
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 0.95rem;
+  position: relative;
+  z-index: 1000;
+  pointer-events: auto;
 }
 
 .menu-item:hover {

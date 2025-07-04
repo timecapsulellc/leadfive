@@ -29,7 +29,12 @@ import {
   FaCopy,
   FaExpand,
   FaCompress,
-  FaSync
+  FaSync,
+  FaLayerGroup,
+  FaArrowUp,
+  FaCrown,
+  FaHandsHelping,
+  FaCoins
 } from 'react-icons/fa';
 
 // Import ALL your existing components - PRESERVED
@@ -213,7 +218,7 @@ export default function EnhancedDashboard({ account, provider, onDisconnect }) {
               <h3 className="card-title">Direct Referrals (40%)</h3>
               <FaUsers className="card-icon" />
             </div>
-            <div className="card-value">${data.directReferralEarnings.toFixed(2)}</div>
+            <div className="card-value">${(data.directReferralEarnings || 0).toFixed(2)}</div>
             <div className="card-label">From {data.directReferrals} direct referrals</div>
           </div>
           
@@ -222,7 +227,7 @@ export default function EnhancedDashboard({ account, provider, onDisconnect }) {
               <h3 className="card-title">Level Bonus (10%)</h3>
               <FaNetworkWired className="card-icon" />
             </div>
-            <div className="card-value">${data.levelBonusEarnings.toFixed(2)}</div>
+            <div className="card-value">${(data.levelBonusEarnings || 0).toFixed(2)}</div>
             <div className="card-label">Multi-level commissions</div>
           </div>
           
@@ -231,7 +236,7 @@ export default function EnhancedDashboard({ account, provider, onDisconnect }) {
               <h3 className="card-title">Upline Bonus (10%)</h3>
               <FaChartBar className="card-icon" />
             </div>
-            <div className="card-value">${data.uplineBonusEarnings.toFixed(2)}</div>
+            <div className="card-value">${(data.uplineBonusEarnings || 0).toFixed(2)}</div>
             <div className="card-label">From upline structure</div>
           </div>
           
@@ -240,7 +245,7 @@ export default function EnhancedDashboard({ account, provider, onDisconnect }) {
               <h3 className="card-title">Leader Pool (10%)</h3>
               <FaTrophy className="card-icon" />
             </div>
-            <div className="card-value">${data.leaderPoolEarnings.toFixed(2)}</div>
+            <div className="card-value">${(data.leaderPoolEarnings || 0).toFixed(2)}</div>
             <div className="card-label">{data.leaderRank === 'none' ? 'Not qualified yet' : 'Leader qualified'}</div>
           </div>
           
@@ -249,7 +254,7 @@ export default function EnhancedDashboard({ account, provider, onDisconnect }) {
               <h3 className="card-title">Help Pool (30%)</h3>
               <FaGift className="card-icon" />
             </div>
-            <div className="card-value">${data.helpPoolEarnings.toFixed(2)}</div>
+            <div className="card-value">${(data.helpPoolEarnings || 0).toFixed(2)}</div>
             <div className="card-label">{data.helpPoolEligible ? 'Eligible' : 'Not eligible'}</div>
           </div>
         </div>
