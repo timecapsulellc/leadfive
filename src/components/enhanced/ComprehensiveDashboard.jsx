@@ -23,6 +23,11 @@ import AICoachingPanel from '../AICoachingPanel';
 import AIEarningsPrediction from '../AIEarningsPrediction';
 import PerformanceMetrics from '../PerformanceMetrics';
 
+// Import CoinMarketCap components
+import PriceTicker from '../PriceTicker';
+import PortfolioValue from '../PortfolioValue';
+import MarketDataWidget, { MarketSummaryCard } from '../MarketDataWidget';
+
 import '../../styles/brandColors.css';
 import '../styles/ComprehensiveDashboard.css';
 import '../../styles/CommunityStructureDashboard.css';
@@ -160,6 +165,11 @@ const ComprehensiveDashboard = ({
         </div>
       </div>
 
+      {/* Live Price Ticker */}
+      <div className="price-ticker-section">
+        <PriceTicker symbols={['USDT', 'BNB', 'BTC', 'ETH']} autoRefresh={true} />
+      </div>
+
       <div className="kpi-grid">
         <KPICard 
           title="Account Balance"
@@ -195,6 +205,19 @@ const ComprehensiveDashboard = ({
           changeType="positive"
           icon={FaNetworkWired}
           color="#667eea"
+        />
+
+        {/* Market Summary Card */}
+        <MarketSummaryCard />
+      </div>
+
+      {/* Portfolio Value Section */}
+      <div className="portfolio-section">
+        <PortfolioValue 
+          usdtBalance={dashboardData?.user?.balance || 0}
+          bnbBalance={0} // Would be fetched from wallet
+          showDetailed={true}
+          className="dashboard-portfolio"
         />
       </div>
 
@@ -320,6 +343,11 @@ const ComprehensiveDashboard = ({
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Market Data Widget */}
+        <div className="market-data-card">
+          <MarketDataWidget compact={false} showChart={false} />
         </div>
 
         <div className="quick-actions-card">

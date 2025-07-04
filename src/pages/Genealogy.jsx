@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import PageWrapper from '../components/PageWrapper';
 import UnifiedWalletConnect from '../components/unified/UnifiedWalletConnect';
-import CommunityLevelsVisualization from '../components/CommunityLevelsVisualization';
+import CleanBinaryTree from '../components/CleanBinaryTree';
 import { motion } from 'framer-motion';
 import './Genealogy.css';
 
@@ -80,19 +80,18 @@ const Genealogy = ({ account, provider, signer, onConnect, onDisconnect }) => {
               </div>
             </motion.div>
 
-            {/* Network Levels Visualization */}
+            {/* Binary Tree Visualization */}
             <motion.div 
               className="community-visualization-section"
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <CommunityLevelsVisualization 
+              <CleanBinaryTree 
                 userAddress={account}
-                contractInstance={null} // Will be passed from context/provider
-                mode="enhanced"
+                account={account}
+                data={null} // Will be passed from contract/provider
                 showControls={true}
-                initialDepth={4}
               />
             </motion.div>
 
