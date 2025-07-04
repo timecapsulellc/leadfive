@@ -3,13 +3,15 @@
 # DigitalOcean Build Script
 # This script ensures clean builds for DigitalOcean deployment
 
-echo "🧹 Cleaning previous builds..."
+echo "🧹 Deep cleaning previous builds and cache..."
 rm -rf dist
 rm -rf node_modules/.vite
 rm -rf node_modules/.cache
+rm -rf .vite
+rm -rf vite.config.js.timestamp-*
 
-echo "📦 Installing dependencies with clean slate..."
-npm ci --production=false
+echo "📦 Fresh install of dependencies..."
+npm ci --production=false --prefer-offline=false
 
 echo "🔍 Checking for build issues..."
 node --version
