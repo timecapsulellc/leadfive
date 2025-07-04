@@ -17,7 +17,8 @@ export const ROOT_USER_CONFIG = {
   // Real referral links
   referralLinks: {
     local: 'http://localhost:5174/register?ref=K9NBHT',
-    production: 'https://leadfive.today/register?ref=K9NBHT'
+    production: 'https://leadfive.today/register?ref=K9NBHT',
+    current: 'https://leadfive-app-3f8tb.ondigitalocean.app/register?ref=K9NBHT'
   },
   
   // System options

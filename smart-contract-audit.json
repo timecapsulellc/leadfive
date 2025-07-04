@@ -1,0 +1,59 @@
+{
+  "timestamp": "2025-07-04T08:30:26.190Z",
+  "contractAddress": "0x29dcCb502D10C042BcC6a02a7762C49595A9E498",
+  "usdtAddress": "0x55d398326f99059fF775485246999027B3197955",
+  "rootCode": "K9NBHT",
+  "rootAddress": "0xCeaEfDaDE5a0D574bFd5577665dC58d132995335",
+  "network": "BSC Mainnet",
+  "chainId": 56,
+  "packages": [
+    {
+      "amount": 30,
+      "maxEarnings": 120
+    },
+    {
+      "amount": 50,
+      "maxEarnings": 200
+    },
+    {
+      "amount": 100,
+      "maxEarnings": 400
+    },
+    {
+      "amount": 200,
+      "maxEarnings": 800
+    }
+  ],
+  "commissions": {
+    "directReferrals": 40,
+    "levelBonus": 10,
+    "uplineBonus": 10,
+    "leaderPool": 10,
+    "helpPool": 30
+  },
+  "withdrawalRatios": {
+    "noReferrals": {
+      "withdraw": 70,
+      "reinvest": 30
+    },
+    "oneReferral": {
+      "withdraw": 80,
+      "reinvest": 20
+    },
+    "threeReferrals": {
+      "withdraw": 90,
+      "reinvest": 10
+    },
+    "fiveReferrals": {
+      "withdraw": 100,
+      "reinvest": 0
+    }
+  },
+  "security": {
+    "phdAudited": true,
+    "transparentTransactions": true,
+    "decentralizedPlatform": true,
+    "smartContractAutomation": true
+  },
+  "readyForProduction": true
+}
