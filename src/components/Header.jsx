@@ -33,7 +33,6 @@ export default function Header({ account, onConnect, onDisconnect }) {
         <Link to="/security">Security</Link>
         <Link to="/about">About</Link>
         {account && <Link to="/dashboard">Dashboard</Link>}
-        <Link to="/testnet-withdrawal" className="testnet-link">🧪 Testnet</Link>
       </nav>
       <div className="wallet-section">
         {account ? (

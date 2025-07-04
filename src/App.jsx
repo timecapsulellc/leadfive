@@ -18,7 +18,6 @@ const Security = React.lazy(() => import('./pages/Security'));
 const About = React.lazy(() => import('./pages/About'));
 const Dashboard = React.lazy(() => import('./pages/Dashboard'));
 const Genealogy = React.lazy(() => import('./pages/Genealogy'));
-const TestnetWithdrawalTester = React.lazy(() => import('./components/TestnetWithdrawalTester'));
 import { 
   storeWalletConnection, 
   autoReconnectWallet, 
@@ -445,19 +444,6 @@ function App() {
                   </div>
                   <Footer />
                 </UserRoute>
-              } />
-              <Route path="/testnet-withdrawal" element={
-                <>
-                  <Header 
-                    account={account} 
-                    onConnect={handleWalletConnect}
-                    onDisconnect={handleDisconnect} 
-                  />
-                  <div className="App">
-                    <TestnetWithdrawalTester />
-                  </div>
-                  <Footer />
-                </>
               } />
             </Routes>
           </Suspense>
