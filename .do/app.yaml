@@ -12,9 +12,18 @@ services:
   output_dir: dist
   routes:
   - path: /
+  - path: /register
+  - path: /dashboard
+  - path: /about
+  - path: /packages
+  - path: /referrals
+  - path: /genealogy
+  - path: /withdrawals
+  - path: /security
   - path: /*
-  catchall_document: index.html
+    fallback_document: index.html
   error_document: index.html
+  index_document: index.html
   envs:
   - key: NODE_ENV
     value: production
