@@ -26,3 +26,4 @@ test -f dist/index.html && echo "✅ index.html exists" || echo "❌ index.html 
 test -d dist/assets && echo "✅ assets directory exists" || echo "❌ assets directory missing"
 
 echo "🚀 Build script completed successfully!"
+echo "📅 Build timestamp: $(date)"
