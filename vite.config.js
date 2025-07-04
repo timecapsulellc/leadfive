@@ -64,6 +64,7 @@ export default defineConfig({
     sourcemap: false,
     target: 'es2020',
     chunkSizeWarningLimit: 1000,
+    copyPublicDir: true,
     rollupOptions: {
       external: (id) => {
         // Exclude problematic core-js internal modules
