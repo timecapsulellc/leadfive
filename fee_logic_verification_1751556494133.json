@@ -1,0 +1,31 @@
+{
+  "timestamp": "2025-07-03T15:28:14.133Z",
+  "feeLogicCorrect": true,
+  "implementation": "5% fee ONLY on withdrawal portion",
+  "reinvestmentFee": "No fees on reinvestment",
+  "autoCompoundBonus": "5% bonus on auto-compound",
+  "helpPoolIntegration": "Fee-free reinvestment to Help Pool",
+  "htmlSpecCompliant": true,
+  "testScenarios": [
+    {
+      "name": "0-4 Referrals",
+      "passed": true,
+      "feeAmount": 3.5
+    },
+    {
+      "name": "5-19 Referrals",
+      "passed": true,
+      "feeAmount": 3.75
+    },
+    {
+      "name": "20+ Referrals",
+      "passed": true,
+      "feeAmount": 4
+    },
+    {
+      "name": "Auto-Compound Enabled",
+      "passed": true,
+      "feeAmount": 0
+    }
+  ]
+}

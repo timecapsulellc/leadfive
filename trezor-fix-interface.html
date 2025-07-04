@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadFive Root User Fix - Trezor Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover { background-color: #0056b3; }
+        button:disabled { background-color: #6c757d; cursor: not-allowed; }
+        .step {
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .step h3 { color: #495057; margin-top: 0; }
+        .progress {
+            background-color: #e9ecef;
+            border-radius: 5px;
+            height: 20px;
+            margin: 10px 0;
+        }
+        .progress-bar {
+            background-color: #28a745;
+            height: 100%;
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 LeadFive Root User Fix</h1>
+            <p>Secure Trezor Hardware Wallet Interface</p>
+        </div>
+
+        <div id="connection-status" class="status info">
+            <strong>📱 Connect your Trezor wallet to MetaMask and click "Connect Wallet"</strong>
+        </div>
+
+        <div class="step">
+            <h3>Step 1: Connect Wallet</h3>
+            <button id="connect-btn" onclick="connectWallet()">Connect Trezor via MetaMask</button>
+            <div id="wallet-info"></div>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Fix Root User Issue</h3>
+            <p>This will clear the deployer registration and reset the user count.</p>
+            <button id="fix-btn" onclick="fixRootUserIssue()" disabled>Execute fixRootUserIssue()</button>
+            <div id="fix-status"></div>
+        </div>
+
+        <div class="step">
+            <h3>Step 3: Register as Root User</h3>
+            <p>This will register your Trezor wallet as User ID 1 with the $30 package.</p>
+            <button id="register-btn" onclick="registerAsRoot()" disabled>Execute registerAsRoot(1)</button>
+            <div id="register-status"></div>
+        </div>
+
+        <div class="step">
+            <h3>Step 4: Verification</h3>
+            <button id="verify-btn" onclick="verifyFix()" disabled>Verify Root User Fix</button>
+            <div id="verify-status"></div>
+        </div>
+
+        <div class="progress">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+    </div>
+
+    <script>
+        // Contract configuration
+        const CONTRACT_ADDRESS = '0x29dcCb502D10C042BcC6a02a7762C49595A9E498';
+        const TREZOR_ADDRESS = '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29';
+        
+        // Contract ABI for the functions we need
+        const CONTRACT_ABI = [
+            "function owner() view returns (address)",
+            "function totalUsers() view returns (uint32)",
+            "function fixRootUserIssue() external",
+            "function registerAsRoot(uint8 packageLevel) external",
+            "function isRootUserFixed() view returns (bool, string, address, uint32, bool, bool)",
+            "function isDeployerCleared() view returns (bool)"
+        ];
+
+        let provider = null;
+        let signer = null;
+        let contract = null;
+        let userAddress = null;
+
+        // Connect wallet function
+        async function connectWallet() {
+            try {
+                // Check if ethers is loaded
+                if (typeof ethers === 'undefined') {
+                    showStatus('connection-status', 'error', '❌ Ethers.js library not loaded. Please refresh the page.');
+                    return;
+                }
+
+                if (typeof window.ethereum === 'undefined') {
+                    showStatus('connection-status', 'error', '❌ MetaMask not detected. Please install MetaMask and connect your Trezor.');
+                    return;
+                }
+
+                // Request account access
+                await window.ethereum.request({ method: 'eth_requestAccounts' });
+                
+                // Check if we're on BSC Mainnet
+                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                if (chainId !== '0x38') { // BSC Mainnet chain ID
+                    showStatus('connection-status', 'error', '❌ Please switch to BSC Mainnet (Chain ID: 56)');
+                    return;
+                }
+
+                // Initialize ethers
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                signer = provider.getSigner();
+                userAddress = await signer.getAddress();
+
+                // Check if connected address is the Trezor
+                if (userAddress.toLowerCase() !== TREZOR_ADDRESS.toLowerCase()) {
+                    showStatus('connection-status', 'error', 
+                        `❌ Connected wallet (${userAddress}) is not the Trezor wallet (${TREZOR_ADDRESS}). Please connect your Trezor.`);
+                    return;
+                }
+
+                // Initialize contract
+                contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
+                // Verify ownership
+                const owner = await contract.owner();
+                if (owner.toLowerCase() !== userAddress.toLowerCase()) {
+                    showStatus('connection-status', 'error', 
+                        `❌ Contract owner mismatch. Expected: ${owner}, Connected: ${userAddress}`);
+                    return;
+                }
+
+                // Success!
+                showStatus('connection-status', 'success', 
+                    `✅ Trezor wallet connected successfully! Address: ${userAddress}`);
+                
+                document.getElementById('wallet-info').innerHTML = `
+                    <div class="status success">
+                        <strong>Wallet:</strong> ${userAddress}<br>
+                        <strong>Contract:</strong> ${CONTRACT_ADDRESS}<br>
+                        <strong>Network:</strong> BSC Mainnet
+                    </div>
+                `;
+
+                // Enable next step
+                document.getElementById('fix-btn').disabled = false;
+                updateProgress(25);
+
+            } catch (error) {
+                showStatus('connection-status', 'error', `❌ Connection failed: ${error.message}`);
+            }
+        }
+
+        // Fix root user issue
+        async function fixRootUserIssue() {
+            try {
+                showStatus('fix-status', 'info', '🔄 Executing fixRootUserIssue()... Please confirm on your Trezor.');
+                
+                const tx = await contract.fixRootUserIssue({
+                    gasLimit: 200000
+                });
+
+                showStatus('fix-status', 'info', `⏳ Transaction submitted: ${tx.hash}. Waiting for confirmation...`);
+                
+                const receipt = await tx.wait();
+                
+                showStatus('fix-status', 'success', 
+                    `✅ Root user issue fixed! Gas used: ${receipt.gasUsed}. Transaction: ${tx.hash}`);
+                
+                // Enable next step
+                document.getElementById('register-btn').disabled = false;
+                updateProgress(50);
+
+            } catch (error) {
+                showStatus('fix-status', 'error', `❌ Fix failed: ${error.message}`);
+            }
+        }
+
+        // Register as root user
+        async function registerAsRoot() {
+            try {
+                showStatus('register-status', 'info', '🔄 Executing registerAsRoot(1)... Please confirm on your Trezor.');
+                
+                const tx = await contract.registerAsRoot(1, {
+                    gasLimit: 250000
+                });
+
+                showStatus('register-status', 'info', `⏳ Transaction submitted: ${tx.hash}. Waiting for confirmation...`);
+                
+                const receipt = await tx.wait();
+                
+                showStatus('register-status', 'success', 
+                    `✅ Registered as root user with $30 package! Gas used: ${receipt.gasUsed}. Transaction: ${tx.hash}`);
+                
+                // Enable verification
+                document.getElementById('verify-btn').disabled = false;
+                updateProgress(75);
+
+            } catch (error) {
+                showStatus('register-status', 'error', `❌ Registration failed: ${error.message}`);
+            }
+        }
+
+        // Verify the fix
+        async function verifyFix() {
+            try {
+                showStatus('verify-status', 'info', '🔍 Verifying the root user fix...');
+                
+                const totalUsers = await contract.totalUsers();
+                const isDeployerCleared = await contract.isDeployerCleared();
+                const fixStatus = await contract.isRootUserFixed();
+
+                const verification = `
+                    <div class="status ${fixStatus[0] ? 'success' : 'warning'}">
+                        <h4>📊 Verification Results:</h4>
+                        <strong>Total Users:</strong> ${totalUsers}<br>
+                        <strong>Deployer Cleared:</strong> ${isDeployerCleared ? '✅ Yes' : '❌ No'}<br>
+                        <strong>Fix Status:</strong> ${fixStatus[0] ? '✅ Fixed' : '⚠️ Not Fixed'}<br>
+                        <strong>Status Message:</strong> ${fixStatus[1]}<br>
+                        <strong>Owner:</strong> ${fixStatus[2]}<br>
+                        <strong>Owner Registered:</strong> ${fixStatus[4] ? '✅ Yes' : '❌ No'}<br>
+                        <strong>Owner Is Root:</strong> ${fixStatus[5] ? '✅ Yes' : '❌ No'}
+                    </div>
+                `;
+
+                document.getElementById('verify-status').innerHTML = verification;
+
+                if (fixStatus[0]) {
+                    updateProgress(100);
+                    showStatus('verify-status', 'success', 
+                        '🎉 SUCCESS! Root user issue completely fixed! The LeadFive system is now fully operational.');
+                } else {
+                    showStatus('verify-status', 'warning', `⚠️ Fix incomplete: ${fixStatus[1]}`);
+                }
+
+            } catch (error) {
+                showStatus('verify-status', 'error', `❌ Verification failed: ${error.message}`);
+            }
+        }
+
+        // Utility functions
+        function showStatus(elementId, type, message) {
+            const element = document.getElementById(elementId);
+            element.className = `status ${type}`;
+            element.innerHTML = message;
+        }
+
+        function updateProgress(percentage) {
+            document.getElementById('progress-bar').style.width = percentage + '%';
+        }
+
+        // Initialize when page loads
+        window.addEventListener('load', function() {
+            updateProgress(0);
+            showStatus('connection-status', 'info', '📱 Connect your Trezor wallet to MetaMask and click "Connect Wallet"');
+        });
+    </script>
+    
+    <!-- Load ethers.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.0/dist/ethers.umd.min.js"></script>
+</body>
+</html>

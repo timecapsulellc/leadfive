@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Lead Five Mobile PWA Optimization */
 /* Enhanced mobile-first responsive design with Lead Five branding */
 
@@ -10,6 +11,20 @@
   --leadfive-darker: #1A1A2E;
   --leadfive-bg-gradient: linear-gradient(135deg, #2C3E50 0%, #34495e 50%, #2C3E50 100%);
   --leadfive-text-gradient: linear-gradient(135deg, #FF6B35 0%, #4ECDC4 50%, #45B7D1 100%);
+=======
+/* LeadFive Mobile PWA Optimization */
+/* Enhanced mobile-first responsive design with LeadFive branding */
+
+/* CSS Custom Properties for LeadFive Brand */
+:root {
+  --leadfive-primary: #00D4FF;
+  --leadfive-secondary: #7b2cbf;
+  --leadfive-accent: #ff6b35;
+  --leadfive-dark: #0B1426;
+  --leadfive-darker: #1A1A2E;
+  --leadfive-bg-gradient: linear-gradient(135deg, #0B1426 0%, #1a2332 50%, #0B1426 100%);
+  --leadfive-text-gradient: linear-gradient(135deg, #00d4ff 0%, #7b2cbf 50%, #ff6b35 100%);
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
   
   /* Mobile viewport units fix */
   --vh: 1vh;

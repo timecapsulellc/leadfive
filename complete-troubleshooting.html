@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadFive - Complete Troubleshooting Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1f3a 0%, #0d1117 100%);
+            color: white;
+            line-height: 1.6;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 10px;
+        }
+        .step {
+            background: rgba(0, 212, 255, 0.1);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #00D4FF;
+        }
+        .command {
+            background: rgba(0,0,0,0.6);
+            padding: 12px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 8px 0;
+            overflow-x: auto;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+        .warning { background: rgba(255, 152, 0, 0.2); border-color: #ff9800; }
+        .success { background: rgba(76, 175, 80, 0.2); border-color: #4caf50; }
+        .error { background: rgba(244, 67, 54, 0.2); border-color: #f44336; }
+        button {
+            background: #00D4FF;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0091EA; }
+        .method {
+            background: rgba(100, 181, 246, 0.1);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 3px solid #64B5F6;
+        }
+        h2 { color: #00D4FF; }
+        h3 { color: #64B5F6; }
+        .port-test {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            border: 1px solid #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 LeadFive Complete Troubleshooting Guide</h1>
+        <p>Comprehensive solutions for all common development server issues.</p>
+        
+        <div class="step success">
+            <h2>✅ Quick Status Check</h2>
+            <div id="status-check">Checking system status...</div>
+            <button onclick="runQuickCheck()">🔍 Run Quick Check</button>
+        </div>
+
+        <div class="step">
+            <h2>🚀 Method 1: Standard npm commands</h2>
+            
+            <div class="method">
+                <h3>Option A: Default Port (5175)</h3>
+                <div class="command">cd "/Users/dadou/LEAD FIVE"
+npm run dev</div>
+            </div>
+            
+            <div class="method">
+                <h3>Option B: Alternative Port (3000) - RECOMMENDED</h3>
+                <div class="command">cd "/Users/dadou/LEAD FIVE"
+npm run dev:3000</div>
+            </div>
+            
+            <div class="method">
+                <h3>Option C: Port 8080</h3>
+                <div class="command">cd "/Users/dadou/LEAD FIVE"
+npm run dev:8080</div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h2>⚡ Method 2: Direct Vite execution</h2>
+            <p>If npm commands fail, use Vite directly:</p>
+            
+            <div class="method">
+                <h3>Port 5175</h3>
+                <div class="command">cd "/Users/dadou/LEAD FIVE"
+./node_modules/.bin/vite --host 0.0.0.0 --port 5175 --force</div>
+            </div>
+            
+            <div class="method">
+                <h3>Port 3000 (Recommended)</h3>
+                <div class="command">cd "/Users/dadou/LEAD FIVE"
+./node_modules/.bin/vite --host 0.0.0.0 --port 3000 --force</div>
+            </div>
+        </div>
+
+        <div class="step warning">
+            <h2>🔧 Common Issues & Solutions</h2>
+            
+            <h3>1. "Port already in use"</h3>
+            <div class="command"># Kill processes on port 5175
+lsof -ti:5175 | xargs kill -9
+
+# Or use alternative port
+npm run dev:3000</div>
+            
+            <h3>2. "Permission denied"</h3>
+            <div class="command"># Fix permissions
+sudo chown -R $(whoami) "/Users/dadou/LEAD FIVE"
+chmod +x node_modules/.bin/vite</div>
+            
+            <h3>3. "Module not found"</h3>
+            <div class="command"># Reinstall dependencies
+rm -rf node_modules package-lock.json
+npm install</div>
+            
+            <h3>4. "Command not found: npm"</h3>
+            <p>Install Node.js from <a href="https://nodejs.org/" target="_blank" style="color: #00D4FF;">nodejs.org</a></p>
+            
+            <h3>5. Still blank page after server starts</h3>
+            <div class="command"># Hard refresh browser
+# Mac: Cmd + Shift + R
+# Windows: Ctrl + Shift + F5
+# Or open incognito/private window</div>
+        </div>
+
+        <div class="step">
+            <h2>🌐 Port Testing</h2>
+            <p>Test which ports are available:</p>
+            <div id="port-tests">
+                <div class="port-test" id="port-5175">Port 5175: Testing...</div>
+                <div class="port-test" id="port-3000">Port 3000: Testing...</div>
+                <div class="port-test" id="port-8080">Port 8080: Testing...</div>
+            </div>
+            <button onclick="testPorts()">🔍 Test Ports</button>
+        </div>
+
+        <div class="step">
+            <h2>🎯 Quick Links (After Server Starts)</h2>
+            <div style="text-align: center;">
+                <button onclick="testAndOpen('http://localhost:5175/')">🚀 Try Port 5175</button>
+                <button onclick="testAndOpen('http://localhost:3000/')">🚀 Try Port 3000</button>
+                <button onclick="testAndOpen('http://localhost:8080/')">🚀 Try Port 8080</button>
+            </div>
+        </div>
+
+        <div class="step error">
+            <h2>🆘 Last Resort Solutions</h2>
+            
+            <h3>Clean Installation</h3>
+            <div class="command"># Complete clean install
+rm -rf node_modules package-lock.json
+rm -rf .vite dist
+npm cache clean --force
+npm install
+npm run dev:3000</div>
+            
+            <h3>Use Different Terminal</h3>
+            <p>Try these commands in different terminals:</p>
+            <ul>
+                <li>VS Code integrated terminal</li>
+                <li>System Terminal/iTerm</li>
+                <li>VS Code external terminal</li>
+            </ul>
+            
+            <h3>Alternative Serving Methods</h3>
+            <div class="command"># Python HTTP server (if available)
+python3 -m http.server 3000
+
+# PHP server (if available)
+php -S localhost:3000</div>
+        </div>
+
+        <div class="step success">
+            <h2>✅ Expected Success</h2>
+            <p>When the server starts successfully, you should see:</p>
+            <div class="command">VITE v5.x.x  ready in xxx ms
+
+➜  Local:   http://localhost:3000/
+➜  Network: http://192.168.x.x:3000/</div>
+            <p>Then your LeadFive dashboard will be available with all features!</p>
+        </div>
+    </div>
+
+    <script>
+        function runQuickCheck() {
+            const status = document.getElementById('status-check');
+            status.innerHTML = '<p>🔍 Running system checks...</p>';
+            
+            let checks = [];
+            
+            // Check if we can access the project files
+            fetch('/package.json')
+                .then(response => response.ok ? checks.push('✅ package.json accessible') : checks.push('❌ package.json not found'))
+                .catch(() => checks.push('❌ Cannot access project files'))
+                .finally(() => updateStatus());
+            
+            fetch('/src/main.jsx')
+                .then(response => response.ok ? checks.push('✅ React files accessible') : checks.push('❌ React files not found'))
+                .catch(() => checks.push('❌ Cannot access React files'))
+                .finally(() => updateStatus());
+            
+            function updateStatus() {
+                if (checks.length >= 2) {
+                    status.innerHTML = '<ul>' + checks.map(check => '<li>' + check + '</li>').join('') + '</ul>';
+                }
+            }
+        }
+        
+        function testPorts() {
+            const ports = [5175, 3000, 8080];
+            
+            ports.forEach(port => {
+                const element = document.getElementById(`port-${port}`);
+                element.textContent = `Port ${port}: Testing...`;
+                element.style.backgroundColor = 'rgba(255, 193, 7, 0.2)';
+                
+                fetch(`http://localhost:${port}/`)
+                    .then(response => {
+                        if (response.ok) {
+                            element.textContent = `Port ${port}: ✅ Server Running`;
+                            element.style.backgroundColor = 'rgba(76, 175, 80, 0.2)';
+                        } else {
+                            element.textContent = `Port ${port}: ⚠️ Server Error`;
+                            element.style.backgroundColor = 'rgba(255, 152, 0, 0.2)';
+                        }
+                    })
+                    .catch(() => {
+                        element.textContent = `Port ${port}: ❌ Not Available`;
+                        element.style.backgroundColor = 'rgba(244, 67, 54, 0.2)';
+                    });
+            });
+        }
+        
+        function testAndOpen(url) {
+            fetch(url)
+                .then(response => {
+                    if (response.ok) {
+                        window.open(url, '_blank');
+                    } else {
+                        alert('Server is not running on this port. Please start the development server first.');
+                    }
+                })
+                .catch(() => {
+                    alert('Cannot connect to ' + url + '. Please start the development server first.');
+                });
+        }
+        
+        // Auto-run quick check on load
+        window.addEventListener('load', () => {
+            setTimeout(runQuickCheck, 1000);
+            setTimeout(testPorts, 2000);
+        });
+    </script>
+</body>
+</html>

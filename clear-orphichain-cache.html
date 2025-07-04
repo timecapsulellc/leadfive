@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>🧹 LeadFive Cache Clearer</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0A0A0A 0%, #1a1a2e 50%, #16213e 100%);
+            color: white;
+            font-family: 'Inter', Arial, sans-serif;
+            padding: 40px;
+            text-align: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        h1 {
+            color: #00D4FF;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .status {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #00D4FF;
+        }
+        .button {
+            background: linear-gradient(135deg, #7B2CBF 0%, #00D4FF 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+        }
+        .log {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧹 OrphiChain Cache Eliminator</h1>
+        <div class="status" id="status">
+            🚨 Preparing to eliminate OrphiChain cache...
+        </div>
+        
+        <button class="button" onclick="clearAllCaches()">🗑️ CLEAR ALL CACHES</button>
+        <button class="button" onclick="goToLeadFive()">🚀 GO TO LEADFIVE</button>
+        
+        <div class="log" id="log"></div>
+    </div>
+
+    <script>
+        function log(message) {
+            const logElement = document.getElementById('log');
+            logElement.innerHTML += new Date().toLocaleTimeString() + ': ' + message + '\n';
+            logElement.scrollTop = logElement.scrollHeight;
+            console.log(message);
+        }
+
+        async function clearAllCaches() {
+            const statusElement = document.getElementById('status');
+            statusElement.innerHTML = '🧹 Clearing all OrphiChain caches...';
+            
+            log('🚨 Starting OrphiChain cache elimination...');
+            
+            try {
+                // Clear service worker caches
+                if ('serviceWorker' in navigator) {
+                    log('🔍 Finding service workers...');
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    for (let registration of registrations) {
+                        log('🗑️ Unregistering service worker: ' + registration.scope);
+                        await registration.unregister();
+                    }
+                }
+                
+                // Clear cache storage
+                if ('caches' in window) {
+                    log('🔍 Finding cache storage...');
+                    const cacheNames = await caches.keys();
+                    for (let cacheName of cacheNames) {
+                        log('🗑️ Deleting cache: ' + cacheName);
+                        await caches.delete(cacheName);
+                    }
+                }
+                
+                // Clear local storage
+                log('🗑️ Clearing localStorage...');
+                localStorage.clear();
+                
+                // Clear session storage  
+                log('🗑️ Clearing sessionStorage...');
+                sessionStorage.clear();
+                
+                // Clear indexed DB
+                if ('indexedDB' in window) {
+                    try {
+                        log('🔍 Finding IndexedDB databases...');
+                        const databases = await indexedDB.databases();
+                        for (let db of databases) {
+                            log('🗑️ Deleting database: ' + db.name);
+                            indexedDB.deleteDatabase(db.name);
+                        }
+                    } catch (e) {
+                        log('⚠️ IndexedDB clear partially supported');
+                    }
+                }
+                
+                statusElement.innerHTML = '✅ All OrphiChain caches eliminated!';
+                log('✅ OrphiChain cache elimination complete!');
+                log('🚀 Ready for clean LeadFive!');
+                
+            } catch (error) {
+                log('❌ Error during cache clearing: ' + error.message);
+                statusElement.innerHTML = '⚠️ Cache clearing completed with some errors';
+            }
+        }
+        
+        function goToLeadFive() {
+            log('🚀 Redirecting to clean LeadFive...');
+            const timestamp = Date.now();
+            window.location.href = 'http://localhost:5175?nocache=' + timestamp + '&clean=true';
+        }
+        
+        // Auto-start cache clearing
+        window.addEventListener('load', () => {
+            setTimeout(clearAllCaches, 1000);
+        });
+    </script>
+</body>
+</html>

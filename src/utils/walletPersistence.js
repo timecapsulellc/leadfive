@@ -58,7 +58,7 @@ const decryptData = (encryptedData) => {
 export const storeWalletConnection = (account, chainId, walletType) => {
   try {
     const connectionData = {
-      account: account.toLowerCase(),
+      account: typeof account === 'string' ? account.toLowerCase() : account,
       chainId,
       walletType,
       timestamp: Date.now(),

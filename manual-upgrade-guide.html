@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    <title>🚀 LeadFive v1.10 UPGRADE - Manual Instructions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .section {
+            margin: 30px 0;
+            padding: 20px;
+            border-radius: 15px;
+            background: #f8f9fa;
+        }
+        
+        .section h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .address-block {
+            background: #e8f4fd;
+            border: 1px solid #bee5eb;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .address-block strong {
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .address-block code {
+            background: #f1f3f4;
+            padding: 5px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+        }
+        
+        .step {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+        }
+        
+        .step h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .warning h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .feature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .feature-table th {
+            background: #667eea;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .feature-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .feature-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 LeadFive v1.10 COMPLETE UPGRADE</h1>
+            <p>Manual Deployment Instructions - Trezor Secure</p>
+        </div>
+
+        <div class="section">
+            <h2>🎯 CONTRACT ADDRESSES</h2>
+            <div class="address-block">
+                <strong>🎯 Main Proxy Contract (UNCHANGED):</strong>
+                <code>0x29dcCb502D10C042BcC6a02a7762C49595A9E498</code>
+            </div>
+            <div class="address-block">
+                <strong>👑 Trezor Owner (PRESERVED):</strong>
+                <code>0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29</code>
+            </div>
+            <div class="address-block">
+                <strong>🆕 v1.10 Implementation (TO BE DEPLOYED):</strong>
+                <code>Will be generated during Step 1</code>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>✅ FEATURE VERIFICATION</h2>
+            <table class="feature-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Feature</th>
+                        <th>Status</th>
+                        <th>Code Lines</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>📋 Marketing Plan</td><td>4 Packages ($30, $50, $100, $200)</td><td class="success">✅</td><td>230-272</td></tr>
+                    <tr><td>💰 Commission</td><td>40% Direct / 10% Level / 10% Upline / 10% Leader / 30% Help</td><td class="success">✅</td><td>230-272</td></tr>
+                    <tr><td>🔧 Root Fix</td><td>Deployer clearing + Trezor registration</td><td class="success">✅</td><td>279-332</td></tr>
+                    <tr><td>🛡️ Security</td><td>All 7 PhD audit fixes</td><td class="success">✅</td><td>Throughout</td></tr>
+                    <tr><td>🏗️ Matrix</td><td>Binary placement system</td><td class="success">✅</td><td>334-368</td></tr>
+                    <tr><td>🏆 Pools</td><td>Leadership & Help pools</td><td class="success">✅</td><td>370-438</td></tr>
+                    <tr><td>👥 Teams</td><td>Network size & statistics</td><td class="success">✅</td><td>440-486</td></tr>
+                    <tr><td>🔗 Codes</td><td>Referral code system</td><td class="success">✅</td><td>488-528</td></tr>
+                    <tr><td>🚫 Security</td><td>Blacklist management</td><td class="success">✅</td><td>530-550</td></tr>
+                    <tr><td>📈 Upgrades</td><td>Package progression</td><td class="success">✅</td><td>552-612</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="warning">
+            <h3>⚠️ IMPORTANT SECURITY NOTICE</h3>
+            <ul>
+                <li>This upgrade preserves ALL existing data and balances</li>
+                <li>Your Trezor wallet MUST be connected for all operations</li>
+                <li>Only the contract owner (Trezor) can perform this upgrade</li>
+                <li>All admin rights and ownership are preserved</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>🔧 MANUAL UPGRADE STEPS</h2>
+
+            <div class="step">
+                <h3>Step 1: Deploy v1.10 Implementation</h3>
+                <p>Connect to your server and run the deployment script:</p>
+                <div class="code-block">
+npx hardhat run scripts/deploy-implementation-only.cjs --network bsc
+                </div>
+                <p>Save the generated implementation address for Step 2.</p>
+            </div>
+
+            <div class="step">
+                <h3>Step 2: Connect Trezor and Access Contract</h3>
+                <p>Using MetaMask with Trezor or Trezor Suite:</p>
+                <ul>
+                    <li>Connect to BSC Mainnet (Chain ID: 56)</li>
+                    <li>Ensure you're using the Trezor wallet: <code>0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29</code></li>
+                    <li>Access the proxy contract: <code>0x29dcCb502D10C042BcC6a02a7762C49595A9E498</code></li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h3>Step 3: Upgrade Proxy Contract</h3>
+                <p>Call the <strong>upgradeTo</strong> function on the proxy contract:</p>
+                <div class="code-block">
+Function: upgradeTo(address newImplementation)
+Parameter: [NEW_IMPLEMENTATION_ADDRESS_FROM_STEP_1]
+Gas Limit: 500,000
+                </div>
+            </div>
+
+            <div class="step">
+                <h3>Step 4: Initialize v1.10 Features</h3>
+                <p>Call these functions in order (all with your Trezor wallet):</p>
+                
+                <div class="code-block">
+1. initializeV1_1()
+   - Gas Limit: 300,000
+   - Initializes new v1.10 features
+                </div>
+                
+                <div class="code-block">
+2. fixRootUserIssue()
+   - Gas Limit: 200,000
+   - Clears deployer registration
+                </div>
+                
+                <div class="code-block">
+3. registerAsRoot(1)
+   - Parameter: 1 (package level)
+   - Gas Limit: 250,000
+   - Registers Trezor as root user
+                </div>
+                
+                <div class="code-block">
+4. activateAllLevelsForRoot()
+   - Gas Limit: 300,000
+   - Activates all 4 package levels FREE
+                </div>
+            </div>
+
+            <div class="step">
+                <h3>Step 5: Verify Upgrade Success</h3>
+                <p>Call these view functions to verify everything is working:</p>
+                
+                <div class="code-block">
+getContractVersion()
+Expected: "LeadFive v1.10 - Marketing Plan Aligned + Security Hardened + Complete Business Logic"
+                </div>
+                
+                <div class="code-block">
+isRootUserFixed()
+Expected: "Root user with all packages activated - COMPLETE!"
+                </div>
+                
+                <div class="code-block">
+getAllPackagePrices()
+Expected: [30000000000000000000, 50000000000000000000, 100000000000000000000, 200000000000000000000]
+(Represents $30, $50, $100, $200 in 18 decimals)
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔍 ALTERNATIVE: Using BSCScan</h2>
+            <p>If you prefer using BSCScan directly:</p>
+            
+            <div class="step">
+                <h3>BSCScan Contract Interaction</h3>
+                <ol>
+                    <li>Go to <strong>https://bscscan.com/address/0x29dcCb502D10C042BcC6a02a7762C49595A9E498#writeContract</strong></li>
+                    <li>Connect your Trezor wallet</li>
+                    <li>Use the "Write Contract" tab to call the functions in Step 3 and 4 above</li>
+                    <li>Use the "Read Contract" tab to verify the results in Step 5</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🚀 EXPECTED RESULTS</h2>
+            <p>After successful upgrade, your contract will have:</p>
+            <ul>
+                <li>✅ All 4 marketing plan compliant packages ($30, $50, $100, $200)</li>
+                <li>✅ Complete commission structure (40/10/10/10/30)</li>
+                <li>✅ Full registration and payment processing system</li>
+                <li>✅ Binary matrix placement and rewards</li>
+                <li>✅ Pool distribution (leadership and help pools)</li>
+                <li>✅ Security features (all PhD audit fixes)</li>
+                <li>✅ Root user properly configured with Trezor wallet</li>
+                <li>✅ All admin rights preserved</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>📞 SUPPORT</h2>
+            <p>If you encounter any issues during the upgrade process:</p>
+            <ul>
+                <li>Ensure your Trezor is connected and unlocked</li>
+                <li>Verify you're on BSC Mainnet (Chain ID: 56)</li>
+                <li>Check that you're using the correct wallet address</li>
+                <li>Ensure sufficient BNB for gas fees</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Simple script to highlight important addresses when clicked
+        document.querySelectorAll('code').forEach(code => {
+            code.addEventListener('click', function() {
+                this.style.background = '#ffe066';
+                navigator.clipboard.writeText(this.textContent).then(() => {
+                    console.log('Copied to clipboard:', this.textContent);
+                });
+                setTimeout(() => {
+                    this.style.background = '#f1f3f4';
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>

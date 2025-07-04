@@ -1,5 +1,7 @@
 {
+  "name": "LeadFive - Community-Driven Platform",
   "short_name": "LeadFive",
+<<<<<<< HEAD
   "name": "LeadFive - The Decentralized Incentive Network",
   "icons": [
     {
@@ -55,17 +57,138 @@
     }
   ],
   "screenshots": [
+=======
+  "description": "Professional Web3 community-driven platform with advanced analytics, AI assistant, and smart contract integration",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#4facfe",
+  "background_color": "#ffffff",
+  "scope": "/",
+  "lang": "en-US",
+  "categories": ["business", "finance", "productivity"],
+  "icons": [
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
     {
-      "src": "screenshot-wide.png",
-      "sizes": "1280x720",
+      "src": "icons/icon-72x72.png",
+      "sizes": "72x72",
       "type": "image/png",
-      "form_factor": "wide"
+      "purpose": "any maskable"
     },
     {
-      "src": "screenshot-narrow.png",
-      "sizes": "720x1280",
+      "src": "icons/icon-96x96.png",
+      "sizes": "96x96",
       "type": "image/png",
-      "form_factor": "narrow"
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/desktop-screenshot.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "LeadFive Dashboard - Desktop View"
+    },
+    {
+      "src": "screenshots/mobile-screenshot.png", 
+      "sizes": "375x812",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "LeadFive Dashboard - Mobile View"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "description": "View your earnings and team performance",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Network Levels",
+      "short_name": "Network Tree",
+      "description": "View your community structure",
+      "url": "/genealogy",
+      "icons": [
+        {
+          "src": "icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Introductions",
+      "short_name": "Introductions",
+      "description": "Manage your introductions",
+      "url": "/referrals",
+      "icons": [
+        {
+          "src": "icons/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "web+leadfive",
+      "url": "/join?ref=%s"
+    }
+  ],
+  "file_handlers": [
+    {
+      "action": "/import",
+      "accept": {
+        "application/json": [".json"],
+        "text/csv": [".csv"]
+      }
     }
   ]
 }

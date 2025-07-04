@@ -29,7 +29,12 @@ export const APP_CONFIG = {
     admin: {
       owner: '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29', // ✅ TREZOR WALLET (NEW OWNER)
       sponsorAddress: '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29', // ✅ TREZOR WALLET FOR NEW REGISTRATIONS
-      feeRecipient: '0xCeaEfDaDE5a0D574bFd5577665dC58d132995335' // ✅ DEPLOYER FOR PLATFORM FEES (can be changed by Trezor)
+      feeRecipient: '0xCeaEfDaDE5a0D574bFd5577665dC58d132995335', // ✅ DEPLOYER FOR PLATFORM FEES (can be changed by Trezor)
+      treasuryWallet: '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29', // Development treasury (changeable)
+      
+      // Client handover addresses (for future reference)
+      clientOwner: '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29', // Final client owner
+      clientTreasury: '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29' // Final client treasury
     }
   },
   

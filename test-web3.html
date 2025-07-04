@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Web3 Libraries</title>
+</head>
+<body>
+    <h1>Testing Web3 Library Loading</h1>
+    <div id="status">Loading...</div>
+    
+    <script>
+        async function testEthers() {
+            const statusDiv = document.getElementById('status');
+            
+            try {
+                // Try to load ethers from multiple sources
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js';
+                
+                script.onload = function() {
+                    if (typeof ethers !== 'undefined') {
+                        statusDiv.innerHTML = '✅ Ethers.js loaded successfully!<br>Version: ' + ethers.version;
+                        statusDiv.style.color = 'green';
+                        
+                        // Test basic functionality
+                        try {
+                            const provider = new ethers.providers.JsonRpcProvider('https://bsc-dataseed.binance.org/');
+                            statusDiv.innerHTML += '<br>✅ Provider created successfully!';
+                        } catch (e) {
+                            statusDiv.innerHTML += '<br>❌ Provider creation failed: ' + e.message;
+                        }
+                    } else {
+                        statusDiv.innerHTML = '❌ Ethers.js not available';
+                        statusDiv.style.color = 'red';
+                    }
+                };
+                
+                script.onerror = function() {
+                    statusDiv.innerHTML = '❌ Failed to load ethers.js from CDN';
+                    statusDiv.style.color = 'red';
+                };
+                
+                document.head.appendChild(script);
+                
+            } catch (error) {
+                statusDiv.innerHTML = '❌ Error: ' + error.message;
+                statusDiv.style.color = 'red';
+            }
+        }
+        
+        // Run test when page loads
+        document.addEventListener('DOMContentLoaded', testEthers);
+    </script>
+</body>
+</html>

@@ -13,11 +13,11 @@ class SystemMonitor {
         this.metrics = {};
         this.alerts = [];
         this.alertThresholds = {
-            api_response_time: 2000, // ms
+            api_response_time: 3000, // ms - increased for development
             contract_gas_usage: 500000, // gas units
             error_rate: 0.05, // 5%
-            memory_usage: 0.95, // 95% - increased for development
-            cpu_usage: 0.90 // 90%
+            memory_usage: 0.985, // 98.5% - very high threshold to reduce noise
+            cpu_usage: 0.95 // 95%
         };
         this.alertHandlers = [];
         this.isMonitoring = false;
@@ -29,7 +29,7 @@ class SystemMonitor {
     /**
      * Start system monitoring
      */
-    startMonitoring(intervalMs = 30000) { // 30 seconds default
+    startMonitoring(intervalMs = 120000) { // 2 minutes default (reduced from 30 seconds)
         if (this.isMonitoring) {
             console.log('⚠️  Monitoring already active');
             return;

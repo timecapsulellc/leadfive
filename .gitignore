@@ -113,6 +113,15 @@ typechain-types/
 deployments/
 .hardhat/
 
+# Exclude deployment and network JSON files (contain sensitive data)
+*deployment*.json
+*mainnet*.json
+*testnet*.json
+bsc.json
+bsc-testnet.json
+*-addresses.json
+*-deployed.json
+
 # ==================== ARCHIVE & BACKUP ====================
 archive/
 backup/

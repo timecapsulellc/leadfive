@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Force Cache Refresh - LeadFive</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .button {
+            background: #00D4FF;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        .button:hover {
+            background: #0066CC;
+            transform: translateY(-2px);
+        }
+        .success {
+            background: #28a745;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 LeadFive Cache Refresh</h1>
+        <p>Fix applied: FaMinimize → FaMinus</p>
+        
+        <div class="success" id="successMessage">
+            ✅ Cache cleared successfully!
+        </div>
+        
+        <a href="http://localhost:5173" class="button" onclick="clearCache()">
+            🚀 Open LeadFive (Fresh)
+        </a>
+        
+        <a href="http://localhost:5173?v=fixed" class="button">
+            🔄 Force Reload with Cache Bust
+        </a>
+        
+        <button class="button" onclick="hardRefresh()">
+            🧹 Hard Refresh Browser
+        </button>
+        
+        <div style="margin-top: 30px; font-size: 14px; opacity: 0.8;">
+            <p>Instructions:</p>
+            <p>1. Click "Hard Refresh Browser" first</p>
+            <p>2. Then click "Open LeadFive (Fresh)"</p>
+            <p>3. The FaMinimize error should be fixed</p>
+        </div>
+    </div>
+
+    <script>
+        function clearCache() {
+            // Clear localStorage
+            localStorage.clear();
+            sessionStorage.clear();
+            
+            // Show success message
+            document.getElementById('successMessage').style.display = 'block';
+            
+            // Force cache refresh
+            if ('caches' in window) {
+                caches.keys().then(names => {
+                    names.forEach(name => {
+                        caches.delete(name);
+                    });
+                });
+            }
+        }
+
+        function hardRefresh() {
+            // Clear cache first
+            clearCache();
+            
+            // Force hard refresh
+            window.location.reload(true);
+        }
+
+        // Auto-clear cache when page loads
+        window.onload = function() {
+            clearCache();
+        };
+    </script>
+</body>
+</html>

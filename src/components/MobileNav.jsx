@@ -93,6 +93,10 @@ const MobileNav = ({ account, onDisconnect }) => {
     e.stopPropagation();
   }, []);
 
+  const displayAddress = typeof account === 'string'
+    ? `${account.slice(0, 6)}...${account.slice(-4)}`
+    : '';
+
   return (
     <>
       {/* Mobile Menu Toggle with enhanced accessibility */}
@@ -144,6 +148,7 @@ const MobileNav = ({ account, onDisconnect }) => {
           </button>
         </div>
 
+<<<<<<< HEAD
         {/* Account Status with enhanced UI */}
         {account && (
           <div className="mobile-account-status mobile-p-4">
@@ -156,6 +161,15 @@ const MobileNav = ({ account, onDisconnect }) => {
                 <span className="account-address mobile-text-xs">
                   {account.slice(0, 6)}...{account.slice(-4)}
                 </span>
+=======
+        <div className="mobile-nav-content">
+          {account && (
+            <div className="mobile-user-info">
+              <div className="user-avatar">👤</div>
+              <div className="user-details">
+                <p className="user-address">{displayAddress}</p>
+                <span className="user-status">Connected</span>
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
               </div>
             </div>
           </div>

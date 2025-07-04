@@ -1,0 +1,713 @@
+/* Dashboard.css for LeadFive */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Brand Colors */
+  --brand-cyber-blue: #00D4FF;
+  --brand-cyber-blue-dark: #00A3C9;
+  --brand-cyber-blue-light: #7DF9FF;
+  --brand-cyber-blue-alpha-10: rgba(0, 212, 255, 0.1);
+  --brand-cyber-blue-alpha-20: rgba(0, 212, 255, 0.2);
+  
+  --brand-cosmic-purple: #7B2CBF;
+  --brand-cosmic-purple-dark: #5A1E8C;
+  --brand-cosmic-purple-light: #9D4EDD;
+  
+  /* UI Colors */
+  --bg-primary: #0A1929;
+  --bg-secondary: #0F2942;
+  --bg-tertiary: #1A3A5A;
+  --bg-card: #162B44;
+  --bg-card-hover: #1D3553;
+  
+  --text-primary: #FFFFFF;
+  --text-secondary: #B8C5D1;
+  --text-tertiary: #8A99A8;
+  --text-accent: #00D4FF;
+  
+  --border-primary: rgba(0, 212, 255, 0.3);
+  --border-secondary: rgba(184, 197, 209, 0.2);
+  
+  /* Status Colors */
+  --status-success: #4CAF50;
+  --status-warning: #FF9800;
+  --status-error: #F44336;
+  --status-info: #2196F3;
+  
+  /* Gradients */
+  --gradient-background: linear-gradient(135deg, #0A1929, #142C46);
+  --gradient-accent: linear-gradient(135deg, #00D4FF, #7B2CBF);
+  --gradient-card: linear-gradient(135deg, #162B44, #1D3553);
+  --gradient-button: linear-gradient(135deg, #00A3C9, #00D4FF);
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.3);
+  
+  /* Animation */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* Dashboard Container - Brand Color Implementation */
+.dashboard-container {
+  display: flex;
+  min-height: calc(100vh - 140px);
+  background: var(--bg-primary); /* Deep Space */
+  position: relative;
+}
+
+/* Loading State - Brand Colors */
+.dashboard-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 140px);
+  background: var(--bg-primary); /* Deep Space */
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid var(--brand-cyber-blue-alpha-10);
+  border-top-color: var(--brand-cyber-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Sidebar - Brand Gradient Background */
+.dashboard-sidebar {
+  width: 280px;
+  background: var(--gradient-background); /* Deep Space to Midnight Blue */
+  border-right: 1px solid var(--border-primary); /* Cyber Blue Alpha */
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 70px;
+  height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  padding: 2rem;
+  border-bottom: 1px solid var(--border-secondary); /* Silver Mist Alpha */
+  text-align: center;
+}
+
+.user-avatar {
+  font-size: 4rem;
+  color: #00D4FF;
+  margin-bottom: 1rem;
+}
+
+.user-info h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.user-info p {
+  color: #B8C5D1;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.user-level {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: linear-gradient(45deg, #00D4FF, #7B2CBF);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+  flex: 1;
+  padding: 1rem 0;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem 2rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary); /* Silver Mist */
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.menu-item:hover {
+  color: var(--text-accent); /* Cyber Blue */
+  background: var(--bg-tertiary); /* Cosmic Deep */
+}
+
+.menu-item.active {
+  color: var(--text-accent); /* Cyber Blue */
+  background: var(--bg-tertiary); /* Cosmic Deep */
+}
+
+.menu-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--brand-cyber-blue); /* Cyber Blue */
+}
+
+.menu-icon {
+  width: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Main Content */
+.dashboard-main {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.dashboard-header {
+  margin-bottom: 2rem;
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary); /* Pure White */
+}
+
+.dashboard-subtitle {
+  color: var(--text-secondary); /* Silver Mist */
+  font-size: 1rem;
+}
+
+/* Dashboard Cards and Sections */
+.dashboard-section {
+  margin-bottom: 2.5rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary); /* Pure White */
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section-title svg {
+  color: var(--brand-cyber-blue); /* Cyber Blue */
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-card {
+  background: var(--bg-card); /* Midnight Navy */
+  border: 1px solid var(--border-secondary); /* Silver Mist Alpha */
+  border-radius: 10px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+  background: var(--bg-card-hover); /* Deep Navy */
+  border-color: var(--border-primary); /* Cyber Blue Alpha */
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-primary); /* Pure White */
+}
+
+.card-icon {
+  font-size: 1.5rem;
+  color: var(--brand-cyber-blue); /* Cyber Blue */
+}
+
+.card-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary); /* Pure White */
+  margin-bottom: 0.5rem;
+}
+
+.card-label {
+  font-size: 0.9rem;
+  color: var(--text-tertiary); /* Slate Gray */
+}
+
+/* Overview Section - First section of the dashboard */
+.overview-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: var(--bg-card); /* Midnight Navy */
+  border-radius: 10px;
+  padding: 1.5rem;
+  border: 1px solid var(--border-secondary); /* Silver Mist Alpha */
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  border-color: var(--border-primary); /* Cyber Blue Alpha */
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-icon {
+  font-size: 1.5rem;
+  color: var(--brand-cyber-blue); /* Cyber Blue */
+  margin-bottom: 1rem;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary); /* Pure White */
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--text-tertiary); /* Slate Gray */
+}
+
+/* Welcome Banner */
+.welcome-banner {
+  background: var(--gradient-accent); /* Cyber Blue to Cosmic Purple */
+  border-radius: 15px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.welcome-content h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.welcome-content p {
+  font-size: 1rem;
+  opacity: 0.9;
+  max-width: 600px;
+}
+
+.welcome-cta-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid white;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.welcome-cta-button:hover {
+  background: white;
+  color: var(--brand-cosmic-purple);
+}
+
+/* Progress Bars */
+.progress-container {
+  margin-bottom: 1rem;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.progress-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary); /* Silver Mist */
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--bg-tertiary); /* Cosmic Deep */
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--gradient-accent); /* Cyber Blue to Cosmic Purple */
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+/* Activity Feed */
+.activity-feed {
+  background: var(--bg-card); /* Midnight Navy */
+  border: 1px solid var(--border-secondary); /* Silver Mist Alpha */
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-secondary); /* Silver Mist Alpha */
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.activity-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-tertiary); /* Cosmic Deep */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand-cyber-blue); /* Cyber Blue */
+  font-size: 1.2rem;
+}
+
+.activity-content {
+  flex: 1;
+}
+
+.activity-message {
+  font-size: 0.95rem;
+  color: var(--text-primary); /* Pure White */
+  margin-bottom: 0.25rem;
+}
+
+.activity-time {
+  font-size: 0.8rem;
+  color: var(--text-tertiary); /* Slate Gray */
+}
+
+/* Buttons and Actions */
+.dashboard-action-btn {
+  background: var(--bg-tertiary); /* Cosmic Deep */
+  color: var(--text-primary); /* Pure White */
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dashboard-action-btn.primary {
+  background: var(--gradient-button); /* Cyber Blue Gradient */
+  color: var(--bg-primary); /* Deep Space */
+  font-weight: 600;
+}
+
+.dashboard-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.action-btns {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Charts and Visualizations */
+.chart-container {
+  background: var(--bg-card); /* Midnight Navy */
+  border: 1px solid var(--border-secondary); /* Silver Mist Alpha */
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  height: 350px;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.chart-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-primary); /* Pure White */
+}
+
+.chart-legend {
+  display: flex;
+  gap: 1rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary); /* Silver Mist */
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.legend-color.primary {
+  background: var(--brand-cyber-blue); /* Cyber Blue */
+}
+
+.legend-color.secondary {
+  background: var(--brand-cosmic-purple); /* Cosmic Purple */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  
+  .dashboard-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    top: 0;
+  }
+  
+  .sidebar-menu {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0.5rem;
+  }
+  
+  .menu-item {
+    padding: 0.75rem 1rem;
+    width: auto;
+  }
+  
+  .dashboard-main {
+    padding: 1.5rem;
+  }
+  
+  .card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .welcome-banner {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .welcome-content {
+    margin-bottom: 1.5rem;
+  }
+  
+  .overview-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .chart-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+/* AI Components Styling */
+.ai-section {
+  background: var(--bg-card); /* Midnight Navy */
+  border: 1px solid var(--border-secondary); /* Silver Mist Alpha */
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle at bottom right, rgba(0, 212, 255, 0.1), transparent 70%);
+  pointer-events: none;
+}
+
+.ai-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.ai-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-primary); /* Pure White */
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.ai-title svg {
+  color: var(--brand-cyber-blue); /* Cyber Blue */
+}
+
+.ai-badge {
+  background: rgba(0, 212, 255, 0.1);
+  color: var(--brand-cyber-blue); /* Cyber Blue */
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.ai-insight {
+  background: var(--bg-tertiary); /* Cosmic Deep */
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  border-left: 3px solid var(--brand-cyber-blue); /* Cyber Blue */
+}
+
+.insight-title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary); /* Pure White */
+}
+
+.insight-description {
+  font-size: 0.9rem;
+  color: var(--text-secondary); /* Silver Mist */
+  line-height: 1.5;
+}
+
+.ai-action-btn {
+  background: rgba(0, 212, 255, 0.1);
+  color: var(--brand-cyber-blue); /* Cyber Blue */
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ai-action-btn:hover {
+  background: rgba(0, 212, 255, 0.2);
+}
+
+/* Mobile-specific styles */
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 0;
+  }
+  
+  .dashboard-main {
+    padding: 1rem;
+  }
+  
+  .dashboard-title {
+    font-size: 1.5rem;
+  }
+  
+  .welcome-banner {
+    padding: 1.5rem;
+  }
+  
+  .welcome-content h2 {
+    font-size: 1.5rem;
+  }
+  
+  .stat-card {
+    padding: 1rem;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem;
+  }
+}
+
+/* Enhanced Dashboard Integration */
+.enhancement-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 30px 0;
+}
+
+@media (max-width: 1024px) {
+  .enhancement-row {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}

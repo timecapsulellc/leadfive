@@ -16,8 +16,8 @@ const AISettings = () => {
 
   // Load saved keys on component mount
   useEffect(() => {
-    const savedOpenaiKey = localStorage.getItem('orphi_openai_key');
-    const savedElevenLabsKey = localStorage.getItem('orphi_elevenlabs_key');
+    const savedOpenaiKey = localStorage.getItem('leadfive_openai_key');
+    const savedElevenLabsKey = localStorage.getItem('leadfive_elevenlabs_key');
     
     if (savedOpenaiKey) {
       setOpenaiKey(savedOpenaiKey);
@@ -55,7 +55,7 @@ const AISettings = () => {
 
     const success = OpenAIService.initialize(openaiKey);
     if (success) {
-      localStorage.setItem('orphi_openai_key', openaiKey);
+      localStorage.setItem('leadfive_openai_key', openaiKey);
       updateStatus();
       alert('✅ OpenAI API key saved successfully!');
     } else {
@@ -72,7 +72,7 @@ const AISettings = () => {
 
     const success = ElevenLabsService.initialize(elevenLabsKey);
     if (success) {
-      localStorage.setItem('orphi_elevenlabs_key', elevenLabsKey);
+      localStorage.setItem('leadfive_elevenlabs_key', elevenLabsKey);
       updateStatus();
       alert('✅ ElevenLabs API key saved successfully!');
     } else {
@@ -91,7 +91,7 @@ const AISettings = () => {
     
     try {
       const response = await OpenAIService.getChatResponse(
-        "Test message: Say hello and confirm you're working for ORPHI!",
+        "Test message: Say hello and confirm you're working for LeadFive!",
         { account: 'test-user', isRegistered: true }
       );
       
@@ -123,7 +123,7 @@ const AISettings = () => {
     
     try {
       const audio = await ElevenLabsService.generateSpeech(
-        "Hello from ORPHI! This is a test of the ElevenLabs voice synthesis."
+        "Hello from LeadFive! This is a test of the ElevenLabs voice synthesis."
       );
       
       if (audio.success) {
@@ -157,8 +157,8 @@ const AISettings = () => {
   // Clear API keys
   const clearKeys = () => {
     if (window.confirm('Are you sure you want to clear all API keys?')) {
-      localStorage.removeItem('orphi_openai_key');
-      localStorage.removeItem('orphi_elevenlabs_key');
+      localStorage.removeItem('leadfive_openai_key');
+      localStorage.removeItem('leadfive_elevenlabs_key');
       setOpenaiKey('');
       setElevenLabsKey('');
       setTestResults(null);

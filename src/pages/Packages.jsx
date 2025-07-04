@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { LEAD_FIVE_CONFIG, LEAD_FIVE_ABI } from '../contracts-leadfive.js';
-import UnifiedWalletConnect from '../components/UnifiedWalletConnect';
+import UnifiedWalletConnect from '../components/unified/UnifiedWalletConnect';
 import PageWrapper from '../components/PageWrapper';
 import '../styles/ContractIntegration.css';
 

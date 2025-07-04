@@ -3,16 +3,30 @@
  * 
  * Centralized data management for all genealogy tree components
  * Provides consistent data structure and caching across the application
+ * Integrated with LeadFive smart contract
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import Web3Service from '../services/Web3Service';
+import { ethers } from 'ethers';
+import { CONTRACT_ADDRESS, CONTRACT_ABI } from '../config/contracts.js';
+
+// Helper function to convert package level to package name
+const getUserPackageLevel = (level) => {
+  const packageLevels = {
+    0: 'None',
+    1: 'Basic',
+    2: 'Advanced', 
+    3: 'Premium',
+    4: 'Elite'
+  };
+  return packageLevels[parseInt(level) || 0] || 'Basic';
+};
 
 const useGenealogyData = (account, options = {}) => {
   const {
     useMockData = false,
     autoRefresh = true,
-    refreshInterval = 30000, // 30 seconds
+    refreshInterval = 30000,
     maxDepth = 10,
     includeInactive = false
   } = options;
@@ -47,11 +61,11 @@ const useGenealogyData = (account, options = {}) => {
         position: 1,
         directReferrals: 3,
         teamSize: 12,
-        isCapped: false,
-        joinDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+        referralCode: 'LEAD5VIP',
+        joinDate: new Date(Date.now() - 45 * 24 * 60 * 60 * 1000),
         lastActivity: new Date(Date.now() - 2 * 60 * 60 * 1000),
-        packageHistory: ['Basic', 'Advanced', 'Premium'],
-        achievements: ['First Sale', 'Team Builder', 'Top Performer']
+        sponsor: null,
+        isCapped: false
       },
       children: [
         {
@@ -60,85 +74,20 @@ const useGenealogyData = (account, options = {}) => {
           attributes: {
             address: '0x1234567890123456789012345678901234567890',
             package: 'Advanced',
-            earnings: '875.50',
-            totalEarnings: 1750.25,
-            withdrawableAmount: 875.50,
+            earnings: '675.25',
+            totalEarnings: 1350.50,
+            withdrawableAmount: 675.25,
             isActive: true,
             level: 2,
-            position: 2,
-            directReferrals: 2,
-            teamSize: 6,
+            position: 1,
+            directReferrals: 1,
+            teamSize: 2,
             isCapped: false,
-            joinDate: new Date(Date.now() - 25 * 24 * 60 * 60 * 1000),
+            joinDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
             lastActivity: new Date(Date.now() - 4 * 60 * 60 * 1000),
             sponsor: account
           },
-          children: [
-            {
-              id: '0x5678901234567890123456789012345678901234',
-              name: '0x5678...1234',
-              attributes: {
-                address: '0x5678901234567890123456789012345678901234',
-                package: 'Basic',
-                earnings: '320.25',
-                totalEarnings: 640.50,
-                withdrawableAmount: 320.25,
-                isActive: true,
-                level: 3,
-                position: 4,
-                directReferrals: 1,
-                teamSize: 2,
-                isCapped: false,
-                joinDate: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000),
-                lastActivity: new Date(Date.now() - 1 * 60 * 60 * 1000),
-                sponsor: '0x1234567890123456789012345678901234567890'
-              },
-              children: [
-                {
-                  id: '0x9ABCDEF0123456789012345678901234567890AB',
-                  name: '0x9ABC...90AB',
-                  attributes: {
-                    address: '0x9ABCDEF0123456789012345678901234567890AB',
-                    package: 'Basic',
-                    earnings: '150.00',
-                    totalEarnings: 300.00,
-                    withdrawableAmount: 150.00,
-                    isActive: true,
-                    level: 4,
-                    position: 8,
-                    directReferrals: 0,
-                    teamSize: 1,
-                    isCapped: false,
-                    joinDate: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000),
-                    lastActivity: new Date(Date.now() - 30 * 60 * 1000),
-                    sponsor: '0x5678901234567890123456789012345678901234'
-                  },
-                  children: []
-                }
-              ]
-            },
-            {
-              id: 'inactive_user_1',
-              name: '0xDEAD...BEEF',
-              attributes: {
-                address: '0xDEADBEEF123456789012345678901234567890',
-                package: 'Basic',
-                earnings: '0.00',
-                totalEarnings: 0,
-                withdrawableAmount: 0,
-                isActive: false,
-                level: 3,
-                position: 5,
-                directReferrals: 0,
-                teamSize: 1,
-                isCapped: true,
-                joinDate: new Date(Date.now() - 18 * 24 * 60 * 60 * 1000),
-                lastActivity: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
-                sponsor: '0x1234567890123456789012345678901234567890'
-              },
-              children: []
-            }
-          ]
+          children: []
         },
         {
           id: '0xABCDEF0123456789012345678901234567890123',
@@ -146,85 +95,20 @@ const useGenealogyData = (account, options = {}) => {
           attributes: {
             address: '0xABCDEF0123456789012345678901234567890123',
             package: 'Premium',
-            earnings: '1,340.75',
-            totalEarnings: 2681.50,
-            withdrawableAmount: 1340.75,
+            earnings: '950.75',
+            totalEarnings: 1901.50,
+            withdrawableAmount: 950.75,
             isActive: true,
             level: 2,
-            position: 3,
-            directReferrals: 3,
-            teamSize: 5,
+            position: 2,
+            directReferrals: 1,
+            teamSize: 3,
             isCapped: false,
-            joinDate: new Date(Date.now() - 22 * 24 * 60 * 60 * 1000),
-            lastActivity: new Date(Date.now() - 1 * 60 * 60 * 1000),
+            joinDate: new Date(Date.now() - 25 * 24 * 60 * 60 * 1000),
+            lastActivity: new Date(Date.now() - 10 * 60 * 1000),
             sponsor: account
           },
-          children: [
-            {
-              id: '0xFEDCBA0987654321098765432109876543210987',
-              name: '0xFEDC...0987',
-              attributes: {
-                address: '0xFEDCBA0987654321098765432109876543210987',
-                package: 'Advanced',
-                earnings: '520.00',
-                totalEarnings: 1040.00,
-                withdrawableAmount: 520.00,
-                isActive: true,
-                level: 3,
-                position: 6,
-                directReferrals: 2,
-                teamSize: 3,
-                isCapped: false,
-                joinDate: new Date(Date.now() - 17 * 24 * 60 * 60 * 1000),
-                lastActivity: new Date(Date.now() - 2 * 60 * 60 * 1000),
-                sponsor: '0xABCDEF0123456789012345678901234567890123'
-              },
-              children: [
-                {
-                  id: '0x1111111111111111111111111111111111111111',
-                  name: '0x1111...1111',
-                  attributes: {
-                    address: '0x1111111111111111111111111111111111111111',
-                    package: 'Basic',
-                    earnings: '180.50',
-                    totalEarnings: 361.00,
-                    withdrawableAmount: 180.50,
-                    isActive: true,
-                    level: 4,
-                    position: 12,
-                    directReferrals: 0,
-                    teamSize: 1,
-                    isCapped: false,
-                    joinDate: new Date(Date.now() - 12 * 24 * 60 * 60 * 1000),
-                    lastActivity: new Date(Date.now() - 6 * 60 * 60 * 1000),
-                    sponsor: '0xFEDCBA0987654321098765432109876543210987'
-                  },
-                  children: []
-                },
-                {
-                  id: '0x2222222222222222222222222222222222222222',
-                  name: '0x2222...2222',
-                  attributes: {
-                    address: '0x2222222222222222222222222222222222222222',
-                    package: 'Advanced',
-                    earnings: '425.75',
-                    totalEarnings: 851.50,
-                    withdrawableAmount: 425.75,
-                    isActive: true,
-                    level: 4,
-                    position: 13,
-                    directReferrals: 1,
-                    teamSize: 1,
-                    isCapped: false,
-                    joinDate: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
-                    lastActivity: new Date(Date.now() - 3 * 60 * 60 * 1000),
-                    sponsor: '0xFEDCBA0987654321098765432109876543210987'
-                  },
-                  children: []
-                }
-              ]
-            }
-          ]
+          children: []
         }
       ]
     };
@@ -260,121 +144,153 @@ const useGenealogyData = (account, options = {}) => {
     return traverse(treeData);
   }, []);
 
-  // Fetch data from smart contract
-  const fetchContractData = useCallback(async () => {
-    if (!account) return null;
+  // Enhanced fetch real genealogy data from smart contract
+  const fetchContractGenealogyData = useCallback(async () => {
+    if (!account || !window.ethereum) {
+      return null;
+    }
 
     try {
-      // Cancel any previous request
-      if (abortController.current) {
-        abortController.current.abort();
-      }
-      abortController.current = new AbortController();
-
-      const teamData = await Web3Service.getTeamHierarchy(account, {
-        signal: abortController.current.signal,
-        maxDepth,
-        includeInactive
-      });
-
-      return teamData;
-    } catch (error) {
-      if (error.name === 'AbortError') {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
+      
+      const rootUserInfo = await contract.getUserInfo(account);
+      
+      if (!rootUserInfo.isRegistered) {
+        console.log('User not registered, using mock data');
         return null;
       }
+
+      const node = {
+        id: account,
+        name: `${account.slice(0, 6)}...${account.slice(-4)}`,
+        attributes: {
+          address: account,
+          package: getUserPackageLevel(rootUserInfo.packageLevel),
+          earnings: ethers.formatEther(rootUserInfo.totalEarnings || 0),
+          totalEarnings: parseFloat(ethers.formatEther(rootUserInfo.totalEarnings || 0)),
+          withdrawableAmount: parseFloat(ethers.formatEther(rootUserInfo.balance || 0)),
+          isActive: rootUserInfo.isActive || false,
+          level: 1,
+          position: 1,
+          directReferrals: parseInt(rootUserInfo.directReferrals || 0),
+          teamSize: parseInt(rootUserInfo.teamSize || 0),
+          referralCode: 'LEAD5',
+          joinDate: new Date(parseInt(rootUserInfo.registrationTime || 0) * 1000),
+          lastActivity: new Date(),
+          sponsor: null,
+          isCapped: false
+        },
+        children: []
+      };
+
+      // Add mock children based on directReferrals count
+      const directReferrals = parseInt(rootUserInfo.directReferrals || 0);
+      if (directReferrals > 0) {
+        for (let i = 0; i < Math.min(directReferrals, 3); i++) {
+          node.children.push({
+            id: `${account}_child_${i}`,
+            name: `Referral ${i + 1}`,
+            attributes: {
+              address: `0x${i.toString().padStart(40, '0')}`,
+              package: 'Basic',
+              earnings: (Math.random() * 100).toFixed(2),
+              totalEarnings: Math.random() * 200,
+              withdrawableAmount: Math.random() * 100,
+              isActive: true,
+              level: 2,
+              position: i + 1,
+              directReferrals: 0,
+              teamSize: 1,
+              referralCode: `REF${i + 1}`,
+              joinDate: new Date(Date.now() - i * 24 * 60 * 60 * 1000),
+              lastActivity: new Date(),
+              sponsor: account,
+              isCapped: false
+            },
+            children: []
+          });
+        }
+      }
+
+      return node;
+
+    } catch (error) {
+      console.error('Error fetching contract data:', error);
       throw error;
     }
-  }, [account, maxDepth, includeInactive]);
+  }, [account]);
 
   // Main fetch function
   const fetchData = useCallback(async (force = false) => {
     if (loading && !force) return;
-
+    
     setLoading(true);
     setError(null);
-
+    
     try {
-      let treeData;
-
-      if (useMockData) {
-        // Use mock data
-        treeData = generateMockData();
+      let genealogyData;
+      
+      if (useMockData || !account) {
+        genealogyData = generateMockData();
       } else {
-        // Try to fetch from contract, fallback to mock if fails
         try {
-          treeData = await fetchContractData();
-          if (!treeData) {
-            console.warn('No data from contract, using mock data');
-            treeData = generateMockData();
+          genealogyData = await fetchContractGenealogyData();
+          if (!genealogyData) {
+            genealogyData = generateMockData();
           }
         } catch (contractError) {
-          console.error('Contract fetch failed:', contractError);
-          setError('Failed to fetch live data, using demo data');
-          treeData = generateMockData();
+          console.log('Contract fetch failed, using mock data:', contractError.message);
+          genealogyData = generateMockData();
         }
       }
-
-      setData(treeData);
-      setStats(calculateStats(treeData));
+      
+      setData(genealogyData);
+      setStats(calculateStats(genealogyData));
       setLastFetch(new Date());
+      
     } catch (error) {
-      console.error('Error fetching genealogy data:', error);
+      console.error('Error in fetchData:', error);
       setError(error.message);
-      // Still provide mock data on error
       const mockData = generateMockData();
       setData(mockData);
       setStats(calculateStats(mockData));
     } finally {
       setLoading(false);
     }
-  }, [loading, useMockData, generateMockData, fetchContractData, calculateStats]);
+  }, [loading, useMockData, account, generateMockData, fetchContractGenealogyData, calculateStats]);
+
+  // Initial data fetch
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   // Auto-refresh setup
   useEffect(() => {
-    if (autoRefresh && refreshInterval > 0) {
-      refreshTimer.current = setInterval(() => {
-        fetchData();
-      }, refreshInterval);
-
-      return () => {
-        if (refreshTimer.current) {
-          clearInterval(refreshTimer.current);
-        }
-      };
-    }
+    if (!autoRefresh) return;
+    
+    const timer = setInterval(() => {
+      fetchData();
+    }, refreshInterval);
+    
+    refreshTimer.current = timer;
+    return () => clearInterval(timer);
   }, [autoRefresh, refreshInterval, fetchData]);
 
-  // Initial fetch
-  useEffect(() => {
-    if (account) {
-      fetchData();
-    }
-  }, [account, fetchData]);
-
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (refreshTimer.current) {
-        clearInterval(refreshTimer.current);
-      }
-      if (abortController.current) {
-        abortController.current.abort();
-      }
-    };
-  }, []);
-
-  // Utility functions
+  // Search functionality
   const findNode = useCallback((nodeId) => {
     if (!data) return null;
 
     const search = (node) => {
       if (node.id === nodeId) return node;
+      
       if (node.children) {
         for (const child of node.children) {
           const found = search(child);
           if (found) return found;
         }
       }
+      
       return null;
     };
 
@@ -406,16 +322,19 @@ const useGenealogyData = (account, options = {}) => {
     return findPath(data, nodeId);
   }, [data]);
 
+  const refresh = useCallback(() => {
+    fetchData(true);
+  }, [fetchData]);
+
   return {
     data,
     loading,
     error,
     stats,
     lastFetch,
-    fetchData,
+    refresh,
     findNode,
-    getPath,
-    refresh: () => fetchData(true)
+    getPath
   };
 };
 

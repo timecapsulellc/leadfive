@@ -9,7 +9,7 @@ const FallbackComponent = () => {
       margin: '0 auto',
       textAlign: 'center'
     }}>
-      <h1 style={{ color: '#7B2CBF' }}>OrphiChain Dashboard</h1>
+      <h1 style={{ color: '#7B2CBF' }}>LeadFive Dashboard</h1>
       <p>If you're seeing this, the main dashboard components may have failed to load.</p>
       
       <div style={{

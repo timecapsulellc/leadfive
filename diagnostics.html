@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard Diagnostics</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1a1f3a; color: white; }
+        .error { color: #ff6b6b; }
+        .success { color: #51cf66; }
+        .info { color: #00D4FF; }
+        pre { background: rgba(0,0,0,0.3); padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>LeadFive Dashboard Diagnostics</h1>
+    <div id="results"></div>
+    
+    <script>
+        const results = document.getElementById('results');
+        
+        async function runDiagnostics() {
+            // Check if main.jsx loads
+            try {
+                const mainResponse = await fetch('/src/main.jsx');
+                results.innerHTML += '<p class="success">✓ main.jsx found</p>';
+            } catch (e) {
+                results.innerHTML += '<p class="error">✗ main.jsx not found: ' + e.message + '</p>';
+            }
+            
+            // Check if App.jsx loads
+            try {
+                const appResponse = await fetch('/src/App.jsx');
+                results.innerHTML += '<p class="success">✓ App.jsx found</p>';
+            } catch (e) {
+                results.innerHTML += '<p class="error">✗ App.jsx not found: ' + e.message + '</p>';
+            }
+            
+            // Check if Dashboard loads
+            try {
+                const dashResponse = await fetch('/src/pages/Dashboard_AIRA_Advanced.jsx');
+                results.innerHTML += '<p class="success">✓ Dashboard found</p>';
+            } catch (e) {
+                results.innerHTML += '<p class="error">✗ Dashboard not found: ' + e.message + '</p>';
+            }
+            
+            // Check React
+            results.innerHTML += '<h3>React Status:</h3>';
+            if (window.React) {
+                results.innerHTML += '<p class="success">✓ React loaded</p>';
+            } else {
+                results.innerHTML += '<p class="error">✗ React not loaded</p>';
+            }
+            
+            // Check for errors
+            results.innerHTML += '<h3>Console Errors:</h3>';
+            results.innerHTML += '<pre id="errors">Checking for errors...</pre>';
+        }
+        
+        // Capture errors
+        window.addEventListener('error', (e) => {
+            document.getElementById('errors').innerHTML += e.message + '\n' + e.filename + ':' + e.lineno + '\n\n';
+        });
+        
+        runDiagnostics();
+    </script>
+</body>
+</html>

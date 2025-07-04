@@ -1,5 +1,5 @@
 /**
- * ORPHI CrowdFund AI Management Panel
+ * LeadFive AI Management Panel
  * Complete AI services management for administrators
  * Developed by LEAD 5 - Young Blockchain Engineers
  */

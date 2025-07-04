@@ -345,12 +345,32 @@ export default function About({ account, provider, signer, onConnect, onDisconne
           <h2>📋 Contract Information</h2>
           <div className="contract-info">
             <div className="contract-detail">
+<<<<<<< HEAD
               <strong>Contract Address:</strong>
+=======
+              <strong>📄 Contract Address:</strong>
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
               <code>0x29dcCb502D10C042BcC6a02a7762C49595A9E498</code>
             </div>
             <div className="contract-detail">
-              <strong>Network:</strong>
-              <span>BSC Mainnet</span>
+              <strong>👤 Default Sponsor:</strong>
+              <code>0xCeaEfDaDE5a0D574bFd5577665dC58d132995335</code>
+            </div>
+            <div className="contract-detail">
+              <strong>🎫 Referral Code:</strong>
+              <code>K9NBHT</code>
+            </div>
+            <div className="contract-detail">
+              <strong>💰 USDT Contract:</strong>
+              <code>0x55d398326f99059fF775485246999027B3197955</code>
+            </div>
+            <div className="contract-detail">
+              <strong>🌐 Network:</strong>
+              <span>BSC Mainnet (Chain ID: 56)</span>
+            </div>
+            <div className="contract-detail">
+              <strong>📅 Last Updated:</strong>
+              <span>June 29, 2025</span>
             </div>
             <div className="contract-detail">
               <strong>Status:</strong>
@@ -363,7 +383,15 @@ export default function About({ account, provider, signer, onConnect, onDisconne
                 rel="noopener noreferrer"
                 className="contract-link"
               >
-                View on BSCScan
+                📊 View Contract on BSCScan
+              </a>
+              <a 
+                href="https://bscscan.com/address/0x55d398326f99059fF775485246999027B3197955" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="contract-link"
+              >
+                💰 View USDT Contract
               </a>
             </div>
           </div>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import UnifiedWalletConnect from './UnifiedWalletConnect';
 
 export default function Header({ account, onConnect, onDisconnect }) {
   return (
@@ -32,23 +31,20 @@ export default function Header({ account, onConnect, onDisconnect }) {
         <Link to="/genealogy">Genealogy</Link>
         <Link to="/withdrawals">Withdrawals</Link>
         <Link to="/security">Security</Link>
-        <Link to="/brand-guide">Brand Guide</Link>
         <Link to="/about">About</Link>
         {account && <Link to="/dashboard">Dashboard</Link>}
+        <Link to="/testnet-withdrawal" className="testnet-link">🧪 Testnet</Link>
       </nav>
       <div className="wallet-section">
         {account ? (
           <div className="wallet-info">
-            <span className="wallet-address">{account.substring(0, 6)}...{account.slice(-4)}</span>
+            <span className="wallet-address">{typeof account === 'string' && `${account.substring(0, 6)}...${account.slice(-4)}`}</span>
             <button className="disconnect-btn" onClick={onDisconnect}>Disconnect</button>
           </div>
         ) : (
-          <UnifiedWalletConnect
-            onConnect={onConnect}
-            onDisconnect={onDisconnect}
-            buttonText="Connect Wallet"
-            compact={true}
-          />
+          <button className="connect-btn" onClick={onConnect}>
+            Connect Wallet
+          </button>
         )}
       </div>
     </header>

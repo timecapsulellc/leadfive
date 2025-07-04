@@ -8,7 +8,7 @@ export const APP_CONFIG = {
   DEVELOPER: "LeadFive Team"
 };
 
-// OrphiChain Official Brand Colors
+// LeadFive Official Brand Colors
 export const BRAND_COLORS = {
   // Primary Brand Colors
   CYBER_BLUE: "#00D4FF",

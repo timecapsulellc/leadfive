@@ -1,0 +1,62 @@
+{
+  "timestamp": "2025-06-28T18:13:05.551Z",
+  "results": [
+    {
+      "name": "Server Running",
+      "status": "FAILED",
+      "duration": 20
+    },
+    {
+      "name": "Project Structure",
+      "status": "PASSED",
+      "duration": 0
+    },
+    {
+      "name": "No FaMinimize Issues",
+      "status": "PASSED",
+      "duration": 1
+    },
+    {
+      "name": "Emergency Component Active",
+      "status": "PASSED",
+      "duration": 0
+    },
+    {
+      "name": "Package Scripts",
+      "status": "PASSED",
+      "duration": 0
+    },
+    {
+      "name": "Dependencies Check",
+      "status": "PASSED",
+      "duration": 1
+    },
+    {
+      "name": "Build Configuration",
+      "status": "PASSED",
+      "duration": 0
+    },
+    {
+      "name": "Node Modules",
+      "status": "PASSED",
+      "duration": 0
+    },
+    {
+      "name": "Homepage Content",
+      "status": "FAILED",
+      "duration": 2
+    },
+    {
+      "name": "Emergency Fix Files",
+      "status": "PASSED",
+      "duration": 0
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 2,
+    "errors": 0,
+    "total": 10,
+    "percentage": 80
+  }
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaUsers, FaUserPlus, FaChartLine, FaCopy, FaCheckCircle, FaUserCircle } from 'react-icons/fa';
+import { FaUsers, FaUserPlus, FaChartLine, FaCopy, FaCheckCircle, FaUserCircle, FaDollarSign } from 'react-icons/fa';
 import './ReferralStats.css';
 
 export default function ReferralStats({ account }) {

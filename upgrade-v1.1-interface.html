@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadFive v1.1 UPGRADE - Trezor Secure</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .upgrade-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .step-content h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .step-content p {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .addresses {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .address-item {
+            margin: 10px 0;
+        }
+        
+        .address-item strong {
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .address-item code {
+            background: #f1f3f4;
+            padding: 8px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            word-break: break-all;
+            display: block;
+        }
+        
+        .button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin: 10px 0;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .warning h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .warning ul {
+            color: #856404;
+            margin-left: 20px;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔄 LeadFive v1.1 COMPLETE UPGRADE</h1>
+            <p>Marketing Plan Compliant + Security Hardened + Complete Business Logic</p>
+        </div>
+
+        <div class="warning">
+            <h3>🎯 v1.1 COMPLETE UPGRADE INCLUDES:</h3>
+            <ul>
+                <li>✅ <strong>Marketing Plan Compliance:</strong> 4 packages ($30, $50, $100, $200)</li>
+                <li>✅ <strong>Complete Business Logic:</strong> Registration, payments, commissions, pools</li>
+                <li>✅ <strong>Security Features:</strong> All 7 PhD audit fixes implemented</li>
+                <li>✅ <strong>Root User Fix:</strong> Deployer clearing + admin rights preservation</li>
+                <li>✅ <strong>Matrix System:</strong> Binary placement and rewards</li>
+                <li>✅ <strong>Pool Management:</strong> Leadership, help, community pools</li>
+            </ul>
+            <br>
+            <h3>⚠️ Important Security Notice</h3>
+            <ul>
+                <li>This upgrades your contract to the COMPLETE v1.1 implementation</li>
+                <li>Your Trezor must be connected and unlocked</li>
+                <li>Only the contract owner can perform this upgrade</li>
+                <li>All existing data and balances will be preserved</li>
+                <li>All missing features will be activated after upgrade</li>
+            </ul>
+        </div>
+
+        <div class="addresses">
+            <div class="address-item">
+                <strong>🎯 Proxy Contract (stays the same):</strong>
+                <code id="proxyAddress">0x29dcCb502D10C042BcC6a02a7762C49595A9E498</code>
+            </div>
+            <div class="address-item">
+                <strong>🆕 New Implementation (v1.1 Complete):</strong>
+                <code id="implementationAddress">0x4eC8277F557C73B41EEEBd35Bf0dC0E24c165944</code>
+            </div>
+        </div>
+
+        <div class="upgrade-section">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Connect Trezor Wallet</h3>
+                    <p>Connect your Trezor device and ensure it's the contract owner</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Verify Contract State</h3>
+                    <p>Check current contract version and ownership</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Execute Upgrade</h3>
+                    <p>Upgrade proxy to use the new v1.1 Complete implementation</p>
+                </div>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Initialize v1.1 Features</h3>
+                    <p>Initialize new features and fix root user configuration</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="connectionStatus" class="status info">
+            📡 Click "Connect Trezor" to begin the upgrade process
+        </div>
+
+        <button id="connectButton" class="button">🔗 Connect Trezor Wallet</button>
+        <button id="verifyButton" class="button hidden">🔍 Verify Contract State</button>
+        <button id="upgradeButton" class="button hidden">🔄 Execute Upgrade</button>
+        <button id="initializeButton" class="button hidden">⚡ Initialize v1.1</button>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Processing transaction... Please confirm on your Trezor device.</p>
+        </div>
+
+        <div id="results" class="hidden">
+            <h3>📊 Upgrade Results</h3>
+            <div id="resultContent"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
+    <script>
+        // Contract addresses and configuration
+        const PROXY_ADDRESS = "0x29dcCb502D10C042BcC6a02a7762C49595A9E498";
+        const NEW_IMPLEMENTATION = "0x4eC8277F557C73B41EEEBd35Bf0dC0E24c165944";
+        const BSC_MAINNET_RPC = "https://bsc-dataseed.binance.org/";
+        const BSC_CHAIN_ID = 56;
+
+        // Contract ABIs (simplified for upgrade functions)
+        const UPGRADE_ABI = [
+            "function owner() view returns (address)",
+            "function upgradeTo(address newImplementation)",
+            "function getContractVersion() view returns (string)",
+            "function initializeV1_1()",
+            "function fixRootUserIssue()",
+            "function registerAsRoot(uint8 packageLevel)",
+            "function activateAllLevelsForRoot()",
+            "function isRootUserFixed() view returns (bool, string, address, uint32, bool, bool)"
+        ];
+
+        let provider, signer, contract, userAddress;
+
+        // UI Elements
+        const connectButton = document.getElementById('connectButton');
+        const verifyButton = document.getElementById('verifyButton');
+        const upgradeButton = document.getElementById('upgradeButton');
+        const initializeButton = document.getElementById('initializeButton');
+        const connectionStatus = document.getElementById('connectionStatus');
+        const loading = document.getElementById('loading');
+        const results = document.getElementById('results');
+
+        // Event Listeners
+        connectButton.addEventListener('click', connectTrezor);
+        verifyButton.addEventListener('click', verifyContract);
+        upgradeButton.addEventListener('click', executeUpgrade);
+        initializeButton.addEventListener('click', initializeV11);
+
+        async function connectTrezor() {
+            try {
+                showLoading("Connecting to Trezor...");
+                
+                // Check if MetaMask/Web3 is available
+                if (typeof window.ethereum === 'undefined') {
+                    throw new Error('Please install MetaMask or use Trezor Suite');
+                }
+
+                // Request account access
+                await window.ethereum.request({ method: 'eth_requestAccounts' });
+                
+                // Set up provider and signer
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                signer = provider.getSigner();
+                userAddress = await signer.getAddress();
+                
+                // Check network
+                const network = await provider.getNetwork();
+                if (network.chainId !== BSC_CHAIN_ID) {
+                    throw new Error('Please switch to BSC Mainnet (Chain ID: 56)');
+                }
+                
+                // Set up contract
+                contract = new ethers.Contract(PROXY_ADDRESS, UPGRADE_ABI, signer);
+                
+                hideLoading();
+                showStatus(`✅ Connected: ${userAddress}`, 'success');
+                
+                connectButton.classList.add('hidden');
+                verifyButton.classList.remove('hidden');
+                
+            } catch (error) {
+                hideLoading();
+                showStatus(`❌ Connection failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function verifyContract() {
+            try {
+                showLoading("Verifying contract state...");
+                
+                // Check ownership
+                const owner = await contract.owner();
+                const isOwner = owner.toLowerCase() === userAddress.toLowerCase();
+                
+                // Get current version (might fail if not v1.1 yet)
+                let currentVersion = "Unknown";
+                try {
+                    currentVersion = await contract.getContractVersion();
+                } catch (e) {
+                    currentVersion = "Pre-v1.1 (upgrade needed)";
+                }
+                
+                // Check root user status (might fail if not v1.1 yet)
+                let rootStatus = "Unknown";
+                try {
+                    const rootInfo = await contract.isRootUserFixed();
+                    rootStatus = rootInfo[1];
+                } catch (e) {
+                    rootStatus = "Will be available after upgrade";
+                }
+                
+                hideLoading();
+                
+                const resultHtml = `
+                    <div class="address-item">
+                        <strong>👑 Contract Owner:</strong>
+                        <code>${owner}</code>
+                    </div>
+                    <div class="address-item">
+                        <strong>🔑 Your Address:</strong>
+                        <code>${userAddress}</code>
+                    </div>
+                    <div class="address-item">
+                        <strong>✅ Ownership Check:</strong>
+                        <code>${isOwner ? 'YOU ARE THE OWNER ✅' : 'NOT THE OWNER ❌'}</code>
+                    </div>
+                    <div class="address-item">
+                        <strong>📋 Current Version:</strong>
+                        <code>${currentVersion}</code>
+                    </div>
+                    <div class="address-item">
+                        <strong>👤 Root Status:</strong>
+                        <code>${rootStatus}</code>
+                    </div>
+                `;
+                
+                results.classList.remove('hidden');
+                document.getElementById('resultContent').innerHTML = resultHtml;
+                
+                if (isOwner) {
+                    showStatus('✅ Verification successful - You can proceed with upgrade', 'success');
+                    verifyButton.classList.add('hidden');
+                    upgradeButton.classList.remove('hidden');
+                } else {
+                    showStatus('❌ You are not the contract owner', 'error');
+                }
+                
+            } catch (error) {
+                hideLoading();
+                showStatus(`❌ Verification failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function executeUpgrade() {
+            try {
+                showLoading("Executing upgrade... Please confirm on your Trezor device");
+                
+                // Execute the upgrade
+                const tx = await contract.upgradeTo(NEW_IMPLEMENTATION, {
+                    gasLimit: 500000
+                });
+                
+                showLoading(`Upgrade transaction sent: ${tx.hash}\nWaiting for confirmation...`);
+                
+                const receipt = await tx.wait();
+                
+                hideLoading();
+                showStatus(`✅ Upgrade successful! Transaction: ${tx.hash}`, 'success');
+                
+                // Update results
+                const upgradeResultHtml = `
+                    <div class="address-item">
+                        <strong>🎉 Upgrade Status:</strong>
+                        <code>SUCCESS ✅</code>
+                    </div>
+                    <div class="address-item">
+                        <strong>📝 Transaction Hash:</strong>
+                        <code>${tx.hash}</code>
+                    </div>
+                    <div class="address-item">
+                        <strong>⛽ Gas Used:</strong>
+                        <code>${receipt.gasUsed.toString()}</code>
+                    </div>
+                    <div class="address-item">
+                        <strong>🔗 BSCScan:</strong>
+                        <code><a href="https://bscscan.com/tx/${tx.hash}" target="_blank">View Transaction</a></code>
+                    </div>
+                `;
+                
+                document.getElementById('resultContent').innerHTML += upgradeResultHtml;
+                
+                upgradeButton.classList.add('hidden');
+                initializeButton.classList.remove('hidden');
+                
+            } catch (error) {
+                hideLoading();
+                showStatus(`❌ Upgrade failed: ${error.message}`, 'error');
+                console.error('Upgrade error:', error);
+            }
+        }
+
+        async function initializeV11() {
+            try {
+                showLoading("Initializing v1.1 features...");
+                
+                // Step 1: Initialize v1.1
+                const initTx = await contract.initializeV1_1();
+                await initTx.wait();
+                
+                showLoading("Fixing root user issue...");
+                
+                // Step 2: Fix root user
+                const fixTx = await contract.fixRootUserIssue();
+                await fixTx.wait();
+                
+                showLoading("Registering as root user...");
+                
+                // Step 3: Register as root (Package Level 1)
+                const registerTx = await contract.registerAsRoot(1);
+                await registerTx.wait();
+                
+                showLoading("Activating all package levels...");
+                
+                // Step 4: Activate all levels
+                const activateTx = await contract.activateAllLevelsForRoot();
+                await activateTx.wait();
+                
+                hideLoading();
+                showStatus('🎉 v1.1 initialization complete! All features are now active.', 'success');
+                
+                // Verify final status
+                const finalStatus = await contract.isRootUserFixed();
+                const version = await contract.getContractVersion();
+                
+                const finalResultHtml = `
+                    <div class="address-item">
+                        <strong>🎯 Final Status:</strong>
+                        <code>${finalStatus[1]}</code>
+                    </div>
+                    <div class="address-item">
+                        <strong>📋 Contract Version:</strong>
+                        <code>${version}</code>
+                    </div>
+                    <div class="address-item">
+                        <strong>✅ Upgrade Complete:</strong>
+                        <code>LeadFive v1.1 is now fully operational! 🚀</code>
+                    </div>
+                `;
+                
+                document.getElementById('resultContent').innerHTML += finalResultHtml;
+                initializeButton.classList.add('hidden');
+                
+            } catch (error) {
+                hideLoading();
+                showStatus(`❌ Initialization failed: ${error.message}`, 'error');
+                console.error('Initialization error:', error);
+            }
+        }
+
+        function showLoading(message) {
+            loading.style.display = 'block';
+            if (message) {
+                loading.querySelector('p').textContent = message;
+            }
+        }
+
+        function hideLoading() {
+            loading.style.display = 'none';
+        }
+
+        function showStatus(message, type) {
+            connectionStatus.textContent = message;
+            connectionStatus.className = `status ${type}`;
+        }
+    </script>
+</body>
+</html>

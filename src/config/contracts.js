@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 // LeadFive Contract Configuration - Updated with MAINNET PRODUCTION addresses
 export const CONTRACT_ADDRESS = '0x29dcCb502D10C042BcC6a02a7762C49595A9E498'; // MAINNET PROXY
 export const IMPLEMENTATION_ADDRESS = '0x2cc37CB4e1F5D3D56E86c8792fD241d46064B2cF'; // MAINNET IMPLEMENTATION v1.10
 export const USDT_ADDRESS = '0x55d398326f99059fF775485246999027B3197955'; // BSC MAINNET USDT
 export const SPONSOR_ADDRESS = '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29'; // TREZOR WALLET (NEW OWNER)
+=======
+// LeadFive Contract Configuration - Updated with complete mainnet ABI
+export const CONTRACT_ADDRESS = '0x29dcCb502D10C042BcC6a02a7762C49595A9E498';
+export const USDT_ADDRESS = '0x55d398326f99059fF775485246999027B3197955';
+export const CONTRACT_OWNER = '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29'; // Trezor Wallet
+export const TREASURY_WALLET = '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29'; // Trezor Wallet
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
 
 // Network configuration
 export const SUPPORTED_NETWORKS = {
@@ -11,11 +19,14 @@ export const SUPPORTED_NETWORKS = {
     name: 'BNB Smart Chain',
     rpcUrl: 'https://bsc-dataseed.binance.org/',
     blockExplorer: 'https://bscscan.com/',
+<<<<<<< HEAD
     contractAddress: '0x29dcCb502D10C042BcC6a02a7762C49595A9E498',
     usdtAddress: '0x55d398326f99059fF775485246999027B3197955',
     sponsorAddress: '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29'
+=======
+    contractAddress: '0x29dcCb502D10C042BcC6a02a7762C49595A9E498'
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
   }
-  // Testnet removed for production deployment
 };
 
 // Get contract address for current network
@@ -33,6 +44,7 @@ export const isSupportedNetwork = (chainId) => {
   );
 };
 
+// Complete ABI with all enhanced functions
 export const CONTRACT_ABI = [
   {
     "inputs": [
@@ -133,6 +145,69 @@ export const CONTRACT_ABI = [
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "uint96",
+        "name": "amount",
+        "type": "uint96"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "AdminFeeCollected",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "reinvestAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "bonus",
+        "type": "uint256"
+      }
+    ],
+    "name": "AutoCompoundBonus",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "enabled",
+        "type": "bool"
+      }
+    ],
+    "name": "AutoCompoundToggled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": true,
         "internalType": "address",
         "name": "recipient",
@@ -158,6 +233,43 @@ export const CONTRACT_ABI = [
     "anonymous": false,
     "inputs": [
       {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "adminFee",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "userReceives",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "reinvestAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "EnhancedWithdrawal",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": false,
         "internalType": "uint64",
         "name": "version",
@@ -165,6 +277,44 @@ export const CONTRACT_ABI = [
       }
     ],
     "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferCompleted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferInitiated",
     "type": "event"
   },
   {
@@ -229,18 +379,37 @@ export const CONTRACT_ABI = [
     "inputs": [
       {
         "indexed": true,
-        "internalType": "uint8",
-        "name": "poolType",
-        "type": "uint8"
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
       },
       {
         "indexed": false,
-        "internalType": "uint96",
+        "internalType": "uint256",
         "name": "amount",
-        "type": "uint96"
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "poolType",
+        "type": "string"
       }
     ],
-    "name": "PoolDistributed",
+    "name": "PoolReinvestment",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "treasury",
+        "type": "address"
+      }
+    ],
+    "name": "TreasuryWalletSet",
     "type": "event"
   },
   {
@@ -321,6 +490,19 @@ export const CONTRACT_ABI = [
   },
   {
     "inputs": [],
+    "name": "ADMIN_FEE_PERCENT",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "UPGRADE_INTERFACE_VERSION",
     "outputs": [
       {
@@ -333,14 +515,15 @@ export const CONTRACT_ABI = [
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "adminIds",
+    "inputs": [],
+    "name": "acceptOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "adminFeeRecipient",
     "outputs": [
       {
         "internalType": "address",
@@ -357,40 +540,17 @@ export const CONTRACT_ABI = [
         "internalType": "address",
         "name": "",
         "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
-    "name": "binaryMatrix",
+    "name": "autoCompoundEnabled",
     "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      },
       {
         "internalType": "bool",
-        "name": "status",
+        "name": "",
         "type": "bool"
       }
     ],
-    "name": "blacklistUser",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -442,57 +602,17 @@ export const CONTRACT_ABI = [
   },
   {
     "inputs": [],
-    "name": "distributePools",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "emergencyWithdraw",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      }
-    ],
-    "name": "getBinaryMatrix",
+    "name": "getPendingTransfers",
     "outputs": [
       {
-        "internalType": "address[2]",
-        "name": "",
-        "type": "address[2]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
+        "internalType": "address",
+        "name": "pendingOwnerAddress",
+        "type": "address"
+      },
       {
         "internalType": "address",
-        "name": "user",
+        "name": "pendingTreasuryAddress",
         "type": "address"
-      }
-    ],
-    "name": "getDirectReferrals",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
       }
     ],
     "stateMutability": "view",
@@ -522,19 +642,13 @@ export const CONTRACT_ABI = [
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "user",
-        "type": "address"
-      }
-    ],
-    "name": "getUplineChain",
+    "inputs": [],
+    "name": "getTreasuryWallet",
     "outputs": [
       {
-        "internalType": "address[30]",
+        "internalType": "address",
         "name": "",
-        "type": "address[30]"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -611,11 +725,89 @@ export const CONTRACT_ABI = [
             "internalType": "uint8",
             "name": "withdrawalRate",
             "type": "uint8"
+          },
+          {
+            "internalType": "uint32",
+            "name": "lastHelpPoolClaim",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bool",
+            "name": "isEligibleForHelpPool",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint32",
+            "name": "registrationTime",
+            "type": "uint32"
+          },
+          {
+            "internalType": "string",
+            "name": "referralCode",
+            "type": "string"
+          },
+          {
+            "internalType": "uint96",
+            "name": "pendingRewards",
+            "type": "uint96"
+          },
+          {
+            "internalType": "uint32",
+            "name": "lastWithdrawal",
+            "type": "uint32"
+          },
+          {
+            "internalType": "bool",
+            "name": "isActive",
+            "type": "bool"
           }
         ],
-        "internalType": "struct OrphiCrowdFund.User",
+        "internalType": "struct LeadFiveTestnet.User",
         "name": "",
         "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "getUserReferralCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "getWithdrawalSplit",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "withdrawPercent",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "reinvestPercent",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -650,21 +842,43 @@ export const CONTRACT_ABI = [
         "internalType": "address",
         "name": "_usdt",
         "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_priceFeed",
-        "type": "address"
-      },
-      {
-        "internalType": "address[16]",
-        "name": "_adminIds",
-        "type": "address[16]"
       }
     ],
     "name": "initialize",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "initiateOwnershipTransfer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "isAutoCompoundEnabled",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -767,10 +981,23 @@ export const CONTRACT_ABI = [
   },
   {
     "inputs": [],
-    "name": "priceFeed",
+    "name": "pendingOwner",
     "outputs": [
       {
-        "internalType": "contract IPriceFeed",
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pendingTreasuryWallet",
+    "outputs": [
+      {
+        "internalType": "address",
         "name": "",
         "type": "address"
       }
@@ -794,14 +1021,20 @@ export const CONTRACT_ABI = [
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       }
     ],
-    "name": "recoverUSDT",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "name": "referralCodeToUser",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -815,11 +1048,6 @@ export const CONTRACT_ABI = [
         "internalType": "uint8",
         "name": "packageLevel",
         "type": "uint8"
-      },
-      {
-        "internalType": "bool",
-        "name": "useUSDT",
-        "type": "bool"
       }
     ],
     "name": "register",
@@ -832,6 +1060,97 @@ export const CONTRACT_ABI = [
     "name": "renounceOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "rootUser",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "rootUserSet",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_recipient",
+        "type": "address"
+      }
+    ],
+    "name": "setAdminFeeRecipient",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_treasuryWallet",
+        "type": "address"
+      }
+    ],
+    "name": "setTreasuryWallet",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "enabled",
+        "type": "bool"
+      }
+    ],
+    "name": "toggleAutoCompound",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalAdminFeesCollected",
+    "outputs": [
+      {
+        "internalType": "uint96",
+        "name": "",
+        "type": "uint96"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalUsers",
+    "outputs": [
+      {
+        "internalType": "uint32",
+        "name": "",
+        "type": "uint32"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -851,54 +1170,31 @@ export const CONTRACT_ABI = [
     "inputs": [
       {
         "internalType": "address",
-        "name": "user",
+        "name": "clientOwner",
         "type": "address"
       },
-      {
-        "internalType": "uint8",
-        "name": "rank",
-        "type": "uint8"
-      }
-    ],
-    "name": "updateUserRank",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
       {
         "internalType": "address",
-        "name": "user",
+        "name": "clientTreasury",
         "type": "address"
-      },
-      {
-        "internalType": "uint8",
-        "name": "rate",
-        "type": "uint8"
       }
     ],
-    "name": "updateWithdrawalRate",
+    "name": "transferToClient",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "treasuryWallet",
+    "outputs": [
       {
-        "internalType": "uint8",
-        "name": "newLevel",
-        "type": "uint8"
-      },
-      {
-        "internalType": "bool",
-        "name": "useUSDT",
-        "type": "bool"
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
-    "name": "upgradePackage",
-    "outputs": [],
-    "stateMutability": "payable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -920,6 +1216,19 @@ export const CONTRACT_ABI = [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "usdt",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -932,23 +1241,10 @@ export const CONTRACT_ABI = [
         "type": "uint256"
       }
     ],
-    "name": "uplineChain",
+    "name": "userReferrals",
     "outputs": [
       {
         "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "usdt",
-    "outputs": [
-      {
-        "internalType": "contract IERC20",
         "name": "",
         "type": "address"
       }
@@ -1025,6 +1321,41 @@ export const CONTRACT_ABI = [
         "internalType": "uint8",
         "name": "withdrawalRate",
         "type": "uint8"
+      },
+      {
+        "internalType": "uint32",
+        "name": "lastHelpPoolClaim",
+        "type": "uint32"
+      },
+      {
+        "internalType": "bool",
+        "name": "isEligibleForHelpPool",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint32",
+        "name": "registrationTime",
+        "type": "uint32"
+      },
+      {
+        "internalType": "string",
+        "name": "referralCode",
+        "type": "string"
+      },
+      {
+        "internalType": "uint96",
+        "name": "pendingRewards",
+        "type": "uint96"
+      },
+      {
+        "internalType": "uint32",
+        "name": "lastWithdrawal",
+        "type": "uint32"
+      },
+      {
+        "internalType": "bool",
+        "name": "isActive",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -1033,18 +1364,51 @@ export const CONTRACT_ABI = [
   {
     "inputs": [
       {
-        "internalType": "uint96",
+        "internalType": "uint256",
         "name": "amount",
-        "type": "uint96"
+        "type": "uint256"
       }
     ],
-    "name": "withdraw",
+    "name": "withdrawEnhanced",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "xpContract",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "stateMutability": "payable",
     "type": "receive"
   }
+];
+
+// Enhanced function selectors for easy reference
+export const ENHANCED_FUNCTIONS = {
+  withdrawEnhanced: 'withdrawEnhanced(uint256)',
+  toggleAutoCompound: 'toggleAutoCompound(bool)',
+  getWithdrawalSplit: 'getWithdrawalSplit(address)',
+  getUserReferralCount: 'getUserReferralCount(address)',
+  isAutoCompoundEnabled: 'isAutoCompoundEnabled(address)',
+  getTreasuryWallet: 'getTreasuryWallet()',
+  setTreasuryWallet: 'setTreasuryWallet(address)'
+};
+
+// Enhanced events for frontend listening
+export const ENHANCED_EVENTS = [
+  'TreasuryWalletSet',
+  'AutoCompoundToggled', 
+  'EnhancedWithdrawal',
+  'PoolReinvestment',
+  'AutoCompoundBonus'
 ];

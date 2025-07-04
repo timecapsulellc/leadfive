@@ -1,0 +1,445 @@
+/* Enhanced MLM Dashboard Styles - Advanced Components Integration */
+
+/* Section Headers */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.section-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.section-actions, .section-controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Enhanced Overview Styles */
+.overview-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #2196F3, #1976D2);
+  color: white;
+}
+
+.action-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(33, 150, 243, 0.3);
+}
+
+.action-btn.secondary {
+  background: #f5f5f5;
+  color: #333;
+  border: 2px solid #e0e0e0;
+}
+
+.action-btn.secondary:hover {
+  background: #e0e0e0;
+}
+
+/* Real-time Dashboard Stats */
+.realtime-dashboard-stats {
+  margin: 24px 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 12px;
+  border: 2px solid #e0e0e0;
+}
+
+/* Network Monitoring Section */
+.network-monitoring-section {
+  margin: 24px 0;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Quick Analytics Preview */
+.quick-analytics-preview {
+  margin-top: 32px;
+  padding: 24px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 2px solid #f0f0f0;
+}
+
+.analytics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.analytics-header h3 {
+  margin: 0;
+  color: #333;
+}
+
+.view-full-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.view-full-btn:hover {
+  background: #1976D2;
+  transform: translateY(-1px);
+}
+
+/* Network Tree Section */
+.tree-components-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* Earnings Section */
+.earnings-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+.export-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.export-button:hover {
+  background: #45a049;
+}
+
+/* Referrals Section */
+.referral-summary {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.summary-stat {
+  text-align: center;
+  padding: 12px 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  min-width: 100px;
+}
+
+.summary-stat .stat-label {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.summary-stat .stat-value {
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  color: #2196F3;
+}
+
+/* Withdrawals Section */
+.balance-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+  border-radius: 8px;
+}
+
+.balance-label {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.balance-amount {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Performance Section */
+.performance-summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #9C27B0, #7B1FA2);
+  color: white;
+  border-radius: 8px;
+}
+
+.summary-metric {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.metric-icon {
+  font-size: 20px;
+}
+
+.performance-components-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.ai-coaching-section {
+  margin-top: 24px;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  border-radius: 12px;
+  border: 2px solid #e0e0e0;
+}
+
+/* Component Modifiers */
+.compact {
+  padding: 12px !important;
+  font-size: 14px !important;
+}
+
+.overview-stats {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb) !important;
+}
+
+.network-stats {
+  background: linear-gradient(135deg, #f3e5f5, #e1bee7) !important;
+}
+
+.earnings-analytics {
+  background: linear-gradient(135deg, #e8f5e8, #c8e6c8) !important;
+}
+
+.performance-stats {
+  background: linear-gradient(135deg, #fff3e0, #ffe0b2) !important;
+}
+
+.performance-monitor {
+  background: linear-gradient(135deg, #fce4ec, #f8bbd9) !important;
+}
+
+.performance-analytics {
+  background: linear-gradient(135deg, #f1f8e9, #dcedc8) !important;
+}
+
+.overview-monitor {
+  background: linear-gradient(135deg, #e0f2f1, #b2dfdb) !important;
+}
+
+.compact-analytics {
+  max-height: 400px !important;
+  overflow: hidden !important;
+}
+
+.activity-stats-chart {
+  background: linear-gradient(135deg, #e8eaf6, #c5cae9) !important;
+}
+
+/* Enhanced Responsiveness */
+@media (max-width: 1200px) {
+  .tree-components-grid,
+  .earnings-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .performance-components-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  
+  .section-actions,
+  .section-controls {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .referral-summary {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .summary-stat {
+    width: 100%;
+  }
+  
+  .balance-indicator {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+  
+  .performance-summary {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+  
+  .analytics-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+}
+
+/* Animation Enhancements */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.section-header {
+  animation: slideInUp 0.6s ease-out;
+}
+
+.realtime-dashboard-stats,
+.network-monitoring-section,
+.quick-analytics-preview {
+  animation: fadeInScale 0.5s ease-out;
+}
+
+/* Pulse animation for real-time indicators */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.realtime-indicator {
+  animation: pulse 2s infinite;
+}
+
+/* Loading states */
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  z-index: 100;
+}
+
+.loading-spinner-enhanced {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #2196F3;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Connection Status Indicator */
+.connection-status {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: slideInUp 0.5s ease-out;
+}
+
+.connection-status.connected {
+  background: #4CAF50;
+  color: white;
+}
+
+.connection-status.disconnected {
+  background: #FF9800;
+  color: white;
+  animation: pulse 2s infinite;
+}
+
+.connection-status.error {
+  background: #F44336;
+  color: white;
+}

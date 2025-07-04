@@ -22,7 +22,7 @@ const FileUploader = ({
   const [isProcessing, setIsProcessing] = useState(false);
   const fileInputRef = useRef(null);
 
-  // Brand colors for ORPHI
+  // Brand colors for LeadFive
   const colors = {
     primary: '#00D4FF',
     secondary: '#7B2CBF',
@@ -245,9 +245,9 @@ const FileUploader = ({
   };
 
   return (
-    <div className={`orphi-file-uploader ${className}`}>
+    <div className={`leadfive-file-uploader ${className}`}>
       <style jsx>{`
-        .orphi-file-uploader {
+        .leadfive-file-uploader {
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
         

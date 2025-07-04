@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadFive - Terminal Issue Detected</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1f3a 0%, #0d1117 100%);
+            color: white;
+            line-height: 1.6;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 10px;
+        }
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid;
+        }
+        .error { background: rgba(244, 67, 54, 0.2); border-color: #f44336; }
+        .warning { background: rgba(255, 152, 0, 0.2); border-color: #ff9800; }
+        .info { background: rgba(33, 150, 243, 0.2); border-color: #2196f3; }
+        .success { background: rgba(76, 175, 80, 0.2); border-color: #4caf50; }
+        button {
+            background: #00D4FF;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover { background: #0091EA; }
+        code {
+            background: rgba(0,0,0,0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        .command-box {
+            background: rgba(0,0,0,0.5);
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚨 LeadFive Development Server Issue</h1>
+        
+        <div class="status error">
+            <h3>❌ Connection Refused</h3>
+            <p>The development server is not responding. This typically indicates:</p>
+            <ul>
+                <li>Node.js/npm is not properly installed or accessible</li>
+                <li>The development server hasn't been started</li>
+                <li>There are dependency issues</li>
+                <li>Port 5175 is blocked or unavailable</li>
+            </ul>
+        </div>
+
+        <div class="status warning">
+            <h3>⚠️ Terminal Environment Issue</h3>
+            <p>There appears to be an issue with the terminal environment where standard commands are not responding. This might be due to:</p>
+            <ul>
+                <li>PATH environment variable issues</li>
+                <li>Shell configuration problems</li>
+                <li>Missing development tools</li>
+            </ul>
+        </div>
+
+        <div class="status info">
+            <h3>🔧 Manual Resolution Steps</h3>
+            <p>Please manually run these commands in your terminal:</p>
+            
+            <h4>1. Check Node.js Installation:</h4>
+            <div class="command-box">node --version
+npm --version</div>
+            
+            <h4>2. If Node.js is missing, install it:</h4>
+            <div class="command-box"># Using Homebrew (recommended for macOS):
+brew install node
+
+# Or download from: https://nodejs.org/</div>
+            
+            <h4>3. Install dependencies:</h4>
+            <div class="command-box">cd /Users/dadou/LEAD\ FIVE
+npm install</div>
+            
+            <h4>4. Start the development server:</h4>
+            <div class="command-box">npm run dev</div>
+            
+            <h4>5. Alternative - Use yarn if npm doesn't work:</h4>
+            <div class="command-box">yarn install
+yarn dev</div>
+        </div>
+
+        <div class="status success">
+            <h3>✅ Alternative Solutions</h3>
+            <p>If the above doesn't work, try these alternatives:</p>
+            
+            <h4>Static File Server (Python):</h4>
+            <div class="command-box">cd /Users/dadou/LEAD\ FIVE
+python3 -m http.server 5175</div>
+            
+            <h4>Static File Server (PHP):</h4>
+            <div class="command-box">cd /Users/dadou/LEAD\ FIVE
+php -S localhost:5175</div>
+            
+            <h4>Use a different port:</h4>
+            <div class="command-box">npm run dev -- --port 3000</div>
+        </div>
+
+        <div class="status info">
+            <h3>🐛 Debug Information</h3>
+            <p>Current status as detected:</p>
+            <ul>
+                <li><strong>Working Directory:</strong> /Users/dadou/LEAD FIVE</li>
+                <li><strong>Expected Port:</strong> 5175</li>
+                <li><strong>Issue:</strong> Terminal commands not responding</li>
+                <li><strong>Files Present:</strong> index.html, package.json, src/ directory ✅</li>
+                <li><strong>Node Modules:</strong> Present but not verified ⚠️</li>
+            </ul>
+        </div>
+
+        <button onclick="window.location.reload()">🔄 Refresh Page</button>
+        <button onclick="window.location.href='http://localhost:3000'">🌐 Try Port 3000</button>
+        <button onclick="window.location.href='http://localhost:8080'">🌐 Try Port 8080</button>
+    </div>
+
+    <script>
+        // Auto-refresh every 10 seconds to check if server comes online
+        setTimeout(() => {
+            fetch('/')
+                .then(() => window.location.reload())
+                .catch(() => console.log('Server still not responding'));
+        }, 10000);
+        
+        // Show current time
+        setInterval(() => {
+            document.title = `LeadFive - Issue at ${new Date().toLocaleTimeString()}`;
+        }, 1000);
+    </script>
+</body>
+</html>

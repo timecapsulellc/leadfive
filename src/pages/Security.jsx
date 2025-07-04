@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import UnifiedWalletConnect from '../components/UnifiedWalletConnect';
+import UnifiedWalletConnect from '../components/unified/UnifiedWalletConnect';
 import SecurityBadges from '../components/SecurityBadges';
 import PageWrapper from '../components/PageWrapper';
 

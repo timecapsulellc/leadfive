@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadFive - Emergency Cache Clear</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1f3a 0%, #0d1117 100%);
+            color: white;
+            text-align: center;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 10px;
+        }
+        button {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover { background: #d32f2f; }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+            background: rgba(33, 150, 243, 0.2);
+            border-left: 4px solid #2196f3;
+        }
+        .warning {
+            background: rgba(255, 152, 0, 0.2);
+            border-color: #ff9800;
+        }
+        .success {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: #4caf50;
+        }
+        .progress {
+            width: 100%;
+            height: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00D4FF, #0091EA);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚨 Emergency Cache Clear</h1>
+        <p>Service Worker is still active and causing blank page issues</p>
+        
+        <div id="status" class="status">
+            Ready to clear all cached data...
+        </div>
+        
+        <div class="progress">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+        
+        <button onclick="emergencyClear()">🗑️ NUCLEAR CACHE CLEAR</button>
+        <button onclick="window.location.href='http://localhost:5175/'">🔄 Try Main App</button>
+        
+        <div class="status warning">
+            <h3>⚠️ This will:</h3>
+            <ul style="text-align: left;">
+                <li>Unregister ALL service workers</li>
+                <li>Delete ALL browser caches</li>
+                <li>Clear localStorage & sessionStorage</li>
+                <li>Clear IndexedDB</li>
+                <li>Force hard refresh</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let progress = 0;
+        
+        function updateProgress(percent) {
+            progress = percent;
+            document.getElementById('progress-bar').style.width = percent + '%';
+        }
+        
+        function log(message, type = 'status') {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = 'status ' + type;
+            console.log(message);
+        }
+        
+        async function emergencyClear() {
+            try {
+                log('🧹 Starting emergency cache clear...', 'status');
+                updateProgress(10);
+                
+                // 1. Unregister ALL service workers
+                if ('serviceWorker' in navigator) {
+                    log('🔧 Unregistering service workers...', 'status');
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    
+                    for (let registration of registrations) {
+                        await registration.unregister();
+                        console.log('Unregistered:', registration.scope);
+                    }
+                    
+                    // Force update any remaining workers
+                    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                        navigator.serviceWorker.controller.postMessage({action: 'skipWaiting'});
+                    }
+                    
+                    log(`✅ Unregistered ${registrations.length} service workers`, 'success');
+                }
+                updateProgress(30);
+                
+                // 2. Clear ALL caches
+                if ('caches' in window) {
+                    log('🗑️ Clearing cache storage...', 'status');
+                    const cacheNames = await caches.keys();
+                    
+                    for (let cacheName of cacheNames) {
+                        await caches.delete(cacheName);
+                        console.log('Deleted cache:', cacheName);
+                    }
+                    
+                    log(`✅ Cleared ${cacheNames.length} caches`, 'success');
+                }
+                updateProgress(50);
+                
+                // 3. Clear storage
+                log('📦 Clearing storage...', 'status');
+                localStorage.clear();
+                sessionStorage.clear();
+                updateProgress(70);
+                
+                // 4. Clear IndexedDB
+                if ('indexedDB' in window) {
+                    try {
+                        const databases = await indexedDB.databases();
+                        for (let db of databases) {
+                            if (db.name) {
+                                indexedDB.deleteDatabase(db.name);
+                                console.log('Deleted IndexedDB:', db.name);
+                            }
+                        }
+                    } catch (e) {
+                        console.log('IndexedDB cleanup completed');
+                    }
+                }
+                updateProgress(90);
+                
+                // 5. Clear cookies
+                if ('cookieStore' in window) {
+                    try {
+                        const cookies = await cookieStore.getAll();
+                        for (let cookie of cookies) {
+                            await cookieStore.delete(cookie.name);
+                        }
+                    } catch (e) {
+                        // Fallback cookie clearing
+                        document.cookie.split(";").forEach(function(c) { 
+                            document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+                        });
+                    }
+                }
+                
+                updateProgress(100);
+                log('🎉 Emergency clear complete! Reloading...', 'success');
+                
+                // Wait 2 seconds then force reload
+                setTimeout(() => {
+                    // Try multiple reload methods
+                    window.location.href = window.location.href + '?nocache=' + Date.now();
+                }, 2000);
+                
+            } catch (error) {
+                log(`❌ Error: ${error.message}`, 'warning');
+                console.error('Emergency clear error:', error);
+            }
+        }
+        
+        // Auto-detect and show current service worker status
+        window.addEventListener('load', async () => {
+            if ('serviceWorker' in navigator) {
+                const registrations = await navigator.serviceWorker.getRegistrations();
+                if (registrations.length > 0) {
+                    log(`⚠️ ${registrations.length} service workers detected - click to clear`, 'warning');
+                } else {
+                    log('✅ No service workers found', 'success');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

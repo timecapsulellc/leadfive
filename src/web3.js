@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Web3 Integration for LeadFive - BSC Mainnet Production
 import { CONTRACT_ADDRESS, USDT_ADDRESS, SPONSOR_ADDRESS, SUPPORTED_NETWORKS, CONTRACT_ABI } from './config/contracts.js';
 
@@ -37,6 +38,36 @@ const USDT_ABI = [
         "stateMutability": "view",
         "type": "function"
     }
+=======
+// Web3 Integration for LeadFive Platform
+import { CONTRACT_ADDRESS, CONTRACT_ABI, USDT_ADDRESS, SUPPORTED_NETWORKS } from './config/contracts.js';
+
+// Package tiers for LeadFive
+const PACKAGE_TIERS = {
+  1: { amount: 10, name: 'Starter' },
+  2: { amount: 50, name: 'Basic' },
+  3: { amount: 100, name: 'Standard' },
+  4: { amount: 500, name: 'Premium' },
+  5: { amount: 1000, name: 'Elite' }
+};
+
+// USDT ABI (standard ERC20)
+const USDT_ABI = [
+  {
+    "constant": true,
+    "inputs": [{"name": "_owner", "type": "address"}],
+    "name": "balanceOf",
+    "outputs": [{"name": "balance", "type": "uint256"}],
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [{"name": "_spender", "type": "address"}, {"name": "_value", "type": "uint256"}],
+    "name": "approve",
+    "outputs": [{"name": "", "type": "bool"}],
+    "type": "function"
+  }
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
 ];
 
 class LeadFiveWeb3 {
@@ -45,7 +76,10 @@ class LeadFiveWeb3 {
         this.account = null;
         this.contract = null;
         this.usdtContract = null;
+<<<<<<< HEAD
         this.network = 'BSC_MAINNET';
+=======
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
     }
 
     // Initialize Web3 connection
@@ -53,7 +87,11 @@ class LeadFiveWeb3 {
         if (typeof window.ethereum !== 'undefined') {
             this.web3 = new Web3(window.ethereum);
             
+<<<<<<< HEAD
             // Setup contracts for BSC Mainnet
+=======
+            // Setup contracts
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
             this.contract = new this.web3.eth.Contract(
                 CONTRACT_ABI, 
                 CONTRACT_ADDRESS
@@ -64,9 +102,14 @@ class LeadFiveWeb3 {
             );
 
             console.log('LeadFive Web3 initialized successfully');
+<<<<<<< HEAD
             console.log('Contract Address:', CONTRACT_ADDRESS);
             console.log('USDT Address:', USDT_ADDRESS);
             console.log('Sponsor Address:', SPONSOR_ADDRESS, '(Trezor Wallet)');
+=======
+            console.log('LeadFive Contract Address:', CONTRACT_ADDRESS);
+            console.log('USDT Address:', USDT_ADDRESS);
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
             
             return true;
         } else {
@@ -83,10 +126,14 @@ class LeadFiveWeb3 {
             });
             this.account = accounts[0];
             
+<<<<<<< HEAD
             // Switch to BSC Mainnet if needed
+=======
+            // Switch to BSC Mainnet 
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
             await this.switchToBSCMainnet();
             
-            console.log('Wallet connected:', this.account);
+            console.log('LeadFive wallet connected:', this.account);
             return this.account;
         } catch (error) {
             console.error('Failed to connect wallet:', error);
@@ -108,8 +155,13 @@ class LeadFiveWeb3 {
                     method: 'wallet_addEthereumChain',
                     params: [{
                         chainId: '0x38',
+<<<<<<< HEAD
                         chainName: 'BNB Smart Chain',
                         rpcUrls: ['https://bsc-dataseed.binance.org/'],
+=======
+                        chainName: 'BSC Mainnet',
+                        rpcUrls: ['https://bsc-dataseed1.binance.org/'],
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
                         nativeCurrency: {
                             name: 'BNB',
                             symbol: 'BNB',
@@ -199,7 +251,11 @@ class LeadFiveWeb3 {
         if (!this.account) throw new Error('Wallet not connected');
 
         try {
+<<<<<<< HEAD
             const amountWei = this.web3.utils.toWei(amount.toString(), 'ether'); // BSC USDT uses 18 decimals
+=======
+            const amountWei = this.web3.utils.toWei(amount.toString(), 'mwei');
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
             
             const tx = await this.usdtContract.methods.approve(CONTRACT_ADDRESS, amountWei).send({
                 from: this.account
@@ -226,10 +282,10 @@ class LeadFiveWeb3 {
             const tx = await this.contract.methods.register(sponsorAddress, packageTier).send({
                 from: this.account
             });
-            console.log('User registered:', tx.transactionHash);
+            console.log('LeadFive user registered:', tx.transactionHash);
             return tx;
         } catch (error) {
-            console.error('Error registering:', error);
+            console.error('Error registering with LeadFive:', error);
             throw error;
         }
     }
@@ -242,10 +298,10 @@ class LeadFiveWeb3 {
             const tx = await this.contract.methods.withdraw().send({
                 from: this.account
             });
-            console.log('Withdrawal successful:', tx.transactionHash);
+            console.log('LeadFive withdrawal successful:', tx.transactionHash);
             return tx;
         } catch (error) {
-            console.error('Error withdrawing:', error);
+            console.error('Error withdrawing from LeadFive:', error);
             throw error;
         }
     }

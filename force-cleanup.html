@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Force Cleanup - LeadFive</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+            border-radius: 12px;
+            background-color: #161b22;
+            border: 1px solid #30363d;
+        }
+        h1 {
+            color: #58a6ff;
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 30px;
+            max-width: 500px;
+        }
+        button {
+            background-color: #238636;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #2ea043;
+        }
+        #status {
+            margin-top: 20px;
+            font-size: 14px;
+            white-space: pre-wrap;
+            text-align: left;
+            background-color: #010409;
+            padding: 15px;
+            border-radius: 6px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LeadFive Environment Cleanup</h1>
+        <p>This tool will forcefully unregister all Service Workers and clear all browser caches associated with this domain. This is a critical step to resolve persistent rendering or data issues.</p>
+        <button onclick="forceCleanup()">Run Cleanup</button>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        async function forceCleanup() {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = 'Starting cleanup...\n';
+
+            // 1. Unregister all service workers
+            if ('serviceWorker' in navigator) {
+                try {
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    if (registrations.length) {
+                        for (const registration of registrations) {
+                            await registration.unregister();
+                            statusDiv.innerHTML += `Service Worker for scope ${registration.scope} unregistered.\n`;
+                        }
+                    } else {
+                        statusDiv.innerHTML += 'No active Service Workers found.\n';
+                    }
+                } catch (error) {
+                    statusDiv.innerHTML += `Error unregistering Service Workers: ${error}\n`;
+                }
+            } else {
+                statusDiv.innerHTML += 'Service Workers are not supported in this browser.\n';
+            }
+
+            // 2. Clear all caches
+            if ('caches' in window) {
+                try {
+                    const keys = await caches.keys();
+                    if (keys.length) {
+                        for (const key of keys) {
+                            await caches.delete(key);
+                            statusDiv.innerHTML += `Cache '${key}' deleted.\n`;
+                        }
+                    } else {
+                        statusDiv.innerHTML += 'No caches found to clear.\n';
+                    }
+                } catch (error) {
+                    statusDiv.innerHTML += `Error clearing caches: ${error}\n`;
+                }
+            } else {
+                statusDiv.innerHTML += 'Cache API is not supported in this browser.\n';
+            }
+            
+            // 3. Clear Local Storage and Session Storage
+            try {
+                localStorage.clear();
+                sessionStorage.clear();
+                statusDiv.innerHTML += 'Local Storage and Session Storage cleared.\n';
+            } catch (error) {
+                statusDiv.innerHTML += `Error clearing storage: ${error}\n`;
+            }
+
+            statusDiv.innerHTML += '\nCleanup complete. Please hard-refresh the application page now (Cmd+Shift+R or Ctrl+Shift+R).';
+        }
+    </script>
+</body>
+</html>

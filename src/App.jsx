@@ -12,6 +12,7 @@ import MobilePerformanceMonitor from './components/MobilePerformanceMonitor';
 import { storeWalletConnection, clearWalletConnection, extendSession } from './utils/walletPersistence';
 import { runWalletDiagnostics } from './utils/walletDebug';
 
+<<<<<<< HEAD
 // Lazy load components for better performance with enhanced error handling
 const createLazyComponent = (importFunc, componentName) => {
   return React.lazy(() => 
@@ -36,6 +37,19 @@ const Genealogy = createLazyComponent(() => import('./pages/Genealogy'), 'Geneal
 const TestAIDashboard = createLazyComponent(() => import('./pages/TestAIDashboard'), 'TestAIDashboard');
 const BusinessPresentation = createLazyComponent(() => import('./pages/BusinessPresentation'), 'BusinessPresentation');
 const BusinessPresentationSlides = createLazyComponent(() => import('./pages/BusinessPresentationSlides'), 'BusinessPresentationSlides');
+=======
+// Lazy load components for better performance
+const Home = React.lazy(() => import('./pages/Home'));
+const Register = React.lazy(() => import('./pages/Register'));
+const Packages = React.lazy(() => import('./pages/Packages'));
+const Referrals = React.lazy(() => import('./pages/Referrals'));
+const Withdrawals = React.lazy(() => import('./pages/Withdrawals'));
+const Security = React.lazy(() => import('./pages/Security'));
+const About = React.lazy(() => import('./pages/About'));
+const Dashboard = React.lazy(() => import('./pages/Dashboard'));
+const Genealogy = React.lazy(() => import('./pages/Genealogy'));
+const TestnetWithdrawalTester = React.lazy(() => import('./components/TestnetWithdrawalTester'));
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
 import { 
   autoReconnectWallet
 } from './utils/walletPersistence';
@@ -50,7 +64,6 @@ function App() {
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
   const [isConnecting, setIsConnecting] = useState(false);
-  const [shouldShowWelcome, setShouldShowWelcome] = useState(false);
   const [userRoles, setUserRoles] = useState({}); // For role-based access control
 
   // Initialize mobile security on app load
@@ -58,6 +71,7 @@ function App() {
     initializeMobileSecurity();
   }, []);
 
+<<<<<<< HEAD
   // Check if user should see welcome page
   useEffect(() => {
     const hasVisited = localStorage.getItem('hasVisitedWelcome');
@@ -78,6 +92,8 @@ function App() {
     }
   }, []);
 
+=======
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
   // Auto-reconnect wallet on app load
   useEffect(() => {
     const initializeWalletConnection = async () => {
@@ -342,6 +358,7 @@ function App() {
           account={account} 
           onDisconnect={handleDisconnect}
         />
+<<<<<<< HEAD
         
         {/* PWA Install Prompt for Mobile */}
         <MobilePWAPrompt />
@@ -359,23 +376,30 @@ function App() {
                 <>
                   <Header 
                     account={account} 
+=======
+        <Suspense fallback={<LoadingSpinner message="Loading application..." />}>
+          <Routes>
+            <Route path="/" element={
+              <>
+                <Header 
+                  account={account} 
+                  onConnect={handleWalletConnect}
+                  onDisconnect={handleDisconnect} 
+                />
+                <div className="App">
+                  <Home 
+                    account={account}
+                    provider={provider}
+                    signer={signer}
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
                     onConnect={handleWalletConnect}
-                    onDisconnect={handleDisconnect} 
+                    onDisconnect={handleDisconnect}
                   />
-                  <div className="App">
-                    <Home 
-                      account={account}
-                      provider={provider}
-                      signer={signer}
-                      onConnect={handleWalletConnect}
-                      onDisconnect={handleDisconnect}
-                    />
-                  </div>
-                  <Footer />
-                </>
-              } />
-              <Route path="/welcome" element={<Welcome />} />
-              <Route path="/home" element={
+                </div>
+                <Footer />
+              </>
+            } />
+            <Route path="/home" element={
                 <>
                   <Header 
                     account={account} 
@@ -551,25 +575,6 @@ function App() {
                   <Footer />
                 </>
               } />
-              <Route path="/brand-guide" element={
-                <>
-                  <Header 
-                    account={account} 
-                    onConnect={handleWalletConnect}
-                    onDisconnect={handleDisconnect} 
-                  />
-                  <div className="App">
-                    <BrandGuide 
-                      account={account}
-                      provider={provider}
-                      signer={signer}
-                      onConnect={handleWalletConnect}
-                      onDisconnect={handleDisconnect}
-                    />
-                  </div>
-                  <Footer />
-                </>
-              } />
               <Route path="/dashboard" element={
                 <UserRoute 
                   account={account} 
@@ -591,7 +596,7 @@ function App() {
                   <Footer />
                 </UserRoute>
               } />
-              <Route path="/test-ai" element={
+              <Route path="/testnet-withdrawal" element={
                 <>
                   <Header 
                     account={account} 
@@ -599,7 +604,7 @@ function App() {
                     onDisconnect={handleDisconnect} 
                   />
                   <div className="App">
-                    <TestAIDashboard />
+                    <TestnetWithdrawalTester />
                   </div>
                   <Footer />
                 </>
@@ -622,7 +627,6 @@ function App() {
               } />
             </Routes>
           </Suspense>
-        )}
     </Router>
     </ErrorBoundary>
     </>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>🧹 Browser Cache Cleaner - Safe for LeadFive</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1f3a 0%, #0d1117 100%);
+            color: white;
+            font-family: 'Inter', Arial, sans-serif;
+            padding: 40px;
+            text-align: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        h1 {
+            color: #00D4FF;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .safe {
+            background: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid #4CAF50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .button {
+            background: linear-gradient(135deg, #4CAF50 0%, #00D4FF 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+        }
+        .instructions {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧹 Safe Browser Cache Cleaner</h1>
+        
+        <div class="safe">
+            ✅ <strong>SAFE:</strong> This only clears browser cache, not your project files
+        </div>
+        
+        <div class="instructions">
+            <h3>🔧 Manual Browser Cache Clearing:</h3>
+            <p><strong>Chrome/Edge:</strong></p>
+            <ul>
+                <li>Press <code>Cmd+Shift+Delete</code> (Mac) or <code>Ctrl+Shift+Delete</code> (Windows)</li>
+                <li>Select "All time" and check "Cached images and files"</li>
+                <li>Click "Clear data"</li>
+            </ul>
+            
+            <p><strong>Safari:</strong></p>
+            <ul>
+                <li>Press <code>Cmd+Option+E</code> to empty caches</li>
+                <li>Or go to Develop > Empty Caches</li>
+            </ul>
+            
+            <p><strong>Firefox:</strong></p>
+            <ul>
+                <li>Press <code>Cmd+Shift+Delete</code></li>
+                <li>Select "Cache" and click "Clear Now"</li>
+            </ul>
+        </div>
+        
+        <button class="button" onclick="clearSafeCaches()">🗑️ CLEAR BROWSER CACHE SAFELY</button>
+        <button class="button" onclick="goToLeadFive()">🚀 BACK TO LEADFIVE</button>
+        
+        <div id="log" style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; margin-top: 20px; font-family: monospace; font-size: 0.8rem; text-align: left; max-height: 200px; overflow-y: auto;"></div>
+    </div>
+
+    <script>
+        function log(message) {
+            const logElement = document.getElementById('log');
+            logElement.innerHTML += new Date().toLocaleTimeString() + ': ' + message + '\n';
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+
+        async function clearSafeCaches() {
+            log('🧹 Starting SAFE cache clearing...');
+            
+            try {
+                // Only clear browser caches, not application data
+                if ('caches' in window) {
+                    const cacheNames = await caches.keys();
+                    // Only clear generic browser caches, not our app data
+                    for (let cacheName of cacheNames) {
+                        if (!cacheName.includes('leadfive') && !cacheName.includes('user-data')) {
+                            log('🗑️ Clearing: ' + cacheName);
+                            await caches.delete(cacheName);
+                        }
+                    }
+                }
+                
+                log('✅ Safe cache clearing complete!');
+                log('🔒 Your LeadFive project data is PROTECTED');
+                
+            } catch (error) {
+                log('⚠️ Cache clearing completed with some limitations');
+            }
+        }
+        
+        function goToLeadFive() {
+            window.location.href = 'http://localhost:5175';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,349 @@
+{
+  "summary": {
+    "totalTests": 55,
+    "successCount": 42,
+    "errorCount": 0,
+    "warningCount": 3,
+    "duration": "4.473s",
+    "successRate": "76.4%"
+  },
+  "results": [
+    {
+      "timestamp": "2025-07-04T02:15:23.979Z",
+      "type": "info",
+      "message": "ℹ️  Testing file structure and dependencies...",
+      "success": false
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.980Z",
+      "type": "success",
+      "message": "✅ Found required file: src/pages/Dashboard.jsx",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.980Z",
+      "type": "success",
+      "message": "✅ Found required file: src/components/enhanced/ComprehensiveDashboard.jsx",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.980Z",
+      "type": "success",
+      "message": "✅ Found required file: src/components/enhanced/EnhancedWithdrawalSystem.jsx",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.980Z",
+      "type": "success",
+      "message": "✅ Found required file: src/components/AICoachingPanel.jsx",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.980Z",
+      "type": "success",
+      "message": "✅ Found required file: src/components/AIEarningsPrediction.jsx",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.980Z",
+      "type": "success",
+      "message": "✅ Found required file: src/components/PerformanceMetrics.jsx",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.980Z",
+      "type": "success",
+      "message": "✅ Found required file: src/components/CommunityLevelsVisualization.jsx",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.980Z",
+      "type": "success",
+      "message": "✅ Found required file: src/config/contracts.js",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.980Z",
+      "type": "success",
+      "message": "✅ Found required file: src/config/rootUser.js",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.980Z",
+      "type": "success",
+      "message": "✅ Found required file: src/styles/brandColors.css",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.980Z",
+      "type": "info",
+      "message": "ℹ️  Testing brand color integration...",
+      "success": false
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.981Z",
+      "type": "success",
+      "message": "✅ Brand color defined: --brand-cyber-blue: #00D4FF",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.981Z",
+      "type": "success",
+      "message": "✅ Brand color defined: --brand-royal-purple: #7B2CBF",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.981Z",
+      "type": "success",
+      "message": "✅ Brand color defined: --brand-energy-orange: #FF6B35",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.981Z",
+      "type": "success",
+      "message": "✅ Brand color defined: --brand-success-green: #00FF88",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.981Z",
+      "type": "success",
+      "message": "✅ Brand color defined: --brand-premium-gold: #FFD700",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.981Z",
+      "type": "info",
+      "message": "ℹ️  Testing dashboard components...",
+      "success": false
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.981Z",
+      "type": "success",
+      "message": "✅ Dashboard imports: ComprehensiveDashboard",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.981Z",
+      "type": "warning",
+      "message": "⚠️  Missing dashboard import: EnhancedWithdrawalSystem",
+      "success": false
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.981Z",
+      "type": "warning",
+      "message": "⚠️  Missing dashboard import: AICoachingPanel",
+      "success": false
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.981Z",
+      "type": "warning",
+      "message": "⚠️  Missing dashboard import: PerformanceMetrics",
+      "success": false
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.981Z",
+      "type": "info",
+      "message": "ℹ️  Testing smart contract configuration...",
+      "success": false
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Contract config found: 0x29dcCb502D10C042BcC6a02a7762C49595A9E498",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Contract config found: CONTRACT_ABI",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Contract config found: BSC_MAINNET",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "info",
+      "message": "ℹ️  Testing root user configuration...",
+      "success": false
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Root user config found: 0xCeaEfDaDE5a0D574bFd5577665dC58d132995335",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Root user config found: K9NBHT",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Root user config found: generateReferralLink",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Root user config found: getReferralTarget",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "info",
+      "message": "ℹ️  Testing component functionality...",
+      "success": false
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Component uses React hooks: src/components/AICoachingPanel.jsx",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Component properly exported: src/components/AICoachingPanel.jsx",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Component uses React hooks: src/components/AIEarningsPrediction.jsx",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Component properly exported: src/components/AIEarningsPrediction.jsx",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Component uses React hooks: src/components/PerformanceMetrics.jsx",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Component properly exported: src/components/PerformanceMetrics.jsx",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Component uses React hooks: src/components/CommunityLevelsVisualization.jsx",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Component properly exported: src/components/CommunityLevelsVisualization.jsx",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "info",
+      "message": "ℹ️  Testing CSS and styling...",
+      "success": false
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Style file exists: src/styles/brandColors.css",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Brand colors used in: src/styles/brandColors.css",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.982Z",
+      "type": "success",
+      "message": "✅ Style file exists: src/pages/Dashboard.css",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.983Z",
+      "type": "success",
+      "message": "✅ Brand colors used in: src/pages/Dashboard.css",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.983Z",
+      "type": "success",
+      "message": "✅ Style file exists: src/styles/CommunityStructureDashboard.css",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.983Z",
+      "type": "info",
+      "message": "ℹ️  Testing demo data generation...",
+      "success": false
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.983Z",
+      "type": "success",
+      "message": "✅ Demo data generation functions found",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.983Z",
+      "type": "info",
+      "message": "ℹ️  Testing production readiness...",
+      "success": false
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.983Z",
+      "type": "success",
+      "message": "✅ Build script configured",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.983Z",
+      "type": "success",
+      "message": "✅ Required dependency found: react",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.983Z",
+      "type": "success",
+      "message": "✅ Required dependency found: react-dom",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.983Z",
+      "type": "success",
+      "message": "✅ Required dependency found: ethers",
+      "success": true
+    },
+    {
+      "timestamp": "2025-07-04T02:15:23.983Z",
+      "type": "info",
+      "message": "ℹ️  Testing build system...",
+      "success": false
+    },
+    {
+      "timestamp": "2025-07-04T02:15:28.450Z",
+      "type": "success",
+      "message": "✅ Build completed successfully",
+      "success": true
+    }
+  ],
+  "errors": [],
+  "recommendations": [
+    "Review and address warning-level issues",
+    "Test wallet connectivity with real users",
+    "Verify smart contract integration on mainnet",
+    "Perform load testing before Digital Ocean deployment"
+  ]
+}

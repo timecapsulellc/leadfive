@@ -1,0 +1,60 @@
+/* LeadFive Brand Color Palette */
+:root {
+  /* Primary Colors */
+  --brand-cyber-blue: #00D4FF;
+  --brand-royal-purple: #7B2CBF;
+  --brand-energy-orange: #FF6B35;
+  
+  /* Secondary Colors */
+  --brand-deep-space: #1A1A2E;
+  --brand-midnight-blue: #16213E;
+  --brand-silver-mist: #B8C5D1;
+  
+  /* Accent Colors */
+  --brand-success-green: #00FF88;
+  --brand-alert-red: #FF4757;
+  --brand-premium-gold: #FFD700;
+  
+  /* Neutral Colors */
+  --brand-pure-white: #FFFFFF;
+  --brand-charcoal-gray: #2D3748;
+  --brand-true-black: #0A0A0A;
+  
+  /* Gradient Combinations */
+  --brand-primary-gradient: linear-gradient(135deg, var(--brand-cyber-blue), var(--brand-royal-purple));
+  --brand-secondary-gradient: linear-gradient(135deg, var(--brand-deep-space), var(--brand-midnight-blue));
+  --brand-success-gradient: linear-gradient(135deg, var(--brand-success-green), var(--brand-cyber-blue));
+  --brand-premium-gradient: linear-gradient(135deg, var(--brand-premium-gold), var(--brand-energy-orange));
+  --brand-alert-gradient: linear-gradient(135deg, var(--brand-alert-red), var(--brand-energy-orange));
+  
+  /* Background Patterns */
+  --brand-main-bg: linear-gradient(135deg, var(--brand-true-black) 0%, var(--brand-deep-space) 30%, var(--brand-midnight-blue) 70%, var(--brand-charcoal-gray) 100%);
+  --brand-card-bg: rgba(26, 26, 46, 0.8);
+  --brand-overlay-bg: rgba(0, 212, 255, 0.1);
+  
+  /* Text Colors */
+  --brand-text-primary: var(--brand-pure-white);
+  --brand-text-secondary: var(--brand-silver-mist);
+  --brand-text-accent: var(--brand-cyber-blue);
+  --brand-text-success: var(--brand-success-green);
+  --brand-text-warning: var(--brand-premium-gold);
+  --brand-text-error: var(--brand-alert-red);
+  
+  /* Border Colors */
+  --brand-border-primary: rgba(0, 212, 255, 0.3);
+  --brand-border-secondary: rgba(123, 44, 191, 0.3);
+  --brand-border-success: rgba(0, 255, 136, 0.3);
+  --brand-border-warning: rgba(255, 215, 0, 0.3);
+  --brand-border-error: rgba(255, 71, 87, 0.3);
+  
+  /* Shadow Effects */
+  --brand-shadow-primary: 0 4px 15px rgba(0, 212, 255, 0.3);
+  --brand-shadow-secondary: 0 4px 15px rgba(123, 44, 191, 0.3);
+  --brand-shadow-success: 0 4px 15px rgba(0, 255, 136, 0.3);
+  --brand-shadow-card: 0 10px 30px rgba(0, 0, 0, 0.3);
+  
+  /* Animation Durations */
+  --brand-transition-fast: 0.2s ease;
+  --brand-transition-normal: 0.3s ease;
+  --brand-transition-slow: 0.5s ease;
+}

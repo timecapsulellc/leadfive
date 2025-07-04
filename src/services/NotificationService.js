@@ -13,35 +13,33 @@ class LeadFiveNotificationService {
   }
 
   async init() {
-    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+    if (!('Notification' in window)) {
       console.warn('Push notifications not supported');
       return false;
     }
 
     try {
-      // Get service worker registration
-      this.registration = await navigator.serviceWorker.ready;
       // Check current permission
       this.permission = await Notification.permission;
-      // Get existing subscription
-      this.subscription = await this.registration.pushManager.getSubscription();
-      // Load VAPID key from public file if not set
-      if (!this.vapidKey) {
-        try {
-          const res = await fetch('/vapid-public-key.txt');
-          if (res.ok) {
-            this.vapidKey = await res.text();
-          }
-        } catch (e) {
-          console.warn('Could not load VAPID key:', e);
-        }
-      }
-      console.log('🔔 Notification service initialized');
+      console.log('Notification service initialized');
       return true;
     } catch (error) {
-      console.error('Failed to initialize notifications:', error);
+      console.error('Notification service init failed:', error);
       return false;
+    }  }
+
+  async loadVapidKey() {
+    // Simplified version without service worker dependency
+    try {
+      const res = await fetch('/vapid-public-key.txt');
+      if (res.ok) {
+        this.vapidKey = await res.text();
+      }
+    } catch (e) {
+      console.warn('Could not load VAPID key:', e);
     }
+    console.log('🔔 Notification service initialized');
+    return true;
   }
 
   async requestPermission() {
@@ -61,7 +59,11 @@ class LeadFiveNotificationService {
       this.isEnabled = true;
       
       // Show welcome notification
+<<<<<<< HEAD
       await this.showNotification('🎉 Lead Five Notifications Enabled', {
+=======
+      await this.showNotification('🎉 LeadFive Notifications Enabled', {
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
         body: 'You\'ll receive real-time updates about your Web3 activities',
         icon: '/icons/icon-192x192.png',
         badge: '/icons/icon-72x72.png',
@@ -149,7 +151,11 @@ class LeadFiveNotificationService {
       vibrate: [200, 100, 200],
       data: {
         timestamp: Date.now(),
+<<<<<<< HEAD
         source: 'Lead Five'
+=======
+        source: 'LeadFive'
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
       }
     };
 
@@ -171,7 +177,11 @@ class LeadFiveNotificationService {
     }
   }
 
+<<<<<<< HEAD
   // Predefined Lead Five notification types
+=======
+  // Predefined LeadFive notification types
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
   async showWeb3Notification(type, data = {}) {
     const notifications = {
       'user-registered': {
@@ -373,7 +383,11 @@ class LeadFiveNotificationService {
     await this.requestPermission();
     await this.subscribe();
     await this.showNotification('🔔 Test Push Notification', {
+<<<<<<< HEAD
       body: 'This is a test push notification from Lead Five.',
+=======
+      body: 'This is a test push notification from LeadFive.',
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
       tag: 'test-push',
       requireInteraction: false
     });
@@ -454,4 +468,8 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = LeadFiveNotificationService;
 }
 
+<<<<<<< HEAD
 console.log('🔔 Lead Five Notification Service loaded');
+=======
+console.log('🔔 LeadFive Notification Service loaded');
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)

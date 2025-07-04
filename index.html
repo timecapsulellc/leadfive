@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/leadfive-logo.svg" />
+<<<<<<< HEAD
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
     <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: light)" />
@@ -85,50 +86,24 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
+=======
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LeadFive - Web3 Platform</title>
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
     <style>
-      /* Critical CSS to prevent white flash and ensure brand background */
-      html, body {
+      body {
         margin: 0;
         padding: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #0A0A0A !important;
-        overflow-x: hidden;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-          'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-          sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      
-      #root {
-        min-height: 100vh;
-        width: 100%;
-        background-color: #0A0A0A;
-        margin: 0;
-        padding: 0;
-      }
-      
-      .loading {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background: #0A0A0A;
+        background: linear-gradient(135deg, #1a1f3a 0%, #0d1117 100%);
+        font-family: Arial, sans-serif;
         color: white;
-        font-size: 1.5rem;
-        width: 100%;
       }
     </style>
-  <!-- Cache bust: 1751087191077 -->
-<!-- Deploy time: 2025-06-28T05:06:31.077Z -->
-</head>
+  </head>
   <body>
-    <div id="root">
-      <div class="loading">
-        <div>Loading LeadFive...</div>
-      </div>
-    </div>
+    <!-- Make sure this div exists and has the right ID -->
+    <div id="root"></div>
+    <!-- The entry point script -->
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

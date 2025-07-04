@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { 
   FaUsers, 
   FaChartLine, 
@@ -31,15 +32,12 @@ import WithdrawalHistory from '../components/WithdrawalHistory';
 import ActivityFeed from '../components/ActivityFeed';
 import PerformanceMetrics from '../components/PerformanceMetrics';
 import NotificationSystem from '../components/NotificationSystem';
+=======
+import { ethers } from 'ethers';
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
 import PageWrapper from '../components/PageWrapper';
-// AI Components
-import AICoachingPanel from '../components/AICoachingPanel';
-import AIEarningsPrediction from '../components/AIEarningsPrediction';
-import AITransactionHelper from '../components/AITransactionHelper';
-import AIMarketInsights from '../components/AIMarketInsights';
-import AISuccessStories from '../components/AISuccessStories';
-import AIEmotionTracker from '../components/AIEmotionTracker';
 import ErrorBoundary from '../components/ErrorBoundary';
+<<<<<<< HEAD
 import MobileNavigation from '../components/MobileNavigation';
 import UnifiedChatbot from '../components/UnifiedChatbot';
 // Gamification System
@@ -84,26 +82,36 @@ export default function Dashboard({ account, provider, onDisconnect }) {
   const [isAiLoading, setIsAiLoading] = useState(false);
   const [hasPlayedWelcome, setHasPlayedWelcome] = useState(false);
   const [audioNative, setAudioNative] = useState(null);
+=======
+import ComprehensiveDashboard from '../components/enhanced/ComprehensiveDashboard';
+import { CONTRACT_ADDRESS, CONTRACT_ABI } from '../config/contracts';
+import '../styles/brandColors.css';
+import './Dashboard.css';
 
-  // Debug AI component imports
-  if (process.env.NODE_ENV === 'development') {
-    console.log('🚀 Dashboard AI Component Status:');
-    console.log('AICoachingPanel:', typeof AICoachingPanel, AICoachingPanel);
-    console.log('AIEarningsPrediction:', typeof AIEarningsPrediction, AIEarningsPrediction);
-    console.log('AITransactionHelper:', typeof AITransactionHelper, AITransactionHelper);
-    console.log('AIMarketInsights:', typeof AIMarketInsights, AIMarketInsights);
-    console.log('AISuccessStories:', typeof AISuccessStories, AISuccessStories);
-    console.log('AIEmotionTracker:', typeof AIEmotionTracker, AIEmotionTracker);
-  }
+export default function Dashboard({ account, provider, onDisconnect }) {
+  const navigate = useNavigate();
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
+
+  // Create contract instance when provider is available
+  const contractInstance = useMemo(() => {
+    if (!provider || !account) return null;
+    
+    try {
+      return new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, provider);
+    } catch (error) {
+      console.error('Error creating contract instance:', error);
+      return null;
+    }
+  }, [provider, account]);
 
   useEffect(() => {
     if (!account) {
       navigate('/');
       return;
     }
-    loadDashboardData();
   }, [account, navigate]);
 
+<<<<<<< HEAD
 
   const loadDashboardData = async () => {
     try {
@@ -291,10 +299,23 @@ export default function Dashboard({ account, provider, onDisconnect }) {
         </ErrorBoundary>
 
       </div>
+=======
+  return (
+    <PageWrapper>
+      <ErrorBoundary>
+        <ComprehensiveDashboard 
+          userAddress={account}
+          contractInstance={contractInstance}
+          web3={provider}
+          account={account}
+        />
+      </ErrorBoundary>
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
     </PageWrapper>
   );
 }
 
+<<<<<<< HEAD
 // Earnings Breakdown Component
 function EarningsBreakdown({ data, account }) {
   const earningsBreakdown = [
@@ -1624,3 +1645,5 @@ function GamificationSection({ data, account }) {
     </div>
   );
 }
+=======
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)

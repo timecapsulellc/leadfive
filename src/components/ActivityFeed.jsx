@@ -1,142 +1,108 @@
 import React from 'react';
 import { 
+  FaHistory, 
   FaUserPlus, 
   FaDollarSign, 
-  FaLevelUpAlt, 
-  FaGift,
-  FaCheckCircle,
-  FaClock
+  FaExchangeAlt, 
+  FaTrophy, 
+  FaGift 
 } from 'react-icons/fa';
-import './ActivityFeed.css';
 
-export default function ActivityFeed({ limit = 10 }) {
-  const activities = [
+const ActivityFeed = ({ activities = [] }) => {
+  // Mock activities if none provided
+  const mockActivities = [
     {
       id: 1,
       type: 'referral',
+      description: 'New user 0x123...4567 joined your direct referrals',
+      timestamp: new Date(Date.now() - 3600000).toISOString(),
       icon: FaUserPlus,
-      title: 'New Referral',
-      description: 'User 0x456...def joined your network',
-      time: '2 minutes ago',
       amount: null
     },
     {
       id: 2,
-      type: 'earning',
+      type: 'commission',
+      description: 'You received a direct referral commission',
+      timestamp: new Date(Date.now() - 7200000).toISOString(),
       icon: FaDollarSign,
-      title: 'Commission Earned',
-      description: 'Referral bonus from direct invite',
-      time: '15 minutes ago',
-      amount: '$45.50'
+      amount: 20.00
     },
     {
       id: 3,
-      type: 'levelup',
-      icon: FaLevelUpAlt,
-      title: 'Level Upgrade',
-      description: 'Congratulations! You reached Level 7',
-      time: '1 hour ago',
-      amount: null
+      type: 'withdrawal',
+      description: 'Withdrawal processed successfully',
+      timestamp: new Date(Date.now() - 86400000).toISOString(),
+      icon: FaExchangeAlt,
+      amount: 150.00
     },
     {
       id: 4,
-      type: 'reward',
-      icon: FaGift,
-      title: 'Reward Unlocked',
-      description: 'Team building bonus achieved',
-      time: '3 hours ago',
-      amount: '$100.00'
+      type: 'achievement',
+      description: 'You reached Community Level 2!',
+      timestamp: new Date(Date.now() - 172800000).toISOString(),
+      icon: FaTrophy,
+      amount: null
     },
     {
       id: 5,
-      type: 'earning',
-      icon: FaDollarSign,
-      title: 'Level Bonus',
-      description: 'Level 2 commission from team member',
-      time: '5 hours ago',
-      amount: '$22.75'
-    },
-    {
-      id: 6,
-      type: 'referral',
-      icon: FaUserPlus,
-      title: 'Network Growth',
-      description: 'Your team member invited a new user',
-      time: '8 hours ago',
-      amount: null
-    },
-    {
-      id: 7,
-      type: 'earning',
-      icon: FaDollarSign,
-      title: 'Withdrawal Completed',
-      description: 'Successfully withdrawn to your wallet',
-      time: '1 day ago',
-      amount: '$500.00'
-    },
-    {
-      id: 8,
-      type: 'achievement',
-      icon: FaCheckCircle,
-      title: 'Achievement Unlocked',
-      description: 'Top Recruiter badge earned',
-      time: '2 days ago',
-      amount: null
+      type: 'bonus',
+      description: 'Help Pool distribution completed',
+      timestamp: new Date(Date.now() - 259200000).toISOString(),
+      icon: FaGift,
+      amount: 35.25
     }
   ];
-
-  const limitedActivities = activities.slice(0, limit);
-
-  const getActivityColor = (type) => {
-    switch (type) {
-      case 'referral':
-        return '#00D4FF';
-      case 'earning':
-        return '#7B2CBF';
-      case 'levelup':
-        return '#FF6B35';
-      case 'reward':
-        return '#FFD700';
-      case 'achievement':
-        return '#00FF88';
-      default:
-        return '#B8C5D1';
+  
+  const displayActivities = activities.length > 0 ? activities : mockActivities;
+  
+  // Format timestamp
+  const formatTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+    
+    if (diffMins < 60) {
+      return `${diffMins} minute${diffMins !== 1 ? 's' : ''} ago`;
+    } else if (diffHours < 24) {
+      return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
+    } else {
+      return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
     }
   };
-
+  
   return (
-    <div className="activity-feed">
+    <div className="activity-feed-container">
+      <h3 className="section-title">
+        <FaHistory /> Recent Activity
+      </h3>
+      
       <div className="activity-list">
-        {limitedActivities.map((activity) => (
-          <div key={activity.id} className="activity-item">
-            <div 
-              className="activity-icon"
-              style={{ 
-                background: `linear-gradient(45deg, ${getActivityColor(activity.type)}22, ${getActivityColor(activity.type)}44)` 
-              }}
-            >
-              <activity.icon style={{ color: getActivityColor(activity.type) }} />
+        {displayActivities.map(activity => (
+          <div key={activity.id} className={`activity-item ${activity.type}`}>
+            <div className="activity-icon">
+              {React.createElement(activity.icon)}
             </div>
-            <div className="activity-content">
-              <div className="activity-header">
-                <h4 className="activity-title">{activity.title}</h4>
-                <span className="activity-time">{activity.time}</span>
-              </div>
+            <div className="activity-details">
               <p className="activity-description">{activity.description}</p>
-              {activity.amount && (
-                <span className="activity-amount">{activity.amount}</span>
-              )}
+              <div className="activity-meta">
+                <span className="activity-time">{formatTimestamp(activity.timestamp)}</span>
+                {activity.amount !== null && (
+                  <span className="activity-amount">${activity.amount.toFixed(2)}</span>
+                )}
+              </div>
             </div>
           </div>
         ))}
       </div>
       
-      {activities.length === 0 && (
-        <div className="no-activity">
-          <FaClock className="no-activity-icon" />
-          <p>No recent activity</p>
-        </div>
-      )}
+      <div className="activity-actions">
+        <button className="view-all-btn">View All Activity</button>
+      </div>
     </div>
   );
-}
+};
+
+export default ActivityFeed;

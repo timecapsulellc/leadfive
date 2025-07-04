@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { ethers } from 'ethers';
 import { Web3 } from 'web3';
-import UnifiedWalletConnect from '../components/UnifiedWalletConnect';
+import UnifiedWalletConnect from '../components/unified/UnifiedWalletConnect';
 import { LEAD_FIVE_CONFIG, LEAD_FIVE_ABI } from '../contracts-leadfive.js';
 import { AITransactionExamples, AIIntegrationUtils } from '../hooks/useAIIntegration.js';
 import './Withdrawals.css';

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadFive Cache Cleaner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1f3a 0%, #0d1117 100%);
+            color: white;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        button {
+            background: #00D4FF;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #0091EA;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success { background: rgba(76, 175, 80, 0.2); }
+        .error { background: rgba(244, 67, 54, 0.2); }
+        .info { background: rgba(33, 150, 243, 0.2); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧹 LeadFive Cache Cleaner</h1>
+        <p>This tool will completely clear all cached data and service workers</p>
+        
+        <div id="status"></div>
+        
+        <button onclick="clearEverything()">🗑️ Clear All Cache & Service Workers</button>
+        <button onclick="window.location.href='http://localhost:5175/'">🚀 Go to LeadFive</button>
+        
+        <h3>What this does:</h3>
+        <ul style="text-align: left; max-width: 400px; margin: 0 auto;">
+            <li>Unregisters all service workers</li>
+            <li>Clears all browser caches</li>
+            <li>Removes local and session storage</li>
+            <li>Clears IndexedDB</li>
+            <li>Forces page reload</li>
+        </ul>
+    </div>
+
+    <script>
+        function log(message, type = 'info') {
+            const status = document.getElementById('status');
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.textContent = message;
+            status.appendChild(div);
+            console.log(message);
+        }
+
+        async function clearEverything() {
+            log('🧹 Starting complete cache cleanup...', 'info');
+            
+            try {
+                // 1. Unregister all service workers
+                if ('serviceWorker' in navigator) {
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    for (let registration of registrations) {
+                        await registration.unregister();
+                        log(`✅ Unregistered service worker: ${registration.scope}`, 'success');
+                    }
+                    if (registrations.length === 0) {
+                        log('ℹ️ No service workers found', 'info');
+                    }
+                }
+
+                // 2. Clear all caches
+                if ('caches' in window) {
+                    const cacheNames = await caches.keys();
+                    for (let cacheName of cacheNames) {
+                        await caches.delete(cacheName);
+                        log(`✅ Deleted cache: ${cacheName}`, 'success');
+                    }
+                    if (cacheNames.length === 0) {
+                        log('ℹ️ No caches found', 'info');
+                    }
+                }
+
+                // 3. Clear localStorage
+                localStorage.clear();
+                log('✅ Cleared localStorage', 'success');
+
+                // 4. Clear sessionStorage
+                sessionStorage.clear();
+                log('✅ Cleared sessionStorage', 'success');
+
+                // 5. Clear IndexedDB
+                if ('indexedDB' in window) {
+                    try {
+                        const databases = await indexedDB.databases();
+                        for (let db of databases) {
+                            if (db.name) {
+                                indexedDB.deleteDatabase(db.name);
+                                log(`✅ Deleted IndexedDB: ${db.name}`, 'success');
+                            }
+                        }
+                    } catch (e) {
+                        log('ℹ️ IndexedDB cleanup completed', 'info');
+                    }
+                }
+
+                log('🎉 Complete cleanup finished!', 'success');
+                log('⚠️ Please close ALL browser tabs and restart your browser for complete cleanup', 'error');
+                
+                // Wait 2 seconds then reload
+                setTimeout(() => {
+                    window.location.reload(true);
+                }, 2000);
+
+            } catch (error) {
+                log(`❌ Error during cleanup: ${error.message}`, 'error');
+            }
+        }
+
+        // Auto-run cleanup on page load
+        window.addEventListener('load', () => {
+            log('🔧 Cache cleaner loaded. Click the button to clean everything.', 'info');
+        });
+    </script>
+</body>
+</html>

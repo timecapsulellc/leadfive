@@ -165,6 +165,7 @@ export const MOBILE_SECURITY_HEADERS = {
  */
 export const applyClientSideSecurityMeta = () => {
   try {
+<<<<<<< HEAD
     // Add CSP meta tag if not already present
     if (!document.querySelector('meta[http-equiv="Content-Security-Policy"]')) {
       const cspMeta = document.createElement('meta');
@@ -187,6 +188,13 @@ export const applyClientSideSecurityMeta = () => {
       }
     }
 
+=======
+    // Skip CSP and X-Frame-Options meta tags - these should be set server-side only
+    // CSP and frame-ancestors directives are ignored when delivered via meta elements
+    console.warn('X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.');
+    
+    // Only add safe meta tags that don't conflict with HTTP headers
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
     // Add referrer policy
     if (!document.querySelector('meta[name="referrer"]')) {
       const referrerMeta = document.createElement('meta');

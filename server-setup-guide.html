@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadFive - Server Setup Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1f3a 0%, #0d1117 100%);
+            color: white;
+            line-height: 1.6;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 10px;
+        }
+        .step {
+            background: rgba(0, 212, 255, 0.1);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #00D4FF;
+        }
+        .command {
+            background: rgba(0,0,0,0.5);
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        .warning {
+            background: rgba(255, 152, 0, 0.2);
+            border-color: #ff9800;
+        }
+        .success {
+            background: rgba(76, 175, 80, 0.2);
+            border-color: #4caf50;
+        }
+        .error {
+            background: rgba(244, 67, 54, 0.2);
+            border-color: #f44336;
+        }
+        button {
+            background: #00D4FF;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover { background: #0091EA; }
+        h2 { color: #00D4FF; }
+        h3 { color: #64B5F6; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 LeadFive Server Setup Guide</h1>
+        <p>Your LeadFive dashboard is ready, but the development server needs to be started manually.</p>
+        
+        <div class="step success">
+            <h2>✅ Current Status</h2>
+            <ul>
+                <li>✅ Service workers cleared successfully</li>
+                <li>✅ Cache issues resolved</li>
+                <li>✅ React components ready</li>
+                <li>✅ Dependencies installed</li>
+                <li>❌ Development server not running</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h2>🔧 Manual Server Start</h2>
+            <p><strong>Open a new terminal</strong> in VS Code or your system terminal and run these commands:</p>
+            
+            <h3>Step 1: Navigate to project</h3>
+            <div class="command">cd "/Users/dadou/LEAD FIVE"</div>
+            
+            <h3>Step 2: Check Node.js</h3>
+            <div class="command">node --version
+npm --version</div>
+            <p>If these fail, you need to install Node.js from <a href="https://nodejs.org/" target="_blank" style="color: #00D4FF;">nodejs.org</a></p>
+            
+            <h3>Step 3: Clear any stuck processes</h3>
+            <div class="command">lsof -ti:5175 | xargs kill -9 2>/dev/null || echo "No processes to kill"</div>
+            
+            <h3>Step 4: Clear cache</h3>
+            <div class="command">rm -rf node_modules/.vite
+rm -rf dist</div>
+            
+            <h3>Step 5: Start the server</h3>
+            <div class="command">npm run dev</div>
+            
+            <p><strong>You should see output like:</strong></p>
+            <div class="command">  VITE v5.x.x  ready in xxx ms
+  
+  ➜  Local:   http://localhost:5175/
+  ➜  Network: http://192.168.x.x:5175/</div>
+        </div>
+
+        <div class="step warning">
+            <h2>⚡ Quick Alternative</h2>
+            <p>If npm doesn't work, try using Vite directly:</p>
+            <div class="command">./node_modules/.bin/vite --host 0.0.0.0 --port 5175</div>
+        </div>
+
+        <div class="step">
+            <h2>🎯 Expected Result</h2>
+            <p>Once the server starts, you'll be able to access:</p>
+            <ul>
+                <li><strong>Main Dashboard:</strong> <a href="http://localhost:5175/" target="_blank" style="color: #00D4FF;">http://localhost:5175/</a></li>
+                <li><strong>Features:</strong> AI Coach, DeFi Analytics, Web3 Network, Smart Rewards</li>
+                <li><strong>Branding:</strong> Clean Web3 terminology (no MLM references)</li>
+                <li><strong>Performance:</strong> Fast loading with no service worker conflicts</li>
+            </ul>
+        </div>
+
+        <div class="step error">
+            <h2>🔍 Troubleshooting</h2>
+            <p>If you encounter issues:</p>
+            <ul>
+                <li><strong>Port already in use:</strong> Try port 3000: <code>npm run dev -- --port 3000</code></li>
+                <li><strong>Permission denied:</strong> Check folder permissions</li>
+                <li><strong>Module not found:</strong> Run <code>npm install</code> first</li>
+                <li><strong>Still blank page:</strong> Hard refresh with Cmd+Shift+R (Mac) or Ctrl+Shift+F5 (Windows)</li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="window.location.reload()">🔄 Refresh This Page</button>
+            <button onclick="testConnection()">🌐 Test Connection</button>
+            <button onclick="window.open('http://localhost:5175/', '_blank')">🚀 Try Main App</button>
+        </div>
+
+        <div id="test-result" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        function testConnection() {
+            const result = document.getElementById('test-result');
+            result.innerHTML = '<div class="step">🔍 Testing connection to http://localhost:5175/...</div>';
+            
+            fetch('http://localhost:5175/')
+                .then(response => {
+                    if (response.ok) {
+                        result.innerHTML = '<div class="step success">✅ Server is running! <a href="http://localhost:5175/" target="_blank" style="color: #00D4FF;">Open LeadFive Dashboard</a></div>';
+                    } else {
+                        result.innerHTML = '<div class="step error">❌ Server responded but with error. Try the manual steps above.</div>';
+                    }
+                })
+                .catch(error => {
+                    result.innerHTML = '<div class="step error">❌ Cannot connect to server. Please start it manually using the steps above.</div>';
+                });
+        }
+
+        // Auto-test on load
+        window.addEventListener('load', () => {
+            setTimeout(testConnection, 1000);
+        });
+    </script>
+</body>
+</html>

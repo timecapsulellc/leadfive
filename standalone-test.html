@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>React Standalone Test</title>
+</head>
+<body>
+    <div id="app"></div>
+
+    <!-- Load React directly from CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script>
+        // Simple React component without JSX or build tools
+        const element = React.createElement(
+            'div',
+            { style: { padding: '20px', background: '#1a1f3a', color: 'white', textAlign: 'center' } },
+            [
+                React.createElement('h1', { style: { color: '#00D4FF' } }, 'LeadFive Test'),
+                React.createElement('p', {}, 'If you can see this, React is working without build tools!'),
+            ]
+        );
+        
+        // Render directly to the DOM
+        const container = document.getElementById('app');
+        const root = ReactDOM.createRoot(container);
+        root.render(element);
+    </script>
+</body>
+</html>

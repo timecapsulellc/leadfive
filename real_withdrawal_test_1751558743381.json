@@ -1,0 +1,22 @@
+{
+  "network": "BSC Testnet",
+  "contractAddress": "0x3e0de8CBc717311dbe1E0333B65c2fAb1e277736",
+  "treasury": "0xCeaEfDaDE5a0D574bFd5577665dC58d132995335",
+  "owner": "0xCeaEfDaDE5a0D574bFd5577665dC58d132995335",
+  "timestamp": "2025-07-03T16:05:43.381Z",
+  "testingStatus": "CORE_FUNCTIONS_VERIFIED",
+  "nextPhase": "MANUAL_TESTING_WITH_REAL_USERS",
+  "functionsVerified": [
+    "withdrawEnhanced",
+    "toggleAutoCompound",
+    "getWithdrawalSplit",
+    "getUserReferralCount",
+    "isAutoCompoundEnabled",
+    "getTreasuryWallet",
+    "register"
+  ],
+  "feeLogicVerified": true,
+  "autoCompoundTested": true,
+  "readyForMainnet": false,
+  "requiresManualTesting": true
+}

@@ -1,26 +1,38 @@
-import React, { useState } from 'react';
-import OpenAIService from '../services/OpenAIService';
-import { FaRobot, FaQuestionCircle, FaPaperPlane } from 'react-icons/fa';
-import './AITransactionHelper.css';
+import React from 'react';
+import { FaRobot, FaMoneyBillWave, FaExchangeAlt, FaWallet } from 'react-icons/fa';
 
-const AITransactionHelper = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
+const AITransactionHelper = ({ account, data }) => {
+  // Mock transaction data
+  const transactionSuggestions = [
     {
-      role: 'assistant',
-      content: 'Hello! I\'m your LeadFive AI assistant. I can help you understand transactions, optimize your earnings, and answer any questions about the platform. What would you like to know?',
-      timestamp: new Date()
+      id: 1,
+      type: 'reinvest',
+      title: 'Optimal Reinvestment',
+      description: 'Based on your current earnings, reinvesting 30% of your withdrawal will optimize your growth rate.',
+      suggestedAmount: 45.20,
+      impact: 'Accelerate team growth by approximately 15% over the next 30 days',
+      priority: 'high'
+    },
+    {
+      id: 2,
+      type: 'withdraw',
+      title: 'Strategic Withdrawal',
+      description: 'You have reached 50% of your 4x goal. Consider a partial withdrawal to reduce risk.',
+      suggestedAmount: 105.50,
+      impact: 'Secure 26% of your total investment while maintaining growth momentum',
+      priority: 'medium'
+    },
+    {
+      id: 3,
+      type: 'upgrade',
+      title: 'Package Upgrade Opportunity',
+      description: 'Upgrading to the next package level would significantly increase your Help Pool eligibility.',
+      suggestedAmount: 100.00,
+      impact: 'Potential 40% increase in weekly Help Pool distributions',
+      priority: 'medium'
     }
-  ]);
-  const [inputValue, setInputValue] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
-  const quickQuestions = [
-    "How do I withdraw my earnings?",
-    "What are the different package levels?",
-    "How does the referral system work?",
-    "How can I increase my team growth?"
   ];
+<<<<<<< HEAD
 
   const handleSendMessage = async (message = inputValue) => {
     if (!message.trim() || isLoading) return;
@@ -72,135 +84,102 @@ const AITransactionHelper = () => {
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
+=======
+  
+  // Transaction history
+  const recentTransactions = [
+    {
+      id: 'tx1',
+      type: 'withdrawal',
+      amount: 75.00,
+      timestamp: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+      status: 'completed'
+    },
+    {
+      id: 'tx2',
+      type: 'reinvestment',
+      amount: 25.00,
+      timestamp: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
+      status: 'completed'
+    }
+  ];
+  
+  // Get icon based on transaction type
+  const getTransactionIcon = (type) => {
+    switch(type) {
+      case 'withdraw':
+      case 'withdrawal':
+        return <FaMoneyBillWave />;
+      case 'reinvest':
+      case 'reinvestment':
+        return <FaExchangeAlt />;
+      case 'upgrade':
+        return <FaWallet />;
+      default:
+        return <FaMoneyBillWave />;
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
     }
   };
-
-  const handleQuickQuestion = (question) => {
-    handleSendMessage(question);
-  };
-
-  const speakMessage = async (content) => {
-    try {
-      // Speech synthesis temporarily disabled - using AI chat instead
-      console.log('Speech text:', content);
-    } catch (error) {
-      console.warn('Speech synthesis failed:', error);
-    }
-  };
-
-  const formatTime = (date) => {
-    return new Intl.DateTimeFormat('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
-    }).format(date);
-  };
-
+  
   return (
-    <>
-      {/* AI Assistant Toggle Button */}
-      <button 
-        className="ai-assistant-toggle"
-        onClick={() => setIsOpen(!isOpen)}
-        title="AI Assistant"
-      >
-        <FaRobot />
-        <span>AI Assistant</span>
-        {!isOpen && messages.length > 1 && (
-          <div className="notification-badge">{messages.length - 1}</div>
-        )}
-      </button>
-
-      {/* AI Chat Panel */}
-      {isOpen && (
-        <div className="ai-chat-panel">
-          <div className="ai-chat-header">
-            <div className="header-info">
-              <FaRobot />
-              <div>
-                <h3>AI Assistant</h3>
-                <span className="status">Online & Ready</span>
+    <div className="ai-transaction-helper">
+      <div className="transaction-helper-header">
+        <h3 className="section-title">
+          <FaRobot /> AI Transaction Advisor
+        </h3>
+      </div>
+      
+      <div className="transaction-suggestions">
+        <h4>Smart Transaction Recommendations</h4>
+        <div className="suggestions-list">
+          {transactionSuggestions.map(suggestion => (
+            <div key={suggestion.id} className={`transaction-suggestion ${suggestion.priority}`}>
+              <div className="suggestion-icon">
+                {getTransactionIcon(suggestion.type)}
               </div>
-            </div>
-            <button 
-              className="close-btn"
-              onClick={() => setIsOpen(false)}
-            >
-              ×
-            </button>
-          </div>
-
-          <div className="quick-questions">
-            <p>Quick questions:</p>
-            <div className="quick-question-buttons">
-              {quickQuestions.map((question, index) => (
-                <button
-                  key={index}
-                  className="quick-question-btn"
-                  onClick={() => handleQuickQuestion(question)}
-                  disabled={isLoading}
-                >
-                  <FaQuestionCircle />
-                  {question}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="ai-chat-messages">
-            {messages.map((message, index) => (
-              <div key={index} className={`message ${message.role}`}>
-                <div className="message-content">
-                  <p>{message.content}</p>
-                  <div className="message-footer">
-                    <span className="timestamp">{formatTime(message.timestamp)}</span>
-                    {message.role === 'assistant' && (
-                      <button 
-                        className="speak-btn"
-                        onClick={() => speakMessage(message.content)}
-                        title="Hear this message"
-                      >
-                        <FaVolumeUp />
-                      </button>
-                    )}
-                  </div>
+              <div className="suggestion-details">
+                <h5 className="suggestion-title">{suggestion.title}</h5>
+                <p className="suggestion-description">{suggestion.description}</p>
+                <div className="suggestion-amount">
+                  Suggested Amount: <span className="amount">${suggestion.suggestedAmount.toFixed(2)}</span>
+                </div>
+                <div className="suggestion-impact">
+                  <strong>Impact:</strong> {suggestion.impact}
                 </div>
               </div>
-            ))}
-            
-            {isLoading && (
-              <div className="message assistant loading">
-                <div className="message-content">
-                  <div className="typing-indicator">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className="ai-chat-input">
-            <input
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Ask me anything about LeadFive..."
-              onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
-              disabled={isLoading}
-            />
-            <button 
-              onClick={() => handleSendMessage()}
-              disabled={!inputValue.trim() || isLoading}
-              className="send-btn"
-            >
-              <FaPaperPlane />
-            </button>
-          </div>
+              <button className="apply-suggestion-btn">Apply</button>
+            </div>
+          ))}
         </div>
-      )}
-    </>
+      </div>
+      
+      <div className="transaction-history">
+        <h4>Recent Transactions</h4>
+        <div className="history-list">
+          {recentTransactions.map(transaction => (
+            <div key={transaction.id} className="transaction-item">
+              <div className="transaction-icon">
+                {getTransactionIcon(transaction.type)}
+              </div>
+              <div className="transaction-info">
+                <div className="transaction-type">
+                  {transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1)}
+                </div>
+                <div className="transaction-date">
+                  {new Date(transaction.timestamp).toLocaleDateString()}
+                </div>
+              </div>
+              <div className="transaction-amount">
+                ${transaction.amount.toFixed(2)}
+              </div>
+              <div className={`transaction-status ${transaction.status}`}>
+                {transaction.status}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 

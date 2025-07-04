@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadFive Testing Checklist</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #00D4FF 0%, #0066CC 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        .status-bar {
+            background: #e8f5e8;
+            padding: 15px;
+            border-left: 4px solid #28a745;
+            margin: 20px;
+            border-radius: 5px;
+        }
+        .content {
+            padding: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .test-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .test-list {
+            padding: 20px;
+        }
+        .test-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .test-item:hover {
+            background-color: #f8f9fa;
+        }
+        .test-item input[type="checkbox"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+        .test-item.completed {
+            background-color: #e8f5e8;
+            text-decoration: line-through;
+            color: #666;
+        }
+        .priority-high {
+            border-left: 4px solid #dc3545;
+        }
+        .priority-medium {
+            border-left: 4px solid #ffc107;
+        }
+        .priority-low {
+            border-left: 4px solid #28a745;
+        }
+        .completed-counter {
+            float: right;
+            background: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+        }
+        .quick-links {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .quick-links h3 {
+            margin-top: 0;
+        }
+        .quick-links a {
+            display: inline-block;
+            margin: 5px 10px 5px 0;
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .quick-links a:hover {
+            background: #0056b3;
+        }
+        .notes-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .notes-section textarea {
+            width: 100%;
+            height: 100px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            resize: vertical;
+        }
+        .success-message {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 LeadFive Testing Checklist</h1>
+            <p>Comprehensive testing guide for production readiness</p>
+        </div>
+
+        <div class="status-bar">
+            <strong>✅ Status: READY FOR TESTING</strong> - All critical issues resolved, development server running
+        </div>
+
+        <div class="content">
+            <div class="quick-links">
+                <h3>🔗 Quick Access Links</h3>
+                <a href="http://localhost:5173" target="_blank">🌐 LeadFive App</a>
+                <a href="http://localhost:5173/dashboard" target="_blank">📊 Dashboard</a>
+                <a href="http://localhost:5173/genealogy" target="_blank">🌳 Genealogy</a>
+                <a href="http://localhost:5173/packages" target="_blank">📦 Packages</a>
+                <a href="#" onclick="openConsole()">🔍 Open Console</a>
+            </div>
+
+            <div class="test-section priority-high">
+                <div class="test-header">
+                    🎯 Priority 1: Core Application <span class="completed-counter" id="core-counter">0/8</span>
+                </div>
+                <div class="test-list">
+                    <div class="test-item">
+                        <input type="checkbox" id="app-loads" onchange="updateCounter('core')">
+                        <label for="app-loads">Application loads at http://localhost:5173 without errors</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="console-clean" onchange="updateCounter('core')">
+                        <label for="console-clean">Browser console shows no critical errors (F12 → Console)</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="navigation" onchange="updateCounter('core')">
+                        <label for="navigation">Main navigation menu works (Home, Dashboard, etc.)</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="pages-load" onchange="updateCounter('core')">
+                        <label for="pages-load">All pages load without React errors</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="aria-icon" onchange="updateCounter('core')">
+                        <label for="aria-icon">ARIA chatbot icon appears in bottom-right corner</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="aria-opens" onchange="updateCounter('core')">
+                        <label for="aria-opens">ARIA chatbot opens when clicked (no errors)</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="aria-minimize" onchange="updateCounter('core')">
+                        <label for="aria-minimize">ARIA minimize/expand buttons work properly</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="responsive" onchange="updateCounter('core')">
+                        <label for="responsive">Application is responsive on mobile (F12 → Device toolbar)</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-section priority-medium">
+                <div class="test-header">
+                    🤖 Priority 2: ARIA Chatbot Features <span class="completed-counter" id="aria-counter">0/6</span>
+                </div>
+                <div class="test-list">
+                    <div class="test-item">
+                        <input type="checkbox" id="aria-personalities" onchange="updateCounter('aria')">
+                        <label for="aria-personalities">All 4 AI personalities are selectable (Advisor, Analytics, Strategy, Executive)</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="aria-chat" onchange="updateCounter('aria')">
+                        <label for="aria-chat">Chat input field accepts text and sends messages</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="aria-responses" onchange="updateCounter('aria')">
+                        <label for="aria-responses">AI responds to basic questions (try: "Hello" or "Help")</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="aria-voice" onchange="updateCounter('aria')">
+                        <label for="aria-voice">Voice controls are present (microphone, speaker icons)</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="aria-history" onchange="updateCounter('aria')">
+                        <label for="aria-history">Chat history is maintained during session</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="aria-ui" onchange="updateCounter('aria')">
+                        <label for="aria-ui">UI is clean and professional looking</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-section priority-medium">
+                <div class="test-header">
+                    💰 Priority 3: Wallet Integration <span class="completed-counter" id="wallet-counter">0/5</span>
+                </div>
+                <div class="test-list">
+                    <div class="test-item">
+                        <input type="checkbox" id="metamask-prompt" onchange="updateCounter('wallet')">
+                        <label for="metamask-prompt">MetaMask connection prompt appears when clicking wallet connect</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="wallet-connect" onchange="updateCounter('wallet')">
+                        <label for="wallet-connect">Wallet successfully connects and shows address</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="balance-display" onchange="updateCounter('wallet')">
+                        <label for="balance-display">Wallet balance displays correctly</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="network-check" onchange="updateCounter('wallet')">
+                        <label for="network-check">Correct network is detected (BSC Mainnet/Testnet)</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="wallet-persistence" onchange="updateCounter('wallet')">
+                        <label for="wallet-persistence">Wallet connection persists on page refresh</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-section priority-low">
+                <div class="test-header">
+                    📊 Priority 4: Dashboard Features <span class="completed-counter" id="dashboard-counter">0/5</span>
+                </div>
+                <div class="test-list">
+                    <div class="test-item">
+                        <input type="checkbox" id="dashboard-loads" onchange="updateCounter('dashboard')">
+                        <label for="dashboard-loads">Dashboard page loads without errors</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="user-stats" onchange="updateCounter('dashboard')">
+                        <label for="user-stats">User statistics display (may show 0 for new users)</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="genealogy-tree" onchange="updateCounter('dashboard')">
+                        <label for="genealogy-tree">Genealogy tree component renders</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="packages-display" onchange="updateCounter('dashboard')">
+                        <label for="packages-display">Package information displays correctly</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="referral-system" onchange="updateCounter('dashboard')">
+                        <label for="referral-system">Referral system interface is accessible</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="test-section priority-low">
+                <div class="test-header">
+                    📱 Priority 5: Mobile & Performance <span class="completed-counter" id="mobile-counter">0/4</span>
+                </div>
+                <div class="test-list">
+                    <div class="test-item">
+                        <input type="checkbox" id="mobile-nav" onchange="updateCounter('mobile')">
+                        <label for="mobile-nav">Mobile navigation menu works on small screens</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="mobile-chatbot" onchange="updateCounter('mobile')">
+                        <label for="mobile-chatbot">ARIA chatbot is usable on mobile devices</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="page-speed" onchange="updateCounter('mobile')">
+                        <label for="page-speed">Pages load quickly (under 3 seconds)</label>
+                    </div>
+                    <div class="test-item">
+                        <input type="checkbox" id="memory-usage" onchange="updateCounter('mobile')">
+                        <label for="memory-usage">No memory warnings in console during extended use</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="notes-section">
+                <h3>📝 Testing Notes</h3>
+                <textarea id="testing-notes" placeholder="Record any issues, observations, or notes during testing..."></textarea>
+                <button onclick="saveNotes()" style="margin-top: 10px; padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Save Notes</button>
+            </div>
+
+            <div class="success-message" id="success-message">
+                🎉 <strong>Congratulations!</strong> All tests passed! LeadFive is ready for production deployment.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateCounter(section) {
+            const checkboxes = document.querySelectorAll(`#${section === 'core' ? 'app-loads' : section === 'aria' ? 'aria-personalities' : section === 'wallet' ? 'metamask-prompt' : section === 'dashboard' ? 'dashboard-loads' : 'mobile-nav'}`).parentNode.parentNode.querySelectorAll('input[type="checkbox"]');
+            const counter = document.getElementById(`${section}-counter`);
+            const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const total = checkboxes.length;
+            
+            counter.textContent = `${completed}/${total}`;
+            
+            // Update visual state
+            checkboxes.forEach(checkbox => {
+                const testItem = checkbox.parentNode;
+                if (checkbox.checked) {
+                    testItem.classList.add('completed');
+                } else {
+                    testItem.classList.remove('completed');
+                }
+            });
+
+            // Check if all tests are completed
+            checkAllCompleted();
+        }
+
+        function checkAllCompleted() {
+            const allCounters = document.querySelectorAll('.completed-counter');
+            let allCompleted = true;
+            
+            allCounters.forEach(counter => {
+                const [completed, total] = counter.textContent.split('/').map(Number);
+                if (completed !== total) {
+                    allCompleted = false;
+                }
+            });
+
+            if (allCompleted) {
+                document.getElementById('success-message').style.display = 'block';
+                document.getElementById('success-message').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function openConsole() {
+            alert('Press F12 to open Developer Tools, then click on the "Console" tab to check for errors.');
+        }
+
+        function saveNotes() {
+            const notes = document.getElementById('testing-notes').value;
+            localStorage.setItem('leadfive-testing-notes', notes);
+            alert('Notes saved successfully!');
+        }
+
+        // Load saved notes on page load
+        window.onload = function() {
+            const savedNotes = localStorage.getItem('leadfive-testing-notes');
+            if (savedNotes) {
+                document.getElementById('testing-notes').value = savedNotes;
+            }
+        };
+    </script>
+</body>
+</html>

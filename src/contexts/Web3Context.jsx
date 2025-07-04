@@ -1,7 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { BrowserProvider, JsonRpcProvider } from 'ethers';
 import { toast } from 'react-toastify';
+<<<<<<< HEAD
 import { CONTRACT_ADDRESS, USDT_ADDRESS, SPONSOR_ADDRESS, CONTRACT_ABI } from '../config/contracts.js';
+=======
+import { CONTRACT_ADDRESS, CONTRACT_ABI, SUPPORTED_NETWORKS } from '../config/contracts';
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)
 
 const Web3Context = createContext(undefined);
 

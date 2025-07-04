@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadFive Enhanced Functions Test</title>
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 15px;
+            color: white;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            background: #fafbfc;
+        }
+        .function-test {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #4facfe;
+        }
+        .status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-left: auto;
+        }
+        .status.loading { background: #ffd700; color: #333; }
+        .status.success { background: #28a745; color: white; }
+        .status.error { background: #dc3545; color: white; }
+        .status.pending { background: #6c757d; color: white; }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .input-group {
+            margin: 10px 0;
+        }
+        input {
+            padding: 10px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            width: 200px;
+            margin: 5px;
+        }
+        .result {
+            margin: 10px 0;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 8px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        .network-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .info-card {
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #28a745;
+        }
+        .enhanced-highlight {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            border: 2px solid #ff6b9d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 LeadFive Enhanced Functions Test</h1>
+            <p>BSC Mainnet Integration Testing</p>
+            <p><strong>Contract:</strong> 0x29dcCb502D10C042BcC6a02a7762C49595A9E498</p>
+        </div>
+
+        <!-- Connection Status -->
+        <div class="section">
+            <h2>🔗 Connection Status</h2>
+            <div class="network-info">
+                <div class="info-card">
+                    <h4>Wallet Status</h4>
+                    <div id="walletStatus">Not Connected</div>
+                </div>
+                <div class="info-card">
+                    <h4>Network</h4>
+                    <div id="networkStatus">Unknown</div>
+                </div>
+                <div class="info-card">
+                    <h4>Contract Status</h4>
+                    <div id="contractStatus">Not Initialized</div>
+                </div>
+            </div>
+            <button onclick="connectWallet()">Connect Wallet</button>
+        </div>
+
+        <!-- Enhanced Functions Tests -->
+        <div class="section enhanced-highlight">
+            <h2>✨ Enhanced Withdrawal Functions</h2>
+            <p><strong>New Features:</strong> Treasury fees, Referral splits, Auto-compound</p>
+            
+            <div class="function-test">
+                <span>getWithdrawalSplit() - Check user's withdrawal percentage</span>
+                <span class="status pending" id="status-getWithdrawalSplit">Pending</span>
+            </div>
+            
+            <div class="function-test">
+                <span>getUserReferralCount() - Count user's referrals</span>
+                <span class="status pending" id="status-getUserReferralCount">Pending</span>
+            </div>
+            
+            <div class="function-test">
+                <span>isAutoCompoundEnabled() - Check auto-compound status</span>
+                <span class="status pending" id="status-isAutoCompoundEnabled">Pending</span>
+            </div>
+            
+            <div class="function-test">
+                <span>getTreasuryWallet() - Get treasury address</span>
+                <span class="status pending" id="status-getTreasuryWallet">Pending</span>
+            </div>
+            
+            <button onclick="testEnhancedFunctions()">Test Enhanced Functions</button>
+        </div>
+
+        <!-- Withdrawal Split Calculator -->
+        <div class="section">
+            <h2>💰 Withdrawal Split Calculator</h2>
+            <p>Test the new fee structure: 5% on withdrawal portion only</p>
+            
+            <div class="input-group">
+                <label>Amount to withdraw (USDT):</label>
+                <input type="number" id="withdrawAmount" value="100" placeholder="100">
+                <button onclick="calculateWithdrawalSplit()">Calculate Split</button>
+            </div>
+            
+            <div id="withdrawalCalculation" class="result" style="display: none;">
+                <!-- Results will be displayed here -->
+            </div>
+        </div>
+
+        <!-- Auto-Compound Toggle -->
+        <div class="section enhanced-highlight">
+            <h2>🔄 Auto-Compound Toggle</h2>
+            <p>Enable/disable auto-compound with 5% bonus</p>
+            
+            <div class="input-group">
+                <button onclick="toggleAutoCompound(true)">Enable Auto-Compound</button>
+                <button onclick="toggleAutoCompound(false)">Disable Auto-Compound</button>
+            </div>
+            
+            <div id="autoCompoundResult" class="result" style="display: none;">
+                <!-- Results will be displayed here -->
+            </div>
+        </div>
+
+        <!-- Test Results -->
+        <div class="section">
+            <h2>📊 Test Results</h2>
+            <div id="testResults">
+                <p>Connect wallet and run tests to see results...</p>
+            </div>
+        </div>
+
+        <!-- Treasury Information -->
+        <div class="section">
+            <h2>🏛️ Treasury Information</h2>
+            <div class="network-info">
+                <div class="info-card">
+                    <h4>Treasury Wallet</h4>
+                    <div id="treasuryWallet">Loading...</div>
+                </div>
+                <div class="info-card">
+                    <h4>Total Fees Collected</h4>
+                    <div id="totalFees">Loading...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Contract configuration
+        const CONTRACT_ADDRESS = '0x29dcCb502D10C042BcC6a02a7762C49595A9E498';
+        const USDT_ADDRESS = '0x55d398326f99059fF775485246999027B3197955';
+        
+        // Enhanced functions ABI (minimal for testing)
+        const ENHANCED_ABI = [
+            "function getWithdrawalSplit(address user) view returns (uint256 withdrawPercent, uint256 reinvestPercent)",
+            "function getUserReferralCount(address user) view returns (uint256)",
+            "function isAutoCompoundEnabled(address user) view returns (bool)",
+            "function getTreasuryWallet() view returns (address)",
+            "function toggleAutoCompound(bool enabled)",
+            "function withdrawEnhanced(uint256 amount)",
+            "function totalAdminFeesCollected() view returns (uint96)",
+            "function getUserInfo(address user) view returns (tuple(bool isRegistered, bool isBlacklisted, address referrer, uint96 balance, uint96 totalInvestment, uint96 totalEarnings, uint96 earningsCap, uint32 directReferrals, uint32 teamSize, uint8 packageLevel, uint8 rank, uint8 withdrawalRate, uint32 lastHelpPoolClaim, bool isEligibleForHelpPool, uint32 registrationTime, string referralCode, uint96 pendingRewards, uint32 lastWithdrawal, bool isActive))"
+        ];
+
+        let provider, signer, contract, userAddress;
+
+        async function connectWallet() {
+            try {
+                updateStatus('walletStatus', 'Connecting...', 'loading');
+                
+                if (!window.ethereum) {
+                    throw new Error('MetaMask not found');
+                }
+
+                await window.ethereum.request({ method: 'eth_requestAccounts' });
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                signer = provider.getSigner();
+                userAddress = await signer.getAddress();
+                
+                // Check network
+                const network = await provider.getNetwork();
+                if (network.chainId !== 56) {
+                    throw new Error('Please switch to BSC Mainnet (Chain ID: 56)');
+                }
+                
+                // Initialize contract
+                contract = new ethers.Contract(CONTRACT_ADDRESS, ENHANCED_ABI, signer);
+                
+                updateStatus('walletStatus', `Connected: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`, 'success');
+                updateStatus('networkStatus', 'BSC Mainnet (56)', 'success');
+                updateStatus('contractStatus', 'Initialized', 'success');
+                
+                // Load treasury info
+                await loadTreasuryInfo();
+                
+            } catch (error) {
+                console.error('Connection error:', error);
+                updateStatus('walletStatus', `Error: ${error.message}`, 'error');
+            }
+        }
+
+        async function testEnhancedFunctions() {
+            if (!contract || !userAddress) {
+                alert('Please connect wallet first');
+                return;
+            }
+
+            const results = [];
+            
+            try {
+                // Test getWithdrawalSplit
+                updateStatus('status-getWithdrawalSplit', 'Testing...', 'loading');
+                const [withdrawPercent, reinvestPercent] = await contract.getWithdrawalSplit(userAddress);
+                results.push(`✅ Withdrawal Split: ${withdrawPercent}%/${reinvestPercent}%`);
+                updateStatus('status-getWithdrawalSplit', `${withdrawPercent}%/${reinvestPercent}%`, 'success');
+                
+                // Test getUserReferralCount
+                updateStatus('status-getUserReferralCount', 'Testing...', 'loading');
+                const referralCount = await contract.getUserReferralCount(userAddress);
+                results.push(`✅ Referral Count: ${referralCount.toString()}`);
+                updateStatus('status-getUserReferralCount', referralCount.toString(), 'success');
+                
+                // Test isAutoCompoundEnabled
+                updateStatus('status-isAutoCompoundEnabled', 'Testing...', 'loading');
+                const autoCompound = await contract.isAutoCompoundEnabled(userAddress);
+                results.push(`✅ Auto-Compound: ${autoCompound ? 'Enabled' : 'Disabled'}`);
+                updateStatus('status-isAutoCompoundEnabled', autoCompound ? 'Enabled' : 'Disabled', 'success');
+                
+                // Test getTreasuryWallet
+                updateStatus('status-getTreasuryWallet', 'Testing...', 'loading');
+                const treasury = await contract.getTreasuryWallet();
+                results.push(`✅ Treasury: ${treasury}`);
+                updateStatus('status-getTreasuryWallet', `${treasury.slice(0, 6)}...${treasury.slice(-4)}`, 'success');
+                
+                // Display results
+                document.getElementById('testResults').innerHTML = `
+                    <h3>✅ All Enhanced Functions Working!</h3>
+                    <div class="result">
+                        ${results.join('<br>')}
+                    </div>
+                    <p><strong>Status:</strong> All 4/4 enhanced functions are operational on mainnet!</p>
+                `;
+                
+            } catch (error) {
+                console.error('Test error:', error);
+                document.getElementById('testResults').innerHTML = `
+                    <h3>❌ Test Error</h3>
+                    <div class="result">Error: ${error.message}</div>
+                `;
+                updateAllStatus('error');
+            }
+        }
+
+        async function calculateWithdrawalSplit() {
+            if (!contract || !userAddress) {
+                alert('Please connect wallet first');
+                return;
+            }
+
+            try {
+                const amount = parseFloat(document.getElementById('withdrawAmount').value);
+                if (!amount || amount <= 0) {
+                    alert('Please enter a valid amount');
+                    return;
+                }
+
+                // Get user's withdrawal split
+                const [withdrawPercent, reinvestPercent] = await contract.getWithdrawalSplit(userAddress);
+                const referralCount = await contract.getUserReferralCount(userAddress);
+                const autoCompound = await contract.isAutoCompoundEnabled(userAddress);
+
+                // Calculate amounts
+                const withdrawAmount = (amount * withdrawPercent.toNumber()) / 100;
+                const adminFee = (withdrawAmount * 5) / 100; // 5% fee on withdrawal only
+                const userReceives = withdrawAmount - adminFee;
+                const reinvestAmount = (amount * reinvestPercent.toNumber()) / 100;
+
+                const calculation = `
+                    <h3>💰 Withdrawal Calculation for ${amount} USDT</h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 15px 0;">
+                        <div style="padding: 10px; background: white; border-radius: 8px;">
+                            <strong>User Profile:</strong><br>
+                            Referrals: ${referralCount.toString()}<br>
+                            Auto-compound: ${autoCompound ? 'Enabled' : 'Disabled'}
+                        </div>
+                        <div style="padding: 10px; background: white; border-radius: 8px;">
+                            <strong>Split Ratio:</strong><br>
+                            Withdraw: ${withdrawPercent}%<br>
+                            Reinvest: ${reinvestPercent}%
+                        </div>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <strong>Breakdown:</strong><br>
+                        🔹 Total Amount: ${amount} USDT<br>
+                        🔹 Withdrawal Portion: ${withdrawAmount.toFixed(2)} USDT (${withdrawPercent}%)<br>
+                        🔹 Admin Fee: ${adminFee.toFixed(2)} USDT (5% of withdrawal only)<br>
+                        🔹 <strong>User Receives: ${userReceives.toFixed(2)} USDT</strong><br>
+                        🔹 Reinvestment: ${reinvestAmount.toFixed(2)} USDT → ${autoCompound ? 'Auto-compound +5% bonus' : 'Help Pool'}
+                    </div>
+                    <div style="background: #e3f2fd; padding: 10px; border-radius: 8px; border-left: 4px solid #2196f3;">
+                        <strong>Note:</strong> The 5% fee is applied ONLY to the withdrawal portion (${withdrawAmount.toFixed(2)} USDT), 
+                        not the total amount (${amount} USDT). This is the corrected implementation!
+                    </div>
+                `;
+
+                document.getElementById('withdrawalCalculation').innerHTML = calculation;
+                document.getElementById('withdrawalCalculation').style.display = 'block';
+
+            } catch (error) {
+                console.error('Calculation error:', error);
+                document.getElementById('withdrawalCalculation').innerHTML = `<div style="color: red;">Error: ${error.message}</div>`;
+                document.getElementById('withdrawalCalculation').style.display = 'block';
+            }
+        }
+
+        async function toggleAutoCompound(enabled) {
+            if (!contract || !userAddress) {
+                alert('Please connect wallet first');
+                return;
+            }
+
+            try {
+                document.getElementById('autoCompoundResult').innerHTML = `
+                    <div style="color: orange;">⏳ ${enabled ? 'Enabling' : 'Disabling'} auto-compound...</div>
+                `;
+                document.getElementById('autoCompoundResult').style.display = 'block';
+
+                const tx = await contract.toggleAutoCompound(enabled);
+                
+                document.getElementById('autoCompoundResult').innerHTML = `
+                    <div style="color: blue;">⏳ Transaction sent: ${tx.hash}</div>
+                    <div>Waiting for confirmation...</div>
+                `;
+
+                await tx.wait();
+
+                document.getElementById('autoCompoundResult').innerHTML = `
+                    <div style="color: green;">✅ Auto-compound ${enabled ? 'enabled' : 'disabled'} successfully!</div>
+                    <div>Transaction: ${tx.hash}</div>
+                `;
+
+                // Refresh the auto-compound status
+                setTimeout(() => {
+                    testEnhancedFunctions();
+                }, 2000);
+
+            } catch (error) {
+                console.error('Toggle error:', error);
+                document.getElementById('autoCompoundResult').innerHTML = `
+                    <div style="color: red;">❌ Error: ${error.message}</div>
+                `;
+                document.getElementById('autoCompoundResult').style.display = 'block';
+            }
+        }
+
+        async function loadTreasuryInfo() {
+            try {
+                const treasury = await contract.getTreasuryWallet();
+                const totalFees = await contract.totalAdminFeesCollected();
+                
+                document.getElementById('treasuryWallet').textContent = treasury;
+                document.getElementById('totalFees').textContent = `${ethers.utils.formatUnits(totalFees, 18)} USDT`;
+            } catch (error) {
+                document.getElementById('treasuryWallet').textContent = 'Error loading';
+                document.getElementById('totalFees').textContent = 'Error loading';
+            }
+        }
+
+        function updateStatus(elementId, text, status) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = text;
+                element.className = `status ${status}`;
+            }
+        }
+
+        function updateAllStatus(status) {
+            ['status-getWithdrawalSplit', 'status-getUserReferralCount', 'status-isAutoCompoundEnabled', 'status-getTreasuryWallet']
+                .forEach(id => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.className = `status ${status}`;
+                    }
+                });
+        }
+
+        // Auto-connect if already connected
+        window.addEventListener('load', async () => {
+            if (window.ethereum && window.ethereum.selectedAddress) {
+                await connectWallet();
+            }
+        });
+    </script>
+</body>
+</html>

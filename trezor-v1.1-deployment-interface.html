@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadFive v1.1 Deployment - Trezor Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .status {
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover { background-color: #0056b3; }
+        button:disabled { background-color: #6c757d; cursor: not-allowed; }
+        .step {
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .step h3 { color: #495057; margin-top: 0; }
+        .progress {
+            background-color: #e9ecef;
+            border-radius: 5px;
+            height: 20px;
+            margin: 10px 0;
+        }
+        .progress-bar {
+            background-color: #28a745;
+            height: 100%;
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .package-list {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .package-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .package-item:last-child { border-bottom: none; }
+        .deployment-info {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 LeadFive v1.1 Deployment</h1>
+            <p>Secure Trezor Hardware Wallet Interface</p>
+            <p><strong>Root Package Activation System</strong></p>
+        </div>
+
+        <div id="connection-status" class="status info">
+            <strong>📱 Connect your Trezor wallet to MetaMask and click "Connect Wallet"</strong>
+        </div>
+
+        <div class="step">
+            <h3>Step 1: Connect Wallet</h3>
+            <button id="connect-btn" onclick="connectWallet()">Connect Trezor Wallet</button>
+            <div id="wallet-info"></div>
+        </div>
+
+        <div class="step">
+            <h3>Step 2: Deploy v1.1 Implementation</h3>
+            <button id="deploy-impl-btn" onclick="deployImplementation()" disabled>Deploy v1.1 Implementation</button>
+            <div id="deploy-impl-status"></div>
+        </div>
+
+        <div class="step">
+            <h3>Step 3: Upgrade Proxy Contract</h3>
+            <button id="upgrade-btn" onclick="upgradeProxy()" disabled>Upgrade to v1.1</button>
+            <div id="upgrade-status"></div>
+        </div>
+
+        <div class="step">
+            <h3>Step 4: Initialize v1.1 Features</h3>
+            <button id="initialize-btn" onclick="initializeV1_1()" disabled>Initialize Package System</button>
+            <div id="initialize-status"></div>
+        </div>
+
+        <div class="step">
+            <h3>Step 5: Activate All Package Levels</h3>
+            <button id="activate-btn" onclick="activateAllLevels()" disabled>Activate All 6 Levels</button>
+            <div id="activate-status"></div>
+            
+            <div class="package-list" style="display: none;" id="package-preview">
+                <h4>🎯 Package Levels (Free for Root User):</h4>
+                <div class="package-item">
+                    <span><strong>Level 1:</strong> Basic Package</span>
+                    <span><strong>$30 USDT</strong></span>
+                </div>
+                <div class="package-item">
+                    <span><strong>Level 2:</strong> Standard Package</span>
+                    <span><strong>$60 USDT</strong></span>
+                </div>
+                <div class="package-item">
+                    <span><strong>Level 3:</strong> Premium Package</span>
+                    <span><strong>$120 USDT</strong></span>
+                </div>
+                <div class="package-item">
+                    <span><strong>Level 4:</strong> Elite Package</span>
+                    <span><strong>$240 USDT</strong></span>
+                </div>
+                <div class="package-item">
+                    <span><strong>Level 5:</strong> VIP Package</span>
+                    <span><strong>$480 USDT</strong></span>
+                </div>
+                <div class="package-item">
+                    <span><strong>Level 6:</strong> Diamond Package</span>
+                    <span><strong>$960 USDT</strong></span>
+                </div>
+                <div style="text-align: center; margin-top: 10px; font-weight: bold; color: #28a745;">
+                    Total Value: $1,950 USDT - FREE for Root User! 🎉
+                </div>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3>Step 6: Verification</h3>
+            <button id="verify-btn" onclick="verifyDeployment()" disabled>Verify v1.1 Deployment</button>
+            <div id="verify-status"></div>
+        </div>
+
+        <div class="progress">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+
+        <div class="deployment-info" id="deployment-info" style="display: none;">
+            <h4>📋 Deployment Information:</h4>
+            <div id="deployment-details"></div>
+        </div>
+    </div>
+
+    <script>
+        // Contract configuration
+        const PROXY_ADDRESS = '0x29dcCb502D10C042BcC6a02a7762C49595A9E498';
+        const TREZOR_ADDRESS = '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29';
+        
+        // Contract ABIs
+        const UPGRADE_ABI = [
+            "function upgradeTo(address newImplementation) external",
+            "function upgradeToAndCall(address newImplementation, bytes calldata data) external payable"
+        ];
+        
+        const V1_1_ABI = [
+            "function owner() view returns (address)",
+            "function initializeV1_1() external",
+            "function activateAllLevelsForRoot() external",
+            "function getContractVersion() view returns (string)",
+            "function getAllPackagePrices() view returns (uint256[6])",
+            "function getUserActivatedLevels(address user) view returns (uint8[])",
+            "function hasPackageLevel(address user, uint8 level) view returns (bool)",
+            "function rootPackagesActivated() view returns (bool)",
+            "function totalUsers() view returns (uint32)"
+        ];
+
+        let provider = null;
+        let signer = null;
+        let userAddress = null;
+        let newImplementationAddress = null;
+
+        // Connect wallet function
+        async function connectWallet() {
+            try {
+                // Check if ethers is loaded
+                if (typeof ethers === 'undefined') {
+                    showStatus('connection-status', 'error', '❌ Ethers.js library not loaded. Please refresh the page.');
+                    return;
+                }
+
+                if (typeof window.ethereum === 'undefined') {
+                    showStatus('connection-status', 'error', '❌ MetaMask not detected. Please install MetaMask and connect your Trezor.');
+                    return;
+                }
+
+                // Request account access
+                await window.ethereum.request({ method: 'eth_requestAccounts' });
+                
+                // Check if we're on BSC Mainnet
+                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                if (chainId !== '0x38') { // BSC Mainnet chain ID
+                    showStatus('connection-status', 'error', '❌ Please switch to BSC Mainnet (Chain ID: 56)');
+                    return;
+                }
+
+                // Initialize ethers
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                signer = provider.getSigner();
+                userAddress = await signer.getAddress();
+
+                // Verify this is the Trezor address
+                if (userAddress.toLowerCase() !== TREZOR_ADDRESS.toLowerCase()) {
+                    showStatus('connection-status', 'error', 
+                        `❌ Wrong wallet! Expected Trezor: ${TREZOR_ADDRESS}, Connected: ${userAddress}`);
+                    return;
+                }
+
+                // Check balance
+                const balance = await provider.getBalance(userAddress);
+                const balanceInBNB = ethers.utils.formatEther(balance);
+
+                showStatus('connection-status', 'success', 
+                    `✅ Trezor wallet connected: ${userAddress}`);
+                
+                document.getElementById('wallet-info').innerHTML = `
+                    <div class="status info">
+                        <strong>Wallet:</strong> ${userAddress}<br>
+                        <strong>Balance:</strong> ${parseFloat(balanceInBNB).toFixed(4)} BNB<br>
+                        <strong>Network:</strong> BSC Mainnet
+                    </div>
+                `;
+
+                // Enable next step
+                document.getElementById('deploy-impl-btn').disabled = false;
+                updateProgress(20);
+
+            } catch (error) {
+                showStatus('connection-status', 'error', `❌ Connection failed: ${error.message}`);
+            }
+        }
+
+        // Deploy new implementation
+        async function deployImplementation() {
+            try {
+                showStatus('deploy-impl-status', 'info', '🔨 Deploying v1.1 implementation...');
+                
+                // Contract bytecode (simplified - in real deployment, this would be the actual bytecode)
+                const contractFactory = new ethers.ContractFactory(
+                    V1_1_ABI, 
+                    "0x", // Placeholder - would need actual bytecode
+                    signer
+                );
+                
+                // For this demo, we'll simulate deployment
+                showStatus('deploy-impl-status', 'warning', 
+                    '⚠️ Implementation deployment requires contract bytecode. Use BSCScan for manual deployment or deploy via script first.');
+                
+                // Enable next step for demo
+                document.getElementById('upgrade-btn').disabled = false;
+                updateProgress(40);
+                
+            } catch (error) {
+                showStatus('deploy-impl-status', 'error', `❌ Deployment failed: ${error.message}`);
+            }
+        }
+
+        // Upgrade proxy
+        async function upgradeProxy() {
+            try {
+                showStatus('upgrade-status', 'info', '🔄 Upgrading proxy to v1.1...');
+                
+                const implementationAddress = prompt('Enter the new implementation address:');
+                if (!implementationAddress || !ethers.utils.isAddress(implementationAddress)) {
+                    showStatus('upgrade-status', 'error', '❌ Invalid implementation address');
+                    return;
+                }
+                
+                newImplementationAddress = implementationAddress;
+                
+                const contract = new ethers.Contract(PROXY_ADDRESS, UPGRADE_ABI, signer);
+                const tx = await contract.upgradeTo(implementationAddress);
+                
+                showStatus('upgrade-status', 'info', `⏳ Transaction submitted: ${tx.hash}`);
+                
+                const receipt = await tx.wait();
+                showStatus('upgrade-status', 'success', 
+                    `✅ Proxy upgraded! Gas used: ${receipt.gasUsed.toString()}`);
+                
+                document.getElementById('initialize-btn').disabled = false;
+                updateProgress(60);
+                
+            } catch (error) {
+                showStatus('upgrade-status', 'error', `❌ Upgrade failed: ${error.message}`);
+            }
+        }
+
+        // Initialize v1.1
+        async function initializeV1_1() {
+            try {
+                showStatus('initialize-status', 'info', '⚙️ Initializing v1.1 features...');
+                
+                const contract = new ethers.Contract(PROXY_ADDRESS, V1_1_ABI, signer);
+                const tx = await contract.initializeV1_1();
+                
+                showStatus('initialize-status', 'info', `⏳ Transaction submitted: ${tx.hash}`);
+                
+                const receipt = await tx.wait();
+                showStatus('initialize-status', 'success', 
+                    `✅ v1.1 initialized! Gas used: ${receipt.gasUsed.toString()}`);
+                
+                document.getElementById('activate-btn').disabled = false;
+                document.getElementById('package-preview').style.display = 'block';
+                updateProgress(80);
+                
+            } catch (error) {
+                showStatus('initialize-status', 'error', `❌ Initialization failed: ${error.message}`);
+            }
+        }
+
+        // Activate all package levels
+        async function activateAllLevels() {
+            try {
+                showStatus('activate-status', 'info', '🎯 Activating all 6 package levels...');
+                
+                const contract = new ethers.Contract(PROXY_ADDRESS, V1_1_ABI, signer);
+                const tx = await contract.activateAllLevelsForRoot();
+                
+                showStatus('activate-status', 'info', `⏳ Transaction submitted: ${tx.hash}`);
+                
+                const receipt = await tx.wait();
+                showStatus('activate-status', 'success', 
+                    `✅ All package levels activated! Gas used: ${receipt.gasUsed.toString()}`);
+                
+                document.getElementById('verify-btn').disabled = false;
+                updateProgress(100);
+                
+            } catch (error) {
+                showStatus('activate-status', 'error', `❌ Activation failed: ${error.message}`);
+            }
+        }
+
+        // Verify deployment
+        async function verifyDeployment() {
+            try {
+                showStatus('verify-status', 'info', '🔍 Verifying deployment...');
+                
+                const contract = new ethers.Contract(PROXY_ADDRESS, V1_1_ABI, signer);
+                
+                const version = await contract.getContractVersion();
+                const owner = await contract.owner();
+                const totalUsers = await contract.totalUsers();
+                const rootActivated = await contract.rootPackagesActivated();
+                const activatedLevels = await contract.getUserActivatedLevels(userAddress);
+                
+                const deploymentInfo = {
+                    timestamp: new Date().toISOString(),
+                    proxyAddress: PROXY_ADDRESS,
+                    implementationAddress: newImplementationAddress,
+                    version: version,
+                    owner: owner,
+                    totalUsers: totalUsers.toString(),
+                    rootPackagesActivated: rootActivated,
+                    activatedLevels: activatedLevels.map(l => l.toString())
+                };
+                
+                document.getElementById('deployment-info').style.display = 'block';
+                document.getElementById('deployment-details').innerHTML = `
+                    <strong>Version:</strong> ${version}<br>
+                    <strong>Owner:</strong> ${owner}<br>
+                    <strong>Total Users:</strong> ${totalUsers}<br>
+                    <strong>Root Packages Activated:</strong> ${rootActivated ? 'Yes' : 'No'}<br>
+                    <strong>Activated Levels:</strong> [${activatedLevels.join(', ')}]<br>
+                    <strong>Deployment Time:</strong> ${deploymentInfo.timestamp}
+                `;
+                
+                showStatus('verify-status', 'success', 
+                    `🎉 SUCCESS! LeadFive v1.1 fully deployed and configured!`);
+                
+            } catch (error) {
+                showStatus('verify-status', 'error', `❌ Verification failed: ${error.message}`);
+            }
+        }
+
+        // Utility functions
+        function showStatus(elementId, type, message) {
+            const element = document.getElementById(elementId);
+            element.className = `status ${type}`;
+            element.innerHTML = message;
+        }
+
+        function updateProgress(percentage) {
+            document.getElementById('progress-bar').style.width = percentage + '%';
+        }
+
+        // Initialize when page loads
+        window.addEventListener('load', function() {
+            updateProgress(0);
+            showStatus('connection-status', 'info', '📱 Connect your Trezor wallet to MetaMask and click "Connect Wallet"');
+        });
+    </script>
+    
+    <!-- Load ethers.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.0/dist/ethers.umd.min.js"></script>
+</body>
+</html>

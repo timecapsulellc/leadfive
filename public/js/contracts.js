@@ -56,4 +56,8 @@ window.CONTRACT_ABI = [
     "event CommissionDistributed(address indexed recipient, address indexed payer, uint256 indexed amount, uint8 poolType, string poolName, uint256 timestamp)"
 ];
 
+<<<<<<< HEAD
 console.log('✅ Lead Five Contract Configuration Loaded');
+=======
+console.log('✅ LeadFive Contract Configuration Loaded');
+>>>>>>> 4e21071 (🔐 Complete dashboard implementation with Trezor security integration)

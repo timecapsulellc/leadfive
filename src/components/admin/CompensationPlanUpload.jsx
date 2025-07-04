@@ -80,7 +80,7 @@ const CompensationPlanUpload = ({ onAnalysisComplete }) => {
           
           // Simulate PDF text extraction
           const simulatedText = `
-            ORPHI COMPENSATION PLAN DOCUMENT
+            LEADFIVE COMPENSATION PLAN DOCUMENT
             
             Commission Structure:
             - Direct Referral Bonus: 10%
