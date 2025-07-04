@@ -439,7 +439,8 @@ function App() {
                     <Dashboard 
                       account={account} 
                       provider={provider} 
-                      signer={signer} 
+                      signer={signer}
+                      onDisconnect={handleDisconnect}
                     />
                   </div>
                   <Footer />
