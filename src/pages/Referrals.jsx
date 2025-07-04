@@ -3,6 +3,9 @@ import UnifiedWalletConnect from '../components/unified/UnifiedWalletConnect';
 import PageWrapper from '../components/PageWrapper';
 import { CONTRACT_ADDRESS } from '../config/contracts';
 import { ROOT_USER_CONFIG, generateReferralLink, getReferralTarget } from '../config/rootUser';
+import PriceTicker from '../components/PriceTicker';
+import PortfolioValue, { EarningsDisplay } from '../components/PortfolioValue';
+import { MarketSummaryCard } from '../components/MarketDataWidget';
 import './Referrals_Enhanced.css';
 
 export default function Referrals({ account, provider, signer, onConnect, onDisconnect, contractInstance }) {
@@ -114,6 +117,12 @@ export default function Referrals({ account, provider, signer, onConnect, onDisc
           </div>
         )}
 
+        {/* Real-Time Market Data */}
+        <div className="market-data-section">
+          <PriceTicker />
+          <MarketSummaryCard compact={true} />
+        </div>
+
         {/* Team Statistics */}
         <div className="team-stats-grid">
           <div className="stat-card direct">
@@ -129,10 +138,27 @@ export default function Referrals({ account, provider, signer, onConnect, onDisc
             <div className="stat-label">Active Members</div>
           </div>
           <div className="stat-card earnings">
-            <div className="stat-value">${teamStats.totalEarnings.toFixed(2)}</div>
+            <div className="stat-value">
+              <EarningsDisplay 
+                usdtBalance={teamStats.totalEarnings} 
+                bnbBalance={0} 
+                showDetailed={false} 
+              />
+            </div>
             <div className="stat-label">Total Earnings</div>
           </div>
         </div>
+
+        {/* Portfolio Value Display */}
+        {account && (
+          <div className="portfolio-section">
+            <PortfolioValue 
+              account={account} 
+              provider={provider} 
+              refreshInterval={30000}
+            />
+          </div>
+        )}
 
         {/* Referral System */}
         {account && (
@@ -286,6 +312,30 @@ export default function Referrals({ account, provider, signer, onConnect, onDisc
             <br/>
             <p><strong>Earnings Cap:</strong> Maximum 4x initial investment per package</p>
             <p><strong>Collection Rates:</strong> No Direct: 70% | 5+ Direct: 80% | 20+ Direct: 90%</p>
+            <br/>
+            <h6>💰 Package Values (Real-Time Pricing)</h6>
+            <div className="package-pricing">
+              <div className="package-item">
+                <span className="package-name">Level 1:</span>
+                <span className="package-value">30 USDT</span>
+                <EarningsDisplay usdtBalance={30} showDetailed={false} />
+              </div>
+              <div className="package-item">
+                <span className="package-name">Level 2:</span>
+                <span className="package-value">150 USDT</span>
+                <EarningsDisplay usdtBalance={150} showDetailed={false} />
+              </div>
+              <div className="package-item">
+                <span className="package-name">Level 3:</span>
+                <span className="package-value">750 USDT</span>
+                <EarningsDisplay usdtBalance={750} showDetailed={false} />
+              </div>
+              <div className="package-item">
+                <span className="package-name">Level 4:</span>
+                <span className="package-value">1500 USDT</span>
+                <EarningsDisplay usdtBalance={1500} showDetailed={false} />
+              </div>
+            </div>
         </div>
 
       </div>
