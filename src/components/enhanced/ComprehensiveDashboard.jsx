@@ -29,6 +29,9 @@ import PortfolioValue from '../PortfolioValue';
 import MarketDataWidget, { MarketSummaryCard } from '../MarketDataWidget';
 
 import '../../styles/brandColors.css';
+import '../../styles/professional-dashboard.css';
+import '../../styles/expert-dashboard-redesign.css';
+import '../../styles/professional-gamification.css';
 import '../styles/ComprehensiveDashboard.css';
 import '../../styles/CommunityStructureDashboard.css';
 
