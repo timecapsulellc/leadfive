@@ -1,0 +1,242 @@
+/* Portfolio Value Component Styles */
+.portfolio-value {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.portfolio-value:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.portfolio-header {
+  margin-bottom: 16px;
+}
+
+.portfolio-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.title-text {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.refresh-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 4px 6px;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.8rem;
+}
+
+.refresh-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(251, 191, 36, 0.5);
+  color: #fbbf24;
+}
+
+.refresh-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.total-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fbbf24;
+  font-family: 'Monaco', 'Courier New', monospace;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.portfolio-details {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 16px;
+  margin-bottom: 16px;
+}
+
+.asset-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.asset-row:last-child {
+  border-bottom: none;
+}
+
+.asset-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.asset-symbol {
+  font-weight: 700;
+  color: #e0e7ff;
+  font-size: 0.9rem;
+}
+
+.asset-balance {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-family: 'Monaco', 'Courier New', monospace;
+}
+
+.asset-value {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.current-price {
+  font-size: 0.7rem;
+  color: #64748b;
+  font-family: 'Monaco', 'Courier New', monospace;
+}
+
+.asset-usd-value {
+  font-weight: 600;
+  color: #10b981;
+  font-size: 0.9rem;
+  font-family: 'Monaco', 'Courier New', monospace;
+}
+
+.portfolio-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 12px;
+  text-align: center;
+}
+
+.last-updated {
+  font-size: 0.7rem;
+  color: #64748b;
+  font-family: 'Monaco', 'Courier New', monospace;
+}
+
+/* Loading and Error States */
+.portfolio-value.loading,
+.portfolio-value.error {
+  text-align: center;
+}
+
+.loading-indicator,
+.error-indicator {
+  margin-right: 8px;
+}
+
+/* Earnings Display Component */
+.earnings-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.primary-amount {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fbbf24;
+  font-family: 'Monaco', 'Courier New', monospace;
+}
+
+.secondary-amount {
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+.usd-equivalent {
+  font-family: 'Monaco', 'Courier New', monospace;
+  color: #10b981;
+}
+
+.loading-text {
+  color: #64748b;
+  font-style: italic;
+}
+
+/* Compact variant */
+.portfolio-value.compact {
+  padding: 12px;
+}
+
+.portfolio-value.compact .total-value {
+  font-size: 1.5rem;
+}
+
+.portfolio-value.compact .title-text {
+  font-size: 0.8rem;
+}
+
+/* Dashboard card variant */
+.portfolio-value.dashboard-card {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.portfolio-value.dashboard-card:hover {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(245, 158, 11, 0.15) 100%);
+  border-color: rgba(251, 191, 36, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .portfolio-value {
+    padding: 16px;
+  }
+  
+  .total-value {
+    font-size: 1.8rem;
+  }
+  
+  .asset-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .asset-value {
+    align-items: flex-start;
+    width: 100%;
+  }
+  
+  .primary-amount {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .portfolio-value {
+    padding: 12px;
+  }
+  
+  .total-value {
+    font-size: 1.5rem;
+  }
+  
+  .portfolio-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .primary-amount {
+    font-size: 1.2rem;
+  }
+}

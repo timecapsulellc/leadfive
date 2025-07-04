@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  leadfive-frontend:
+    image: leadfive/frontend:latest
+    container_name: leadfive-production
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - NODE_ENV=production
+      - VITE_APP_ENV=production
+      - VITE_API_BASE_URL=https://api.leadfive.today
+      - VITE_CONTRACT_ADDRESS=0x29dcCb502D10C042BcC6a02a7762C49595A9E498
+      - VITE_DEFAULT_SPONSOR=0xCeaEfDaDE5a0D574bFd5577665dC58d132995335
+      - VITE_DEFAULT_REFERRAL_CODE=K9NBHT
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/ssl/private:ro
+      - leadfive_logs:/var/log/nginx
+    networks:
+      - leadfive-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: Analytics service
+  leadfive-analytics:
+    image: leadfive/analytics:latest
+    container_name: leadfive-analytics
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
+    networks:
+      - leadfive-network
+    depends_on:
+      - leadfive-frontend
+
+networks:
+  leadfive-network:
+    driver: bridge
+
+volumes:
+  leadfive_logs:
+    driver: local

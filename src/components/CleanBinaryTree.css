@@ -1,0 +1,354 @@
+/**
+ * Clean Binary Tree Component Styles
+ * Professional MLM genealogy tree visualization
+ */
+
+.clean-binary-tree {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 600px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.clean-binary-tree.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  border-radius: 0;
+}
+
+/* Tree Controls */
+.tree-controls {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.controls-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.controls-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  color: #ffffff;
+  opacity: 0.7;
+  z-index: 1;
+}
+
+.search-box input {
+  padding: 12px 16px 12px 40px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 14px;
+  width: 250px;
+  transition: all 0.3s ease;
+}
+
+.search-box input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.search-box input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.control-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Tree Statistics */
+.tree-stats {
+  position: absolute;
+  top: 100px;
+  left: 20px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  min-width: 180px;
+}
+
+.stat-icon {
+  color: #00d4ff;
+  font-size: 20px;
+}
+
+.stat-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+}
+
+.left-leg .leg-label {
+  background: linear-gradient(45deg, #00d4ff, #00b4d8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.right-leg .leg-label {
+  background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Tree Container */
+.tree-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.binary-tree-svg {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+}
+
+/* Node Details Panel */
+.node-details {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 320px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 15;
+}
+
+.node-details h4 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.detail-label {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.detail-value {
+  font-size: 14px;
+  color: #333;
+  font-weight: 600;
+}
+
+.detail-value.status-active {
+  color: #10b981;
+}
+
+.detail-value.status-inactive {
+  color: #ef4444;
+}
+
+.close-details {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.close-details:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* SVG Styling */
+.binary-tree-svg .community-link {
+  stroke: #4facfe;
+  stroke-width: 2;
+  fill: none;
+  opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tree-controls {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .controls-left,
+  .controls-right {
+    justify-content: center;
+  }
+
+  .search-box input {
+    width: 200px;
+  }
+
+  .tree-stats {
+    position: static;
+    flex-direction: row;
+    margin: 20px;
+    overflow-x: auto;
+  }
+
+  .stat-item {
+    min-width: 140px;
+  }
+
+  .node-details {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tree-stats {
+    flex-direction: column;
+  }
+
+  .stat-item {
+    min-width: auto;
+  }
+
+  .search-box input {
+    width: 150px;
+  }
+}
+
+/* Animation for tree loading */
+@keyframes treeLoad {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.binary-tree-svg {
+  animation: treeLoad 0.8s ease-out;
+}
+
+/* Gradient backgrounds for different states */
+.clean-binary-tree::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(79, 172, 254, 0.3) 0%, transparent 30%),
+    radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.3) 0%, transparent 30%),
+    radial-gradient(circle at 40% 60%, rgba(16, 185, 129, 0.2) 0%, transparent 30%);
+  pointer-events: none;
+}

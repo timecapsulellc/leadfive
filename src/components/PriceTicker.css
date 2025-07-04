@@ -1,0 +1,215 @@
+/* Price Ticker Component Styles */
+.price-ticker {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 0;
+  overflow: hidden;
+  position: relative;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.ticker-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.ticker-scroll {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: scroll-ticker 30s linear infinite;
+}
+
+@keyframes scroll-ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-item {
+  display: flex;
+  align-items: center;
+  min-width: fit-content;
+  flex-shrink: 0;
+}
+
+.coin-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.coin-symbol {
+  font-weight: 700;
+  color: #fbbf24;
+  font-size: 0.9rem;
+  min-width: 40px;
+}
+
+.coin-price {
+  font-weight: 600;
+  color: #e0e7ff;
+  font-size: 0.9rem;
+  font-family: 'Monaco', 'Courier New', monospace;
+}
+
+.coin-change {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Monaco', 'Courier New', monospace;
+}
+
+.coin-change.positive {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.coin-change.negative {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.ticker-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.refresh-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 4px 8px;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.refresh-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(251, 191, 36, 0.5);
+  color: #fbbf24;
+}
+
+.refresh-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.last-updated {
+  font-size: 0.7rem;
+  color: #64748b;
+  font-family: 'Monaco', 'Courier New', monospace;
+}
+
+/* Loading and Error States */
+.price-ticker.loading,
+.price-ticker.error {
+  justify-content: center;
+  text-align: center;
+}
+
+.loading-text {
+  color: #fbbf24;
+  font-size: 0.9rem;
+  animation: pulse 2s infinite;
+}
+
+.error-text {
+  color: #ef4444;
+  font-size: 0.9rem;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .ticker-container {
+    padding: 0 16px;
+  }
+  
+  .ticker-scroll {
+    gap: 24px;
+  }
+  
+  .coin-info {
+    gap: 8px;
+  }
+  
+  .coin-symbol,
+  .coin-price {
+    font-size: 0.8rem;
+  }
+  
+  .coin-change {
+    font-size: 0.7rem;
+    padding: 1px 4px;
+  }
+  
+  .last-updated {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .ticker-scroll {
+    gap: 16px;
+    animation-duration: 20s;
+  }
+  
+  .coin-symbol {
+    min-width: 35px;
+  }
+  
+  .ticker-controls {
+    gap: 8px;
+  }
+}
+
+/* Pause animation on hover */
+.price-ticker:hover .ticker-scroll {
+  animation-play-state: paused;
+}
+
+/* Compact mode for header */
+.price-ticker.compact {
+  padding: 4px 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.price-ticker.compact .ticker-container {
+  padding: 0 16px;
+}
+
+.price-ticker.compact .coin-symbol,
+.price-ticker.compact .coin-price,
+.price-ticker.compact .coin-change {
+  font-size: 0.8rem;
+}
+
+.price-ticker.compact .ticker-scroll {
+  gap: 24px;
+  animation-duration: 25s;
+}
