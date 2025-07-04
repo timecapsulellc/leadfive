@@ -25,6 +25,7 @@ import {
   FaGamepad,
   FaEye,
   FaShare,
+  FaShareAlt,
   FaCopy,
   FaExpand,
   FaCompress,
@@ -33,7 +34,6 @@ import {
 
 // Import ALL your existing components - PRESERVED
 import LevelVisualization from '../LevelVisualization';
-import CommunityLevelsVisualization from '../CommunityLevelsVisualization';
 import EarningsChart from '../EarningsChart';
 import ReferralStats from '../ReferralStats';
 import WithdrawalHistory from '../WithdrawalHistory';
@@ -41,6 +41,7 @@ import ActivityFeed from '../ActivityFeed';
 import PerformanceMetrics from '../PerformanceMetrics';
 import NotificationSystem from '../NotificationSystem';
 import PageWrapper from '../PageWrapper';
+import AdvancedDashboardOverview from './EnhancedDashboardOverview';
 
 // AI Components - PRESERVED
 import AICoachingPanel from '../AICoachingPanel';
@@ -166,100 +167,36 @@ export default function EnhancedDashboard({ account, provider, onDisconnect }) {
     { id: 'settings', label: 'Settings', icon: FaCog }
   ];
 
-  // Enhanced Dashboard Overview with ALL your existing features PLUS enhancements
+  // Enhanced Dashboard Overview with MUCH MORE ADVANCED features
   const EnhancedDashboardOverview = ({ data, account }) => {
     return (
       <div className="enhanced-dashboard-section">
-        {/* NEW: Real-time Market Data */}
-        <div className="market-data-section">
-          <PriceTicker symbols={['USDT', 'BNB', 'BTC', 'ETH']} autoRefresh={true} />
-          <MarketSummaryCard compact={true} />
-        </div>
-        
-        {/* NEW: Enhanced KPI Cards on top of your existing welcome banner */}
-        <EnhancedKPICards data={data} />
-        
-        {/* PRESERVED: Your existing welcome banner */}
-        <div className="welcome-banner">
-          <div className="welcome-content">
-            <h2>Welcome to LeadFive!</h2>
-            <p>Build your financial future with our proven 4x earning system</p>
-          </div>
-          <button className="welcome-cta-button">Get Started</button>
-        </div>
-
-        {/* PRESERVED: Your existing Quick Stats */}
-        <div className="overview-stats">
-          <motion.div 
-            className="stat-card"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            <FaDollarSign className="stat-icon" />
-            <div className="stat-value">${data.totalEarnings.toFixed(2)}</div>
-            <div className="stat-label">Total Earnings</div>
-          </motion.div>
-          <motion.div 
-            className="stat-card"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            <FaUsers className="stat-icon" />
-            <div className="stat-value">{data.directReferrals}</div>
-            <div className="stat-label">Direct Referrals</div>
-          </motion.div>
-          <motion.div 
-            className="stat-card"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            <FaNetworkWired className="stat-icon" />
-            <div className="stat-value">{data.teamSize}</div>
-            <div className="stat-label">Team Size</div>
-          </motion.div>
-          <motion.div 
-            className="stat-card"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
-            <FaRocket className="stat-icon" />
-            <div className="stat-value">${data.currentPackage}</div>
-            <div className="stat-label">Current Package</div>
-          </motion.div>
-        </div>
-
-        {/* PRESERVED: Your existing Charts and Insights */}
-        <div className="card-grid">
-          <EarningsChart data={data} />
-          <ActivityFeed />
-        </div>
-
-        <div className="card-grid">
-          <LevelVisualization data={data} account={account} />
-          <CommunityLevelsVisualization 
-            userAddress={account}
-            contractInstance={null}
-            mode="enhanced"
-            showControls={true}
-            initialDepth={3}
-          />
-        </div>
-
-        {/* NEW: Portfolio Value Section */}
-        <div className="portfolio-section">
-          <PortfolioValue 
-            account={account} 
-            provider={provider} 
-            refreshInterval={30000}
-            showDetailed={true}
-          />
-        </div>
-
-        {/* NEW: Additional enhanced features */}
-        <div className="enhancement-row">
-          <LiveNotifications />
-          <QuickActionsPanel data={data} />
-        </div>
+        {/* Use the MUCH MORE ADVANCED EnhancedDashboardOverview component */}
+        <AdvancedDashboardOverview 
+          userData={{
+            referralCode: account?.slice(-8) || 'ABC123',
+            totalEarnings: data.totalEarnings,
+            teamSize: data.teamSize,
+            directReferrals: data.directReferrals,
+            currentPackage: data.currentPackage,
+            ...data
+          }}
+          onActionClick={(action) => {
+            switch(action) {
+              case 'withdraw':
+                setActiveSection('withdrawals');
+                break;
+              case 'upgrade':
+                setActiveSection('packages');
+                break;
+              case 'team':
+                setActiveSection('team-structure');
+                break;
+              default:
+                break;
+            }
+          }}
+        />
       </div>
     );
   };
@@ -399,14 +336,34 @@ export default function EnhancedDashboard({ account, provider, onDisconnect }) {
   const TeamStructureSection = ({ account }) => {
     return (
       <div className="dashboard-section">
-        <h2 className="section-title">Team Structure</h2>
-        <CommunityLevelsVisualization 
-          userAddress={account}
-          contractInstance={null}
-          mode="standard"
-          showControls={false}
-          initialDepth={2}
-        />
+        <h2 className="section-title">My Team</h2>
+        <div className="team-overview">
+          <div className="team-stats">
+            <div className="team-stat">
+              <FaUsers className="team-icon" />
+              <div className="team-value">{dashboardData.teamSize}</div>
+              <div className="team-label">Total Team Members</div>
+            </div>
+            <div className="team-stat">
+              <FaUsers className="team-icon" />
+              <div className="team-value">{dashboardData.directReferrals}</div>
+              <div className="team-label">Direct Referrals</div>
+            </div>
+            <div className="team-stat">
+              <FaUsers className="team-icon" />
+              <div className="team-value">{dashboardData.activeReferrals}</div>
+              <div className="team-label">Active Members</div>
+            </div>
+          </div>
+          <div className="team-actions">
+            <button className="team-btn" onClick={() => navigate('/genealogy')}>
+              <FaNetworkWired /> View Full Genealogy Tree
+            </button>
+            <button className="team-btn" onClick={() => window.open(`/ref/${account?.slice(-8)}`, '_blank')}>
+              <FaShareAlt /> Share Referral Link
+            </button>
+          </div>
+        </div>
       </div>
     );
   };
@@ -611,10 +568,9 @@ export default function EnhancedDashboard({ account, provider, onDisconnect }) {
             </AnimatePresence>
           </ErrorBoundary>
         </div>
-      </div>
 
-      {/* PRESERVED: Your existing AI Chatbot */}
-      <UnifiedChatbot account={account} />
-    </div>
-  );
-}
+        {/* PRESERVED: Your existing AI Chatbot */}
+        <UnifiedChatbot account={account} />
+      </div>
+    );
+  }
