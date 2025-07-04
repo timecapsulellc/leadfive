@@ -522,10 +522,9 @@ export default function EnhancedDashboard({ account, provider, onDisconnect }) {
   }
 
   return (
-    <PageWrapper>
-      <div className={`enhanced-dashboard-container ${isFullscreen ? 'fullscreen' : ''} ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
-        {/* Enhanced Toolbar */}
-        <div className="dashboard-toolbar">
+    <div className={`enhanced-dashboard-container ${isFullscreen ? 'fullscreen' : ''} ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
+      {/* Enhanced Toolbar */}
+      <div className="dashboard-toolbar">
           <div className="toolbar-left">
             <button 
               className="toolbar-btn"
@@ -616,6 +615,6 @@ export default function EnhancedDashboard({ account, provider, onDisconnect }) {
 
       {/* PRESERVED: Your existing AI Chatbot */}
       <UnifiedChatbot account={account} />
-    </PageWrapper>
+    </div>
   );
 }
