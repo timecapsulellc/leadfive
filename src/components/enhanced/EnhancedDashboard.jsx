@@ -64,6 +64,9 @@ import PriceTicker from '../PriceTicker';
 import PortfolioValue, { EarningsDisplay } from '../PortfolioValue';
 import { MarketSummaryCard } from '../MarketDataWidget';
 
+import '../../styles/professional-dashboard.css';
+import '../../styles/expert-dashboard-redesign.css';
+import '../../styles/professional-gamification.css';
 import './EnhancedDashboard.css';
 
 export default function EnhancedDashboard({ account, provider, onDisconnect }) {
