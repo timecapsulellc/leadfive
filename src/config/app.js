@@ -10,7 +10,7 @@ export const APP_CONFIG = {
   
   // Smart Contract Configuration
   contract: {
-    address: '0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569', // ✅ NEW MAINNET DEPLOYMENT
+    address: '0x29dcCb502D10C042BcC6a02a7762C49595A9E498', // ✅ UPDATED MAINNET DEPLOYMENT
     network: {
       name: 'BSC Mainnet',
       chainId: 56,
@@ -26,8 +26,13 @@ export const APP_CONFIG = {
       }
     },
     admin: {
-      owner: '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29',
-      feeRecipient: '0xeB652c4523f3Cf615D3F3694b14E551145953aD0'
+      owner: '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29', // Will be updated to deployer during development
+      feeRecipient: '0xeB652c4523f3Cf615D3F3694b14E551145953aD0',
+      treasuryWallet: '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29', // Development treasury (changeable)
+      
+      // Client handover addresses (for future reference)
+      clientOwner: '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29', // Final client owner
+      clientTreasury: '0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29' // Final client treasury
     }
   },
   

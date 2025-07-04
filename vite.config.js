@@ -12,6 +12,25 @@ const clearCachePlugin = () => {
         res.setHeader('Pragma', 'no-cache');
         res.setHeader('Expires', '0');
         res.setHeader('Surrogate-Control', 'no-store');
+        
+        // Comprehensive security headers
+        res.setHeader('Content-Security-Policy', 
+          "default-src 'self'; " +
+          "script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; " +
+          "style-src 'self' 'unsafe-inline' https: https://fonts.googleapis.com; " +
+          "font-src 'self' data: https: https://fonts.gstatic.com; " +
+          "img-src 'self' data: https: blob:; " +
+          "connect-src 'self' https: wss: ws:; " +
+          "frame-ancestors 'self'; " +
+          "base-uri 'self'; " +
+          "object-src 'none'"
+        );
+        res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+        res.setHeader('X-Content-Type-Options', 'nosniff');
+        res.setHeader('X-XSS-Protection', '1; mode=block');
+        res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+        res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
+        
         next();
       });
     }
@@ -21,20 +40,18 @@ const clearCachePlugin = () => {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react(), 
-    clearCachePlugin()
+    react()
   ],
   
   server: {
     host: '0.0.0.0',
-    port: 5173,
-    // Force clear browser cache on start
-    force: true
+    port: 5175,
+    strictPort: true
   },
   
   preview: {
     host: '0.0.0.0',
-    port: 8080,
+    port: 5175,
   },
   
   define: {
@@ -46,6 +63,7 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: false,
     target: 'es2020',
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       external: (id) => {
         // Exclude problematic core-js internal modules
@@ -56,8 +74,12 @@ export default defineConfig({
       },
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          ethers: ['ethers']
+          react: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+          icons: ['react-icons'],
+          web3: ['ethers'],
+          charts: ['chart.js', 'react-chartjs-2'],
+          ai: ['openai']
         }
       }
     }

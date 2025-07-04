@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import OpenAIService from '../services/OpenAIService';
-import { FaBrain, FaChartLine, FaPercentage } from 'react-icons/fa';
+import { FaBrain, FaChartLine, FaPercent, FaVolumeUp } from 'react-icons/fa';
 import './AIEarningsPrediction.css';
+import '../styles/brandColors.css';
 
 const AIEarningsPrediction = ({ userStats }) => {
   const [prediction, setPrediction] = useState(null);
@@ -157,7 +158,7 @@ const AIEarningsPrediction = ({ userStats }) => {
           
           <div className="confidence-meter">
             <div className="confidence-label">
-              <FaPercentage /> Overall Confidence: {prediction.confidence}%
+              <FaPercent /> Overall Confidence: {prediction.confidence}%
             </div>
             <div className="confidence-bar">
               <div 

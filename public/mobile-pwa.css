@@ -1,15 +1,15 @@
-/* OrphiChain Mobile PWA Optimization */
-/* Enhanced mobile-first responsive design with OrphiChain branding */
+/* LeadFive Mobile PWA Optimization */
+/* Enhanced mobile-first responsive design with LeadFive branding */
 
-/* CSS Custom Properties for OrphiChain Brand */
+/* CSS Custom Properties for LeadFive Brand */
 :root {
-  --orphi-primary: #00D4FF;
-  --orphi-secondary: #7b2cbf;
-  --orphi-accent: #ff6b35;
-  --orphi-dark: #0B1426;
-  --orphi-darker: #1A1A2E;
-  --orphi-bg-gradient: linear-gradient(135deg, #0B1426 0%, #1a2332 50%, #0B1426 100%);
-  --orphi-text-gradient: linear-gradient(135deg, #00d4ff 0%, #7b2cbf 50%, #ff6b35 100%);
+  --leadfive-primary: #00D4FF;
+  --leadfive-secondary: #7b2cbf;
+  --leadfive-accent: #ff6b35;
+  --leadfive-dark: #0B1426;
+  --leadfive-darker: #1A1A2E;
+  --leadfive-bg-gradient: linear-gradient(135deg, #0B1426 0%, #1a2332 50%, #0B1426 100%);
+  --leadfive-text-gradient: linear-gradient(135deg, #00d4ff 0%, #7b2cbf 50%, #ff6b35 100%);
   
   /* Mobile viewport units fix */
   --vh: 1vh;
@@ -41,7 +41,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background: var(--orphi-bg-gradient);
+  background: var(--leadfive-bg-gradient);
   color: white;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -115,7 +115,7 @@ body {
 
 /* Enhanced mobile buttons */
 .mobile-btn {
-  background: var(--orphi-text-gradient);
+  background: var(--leadfive-text-gradient);
   border: none;
   border-radius: 12px;
   color: white;
@@ -215,7 +215,7 @@ body {
 }
 
 .mobile-nav-item.active {
-  background: var(--orphi-text-gradient);
+  background: var(--leadfive-text-gradient);
   color: white;
 }
 
@@ -251,7 +251,7 @@ body {
 
 .mobile-input:focus {
   outline: none;
-  border-color: var(--orphi-primary);
+  border-color: var(--leadfive-primary);
   box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
 }
 
@@ -285,7 +285,7 @@ body {
 .mobile-modal-content {
   width: 100%;
   max-height: 90vh;
-  background: var(--orphi-darker);
+  background: var(--leadfive-darker);
   border-radius: 20px 20px 0 0;
   padding: 24px;
   transform: translateY(100%);
@@ -367,7 +367,7 @@ body {
 .mobile-metric-value {
   font-size: 24px;
   font-weight: bold;
-  color: var(--orphi-primary);
+  color: var(--leadfive-primary);
   margin-bottom: 4px;
 }
 
@@ -408,7 +408,7 @@ body {
   width: 32px;
   height: 32px;
   border: 3px solid rgba(0, 212, 255, 0.2);
-  border-top: 3px solid var(--orphi-primary);
+  border-top: 3px solid var(--leadfive-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }

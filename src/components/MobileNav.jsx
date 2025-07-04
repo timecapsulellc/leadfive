@@ -41,6 +41,10 @@ const MobileNav = ({ account, onDisconnect }) => {
     return false;
   };
 
+  const displayAddress = typeof account === 'string'
+    ? `${account.slice(0, 6)}...${account.slice(-4)}`
+    : '';
+
   return (
     <>
       {/* Mobile Menu Toggle */}
@@ -70,9 +74,7 @@ const MobileNav = ({ account, onDisconnect }) => {
             <div className="mobile-user-info">
               <div className="user-avatar">👤</div>
               <div className="user-details">
-                <p className="user-address">
-                  {account.slice(0, 6)}...{account.slice(-4)}
-                </p>
+                <p className="user-address">{displayAddress}</p>
                 <span className="user-status">Connected</span>
               </div>
             </div>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FaBrain, FaSync, FaChartLine, FaFire } from 'react-icons/fa';
+import { FaBrain, FaSync, FaChartLine, FaArrowUp } from 'react-icons/fa';
 
 const AIMarketInsights = ({ aiInsights, isAiLoading, generateAIInsights }) => {
   // Add debug logging to verify component is mounting
@@ -80,7 +80,7 @@ const AIMarketInsights = ({ aiInsights, isAiLoading, generateAIInsights }) => {
         </div>
         <div className="insight-item trending-now">
           <div className="insight-header">
-            <FaFire className="insight-icon" />
+            <FaArrowUp className="insight-icon" />
             <span className="insight-title">Trending Now</span>
           </div>
           <p className="insight-text">AI-powered projects are 340% more successful. Don't miss the revolution!</p>

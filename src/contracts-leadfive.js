@@ -1,19 +1,21 @@
 // LEAD FIVE Contract Configuration
-// Updated for NEW MAINNET DEPLOYMENT: 2025-06-21
-// Contract Address: 0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569
+// Updated for NEW MAINNET DEPLOYMENT: 2025-06-29
+// Contract Address: 0x29dcCb502D10C042BcC6a02a7762C49595A9E498
 // Network: BSC Mainnet (Chain ID: 56)
 // Status: PRODUCTION READY ✅
 
 export const LEAD_FIVE_CONFIG = {
-    address: "0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569", // ✅ NEW MAINNET DEPLOYED
-    implementationAddress: "0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569",
+    address: "0x29dcCb502D10C042BcC6a02a7762C49595A9E498", // ✅ UPDATED MAINNET ADDRESS
+    implementationAddress: "0x29dcCb502D10C042BcC6a02a7762C49595A9E498",
+    sponsorAddress: "0xCeaEfDaDE5a0D574bFd5577665dC58d132995335", // ✅ DEFAULT SPONSOR
+    referralCode: "K9NBHT", // ✅ DEFAULT REFERRAL CODE
     network: "BSC Mainnet",
     chainId: 56,
-    usdtAddress: "0x55d398326f99059fF775485246999027B3197955",
+    usdtAddress: "0x55d398326f99059fF775485246999027B3197955", // ✅ USDT CONTRACT
     rpcUrl: "https://bsc-dataseed.binance.org/",
     blockExplorer: "https://bscscan.com",
-    contractUrl: "https://bscscan.com/address/0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569", // ✅ NEW MAINNET DEPLOYED
-    writeContractUrl: "https://bscscan.com/address/0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569#writeContract", // ✅ NEW MAINNET DEPLOYED
+    contractUrl: "https://bscscan.com/address/0x29dcCb502D10C042BcC6a02a7762C49595A9E498", // ✅ UPDATED MAINNET
+    writeContractUrl: "https://bscscan.com/address/0x29dcCb502D10C042BcC6a02a7762C49595A9E498#writeContract", // ✅ UPDATED MAINNET
     owner: "0xDf628ed21f0B27197Ad02fc29EbF4417C04c4D29", // ✅ TREZOR WALLET
     feeRecipient: "0xeB652c4523f3Cf615D3F3694b14E551145953aD0" // ✅ REVENUE COLLECTION ACTIVE
 };

@@ -19,7 +19,7 @@ export function useCompensationData(teamData) {
   // Base investment amount for calculations
   const investment = 100;
 
-  // Get level bonus rate based on OrphiCrowdFund compensation plan
+  // Get level bonus rate based on LeadFive compensation plan
   const getLevelBonusRate = React.useCallback((level) => {
     if (level === 1) return 3; // 3% for direct referrals
     if (level <= 6) return 1; // 1% for levels 2-6

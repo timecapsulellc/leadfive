@@ -7,7 +7,7 @@ export const NETWORKS = {
     explorerUrl: 'https://bscscan.com',
     symbol: 'BNB',
     contracts: {
-      leadfive: '0x423f0ecA4a4F8C350644c56eaCB383c4e69F0569',
+      leadfive: '0x29dcCb502D10C042BcC6a02a7762C49595A9E498',
       usdt: '0x55d398326f99059fF775485246999027B3197955'
     }
   }

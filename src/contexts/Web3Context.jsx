@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { BrowserProvider, JsonRpcProvider } from 'ethers';
 import { toast } from 'react-toastify';
-import { ORPHI_CROWDFUND_CONFIG } from '../contracts';
+import { CONTRACT_ADDRESS, CONTRACT_ABI, SUPPORTED_NETWORKS } from '../config/contracts';
 
 const Web3Context = createContext(undefined);
 

@@ -1,7 +1,7 @@
-// OrphiChain PWA Push Notification Service
+// LeadFive PWA Push Notification Service
 // Handles PWA notifications with Web3 integration and brand consistency
 
-class OrphiChainNotificationService {
+class LeadFiveNotificationService {
   constructor() {
     this.registration = null;
     this.permission = 'default';
@@ -13,35 +13,33 @@ class OrphiChainNotificationService {
   }
 
   async init() {
-    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+    if (!('Notification' in window)) {
       console.warn('Push notifications not supported');
       return false;
     }
 
     try {
-      // Get service worker registration
-      this.registration = await navigator.serviceWorker.ready;
       // Check current permission
       this.permission = await Notification.permission;
-      // Get existing subscription
-      this.subscription = await this.registration.pushManager.getSubscription();
-      // Load VAPID key from public file if not set
-      if (!this.vapidKey) {
-        try {
-          const res = await fetch('/vapid-public-key.txt');
-          if (res.ok) {
-            this.vapidKey = await res.text();
-          }
-        } catch (e) {
-          console.warn('Could not load VAPID key:', e);
-        }
-      }
-      console.log('🔔 Notification service initialized');
+      console.log('Notification service initialized');
       return true;
     } catch (error) {
-      console.error('Failed to initialize notifications:', error);
+      console.error('Notification service init failed:', error);
       return false;
+    }  }
+
+  async loadVapidKey() {
+    // Simplified version without service worker dependency
+    try {
+      const res = await fetch('/vapid-public-key.txt');
+      if (res.ok) {
+        this.vapidKey = await res.text();
+      }
+    } catch (e) {
+      console.warn('Could not load VAPID key:', e);
     }
+    console.log('🔔 Notification service initialized');
+    return true;
   }
 
   async requestPermission() {
@@ -61,7 +59,7 @@ class OrphiChainNotificationService {
       this.isEnabled = true;
       
       // Show welcome notification
-      await this.showNotification('🎉 OrphiChain Notifications Enabled', {
+      await this.showNotification('🎉 LeadFive Notifications Enabled', {
         body: 'You\'ll receive real-time updates about your Web3 activities',
         icon: '/icons/icon-192x192.png',
         badge: '/icons/icon-72x72.png',
@@ -143,13 +141,13 @@ class OrphiChainNotificationService {
     const defaultOptions = {
       icon: '/icons/icon-192x192.png',
       badge: '/icons/icon-72x72.png',
-      tag: 'orphi-notification',
+      tag: 'leadfive-notification',
       requireInteraction: false,
       timestamp: Date.now(),
       vibrate: [200, 100, 200],
       data: {
         timestamp: Date.now(),
-        source: 'OrphiChain'
+        source: 'LeadFive'
       }
     };
 
@@ -171,7 +169,7 @@ class OrphiChainNotificationService {
     }
   }
 
-  // Predefined OrphiChain notification types
+  // Predefined LeadFive notification types
   async showWeb3Notification(type, data = {}) {
     const notifications = {
       'user-registered': {
@@ -373,7 +371,7 @@ class OrphiChainNotificationService {
     await this.requestPermission();
     await this.subscribe();
     await this.showNotification('🔔 Test Push Notification', {
-      body: 'This is a test push notification from OrphiChain.',
+      body: 'This is a test push notification from LeadFive.',
       tag: 'test-push',
       requireInteraction: false
     });
@@ -447,11 +445,11 @@ class OrphiChainNotificationService {
 }
 
 // Create global instance
-window.OrphiNotifications = new OrphiChainNotificationService();
+window.LeadFiveNotifications = new LeadFiveNotificationService();
 
 // Export for module usage
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = OrphiChainNotificationService;
+  module.exports = LeadFiveNotificationService;
 }
 
-console.log('🔔 OrphiChain Notification Service loaded');
+console.log('🔔 LeadFive Notification Service loaded');

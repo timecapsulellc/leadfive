@@ -17,10 +17,8 @@ const Withdrawals = React.lazy(() => import('./pages/Withdrawals'));
 const Security = React.lazy(() => import('./pages/Security'));
 const About = React.lazy(() => import('./pages/About'));
 const Dashboard = React.lazy(() => import('./pages/Dashboard'));
-const Welcome = React.lazy(() => import('./pages/Welcome'));
-const BrandGuide = React.lazy(() => import('./pages/BrandGuide'));
 const Genealogy = React.lazy(() => import('./pages/Genealogy'));
-const TestAIDashboard = React.lazy(() => import('./pages/TestAIDashboard'));
+const TestnetWithdrawalTester = React.lazy(() => import('./components/TestnetWithdrawalTester'));
 import { 
   storeWalletConnection, 
   autoReconnectWallet, 
@@ -38,31 +36,11 @@ function App() {
   const [provider, setProvider] = useState(null);
   const [signer, setSigner] = useState(null);
   const [isConnecting, setIsConnecting] = useState(false);
-  const [shouldShowWelcome, setShouldShowWelcome] = useState(false);
   const [userRoles, setUserRoles] = useState({}); // For role-based access control
 
   // Initialize mobile security on app load
   useEffect(() => {
     initializeMobileSecurity();
-  }, []);
-
-  // Check if user should see welcome page
-  useEffect(() => {
-    const hasVisited = localStorage.getItem('hasVisitedWelcome');
-    const welcomeShown = sessionStorage.getItem('welcomeShown');
-    
-    // Clear stale states
-    if (welcomeShown) {
-      setShouldShowWelcome(false);
-      return;
-    }
-    
-    if (!hasVisited) {
-      setShouldShowWelcome(true);
-      sessionStorage.setItem('welcomeShown', 'true');
-    } else {
-      setShouldShowWelcome(false);
-    }
   }, []);
 
   // Auto-reconnect wallet on app load
@@ -250,36 +228,28 @@ function App() {
           account={account} 
           onDisconnect={handleDisconnect}
         />
-        {shouldShowWelcome ? (
-          <Suspense fallback={<LoadingSpinner message="Loading Welcome..." />}>
-            <Routes>
-              <Route path="*" element={<Welcome />} />
-            </Routes>
-          </Suspense>
-        ) : (
-          <Suspense fallback={<LoadingSpinner message="Loading application..." />}>
-            <Routes>
-              <Route path="/" element={
-                <>
-                  <Header 
-                    account={account} 
+        <Suspense fallback={<LoadingSpinner message="Loading application..." />}>
+          <Routes>
+            <Route path="/" element={
+              <>
+                <Header 
+                  account={account} 
+                  onConnect={handleWalletConnect}
+                  onDisconnect={handleDisconnect} 
+                />
+                <div className="App">
+                  <Home 
+                    account={account}
+                    provider={provider}
+                    signer={signer}
                     onConnect={handleWalletConnect}
-                    onDisconnect={handleDisconnect} 
+                    onDisconnect={handleDisconnect}
                   />
-                  <div className="App">
-                    <Home 
-                      account={account}
-                      provider={provider}
-                      signer={signer}
-                      onConnect={handleWalletConnect}
-                      onDisconnect={handleDisconnect}
-                    />
-                  </div>
-                  <Footer />
-                </>
-              } />
-              <Route path="/welcome" element={<Welcome />} />
-              <Route path="/home" element={
+                </div>
+                <Footer />
+              </>
+            } />
+            <Route path="/home" element={
                 <>
                   <Header 
                     account={account} 
@@ -455,25 +425,6 @@ function App() {
                   <Footer />
                 </>
               } />
-              <Route path="/brand-guide" element={
-                <>
-                  <Header 
-                    account={account} 
-                    onConnect={handleWalletConnect}
-                    onDisconnect={handleDisconnect} 
-                  />
-                  <div className="App">
-                    <BrandGuide 
-                      account={account}
-                      provider={provider}
-                      signer={signer}
-                      onConnect={handleWalletConnect}
-                      onDisconnect={handleDisconnect}
-                    />
-                  </div>
-                  <Footer />
-                </>
-              } />
               <Route path="/dashboard" element={
                 <UserRoute 
                   account={account} 
@@ -495,7 +446,7 @@ function App() {
                   <Footer />
                 </UserRoute>
               } />
-              <Route path="/test-ai" element={
+              <Route path="/testnet-withdrawal" element={
                 <>
                   <Header 
                     account={account} 
@@ -503,14 +454,13 @@ function App() {
                     onDisconnect={handleDisconnect} 
                   />
                   <div className="App">
-                    <TestAIDashboard />
+                    <TestnetWithdrawalTester />
                   </div>
                   <Footer />
                 </>
               } />
             </Routes>
           </Suspense>
-        )}
     </Router>
     </ErrorBoundary>
     </>

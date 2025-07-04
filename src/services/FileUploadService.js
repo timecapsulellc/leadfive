@@ -169,7 +169,7 @@ class FileUploadService {
       // Simulate upload delay
       setTimeout(() => {
         // Store metadata in localStorage for demo purposes
-        const uploads = JSON.parse(localStorage.getItem('orphi_uploads') || '[]');
+        const uploads = JSON.parse(localStorage.getItem('leadfive_uploads') || '[]');
         const uploadId = Date.now().toString();
         
         uploads.push({
@@ -179,7 +179,7 @@ class FileUploadService {
           uploadedAt: new Date().toISOString()
         });
         
-        localStorage.setItem('orphi_uploads', JSON.stringify(uploads));
+        localStorage.setItem('leadfive_uploads', JSON.stringify(uploads));
         
         resolve({ uploadId });
       }, 1000 + Math.random() * 2000); // 1-3 second delay
@@ -190,7 +190,7 @@ class FileUploadService {
    * Get upload history for a user
    */
   getUserUploads(userId) {
-    const uploads = JSON.parse(localStorage.getItem('orphi_uploads') || '[]');
+    const uploads = JSON.parse(localStorage.getItem('leadfive_uploads') || '[]');
     return uploads.filter(upload => upload.metadata.uploadedBy === userId);
   }
 
@@ -199,7 +199,7 @@ class FileUploadService {
    */
   async deleteFile(uploadId, userId) {
     try {
-      const uploads = JSON.parse(localStorage.getItem('orphi_uploads') || '[]');
+      const uploads = JSON.parse(localStorage.getItem('leadfive_uploads') || '[]');
       const fileIndex = uploads.findIndex(upload => 
         upload.uploadId === uploadId && upload.metadata.uploadedBy === userId
       );
@@ -209,7 +209,7 @@ class FileUploadService {
       }
 
       uploads.splice(fileIndex, 1);
-      localStorage.setItem('orphi_uploads', JSON.stringify(uploads));
+      localStorage.setItem('leadfive_uploads', JSON.stringify(uploads));
 
       return { success: true, message: 'File deleted successfully' };
     } catch (error) {
@@ -223,7 +223,7 @@ class FileUploadService {
    */
   async processWithAI(uploadId, processingType = 'analyze') {
     try {
-      const uploads = JSON.parse(localStorage.getItem('orphi_uploads') || '[]');
+      const uploads = JSON.parse(localStorage.getItem('leadfive_uploads') || '[]');
       const upload = uploads.find(u => u.uploadId === uploadId);
 
       if (!upload) {
@@ -310,7 +310,7 @@ class FileUploadService {
    * Get file statistics
    */
   getUploadStats(userId = null) {
-    const uploads = JSON.parse(localStorage.getItem('orphi_uploads') || '[]');
+    const uploads = JSON.parse(localStorage.getItem('leadfive_uploads') || '[]');
     const userUploads = userId ? uploads.filter(u => u.metadata.uploadedBy === userId) : uploads;
 
     const stats = {
@@ -336,7 +336,7 @@ class FileUploadService {
    * Clean up old uploads (maintenance function)
    */
   cleanupOldUploads(maxAge = 30 * 24 * 60 * 60 * 1000) { // 30 days default
-    const uploads = JSON.parse(localStorage.getItem('orphi_uploads') || '[]');
+    const uploads = JSON.parse(localStorage.getItem('leadfive_uploads') || '[]');
     const cutoffDate = Date.now() - maxAge;
 
     const activeUploads = uploads.filter(upload => {
@@ -344,7 +344,7 @@ class FileUploadService {
       return uploadDate > cutoffDate;
     });
 
-    localStorage.setItem('orphi_uploads', JSON.stringify(activeUploads));
+    localStorage.setItem('leadfive_uploads', JSON.stringify(activeUploads));
     
     return {
       cleaned: uploads.length - activeUploads.length,

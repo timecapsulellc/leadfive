@@ -1,13 +1,39 @@
-// Web3 Integration for OrphiCrowdFund V4UltraSecure
-import { CONTRACTS, ORPHI_ABI, USDT_ABI, PACKAGE_TIERS } from './contracts.js';
+// Web3 Integration for LeadFive Platform
+import { CONTRACT_ADDRESS, CONTRACT_ABI, USDT_ADDRESS, SUPPORTED_NETWORKS } from './config/contracts.js';
 
-class OrphiWeb3 {
+// Package tiers for LeadFive
+const PACKAGE_TIERS = {
+  1: { amount: 10, name: 'Starter' },
+  2: { amount: 50, name: 'Basic' },
+  3: { amount: 100, name: 'Standard' },
+  4: { amount: 500, name: 'Premium' },
+  5: { amount: 1000, name: 'Elite' }
+};
+
+// USDT ABI (standard ERC20)
+const USDT_ABI = [
+  {
+    "constant": true,
+    "inputs": [{"name": "_owner", "type": "address"}],
+    "name": "balanceOf",
+    "outputs": [{"name": "balance", "type": "uint256"}],
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [{"name": "_spender", "type": "address"}, {"name": "_value", "type": "uint256"}],
+    "name": "approve",
+    "outputs": [{"name": "", "type": "bool"}],
+    "type": "function"
+  }
+];
+
+class LeadFiveWeb3 {
     constructor() {
         this.web3 = null;
         this.account = null;
         this.contract = null;
         this.usdtContract = null;
-        this.network = 'BSC_TESTNET';
     }
 
     // Initialize Web3 connection
@@ -16,19 +42,18 @@ class OrphiWeb3 {
             this.web3 = new Web3(window.ethereum);
             
             // Setup contracts
-            const config = CONTRACTS[this.network];
             this.contract = new this.web3.eth.Contract(
-                ORPHI_ABI, 
-                config.contracts.OrphiCrowdFundV4UltraSecure.address
+                CONTRACT_ABI, 
+                CONTRACT_ADDRESS
             );
             this.usdtContract = new this.web3.eth.Contract(
                 USDT_ABI, 
-                config.contracts.MockUSDT.address
+                USDT_ADDRESS
             );
 
-            console.log('Web3 initialized successfully');
-            console.log('Contract Address:', config.contracts.OrphiCrowdFundV4UltraSecure.address);
-            console.log('USDT Address:', config.contracts.MockUSDT.address);
+            console.log('LeadFive Web3 initialized successfully');
+            console.log('LeadFive Contract Address:', CONTRACT_ADDRESS);
+            console.log('USDT Address:', USDT_ADDRESS);
             
             return true;
         } else {
@@ -45,10 +70,10 @@ class OrphiWeb3 {
             });
             this.account = accounts[0];
             
-            // Switch to BSC Testnet if needed
-            await this.switchToBSCTestnet();
+            // Switch to BSC Mainnet 
+            await this.switchToBSCMainnet();
             
-            console.log('Wallet connected:', this.account);
+            console.log('LeadFive wallet connected:', this.account);
             return this.account;
         } catch (error) {
             console.error('Failed to connect wallet:', error);
@@ -56,12 +81,12 @@ class OrphiWeb3 {
         }
     }
 
-    // Switch to BSC Testnet
-    async switchToBSCTestnet() {
+    // Switch to BSC Mainnet
+    async switchToBSCMainnet() {
         try {
             await window.ethereum.request({
                 method: 'wallet_switchEthereumChain',
-                params: [{ chainId: '0x61' }], // BSC Testnet
+                params: [{ chainId: '0x38' }], // BSC Mainnet
             });
         } catch (switchError) {
             // Chain not added, let's add it
@@ -69,15 +94,15 @@ class OrphiWeb3 {
                 await window.ethereum.request({
                     method: 'wallet_addEthereumChain',
                     params: [{
-                        chainId: '0x61',
-                        chainName: 'BSC Testnet',
-                        rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+                        chainId: '0x38',
+                        chainName: 'BSC Mainnet',
+                        rpcUrls: ['https://bsc-dataseed1.binance.org/'],
                         nativeCurrency: {
                             name: 'BNB',
                             symbol: 'BNB',
                             decimals: 18
                         },
-                        blockExplorerUrls: ['https://testnet.bscscan.com']
+                        blockExplorerUrls: ['https://bscscan.com']
                     }]
                 });
             }
@@ -162,9 +187,8 @@ class OrphiWeb3 {
 
         try {
             const amountWei = this.web3.utils.toWei(amount.toString(), 'mwei');
-            const contractAddress = CONTRACTS[this.network].contracts.OrphiCrowdFundV4UltraSecure.address;
             
-            const tx = await this.usdtContract.methods.approve(contractAddress, amountWei).send({
+            const tx = await this.usdtContract.methods.approve(CONTRACT_ADDRESS, amountWei).send({
                 from: this.account
             });
             console.log('USDT approved:', tx.transactionHash);
@@ -189,10 +213,10 @@ class OrphiWeb3 {
             const tx = await this.contract.methods.register(sponsorAddress, packageTier).send({
                 from: this.account
             });
-            console.log('User registered:', tx.transactionHash);
+            console.log('LeadFive user registered:', tx.transactionHash);
             return tx;
         } catch (error) {
-            console.error('Error registering:', error);
+            console.error('Error registering with LeadFive:', error);
             throw error;
         }
     }
@@ -205,10 +229,10 @@ class OrphiWeb3 {
             const tx = await this.contract.methods.withdraw().send({
                 from: this.account
             });
-            console.log('Withdrawal successful:', tx.transactionHash);
+            console.log('LeadFive withdrawal successful:', tx.transactionHash);
             return tx;
         } catch (error) {
-            console.error('Error withdrawing:', error);
+            console.error('Error withdrawing from LeadFive:', error);
             throw error;
         }
     }
@@ -221,21 +245,21 @@ class OrphiWeb3 {
 
     // Get BSCScan URL for transaction
     getTxUrl(txHash) {
-        return `https://testnet.bscscan.com/tx/${txHash}`;
+        return `https://bscscan.com/tx/${txHash}`;
     }
 
     // Get BSCScan URL for address
     getAddressUrl(address) {
-        return `https://testnet.bscscan.com/address/${address}`;
+        return `https://bscscan.com/address/${address}`;
     }
 }
 
 // Export instance
-export const orphiWeb3 = new OrphiWeb3();
+export const leadFiveWeb3 = new LeadFiveWeb3();
 
 // Auto-initialize when DOM loads
 if (typeof window !== 'undefined') {
     window.addEventListener('load', async () => {
-        await orphiWeb3.init();
+        await leadFiveWeb3.init();
     });
 }

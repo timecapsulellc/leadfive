@@ -10,14 +10,14 @@ const WhitepaperUpload = ({ isAdmin }) => {
 
   // Load existing whitepapers from localStorage (in production, this would be from a database)
   useEffect(() => {
-    const savedFiles = localStorage.getItem('orphi_whitepapers');
+    const savedFiles = localStorage.getItem('leadfive_whitepapers');
     if (savedFiles) {
       setUploadedFiles(JSON.parse(savedFiles));
     }
   }, []);
 
   const saveFilesToStorage = (files) => {
-    localStorage.setItem('orphi_whitepapers', JSON.stringify(files));
+    localStorage.setItem('leadfive_whitepapers', JSON.stringify(files));
   };
 
   const handleFileSelect = (event) => {

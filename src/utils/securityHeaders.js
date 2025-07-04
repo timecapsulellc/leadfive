@@ -153,22 +153,11 @@ export const MOBILE_SECURITY_HEADERS = {
  */
 export const applyClientSideSecurityMeta = () => {
   try {
-    // Add CSP meta tag if not already present
-    if (!document.querySelector('meta[http-equiv="Content-Security-Policy"]')) {
-      const cspMeta = document.createElement('meta');
-      cspMeta.setAttribute('http-equiv', 'Content-Security-Policy');
-      cspMeta.setAttribute('content', generateCSPHeader());
-      document.head.appendChild(cspMeta);
-    }
-
-    // Add X-Frame-Options equivalent
-    if (!document.querySelector('meta[http-equiv="X-Frame-Options"]')) {
-      const frameMeta = document.createElement('meta');
-      frameMeta.setAttribute('http-equiv', 'X-Frame-Options');
-      frameMeta.setAttribute('content', 'DENY');
-      document.head.appendChild(frameMeta);
-    }
-
+    // Skip CSP and X-Frame-Options meta tags - these should be set server-side only
+    // CSP and frame-ancestors directives are ignored when delivered via meta elements
+    console.warn('X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.');
+    
+    // Only add safe meta tags that don't conflict with HTTP headers
     // Add referrer policy
     if (!document.querySelector('meta[name="referrer"]')) {
       const referrerMeta = document.createElement('meta');

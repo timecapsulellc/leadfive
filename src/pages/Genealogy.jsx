@@ -1,192 +1,203 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import PageWrapper from '../components/PageWrapper';
-import UnifiedWalletConnect from '../components/UnifiedWalletConnect';
-import UnifiedGenealogyTree from '../components/UnifiedGenealogyTree';
-import GenealogyAnalytics from '../components/GenealogyAnalytics';
-import UserProfileModal from '../components/UserProfileModal';
-import ExportModal from '../components/ExportModal';
-import RealtimeStatus from '../components/RealtimeStatus';
+import UnifiedWalletConnect from '../components/unified/UnifiedWalletConnect';
+import CommunityLevelsVisualization from '../components/CommunityLevelsVisualization';
+import { motion } from 'framer-motion';
 import './Genealogy.css';
 
 const Genealogy = ({ account, provider, signer, onConnect, onDisconnect }) => {
-  const [selectedNode, setSelectedNode] = useState(null);
-  const [showUserProfile, setShowUserProfile] = useState(false);
-  const [profileUser, setProfileUser] = useState(null);
-  const [showExportModal, setShowExportModal] = useState(false);
-  const [showAnalytics, setShowAnalytics] = useState(false);
-  const [useMockData, setUseMockData] = useState(true);
-  const [realtimeEnabled, setRealtimeEnabled] = useState(true);
-  const [viewMode, setViewMode] = useState('advanced');
   const navigate = useNavigate();
-
-  // Handle node selection and interaction
-  const handleNodeClick = useCallback((node) => {
-    setSelectedNode(node);
-    setProfileUser({
-      address: node.attributes?.address || node.id,
-      name: node.name,
-      ...node.attributes
-    });
-  }, []);
-
-  const handleNodeHover = useCallback((node) => {
-    // Optional: implement hover effects or tooltips
-    console.log('Node hovered:', node.name);
-  }, []);
-
-  // Modal handlers
-  const handleShowProfile = useCallback(() => {
-    if (profileUser) {
-      setShowUserProfile(true);
-    }
-  }, [profileUser]);
-
-  const handleExport = useCallback(() => {
-    setShowExportModal(true);
-  }, []);
-
-  const handleToggleAnalytics = useCallback(() => {
-    setShowAnalytics(prev => !prev);
-  }, []);
-
-  // Page header with controls
-  const renderHeader = () => (
-    <div className="genealogy-header">
-      <div className="header-content">
-        <div className="title-section">
-          <h1>Network Genealogy</h1>
-          <p>Visualize and analyze your team structure and performance</p>
-        </div>
-        
-        <div className="header-controls">
-          <div className="control-group">
-            <label>
-              <input
-                type="checkbox"
-                checked={useMockData}
-                onChange={(e) => setUseMockData(e.target.checked)}
-              />
-              Use Demo Data
-            </label>
-          </div>
-          
-          <div className="control-group">
-            <label>
-              <input
-                type="checkbox"
-                checked={realtimeEnabled}
-                onChange={(e) => setRealtimeEnabled(e.target.checked)}
-              />
-              Real-time Updates
-            </label>
-          </div>
-          
-          <button 
-            className="btn btn-secondary"
-            onClick={handleToggleAnalytics}
-          >
-            {showAnalytics ? 'Hide Analytics' : 'Show Analytics'}
-          </button>
-          
-          {selectedNode && (
-            <button 
-              className="btn btn-primary"
-              onClick={handleShowProfile}
-            >
-              View Profile
-            </button>
-          )}
-          
-          <button 
-            className="btn btn-outline"
-            onClick={handleExport}
-          >
-            Export Data
-          </button>
-        </div>
-      </div>
-      
-      {realtimeEnabled && (
-        <RealtimeStatus 
-          account={account}
-          isConnected={!!account}
-          lastUpdate={new Date()}
-        />
-      )}
-    </div>
-  );
-
-  // Analytics panel
-  const renderAnalytics = () => {
-    if (!showAnalytics) return null;
-    
-    return (
-      <div className="analytics-panel">
-        <GenealogyAnalytics 
-          account={account}
-          selectedNode={selectedNode}
-          useMockData={useMockData}
-        />
-      </div>
-    );
-  };
 
   return (
     <PageWrapper>
       <div className="genealogy-page">
-        {/* Header */}
-        {renderHeader()}
-        
+        {/* Page Header */}
+        <motion.div 
+          className="page-header"
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1>🌳 Community Levels</h1>
+          <p>Visualize and analyze your community structure with advanced insights and real-time analytics.</p>
+        </motion.div>
+
         {/* Wallet Connection */}
-        {!account && (
-          <div className="wallet-connection-section">
-            <UnifiedWalletConnect
-              onConnect={onConnect}
-              onDisconnect={onDisconnect}
-              showBalance={true}
-              compact={false}
-            />
-          </div>
-        )}
-        
-        {/* Analytics Panel */}
-        {renderAnalytics()}
-        
-        {/* Main Tree Visualization */}
-        <div className="tree-section">
-          <UnifiedGenealogyTree
-            account={account}
-            useMockData={useMockData}
-            viewMode={viewMode}
-            orientation="vertical"
-            autoRefresh={realtimeEnabled}
-            onNodeClick={handleNodeClick}
-            onNodeHover={handleNodeHover}
-            showControls={true}
-            showStats={true}
-            enableExport={true}
-            className="main-genealogy-tree"
-          />
-        </div>
-        
-        {/* Modals */}
-        {showUserProfile && profileUser && (
-          <UserProfileModal
-            user={profileUser}
-            isOpen={showUserProfile}
-            onClose={() => setShowUserProfile(false)}
-            account={account}
-          />
-        )}
-        
-        {showExportModal && (
-          <ExportModal
-            isOpen={showExportModal}
-            onClose={() => setShowExportModal(false)}
-            data={selectedNode}
-            account={account}
-          />
+        {!account ? (
+          <motion.div 
+            className="wallet-connect-section"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <div className="connection-prompt">
+              <h3>Connect Your Wallet</h3>
+              <p>Connect your wallet to view your community levels and structure.</p>
+              <UnifiedWalletConnect 
+                onConnect={onConnect}
+                onDisconnect={onDisconnect}
+                account={account}
+                showBalance={true}
+              />
+            </div>
+          </motion.div>
+        ) : (
+          <>
+            {/* Connected User Info */}
+            <motion.div 
+              className="connected-user-info"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <div className="user-card">
+                <div className="user-details">
+                  <div className="user-address">
+                    <strong>Connected Wallet:</strong>
+                    <span className="address-display">
+                      {account?.substring(0, 6)}...{account?.substring(account.length - 4)}
+                    </span>
+                  </div>
+                  <button onClick={onDisconnect} className="disconnect-btn">
+                    Disconnect Wallet
+                  </button>
+                </div>
+                <div className="quick-actions">
+                  <button 
+                    onClick={() => navigate('/dashboard')} 
+                    className="action-btn primary"
+                  >
+                    Go to Dashboard
+                  </button>
+                  <button 
+                    onClick={() => navigate('/referrals')} 
+                    className="action-btn secondary"
+                  >
+                    View Introductions
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Network Levels Visualization */}
+            <motion.div 
+              className="community-visualization-section"
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <CommunityLevelsVisualization 
+                userAddress={account}
+                contractInstance={null} // Will be passed from context/provider
+                mode="enhanced"
+                showControls={true}
+                initialDepth={4}
+              />
+            </motion.div>
+
+            {/* Business Plan Information */}
+            <motion.div 
+              className="business-info-section"
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              <div className="info-grid">
+                <div className="info-card">
+                  <h4>🎯 4X Reward System</h4>
+                  <p>Each member can earn up to 4 times their initial membership investment through our comprehensive reward structure.</p>
+                  <div className="reward-breakdown">
+                    <div className="reward-item">
+                      <span className="reward-percentage">40%</span>
+                      <span className="reward-name">Direct Community Bonus</span>
+                    </div>
+                    <div className="reward-item">
+                      <span className="reward-percentage">10%</span>
+                      <span className="reward-name">Network Level Rewards</span>
+                    </div>
+                    <div className="reward-item">
+                      <span className="reward-percentage">10%</span>
+                      <span className="reward-name">Global Network Rewards</span>
+                    </div>
+                    <div className="reward-item">
+                      <span className="reward-percentage">10%</span>
+                      <span className="reward-name">Leadership Rewards</span>
+                    </div>
+                    <div className="reward-item">
+                      <span className="reward-percentage">30%</span>
+                      <span className="reward-name">Community Growth Pool</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="info-card">
+                  <h4>💎 Membership Tiers</h4>
+                  <p>Choose the membership level that best fits your goals and unlock increasing earning potential.</p>
+                  <div className="tier-list">
+                    <div className="tier-item bronze">
+                      <span className="tier-name">Bronze</span>
+                      <span className="tier-price">$30</span>
+                      <span className="tier-max">Max: $120</span>
+                    </div>
+                    <div className="tier-item silver">
+                      <span className="tier-name">Silver</span>
+                      <span className="tier-price">$50</span>
+                      <span className="tier-max">Max: $200</span>
+                    </div>
+                    <div className="tier-item gold">
+                      <span className="tier-name">Gold</span>
+                      <span className="tier-price">$100</span>
+                      <span className="tier-max">Max: $400</span>
+                    </div>
+                    <div className="tier-item diamond">
+                      <span className="tier-name">Diamond</span>
+                      <span className="tier-price">$200</span>
+                      <span className="tier-max">Max: $800</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="info-card">
+                  <h4>📊 Collection Rates</h4>
+                  <p>Your collection rate improves as you build your community through direct introductions.</p>
+                  <div className="collection-rates">
+                    <div className="rate-item">
+                      <span className="rate-condition">0 Introductions</span>
+                      <span className="rate-split">70% Collection / 30% Reinvestment</span>
+                    </div>
+                    <div className="rate-item">
+                      <span className="rate-condition">5+ Introductions</span>
+                      <span className="rate-split">80% Collection / 20% Reinvestment</span>
+                    </div>
+                    <div className="rate-item highlighted">
+                      <span className="rate-condition">20+ Introductions</span>
+                      <span className="rate-split">90% Collection / 10% Reinvestment</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="info-card">
+                  <h4>🏆 Leadership Qualification</h4>
+                  <p>Qualify for leadership rewards by building an active community and meeting our qualification criteria.</p>
+                  <div className="leadership-requirements">
+                    <div className="requirement-item">
+                      <span className="requirement-icon">✅</span>
+                      <span>Minimum 5 direct introductions</span>
+                    </div>
+                    <div className="requirement-item">
+                      <span className="requirement-icon">✅</span>
+                      <span>Minimum community size of 20 members</span>
+                    </div>
+                    <div className="requirement-item">
+                      <span className="requirement-icon">✅</span>
+                      <span>Maintain active status</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </div>
     </PageWrapper>

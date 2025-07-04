@@ -1,6 +1,6 @@
-# OrphiChain Dashboard Frontend
+# LeadFive Dashboard Frontend
 
-This directory contains the main entry point for the OrphiChain Dashboard frontend application.
+This directory contains the main entry point for the LeadFive Dashboard frontend application.
 
 ## Files
 
@@ -22,8 +22,8 @@ This will start the development server, typically on port 3000 or 3001.
 
 The main App component provides a tabbed interface to showcase all the dashboard components:
 
-1. Logo Demo - Demonstrates the animated OrphiChain logo in various forms
-2. Orphi Dashboard - Complete dashboard with network visualization and analytics
+1. Logo Demo - Demonstrates the animated LeadFive logo in various forms
+2. LeadFive Dashboard - Complete dashboard with network visualization and analytics
 3. Team Analytics - Team performance metrics and export functionality
 4. Genealogy Tree - Interactive network relationship visualization
 5. Network Visualization - Force-directed graph of the entire network
@@ -39,14 +39,14 @@ To use these components in your own application:
 Example:
 
 ```jsx
-import OrphiChainLogo from '../docs/components/OrphiChainLogo';
-import '../docs/components/OrphiChainLogo.css';
+import LeadFiveLogo from '../components/LeadFiveLogo';
+import '../components/LeadFiveLogo.css';
 
 function MyApp() {
   return (
     <div>
-      <h1>My OrphiChain App</h1>
-      <OrphiChainLogo size="medium" variant="orbital" />
+      <h1>My LeadFive App</h1>
+      <LeadFiveLogo size="medium" variant="orbital" />
     </div>
   );
 }
@@ -54,7 +54,7 @@ function MyApp() {
 
 ## Connecting to Smart Contracts
 
-The next phase of development will involve connecting these components to the OrphiChain smart contracts for real-time data. This will be implemented using Web3 providers and contract ABIs.
+The next phase of development will involve connecting these components to the LeadFive smart contracts for real-time data. This will be implemented using Web3 providers and contract ABIs.
 
 ## Mobile Optimization
 

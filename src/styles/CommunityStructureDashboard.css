@@ -1,0 +1,139 @@
+/* Community Structure Dashboard Integration Styles */
+
+/* Community Structure Wrapper in Dashboard */
+.community-structure-wrapper {
+  width: 100%;
+  height: calc(100vh - 200px);
+  min-height: 700px;
+  margin: 20px 0;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(123, 44, 191, 0.2);
+}
+
+.community-structure-wrapper .community-structure-container {
+  height: 100%;
+  border-radius: 15px;
+  margin: 0;
+}
+
+/* Dashboard Content Spacing for Community Structure */
+.dashboard-content {
+  padding: 20px;
+  min-height: calc(100vh - 180px);
+}
+
+.dashboard-content .community-structure-wrapper {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Ensure proper spacing for genealogy sections */
+.earnings-breakdown-section,
+.insights-section,
+.contract-functions-overview {
+  margin-bottom: 30px;
+}
+
+/* Community Structure specific adjustments */
+.community-structure-wrapper .community-controls {
+  padding: 20px 25px;
+  background: linear-gradient(135deg, 
+    rgba(26, 26, 46, 0.95) 0%, 
+    rgba(123, 44, 191, 0.15) 100%);
+}
+
+.community-structure-wrapper .community-content {
+  height: calc(100% - 120px);
+  padding: 0;
+}
+
+/* Update earning cards to align with business plan */
+.earning-card.direct-referrals {
+  background: linear-gradient(135deg, rgba(123, 44, 191, 0.2), rgba(255, 215, 0, 0.1));
+  border-color: rgba(123, 44, 191, 0.4);
+}
+
+.earning-card.level-bonus {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(16, 185, 129, 0.1));
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.earning-card.global-bonus {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.1));
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.earning-card.leader-pool {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(245, 158, 11, 0.1));
+  border-color: rgba(255, 215, 0, 0.4);
+}
+
+.earning-card.community-pool {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(124, 58, 237, 0.1));
+  border-color: rgba(139, 92, 246, 0.4);
+}
+
+/* Business Plan Terminology Updates */
+.section-title {
+  background: linear-gradient(45deg, #FFD700, #7B2CBF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Enhanced spacing for community structure analytics */
+.community-analytics .analytics-grid {
+  gap: 25px;
+  margin-top: 25px;
+}
+
+.community-analytics .analytics-card {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.community-analytics .card-header {
+  border-bottom: 2px solid rgba(123, 44, 191, 0.3);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+/* Responsive adjustments for community structure */
+@media (max-width: 1200px) {
+  .community-structure-wrapper {
+    height: calc(100vh - 160px);
+    min-height: 600px;
+  }
+}
+
+@media (max-width: 768px) {
+  .community-structure-wrapper {
+    height: calc(100vh - 120px);
+    min-height: 500px;
+    margin: 10px 0;
+  }
+  
+  .community-structure-wrapper .community-controls {
+    padding: 15px 20px;
+  }
+  
+  .dashboard-content {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .community-structure-wrapper {
+    height: calc(100vh - 100px);
+    min-height: 450px;
+  }
+  
+  .community-structure-wrapper .community-controls {
+    padding: 10px 15px;
+  }
+}

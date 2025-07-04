@@ -1,981 +1,459 @@
-/* Unified Genealogy Page Styles */
+/* Genealogy Page - Community Levels Styling */
+
 .genealogy-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #0A0A0A 0%, #1A1A2E 30%, #16213E 70%, #0F1419 100%);
   color: white;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Header Section */
-.genealogy-header {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+/* Page Header */
+.page-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 30px 20px;
+  background: rgba(26, 26, 46, 0.6);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  backdrop-filter: blur(15px);
 }
 
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 16px;
-}
-
-.title-section h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin: 0 0 8px 0;
-  background: linear-gradient(135deg, #ffffff, #e0e7ff);
-  background-clip: text;
+.page-header h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  margin: 0 0 15px 0;
+  background: linear-gradient(45deg, #00D4FF, #7B2CBF, #FF6B35);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientFlow 4s ease-in-out infinite;
 }
 
-.title-section p {
-  color: rgba(255, 255, 255, 0.8);
+@keyframes gradientFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.page-header p {
   font-size: 1.1rem;
-  margin: 0;
-}
-
-.header-controls {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.control-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.control-group label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.control-group input[type="checkbox"] {
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  border-radius: 4px;
-  background: transparent;
-  cursor: pointer;
-  position: relative;
-  transition: all 0.2s ease;
-}
-
-.control-group input[type="checkbox"]:checked {
-  background: #ffffff;
-  border-color: #ffffff;
-}
-
-.control-group input[type="checkbox"]:checked::after {
-  content: '✓';
-  position: absolute;
-  top: -2px;
-  left: 2px;
-  color: #667eea;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-}
-
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: translateY(-1px);
-}
-
-.btn-outline {
-  background: transparent;
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-}
-
-.btn-outline:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
 /* Wallet Connection Section */
-.wallet-connection-section {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 32px;
-  margin-bottom: 24px;
+.wallet-connect-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.connection-prompt {
   text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 40px;
+  background: rgba(26, 26, 46, 0.8);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  backdrop-filter: blur(15px);
+  max-width: 500px;
+  width: 100%;
 }
 
-/* Analytics Panel */
-.analytics-panel {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+.connection-prompt h3 {
+  color: #00D4FF;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0 0 15px 0;
 }
 
-/* Tree Section */
-.tree-section {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+.connection-prompt p {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 30px;
+  line-height: 1.5;
 }
 
-.main-genealogy-tree {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 8px;
-  overflow: hidden;
+/* Connected User Info */
+.connected-user-info {
+  margin-bottom: 40px;
 }
 
-/* Genealogy Page Styles */
-.genealogy-page {
-  min-height: 100vh;
-  padding: 2rem;
-  color: white;
-}
-
-.page-header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.page-title {
-  font-size: 3rem;
-  font-weight: 800;
-  background: linear-gradient(135deg, #00D4FF, #7B2CBF, #FF6B35);
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradientShift 4s ease-in-out infinite;
-  margin-bottom: 1rem;
-}
-
-.page-subtitle {
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.8);
-  font-weight: 300;
-}
-
-/* Controls */
-.genealogy-controls {
+.user-card {
+  background: rgba(26, 26, 46, 0.8);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  backdrop-filter: blur(15px);
+  padding: 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 20px;
 }
 
-.view-controls {
-  display: flex;
-  gap: 10px;
-}
-
-.view-btn {
+.user-details {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 14px;
-  font-weight: 500;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-.view-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: translateY(-2px);
-}
-
-.view-btn.active {
-  background: linear-gradient(135deg, #00D4FF, #7B2CBF);
-  border-color: transparent;
-  box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
-}
-
-.tree-controls {
+.user-address {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 5px;
 }
 
-.control-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 10px 16px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 13px;
-}
-
-.control-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-}
-
-/* Data source and error controls */
-.data-source-controls {
-  margin: 1rem 0;
-  display: flex;
-  justify-content: center;
-}
-
-.data-toggle {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  transition: all 0.3s ease;
-}
-
-.data-toggle:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.data-toggle input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  accent-color: #00D4FF;
-}
-
-.toggle-text {
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.error-banner {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  background: rgba(255, 107, 53, 0.2);
-  border: 1px solid #FF6B35;
-  border-radius: 8px;
-  color: #FF6B35;
-  margin: 1rem 0;
+.user-address strong {
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.9rem;
 }
 
-.info-banner {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  background: rgba(0, 212, 255, 0.2);
-  border: 1px solid #00D4FF;
-  border-radius: 8px;
+.address-display {
+  font-family: monospace;
+  font-size: 1rem;
   color: #00D4FF;
-  margin: 1rem 0;
-  font-size: 0.9rem;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
 }
 
-/* Tree Structure */
-.genealogy-tree {
+.disconnect-btn {
+  padding: 8px 16px;
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  border-radius: 8px;
+  color: #EF4444;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.disconnect-btn:hover {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: #EF4444;
+  transform: translateY(-1px);
+}
+
+.quick-actions {
   display: flex;
-  justify-content: center;
-  padding: 2rem;
-  overflow-x: auto;
-  overflow-y: visible;
+  gap: 12px;
+}
+
+.action-btn {
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.action-btn.primary {
+  background: linear-gradient(45deg, #00D4FF, #7B2CBF);
+  border: none;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+}
+
+.action-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+}
+
+.action-btn.secondary {
+  background: rgba(123, 44, 191, 0.2);
+  border: 1px solid rgba(123, 44, 191, 0.5);
+  color: #7B2CBF;
+}
+
+.action-btn.secondary:hover {
+  background: rgba(123, 44, 191, 0.3);
+  border-color: #7B2CBF;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Community Visualization Section */
+.community-visualization-section {
+  margin-bottom: 40px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  overflow: hidden;
   min-height: 600px;
 }
 
-.genealogy-tree.horizontal {
-  flex-direction: column;
-  align-items: center;
+/* Business Info Section */
+.business-info-section {
+  margin-top: 40px;
 }
 
-.genealogy-tree.vertical {
-  flex-direction: row;
-  align-items: flex-start;
-}
-
-/* Tree Nodes */
-.tree-node {
-  position: relative;
-  display: flex;
-  align-items: center;
-  margin: 1rem;
-}
-
-.tree-node.horizontal {
-  flex-direction: column;
-}
-
-.tree-node.vertical {
-  flex-direction: row;
-}
-
-.node-card {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
-  padding: 20px;
-  backdrop-filter: blur(10px);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  min-width: 280px;
-  max-width: 320px;
-}
-
-.node-card:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(0, 212, 255, 0.5);
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 212, 255, 0.2);
-}
-
-.node-card.selected {
-  background: rgba(0, 212, 255, 0.2);
-  border-color: #00D4FF;
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-}
-
-.node-card.user-node {
-  border: 2px solid #FFD700;
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.05));
-}
-
-.node-card.capped {
-  border: 2px solid #FF6B35;
-  background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(255, 69, 0, 0.05));
-}
-
-.root-node .node-card {
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(123, 44, 191, 0.2));
-  border-color: #00D4FF;
-  box-shadow: 0 10px 25px rgba(0, 212, 255, 0.3);
-}
-
-/* Node Content */
-.node-avatar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 15px;
-  position: relative;
-}
-
-.avatar-circle {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #00D4FF, #7B2CBF);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 16px;
-  color: white;
-}
-
-.node-status {
-  position: absolute;
-  top: -2px;
-  right: -2px;
-}
-
-.status-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.9);
-}
-
-.status-dot.active {
-  background: #4CAF50;
-  animation: pulse 2s infinite;
-}
-
-.status-dot.capped {
-  background: #FF6B35;
-  box-shadow: 0 0 8px rgba(255, 107, 53, 0.6);
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.node-info {
-  text-align: left;
-}
-
-.node-name {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: white;
-  margin-bottom: 5px;
-}
-
-.node-id {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 15px;
-  font-family: 'Courier New', monospace;
-}
-
-.node-stats {
+.info-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+}
+
+.info-card {
+  background: rgba(26, 26, 46, 0.8);
+  border-radius: 16px;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  backdrop-filter: blur(15px);
+  padding: 25px;
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  border-color: rgba(0, 212, 255, 0.4);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.info-card h4 {
+  color: #00D4FF;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+  display: flex;
+  align-items: center;
   gap: 8px;
 }
 
-.stat {
+.info-card p {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+/* Reward Breakdown */
+.reward-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reward-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.85rem;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 212, 255, 0.1);
 }
 
-.stat-label {
-  color: rgba(255, 255, 255, 0.7);
+.reward-percentage {
+  color: #FFD700;
+  font-weight: bold;
+  font-size: 1rem;
+  width: 50px;
+}
+
+.reward-name {
+  color: white;
   font-weight: 500;
 }
 
-.stat-value {
-  color: white;
-  font-weight: 600;
-}
-
-.stat-value.earnings {
-  color: #4CAF50;
-  font-weight: 700;
-}
-
-.stat-value.withdrawable {
-  color: #00FF88;
-  font-weight: 600;
-}
-
-/* Connection Lines */
-.children-container {
-  position: relative;
-}
-
-.children-container.horizontal {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.children-container.vertical {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-}
-
-.connection-line {
-  background: linear-gradient(135deg, #00D4FF, #7B2CBF);
-  position: relative;
-}
-
-.connection-line.horizontal {
-  width: 2px;
-  height: 40px;
-  margin: 10px 0;
-}
-
-.connection-line.vertical {
-  width: 40px;
-  height: 2px;
-  margin: 0 10px;
-  align-self: center;
-}
-
-.children-grid.horizontal {
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.children-grid.vertical {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-/* Node Details Panel */
-.node-details-panel {
-  position: fixed;
-  top: 50%;
-  right: 30px;
-  transform: translateY(-50%);
-  width: 350px;
-  background: rgba(10, 10, 10, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
-  backdrop-filter: blur(20px);
-  z-index: 1000;
-  animation: slideInRight 0.3s ease-out;
-}
-
-@keyframes slideInRight {
-  from {
-    transform: translateY(-50%) translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(-50%) translateX(0);
-    opacity: 1;
-  }
-}
-
-.panel-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 20px 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.panel-header h3 {
-  color: white;
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin: 0;
-}
-
-.close-btn {
-  background: none;
-  border: none;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 24px;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.close-btn:hover {
-  color: white;
-}
-
-.panel-content {
-  padding: 20px;
-}
-
-.detail-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.detail-row:last-child {
-  border-bottom: none;
-}
-
-.detail-label {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.detail-value {
-  color: white;
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-.detail-value.earnings {
-  color: #4CAF50;
-  font-weight: 700;
-}
-
-/* Statistics Cards */
-.genealogy-stats {
+/* Tier List */
+.tier-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
 }
 
-.stat-card {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
-  padding: 2rem;
-  backdrop-filter: blur(10px);
+.tier-item {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  padding: 15px 10px;
+  border-radius: 12px;
+  border: 2px solid;
+  text-align: center;
   transition: all 0.3s ease;
 }
 
-.stat-card:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(0, 212, 255, 0.5);
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 212, 255, 0.2);
+.tier-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
-.stat-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 15px;
-  background: linear-gradient(135deg, #00D4FF, #7B2CBF);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
+.tier-item.bronze {
+  background: rgba(205, 127, 50, 0.1);
+  border-color: #CD7F32;
 }
 
-.stat-info h4 {
-  color: white;
-  font-size: 1.1rem;
-  font-weight: 600;
+.tier-item.silver {
+  background: rgba(192, 192, 192, 0.1);
+  border-color: #C0C0C0;
+}
+
+.tier-item.gold {
+  background: rgba(255, 215, 0, 0.1);
+  border-color: #FFD700;
+}
+
+.tier-item.diamond {
+  background: rgba(123, 44, 191, 0.1);
+  border-color: #7B2CBF;
+}
+
+.tier-name {
+  font-weight: bold;
+  font-size: 0.9rem;
   margin-bottom: 5px;
 }
 
-.stat-number {
-  font-size: 2rem;
-  font-weight: 800;
+.tier-price {
   color: #00D4FF;
-  margin: 0;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 3px;
 }
 
-.stat-number.earnings {
-  color: #4CAF50;
+.tier-max {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
 }
 
-/* Loading State */
-.loading-container {
+/* Collection Rates */
+.collection-rates {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 400px;
-  gap: 2rem;
-}
-
-.loading-spinner {
-  width: 60px;
-  height: 60px;
-  border: 3px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  border-top-color: #00D4FF;
-  animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.loading-container p {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1.1rem;
-}
-
-/* React D3 Tree Specific Styles */
-.d3-tree-container {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 15px;
-  border: 1px solid rgba(123, 44, 191, 0.3);
-  overflow: hidden;
-  position: relative;
-}
-
-.genealogy-d3-tree {
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, rgba(123, 44, 191, 0.1), rgba(0, 0, 0, 0.3));
-}
-
-.tree-link {
-  stroke: #00D4FF;
-  stroke-width: 3;
-  fill: none;
-  opacity: 0.8;
-  transition: all 0.3s ease;
-  filter: drop-shadow(0 1px 3px rgba(0, 212, 255, 0.3));
-}
-
-.tree-link:hover {
-  stroke: #FFD700;
-  stroke-width: 4;
-  opacity: 1;
-  filter: drop-shadow(0 2px 6px rgba(255, 215, 0, 0.5));
-}
-
-.custom-node {
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.custom-node:hover {
-  transform: scale(1.1);
-}
-
-.custom-node .node-circle {
-  transition: all 0.3s ease;
-  stroke: #ffffff;
-  stroke-width: 2;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
-}
-
-.custom-node:hover .node-circle {
-  fill: rgba(0, 212, 255, 0.4);
-  stroke: #00D4FF;
-  stroke-width: 3;
-  filter: drop-shadow(0 4px 12px rgba(0, 212, 255, 0.6));
-}
-
-.custom-node .avatar-circle {
-  fill: url(#avatarGradient);
-  stroke: #ffffff;
-  stroke-width: 3;
-}
-
-.custom-node .node-initials {
-  font-weight: 700;
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  fill: #ffffff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-}
-
-.custom-node .node-name {
-  font-weight: 600;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  fill: #ffffff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-}
-
-.custom-node .node-earnings {
-  font-weight: 700;
-  font-family: 'Inter', sans-serif;
-  font-size: 12px;
-  fill: #00FF88;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-}
-
-.custom-node .expand-button {
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.custom-node .expand-button:hover {
-  fill: #FF6B35;
-  transform: scale(1.2);
-}
-
-.custom-node .status-dot {
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-/* Tree Orientation Controls */
-.tree-orientation-controls {
-  display: flex;
   gap: 10px;
-  margin: 0 1rem;
 }
 
-.orientation-btn {
-  padding: 8px 16px;
-  background: rgba(123, 44, 191, 0.2);
-  border: 1px solid rgba(123, 44, 191, 0.5);
-  color: white;
+.rate-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  cursor: pointer;
+  border: 1px solid rgba(0, 212, 255, 0.1);
   transition: all 0.3s ease;
-  font-size: 14px;
+}
+
+.rate-item.highlighted {
+  border-color: rgba(255, 215, 0, 0.5);
+  background: rgba(255, 215, 0, 0.1);
+}
+
+.rate-condition {
+  color: white;
   font-weight: 500;
 }
 
-.orientation-btn:hover {
-  background: rgba(123, 44, 191, 0.4);
-  border-color: #7B2CBF;
-  transform: translateY(-2px);
+.rate-split {
+  color: #00D4FF;
+  font-weight: 600;
 }
 
-.orientation-btn.active {
-  background: linear-gradient(135deg, #7B2CBF, #00D4FF);
-  border-color: #7B2CBF;
-  box-shadow: 0 4px 12px rgba(123, 44, 191, 0.4);
+.rate-item.highlighted .rate-split {
+  color: #FFD700;
 }
 
-/* Enhanced view mode styles */
-.genealogy-tree.d3tree {
-  background: transparent;
-  border-radius: 15px;
-  overflow: hidden;
+/* Leadership Requirements */
+.leadership-requirements {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-/* Responsive D3 Tree */
-@media (max-width: 768px) {
-  .d3-tree-container {
-    height: 400px !important;
-  }
-  
-  .tree-orientation-controls {
-    flex-direction: column;
-    gap: 5px;
-  }
-  
-  .orientation-btn {
-    padding: 6px 12px;
-    font-size: 12px;
-  }
-  
-  .custom-node .node-name {
-    font-size: 10px;
-  }
-  
-  .custom-node .node-earnings {
-    font-size: 8px;
-  }
+.requirement-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
-@media (max-width: 480px) {
-  .d3-tree-container {
-    height: 350px !important;
-  }
-  
-  .genealogy-controls {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .view-controls {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+.requirement-icon {
+  color: #10B981;
+  font-size: 1rem;
 }
 
-@media (max-width: 1200px) {
-  .node-details-panel {
-    position: relative;
-    top: auto;
-    right: auto;
-    transform: none;
-    width: 100%;
-    margin-top: 2rem;
-  }
+.requirement-item span:last-child {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
 }
 
-@media (max-width: 768px) {
-  .genealogy-page {
-    padding: 1rem;
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .info-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
   }
   
-  .page-title {
-    font-size: 2.5rem;
-  }
-  
-  .genealogy-controls {
+  .user-card {
     flex-direction: column;
     align-items: stretch;
+    text-align: center;
   }
   
-  .view-controls {
+  .user-details {
     justify-content: center;
-  }
-  
-  .tree-controls {
-    justify-content: center;
-  }
-  
-  .node-card {
-    min-width: 250px;
-    max-width: 280px;
-  }
-  
-  .children-grid.horizontal {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .genealogy-stats {
-    grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .genealogy-page {
-    padding: 0.5rem;
-  }
-  
-  .page-title {
-    font-size: 2rem;
-  }
-  
-  .node-card {
-    min-width: 220px;
-    max-width: 260px;
     padding: 15px;
   }
   
-  .view-btn {
-    padding: 10px 15px;
-    font-size: 13px;
+  .page-header {
+    padding: 20px 15px;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tier-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .quick-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .action-btn {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .connection-prompt {
+    padding: 25px 20px;
+    margin: 0 10px;
+  }
+  
+  .user-card {
+    padding: 20px;
+  }
+  
+  .info-card {
+    padding: 20px;
+  }
+  
+  .tier-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .reward-item,
+  .rate-item,
+  .requirement-item {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
   }
 }

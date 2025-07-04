@@ -56,4 +56,4 @@ window.CONTRACT_ABI = [
     "event CommissionDistributed(address indexed recipient, address indexed payer, uint256 indexed amount, uint8 poolType, string poolName, uint256 timestamp)"
 ];
 
-console.log('✅ OrphiChain Contract Configuration Loaded');
+console.log('✅ LeadFive Contract Configuration Loaded');

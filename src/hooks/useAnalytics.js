@@ -204,7 +204,7 @@ export function useAnalytics(teamData, compensationData) {
       metadata: {
         exportFormat: format,
         dashboardVersion: '2.1.0',
-        exportedBy: 'OrphiCrowdFund Dashboard',
+        exportedBy: 'LeadFive Dashboard',
         generatedAt: new Date().toISOString()
       }
     };
