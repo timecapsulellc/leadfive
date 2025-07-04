@@ -16,7 +16,7 @@ node --version
 npm --version
 
 echo "🔨 Building for production..."
-NODE_ENV=production npm run build
+npm run build
 
 echo "✅ Build complete! Checking output..."
 ls -la dist/
