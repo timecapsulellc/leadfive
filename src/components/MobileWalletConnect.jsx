@@ -42,15 +42,22 @@ const MobileWalletConnect = ({ onConnect, onDisconnect, account: externalAccount
   const handleConnect = async () => {
     try {
       setRetryCount(0);
-      await connect();
+      if (isMobile) {
+        await connect();
+      } else {
+        // Desktop connection - use parent onConnect
+        if (onConnect) {
+          onConnect();
+        }
+      }
     } catch (error) {
       console.error('Connection failed:', error);
       
       // Show instructions for mobile users
       if (isMobile && !window.ethereum) {
         setShowInstructions(true);
-      } else if (retryCount < 3) {
-        // Auto-retry for other errors
+      } else if (retryCount < 3 && isMobile) {
+        // Auto-retry for mobile errors only
         setTimeout(() => {
           setRetryCount(prev => prev + 1);
           handleConnect();
@@ -148,7 +155,9 @@ const MobileWalletConnect = ({ onConnect, onDisconnect, account: externalAccount
                isMobile ? 'Mobile Wallet' : 'Connected Wallet'}
             </p>
             <p className="wallet-address">
-              {displayAccount.substring(0, 6)}...{displayAccount.slice(-4)}
+              {typeof displayAccount === 'string' && displayAccount.length > 10
+                ? `${displayAccount.substring(0, 6)}...${displayAccount.slice(-4)}`
+                : displayAccount || 'Connected'}
             </p>
           </div>
         </div>

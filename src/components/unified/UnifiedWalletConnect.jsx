@@ -13,7 +13,9 @@ const UnifiedWalletConnect = ({
       {account ? (
         <div className="wallet-connected">
           <span className="wallet-address">
-            {account.substring(0, 6)}...{account.slice(-4)}
+            {typeof account === 'string' && account.length > 10
+              ? `${account.substring(0, 6)}...${account.slice(-4)}`
+              : account || 'Connected'}
           </span>
           <button className="disconnect-btn" onClick={onDisconnect}>
             Disconnect

@@ -112,7 +112,8 @@ export const useMobileWallet = () => {
   // Mobile wallet connection function
   const connectMobileWallet = useCallback(async () => {
     if (!mobileInfo.isMobile) {
-      throw new Error('Not a mobile environment');
+      console.log('Not a mobile environment, skipping mobile wallet connection');
+      return null;
     }
 
     setIsConnecting(true);
@@ -221,12 +222,12 @@ export const useMobileWallet = () => {
           if (accounts && accounts.length > 0) {
             // Auto-reconnect if already connected
             connectMobileWallet().catch(error => {
-              console.error('Auto-reconnection failed:', error);
+              console.log('Auto-reconnection failed (expected on desktop):', error);
             });
           }
         })
         .catch(error => {
-          console.error('Error checking existing accounts:', error);
+          console.log('Error checking existing accounts (expected on desktop):', error);
         });
     }
   }, [mobileInfo, connectMobileWallet]);
