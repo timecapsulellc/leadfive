@@ -336,7 +336,7 @@ const GenealogyTreeIntegration = ({
         </div>
       )}
 
-      <style jsx>{`
+      <style>{`
         .genealogy-tree-integration {
           position: relative;
           height: 600px;

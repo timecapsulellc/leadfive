@@ -11,26 +11,32 @@ export class GasOptimizer {
   // Estimate gas with optimization suggestions
   async estimateGasOptimized(contract, functionName, args = [], options = {}) {
     try {
-      const estimatedGas = await contract[functionName].estimateGas(...args, options);
+      const estimatedGas = await contract[functionName].estimateGas(
+        ...args,
+        options
+      );
       const gasPrice = await this.getOptimalGasPrice();
-      
+
       const gasData = {
         functionName,
         estimatedGas: estimatedGas.toString(),
         gasPrice: gasPrice.toString(),
         estimatedCost: ethers.utils.formatEther(estimatedGas.mul(gasPrice)),
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
 
       // Store for analytics
       this.gasHistory.push(gasData);
 
       // Get optimization suggestions
-      const suggestions = this.getOptimizationSuggestions(functionName, estimatedGas);
+      const suggestions = this.getOptimizationSuggestions(
+        functionName,
+        estimatedGas
+      );
 
       return {
         ...gasData,
-        suggestions
+        suggestions,
       };
     } catch (error) {
       console.error(`Gas estimation failed for ${functionName}:`, error);
@@ -42,7 +48,7 @@ export class GasOptimizer {
   async getOptimalGasPrice() {
     try {
       const feeData = await this.provider.getFeeData();
-      
+
       // For BSC, use gasPrice directly
       if (feeData.gasPrice) {
         return feeData.gasPrice;
@@ -64,33 +70,41 @@ export class GasOptimizer {
   // Execute transaction with gas optimization
   async executeOptimized(contract, functionName, args = [], options = {}) {
     try {
-      const gasEstimate = await this.estimateGasOptimized(contract, functionName, args, options);
-      
+      const gasEstimate = await this.estimateGasOptimized(
+        contract,
+        functionName,
+        args,
+        options
+      );
+
       // Add gas buffer (10% extra)
       const gasLimit = Math.floor(parseInt(gasEstimate.estimatedGas) * 1.1);
-      
+
       const optimizedOptions = {
         ...options,
         gasLimit,
-        gasPrice: gasEstimate.gasPrice
+        gasPrice: gasEstimate.gasPrice,
       };
 
       console.log(`Executing ${functionName} with optimized gas:`, {
         gasLimit,
         gasPrice: gasEstimate.gasPrice,
-        estimatedCost: gasEstimate.estimatedCost
+        estimatedCost: gasEstimate.estimatedCost,
       });
 
       const tx = await contract[functionName](...args, optimizedOptions);
-      
+
       // Monitor transaction
       const receipt = await this.monitorTransaction(tx);
-      
+
       return {
         transaction: tx,
         receipt,
         gasUsed: receipt.gasUsed.toString(),
-        gasEfficiency: (parseInt(gasEstimate.estimatedGas) / parseInt(receipt.gasUsed.toString())) * 100
+        gasEfficiency:
+          (parseInt(gasEstimate.estimatedGas) /
+            parseInt(receipt.gasUsed.toString())) *
+          100,
       };
     } catch (error) {
       console.error(`Optimized execution failed for ${functionName}:`, error);
@@ -101,22 +115,22 @@ export class GasOptimizer {
   // Monitor transaction and provide insights
   async monitorTransaction(tx) {
     const startTime = Date.now();
-    
+
     try {
       const receipt = await tx.wait();
       const endTime = Date.now();
-      
+
       const monitoringData = {
         hash: tx.hash,
         gasUsed: receipt.gasUsed.toString(),
         effectiveGasPrice: receipt.effectiveGasPrice?.toString() || 'N/A',
         confirmationTime: endTime - startTime,
         blockNumber: receipt.blockNumber,
-        status: receipt.status
+        status: receipt.status,
       };
 
       console.log('Transaction monitoring:', monitoringData);
-      
+
       return receipt;
     } catch (error) {
       console.error('Transaction monitoring failed:', error);
@@ -131,18 +145,18 @@ export class GasOptimizer {
 
     // Function-specific suggestions
     const functionSuggestions = {
-      'register': [
+      register: [
         'Consider batching multiple registrations',
-        'Use events instead of return values for data'
+        'Use events instead of return values for data',
       ],
-      'deposit': [
+      deposit: [
         'Check if amount is optimally sized',
-        'Consider using approve + depositFrom pattern'
+        'Consider using approve + depositFrom pattern',
       ],
-      'withdraw': [
+      withdraw: [
         'Batch multiple withdrawals if possible',
-        'Consider withdrawal queue for large amounts'
-      ]
+        'Consider withdrawal queue for large amounts',
+      ],
     };
 
     if (functionSuggestions[functionName]) {
@@ -151,15 +165,21 @@ export class GasOptimizer {
 
     // Gas-based suggestions
     if (gasAmount > 500000) {
-      suggestions.push('High gas usage detected - consider breaking into smaller operations');
+      suggestions.push(
+        'High gas usage detected - consider breaking into smaller operations'
+      );
     }
 
     if (gasAmount > 200000) {
-      suggestions.push('Consider using events instead of storage for non-critical data');
+      suggestions.push(
+        'Consider using events instead of storage for non-critical data'
+      );
     }
 
     if (gasAmount < 50000) {
-      suggestions.push('Low gas usage - consider batching with other operations');
+      suggestions.push(
+        'Low gas usage - consider batching with other operations'
+      );
     }
 
     return suggestions;
@@ -170,7 +190,7 @@ export class GasOptimizer {
     try {
       const results = [];
       let totalGasUsed = 0;
-      
+
       for (const tx of transactions) {
         const result = await this.executeOptimized(
           tx.contract,
@@ -178,7 +198,7 @@ export class GasOptimizer {
           tx.args,
           tx.options
         );
-        
+
         results.push(result);
         totalGasUsed += parseInt(result.gasUsed);
       }
@@ -186,7 +206,8 @@ export class GasOptimizer {
       return {
         results,
         totalGasUsed,
-        averageGasEfficiency: results.reduce((sum, r) => sum + r.gasEfficiency, 0) / results.length
+        averageGasEfficiency:
+          results.reduce((sum, r) => sum + r.gasEfficiency, 0) / results.length,
       };
     } catch (error) {
       console.error('Batch transaction failed:', error);
@@ -201,7 +222,7 @@ export class GasOptimizer {
       averageGasUsed: 0,
       averageCost: 0,
       functionBreakdown: {},
-      trends: []
+      trends: [],
     };
 
     if (this.gasHistory.length === 0) {
@@ -209,9 +230,15 @@ export class GasOptimizer {
     }
 
     // Calculate averages
-    const totalGas = this.gasHistory.reduce((sum, tx) => sum + parseInt(tx.estimatedGas), 0);
-    const totalCost = this.gasHistory.reduce((sum, tx) => sum + parseFloat(tx.estimatedCost), 0);
-    
+    const totalGas = this.gasHistory.reduce(
+      (sum, tx) => sum + parseInt(tx.estimatedGas),
+      0
+    );
+    const totalCost = this.gasHistory.reduce(
+      (sum, tx) => sum + parseFloat(tx.estimatedCost),
+      0
+    );
+
     analytics.averageGasUsed = Math.floor(totalGas / this.gasHistory.length);
     analytics.averageCost = totalCost / this.gasHistory.length;
 
@@ -221,12 +248,14 @@ export class GasOptimizer {
         analytics.functionBreakdown[tx.functionName] = {
           count: 0,
           totalGas: 0,
-          averageGas: 0
+          averageGas: 0,
         };
       }
-      
+
       analytics.functionBreakdown[tx.functionName].count++;
-      analytics.functionBreakdown[tx.functionName].totalGas += parseInt(tx.estimatedGas);
+      analytics.functionBreakdown[tx.functionName].totalGas += parseInt(
+        tx.estimatedGas
+      );
     });
 
     // Calculate function averages
@@ -239,7 +268,8 @@ export class GasOptimizer {
   }
 
   // Clear old gas history to prevent memory leaks
-  clearOldHistory(maxAge = 24 * 60 * 60 * 1000) { // 24 hours
+  clearOldHistory(maxAge = 24 * 60 * 60 * 1000) {
+    // 24 hours
     const cutoff = Date.now() - maxAge;
     this.gasHistory = this.gasHistory.filter(tx => tx.timestamp > cutoff);
   }
@@ -257,17 +287,17 @@ export class OptimizedContractInteraction {
   async cachedCall(functionName, args = [], cacheTime = 5000) {
     const cacheKey = `${functionName}-${JSON.stringify(args)}`;
     const cached = this.callCache.get(cacheKey);
-    
+
     if (cached && Date.now() - cached.timestamp < cacheTime) {
       return cached.result;
     }
 
     try {
       const result = await this.contract[functionName](...args);
-      
+
       this.callCache.set(cacheKey, {
         result,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
 
       return result;
@@ -313,41 +343,41 @@ export class OptimizedContractInteraction {
 export const BSC_GAS_CONFIGS = {
   standard: {
     gasPrice: '5000000000', // 5 gwei
-    gasLimit: 300000
+    gasLimit: 300000,
   },
   fast: {
     gasPrice: '6000000000', // 6 gwei
-    gasLimit: 300000
+    gasLimit: 300000,
   },
   instant: {
     gasPrice: '10000000000', // 10 gwei
-    gasLimit: 300000
-  }
+    gasLimit: 300000,
+  },
 };
 
 // Network-specific optimizations
-export const getNetworkOptimizations = (chainId) => {
+export const getNetworkOptimizations = chainId => {
   switch (chainId) {
     case 56: // BSC Mainnet
       return {
         gasPrice: BSC_GAS_CONFIGS.standard.gasPrice,
         gasLimit: BSC_GAS_CONFIGS.standard.gasLimit,
         batchSupported: true,
-        recommendedBuffer: 0.1 // 10%
+        recommendedBuffer: 0.1, // 10%
       };
     case 97: // BSC Testnet
       return {
         gasPrice: '10000000000', // 10 gwei
         gasLimit: 300000,
         batchSupported: true,
-        recommendedBuffer: 0.2 // 20% for testnet
+        recommendedBuffer: 0.2, // 20% for testnet
       };
     default:
       return {
         gasPrice: '20000000000', // 20 gwei
         gasLimit: 300000,
         batchSupported: false,
-        recommendedBuffer: 0.15 // 15%
+        recommendedBuffer: 0.15, // 15%
       };
   }
 };

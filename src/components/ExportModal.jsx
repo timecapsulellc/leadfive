@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import TreeExporter from '../utils/TreeExporter';
 import './ExportModal.css';
 
-const ExportModal = ({ isOpen, onClose, treeData, elementId = 'genealogy-tree' }) => {
+const ExportModal = ({
+  isOpen,
+  onClose,
+  treeData,
+  elementId = 'genealogy-tree',
+}) => {
   const [exportType, setExportType] = useState('png');
   const [fileName, setFileName] = useState('genealogy-tree');
   const [isExporting, setIsExporting] = useState(false);
@@ -14,30 +19,30 @@ const ExportModal = ({ isOpen, onClose, treeData, elementId = 'genealogy-tree' }
     png: {
       name: 'PNG Image',
       description: 'High-quality image file',
-      icon: '🖼️'
+      icon: '🖼️',
     },
     pdf: {
       name: 'PDF Document',
       description: 'Portable document format',
-      icon: '📄'
+      icon: '📄',
     },
     json: {
       name: 'JSON Data',
       description: 'Raw tree data structure',
-      icon: '📊'
+      icon: '📊',
     },
     csv: {
       name: 'CSV Spreadsheet',
       description: 'Tabular data format',
-      icon: '📈'
-    }
+      icon: '📈',
+    },
   };
 
   const qualityOptions = {
     low: { scale: 1, description: 'Faster export, smaller file' },
     medium: { scale: 1.5, description: 'Balanced quality and size' },
     high: { scale: 2, description: 'Best quality, larger file' },
-    ultra: { scale: 3, description: 'Ultra HD, very large file' }
+    ultra: { scale: 3, description: 'Ultra HD, very large file' },
   };
 
   const handleExport = async () => {
@@ -56,26 +61,18 @@ const ExportModal = ({ isOpen, onClose, treeData, elementId = 'genealogy-tree' }
       switch (exportType) {
         case 'png':
           setExportStatus('Capturing screenshot...');
-          await TreeExporter.exportToPNG(
-            elementId,
-            `${fullFileName}.png`,
-            {
-              scale: qualityOptions[quality].scale,
-              backgroundColor: '#0F0F23'
-            }
-          );
+          await TreeExporter.exportToPNG(elementId, `${fullFileName}.png`, {
+            scale: qualityOptions[quality].scale,
+            backgroundColor: '#0F0F23',
+          });
           break;
 
         case 'pdf':
           setExportStatus('Generating PDF...');
-          await TreeExporter.exportToPDF(
-            elementId,
-            `${fullFileName}.pdf`,
-            {
-              scale: qualityOptions[quality].scale,
-              backgroundColor: '#0F0F23'
-            }
-          );
+          await TreeExporter.exportToPDF(elementId, `${fullFileName}.pdf`, {
+            scale: qualityOptions[quality].scale,
+            backgroundColor: '#0F0F23',
+          });
           break;
 
         case 'json':
@@ -97,7 +94,6 @@ const ExportModal = ({ isOpen, onClose, treeData, elementId = 'genealogy-tree' }
         onClose();
         setExportStatus('');
       }, 2000);
-
     } catch (error) {
       console.error('Export failed:', error);
       setExportStatus(`Export failed: ${error.message}`);
@@ -108,7 +104,7 @@ const ExportModal = ({ isOpen, onClose, treeData, elementId = 'genealogy-tree' }
 
   const getFileSize = () => {
     if (!treeData) return 'Unknown';
-    
+
     const stats = TreeExporter.getExportStats(treeData);
     if (!stats) return 'Unknown';
 
@@ -121,7 +117,7 @@ const ExportModal = ({ isOpen, onClose, treeData, elementId = 'genealogy-tree' }
       case 'json':
         return `~${(JSON.stringify(treeData).length / 1024).toFixed(1)} KB`;
       case 'csv':
-        return `~${(stats.totalNodes * 200 / 1024).toFixed(1)} KB`;
+        return `~${((stats.totalNodes * 200) / 1024).toFixed(1)} KB`;
       default:
         return 'Unknown';
     }
@@ -131,12 +127,12 @@ const ExportModal = ({ isOpen, onClose, treeData, elementId = 'genealogy-tree' }
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="export-modal" onClick={(e) => e.stopPropagation()}>
+      <div className="export-modal" onClick={e => e.stopPropagation()}>
         <div className="export-header">
           <h2>Export Genealogy Tree</h2>
           <button className="close-btn" onClick={onClose}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+              <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
             </svg>
           </button>
         </div>
@@ -169,7 +165,7 @@ const ExportModal = ({ isOpen, onClose, treeData, elementId = 'genealogy-tree' }
                 <input
                   type="text"
                   value={fileName}
-                  onChange={(e) => setFileName(e.target.value)}
+                  onChange={e => setFileName(e.target.value)}
                   placeholder="genealogy-tree"
                   className="file-input"
                 />
@@ -180,12 +176,13 @@ const ExportModal = ({ isOpen, onClose, treeData, elementId = 'genealogy-tree' }
                   <label>Quality</label>
                   <select
                     value={quality}
-                    onChange={(e) => setQuality(e.target.value)}
+                    onChange={e => setQuality(e.target.value)}
                     className="quality-select"
                   >
                     {Object.entries(qualityOptions).map(([key, option]) => (
                       <option key={key} value={key}>
-                        {key.charAt(0).toUpperCase() + key.slice(1)} - {option.description}
+                        {key.charAt(0).toUpperCase() + key.slice(1)} -{' '}
+                        {option.description}
                       </option>
                     ))}
                   </select>
@@ -199,7 +196,9 @@ const ExportModal = ({ isOpen, onClose, treeData, elementId = 'genealogy-tree' }
             <div className="info-grid">
               <div className="info-item">
                 <span className="info-label">Format:</span>
-                <span className="info-value">{exportOptions[exportType].name}</span>
+                <span className="info-value">
+                  {exportOptions[exportType].name}
+                </span>
               </div>
               <div className="info-item">
                 <span className="info-label">Estimated Size:</span>
@@ -209,11 +208,15 @@ const ExportModal = ({ isOpen, onClose, treeData, elementId = 'genealogy-tree' }
                 <>
                   <div className="info-item">
                     <span className="info-label">Total Nodes:</span>
-                    <span className="info-value">{TreeExporter.getExportStats(treeData)?.totalNodes || 0}</span>
+                    <span className="info-value">
+                      {TreeExporter.getExportStats(treeData)?.totalNodes || 0}
+                    </span>
                   </div>
                   <div className="info-item">
                     <span className="info-label">Max Depth:</span>
-                    <span className="info-value">{TreeExporter.getExportStats(treeData)?.maxDepth || 0}</span>
+                    <span className="info-value">
+                      {TreeExporter.getExportStats(treeData)?.maxDepth || 0}
+                    </span>
                   </div>
                 </>
               )}
@@ -221,7 +224,9 @@ const ExportModal = ({ isOpen, onClose, treeData, elementId = 'genealogy-tree' }
           </div>
 
           {exportStatus && (
-            <div className={`export-status ${isExporting ? 'loading' : 'success'}`}>
+            <div
+              className={`export-status ${isExporting ? 'loading' : 'success'}`}
+            >
               {isExporting && <div className="status-spinner"></div>}
               <span>{exportStatus}</span>
             </div>
@@ -229,15 +234,15 @@ const ExportModal = ({ isOpen, onClose, treeData, elementId = 'genealogy-tree' }
         </div>
 
         <div className="export-footer">
-          <button 
-            className="cancel-btn" 
+          <button
+            className="cancel-btn"
             onClick={onClose}
             disabled={isExporting}
           >
             Cancel
           </button>
-          <button 
-            className="export-btn" 
+          <button
+            className="export-btn"
             onClick={handleExport}
             disabled={isExporting || !fileName.trim()}
           >

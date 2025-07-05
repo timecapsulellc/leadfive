@@ -4,26 +4,30 @@
  */
 
 import React, { useState } from 'react';
-import { 
-  FaRobot, 
-  FaTimes, 
-  FaMinus,
-  FaExpand
-} from 'react-icons/fa';
+import { FaRobot, FaTimes, FaMinus, FaExpand } from 'react-icons/fa';
 
-const UnifiedChatbot = ({ userStats, account, userInfo, mode = 'floating', position = 'bottom-right' }) => {
+const UnifiedChatbot = ({
+  userStats,
+  account,
+  userInfo,
+  mode = 'floating',
+  position = 'bottom-right',
+}) => {
   console.log('[ARIA DEBUG] EMERGENCY FIX - UnifiedChatbot loading...');
-  
+
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
 
   return (
-    <div className="aria-chatbot-container" style={{
-      position: 'fixed',
-      bottom: '20px',
-      right: '20px',
-      zIndex: 9999
-    }}>
+    <div
+      className="aria-chatbot-container"
+      style={{
+        position: 'fixed',
+        bottom: '20px',
+        right: '20px',
+        zIndex: 9999,
+      }}
+    >
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
@@ -39,7 +43,7 @@ const UnifiedChatbot = ({ userStats, account, userInfo, mode = 'floating', posit
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 4px 20px rgba(0, 212, 255, 0.3)'
+            boxShadow: '0 4px 20px rgba(0, 212, 255, 0.3)',
           }}
           title="Open ARIA Assistant"
         >
@@ -48,25 +52,29 @@ const UnifiedChatbot = ({ userStats, account, userInfo, mode = 'floating', posit
       )}
 
       {isOpen && (
-        <div style={{
-          width: '400px',
-          height: isMinimized ? '60px' : '500px',
-          background: 'white',
-          borderRadius: '15px',
-          boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
-          border: '1px solid #e0e0e0',
-          transition: 'all 0.3s ease',
-          overflow: 'hidden'
-        }}>
+        <div
+          style={{
+            width: '400px',
+            height: isMinimized ? '60px' : '500px',
+            background: 'white',
+            borderRadius: '15px',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+            border: '1px solid #e0e0e0',
+            transition: 'all 0.3s ease',
+            overflow: 'hidden',
+          }}
+        >
           {/* Header */}
-          <div style={{
-            background: 'linear-gradient(135deg, #00D4FF 0%, #0066CC 100%)',
-            color: 'white',
-            padding: '15px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-          }}>
+          <div
+            style={{
+              background: 'linear-gradient(135deg, #00D4FF 0%, #0066CC 100%)',
+              color: 'white',
+              padding: '15px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <FaRobot />
               <span>ARIA Assistant</span>
@@ -79,9 +87,9 @@ const UnifiedChatbot = ({ userStats, account, userInfo, mode = 'floating', posit
                   border: 'none',
                   color: 'white',
                   cursor: 'pointer',
-                  padding: '5px'
+                  padding: '5px',
                 }}
-                title={isMinimized ? "Expand" : "Minimize"}
+                title={isMinimized ? 'Expand' : 'Minimize'}
               >
                 {isMinimized ? <FaExpand /> : <FaMinus />}
               </button>
@@ -92,7 +100,7 @@ const UnifiedChatbot = ({ userStats, account, userInfo, mode = 'floating', posit
                   border: 'none',
                   color: 'white',
                   cursor: 'pointer',
-                  padding: '5px'
+                  padding: '5px',
                 }}
                 title="Close"
               >
@@ -103,7 +111,9 @@ const UnifiedChatbot = ({ userStats, account, userInfo, mode = 'floating', posit
 
           {/* Content */}
           {!isMinimized && (
-            <div style={{ padding: '20px', textAlign: 'center', color: '#333' }}>
+            <div
+              style={{ padding: '20px', textAlign: 'center', color: '#333' }}
+            >
               <h3>✅ ARIA Fixed!</h3>
               <p>No more FaMinimize errors!</p>
               <p>Emergency minimal version working.</p>

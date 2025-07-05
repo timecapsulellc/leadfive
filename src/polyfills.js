@@ -13,11 +13,11 @@ if (typeof global === 'undefined') {
 }
 
 if (typeof process === 'undefined') {
-  window.process = { 
+  window.process = {
     env: {},
     browser: true,
     version: '',
-    versions: { node: '' }
+    versions: { node: '' },
   };
 }
 
@@ -26,9 +26,9 @@ if (typeof Buffer === 'undefined') {
   // Simple Buffer polyfill for browsers
   window.Buffer = {
     isBuffer: () => false,
-    from: (data) => new Uint8Array(data),
-    alloc: (size) => new Uint8Array(size),
-    allocUnsafe: (size) => new Uint8Array(size),
+    from: data => new Uint8Array(data),
+    alloc: size => new Uint8Array(size),
+    allocUnsafe: size => new Uint8Array(size),
   };
 }
 

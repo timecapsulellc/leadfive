@@ -3,7 +3,7 @@
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  background: linear-gradient(135deg, #00D4FF 0%, #BD00FF 100%);
+  background: linear-gradient(135deg, #00d4ff 0%, #bd00ff 100%);
   color: #fff;
   border: none;
   border-radius: 50px;
@@ -79,17 +79,17 @@
 
 .header-info svg {
   font-size: 1.5rem;
-  color: #00D4FF;
+  color: #00d4ff;
 }
 
 .header-info h3 {
   margin: 0;
-  color: #00D4FF;
+  color: #00d4ff;
   font-size: 1.2rem;
 }
 
 .status {
-  color: #00FF00;
+  color: #00ff00;
   font-size: 0.8rem;
   display: flex;
   align-items: center;
@@ -100,7 +100,7 @@
   content: '';
   width: 8px;
   height: 8px;
-  background: #00FF00;
+  background: #00ff00;
   border-radius: 50%;
   animation: pulse 2s infinite;
 }
@@ -129,7 +129,7 @@
 }
 
 .quick-questions p {
-  color: #00D4FF;
+  color: #00d4ff;
   margin: 0 0 1rem 0;
   font-size: 0.9rem;
   font-weight: 600;
@@ -158,8 +158,8 @@
 
 .quick-question-btn:hover:not(:disabled) {
   background: rgba(0, 212, 255, 0.1);
-  border-color: #00D4FF;
-  color: #00D4FF;
+  border-color: #00d4ff;
+  color: #00d4ff;
 }
 
 .quick-question-btn:disabled {
@@ -200,7 +200,7 @@
 }
 
 .message.user .message-content {
-  background: linear-gradient(135deg, #00D4FF 0%, #BD00FF 100%);
+  background: linear-gradient(135deg, #00d4ff 0%, #bd00ff 100%);
   padding: 0.75rem 1rem;
 }
 
@@ -227,7 +227,7 @@
 .speak-btn {
   background: none;
   border: none;
-  color: #00D4FF;
+  color: #00d4ff;
   cursor: pointer;
   padding: 0.25rem;
   border-radius: 4px;
@@ -254,7 +254,7 @@
 .typing-indicator span {
   width: 8px;
   height: 8px;
-  background: #00D4FF;
+  background: #00d4ff;
   border-radius: 50%;
   animation: typing 1.4s infinite;
 }
@@ -289,7 +289,7 @@
 
 .ai-chat-input input:focus {
   outline: none;
-  border-color: #00D4FF;
+  border-color: #00d4ff;
   box-shadow: 0 0 0 2px rgba(0, 212, 255, 0.2);
 }
 
@@ -299,7 +299,7 @@
 }
 
 .send-btn {
-  background: #00D4FF;
+  background: #00d4ff;
   border: none;
   border-radius: 8px;
   color: #000;
@@ -348,7 +348,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -357,7 +358,9 @@
 }
 
 @keyframes typing {
-  0%, 60%, 100% {
+  0%,
+  60%,
+  100% {
     transform: translateY(0);
   }
   30% {
@@ -392,7 +395,7 @@
     bottom: 5rem;
     max-height: 70vh;
   }
-  
+
   .ai-assistant-toggle {
     bottom: 1rem;
     right: 1rem;
@@ -400,19 +403,19 @@
     font-size: 0.9rem;
     min-width: 140px;
   }
-  
+
   .ai-chat-header {
     padding: 1rem;
   }
-  
+
   .ai-chat-messages {
     max-height: 250px;
   }
-  
+
   .quick-questions {
     padding: 0.75rem 1rem;
   }
-  
+
   .quick-question-btn {
     font-size: 0.75rem;
     padding: 0.4rem 0.6rem;

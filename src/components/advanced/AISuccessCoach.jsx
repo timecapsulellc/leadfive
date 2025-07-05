@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  FaRobot, 
-  FaLightbulb, 
-  FaStar, 
-  FaRedo, 
+import {
+  FaRobot,
+  FaLightbulb,
+  FaStar,
+  FaRedo,
   FaChartLine,
   FaBolt,
   FaTrophy,
-  FaBullseye
+  FaBullseye,
 } from 'react-icons/fa';
 
 const AISuccessCoach = ({ userStats, dashboardData, className = '' }) => {
   const [currentCoaching, setCurrentCoaching] = useState({
     type: 'leadfive-optimization',
     title: 'LeadFive Network Growth Strategy',
-    message: "Welcome to your AI Success Coach! Based on your current position, I recommend focusing on team building and package upgrades to maximize your earning potential.",
-    actionStep: "Connect with 3 new prospects this week and help them choose the right package level.",
-    insight: "Top LeadFive leaders who focus on team growth achieve 45% higher monthly earnings!",
+    message:
+      'Welcome to your AI Success Coach! Based on your current position, I recommend focusing on team building and package upgrades to maximize your earning potential.',
+    actionStep:
+      'Connect with 3 new prospects this week and help them choose the right package level.',
+    insight:
+      'Top LeadFive leaders who focus on team growth achieve 45% higher monthly earnings!',
     riskLevel: 'Low',
-    expectedGrowth: '25-40%'
+    expectedGrowth: '25-40%',
   });
 
   const [earningsForecast] = useState({
@@ -26,25 +29,25 @@ const AISuccessCoach = ({ userStats, dashboardData, className = '' }) => {
     days90: Math.round((dashboardData?.totalEarnings || 0) * 2.1 + 1800),
     months12: Math.round((dashboardData?.totalEarnings || 0) * 8.5 + 12000),
     growthRate: '32%',
-    marketCondition: 'Growing'
+    marketCondition: 'Growing',
   });
 
   const [coachingTips] = useState([
     {
       category: 'Team Building',
       tip: 'Focus on quality relationships over quantity. Help each team member succeed.',
-      impact: 'High'
+      impact: 'High',
     },
     {
       category: 'Package Strategy',
       tip: 'Consider upgrading your package level to increase commission rates.',
-      impact: 'Medium'
+      impact: 'Medium',
     },
     {
       category: 'Network Health',
       tip: 'Maintain balanced team structure for optimal binary commission earnings.',
-      impact: 'High'
-    }
+      impact: 'High',
+    },
   ]);
 
   // Update coaching advice based on user performance
@@ -58,31 +61,40 @@ const AISuccessCoach = ({ userStats, dashboardData, className = '' }) => {
         setCurrentCoaching({
           type: 'getting-started',
           title: 'Getting Started with LeadFive',
-          message: "Perfect timing to start your LeadFive journey! Your AI coach recommends beginning with a solid foundation by choosing the right package and identifying your first prospects.",
-          actionStep: "Choose your initial package level and create your first referral strategy.",
-          insight: "New LeadFive members who start with a clear plan are 3x more likely to reach their first milestone!",
+          message:
+            'Perfect timing to start your LeadFive journey! Your AI coach recommends beginning with a solid foundation by choosing the right package and identifying your first prospects.',
+          actionStep:
+            'Choose your initial package level and create your first referral strategy.',
+          insight:
+            'New LeadFive members who start with a clear plan are 3x more likely to reach their first milestone!',
           riskLevel: 'Low',
-          expectedGrowth: 'High Potential'
+          expectedGrowth: 'High Potential',
         });
       } else if (level < 3) {
         setCurrentCoaching({
           type: 'early-growth',
           title: 'Early Growth Phase Strategy',
-          message: "You're building momentum! Focus on consistent team building and helping your referrals get started with their own packages.",
-          actionStep: "Aim to help 2-3 new team members get their first referral this month.",
-          insight: "Members who achieve consistent growth in their first 90 days typically 5x their earnings!",
+          message:
+            "You're building momentum! Focus on consistent team building and helping your referrals get started with their own packages.",
+          actionStep:
+            'Aim to help 2-3 new team members get their first referral this month.',
+          insight:
+            'Members who achieve consistent growth in their first 90 days typically 5x their earnings!',
           riskLevel: 'Low',
-          expectedGrowth: '40-60%'
+          expectedGrowth: '40-60%',
         });
       } else {
         setCurrentCoaching({
           type: 'scaling-success',
           title: 'Scaling Your Success',
-          message: "Excellent progress! You're ready to scale your network. Focus on leadership development and advanced compensation plan optimization.",
-          actionStep: "Develop 2-3 key leaders in your organization and explore higher package levels.",
-          insight: "Top 10% of LeadFive leaders focus on developing other leaders, not just recruiting!",
+          message:
+            "Excellent progress! You're ready to scale your network. Focus on leadership development and advanced compensation plan optimization.",
+          actionStep:
+            'Develop 2-3 key leaders in your organization and explore higher package levels.',
+          insight:
+            'Top 10% of LeadFive leaders focus on developing other leaders, not just recruiting!',
           riskLevel: 'Low',
-          expectedGrowth: '50-80%'
+          expectedGrowth: '50-80%',
         });
       }
     };
@@ -95,27 +107,32 @@ const AISuccessCoach = ({ userStats, dashboardData, className = '' }) => {
     const tips = [
       {
         title: 'Binary Balance Strategy',
-        message: 'Balance your left and right team legs for optimal binary commissions.',
-        action: 'Review your team structure and identify which leg needs attention.'
+        message:
+          'Balance your left and right team legs for optimal binary commissions.',
+        action:
+          'Review your team structure and identify which leg needs attention.',
       },
       {
         title: 'Package Upgrade Analysis',
-        message: 'Higher package levels unlock increased commission rates and bonuses.',
-        action: 'Calculate the ROI of upgrading to the next package level.'
+        message:
+          'Higher package levels unlock increased commission rates and bonuses.',
+        action: 'Calculate the ROI of upgrading to the next package level.',
       },
       {
         title: 'Leadership Development',
-        message: 'Developing leaders in your team creates residual income growth.',
-        action: 'Identify your top 3 performers and provide them with additional training.'
-      }
+        message:
+          'Developing leaders in your team creates residual income growth.',
+        action:
+          'Identify your top 3 performers and provide them with additional training.',
+      },
     ];
-    
+
     const randomTip = tips[Math.floor(Math.random() * tips.length)];
     setCurrentCoaching(prev => ({
       ...prev,
       title: randomTip.title,
       message: randomTip.message,
-      actionStep: randomTip.action
+      actionStep: randomTip.action,
     }));
   };
 
@@ -139,18 +156,20 @@ const AISuccessCoach = ({ userStats, dashboardData, className = '' }) => {
           <div className="coaching-type">
             <FaLightbulb />
             <span>{currentCoaching.title}</span>
-            <span className={`risk-level ${currentCoaching.riskLevel.toLowerCase()}`}>
+            <span
+              className={`risk-level ${currentCoaching.riskLevel.toLowerCase()}`}
+            >
               {currentCoaching.riskLevel} Risk
             </span>
           </div>
-          
+
           <p className="coaching-message">{currentCoaching.message}</p>
-          
+
           <div className="action-step">
             <strong>📈 Action Step:</strong>
             <p>{currentCoaching.actionStep}</p>
           </div>
-          
+
           <div className="coach-insight">
             <FaStar className="insight-icon" />
             <span>{currentCoaching.insight}</span>
@@ -163,28 +182,44 @@ const AISuccessCoach = ({ userStats, dashboardData, className = '' }) => {
             <span>Earnings Projections</span>
             <span className="forecast-badge">AI POWERED</span>
           </div>
-          
+
           <div className="forecast-grid">
             <div className="forecast-item">
               <span className="forecast-period">30 DAYS</span>
-              <span className="forecast-amount">${earningsForecast.days30}</span>
-              <span className="forecast-growth">Growth: {earningsForecast.growthRate}</span>
+              <span className="forecast-amount">
+                ${earningsForecast.days30}
+              </span>
+              <span className="forecast-growth">
+                Growth: {earningsForecast.growthRate}
+              </span>
             </div>
             <div className="forecast-item">
               <span className="forecast-period">90 DAYS</span>
-              <span className="forecast-amount">${earningsForecast.days90}</span>
-              <span className="forecast-growth">+{Math.round((earningsForecast.days90 / earningsForecast.days30 - 1) * 100)}%</span>
+              <span className="forecast-amount">
+                ${earningsForecast.days90}
+              </span>
+              <span className="forecast-growth">
+                +
+                {Math.round(
+                  (earningsForecast.days90 / earningsForecast.days30 - 1) * 100
+                )}
+                %
+              </span>
             </div>
             <div className="forecast-item">
               <span className="forecast-period">12 MONTHS</span>
-              <span className="forecast-amount">${earningsForecast.months12}</span>
+              <span className="forecast-amount">
+                ${earningsForecast.months12}
+              </span>
               <span className="forecast-growth">Target Growth</span>
             </div>
           </div>
-          
+
           <div className="market-indicator">
             <span className="market-label">Market Condition:</span>
-            <span className={`market-status ${earningsForecast.marketCondition.toLowerCase()}`}>
+            <span
+              className={`market-status ${earningsForecast.marketCondition.toLowerCase()}`}
+            >
               {earningsForecast.marketCondition}
             </span>
           </div>

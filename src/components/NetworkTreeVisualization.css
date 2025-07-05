@@ -22,20 +22,28 @@
 
 :root {
   /* OrphiChain Brand Colors */
-  --orphi-royal-purple: #7B2CBF;
-  --orphi-cyber-blue: #00D4FF;
-  --orphi-energy-orange: #FF6B35;
-  --orphi-success-green: #00FF88;
-  --orphi-silver-mist: #C0C0C0;
-  
+  --orphi-royal-purple: #7b2cbf;
+  --orphi-cyber-blue: #00d4ff;
+  --orphi-energy-orange: #ff6b35;
+  --orphi-success-green: #00ff88;
+  --orphi-silver-mist: #c0c0c0;
+
   /* Background Gradients */
-  --orphi-primary-gradient: linear-gradient(135deg, var(--orphi-royal-purple) 0%, var(--orphi-cyber-blue) 100%);
-  --orphi-accent-gradient: linear-gradient(135deg, var(--orphi-energy-orange) 0%, var(--orphi-success-green) 100%);
-  
+  --orphi-primary-gradient: linear-gradient(
+    135deg,
+    var(--orphi-royal-purple) 0%,
+    var(--orphi-cyber-blue) 100%
+  );
+  --orphi-accent-gradient: linear-gradient(
+    135deg,
+    var(--orphi-energy-orange) 0%,
+    var(--orphi-success-green) 100%
+  );
+
   /* Typography */
   --orphi-font-primary: 'Inter', 'Segoe UI', system-ui, sans-serif;
   --orphi-font-secondary: 'Roboto Mono', 'Consolas', monospace;
-  
+
   /* Spacing Scale */
   --orphi-spacing-xs: 0.25rem;
   --orphi-spacing-sm: 0.5rem;
@@ -43,19 +51,22 @@
   --orphi-spacing-lg: 1.5rem;
   --orphi-spacing-xl: 2rem;
   --orphi-spacing-xxl: 3rem;
-  
+
   /* Border Radius */
   --orphi-radius-sm: 0.375rem;
   --orphi-radius-md: 0.5rem;
   --orphi-radius-lg: 0.75rem;
   --orphi-radius-xl: 1rem;
-  
+
   /* Shadows */
   --orphi-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --orphi-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --orphi-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --orphi-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  
+  --orphi-shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --orphi-shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --orphi-shadow-xl:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
   /* Transitions */
   --orphi-transition-fast: 0.15s ease-in-out;
   --orphi-transition-normal: 0.3s ease-in-out;
@@ -125,8 +136,12 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .network-tree-loading p {
@@ -651,7 +666,11 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: var(--orphi-spacing-md);
   padding: var(--orphi-spacing-lg);
-  background: linear-gradient(135deg, rgba(123, 44, 191, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(123, 44, 191, 0.1) 0%,
+    rgba(0, 212, 255, 0.1) 100%
+  );
   border-radius: var(--orphi-radius-lg);
   margin-bottom: var(--orphi-spacing-lg);
 }
@@ -689,11 +708,11 @@
 }
 
 /* Binary leg specific styling */
-.stat-item .stat-value[style*="color: rgb(255, 107, 53)"] {
+.stat-item .stat-value[style*='color: rgb(255, 107, 53)'] {
   text-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
 }
 
-.stat-item .stat-value[style*="color: rgb(0, 212, 255)"] {
+.stat-item .stat-value[style*='color: rgb(0, 212, 255)'] {
   text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
 }
 
@@ -774,15 +793,15 @@
     gap: var(--orphi-spacing-sm);
     padding: var(--orphi-spacing-md);
   }
-  
+
   .stat-item {
     padding: var(--orphi-spacing-sm);
   }
-  
+
   .stat-value {
     font-size: 1rem;
   }
-  
+
   .tree-legend {
     position: relative;
     bottom: auto;
@@ -807,16 +826,16 @@
     align-items: stretch;
     gap: var(--orphi-spacing-md);
   }
-  
+
   .control-group {
     justify-content: space-between;
   }
-  
+
   .search-input {
     min-width: auto;
     flex: 1;
   }
-  
+
   .node-details-panel {
     position: fixed;
     top: 50%;
@@ -825,7 +844,7 @@
     width: 90vw;
     max-width: 400px;
   }
-  
+
   .tree-legend {
     position: static;
     margin-top: var(--orphi-spacing-lg);
@@ -839,30 +858,30 @@
     grid-template-columns: repeat(2, 1fr);
     gap: var(--orphi-spacing-md);
   }
-  
+
   .tree-header,
   .tree-controls {
     padding: var(--orphi-spacing-md);
   }
-  
+
   .control-group {
     flex-direction: column;
     align-items: stretch;
     gap: var(--orphi-spacing-xs);
   }
-  
+
   .control-group label {
     font-size: 0.75rem;
   }
-  
+
   .zoom-slider {
     width: 100%;
   }
-  
+
   .stat-value {
     font-size: 1.25rem;
   }
-  
+
   .stat-label {
     font-size: 0.6875rem;
   }
@@ -872,25 +891,25 @@
   .tree-stats {
     grid-template-columns: 1fr;
   }
-  
+
   .network-tree-visualization {
     min-height: 500px;
   }
-  
+
   .tree-container {
     height: 400px !important;
   }
-  
+
   .panel-content {
     padding: var(--orphi-spacing-md);
   }
-  
+
   .detail-row {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--orphi-spacing-xs);
   }
-  
+
   .detail-value {
     text-align: left;
   }
@@ -906,7 +925,7 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
+
   .loading-spinner .spinner-ring {
     animation: none;
   }
@@ -925,13 +944,13 @@
   .network-tree-visualization {
     border-width: 2px;
   }
-  
+
   .stat-item,
   .node-details-panel,
   .tree-legend {
     border-width: 2px;
   }
-  
+
   .control-select,
   .search-input {
     border-width: 2px;

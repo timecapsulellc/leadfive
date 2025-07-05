@@ -5,7 +5,7 @@ const AIMarketInsights = ({ aiInsights, isAiLoading, generateAIInsights }) => {
   // Add debug logging to verify component is mounting
   useEffect(() => {
     console.log('🔍 DEBUG: AIMarketInsights mounted and visible in DOM');
-    
+
     // Create debug element
     const debugElement = document.createElement('div');
     debugElement.style.position = 'fixed';
@@ -18,17 +18,17 @@ const AIMarketInsights = ({ aiInsights, isAiLoading, generateAIInsights }) => {
     debugElement.style.zIndex = '9999';
     debugElement.style.fontSize = '12px';
     debugElement.textContent = 'AI Market Insights Mounted';
-    
+
     // Add to DOM
     document.body.appendChild(debugElement);
-    
+
     // Remove after 5 seconds
     setTimeout(() => {
       if (document.body.contains(debugElement)) {
         document.body.removeChild(debugElement);
       }
     }, 5000);
-    
+
     return () => {
       // Clean up if component unmounts before timeout
       if (document.body.contains(debugElement)) {
@@ -40,7 +40,9 @@ const AIMarketInsights = ({ aiInsights, isAiLoading, generateAIInsights }) => {
 
   return (
     <div className="overview-card ai-insights-card">
-      <h3><FaBrain /> AI Market Insights</h3>
+      <h3>
+        <FaBrain /> AI Market Insights
+      </h3>
       <div className="ai-insights-content">
         {isAiLoading ? (
           <div className="ai-loading">
@@ -76,14 +78,20 @@ const AIMarketInsights = ({ aiInsights, isAiLoading, generateAIInsights }) => {
             <FaChartLine className="insight-icon" />
             <span className="insight-title">Hot Opportunity</span>
           </div>
-          <p className="insight-text">Top 10% earn $15,000/month. Join the elite tier now - only 23 spots left!</p>
+          <p className="insight-text">
+            Top 10% earn $15,000/month. Join the elite tier now - only 23 spots
+            left!
+          </p>
         </div>
         <div className="insight-item trending-now">
           <div className="insight-header">
             <FaArrowUp className="insight-icon" />
             <span className="insight-title">Trending Now</span>
           </div>
-          <p className="insight-text">AI-powered projects are 340% more successful. Don't miss the revolution!</p>
+          <p className="insight-text">
+            AI-powered projects are 340% more successful. Don't miss the
+            revolution!
+          </p>
         </div>
       </div>
     </div>

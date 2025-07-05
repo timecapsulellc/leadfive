@@ -39,8 +39,13 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .unread-badge {
@@ -311,35 +316,35 @@
     padding: 15px;
     max-height: 500px;
   }
-  
+
   .notifications-filters {
     gap: 6px;
   }
-  
+
   .filter-btn {
     padding: 4px 8px;
     font-size: 0.75rem;
   }
-  
+
   .filter-btn span {
     display: none;
   }
-  
+
   .notification-item {
     padding: 10px;
     gap: 10px;
   }
-  
+
   .notification-icon {
     width: 35px;
     height: 35px;
     font-size: 1rem;
   }
-  
+
   .notification-message {
     font-size: 0.85rem;
   }
-  
+
   .notification-amount {
     font-size: 0.8rem;
     padding: 3px 6px;
@@ -350,15 +355,15 @@
   .live-notifications {
     padding: 12px;
   }
-  
+
   .header-left h3 {
     font-size: 1.1rem;
   }
-  
+
   .notifications-filters {
     justify-content: center;
   }
-  
+
   .notification-item {
     padding: 8px;
   }

@@ -1,0 +1,244 @@
+/* Web3 Status Panel Styles */
+
+.web3-status-panel {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.status-main {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.connection-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+.status-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.status-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.account-text {
+  font-size: 12px;
+  color: #6b7280;
+  font-family: 'Courier New', monospace;
+}
+
+.provider-summary {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 20px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.providers-healthy {
+  font-size: 12px;
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+.status-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.connect-btn,
+.disconnect-btn,
+.retry-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.connect-btn {
+  background: #3b82f6;
+  color: white;
+}
+
+.connect-btn:hover:not(:disabled) {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.connect-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.disconnect-btn {
+  background: #ef4444;
+  color: white;
+}
+
+.disconnect-btn:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+}
+
+.retry-btn {
+  background: #10b981;
+  color: white;
+  font-size: 11px;
+  padding: 4px 8px;
+}
+
+.retry-btn:hover {
+  background: #059669;
+}
+
+.details-toggle {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #d1d5db;
+  background: white;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 12px;
+}
+
+.details-toggle:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: #fef2f2;
+  border-bottom: 1px solid #fecaca;
+  color: #dc2626;
+}
+
+.error-icon {
+  font-size: 16px;
+}
+
+.error-text {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status-details {
+  padding: 20px;
+  background: #fafafa;
+}
+
+/* Compact version styles */
+.web3-status-panel.compact {
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.web3-status-panel.compact .status-header {
+  padding: 12px 16px;
+}
+
+.web3-status-panel.compact .status-text {
+  font-size: 13px;
+}
+
+.web3-status-panel.compact .account-text {
+  font-size: 11px;
+}
+
+.web3-status-panel.compact .provider-summary {
+  padding: 4px 8px;
+}
+
+.web3-status-panel.compact .providers-healthy {
+  font-size: 11px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .status-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .status-main {
+    justify-content: space-between;
+  }
+
+  .status-actions {
+    justify-content: center;
+  }
+
+  .provider-summary {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .status-main {
+    flex-direction: column;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .connection-indicator {
+    justify-content: center;
+  }
+
+  .provider-summary {
+    text-align: center;
+  }
+}

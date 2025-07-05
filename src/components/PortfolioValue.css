@@ -186,12 +186,20 @@
 
 /* Dashboard card variant */
 .portfolio-value.dashboard-card {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(251, 191, 36, 0.1) 0%,
+    rgba(245, 158, 11, 0.1) 100%
+  );
   border: 1px solid rgba(251, 191, 36, 0.2);
 }
 
 .portfolio-value.dashboard-card:hover {
-  background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(245, 158, 11, 0.15) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(251, 191, 36, 0.15) 0%,
+    rgba(245, 158, 11, 0.15) 100%
+  );
   border-color: rgba(251, 191, 36, 0.3);
 }
 
@@ -200,22 +208,22 @@
   .portfolio-value {
     padding: 16px;
   }
-  
+
   .total-value {
     font-size: 1.8rem;
   }
-  
+
   .asset-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
-  
+
   .asset-value {
     align-items: flex-start;
     width: 100%;
   }
-  
+
   .primary-amount {
     font-size: 1.3rem;
   }
@@ -225,17 +233,17 @@
   .portfolio-value {
     padding: 12px;
   }
-  
+
   .total-value {
     font-size: 1.5rem;
   }
-  
+
   .portfolio-title {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
-  
+
   .primary-amount {
     font-size: 1.2rem;
   }

@@ -19,7 +19,9 @@ class SimpleEventEmitter {
 
   off(event, listener) {
     if (this._listeners[event]) {
-      this._listeners[event] = this._listeners[event].filter(l => l !== listener);
+      this._listeners[event] = this._listeners[event].filter(
+        l => l !== listener
+      );
     }
   }
 
@@ -46,7 +48,7 @@ class WebSocketService extends SimpleEventEmitter {
     this.reconnectTimer = null;
     this.heartbeatTimer = null;
     this.isManualClose = false;
-    
+
     // Event types
     this.events = {
       CONNECTED: 'connected',
@@ -56,7 +58,7 @@ class WebSocketService extends SimpleEventEmitter {
       TREE_UPDATED: 'tree_updated',
       EARNINGS_UPDATED: 'earnings_updated',
       NEW_REFERRAL: 'new_referral',
-      NETWORK_STATS: 'network_stats'
+      NETWORK_STATS: 'network_stats',
     };
   }
 
@@ -70,11 +72,13 @@ class WebSocketService extends SimpleEventEmitter {
     }
 
     this.isManualClose = false;
-    
+
     // Use environment variable or fallback to localhost for development
-    const wsUrl = url || import.meta.env.VITE_WEBSOCKET_URL || 
+    const wsUrl =
+      url ||
+      import.meta.env.VITE_WEBSOCKET_URL ||
       (import.meta.env.DEV ? 'ws://localhost:8080' : 'wss://ws.leadfive.today');
-    
+
     try {
       console.log('Connecting to WebSocket:', wsUrl);
       this.ws = new WebSocket(wsUrl);
@@ -90,17 +94,17 @@ class WebSocketService extends SimpleEventEmitter {
    */
   disconnect() {
     this.isManualClose = true;
-    
+
     if (this.heartbeatTimer) {
       clearInterval(this.heartbeatTimer);
       this.heartbeatTimer = null;
     }
-    
+
     if (this.reconnectTimer) {
       clearTimeout(this.reconnectTimer);
       this.reconnectTimer = null;
     }
-    
+
     if (this.ws) {
       this.ws.close();
       this.ws = null;
@@ -120,7 +124,7 @@ class WebSocketService extends SimpleEventEmitter {
       this.startHeartbeat();
     };
 
-    this.ws.onmessage = (event) => {
+    this.ws.onmessage = event => {
       try {
         const data = JSON.parse(event.data);
         this.handleMessage(data);
@@ -129,21 +133,27 @@ class WebSocketService extends SimpleEventEmitter {
       }
     };
 
-    this.ws.onclose = (event) => {
+    this.ws.onclose = event => {
       console.log('WebSocket disconnected:', event.code, event.reason);
-      this.emit(this.events.DISCONNECTED, { code: event.code, reason: event.reason });
-      
+      this.emit(this.events.DISCONNECTED, {
+        code: event.code,
+        reason: event.reason,
+      });
+
       if (this.heartbeatTimer) {
         clearInterval(this.heartbeatTimer);
         this.heartbeatTimer = null;
       }
-      
-      if (!this.isManualClose && this.reconnectAttempts < this.maxReconnectAttempts) {
+
+      if (
+        !this.isManualClose &&
+        this.reconnectAttempts < this.maxReconnectAttempts
+      ) {
         this.scheduleReconnect();
       }
     };
 
-    this.ws.onerror = (error) => {
+    this.ws.onerror = error => {
       console.error('WebSocket error:', error);
       this.emit(this.events.ERROR, error);
     };
@@ -154,32 +164,32 @@ class WebSocketService extends SimpleEventEmitter {
    */
   handleMessage(data) {
     const { type, payload, timestamp } = data;
-    
+
     switch (type) {
       case 'user_updated':
         this.emit(this.events.USER_UPDATED, payload);
         break;
-        
+
       case 'tree_updated':
         this.emit(this.events.TREE_UPDATED, payload);
         break;
-        
+
       case 'earnings_updated':
         this.emit(this.events.EARNINGS_UPDATED, payload);
         break;
-        
+
       case 'new_referral':
         this.emit(this.events.NEW_REFERRAL, payload);
         break;
-        
+
       case 'network_stats':
         this.emit(this.events.NETWORK_STATS, payload);
         break;
-        
+
       case 'pong':
         // Heartbeat response - connection is alive
         break;
-        
+
       default:
         console.log('Unknown WebSocket message type:', type);
     }
@@ -198,9 +208,9 @@ class WebSocketService extends SimpleEventEmitter {
       const message = {
         type,
         payload,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       };
-      
+
       this.ws.send(JSON.stringify(message));
       return true;
     } catch (error) {
@@ -253,10 +263,13 @@ class WebSocketService extends SimpleEventEmitter {
    */
   scheduleReconnect() {
     this.reconnectAttempts++;
-    const delay = this.reconnectInterval * Math.pow(2, this.reconnectAttempts - 1); // Exponential backoff
-    
-    console.log(`Attempting to reconnect in ${delay}ms (attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts})`);
-    
+    const delay =
+      this.reconnectInterval * Math.pow(2, this.reconnectAttempts - 1); // Exponential backoff
+
+    console.log(
+      `Attempting to reconnect in ${delay}ms (attempt ${this.reconnectAttempts}/${this.maxReconnectAttempts})`
+    );
+
     this.reconnectTimer = setTimeout(() => {
       this.connect();
     }, delay);
@@ -267,7 +280,7 @@ class WebSocketService extends SimpleEventEmitter {
    */
   getStatus() {
     if (!this.ws) return 'disconnected';
-    
+
     switch (this.ws.readyState) {
       case WebSocket.CONNECTING:
         return 'connecting';
@@ -305,7 +318,7 @@ if (process.env.NODE_ENV === 'development') {
     }
     simulationStarted = true;
     console.log('Starting WebSocket simulation...');
-    
+
     // Simulate user earnings update every 45 seconds (reduced frequency)
     setInterval(() => {
       wsService.emit(wsService.events.EARNINGS_UPDATED, {
@@ -314,9 +327,9 @@ if (process.env.NODE_ENV === 'development') {
           totalEarned: Math.random() * 1000,
           withdrawableAmount: Math.random() * 500,
           sponsorCommission: Math.random() * 200,
-          levelBonus: Math.random() * 150
+          levelBonus: Math.random() * 150,
         },
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     }, 45000);
 
@@ -326,7 +339,7 @@ if (process.env.NODE_ENV === 'development') {
         sponsor: '0x1234567890123456789012345678901234567890',
         newUser: `0x${Math.random().toString(16).substring(2, 42)}`,
         package: '$100',
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     }, 90000);
 
@@ -336,7 +349,7 @@ if (process.env.NODE_ENV === 'development') {
         totalUsers: 1000 + Math.floor(Math.random() * 100),
         totalEarnings: 50000 + Math.random() * 10000,
         activeUsers: 800 + Math.floor(Math.random() * 50),
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     }, 75000);
   };

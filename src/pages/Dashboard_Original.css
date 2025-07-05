@@ -3,48 +3,48 @@
 
 :root {
   /* Brand Colors */
-  --brand-cyber-blue: #00D4FF;
-  --brand-cyber-blue-dark: #00A3C9;
-  --brand-cyber-blue-light: #7DF9FF;
+  --brand-cyber-blue: #00d4ff;
+  --brand-cyber-blue-dark: #00a3c9;
+  --brand-cyber-blue-light: #7df9ff;
   --brand-cyber-blue-alpha-10: rgba(0, 212, 255, 0.1);
   --brand-cyber-blue-alpha-20: rgba(0, 212, 255, 0.2);
-  
-  --brand-cosmic-purple: #7B2CBF;
-  --brand-cosmic-purple-dark: #5A1E8C;
-  --brand-cosmic-purple-light: #9D4EDD;
-  
+
+  --brand-cosmic-purple: #7b2cbf;
+  --brand-cosmic-purple-dark: #5a1e8c;
+  --brand-cosmic-purple-light: #9d4edd;
+
   /* UI Colors */
-  --bg-primary: #0A1929;
-  --bg-secondary: #0F2942;
-  --bg-tertiary: #1A3A5A;
-  --bg-card: #162B44;
-  --bg-card-hover: #1D3553;
-  
-  --text-primary: #FFFFFF;
-  --text-secondary: #B8C5D1;
-  --text-tertiary: #8A99A8;
-  --text-accent: #00D4FF;
-  
+  --bg-primary: #0a1929;
+  --bg-secondary: #0f2942;
+  --bg-tertiary: #1a3a5a;
+  --bg-card: #162b44;
+  --bg-card-hover: #1d3553;
+
+  --text-primary: #ffffff;
+  --text-secondary: #b8c5d1;
+  --text-tertiary: #8a99a8;
+  --text-accent: #00d4ff;
+
   --border-primary: rgba(0, 212, 255, 0.3);
   --border-secondary: rgba(184, 197, 209, 0.2);
-  
+
   /* Status Colors */
-  --status-success: #4CAF50;
-  --status-warning: #FF9800;
-  --status-error: #F44336;
-  --status-info: #2196F3;
-  
+  --status-success: #4caf50;
+  --status-warning: #ff9800;
+  --status-error: #f44336;
+  --status-info: #2196f3;
+
   /* Gradients */
-  --gradient-background: linear-gradient(135deg, #0A1929, #142C46);
-  --gradient-accent: linear-gradient(135deg, #00D4FF, #7B2CBF);
-  --gradient-card: linear-gradient(135deg, #162B44, #1D3553);
-  --gradient-button: linear-gradient(135deg, #00A3C9, #00D4FF);
-  
+  --gradient-background: linear-gradient(135deg, #0a1929, #142c46);
+  --gradient-accent: linear-gradient(135deg, #00d4ff, #7b2cbf);
+  --gradient-card: linear-gradient(135deg, #162b44, #1d3553);
+  --gradient-button: linear-gradient(135deg, #00a3c9, #00d4ff);
+
   /* Shadows */
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.3);
-  
+
   /* Animation */
   --transition-fast: 0.2s ease;
   --transition-normal: 0.3s ease;
@@ -79,7 +79,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Sidebar - Brand Gradient Background */
@@ -103,7 +105,7 @@
 
 .user-avatar {
   font-size: 4rem;
-  color: #00D4FF;
+  color: #00d4ff;
   margin-bottom: 1rem;
 }
 
@@ -114,7 +116,7 @@
 }
 
 .user-info p {
-  color: #B8C5D1;
+  color: #b8c5d1;
   font-size: 0.9rem;
   margin-bottom: 0.5rem;
 }
@@ -122,7 +124,7 @@
 .user-level {
   display: inline-block;
   padding: 0.25rem 0.75rem;
-  background: linear-gradient(45deg, #00D4FF, #7B2CBF);
+  background: linear-gradient(45deg, #00d4ff, #7b2cbf);
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 600;
@@ -522,29 +524,29 @@
   .dashboard-container {
     flex-direction: column;
   }
-  
+
   .dashboard-sidebar {
     width: 100%;
     height: auto;
     position: relative;
     top: 0;
   }
-  
+
   .sidebar-menu {
     display: flex;
     flex-wrap: wrap;
     padding: 0.5rem;
   }
-  
+
   .menu-item {
     padding: 0.75rem 1rem;
     width: auto;
   }
-  
+
   .dashboard-main {
     padding: 1.5rem;
   }
-  
+
   .card-grid {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
@@ -555,19 +557,19 @@
     flex-direction: column;
     text-align: center;
   }
-  
+
   .welcome-content {
     margin-bottom: 1.5rem;
   }
-  
+
   .overview-stats {
     grid-template-columns: 1fr;
   }
-  
+
   .card-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .chart-header {
     flex-direction: column;
     align-items: flex-start;
@@ -593,7 +595,11 @@
   right: 0;
   width: 100px;
   height: 100px;
-  background: radial-gradient(circle at bottom right, rgba(0, 212, 255, 0.1), transparent 70%);
+  background: radial-gradient(
+    circle at bottom right,
+    rgba(0, 212, 255, 0.1),
+    transparent 70%
+  );
   pointer-events: none;
 }
 
@@ -671,27 +677,27 @@
   .dashboard-container {
     padding: 0;
   }
-  
+
   .dashboard-main {
     padding: 1rem;
   }
-  
+
   .dashboard-title {
     font-size: 1.5rem;
   }
-  
+
   .welcome-banner {
     padding: 1.5rem;
   }
-  
+
   .welcome-content h2 {
     font-size: 1.5rem;
   }
-  
+
   .stat-card {
     padding: 1rem;
   }
-  
+
   .stat-value {
     font-size: 1.5rem;
   }

@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import './OrphiChainEnhanced.css';
 
-const NetworkStatusMonitor = ({ 
-  provider, 
-  onStatusChange = () => {}, 
+const NetworkStatusMonitor = ({
+  provider,
+  onStatusChange = () => {},
   onReconnect = () => {},
-  pendingTransactions = []
+  pendingTransactions = [],
 }) => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [isVisible, setIsVisible] = useState(false);
@@ -17,7 +17,7 @@ const NetworkStatusMonitor = ({
       onStatusChange({ isOnline: true, isProviderConnected: true });
       onReconnect();
     };
-    
+
     const handleOffline = () => {
       setIsOnline(false);
       onStatusChange({ isOnline: false, isProviderConnected: false });
@@ -42,14 +42,16 @@ const NetworkStatusMonitor = ({
           bottom: '20px',
           left: '20px',
           zIndex: 999,
-          background: isOnline ? 'var(--orphi-success-green)' : 'var(--orphi-alert-red)',
+          background: isOnline
+            ? 'var(--orphi-success-green)'
+            : 'var(--orphi-alert-red)',
           color: 'white',
           border: 'none',
           borderRadius: '50%',
           width: '50px',
           height: '50px',
           cursor: 'pointer',
-          fontSize: '1.2rem'
+          fontSize: '1.2rem',
         }}
         title={isOnline ? 'Network Online' : 'Network Offline'}
       >
@@ -61,7 +63,9 @@ const NetworkStatusMonitor = ({
   return (
     <div className="network-status-monitor bottom-left">
       <div className="status-header" onClick={() => setIsVisible(false)}>
-        <div className={`status-icon ${isOnline ? 'status-online' : 'status-offline'}`}>
+        <div
+          className={`status-icon ${isOnline ? 'status-online' : 'status-offline'}`}
+        >
           {isOnline ? '✓' : '✕'}
         </div>
         <div className="status-text">
@@ -69,7 +73,7 @@ const NetworkStatusMonitor = ({
         </div>
         <button className="expand-button">×</button>
       </div>
-      
+
       <div className="status-details">
         <div className="status-item">
           <span className="status-label">Connection:</span>
@@ -77,7 +81,7 @@ const NetworkStatusMonitor = ({
             {isOnline ? 'Connected' : 'Disconnected'}
           </span>
         </div>
-        
+
         {pendingTransactions.length > 0 && (
           <div className="pending-transactions">
             <h4>Pending Transactions ({pendingTransactions.length})</h4>

@@ -6,7 +6,7 @@ const UserProfileSection = ({ userInfo, onProfileUpdate }) => {
     name: userInfo?.name || 'John Doe',
     level: userInfo?.level || 'Diamond',
     packageTier: userInfo?.packageTier || 1,
-    avatar: userInfo?.avatar || 'JD'
+    avatar: userInfo?.avatar || 'JD',
   });
 
   const handleProfileSave = () => {
@@ -14,17 +14,21 @@ const UserProfileSection = ({ userInfo, onProfileUpdate }) => {
     setShowProfileEdit(false);
   };
 
-  const getAvatarInitials = (name) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase();
+  const getAvatarInitials = name => {
+    return name
+      .split(' ')
+      .map(n => n[0])
+      .join('')
+      .toUpperCase();
   };
 
-  const getLevelColor = (level) => {
+  const getLevelColor = level => {
     const colors = {
-      'Bronze': '#CD7F32',
-      'Silver': '#C0C0C0',
-      'Gold': '#FFD700',
-      'Platinum': '#E5E4E2',
-      'Diamond': '#00D4FF'
+      Bronze: '#CD7F32',
+      Silver: '#C0C0C0',
+      Gold: '#FFD700',
+      Platinum: '#E5E4E2',
+      Diamond: '#00D4FF',
     };
     return colors[level] || '#00D4FF';
   };
@@ -37,17 +41,18 @@ const UserProfileSection = ({ userInfo, onProfileUpdate }) => {
         </div>
         <div className="user-details-extended">
           <h3>{profileData.name}</h3>
-          <div 
+          <div
             className="user-level-badge"
             style={{ backgroundColor: getLevelColor(profileData.level) }}
           >
             {profileData.level} Level
           </div>
           <div className="package-info">
-            Package Tier {profileData.packageTier} | ID: {userInfo?.id || '12345'}
+            Package Tier {profileData.packageTier} | ID:{' '}
+            {userInfo?.id || '12345'}
           </div>
         </div>
-        <button 
+        <button
           className="edit-profile-btn"
           onClick={() => setShowProfileEdit(!showProfileEdit)}
         >
@@ -64,14 +69,18 @@ const UserProfileSection = ({ userInfo, onProfileUpdate }) => {
               <input
                 type="text"
                 value={profileData.name}
-                onChange={(e) => setProfileData({...profileData, name: e.target.value})}
+                onChange={e =>
+                  setProfileData({ ...profileData, name: e.target.value })
+                }
               />
             </div>
             <div className="form-group">
               <label>Current Level</label>
               <select
                 value={profileData.level}
-                onChange={(e) => setProfileData({...profileData, level: e.target.value})}
+                onChange={e =>
+                  setProfileData({ ...profileData, level: e.target.value })
+                }
               >
                 <option value="Bronze">Bronze</option>
                 <option value="Silver">Silver</option>
@@ -81,8 +90,15 @@ const UserProfileSection = ({ userInfo, onProfileUpdate }) => {
               </select>
             </div>
             <div className="form-actions">
-              <button onClick={handleProfileSave} className="save-btn">Save Changes</button>
-              <button onClick={() => setShowProfileEdit(false)} className="cancel-btn">Cancel</button>
+              <button onClick={handleProfileSave} className="save-btn">
+                Save Changes
+              </button>
+              <button
+                onClick={() => setShowProfileEdit(false)}
+                className="cancel-btn"
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
@@ -91,7 +107,7 @@ const UserProfileSection = ({ userInfo, onProfileUpdate }) => {
       <style jsx>{`
         .user-profile-section {
           background: rgba(255, 255, 255, 0.1);
-          border: 1px solid #00D4FF;
+          border: 1px solid #00d4ff;
           border-radius: 15px;
           padding: 20px;
           margin-bottom: 20px;
@@ -109,7 +125,7 @@ const UserProfileSection = ({ userInfo, onProfileUpdate }) => {
           width: 60px;
           height: 60px;
           border-radius: 50%;
-          background: linear-gradient(45deg, #00D4FF, #0099CC);
+          background: linear-gradient(45deg, #00d4ff, #0099cc);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -144,8 +160,8 @@ const UserProfileSection = ({ userInfo, onProfileUpdate }) => {
           right: 0;
           top: 0;
           background: transparent;
-          border: 1px solid #00D4FF;
-          color: #00D4FF;
+          border: 1px solid #00d4ff;
+          color: #00d4ff;
           padding: 8px 16px;
           border-radius: 8px;
           cursor: pointer;
@@ -154,7 +170,7 @@ const UserProfileSection = ({ userInfo, onProfileUpdate }) => {
         }
 
         .edit-profile-btn:hover {
-          background: #00D4FF;
+          background: #00d4ff;
           color: #1a1a2e;
         }
 
@@ -173,14 +189,14 @@ const UserProfileSection = ({ userInfo, onProfileUpdate }) => {
 
         .profile-edit-content {
           background: #1a1a2e;
-          border: 2px solid #00D4FF;
+          border: 2px solid #00d4ff;
           border-radius: 15px;
           padding: 30px;
           min-width: 400px;
         }
 
         .profile-edit-content h4 {
-          color: #00D4FF;
+          color: #00d4ff;
           margin-bottom: 20px;
           text-align: center;
         }
@@ -214,7 +230,8 @@ const UserProfileSection = ({ userInfo, onProfileUpdate }) => {
           margin-top: 20px;
         }
 
-        .save-btn, .cancel-btn {
+        .save-btn,
+        .cancel-btn {
           padding: 10px 20px;
           border: none;
           border-radius: 8px;
@@ -224,7 +241,7 @@ const UserProfileSection = ({ userInfo, onProfileUpdate }) => {
         }
 
         .save-btn {
-          background: #00D4FF;
+          background: #00d4ff;
           color: #1a1a2e;
         }
 
@@ -247,12 +264,12 @@ const UserProfileSection = ({ userInfo, onProfileUpdate }) => {
             flex-direction: column;
             text-align: center;
           }
-          
+
           .edit-profile-btn {
             position: static;
             margin-top: 15px;
           }
-          
+
           .profile-edit-content {
             margin: 20px;
             min-width: auto;

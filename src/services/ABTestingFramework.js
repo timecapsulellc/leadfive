@@ -12,7 +12,7 @@ class ABTestingFramework {
       engagement: {},
       conversion: {},
       retention: {},
-      satisfaction: {}
+      satisfaction: {},
     };
   }
 
@@ -21,18 +21,23 @@ class ABTestingFramework {
    */
   async initializeABTests() {
     console.log('🧪 Initializing A/B Testing Framework for AI Features...');
-    
+
     // Test 1: AI Transaction Helper vs Traditional
     await this.setupTest('ai-transaction-helper', {
       name: 'AI Transaction Helper Impact',
       variants: {
         control: 'Traditional transaction flow',
-        treatment: 'AI-powered transaction explanations'
+        treatment: 'AI-powered transaction explanations',
       },
-      metrics: ['completion_rate', 'time_to_complete', 'user_satisfaction', 'error_rate'],
+      metrics: [
+        'completion_rate',
+        'time_to_complete',
+        'user_satisfaction',
+        'error_rate',
+      ],
       duration: 14, // days
       trafficSplit: { control: 50, treatment: 50 },
-      hypothesis: 'AI explanations increase transaction completion by 25%'
+      hypothesis: 'AI explanations increase transaction completion by 25%',
     });
 
     // Test 2: AI Coaching Panel Visibility
@@ -42,12 +47,17 @@ class ABTestingFramework {
         hidden: 'AI coaching hidden by default',
         sidebar: 'AI coaching in sidebar',
         dashboard: 'AI coaching prominent on dashboard',
-        popup: 'AI coaching as contextual popup'
+        popup: 'AI coaching as contextual popup',
       },
-      metrics: ['engagement_rate', 'coaching_clicks', 'goal_completion', 'return_visits'],
+      metrics: [
+        'engagement_rate',
+        'coaching_clicks',
+        'goal_completion',
+        'return_visits',
+      ],
       duration: 21, // days
       trafficSplit: { hidden: 25, sidebar: 25, dashboard: 25, popup: 25 },
-      hypothesis: 'Prominent AI coaching increases user engagement by 40%'
+      hypothesis: 'Prominent AI coaching increases user engagement by 40%',
     });
 
     // Test 3: Voice Features Adoption
@@ -57,12 +67,17 @@ class ABTestingFramework {
         disabled: 'No voice features',
         optional: 'Voice features as opt-in',
         default: 'Voice features enabled by default',
-        smart: 'Smart voice activation based on context'
+        smart: 'Smart voice activation based on context',
       },
-      metrics: ['voice_usage', 'user_preference', 'accessibility_score', 'completion_rate'],
+      metrics: [
+        'voice_usage',
+        'user_preference',
+        'accessibility_score',
+        'completion_rate',
+      ],
       duration: 28, // days
       trafficSplit: { disabled: 25, optional: 25, default: 25, smart: 25 },
-      hypothesis: 'Voice features improve accessibility and user experience'
+      hypothesis: 'Voice features improve accessibility and user experience',
     });
 
     // Test 4: AI Earnings Prediction Display
@@ -72,12 +87,23 @@ class ABTestingFramework {
         simple: 'Simple single prediction',
         detailed: 'Detailed multi-timeframe predictions',
         conservative: 'Conservative estimates with disclaimers',
-        optimistic: 'Optimistic projections with growth scenarios'
+        optimistic: 'Optimistic projections with growth scenarios',
       },
-      metrics: ['user_motivation', 'goal_setting', 'package_upgrades', 'activity_level'],
+      metrics: [
+        'user_motivation',
+        'goal_setting',
+        'package_upgrades',
+        'activity_level',
+      ],
       duration: 30, // days
-      trafficSplit: { simple: 25, detailed: 25, conservative: 25, optimistic: 25 },
-      hypothesis: 'Detailed predictions motivate users without creating unrealistic expectations'
+      trafficSplit: {
+        simple: 25,
+        detailed: 25,
+        conservative: 25,
+        optimistic: 25,
+      },
+      hypothesis:
+        'Detailed predictions motivate users without creating unrealistic expectations',
     });
 
     // Test 5: Smart Notifications Frequency
@@ -87,12 +113,18 @@ class ABTestingFramework {
         minimal: '1-2 notifications per week',
         moderate: '3-5 notifications per week',
         active: '1 notification per day',
-        intelligent: 'AI-driven frequency based on user behavior'
+        intelligent: 'AI-driven frequency based on user behavior',
       },
-      metrics: ['click_through_rate', 'notification_settings', 'app_opens', 'user_complaints'],
+      metrics: [
+        'click_through_rate',
+        'notification_settings',
+        'app_opens',
+        'user_complaints',
+      ],
       duration: 21, // days
       trafficSplit: { minimal: 25, moderate: 25, active: 25, intelligent: 25 },
-      hypothesis: 'Intelligent notification frequency maximizes engagement without annoyance'
+      hypothesis:
+        'Intelligent notification frequency maximizes engagement without annoyance',
     });
 
     console.log('✅ A/B Tests initialized successfully');
@@ -109,10 +141,12 @@ class ABTestingFramework {
       endDate: new Date(Date.now() + config.duration * 24 * 60 * 60 * 1000),
       status: 'active',
       participants: 0,
-      results: {}
+      results: {},
     });
 
-    console.log(`📊 Test "${config.name}" configured with ${Object.keys(config.variants).length} variants`);
+    console.log(
+      `📊 Test "${config.name}" configured with ${Object.keys(config.variants).length} variants`
+    );
   }
 
   /**
@@ -126,10 +160,10 @@ class ABTestingFramework {
     const hash = this.hashUserId(userId);
     const variants = Object.keys(test.trafficSplit);
     const weights = Object.values(test.trafficSplit);
-    
+
     let cumulative = 0;
     const targetPercentile = hash % 100;
-    
+
     for (let i = 0; i < variants.length; i++) {
       cumulative += weights[i];
       if (targetPercentile < cumulative) {
@@ -137,7 +171,7 @@ class ABTestingFramework {
         return variants[i];
       }
     }
-    
+
     return variants[0]; // fallback
   }
 
@@ -146,16 +180,16 @@ class ABTestingFramework {
    */
   recordParticipation(testId, userId, variant) {
     const userSegment = this.getUserSegment(userId);
-    
+
     if (!this.userSegments.has(testId)) {
       this.userSegments.set(testId, new Map());
     }
-    
+
     this.userSegments.get(testId).set(userId, {
       variant,
       segment: userSegment,
       startTime: Date.now(),
-      interactions: []
+      interactions: [],
     });
   }
 
@@ -170,7 +204,7 @@ class ABTestingFramework {
     userData.interactions.push({
       metric,
       value,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
 
     this.updateTestMetrics(testId, userData.variant, metric, value);
@@ -196,7 +230,7 @@ class ABTestingFramework {
 
     variantResults.get(metric).push({
       value,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   }
 
@@ -206,7 +240,7 @@ class ABTestingFramework {
   generateTestReport(testId) {
     const test = this.activeTests.get(testId);
     const results = this.testResults.get(testId);
-    
+
     if (!test || !results) {
       return { error: 'Test not found' };
     }
@@ -214,29 +248,37 @@ class ABTestingFramework {
     const report = {
       testName: test.name,
       status: test.status,
-      duration: Math.ceil((Date.now() - test.startDate) / (24 * 60 * 60 * 1000)),
+      duration: Math.ceil(
+        (Date.now() - test.startDate) / (24 * 60 * 60 * 1000)
+      ),
       variants: {},
       winner: null,
       confidence: 0,
-      recommendation: ''
+      recommendation: '',
     };
 
     // Calculate metrics for each variant
     for (const [variant, metrics] of results) {
       report.variants[variant] = {};
-      
+
       for (const [metric, values] of metrics) {
-        const numericValues = values.map(v => typeof v.value === 'number' ? v.value : 1);
+        const numericValues = values.map(v =>
+          typeof v.value === 'number' ? v.value : 1
+        );
         report.variants[variant][metric] = {
           count: values.length,
-          average: numericValues.reduce((a, b) => a + b, 0) / numericValues.length,
-          total: numericValues.reduce((a, b) => a + b, 0)
+          average:
+            numericValues.reduce((a, b) => a + b, 0) / numericValues.length,
+          total: numericValues.reduce((a, b) => a + b, 0),
         };
       }
     }
 
     // Determine winner (simplified)
-    const winnerAnalysis = this.determineWinner(report.variants, test.metrics[0]);
+    const winnerAnalysis = this.determineWinner(
+      report.variants,
+      test.metrics[0]
+    );
     report.winner = winnerAnalysis.winner;
     report.confidence = winnerAnalysis.confidence;
     report.recommendation = winnerAnalysis.recommendation;
@@ -250,7 +292,7 @@ class ABTestingFramework {
   determineWinner(variants, primaryMetric) {
     let bestVariant = null;
     let bestScore = -Infinity;
-    
+
     for (const [variant, metrics] of Object.entries(variants)) {
       if (metrics[primaryMetric]) {
         const score = metrics[primaryMetric].average;
@@ -264,9 +306,9 @@ class ABTestingFramework {
     return {
       winner: bestVariant,
       confidence: Math.min(95, Math.max(60, bestScore * 10)), // Simplified confidence
-      recommendation: bestVariant ? 
-        `Implement ${bestVariant} variant for ${primaryMetric} optimization` :
-        'Continue testing - insufficient data'
+      recommendation: bestVariant
+        ? `Implement ${bestVariant} variant for ${primaryMetric} optimization`
+        : 'Continue testing - insufficient data',
     };
   }
 
@@ -277,7 +319,7 @@ class ABTestingFramework {
     let hash = 0;
     for (let i = 0; i < userId.length; i++) {
       const char = userId.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
+      hash = (hash << 5) - hash + char;
       hash = hash & hash; // Convert to 32bit integer
     }
     return Math.abs(hash);
@@ -294,20 +336,22 @@ class ABTestingFramework {
    */
   getActiveTestsStatus() {
     const status = {};
-    
+
     for (const [testId, test] of this.activeTests) {
       const participants = this.userSegments.get(testId)?.size || 0;
-      const daysRemaining = Math.ceil((test.endDate - Date.now()) / (24 * 60 * 60 * 1000));
-      
+      const daysRemaining = Math.ceil(
+        (test.endDate - Date.now()) / (24 * 60 * 60 * 1000)
+      );
+
       status[testId] = {
         name: test.name,
         participants,
         daysRemaining,
         status: test.status,
-        variants: Object.keys(test.variants).length
+        variants: Object.keys(test.variants).length,
       };
     }
-    
+
     return status;
   }
 }

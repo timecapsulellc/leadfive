@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  FaDollarSign, 
-  FaUsers, 
-  FaRocket, 
+import {
+  FaDollarSign,
+  FaUsers,
+  FaRocket,
   FaShare,
   FaCopy,
   FaDownload,
@@ -16,7 +16,7 @@ import {
   FaFacebook,
   FaTelegram,
   FaWhatsapp,
-  FaTrophy
+  FaTrophy,
 } from 'react-icons/fa';
 import './QuickActionsPanel.css';
 
@@ -33,7 +33,7 @@ const QuickActionsPanel = ({ data }) => {
       icon: FaDollarSign,
       color: '#22c55e',
       action: 'primary',
-      disabled: (data?.totalEarnings || 0) < 10
+      disabled: (data?.totalEarnings || 0) < 10,
     },
     {
       id: 'refer',
@@ -42,7 +42,7 @@ const QuickActionsPanel = ({ data }) => {
       icon: FaShare,
       color: '#3b82f6',
       action: 'secondary',
-      disabled: false
+      disabled: false,
     },
     {
       id: 'upgrade',
@@ -51,7 +51,7 @@ const QuickActionsPanel = ({ data }) => {
       icon: FaRocket,
       color: '#f59e0b',
       action: 'tertiary',
-      disabled: (data?.currentPackage || 0) >= 200
+      disabled: (data?.currentPackage || 0) >= 200,
     },
     {
       id: 'team',
@@ -60,8 +60,8 @@ const QuickActionsPanel = ({ data }) => {
       icon: FaUsers,
       color: '#8b5cf6',
       action: 'info',
-      disabled: false
-    }
+      disabled: false,
+    },
   ];
 
   const referralTools = [
@@ -69,26 +69,26 @@ const QuickActionsPanel = ({ data }) => {
       id: 'copy-link',
       title: 'Copy Link',
       icon: FaCopy,
-      action: () => copyReferralLink()
+      action: () => copyReferralLink(),
     },
     {
       id: 'qr-code',
       title: 'QR Code',
       icon: FaQrcode,
-      action: () => generateQRCode()
+      action: () => generateQRCode(),
     },
     {
       id: 'preview',
       title: 'Preview',
       icon: FaEye,
-      action: () => previewLanding()
+      action: () => previewLanding(),
     },
     {
       id: 'analytics',
       title: 'Analytics',
       icon: FaChartLine,
-      action: () => viewAnalytics()
-    }
+      action: () => viewAnalytics(),
+    },
   ];
 
   const socialShare = [
@@ -96,26 +96,26 @@ const QuickActionsPanel = ({ data }) => {
       platform: 'twitter',
       icon: FaTwitter,
       color: '#1da1f2',
-      text: 'Join me on LeadFive and start building your financial future! 🚀'
+      text: 'Join me on LeadFive and start building your financial future! 🚀',
     },
     {
       platform: 'facebook',
       icon: FaFacebook,
       color: '#4267b2',
-      text: 'Discover LeadFive - The future of decentralized network marketing!'
+      text: 'Discover LeadFive - The future of decentralized network marketing!',
     },
     {
       platform: 'telegram',
       icon: FaTelegram,
       color: '#0088cc',
-      text: 'LeadFive is revolutionizing MLM with blockchain technology!'
+      text: 'LeadFive is revolutionizing MLM with blockchain technology!',
     },
     {
       platform: 'whatsapp',
       icon: FaWhatsapp,
       color: '#25d366',
-      text: 'Check out LeadFive - earn 4x returns with smart contracts!'
-    }
+      text: 'Check out LeadFive - earn 4x returns with smart contracts!',
+    },
   ];
 
   const copyReferralLink = () => {
@@ -132,7 +132,10 @@ const QuickActionsPanel = ({ data }) => {
 
   const previewLanding = () => {
     // Implementation for landing page preview
-    window.open(`https://leadfive.today/ref/${data?.referralCode || 'ABC123'}`, '_blank');
+    window.open(
+      `https://leadfive.today/ref/${data?.referralCode || 'ABC123'}`,
+      '_blank'
+    );
   };
 
   const viewAnalytics = () => {
@@ -140,9 +143,9 @@ const QuickActionsPanel = ({ data }) => {
     console.log('View referral analytics');
   };
 
-  const handleActionClick = (actionId) => {
+  const handleActionClick = actionId => {
     setActiveAction(actionId);
-    
+
     switch (actionId) {
       case 'withdraw':
         // Handle withdraw action
@@ -167,14 +170,14 @@ const QuickActionsPanel = ({ data }) => {
   const shareToSocial = (platform, text) => {
     const referralLink = `https://leadfive.today/ref/${data?.referralCode || 'ABC123'}`;
     const shareText = `${text} ${referralLink}`;
-    
+
     const urls = {
       twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`,
       facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(referralLink)}&quote=${encodeURIComponent(text)}`,
       telegram: `https://t.me/share/url?url=${encodeURIComponent(referralLink)}&text=${encodeURIComponent(text)}`,
-      whatsapp: `https://wa.me/?text=${encodeURIComponent(shareText)}`
+      whatsapp: `https://wa.me/?text=${encodeURIComponent(shareText)}`,
     };
-    
+
     window.open(urls[platform], '_blank', 'width=600,height=400');
   };
 
@@ -187,8 +190,7 @@ const QuickActionsPanel = ({ data }) => {
         </h3>
         <div className="header-stats">
           <span className="stat">
-            <FaWallet />
-            ${data?.totalEarnings?.toFixed(2) || '0.00'}
+            <FaWallet />${data?.totalEarnings?.toFixed(2) || '0.00'}
           </span>
         </div>
       </div>
@@ -203,14 +205,18 @@ const QuickActionsPanel = ({ data }) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              whileHover={!action.disabled ? { 
-                scale: 1.05,
-                boxShadow: `0 10px 25px ${action.color}30`
-              } : {}}
+              whileHover={
+                !action.disabled
+                  ? {
+                      scale: 1.05,
+                      boxShadow: `0 10px 25px ${action.color}30`,
+                    }
+                  : {}
+              }
               whileTap={!action.disabled ? { scale: 0.95 } : {}}
               disabled={action.disabled}
             >
-              <div 
+              <div
                 className="action-icon"
                 style={{ backgroundColor: action.color }}
               >
@@ -223,8 +229,11 @@ const QuickActionsPanel = ({ data }) => {
               {action.disabled && (
                 <div className="disabled-overlay">
                   <small>
-                    {action.id === 'withdraw' ? 'Min $10' : 
-                     action.id === 'upgrade' ? 'Max Level' : 'N/A'}
+                    {action.id === 'withdraw'
+                      ? 'Min $10'
+                      : action.id === 'upgrade'
+                        ? 'Max Level'
+                        : 'N/A'}
                   </small>
                 </div>
               )}
@@ -234,7 +243,7 @@ const QuickActionsPanel = ({ data }) => {
       ) : (
         <div className="referral-tools-section">
           <div className="section-header">
-            <button 
+            <button
               className="back-btn"
               onClick={() => setShowReferralTools(false)}
             >
@@ -247,20 +256,22 @@ const QuickActionsPanel = ({ data }) => {
           <div className="referral-link-section">
             <label>Your Referral Link</label>
             <div className="link-container">
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={`https://leadfive.today/ref/${data?.referralCode || 'ABC123'}`}
                 readOnly
                 className="referral-input"
               />
-              <button 
+              <button
                 className={`copy-btn ${copied ? 'copied' : ''}`}
                 onClick={copyReferralLink}
               >
                 {copied ? '✓' : <FaCopy />}
               </button>
             </div>
-            {copied && <small className="copy-success">Link copied to clipboard!</small>}
+            {copied && (
+              <small className="copy-success">Link copied to clipboard!</small>
+            )}
           </div>
 
           {/* Referral Tools Grid */}

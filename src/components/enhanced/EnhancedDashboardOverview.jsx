@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  FaDollarSign, 
-  FaUsers, 
-  FaChartLine, 
+import {
+  FaDollarSign,
+  FaUsers,
+  FaChartLine,
   FaTrophy,
   FaRocket,
   FaBell,
@@ -15,7 +15,7 @@ import {
   FaDownload,
   FaPlay,
   FaPause,
-  FaExpand
+  FaExpand,
 } from 'react-icons/fa';
 import { Line, Doughnut, Bar } from 'react-chartjs-2';
 import {
@@ -28,7 +28,7 @@ import {
   Tooltip,
   Legend,
   ArcElement,
-  BarElement
+  BarElement,
 } from 'chart.js';
 import './EnhancedDashboardOverview.css';
 
@@ -54,7 +54,7 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
     growthRate: 23.5,
     progressTo4x: 73.2,
     weeklyGrowth: 12.8,
-    monthlyProjection: 2456.80
+    monthlyProjection: 2456.8,
   });
 
   // Real-time updates simulation
@@ -64,10 +64,10 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
     const interval = setInterval(() => {
       setCurrentStats(prev => ({
         ...prev,
-        totalEarnings: prev.totalEarnings + (Math.random() * 10),
+        totalEarnings: prev.totalEarnings + Math.random() * 10,
         teamSize: prev.teamSize + (Math.random() > 0.8 ? 1 : 0),
         growthRate: prev.growthRate + (Math.random() - 0.5) * 2,
-        progressTo4x: Math.min(100, prev.progressTo4x + Math.random() * 0.5)
+        progressTo4x: Math.min(100, prev.progressTo4x + Math.random() * 0.5),
       }));
 
       // Add random notifications
@@ -75,13 +75,14 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
         const newNotification = {
           id: Date.now(),
           type: Math.random() > 0.5 ? 'earning' : 'referral',
-          message: Math.random() > 0.5 
-            ? `New referral joined: +$${(Math.random() * 50).toFixed(2)}` 
-            : `Matrix spillover: +$${(Math.random() * 25).toFixed(2)}`,
+          message:
+            Math.random() > 0.5
+              ? `New referral joined: +$${(Math.random() * 50).toFixed(2)}`
+              : `Matrix spillover: +$${(Math.random() * 25).toFixed(2)}`,
           timestamp: new Date(),
-          amount: Math.random() * 50
+          amount: Math.random() * 50,
         };
-        
+
         setNotifications(prev => [newNotification, ...prev.slice(0, 9)]);
       }
     }, 3000);
@@ -99,7 +100,7 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
         borderColor: 'rgb(75, 192, 192)',
         backgroundColor: 'rgba(75, 192, 192, 0.1)',
         tension: 0.4,
-        fill: true
+        fill: true,
       },
       {
         label: 'Team Earnings',
@@ -107,24 +108,32 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.1)',
         tension: 0.4,
-        fill: true
-      }
-    ]
+        fill: true,
+      },
+    ],
   };
 
   const commissionBreakdownData = {
-    labels: ['Direct Referrals', 'Level Bonuses', 'Matrix Spillover', 'Leader Pool', 'Help Pool'],
-    datasets: [{
-      data: [40, 15, 20, 15, 10],
-      backgroundColor: [
-        '#FF6384',
-        '#36A2EB',
-        '#FFCE56',
-        '#4BC0C0',
-        '#9966FF'
-      ],
-      borderWidth: 0
-    }]
+    labels: [
+      'Direct Referrals',
+      'Level Bonuses',
+      'Matrix Spillover',
+      'Leader Pool',
+      'Help Pool',
+    ],
+    datasets: [
+      {
+        data: [40, 15, 20, 15, 10],
+        backgroundColor: [
+          '#FF6384',
+          '#36A2EB',
+          '#FFCE56',
+          '#4BC0C0',
+          '#9966FF',
+        ],
+        borderWidth: 0,
+      },
+    ],
   };
 
   const chartOptions = {
@@ -136,32 +145,34 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
         labels: {
           color: '#ffffff',
           usePointStyle: true,
-          padding: 20
-        }
-      }
+          padding: 20,
+        },
+      },
     },
     scales: {
       y: {
         grid: {
-          color: 'rgba(255, 255, 255, 0.1)'
+          color: 'rgba(255, 255, 255, 0.1)',
         },
         ticks: {
-          color: '#ffffff'
-        }
+          color: '#ffffff',
+        },
       },
       x: {
         grid: {
-          color: 'rgba(255, 255, 255, 0.1)'
+          color: 'rgba(255, 255, 255, 0.1)',
         },
         ticks: {
-          color: '#ffffff'
-        }
-      }
-    }
+          color: '#ffffff',
+        },
+      },
+    },
   };
 
   const copyReferralLink = () => {
-    navigator.clipboard.writeText(`https://leadfive.today/ref/${userData?.referralCode || 'ABC123'}`);
+    navigator.clipboard.writeText(
+      `https://leadfive.today/ref/${userData?.referralCode || 'ABC123'}`
+    );
     // Add toast notification
   };
 
@@ -170,17 +181,17 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
       {/* Header Controls */}
       <div className="dashboard-controls">
         <div className="view-controls">
-          <button 
+          <button
             className={`control-btn ${isLiveMode ? 'active' : ''}`}
             onClick={() => setIsLiveMode(!isLiveMode)}
           >
             {isLiveMode ? <FaPause /> : <FaPlay />}
             {isLiveMode ? 'Live' : 'Paused'}
           </button>
-          
-          <select 
+
+          <select
             value={selectedTimeframe}
-            onChange={(e) => setSelectedTimeframe(e.target.value)}
+            onChange={e => setSelectedTimeframe(e.target.value)}
             className="timeframe-select"
           >
             <option value="24h">Last 24 Hours</option>
@@ -202,10 +213,10 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
 
       {/* Main KPI Cards */}
       <div className="kpi-grid">
-        <motion.div 
+        <motion.div
           className="kpi-card earnings"
           whileHover={{ scale: 1.02 }}
-          transition={{ type: "spring", stiffness: 300 }}
+          transition={{ type: 'spring', stiffness: 300 }}
         >
           <div className="kpi-header">
             <div className="kpi-icon">
@@ -216,21 +227,28 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
             </div>
           </div>
           <div className="kpi-value">
-            ${currentStats.totalEarnings.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+            $
+            {currentStats.totalEarnings.toLocaleString(undefined, {
+              minimumFractionDigits: 2,
+            })}
           </div>
           <div className="kpi-label">Total Earnings</div>
           <div className="kpi-subtitle">
-            vs Last Week: +${((currentStats.totalEarnings * currentStats.weeklyGrowth) / 100).toFixed(2)}
+            vs Last Week: +$
+            {(
+              (currentStats.totalEarnings * currentStats.weeklyGrowth) /
+              100
+            ).toFixed(2)}
           </div>
           <div className="kpi-chart">
             <div className="mini-chart earnings-chart"></div>
           </div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="kpi-card team"
           whileHover={{ scale: 1.02 }}
-          transition={{ type: "spring", stiffness: 300 }}
+          transition={{ type: 'spring', stiffness: 300 }}
         >
           <div className="kpi-header">
             <div className="kpi-icon">
@@ -243,17 +261,18 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
           <div className="kpi-value">{currentStats.teamSize}</div>
           <div className="kpi-label">Team Size</div>
           <div className="kpi-subtitle">
-            Direct: {Math.floor(currentStats.teamSize * 0.15)} • Active: {Math.floor(currentStats.teamSize * 0.78)}
+            Direct: {Math.floor(currentStats.teamSize * 0.15)} • Active:{' '}
+            {Math.floor(currentStats.teamSize * 0.78)}
           </div>
           <div className="kpi-chart">
             <div className="mini-chart team-chart"></div>
           </div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="kpi-card growth"
           whileHover={{ scale: 1.02 }}
-          transition={{ type: "spring", stiffness: 300 }}
+          transition={{ type: 'spring', stiffness: 300 }}
         >
           <div className="kpi-header">
             <div className="kpi-icon">
@@ -266,34 +285,43 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
           <div className="kpi-value">{currentStats.growthRate.toFixed(1)}%</div>
           <div className="kpi-label">Growth Rate</div>
           <div className="kpi-subtitle">
-            Monthly: +{(currentStats.growthRate * 4).toFixed(1)}% • Projected: ${currentStats.monthlyProjection.toFixed(0)}
+            Monthly: +{(currentStats.growthRate * 4).toFixed(1)}% • Projected: $
+            {currentStats.monthlyProjection.toFixed(0)}
           </div>
           <div className="kpi-chart">
             <div className="mini-chart growth-chart"></div>
           </div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="kpi-card progress"
           whileHover={{ scale: 1.02 }}
-          transition={{ type: "spring", stiffness: 300 }}
+          transition={{ type: 'spring', stiffness: 300 }}
         >
           <div className="kpi-header">
             <div className="kpi-icon">
               <FaTrophy />
             </div>
             <div className="kpi-trend">
-              ${(currentStats.totalEarnings * 4 - currentStats.totalEarnings).toFixed(0)} left
+              $
+              {(
+                currentStats.totalEarnings * 4 -
+                currentStats.totalEarnings
+              ).toFixed(0)}{' '}
+              left
             </div>
           </div>
-          <div className="kpi-value">{currentStats.progressTo4x.toFixed(1)}%</div>
+          <div className="kpi-value">
+            {currentStats.progressTo4x.toFixed(1)}%
+          </div>
           <div className="kpi-label">Progress to 4x</div>
           <div className="kpi-subtitle">
-            Target: ${(currentStats.totalEarnings * 4).toFixed(0)} • ETA: {Math.ceil((100 - currentStats.progressTo4x) * 2)} days
+            Target: ${(currentStats.totalEarnings * 4).toFixed(0)} • ETA:{' '}
+            {Math.ceil((100 - currentStats.progressTo4x) * 2)} days
           </div>
           <div className="progress-bar">
-            <div 
-              className="progress-fill" 
+            <div
+              className="progress-fill"
               style={{ width: `${currentStats.progressTo4x}%` }}
             ></div>
           </div>
@@ -303,7 +331,7 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
       {/* Main Content Grid */}
       <div className="content-grid">
         {/* Earnings Chart */}
-        <motion.div 
+        <motion.div
           className="chart-card earnings-chart-card"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -326,7 +354,7 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
         </motion.div>
 
         {/* Commission Breakdown */}
-        <motion.div 
+        <motion.div
           className="chart-card commission-card"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -342,8 +370,8 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
             </div>
           </div>
           <div className="chart-container">
-            <Doughnut 
-              data={commissionBreakdownData} 
+            <Doughnut
+              data={commissionBreakdownData}
               options={{
                 ...chartOptions,
                 plugins: {
@@ -355,18 +383,18 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
                       usePointStyle: true,
                       padding: 15,
                       font: {
-                        size: 11
-                      }
-                    }
-                  }
-                }
-              }} 
+                        size: 11,
+                      },
+                    },
+                  },
+                },
+              }}
             />
           </div>
         </motion.div>
 
         {/* Live Notifications */}
-        <motion.div 
+        <motion.div
           className="notifications-card"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -382,7 +410,7 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
           </div>
           <div className="notifications-list">
             <AnimatePresence>
-              {notifications.map((notification) => (
+              {notifications.map(notification => (
                 <motion.div
                   key={notification.id}
                   className={`notification-item ${notification.type}`}
@@ -392,10 +420,16 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
                   transition={{ duration: 0.3 }}
                 >
                   <div className="notification-icon">
-                    {notification.type === 'earning' ? <FaDollarSign /> : <FaUsers />}
+                    {notification.type === 'earning' ? (
+                      <FaDollarSign />
+                    ) : (
+                      <FaUsers />
+                    )}
                   </div>
                   <div className="notification-content">
-                    <div className="notification-message">{notification.message}</div>
+                    <div className="notification-message">
+                      {notification.message}
+                    </div>
                     <div className="notification-time">
                       {notification.timestamp.toLocaleTimeString()}
                     </div>
@@ -410,7 +444,7 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
         </motion.div>
 
         {/* Quick Actions */}
-        <motion.div 
+        <motion.div
           className="quick-actions-card"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -423,25 +457,34 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
             </h3>
           </div>
           <div className="actions-grid">
-            <button className="action-btn primary" onClick={() => onActionClick?.('withdraw')}>
+            <button
+              className="action-btn primary"
+              onClick={() => onActionClick?.('withdraw')}
+            >
               <FaDollarSign />
               <span>Withdraw Funds</span>
               <small>${currentStats.totalEarnings.toFixed(2)} available</small>
             </button>
-            
+
             <button className="action-btn secondary" onClick={copyReferralLink}>
               <FaShareAlt />
               <span>Share Referral</span>
               <small>Earn 25% commission</small>
             </button>
-            
-            <button className="action-btn tertiary" onClick={() => onActionClick?.('upgrade')}>
+
+            <button
+              className="action-btn tertiary"
+              onClick={() => onActionClick?.('upgrade')}
+            >
               <FaRocket />
               <span>Upgrade Package</span>
               <small>Unlock higher earnings</small>
             </button>
-            
-            <button className="action-btn info" onClick={() => onActionClick?.('team')}>
+
+            <button
+              className="action-btn info"
+              onClick={() => onActionClick?.('team')}
+            >
               <FaUsers />
               <span>View Team</span>
               <small>{currentStats.teamSize} members</small>
@@ -450,7 +493,7 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
         </motion.div>
 
         {/* Referral Link Card */}
-        <motion.div 
+        <motion.div
           className="referral-card"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -492,7 +535,7 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
         </motion.div>
 
         {/* Achievement Progress */}
-        <motion.div 
+        <motion.div
           className="achievement-card"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -508,19 +551,29 @@ const EnhancedDashboardOverview = ({ userData, onActionClick }) => {
           <div className="achievements-list">
             {[
               { name: 'First Referral', progress: 100, reward: '$10 Bonus' },
-              { name: 'Team Builder', progress: 85, reward: '5% Extra Commission' },
-              { name: 'Network Leader', progress: 45, reward: 'Leadership Pool Access' },
-              { name: 'Elite Performer', progress: 12, reward: 'VIP Support' }
+              {
+                name: 'Team Builder',
+                progress: 85,
+                reward: '5% Extra Commission',
+              },
+              {
+                name: 'Network Leader',
+                progress: 45,
+                reward: 'Leadership Pool Access',
+              },
+              { name: 'Elite Performer', progress: 12, reward: 'VIP Support' },
             ].map((achievement, idx) => (
               <div key={idx} className="achievement-item">
                 <div className="achievement-info">
                   <span className="achievement-name">{achievement.name}</span>
-                  <span className="achievement-reward">{achievement.reward}</span>
+                  <span className="achievement-reward">
+                    {achievement.reward}
+                  </span>
                 </div>
                 <div className="achievement-progress">
                   <div className="progress-bar small">
-                    <div 
-                      className="progress-fill" 
+                    <div
+                      className="progress-fill"
                       style={{ width: `${achievement.progress}%` }}
                     ></div>
                   </div>

@@ -14,7 +14,7 @@ export function useGlobalStats(contract) {
     freeRegs: 0,
     flexRegs: 0,
     loading: true,
-    error: null
+    error: null,
   });
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export function useGlobalStats(contract) {
           freeRegs: result[5].toNumber(),
           flexRegs: result[6].toNumber(),
           loading: false,
-          error: null
+          error: null,
         });
       } catch (err) {
         if (!mounted) return;
@@ -41,7 +41,9 @@ export function useGlobalStats(contract) {
       }
     }
     fetchStats();
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, [contract]);
 
   return stats;

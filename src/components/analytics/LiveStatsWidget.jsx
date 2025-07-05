@@ -22,8 +22,12 @@ function LiveStatsWidget({ liveStats, wsConnected, deviceInfo }) {
           <span className="stat-value">${liveStats.avgDeposit.toFixed(2)}</span>
         </div>
       </div>
-      <div className={`live-indicator ${wsConnected ? 'connected' : 'disconnected'}`}></div>
-      <div className="last-updated">Last updated: {new Date(liveStats.lastUpdated).toLocaleTimeString()}</div>
+      <div
+        className={`live-indicator ${wsConnected ? 'connected' : 'disconnected'}`}
+      ></div>
+      <div className="last-updated">
+        Last updated: {new Date(liveStats.lastUpdated).toLocaleTimeString()}
+      </div>
     </div>
   );
 }

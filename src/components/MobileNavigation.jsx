@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  FaChartLine, 
-  FaRobot, 
-  FaNetworkWired, 
-  FaDollarSign, 
+import {
+  FaChartLine,
+  FaRobot,
+  FaNetworkWired,
+  FaDollarSign,
   FaUsers,
   FaWallet,
   FaHistory,
   FaTrophy,
   FaCog,
   FaBars,
-  FaTimes
+  FaTimes,
 } from 'react-icons/fa';
 import './MobileNavigation.css';
 
-const MobileNavigation = ({ activeSection, onSectionChange, isOpen, onToggle }) => {
+const MobileNavigation = ({
+  activeSection,
+  onSectionChange,
+  isOpen,
+  onToggle,
+}) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const navItems = [
@@ -22,14 +27,14 @@ const MobileNavigation = ({ activeSection, onSectionChange, isOpen, onToggle }) 
     { id: 'ai-insights', label: 'AI', icon: FaRobot },
     { id: 'network', label: 'Network', icon: FaNetworkWired },
     { id: 'earnings', label: 'Earnings', icon: FaDollarSign },
-    { id: 'referrals', label: 'Team', icon: FaUsers }
+    { id: 'referrals', label: 'Team', icon: FaUsers },
   ];
 
   const secondaryItems = [
     { id: 'withdrawals', label: 'Withdraw', icon: FaWallet },
     { id: 'activity', label: 'Activity', icon: FaHistory },
     { id: 'performance', label: 'Stats', icon: FaTrophy },
-    { id: 'settings', label: 'Settings', icon: FaCog }
+    { id: 'settings', label: 'Settings', icon: FaCog },
   ];
 
   useEffect(() => {
@@ -37,7 +42,7 @@ const MobileNavigation = ({ activeSection, onSectionChange, isOpen, onToggle }) 
     setIsVisible(true);
   }, []);
 
-  const handleItemClick = (sectionId) => {
+  const handleItemClick = sectionId => {
     onSectionChange(sectionId);
     if (isOpen) {
       onToggle(); // Close expanded menu
@@ -48,7 +53,7 @@ const MobileNavigation = ({ activeSection, onSectionChange, isOpen, onToggle }) 
     <>
       {/* Mobile Bottom Navigation Bar */}
       <div className={`mobile-nav-bar ${isVisible ? 'visible' : ''}`}>
-        {navItems.map((item) => (
+        {navItems.map(item => (
           <button
             key={item.id}
             className={`mobile-nav-item ${activeSection === item.id ? 'active' : ''}`}
@@ -58,13 +63,17 @@ const MobileNavigation = ({ activeSection, onSectionChange, isOpen, onToggle }) 
             <span className="nav-label">{item.label}</span>
           </button>
         ))}
-        
+
         {/* More Menu Button */}
         <button
           className={`mobile-nav-item more-menu ${isOpen ? 'active' : ''}`}
           onClick={onToggle}
         >
-          {isOpen ? <FaTimes className="nav-icon" /> : <FaBars className="nav-icon" />}
+          {isOpen ? (
+            <FaTimes className="nav-icon" />
+          ) : (
+            <FaBars className="nav-icon" />
+          )}
           <span className="nav-label">More</span>
         </button>
       </div>
@@ -80,9 +89,9 @@ const MobileNavigation = ({ activeSection, onSectionChange, isOpen, onToggle }) 
                 <FaTimes />
               </button>
             </div>
-            
+
             <div className="menu-items">
-              {secondaryItems.map((item) => (
+              {secondaryItems.map(item => (
                 <button
                   key={item.id}
                   className={`menu-item ${activeSection === item.id ? 'active' : ''}`}

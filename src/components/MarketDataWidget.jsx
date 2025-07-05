@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import coinMarketCapService from '../services/coinMarketCapService';
 import './MarketDataWidget.css';
 
-const MarketDataWidget = ({ 
-  compact = false, 
+const MarketDataWidget = ({
+  compact = false,
   showChart = false,
-  refreshInterval = 60000 // 1 minute
+  refreshInterval = 60000, // 1 minute
 }) => {
   const [marketData, setMarketData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -27,7 +27,7 @@ const MarketDataWidget = ({
 
   useEffect(() => {
     fetchMarketData();
-    
+
     const interval = setInterval(fetchMarketData, refreshInterval);
     return () => clearInterval(interval);
   }, [refreshInterval]);
@@ -76,15 +76,17 @@ const MarketDataWidget = ({
         <h3>Market Overview</h3>
         <div className="header-controls">
           <div className="market-sentiment">
-            <span className={`sentiment-indicator ${averageChange >= 0 ? 'bullish' : 'bearish'}`}>
+            <span
+              className={`sentiment-indicator ${averageChange >= 0 ? 'bullish' : 'bearish'}`}
+            >
               {averageChange >= 0 ? '📈' : '📉'}
             </span>
             <span className="sentiment-text">
               {averageChange >= 0 ? 'Bullish' : 'Bearish'}
             </span>
           </div>
-          <button 
-            onClick={handleRefresh} 
+          <button
+            onClick={handleRefresh}
             className="refresh-btn"
             disabled={loading}
           >
@@ -98,8 +100,11 @@ const MarketDataWidget = ({
           <div className="market-summary">
             <div className="summary-item">
               <span className="summary-label">Average Change (24h)</span>
-              <span className={`summary-value ${averageChange >= 0 ? 'positive' : 'negative'}`}>
-                {averageChange >= 0 ? '+' : ''}{averageChange.toFixed(2)}%
+              <span
+                className={`summary-value ${averageChange >= 0 ? 'positive' : 'negative'}`}
+              >
+                {averageChange >= 0 ? '+' : ''}
+                {averageChange.toFixed(2)}%
               </span>
             </div>
           </div>
@@ -116,8 +121,10 @@ const MarketDataWidget = ({
                   </span>
                 </div>
                 <div className="crypto-details">
-                  <span className={`price-change ${data.change24h >= 0 ? 'positive' : 'negative'}`}>
-                    {data.change24h >= 0 ? '▲' : '▼'} 
+                  <span
+                    className={`price-change ${data.change24h >= 0 ? 'positive' : 'negative'}`}
+                  >
+                    {data.change24h >= 0 ? '▲' : '▼'}
                     {coinMarketCapService.formatChange(data.change24h)}
                   </span>
                   {!compact && data.volume24h > 0 && (
@@ -130,10 +137,10 @@ const MarketDataWidget = ({
               {!compact && (
                 <div className="crypto-visual">
                   <div className="price-bar">
-                    <div 
+                    <div
                       className={`price-fill ${data.change24h >= 0 ? 'positive' : 'negative'}`}
-                      style={{ 
-                        width: `${Math.min(Math.abs(data.change24h) * 10, 100)}%` 
+                      style={{
+                        width: `${Math.min(Math.abs(data.change24h) * 10, 100)}%`,
                       }}
                     ></div>
                   </div>
@@ -161,7 +168,7 @@ const MarketDataWidget = ({
 };
 
 // Helper function to format volume
-const formatVolume = (volume) => {
+const formatVolume = volume => {
   if (volume >= 1e9) {
     return `$${(volume / 1e9).toFixed(1)}B`;
   } else if (volume >= 1e6) {
@@ -201,8 +208,11 @@ export const MarketSummaryCard = () => {
         <div className="card-icon">📊</div>
         <div className="card-info">
           <div className="card-title">Market</div>
-          <div className={`card-value ${summary.averageChange >= 0 ? 'positive' : 'negative'}`}>
-            {summary.averageChange >= 0 ? '+' : ''}{summary.averageChange.toFixed(1)}%
+          <div
+            className={`card-value ${summary.averageChange >= 0 ? 'positive' : 'negative'}`}
+          >
+            {summary.averageChange >= 0 ? '+' : ''}
+            {summary.averageChange.toFixed(1)}%
           </div>
         </div>
         <div className="card-indicator">

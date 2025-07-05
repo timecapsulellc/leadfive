@@ -15,7 +15,7 @@ export function useDistributionStatus(contract) {
     ghpReady: false,
     leaderReady: false,
     loading: true,
-    error: null
+    error: null,
   });
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export function useDistributionStatus(contract) {
           ghpReady: result[4],
           leaderReady: result[5],
           loading: false,
-          error: null
+          error: null,
         });
       } catch (err) {
         if (!mounted) return;
@@ -41,7 +41,9 @@ export function useDistributionStatus(contract) {
       }
     }
     fetchStatus();
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, [contract]);
 
   return status;

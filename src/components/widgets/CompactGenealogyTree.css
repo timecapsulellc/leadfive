@@ -1,0 +1,384 @@
+/**
+ * Compact Genealogy Tree Widget Styles
+ */
+
+.compact-genealogy-tree {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.compact-genealogy-tree:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Header */
+.compact-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.header-info h4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.header-info h4 svg {
+  color: #667eea;
+}
+
+.header-info p {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.compact-controls {
+  display: flex;
+  gap: 4px;
+}
+
+.layout-toggle,
+.expand-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 6px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 12px;
+}
+
+.layout-toggle:hover,
+.expand-btn:hover {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+}
+
+.layout-toggle.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.expand-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.expand-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Tree Container */
+.tree-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px 0;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+}
+
+.compact-tree-svg {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.compact-tree-svg .node circle {
+  transition: all 0.3s ease;
+}
+
+.compact-tree-svg .node:hover circle {
+  transform: scale(1.1);
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
+}
+
+.compact-tree-svg .link {
+  transition: all 0.3s ease;
+}
+
+.compact-tree-svg .link:hover {
+  stroke-width: 3;
+  stroke-opacity: 1;
+}
+
+/* Quick Stats */
+.quick-stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 12px 0;
+  padding: 12px 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.stat-icon {
+  font-size: 16px;
+  color: #667eea;
+  flex-shrink: 0;
+}
+
+.stat-item.success .stat-icon {
+  color: #10b981;
+}
+
+.activity-indicator {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+.stat-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.stat-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stat-label {
+  font-size: 10px;
+  color: #6b7280;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Footer */
+.tree-footer {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.view-full-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-full-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .compact-genealogy-tree {
+    height: 350px;
+    padding: 16px;
+  }
+  
+  .compact-header {
+    margin-bottom: 12px;
+  }
+  
+  .header-info h4 {
+    font-size: 14px;
+  }
+  
+  .header-info p {
+    font-size: 11px;
+  }
+  
+  .quick-stats {
+    gap: 8px;
+    margin: 8px 0;
+  }
+  
+  .stat-value {
+    font-size: 12px;
+  }
+  
+  .stat-label {
+    font-size: 9px;
+  }
+  
+  .view-full-btn {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .compact-genealogy-tree {
+    height: 300px;
+    padding: 12px;
+  }
+  
+  .compact-controls {
+    gap: 2px;
+  }
+  
+  .layout-toggle,
+  .expand-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+  
+  .quick-stats {
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .stat-item {
+    justify-content: center;
+  }
+}
+
+/* Animation Enhancements */
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.compact-genealogy-tree {
+  animation: slideInFromBottom 0.6s ease-out;
+}
+
+/* Loading State */
+.compact-genealogy-tree.loading .tree-container {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Accessibility */
+.compact-genealogy-tree button:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.compact-genealogy-tree .node[tabindex]:focus {
+  outline: 2px solid #fbbf24;
+  outline-offset: 2px;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .compact-genealogy-tree {
+    background: #1f2937;
+    border-color: #374151;
+  }
+  
+  .header-info h4 {
+    color: #f9fafb;
+  }
+  
+  .header-info p {
+    color: #9ca3af;
+  }
+  
+  .tree-container {
+    background: linear-gradient(135deg, #374151, #4b5563);
+  }
+  
+  .stat-value {
+    color: #f9fafb;
+  }
+  
+  .stat-label {
+    color: #9ca3af;
+  }
+  
+  .quick-stats,
+  .tree-footer {
+    border-color: #374151;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .compact-genealogy-tree {
+    border: 2px solid #000;
+  }
+  
+  .layout-toggle,
+  .expand-btn {
+    border: 1px solid #000;
+  }
+  
+  .view-full-btn {
+    background: #000;
+    color: #fff;
+  }
+}

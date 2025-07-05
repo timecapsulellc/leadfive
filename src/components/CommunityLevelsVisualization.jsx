@@ -1,6 +1,6 @@
 /**
  * Community Levels Visualization - PhD-Level Implementation
- * 
+ *
  * Unified genealogy tree component that aligns with LeadFive Business Plan 2025
  * - Uses approved terminology (Community Levels, Community Structure, Introductions)
  * - Integrates with smart contract data
@@ -8,22 +8,40 @@
  * - Real-time analytics and insights
  */
 
-import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+} from 'react';
 import Tree from 'react-d3-tree';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  FaUsers, FaChartLine, FaSearch, FaExpand, FaCompress, 
-  FaDownload, FaEye, FaEyeSlash, FaBullseye, FaCrown,
-  FaGem, FaCoins, FaNetworkWired, FaRocket, FaAward
+import {
+  FaUsers,
+  FaChartLine,
+  FaSearch,
+  FaExpand,
+  FaCompress,
+  FaDownload,
+  FaEye,
+  FaEyeSlash,
+  FaBullseye,
+  FaCrown,
+  FaGem,
+  FaCoins,
+  FaNetworkWired,
+  FaRocket,
+  FaAward,
 } from 'react-icons/fa';
 import './CommunityLevelsVisualization.css';
 
-const CommunityLevelsVisualization = ({ 
-  userAddress, 
-  contractInstance, 
+const CommunityLevelsVisualization = ({
+  userAddress,
+  contractInstance,
   mode = 'standard', // standard, enhanced, analytics
   showControls = true,
-  initialDepth = 3 
+  initialDepth = 3,
 }) => {
   // State management
   const [communityData, setCommunityData] = useState(null);
@@ -38,7 +56,7 @@ const CommunityLevelsVisualization = ({
     activeOnly: false,
     minLevel: 1,
     maxLevel: 6,
-    packageType: 'all'
+    packageType: 'all',
   });
 
   const treeRef = useRef(null);
@@ -57,20 +75,25 @@ const CommunityLevelsVisualization = ({
   const loadCommunityData = async () => {
     try {
       setLoading(true);
-      
+
       // Fetch user's community structure from smart contract
       const userInfo = await contractInstance.getUserInfo(userAddress);
-      const introductions = await contractInstance.getUserReferrals(userAddress);
+      const introductions =
+        await contractInstance.getUserReferrals(userAddress);
       const levels = await contractInstance.getNetworkLevels(userAddress, 6);
-      
+
       // Build community tree structure
-      const tree = await buildCommunityTree(userAddress, userInfo, introductions, levels);
+      const tree = await buildCommunityTree(
+        userAddress,
+        userInfo,
+        introductions,
+        levels
+      );
       setCommunityData(tree);
-      
+
       // Calculate analytics
       const analyticsData = calculateAnalytics(tree);
       setAnalytics(analyticsData);
-      
     } catch (error) {
       console.error('Error loading community data:', error);
       loadDemoData();
@@ -87,16 +110,18 @@ const CommunityLevelsVisualization = ({
   };
 
   // Generate demo community data aligned with business plan
-  const generateDemoCommunityData = (address) => {
+  const generateDemoCommunityData = address => {
     const packages = [
       { id: 1, name: 'Bronze', price: 30, color: '#CD7F32', earnings: 120 },
       { id: 2, name: 'Silver', price: 50, color: '#C0C0C0', earnings: 200 },
       { id: 3, name: 'Gold', price: 100, color: '#FFD700', earnings: 400 },
-      { id: 4, name: 'Diamond', price: 200, color: '#7B2CBF', earnings: 800 }
+      { id: 4, name: 'Diamond', price: 200, color: '#7B2CBF', earnings: 800 },
     ];
 
-    const getRandomPackage = () => packages[Math.floor(Math.random() * packages.length)];
-    const generateAddress = () => `0x${Math.random().toString(16).substr(2, 8)}...${Math.random().toString(16).substr(2, 4)}`;
+    const getRandomPackage = () =>
+      packages[Math.floor(Math.random() * packages.length)];
+    const generateAddress = () =>
+      `0x${Math.random().toString(16).substr(2, 8)}...${Math.random().toString(16).substr(2, 4)}`;
 
     const generateNode = (level, position, parentPackage = null) => {
       const pkg = getRandomPackage();
@@ -109,7 +134,8 @@ const CommunityLevelsVisualization = ({
       return {
         name: level === 1 ? 'YOU' : `Level ${level}`,
         attributes: {
-          address: level === 1 ? (address || generateAddress()) : generateAddress(),
+          address:
+            level === 1 ? address || generateAddress() : generateAddress(),
           level: level,
           position: position,
           package: pkg,
@@ -119,8 +145,16 @@ const CommunityLevelsVisualization = ({
           volume: volume,
           earnings: currentEarnings,
           earningsPercentage: (currentEarnings / pkg.earnings) * 100,
-          joinDate: new Date(Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-          lastActivity: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+          joinDate: new Date(
+            Date.now() - Math.random() * 365 * 24 * 60 * 60 * 1000
+          )
+            .toISOString()
+            .split('T')[0],
+          lastActivity: new Date(
+            Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000
+          )
+            .toISOString()
+            .split('T')[0],
           // Business plan reward structure
           directCommunityBonus: volume * 0.4, // 40%
           levelRewards: volume * 0.1, // 10%
@@ -128,9 +162,11 @@ const CommunityLevelsVisualization = ({
           leadershipRewards: directIntroductions >= 5 ? volume * 0.1 : 0, // 10% if qualified
           communityGrowthPool: volume * 0.3, // 30%
           // Collection rates based on introductions
-          collectionRate: directIntroductions >= 20 ? 90 : directIntroductions >= 5 ? 80 : 70,
-          reinvestmentRate: directIntroductions >= 20 ? 10 : directIntroductions >= 5 ? 20 : 30
-        }
+          collectionRate:
+            directIntroductions >= 20 ? 90 : directIntroductions >= 5 ? 80 : 70,
+          reinvestmentRate:
+            directIntroductions >= 20 ? 10 : directIntroductions >= 5 ? 20 : 30,
+        },
       };
     };
 
@@ -139,7 +175,11 @@ const CommunityLevelsVisualization = ({
       const children = [];
       for (let i = 0; i < count && i < 5; i++) {
         const child = generateNode(level + 1, `${level}-${i}`);
-        child.children = generateChildren(level + 1, maxLevel, Math.floor(Math.random() * 3));
+        child.children = generateChildren(
+          level + 1,
+          maxLevel,
+          Math.floor(Math.random() * 3)
+        );
         children.push(child);
       }
       return children;
@@ -152,7 +192,7 @@ const CommunityLevelsVisualization = ({
   };
 
   // Calculate comprehensive analytics
-  const calculateAnalytics = (data) => {
+  const calculateAnalytics = data => {
     if (!data) return {};
 
     const analytics = {
@@ -163,7 +203,7 @@ const CommunityLevelsVisualization = ({
       levelBreakdown: {},
       packageBreakdown: {},
       performanceMetrics: {},
-      growthProjections: {}
+      growthProjections: {},
     };
 
     const traverse = (node, level = 1) => {
@@ -178,7 +218,8 @@ const CommunityLevelsVisualization = ({
       }
       analytics.levelBreakdown[level].count++;
       analytics.levelBreakdown[level].volume += node.attributes?.volume || 0;
-      analytics.levelBreakdown[level].earnings += node.attributes?.earnings || 0;
+      analytics.levelBreakdown[level].earnings +=
+        node.attributes?.earnings || 0;
 
       // Package breakdown
       const packageName = node.attributes?.package?.name || 'Unknown';
@@ -186,7 +227,8 @@ const CommunityLevelsVisualization = ({
         analytics.packageBreakdown[packageName] = { count: 0, volume: 0 };
       }
       analytics.packageBreakdown[packageName].count++;
-      analytics.packageBreakdown[packageName].volume += node.attributes?.volume || 0;
+      analytics.packageBreakdown[packageName].volume +=
+        node.attributes?.volume || 0;
 
       if (node.children) {
         node.children.forEach(child => traverse(child, level + 1));
@@ -199,251 +241,284 @@ const CommunityLevelsVisualization = ({
     analytics.performanceMetrics = {
       averageVolume: analytics.totalVolume / analytics.totalMembers,
       activenessRate: (analytics.activemembers / analytics.totalMembers) * 100,
-      earningsEfficiency: (analytics.totalEarnings / analytics.totalVolume) * 100,
-      communityDepth: Math.max(...Object.keys(analytics.levelBreakdown).map(Number)),
-      communityWidth: analytics.levelBreakdown[2]?.count || 0
+      earningsEfficiency:
+        (analytics.totalEarnings / analytics.totalVolume) * 100,
+      communityDepth: Math.max(
+        ...Object.keys(analytics.levelBreakdown).map(Number)
+      ),
+      communityWidth: analytics.levelBreakdown[2]?.count || 0,
     };
 
     return analytics;
   };
 
   // Custom node renderer with business plan styling
-  const renderCommunityNode = useCallback(({ nodeDatum, toggleNode }) => {
-    const { name, attributes } = nodeDatum;
-    const isRoot = attributes?.level === 1;
-    const isSelected = selectedNode?.attributes?.address === attributes?.address;
-    const isHighlighted = searchTerm && (
-      name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      attributes?.address?.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  const renderCommunityNode = useCallback(
+    ({ nodeDatum, toggleNode }) => {
+      const { name, attributes } = nodeDatum;
+      const isRoot = attributes?.level === 1;
+      const isSelected =
+        selectedNode?.attributes?.address === attributes?.address;
+      const isHighlighted =
+        searchTerm &&
+        (name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          attributes?.address
+            ?.toLowerCase()
+            .includes(searchTerm.toLowerCase()));
 
-    const nodeRadius = isRoot ? 60 : 45;
-    const packageInfo = attributes?.package || { name: 'Unknown', color: '#6B7280' };
+      const nodeRadius = isRoot ? 60 : 45;
+      const packageInfo = attributes?.package || {
+        name: 'Unknown',
+        color: '#6B7280',
+      };
 
-    return (
-      <g 
-        onClick={(e) => {
-          e.stopPropagation();
-          setSelectedNode(nodeDatum);
-          toggleNode();
-        }}
-        style={{ cursor: 'pointer' }}
-      >
-        {/* Node glow effect */}
-        <defs>
-          <filter id={`glow-${attributes?.address?.replace(/[^a-zA-Z0-9]/g, '')}`}>
-            <feDropShadow 
-              dx="0" 
-              dy="0" 
-              stdDeviation="4" 
-              floodColor={packageInfo.color} 
-              floodOpacity={isSelected ? "0.8" : "0.4"}
-            />
-          </filter>
-          
-          <radialGradient id={`gradient-${attributes?.address?.replace(/[^a-zA-Z0-9]/g, '')}`}>
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
-            <stop offset="50%" stopColor={packageInfo.color} stopOpacity="0.7" />
-            <stop offset="100%" stopColor={packageInfo.color} stopOpacity="1" />
-          </radialGradient>
-        </defs>
+      return (
+        <g
+          onClick={e => {
+            e.stopPropagation();
+            setSelectedNode(nodeDatum);
+            toggleNode();
+          }}
+          style={{ cursor: 'pointer' }}
+        >
+          {/* Node glow effect */}
+          <defs>
+            <filter
+              id={`glow-${attributes?.address?.replace(/[^a-zA-Z0-9]/g, '')}`}
+            >
+              <feDropShadow
+                dx="0"
+                dy="0"
+                stdDeviation="4"
+                floodColor={packageInfo.color}
+                floodOpacity={isSelected ? '0.8' : '0.4'}
+              />
+            </filter>
 
-        {/* Selection ring */}
-        {(isSelected || isHighlighted) && (
+            <radialGradient
+              id={`gradient-${attributes?.address?.replace(/[^a-zA-Z0-9]/g, '')}`}
+            >
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
+              <stop
+                offset="50%"
+                stopColor={packageInfo.color}
+                stopOpacity="0.7"
+              />
+              <stop
+                offset="100%"
+                stopColor={packageInfo.color}
+                stopOpacity="1"
+              />
+            </radialGradient>
+          </defs>
+
+          {/* Selection ring */}
+          {(isSelected || isHighlighted) && (
+            <circle
+              r={nodeRadius + 8}
+              fill="none"
+              stroke={isSelected ? '#00D4FF' : '#FFD700'}
+              strokeWidth="3"
+              strokeDasharray="5,5"
+              opacity="0.8"
+            >
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                values="0;360"
+                dur="3s"
+                repeatCount="indefinite"
+              />
+            </circle>
+          )}
+
+          {/* Main node circle */}
           <circle
-            r={nodeRadius + 8}
+            r={nodeRadius}
+            fill={`url(#gradient-${attributes?.address?.replace(/[^a-zA-Z0-9]/g, '')})`}
+            stroke={isRoot ? '#7B2CBF' : packageInfo.color}
+            strokeWidth={isRoot ? '4' : '2'}
+            filter={`url(#glow-${attributes?.address?.replace(/[^a-zA-Z0-9]/g, '')})`}
+            opacity={attributes?.isActive ? '1' : '0.6'}
+          />
+
+          {/* Inner decorative ring */}
+          <circle
+            r={nodeRadius - 8}
             fill="none"
-            stroke={isSelected ? "#00D4FF" : "#FFD700"}
-            strokeWidth="3"
-            strokeDasharray="5,5"
-            opacity="0.8"
-          >
-            <animateTransform
-              attributeName="transform"
-              type="rotate"
-              values="0;360"
-              dur="3s"
-              repeatCount="indefinite"
+            stroke="rgba(255,255,255,0.5)"
+            strokeWidth="1"
+          />
+
+          {/* Activity indicator */}
+          {attributes?.isActive && (
+            <circle
+              r="6"
+              cx={nodeRadius - 15}
+              cy={-nodeRadius + 15}
+              fill="#10B981"
+              stroke="#ffffff"
+              strokeWidth="2"
             />
-          </circle>
-        )}
+          )}
 
-        {/* Main node circle */}
-        <circle
-          r={nodeRadius}
-          fill={`url(#gradient-${attributes?.address?.replace(/[^a-zA-Z0-9]/g, '')})`}
-          stroke={isRoot ? "#7B2CBF" : packageInfo.color}
-          strokeWidth={isRoot ? "4" : "2"}
-          filter={`url(#glow-${attributes?.address?.replace(/[^a-zA-Z0-9]/g, '')})`}
-          opacity={attributes?.isActive ? "1" : "0.6"}
-        />
-
-        {/* Inner decorative ring */}
-        <circle
-          r={nodeRadius - 8}
-          fill="none"
-          stroke="rgba(255,255,255,0.5)"
-          strokeWidth="1"
-        />
-
-        {/* Activity indicator */}
-        {attributes?.isActive && (
+          {/* Package indicator */}
           <circle
-            r="6"
-            cx={nodeRadius - 15}
+            r="12"
+            cx={-nodeRadius + 15}
             cy={-nodeRadius + 15}
-            fill="#10B981"
+            fill={packageInfo.color}
             stroke="#ffffff"
             strokeWidth="2"
           />
-        )}
+          <text
+            x={-nodeRadius + 15}
+            y={-nodeRadius + 20}
+            textAnchor="middle"
+            fill="white"
+            fontSize="10"
+            fontWeight="bold"
+          >
+            {packageInfo.name.charAt(0)}
+          </text>
 
-        {/* Package indicator */}
-        <circle
-          r="12"
-          cx={-nodeRadius + 15}
-          cy={-nodeRadius + 15}
-          fill={packageInfo.color}
-          stroke="#ffffff"
-          strokeWidth="2"
-        />
-        <text
-          x={-nodeRadius + 15}
-          y={-nodeRadius + 20}
-          textAnchor="middle"
-          fill="white"
-          fontSize="10"
-          fontWeight="bold"
-        >
-          {packageInfo.name.charAt(0)}
-        </text>
+          {/* Node text */}
+          <text
+            textAnchor="middle"
+            fill="white"
+            fontSize={isRoot ? '14' : '12'}
+            fontWeight="bold"
+            dy="-8"
+            style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}
+          >
+            {name.length > 12 ? `${name.substring(0, 12)}...` : name}
+          </text>
 
-        {/* Node text */}
-        <text
-          textAnchor="middle"
-          fill="white"
-          fontSize={isRoot ? "14" : "12"}
-          fontWeight="bold"
-          dy="-8"
-          style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}
-        >
-          {name.length > 12 ? `${name.substring(0, 12)}...` : name}
-        </text>
+          {/* Level indicator */}
+          <text
+            textAnchor="middle"
+            fill="rgba(255,255,255,0.9)"
+            fontSize="10"
+            dy="6"
+          >
+            Level {attributes?.level}
+          </text>
 
-        {/* Level indicator */}
-        <text
-          textAnchor="middle"
-          fill="rgba(255,255,255,0.9)"
-          fontSize="10"
-          dy="6"
-        >
-          Level {attributes?.level}
-        </text>
+          {/* Package and earnings */}
+          <text
+            textAnchor="middle"
+            fill="#FFD700"
+            fontSize="9"
+            fontWeight="bold"
+            dy="20"
+          >
+            ${packageInfo.price} {packageInfo.name}
+          </text>
 
-        {/* Package and earnings */}
-        <text
-          textAnchor="middle"
-          fill="#FFD700"
-          fontSize="9"
-          fontWeight="bold"
-          dy="20"
-        >
-          ${packageInfo.price} {packageInfo.name}
-        </text>
+          {/* Team size indicator */}
+          {attributes?.teamSize && (
+            <g>
+              <circle
+                r="10"
+                cy={nodeRadius + 20}
+                fill="rgba(0,0,0,0.7)"
+                stroke={packageInfo.color}
+                strokeWidth="1"
+              />
+              <text
+                y={nodeRadius + 25}
+                textAnchor="middle"
+                fill="white"
+                fontSize="8"
+                fontWeight="bold"
+              >
+                {attributes.teamSize > 99 ? '99+' : attributes.teamSize}
+              </text>
+            </g>
+          )}
 
-        {/* Team size indicator */}
-        {attributes?.teamSize && (
-          <g>
-            <circle
-              r="10"
-              cy={nodeRadius + 20}
-              fill="rgba(0,0,0,0.7)"
-              stroke={packageInfo.color}
-              strokeWidth="1"
-            />
-            <text
-              y={nodeRadius + 25}
-              textAnchor="middle"
-              fill="white"
-              fontSize="8"
-              fontWeight="bold"
-            >
-              {attributes.teamSize > 99 ? '99+' : attributes.teamSize}
-            </text>
-          </g>
-        )}
-
-        {/* Earnings progress indicator */}
-        {attributes?.earningsPercentage && (
-          <g>
-            <circle
-              r="15"
-              cy={-nodeRadius - 25}
-              fill="none"
-              stroke="rgba(255,255,255,0.3)"
-              strokeWidth="2"
-            />
-            <circle
-              r="15"
-              cy={-nodeRadius - 25}
-              fill="none"
-              stroke="#00FF88"
-              strokeWidth="2"
-              strokeDasharray={`${(attributes.earningsPercentage / 100) * 94} 94`}
-              transform={`rotate(-90)`}
-            />
-            <text
-              y={-nodeRadius - 20}
-              textAnchor="middle"
-              fill="white"
-              fontSize="7"
-              fontWeight="bold"
-            >
-              {Math.round(attributes.earningsPercentage)}%
-            </text>
-          </g>
-        )}
-      </g>
-    );
-  }, [selectedNode, searchTerm]);
+          {/* Earnings progress indicator */}
+          {attributes?.earningsPercentage && (
+            <g>
+              <circle
+                r="15"
+                cy={-nodeRadius - 25}
+                fill="none"
+                stroke="rgba(255,255,255,0.3)"
+                strokeWidth="2"
+              />
+              <circle
+                r="15"
+                cy={-nodeRadius - 25}
+                fill="none"
+                stroke="#00FF88"
+                strokeWidth="2"
+                strokeDasharray={`${(attributes.earningsPercentage / 100) * 94} 94`}
+                transform={`rotate(-90)`}
+              />
+              <text
+                y={-nodeRadius - 20}
+                textAnchor="middle"
+                fill="white"
+                fontSize="7"
+                fontWeight="bold"
+              >
+                {Math.round(attributes.earningsPercentage)}%
+              </text>
+            </g>
+          )}
+        </g>
+      );
+    },
+    [selectedNode, searchTerm]
+  );
 
   // Tree configuration
-  const treeConfig = useMemo(() => ({
-    nodeSize: { x: 200, y: 180 },
-    separation: { siblings: 1.5, nonSiblings: 2 },
-    translate: { x: 400, y: 100 },
-    orientation: 'vertical',
-    pathFunc: 'step',
-    enableLegacyTransitions: true,
-    transitionDuration: 500,
-    collapsible: true,
-    initialDepth: treeDepth,
-    zoom: 0.8,
-    scaleExtent: { min: 0.1, max: 2 },
-    shouldCollapseNeighborNodes: false,
-    pathClassFunc: () => 'community-link',
-    svgClassName: 'community-levels-svg'
-  }), [treeDepth]);
+  const treeConfig = useMemo(
+    () => ({
+      nodeSize: { x: 200, y: 180 },
+      separation: { siblings: 1.5, nonSiblings: 2 },
+      translate: { x: 400, y: 100 },
+      orientation: 'vertical',
+      pathFunc: 'step',
+      enableLegacyTransitions: true,
+      transitionDuration: 500,
+      collapsible: true,
+      initialDepth: treeDepth,
+      zoom: 0.8,
+      scaleExtent: { min: 0.1, max: 2 },
+      shouldCollapseNeighborNodes: false,
+      pathClassFunc: () => 'community-link',
+      svgClassName: 'community-levels-svg',
+    }),
+    [treeDepth]
+  );
 
   // Filter community data based on current filters
   const filteredData = useMemo(() => {
     if (!communityData) return null;
-    
-    const filterNode = (node) => {
+
+    const filterNode = node => {
       const attrs = node.attributes;
       if (!attrs) return node;
 
       // Apply filters
       if (filters.activeOnly && !attrs.isActive) return null;
-      if (attrs.level < filters.minLevel || attrs.level > filters.maxLevel) return null;
-      if (filters.packageType !== 'all' && attrs.package?.name !== filters.packageType) return null;
+      if (attrs.level < filters.minLevel || attrs.level > filters.maxLevel)
+        return null;
+      if (
+        filters.packageType !== 'all' &&
+        attrs.package?.name !== filters.packageType
+      )
+        return null;
 
       // Filter children recursively
-      const filteredChildren = node.children?.map(filterNode).filter(Boolean) || [];
-      
+      const filteredChildren =
+        node.children?.map(filterNode).filter(Boolean) || [];
+
       return {
         ...node,
-        children: filteredChildren
+        children: filteredChildren,
       };
     };
 
@@ -456,7 +531,7 @@ const CommunityLevelsVisualization = ({
         <motion.div
           className="loading-spinner"
           animate={{ rotate: 360 }}
-          transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
         >
           <FaUsers size={40} color="#7B2CBF" />
         </motion.div>
@@ -466,10 +541,13 @@ const CommunityLevelsVisualization = ({
   }
 
   return (
-    <div className={`community-levels-container ${isFullscreen ? 'fullscreen' : ''}`} ref={containerRef}>
+    <div
+      className={`community-levels-container ${isFullscreen ? 'fullscreen' : ''}`}
+      ref={containerRef}
+    >
       {/* Header and Controls */}
       {showControls && (
-        <motion.div 
+        <motion.div
           className="community-controls"
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -502,7 +580,7 @@ const CommunityLevelsVisualization = ({
                 type="text"
                 placeholder="Search community members..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={e => setSearchTerm(e.target.value)}
                 className="search-input"
               />
             </div>
@@ -511,7 +589,9 @@ const CommunityLevelsVisualization = ({
             <div className="filters-container">
               <select
                 value={filters.packageType}
-                onChange={(e) => setFilters({...filters, packageType: e.target.value})}
+                onChange={e =>
+                  setFilters({ ...filters, packageType: e.target.value })
+                }
                 className="filter-select"
               >
                 <option value="all">All Packages</option>
@@ -525,7 +605,9 @@ const CommunityLevelsVisualization = ({
                 <input
                   type="checkbox"
                   checked={filters.activeOnly}
-                  onChange={(e) => setFilters({...filters, activeOnly: e.target.checked})}
+                  onChange={e =>
+                    setFilters({ ...filters, activeOnly: e.target.checked })
+                  }
                 />
                 Active Only
               </label>
@@ -537,7 +619,7 @@ const CommunityLevelsVisualization = ({
                   min="1"
                   max="6"
                   value={treeDepth}
-                  onChange={(e) => setTreeDepth(parseInt(e.target.value))}
+                  onChange={e => setTreeDepth(parseInt(e.target.value))}
                   className="depth-slider"
                 />
               </div>
@@ -548,11 +630,11 @@ const CommunityLevelsVisualization = ({
               <button
                 onClick={() => setIsFullscreen(!isFullscreen)}
                 className="action-btn"
-                title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+                title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
               >
                 {isFullscreen ? <FaCompress /> : <FaExpand />}
               </button>
-              
+
               <button className="action-btn" title="Export Data">
                 <FaDownload />
               </button>
@@ -577,7 +659,10 @@ const CommunityLevelsVisualization = ({
         )}
 
         {viewMode === 'analytics' && (
-          <CommunityAnalytics analytics={analytics} communityData={communityData} />
+          <CommunityAnalytics
+            analytics={analytics}
+            communityData={communityData}
+          />
         )}
       </div>
 
@@ -589,11 +674,11 @@ const CommunityLevelsVisualization = ({
             initial={{ x: 300, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: 300, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
-            <NodeDetailsPanel 
-              node={selectedNode} 
-              onClose={() => setSelectedNode(null)} 
+            <NodeDetailsPanel
+              node={selectedNode}
+              onClose={() => setSelectedNode(null)}
             />
           </motion.div>
         )}
@@ -611,18 +696,25 @@ const NodeDetailsPanel = ({ node, onClose }) => {
     <div className="node-details">
       <div className="details-header">
         <h4>Community Member Details</h4>
-        <button onClick={onClose} className="close-btn">×</button>
+        <button onClick={onClose} className="close-btn">
+          ×
+        </button>
       </div>
-      
+
       <div className="details-content">
         <div className="member-info">
-          <div className="member-avatar" style={{ backgroundColor: packageInfo.color }}>
+          <div
+            className="member-avatar"
+            style={{ backgroundColor: packageInfo.color }}
+          >
             {packageInfo.name?.charAt(0) || 'U'}
           </div>
           <div className="member-basic">
             <h5>{node.name}</h5>
             <p className="member-address">{attributes?.address}</p>
-            <div className={`status-badge ${attributes?.isActive ? 'active' : 'inactive'}`}>
+            <div
+              className={`status-badge ${attributes?.isActive ? 'active' : 'inactive'}`}
+            >
               {attributes?.isActive ? 'Active' : 'Inactive'}
             </div>
           </div>
@@ -632,37 +724,47 @@ const NodeDetailsPanel = ({ node, onClose }) => {
           <div className="detail-item">
             <FaGem className="detail-icon" />
             <span className="detail-label">Package</span>
-            <span className="detail-value">${packageInfo.price} {packageInfo.name}</span>
+            <span className="detail-value">
+              ${packageInfo.price} {packageInfo.name}
+            </span>
           </div>
-          
+
           <div className="detail-item">
             <FaUsers className="detail-icon" />
             <span className="detail-label">Team Size</span>
             <span className="detail-value">{attributes?.teamSize || 0}</span>
           </div>
-          
+
           <div className="detail-item">
             <FaCoins className="detail-icon" />
             <span className="detail-label">Volume</span>
-            <span className="detail-value">${attributes?.volume?.toFixed(2) || '0.00'}</span>
+            <span className="detail-value">
+              ${attributes?.volume?.toFixed(2) || '0.00'}
+            </span>
           </div>
-          
+
           <div className="detail-item">
             <FaRocket className="detail-icon" />
             <span className="detail-label">Earnings</span>
-            <span className="detail-value">${attributes?.earnings?.toFixed(2) || '0.00'}</span>
+            <span className="detail-value">
+              ${attributes?.earnings?.toFixed(2) || '0.00'}
+            </span>
           </div>
-          
+
           <div className="detail-item">
             <FaUsers className="detail-icon" />
             <span className="detail-label">Direct Introductions</span>
-            <span className="detail-value">{attributes?.directIntroductions || 0}</span>
+            <span className="detail-value">
+              {attributes?.directIntroductions || 0}
+            </span>
           </div>
-          
+
           <div className="detail-item">
             <FaChartLine className="detail-icon" />
             <span className="detail-label">Collection Rate</span>
-            <span className="detail-value">{attributes?.collectionRate || 70}%</span>
+            <span className="detail-value">
+              {attributes?.collectionRate || 70}%
+            </span>
           </div>
         </div>
 
@@ -704,7 +806,7 @@ const CommunityAnalytics = ({ analytics, communityData }) => {
           Community Performance Analytics
         </h4>
       </div>
-      
+
       <div className="analytics-grid">
         <div className="analytics-card">
           <div className="card-header">
@@ -721,11 +823,15 @@ const CommunityAnalytics = ({ analytics, communityData }) => {
               <span className="stat-label">Active Members</span>
             </div>
             <div className="stat-item">
-              <span className="stat-value">{Math.round(analytics.performanceMetrics?.activenessRate || 0)}%</span>
+              <span className="stat-value">
+                {Math.round(analytics.performanceMetrics?.activenessRate || 0)}%
+              </span>
               <span className="stat-label">Activity Rate</span>
             </div>
             <div className="stat-item">
-              <span className="stat-value">{analytics.performanceMetrics?.communityDepth || 0}</span>
+              <span className="stat-value">
+                {analytics.performanceMetrics?.communityDepth || 0}
+              </span>
               <span className="stat-label">Community Depth</span>
             </div>
           </div>
@@ -738,19 +844,30 @@ const CommunityAnalytics = ({ analytics, communityData }) => {
           </div>
           <div className="stats-grid">
             <div className="stat-item">
-              <span className="stat-value">${analytics.totalVolume?.toFixed(0) || 0}</span>
+              <span className="stat-value">
+                ${analytics.totalVolume?.toFixed(0) || 0}
+              </span>
               <span className="stat-label">Total Volume</span>
             </div>
             <div className="stat-item">
-              <span className="stat-value">${analytics.totalEarnings?.toFixed(0) || 0}</span>
+              <span className="stat-value">
+                ${analytics.totalEarnings?.toFixed(0) || 0}
+              </span>
               <span className="stat-label">Total Earnings</span>
             </div>
             <div className="stat-item">
-              <span className="stat-value">${Math.round(analytics.performanceMetrics?.averageVolume || 0)}</span>
+              <span className="stat-value">
+                ${Math.round(analytics.performanceMetrics?.averageVolume || 0)}
+              </span>
               <span className="stat-label">Avg Volume</span>
             </div>
             <div className="stat-item">
-              <span className="stat-value">{Math.round(analytics.performanceMetrics?.earningsEfficiency || 0)}%</span>
+              <span className="stat-value">
+                {Math.round(
+                  analytics.performanceMetrics?.earningsEfficiency || 0
+                )}
+                %
+              </span>
               <span className="stat-label">Efficiency</span>
             </div>
           </div>
@@ -762,13 +879,17 @@ const CommunityAnalytics = ({ analytics, communityData }) => {
             <h5>Package Distribution</h5>
           </div>
           <div className="package-breakdown">
-            {Object.entries(analytics.packageBreakdown || {}).map(([pkg, data]) => (
-              <div key={pkg} className="package-item">
-                <span className="package-name">{pkg}</span>
-                <span className="package-count">{data.count} members</span>
-                <span className="package-volume">${data.volume?.toFixed(0) || 0}</span>
-              </div>
-            ))}
+            {Object.entries(analytics.packageBreakdown || {}).map(
+              ([pkg, data]) => (
+                <div key={pkg} className="package-item">
+                  <span className="package-name">{pkg}</span>
+                  <span className="package-count">{data.count} members</span>
+                  <span className="package-volume">
+                    ${data.volume?.toFixed(0) || 0}
+                  </span>
+                </div>
+              )
+            )}
           </div>
         </div>
 
@@ -778,14 +899,20 @@ const CommunityAnalytics = ({ analytics, communityData }) => {
             <h5>Level Breakdown</h5>
           </div>
           <div className="level-breakdown">
-            {Object.entries(analytics.levelBreakdown || {}).map(([level, data]) => (
-              <div key={level} className="level-item">
-                <span className="level-number">Level {level}</span>
-                <span className="level-count">{data.count} members</span>
-                <span className="level-volume">${data.volume?.toFixed(0) || 0}</span>
-                <span className="level-earnings">${data.earnings?.toFixed(0) || 0}</span>
-              </div>
-            ))}
+            {Object.entries(analytics.levelBreakdown || {}).map(
+              ([level, data]) => (
+                <div key={level} className="level-item">
+                  <span className="level-number">Level {level}</span>
+                  <span className="level-count">{data.count} members</span>
+                  <span className="level-volume">
+                    ${data.volume?.toFixed(0) || 0}
+                  </span>
+                  <span className="level-earnings">
+                    ${data.earnings?.toFixed(0) || 0}
+                  </span>
+                </div>
+              )
+            )}
           </div>
         </div>
       </div>

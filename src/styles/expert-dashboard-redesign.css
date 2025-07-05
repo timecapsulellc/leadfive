@@ -8,9 +8,9 @@
   display: grid;
   grid-template-columns: 280px 1fr;
   grid-template-rows: auto 1fr;
-  grid-template-areas: 
-    "sidebar header"
-    "sidebar main";
+  grid-template-areas:
+    'sidebar header'
+    'sidebar main';
   min-height: 100vh;
   background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
   position: relative;
@@ -65,7 +65,7 @@
   font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(102, 126, 234, 0.3),
     0 0 0 1px rgba(255, 255, 255, 0.1);
   position: relative;
@@ -79,7 +79,12 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   transition: left 0.5s;
 }
 
@@ -89,7 +94,7 @@
 
 .quick-action-btn:hover {
   transform: translateY(-2px) scale(1.05);
-  box-shadow: 
+  box-shadow:
     0 12px 40px rgba(102, 126, 234, 0.4),
     0 0 0 1px rgba(255, 255, 255, 0.2);
 }
@@ -130,7 +135,7 @@
   font-size: 2rem;
   color: white;
   margin: 0 auto 20px;
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(102, 126, 234, 0.3),
     0 0 0 3px rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
@@ -138,7 +143,7 @@
 
 .user-avatar:hover {
   transform: scale(1.1);
-  box-shadow: 
+  box-shadow:
     0 12px 40px rgba(102, 126, 234, 0.5),
     0 0 0 3px rgba(255, 255, 255, 0.2);
 }
@@ -200,7 +205,11 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.1) 0%,
+    rgba(118, 75, 162, 0.1) 100%
+  );
   transition: left 0.3s ease;
 }
 
@@ -216,16 +225,24 @@
 }
 
 .menu-item.active {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.2) 0%,
+    rgba(118, 75, 162, 0.2) 100%
+  );
   color: white;
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(102, 126, 234, 0.3),
     inset 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .menu-item.active::before {
   left: 0;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.1) 0%,
+    rgba(118, 75, 162, 0.1) 100%
+  );
 }
 
 .menu-icon {
@@ -266,7 +283,7 @@
   backdrop-filter: blur(30px);
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 
+  box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgba(102, 126, 234, 0.2);
   transform: translateY(20px);
@@ -285,7 +302,11 @@
 /* Premium Chat Header */
 .ai-chat-header {
   padding: 24px 28px 20px;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.1) 0%,
+    rgba(118, 75, 162, 0.1) 100%
+  );
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
@@ -310,8 +331,13 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .ai-close-btn {
@@ -392,7 +418,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 
+  box-shadow:
     0 12px 40px rgba(102, 126, 234, 0.4),
     0 0 0 3px rgba(255, 255, 255, 0.1);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -407,7 +433,11 @@
   left: -50%;
   width: 200%;
   height: 200%;
-  background: conic-gradient(transparent, rgba(255, 255, 255, 0.3), transparent);
+  background: conic-gradient(
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
   animation: rotate 3s linear infinite;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -418,13 +448,17 @@
 }
 
 @keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .ai-toggle-btn:hover {
   transform: scale(1.1) rotate(5deg);
-  box-shadow: 
+  box-shadow:
     0 16px 50px rgba(102, 126, 234, 0.6),
     0 0 0 4px rgba(255, 255, 255, 0.2);
 }
@@ -443,7 +477,7 @@
   backdrop-filter: blur(30px) !important;
   border-radius: 20px !important;
   border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 
+  box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.5),
     0 0 0 1px rgba(102, 126, 234, 0.2) !important;
   padding: 24px !important;
@@ -461,7 +495,11 @@
 }
 
 .elevenlabs-btn {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.2) 0%,
+    rgba(118, 75, 162, 0.2) 100%
+  ) !important;
   border: 1px solid rgba(102, 126, 234, 0.3) !important;
   color: white !important;
   padding: 14px 20px !important;
@@ -472,7 +510,11 @@
 }
 
 .elevenlabs-btn:hover {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.3) 0%,
+    rgba(118, 75, 162, 0.3) 100%
+  ) !important;
   border-color: rgba(102, 126, 234, 0.5) !important;
   transform: translateY(-2px) !important;
 }
@@ -491,7 +533,7 @@
   font-size: 1.5rem !important;
   cursor: pointer !important;
   z-index: 9998 !important;
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(255, 107, 107, 0.4),
     0 0 0 2px rgba(255, 255, 255, 0.1) !important;
   transition: all 0.3s ease !important;
@@ -499,7 +541,7 @@
 
 .elevenlabs-toggle:hover {
   transform: scale(1.1) !important;
-  box-shadow: 
+  box-shadow:
     0 12px 40px rgba(255, 107, 107, 0.6),
     0 0 0 3px rgba(255, 255, 255, 0.2) !important;
 }
@@ -509,15 +551,15 @@
   .dashboard-container {
     grid-template-columns: 260px 1fr;
   }
-  
+
   .dashboard-header {
     padding: 16px 24px;
   }
-  
+
   .dashboard-main {
     padding: 24px;
   }
-  
+
   .ai-chat-panel {
     width: 380px;
   }
@@ -526,11 +568,11 @@
 @media (max-width: 768px) {
   .dashboard-container {
     grid-template-columns: 1fr;
-    grid-template-areas: 
-      "header"
-      "main";
+    grid-template-areas:
+      'header'
+      'main';
   }
-  
+
   .dashboard-sidebar {
     position: fixed;
     top: 0;
@@ -540,46 +582,46 @@
     z-index: 1000;
     transition: left 0.3s ease;
   }
-  
+
   .dashboard-sidebar.mobile-open {
     left: 0;
   }
-  
+
   .dashboard-header {
     grid-area: header;
     padding: 16px 20px;
   }
-  
+
   .dashboard-header h1 {
     font-size: 1.8rem;
   }
-  
+
   .header-actions {
     gap: 12px;
   }
-  
+
   .quick-action-btn {
     padding: 10px 16px;
     font-size: 0.85rem;
   }
-  
+
   .ai-chat-panel {
     width: calc(100vw - 40px);
     max-width: 380px;
   }
-  
+
   .ai-assistant-container {
     bottom: 20px;
     right: 20px;
   }
-  
+
   .elevenlabs-controls {
     right: 20px !important;
     bottom: 100px !important;
     width: calc(100vw - 40px) !important;
     max-width: 320px !important;
   }
-  
+
   .elevenlabs-toggle {
     right: 100px !important;
     bottom: 20px !important;
@@ -628,12 +670,20 @@
 }
 
 .dashboard-main::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.3) 0%,
+    rgba(118, 75, 162, 0.3) 100%
+  );
   border-radius: 4px;
 }
 
 .dashboard-main::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.5) 0%, rgba(118, 75, 162, 0.5) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.5) 0%,
+    rgba(118, 75, 162, 0.5) 100%
+  );
 }
 
 /* ===== EXTRAORDINARY VISUAL EFFECTS ===== */
@@ -644,9 +694,17 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+  background:
+    radial-gradient(
+      circle at 20% 80%,
+      rgba(102, 126, 234, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(118, 75, 162, 0.1) 0%,
+      transparent 50%
+    );
   pointer-events: none;
   z-index: 1;
 }

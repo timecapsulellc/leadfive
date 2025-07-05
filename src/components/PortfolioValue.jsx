@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import coinMarketCapService from '../services/coinMarketCapService';
 import './PortfolioValue.css';
 
-const PortfolioValue = ({ 
-  usdtBalance = 0, 
-  bnbBalance = 0, 
+const PortfolioValue = ({
+  usdtBalance = 0,
+  bnbBalance = 0,
   showDetailed = false,
   className = '',
-  refreshInterval = 60000 // 1 minute
+  refreshInterval = 60000, // 1 minute
 }) => {
   const [portfolioData, setPortfolioData] = useState({
     totalUSD: 0,
     assets: {},
-    lastUpdated: null
+    lastUpdated: null,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,15 +21,18 @@ const PortfolioValue = ({
   const calculatePortfolioValue = async () => {
     try {
       setError(null);
-      const prices = await coinMarketCapService.getCurrentPrices(['tether', 'binancecoin']);
-      
+      const prices = await coinMarketCapService.getCurrentPrices([
+        'tether',
+        'binancecoin',
+      ]);
+
       const usdtPrice = prices.USDT?.price || 1;
       const bnbPrice = prices.BNB?.price || 600;
-      
+
       const usdtValue = parseFloat(usdtBalance) * usdtPrice;
       const bnbValue = parseFloat(bnbBalance) * bnbPrice;
       const totalUSD = usdtValue + bnbValue;
-      
+
       setPortfolioData({
         totalUSD,
         assets: {
@@ -37,18 +40,18 @@ const PortfolioValue = ({
             balance: usdtBalance,
             price: usdtPrice,
             value: usdtValue,
-            symbol: 'USDT'
+            symbol: 'USDT',
           },
           BNB: {
             balance: bnbBalance,
             price: bnbPrice,
             value: bnbValue,
-            symbol: 'BNB'
-          }
+            symbol: 'BNB',
+          },
         },
-        lastUpdated: new Date()
+        lastUpdated: new Date(),
       });
-      
+
       setLoading(false);
     } catch (err) {
       console.error('Error calculating portfolio value:', err);
@@ -59,7 +62,7 @@ const PortfolioValue = ({
 
   useEffect(() => {
     calculatePortfolioValue();
-    
+
     const interval = setInterval(calculatePortfolioValue, refreshInterval);
     return () => clearInterval(interval);
   }, [usdtBalance, bnbBalance, refreshInterval]);
@@ -100,8 +103,8 @@ const PortfolioValue = ({
       <div className="portfolio-header">
         <div className="portfolio-title">
           <span className="title-text">Portfolio Value</span>
-          <button 
-            onClick={handleRefresh} 
+          <button
+            onClick={handleRefresh}
             className="refresh-btn"
             disabled={loading}
             title="Refresh portfolio value"
@@ -118,7 +121,7 @@ const PortfolioValue = ({
         <div className="portfolio-details">
           {Object.entries(portfolioData.assets).map(([symbol, asset]) => {
             if (asset.balance <= 0) return null;
-            
+
             return (
               <div key={symbol} className="asset-row">
                 <div className="asset-info">
@@ -126,7 +129,7 @@ const PortfolioValue = ({
                   <span className="asset-balance">
                     {parseFloat(asset.balance).toLocaleString(undefined, {
                       minimumFractionDigits: 2,
-                      maximumFractionDigits: 6
+                      maximumFractionDigits: 6,
                     })}
                   </span>
                 </div>
@@ -156,11 +159,11 @@ const PortfolioValue = ({
 };
 
 // Component for earnings display with USD conversion
-export const EarningsDisplay = ({ 
-  earnings, 
-  currency = 'USDT', 
+export const EarningsDisplay = ({
+  earnings,
+  currency = 'USDT',
   showUSD = true,
-  className = '' 
+  className = '',
 }) => {
   const [usdValue, setUsdValue] = useState(null);
   const [loading, setLoading] = useState(false);

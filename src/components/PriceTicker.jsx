@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import coinMarketCapService from '../services/coinMarketCapService';
 import './PriceTicker.css';
 
-const PriceTicker = ({ symbols = ['USDT', 'BNB', 'BTC', 'ETH'], autoRefresh = true, refreshInterval = 30000 }) => {
+const PriceTicker = ({
+  symbols = ['USDT', 'BNB', 'BTC', 'ETH'],
+  autoRefresh = true,
+  refreshInterval = 30000,
+}) => {
   const [prices, setPrices] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -71,7 +75,8 @@ const PriceTicker = ({ symbols = ['USDT', 'BNB', 'BTC', 'ETH'], autoRefresh = tr
             const coinData = prices[symbol];
             if (!coinData) return null;
 
-            const changeClass = coinData.change24h >= 0 ? 'positive' : 'negative';
+            const changeClass =
+              coinData.change24h >= 0 ? 'positive' : 'negative';
             const changeIcon = coinData.change24h >= 0 ? '▲' : '▼';
 
             return (
@@ -82,17 +87,18 @@ const PriceTicker = ({ symbols = ['USDT', 'BNB', 'BTC', 'ETH'], autoRefresh = tr
                     {coinMarketCapService.formatPrice(coinData.price)}
                   </span>
                   <span className={`coin-change ${changeClass}`}>
-                    {changeIcon} {coinMarketCapService.formatChange(coinData.change24h)}
+                    {changeIcon}{' '}
+                    {coinMarketCapService.formatChange(coinData.change24h)}
                   </span>
                 </div>
               </div>
             );
           })}
         </div>
-        
+
         <div className="ticker-controls">
-          <button 
-            onClick={handleRefresh} 
+          <button
+            onClick={handleRefresh}
             className="refresh-btn"
             disabled={loading}
             title="Refresh prices"

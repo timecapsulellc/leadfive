@@ -62,7 +62,7 @@ export const SecurityMonitor = () => {
     totalUsers: 0,
     suspiciousActivity: 0,
     contractHealth: 'healthy',
-    lastAudit: null
+    lastAudit: null,
   });
 
   // You can add useEffect here to fetch real metrics from backend or contract

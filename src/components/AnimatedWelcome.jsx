@@ -23,21 +23,21 @@ const AnimatedWelcome = ({ account, onConnect }) => {
       <motion.div
         key={i}
         className="particle"
-        initial={{ 
+        initial={{
           x: Math.random() * window.innerWidth,
           y: window.innerHeight + 10,
-          scale: 0
+          scale: 0,
         }}
-        animate={{ 
+        animate={{
           y: -100,
           scale: [0, 1, 0],
-          opacity: [0, 1, 0]
+          opacity: [0, 1, 0],
         }}
         transition={{
           duration: 8 + Math.random() * 4,
           delay: Math.random() * 2,
           repeat: Infinity,
-          ease: "linear"
+          ease: 'linear',
         }}
       />
     ));
@@ -47,18 +47,18 @@ const AnimatedWelcome = ({ account, onConnect }) => {
     <div className="cinematic-container">
       {/* Animated Background Grid */}
       <div className="grid-background" />
-      
+
       {/* Particle System */}
       <div className="particle-system">
         {particlesGenerated && generateParticles()}
       </div>
 
       {/* Security Fortress Animation */}
-      <motion.div 
+      <motion.div
         className="security-fortress"
         initial={{ scale: 0, rotate: 180, opacity: 0 }}
         animate={{ scale: 1, rotate: 0, opacity: 1 }}
-        transition={{ duration: 3, ease: "easeOut" }}
+        transition={{ duration: 3, ease: 'easeOut' }}
       >
         {[1, 2, 3, 4].map(i => (
           <motion.div
@@ -70,14 +70,14 @@ const AnimatedWelcome = ({ account, onConnect }) => {
               borderColor: [
                 'rgba(0, 212, 255, 0.3)',
                 'rgba(0, 212, 255, 0.7)',
-                'rgba(0, 212, 255, 0.3)'
-              ]
+                'rgba(0, 212, 255, 0.3)',
+              ],
             }}
             transition={{
               duration: 4,
               delay: i * 0.5,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: 'easeInOut',
             }}
           />
         ))}
@@ -86,34 +86,46 @@ const AnimatedWelcome = ({ account, onConnect }) => {
       {/* Main Content */}
       <div className="hero-content">
         {/* Central Logo Animation */}
-        <motion.div 
+        <motion.div
           className="central-logo"
           initial={{ scale: 0, rotateY: 180, opacity: 0, filter: 'blur(20px)' }}
           animate={{ scale: 1, rotateY: 0, opacity: 1, filter: 'blur(0px)' }}
-          transition={{ duration: 4, ease: "easeOut" }}
+          transition={{ duration: 4, ease: 'easeOut' }}
         >
-          <motion.svg 
-            className="main-logo" 
-            width="280" 
-            height="280" 
+          <motion.svg
+            className="main-logo"
+            width="280"
+            height="280"
             viewBox="0 0 400 400"
             animate={{
               y: [0, -15, 0],
-              rotateZ: [0, 5, 0]
+              rotateZ: [0, 5, 0],
             }}
             transition={{
               duration: 6,
               repeat: Infinity,
-              ease: "easeInOut"
+              ease: 'easeInOut',
             }}
           >
             <defs>
-              <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <linearGradient
+                id="mainGradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
                 <stop offset="0%" stopColor="#00d4ff" />
                 <stop offset="50%" stopColor="#7b2cbf" />
                 <stop offset="100%" stopColor="#ff6b35" />
               </linearGradient>
-              <linearGradient id="darkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <linearGradient
+                id="darkGradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
                 <stop offset="0%" stopColor="#1a1a2e" />
                 <stop offset="100%" stopColor="#16213e" />
               </linearGradient>
@@ -121,32 +133,36 @@ const AnimatedWelcome = ({ account, onConnect }) => {
             <g transform="translate(200, 200)">
               {/* Animated logo paths */}
               {[
-                "M -80,-20 L -40,-80 L 0,-60 Z",
-                "M -80,-20 L 0,-60 L -30,-10 Z",
-                "M 40,-80 L 80,-20 L 60,0 Z",
-                "M 40,-80 L 60,0 L 0,-60 Z",
-                "M 80,20 L 40,80 L 0,60 Z",
-                "M 80,20 L 0,60 L 30,10 Z",
-                "M -40,80 L -80,20 L -60,0 Z",
-                "M -40,80 L -60,0 L 0,60 Z",
-                "M -30,-10 L 0,-60 L 30,10 L 0,60 Z"
+                'M -80,-20 L -40,-80 L 0,-60 Z',
+                'M -80,-20 L 0,-60 L -30,-10 Z',
+                'M 40,-80 L 80,-20 L 60,0 Z',
+                'M 40,-80 L 60,0 L 0,-60 Z',
+                'M 80,20 L 40,80 L 0,60 Z',
+                'M 80,20 L 0,60 L 30,10 Z',
+                'M -40,80 L -80,20 L -60,0 Z',
+                'M -40,80 L -60,0 L 0,60 Z',
+                'M -30,-10 L 0,-60 L 30,10 L 0,60 Z',
               ].map((path, index) => (
                 <motion.path
                   key={index}
                   d={path}
-                  fill={index % 2 === 0 ? "url(#mainGradient)" : "url(#darkGradient)"}
+                  fill={
+                    index % 2 === 0
+                      ? 'url(#mainGradient)'
+                      : 'url(#darkGradient)'
+                  }
                   className="logo-path"
                   initial={{ fillOpacity: 0, scale: 0, rotate: 0 }}
-                  animate={{ 
+                  animate={{
                     fillOpacity: [1, 0.8, 1, 0.9, 1],
                     scale: [1, 1.05, 1.02, 1.03, 1],
-                    rotate: [0, 2, -1, 1, 0]
+                    rotate: [0, 2, -1, 1, 0],
                   }}
                   transition={{
                     duration: 4,
                     delay: index * 0.1,
                     repeat: Infinity,
-                    ease: "easeInOut"
+                    ease: 'easeInOut',
                   }}
                 />
               ))}
@@ -154,24 +170,29 @@ const AnimatedWelcome = ({ account, onConnect }) => {
           </motion.svg>
 
           {/* Security Badges */}
-          <motion.div 
+          <motion.div
             className="security-badges"
             initial={{ scale: 0, rotate: 180, opacity: 0 }}
             animate={{ scale: 1, rotate: 0, opacity: 1 }}
-            transition={{ duration: 2, delay: 1, ease: "easeOut" }}
+            transition={{ duration: 2, delay: 1, ease: 'easeOut' }}
           >
-            <motion.div 
+            <motion.div
               className="security-badge badge-audit"
               animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
               whileHover={{ scale: 1.2 }}
             >
               PhD
             </motion.div>
-            <motion.div 
+            <motion.div
               className="security-badge badge-trezor"
               animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 3, delay: 0.5, repeat: Infinity, ease: "easeInOut" }}
+              transition={{
+                duration: 3,
+                delay: 0.5,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
               whileHover={{ scale: 1.2 }}
             >
               🔒
@@ -180,48 +201,52 @@ const AnimatedWelcome = ({ account, onConnect }) => {
         </motion.div>
 
         {/* Brand Title */}
-        <motion.h1 
+        <motion.h1
           className="brand-title"
           initial={{ y: 50, opacity: 0, filter: 'blur(10px)' }}
           animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
-          transition={{ duration: 2, delay: 1.5, ease: "easeOut" }}
+          transition={{ duration: 2, delay: 1.5, ease: 'easeOut' }}
         >
           LEAD FIVE
         </motion.h1>
 
         {/* Subtitle */}
-        <motion.h2 
+        <motion.h2
           className="brand-subtitle"
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1.5, delay: 2, ease: "easeOut" }}
+          transition={{ duration: 1.5, delay: 2, ease: 'easeOut' }}
         >
           Community-Driven Platform
         </motion.h2>
 
         {/* Description */}
-        <motion.p 
+        <motion.p
           className="brand-description"
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1.5, delay: 2.5, ease: "easeOut" }}
+          transition={{ duration: 1.5, delay: 2.5, ease: 'easeOut' }}
         >
-          Experience the future of decentralized community building with our revolutionary 4X reward system. 
-          Built on BSC with complete transparency, security, and automated smart contracts.
+          Experience the future of decentralized community building with our
+          revolutionary 4X reward system. Built on BSC with complete
+          transparency, security, and automated smart contracts.
         </motion.p>
 
         {/* Action Buttons */}
-        <motion.div 
+        <motion.div
           className="action-buttons"
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1.5, delay: 3, ease: "easeOut" }}
+          transition={{ duration: 1.5, delay: 3, ease: 'easeOut' }}
         >
           {!account ? (
-            <motion.button 
+            <motion.button
               className="cta-button primary"
               onClick={onConnect}
-              whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(0, 212, 255, 0.6)" }}
+              whileHover={{
+                scale: 1.05,
+                boxShadow: '0 0 30px rgba(0, 212, 255, 0.6)',
+              }}
               whileTap={{ scale: 0.95 }}
             >
               Connect Wallet
@@ -229,18 +254,24 @@ const AnimatedWelcome = ({ account, onConnect }) => {
           ) : (
             <motion.div className="connected-actions">
               <Link to="/dashboard">
-                <motion.button 
+                <motion.button
                   className="cta-button primary"
-                  whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(0, 212, 255, 0.6)" }}
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: '0 0 30px rgba(0, 212, 255, 0.6)',
+                  }}
                   whileTap={{ scale: 0.95 }}
                 >
                   Enter Dashboard
                 </motion.button>
               </Link>
               <Link to="/register">
-                <motion.button 
+                <motion.button
                   className="cta-button secondary"
-                  whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(123, 44, 191, 0.6)" }}
+                  whileHover={{
+                    scale: 1.05,
+                    boxShadow: '0 0 30px rgba(123, 44, 191, 0.6)',
+                  }}
                   whileTap={{ scale: 0.95 }}
                 >
                   Join Community
@@ -251,11 +282,11 @@ const AnimatedWelcome = ({ account, onConnect }) => {
         </motion.div>
 
         {/* Feature Highlights */}
-        <motion.div 
+        <motion.div
           className="feature-highlights"
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1.5, delay: 3.5, ease: "easeOut" }}
+          transition={{ duration: 1.5, delay: 3.5, ease: 'easeOut' }}
         >
           <div className="feature-item">
             <div className="feature-icon">🛡️</div>

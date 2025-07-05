@@ -23,7 +23,7 @@
   background: #fff;
   border-radius: 10px;
   margin-bottom: 12px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
   padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
@@ -42,8 +42,8 @@
   cursor: pointer;
 }
 
-.push-notification[role="alert"] {
-  outline: 2px solid #00D4FF;
+.push-notification[role='alert'] {
+  outline: 2px solid #00d4ff;
 }
 
 /* Safe area insets for iOS */

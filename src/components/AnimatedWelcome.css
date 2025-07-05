@@ -4,7 +4,13 @@
   position: relative;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(135deg, #0A0A0A 0%, #1A1A2E 30%, #16213E 70%, #0F1419 100%);
+  background: linear-gradient(
+    135deg,
+    #0a0a0a 0%,
+    #1a1a2e 30%,
+    #16213e 70%,
+    #0f1419 100%
+  );
   overflow: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -16,7 +22,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: 
+  background-image:
     linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
   background-size: 100px 100px;
@@ -25,8 +31,12 @@
 }
 
 @keyframes gridMove {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(100px, 100px); }
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(100px, 100px);
+  }
 }
 
 /* Particle System */
@@ -44,9 +54,9 @@
   position: absolute;
   width: 2px;
   height: 2px;
-  background: #00D4FF;
+  background: #00d4ff;
   border-radius: 50%;
-  box-shadow: 0 0 6px #00D4FF;
+  box-shadow: 0 0 6px #00d4ff;
 }
 
 /* Security Fortress Animation */
@@ -66,27 +76,27 @@
   border-radius: 50%;
 }
 
-.ring-1 { 
-  width: 100%; 
-  height: 100%; 
+.ring-1 {
+  width: 100%;
+  height: 100%;
 }
-.ring-2 { 
-  width: 80%; 
-  height: 80%; 
-  top: 10%; 
-  left: 10%; 
+.ring-2 {
+  width: 80%;
+  height: 80%;
+  top: 10%;
+  left: 10%;
 }
-.ring-3 { 
-  width: 60%; 
-  height: 60%; 
-  top: 20%; 
-  left: 20%; 
+.ring-3 {
+  width: 60%;
+  height: 60%;
+  top: 20%;
+  left: 20%;
 }
-.ring-4 { 
-  width: 40%; 
-  height: 40%; 
-  top: 30%; 
-  left: 30%; 
+.ring-4 {
+  width: 40%;
+  height: 40%;
+  top: 30%;
+  left: 30%;
 }
 
 /* Main Content Container */
@@ -136,14 +146,14 @@
 }
 
 .badge-audit {
-  background: linear-gradient(45deg, #FFD700, #FFA500);
-  color: #1A1A2E;
+  background: linear-gradient(45deg, #ffd700, #ffa500);
+  color: #1a1a2e;
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
 }
 
 .badge-trezor {
-  background: linear-gradient(45deg, #00FF88, #00CC6A);
-  color: #1A1A2E;
+  background: linear-gradient(45deg, #00ff88, #00cc6a);
+  color: #1a1a2e;
   box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
 }
 
@@ -151,7 +161,7 @@
 .brand-title {
   font-size: clamp(2.5rem, 8vw, 5rem);
   font-weight: 800;
-  background: linear-gradient(45deg, #00D4FF, #7B2CBF, #FF6B35, #FFD700);
+  background: linear-gradient(45deg, #00d4ff, #7b2cbf, #ff6b35, #ffd700);
   background-size: 400% 400%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -163,14 +173,19 @@
 }
 
 @keyframes gradientFlow {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .brand-subtitle {
   font-size: clamp(1.2rem, 4vw, 2rem);
   font-weight: 300;
-  color: #00D4FF;
+  color: #00d4ff;
   margin-bottom: 20px;
   letter-spacing: 2px;
   text-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
@@ -217,13 +232,13 @@
 }
 
 .cta-button.primary {
-  background: linear-gradient(45deg, #00D4FF, #7B2CBF);
+  background: linear-gradient(45deg, #00d4ff, #7b2cbf);
   color: white;
   box-shadow: 0 8px 32px rgba(0, 212, 255, 0.3);
 }
 
 .cta-button.secondary {
-  background: linear-gradient(45deg, #7B2CBF, #FF6B35);
+  background: linear-gradient(45deg, #7b2cbf, #ff6b35);
   color: white;
   box-shadow: 0 8px 32px rgba(123, 44, 191, 0.3);
 }
@@ -235,7 +250,12 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   transition: left 0.5s;
 }
 
@@ -273,28 +293,28 @@
     width: 400px;
     height: 400px;
   }
-  
+
   .security-badges {
     top: -30px;
     right: -30px;
     gap: 10px;
   }
-  
+
   .security-badge {
     width: 60px;
     height: 60px;
     font-size: 14px;
   }
-  
+
   .action-buttons {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .feature-highlights {
     gap: 20px;
   }
-  
+
   .hero-content {
     padding: 0 15px;
   }
@@ -305,16 +325,16 @@
     width: 300px;
     height: 300px;
   }
-  
+
   .main-logo {
     width: 200px;
     height: 200px;
   }
-  
+
   .brand-title {
     letter-spacing: 1px;
   }
-  
+
   .feature-highlights {
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;

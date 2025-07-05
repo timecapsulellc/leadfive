@@ -64,7 +64,11 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(16, 185, 129, 0.1),
+    rgba(5, 150, 105, 0.1)
+  );
   border: 1px solid rgba(16, 185, 129, 0.2);
   padding: 1rem 1.5rem;
   border-radius: 12px;
@@ -144,7 +148,11 @@
 }
 
 .forecast-item {
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.8), rgba(22, 33, 62, 0.8));
+  background: linear-gradient(
+    135deg,
+    rgba(26, 26, 46, 0.8),
+    rgba(22, 33, 62, 0.8)
+  );
   border: 1px solid rgba(124, 58, 237, 0.3);
   border-radius: 12px;
   padding: 1.5rem;
@@ -264,15 +272,15 @@
   .defi-metrics-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .forecast-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .ai-feature-tags {
     justify-content: center;
   }
-  
+
   .market-indicator {
     flex-direction: column;
     gap: 0.5rem;

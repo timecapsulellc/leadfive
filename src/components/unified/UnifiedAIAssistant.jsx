@@ -14,26 +14,26 @@ const UnifiedAIAssistant = ({ features, userData }) => {
       name: 'Revenue Advisor',
       icon: '🧠',
       color: 'from-green-400 to-emerald-600',
-      prompt: 'Strategic advice for maximizing earnings in LeadFive'
+      prompt: 'Strategic advice for maximizing earnings in LeadFive',
     },
     analyzer: {
       name: 'Network Analyzer',
       icon: '📊',
       color: 'from-blue-400 to-indigo-600',
-      prompt: 'Data insights and network analytics for LeadFive users'
+      prompt: 'Data insights and network analytics for LeadFive users',
     },
     mentor: {
       name: 'Success Mentor',
       icon: '🎯',
       color: 'from-purple-400 to-pink-600',
-      prompt: 'Motivational coaching and success strategies for LeadFive'
+      prompt: 'Motivational coaching and success strategies for LeadFive',
     },
     strategist: {
       name: 'Binary Strategist',
       icon: '♟️',
       color: 'from-yellow-400 to-orange-600',
-      prompt: 'Binary matrix optimization and long-term planning for LeadFive'
-    }
+      prompt: 'Binary matrix optimization and long-term planning for LeadFive',
+    },
   };
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const UnifiedAIAssistant = ({ features, userData }) => {
         id: Date.now(),
         type: 'ai',
         personality,
-        message: `Hello! I'm your ${personalities[personality].name}. How can I help you succeed with LeadFive today?`
+        message: `Hello! I'm your ${personalities[personality].name}. How can I help you succeed with LeadFive today?`,
       };
       setMessages([welcomeMsg]);
     }
@@ -61,7 +61,7 @@ const UnifiedAIAssistant = ({ features, userData }) => {
     const userMessage = {
       id: Date.now(),
       type: 'user',
-      message: input
+      message: input,
     };
 
     setMessages(prev => [...prev, userMessage]);
@@ -72,35 +72,38 @@ const UnifiedAIAssistant = ({ features, userData }) => {
     setTimeout(() => {
       const responses = {
         advisor: [
-          "Based on your current position, I recommend focusing on your weaker leg to maximize binary bonuses.",
-          "Consider upgrading to the next package level to increase your earning potential.",
-          "Your network shows good growth potential. Focus on quality referrals rather than quantity."
+          'Based on your current position, I recommend focusing on your weaker leg to maximize binary bonuses.',
+          'Consider upgrading to the next package level to increase your earning potential.',
+          'Your network shows good growth potential. Focus on quality referrals rather than quantity.',
         ],
         analyzer: [
-          "Your left leg has 60% of your volume. Try to balance it with more right-side placements.",
-          "Your team growth rate is 15% above average for your rank level.",
-          "I detect an opportunity for spillover in your network structure."
+          'Your left leg has 60% of your volume. Try to balance it with more right-side placements.',
+          'Your team growth rate is 15% above average for your rank level.',
+          'I detect an opportunity for spillover in your network structure.',
         ],
         mentor: [
-          "Every successful leader started where you are now. Stay consistent and trust the process!",
-          "Your dedication to building your LeadFive network will pay off. Keep pushing forward!",
-          "Remember: success in network marketing is about helping others succeed first."
+          'Every successful leader started where you are now. Stay consistent and trust the process!',
+          'Your dedication to building your LeadFive network will pay off. Keep pushing forward!',
+          'Remember: success in network marketing is about helping others succeed first.',
         ],
         strategist: [
-          "For optimal binary growth, place your next 3 referrals on your weaker leg.",
-          "Your long-term strategy should focus on developing leaders, not just adding numbers.",
-          "Consider the compound effect: quality placements now mean exponential growth later."
-        ]
+          'For optimal binary growth, place your next 3 referrals on your weaker leg.',
+          'Your long-term strategy should focus on developing leaders, not just adding numbers.',
+          'Consider the compound effect: quality placements now mean exponential growth later.',
+        ],
       };
 
       const personalityResponses = responses[personality] || responses.advisor;
-      const randomResponse = personalityResponses[Math.floor(Math.random() * personalityResponses.length)];
+      const randomResponse =
+        personalityResponses[
+          Math.floor(Math.random() * personalityResponses.length)
+        ];
 
       const aiMessage = {
         id: Date.now() + 1,
         type: 'ai',
         personality,
-        message: randomResponse
+        message: randomResponse,
       };
 
       setMessages(prev => [...prev, aiMessage]);
@@ -113,30 +116,34 @@ const UnifiedAIAssistant = ({ features, userData }) => {
     const currentIndex = personalityKeys.indexOf(personality);
     const nextIndex = (currentIndex + 1) % personalityKeys.length;
     const nextPersonality = personalityKeys[nextIndex];
-    
+
     setPersonality(nextPersonality);
-    
+
     // Add transition message
     const transitionMsg = {
       id: Date.now(),
       type: 'ai',
       personality: nextPersonality,
-      message: `Switched to ${personalities[nextPersonality].name}. ${personalities[nextPersonality].icon} How can I assist you?`
+      message: `Switched to ${personalities[nextPersonality].name}. ${personalities[nextPersonality].icon} How can I assist you?`,
     };
     setMessages(prev => [...prev, transitionMsg]);
   };
 
   const quickPrompts = {
-    advisor: ['Optimize my earnings', 'Package recommendations', 'Investment strategy'],
+    advisor: [
+      'Optimize my earnings',
+      'Package recommendations',
+      'Investment strategy',
+    ],
     analyzer: ['Analyze my network', 'Show growth trends', 'Team performance'],
     mentor: ['Motivate me', 'Success tips', 'Overcome challenges'],
-    strategist: ['Binary planning', 'Placement strategy', 'Long-term goals']
+    strategist: ['Binary planning', 'Placement strategy', 'Long-term goals'],
   };
 
   return (
     <>
       {/* Floating ARIA Button */}
-      <button 
+      <button
         className="aria-float-button"
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Open ARIA AI Assistant"
@@ -156,14 +163,14 @@ const UnifiedAIAssistant = ({ features, userData }) => {
               <h3>ARIA - {personalities[personality].name}</h3>
             </div>
             <div className="aria-controls">
-              <button 
+              <button
                 onClick={switchPersonality}
                 className="aria-switch-btn"
                 title="Switch AI Personality"
               >
                 🔄
               </button>
-              <button 
+              <button
                 onClick={() => setIsOpen(false)}
                 className="aria-close-btn"
               >
@@ -173,11 +180,8 @@ const UnifiedAIAssistant = ({ features, userData }) => {
           </div>
 
           <div className="aria-messages">
-            {messages.map((msg) => (
-              <div 
-                key={msg.id} 
-                className={`aria-message ${msg.type}`}
-              >
+            {messages.map(msg => (
+              <div key={msg.id} className={`aria-message ${msg.type}`}>
                 {msg.type === 'ai' && (
                   <span className="message-icon">
                     {personalities[msg.personality]?.icon}
@@ -186,7 +190,7 @@ const UnifiedAIAssistant = ({ features, userData }) => {
                 <div className="message-content">{msg.message}</div>
               </div>
             ))}
-            
+
             {isTyping && (
               <div className="aria-message ai typing">
                 <span className="message-icon">
@@ -199,7 +203,7 @@ const UnifiedAIAssistant = ({ features, userData }) => {
                 </div>
               </div>
             )}
-            
+
             <div ref={messagesEndRef} />
           </div>
 
@@ -220,12 +224,12 @@ const UnifiedAIAssistant = ({ features, userData }) => {
             <input
               type="text"
               value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+              onChange={e => setInput(e.target.value)}
+              onKeyPress={e => e.key === 'Enter' && handleSend()}
               placeholder="Ask ARIA anything about LeadFive..."
               className="aria-input"
             />
-            <button 
+            <button
               onClick={handleSend}
               disabled={!input.trim() || isTyping}
               className="aria-send-btn"
@@ -235,7 +239,10 @@ const UnifiedAIAssistant = ({ features, userData }) => {
           </div>
 
           <div className="aria-features">
-            <p>💡 Ask about: Placement strategies • Earnings optimization • Network growth • Success tips</p>
+            <p>
+              💡 Ask about: Placement strategies • Earnings optimization •
+              Network growth • Success tips
+            </p>
           </div>
         </div>
       )}

@@ -10,7 +10,8 @@
 }
 
 /* Touch-friendly interactions */
-button, .clickable {
+button,
+.clickable {
   min-height: 44px;
   min-width: 44px;
   touch-action: manipulation;
@@ -69,7 +70,7 @@ button, .clickable {
     align-items: center;
     gap: 0.25rem;
     padding: 0.5rem;
-    color: #B8C5D1;
+    color: #b8c5d1;
     font-size: 0.75rem;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -77,7 +78,7 @@ button, .clickable {
   }
 
   .mobile-nav-item.active {
-    color: #00D4FF;
+    color: #00d4ff;
   }
 
   .mobile-nav-item .icon {
@@ -255,7 +256,9 @@ button, .clickable {
 
 /* 9. MOBILE FORMS AND INPUTS */
 @media (max-width: 768px) {
-  input, select, textarea {
+  input,
+  select,
+  textarea {
     font-size: 16px; /* Prevents zoom on iOS */
     padding: 0.75rem;
     border-radius: 8px;
@@ -311,7 +314,8 @@ button, .clickable {
     font-size: 0.85rem;
   }
 
-  th, td {
+  th,
+  td {
     padding: 0.5rem;
     white-space: nowrap;
   }
@@ -364,7 +368,7 @@ button, .clickable {
   }
 
   .focus-visible {
-    outline: 2px solid #00D4FF;
+    outline: 2px solid #00d4ff;
     outline-offset: 2px;
   }
 }

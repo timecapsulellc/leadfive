@@ -5,7 +5,7 @@ const NetworkVisualization = ({ demoMode = false }) => {
   const [viewMode, setViewMode] = useState('network');
   const [filterActive, setFilterActive] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  
+
   return (
     <div className="network-visualization">
       <div className="visualization-header">
@@ -15,13 +15,13 @@ const NetworkVisualization = ({ demoMode = false }) => {
         </div>
         <div className="controls-section">
           <div className="view-toggle">
-            <button 
+            <button
               className={`view-button ${viewMode === 'network' ? 'active' : ''}`}
               onClick={() => setViewMode('network')}
             >
               Network View
             </button>
-            <button 
+            <button
               className={`view-button ${viewMode === 'heatmap' ? 'active' : ''}`}
               onClick={() => setViewMode('heatmap')}
             >
@@ -29,16 +29,16 @@ const NetworkVisualization = ({ demoMode = false }) => {
             </button>
           </div>
           <div className="search-filter">
-            <input 
-              type="text" 
-              placeholder="Search nodes..." 
+            <input
+              type="text"
+              placeholder="Search nodes..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={e => setSearchTerm(e.target.value)}
               className="search-input"
             />
             <label className="filter-toggle">
-              <input 
-                type="checkbox" 
+              <input
+                type="checkbox"
                 checked={filterActive}
                 onChange={() => setFilterActive(prev => !prev)}
               />
@@ -47,7 +47,7 @@ const NetworkVisualization = ({ demoMode = false }) => {
           </div>
         </div>
       </div>
-      
+
       <div className="visualization-content">
         <div className="network-container">
           {viewMode === 'network' ? (
@@ -61,16 +61,16 @@ const NetworkVisualization = ({ demoMode = false }) => {
                   <div className="network-level">
                     {[...Array(5)].map((_, i) => (
                       <div key={`level1-${i}`} className="network-node level-1">
-                        <span className="node-label">Node {i+1}</span>
+                        <span className="node-label">Node {i + 1}</span>
                       </div>
                     ))}
                   </div>
-                  
+
                   {/* Second level nodes */}
                   <div className="network-level level-2-container">
                     {[...Array(8)].map((_, i) => (
                       <div key={`level2-${i}`} className="network-node level-2">
-                        <span className="node-label">Sub {i+1}</span>
+                        <span className="node-label">Sub {i + 1}</span>
                       </div>
                     ))}
                   </div>
@@ -106,12 +106,12 @@ const NetworkVisualization = ({ demoMode = false }) => {
                         else if (value < 0.6) intensity = 'medium';
                         else if (value < 0.8) intensity = 'high';
                         else intensity = 'very-high';
-                        
+
                         return (
-                          <div 
-                            key={`cell-${row}-${col}`} 
+                          <div
+                            key={`cell-${row}-${col}`}
                             className={`heatmap-cell ${intensity}`}
-                            title={`Region ${row+1}-${col+1}: ${Math.round(value * 100)}% activity`}
+                            title={`Region ${row + 1}-${col + 1}: ${Math.round(value * 100)}% activity`}
                           ></div>
                         );
                       })}
@@ -136,7 +136,7 @@ const NetworkVisualization = ({ demoMode = false }) => {
             </div>
           )}
         </div>
-        
+
         <div className="network-stats">
           <div className="stats-card">
             <h3>Network Overview</h3>
@@ -167,7 +167,7 @@ const NetworkVisualization = ({ demoMode = false }) => {
               </div>
             </div>
           </div>
-          
+
           <div className="node-activity-card">
             <h3>Recent Activity</h3>
             <div className="activity-list">
@@ -175,7 +175,9 @@ const NetworkVisualization = ({ demoMode = false }) => {
                 <div className="activity-indicator new-node"></div>
                 <div className="activity-details">
                   <span className="activity-title">New Node Joined</span>
-                  <span className="activity-info">Node 0x67F3...2A41 connected</span>
+                  <span className="activity-info">
+                    Node 0x67F3...2A41 connected
+                  </span>
                   <span className="activity-time">2 minutes ago</span>
                 </div>
               </div>
@@ -183,7 +185,9 @@ const NetworkVisualization = ({ demoMode = false }) => {
                 <div className="activity-indicator connection"></div>
                 <div className="activity-details">
                   <span className="activity-title">New Connection</span>
-                  <span className="activity-info">0x42B1...9F12 → 0x89F7...1A32</span>
+                  <span className="activity-info">
+                    0x42B1...9F12 → 0x89F7...1A32
+                  </span>
                   <span className="activity-time">15 minutes ago</span>
                 </div>
               </div>
@@ -191,7 +195,9 @@ const NetworkVisualization = ({ demoMode = false }) => {
                 <div className="activity-indicator disconnection"></div>
                 <div className="activity-details">
                   <span className="activity-title">Node Disconnected</span>
-                  <span className="activity-info">Node 0x12D8...8B34 inactive</span>
+                  <span className="activity-info">
+                    Node 0x12D8...8B34 inactive
+                  </span>
                   <span className="activity-time">28 minutes ago</span>
                 </div>
               </div>
@@ -199,12 +205,12 @@ const NetworkVisualization = ({ demoMode = false }) => {
           </div>
         </div>
       </div>
-      
+
       <div className="network-footer">
         <p>Data refreshes every 60 seconds • Last updated: just now</p>
       </div>
-      
-      <style jsx>{`
+
+      <style>{`
         .network-visualization {
           background-color: #f8f9fa;
           padding: 1.5rem;

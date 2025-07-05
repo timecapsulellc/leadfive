@@ -4,34 +4,39 @@ class FeatureRecoveryManager {
   constructor() {
     this.contractAddress = '0x29dcCb502D10C042BcC6a02a7762C49595A9E498';
     this.bscRpcUrl = 'https://bsc-dataseed.binance.org/';
-    
+
     this.features = {
       // Core MLM Features from Smart Contract
       registration: {
         packages: [30, 50, 100, 200], // USDT values
         referralSystem: true,
         binaryMatrix: true,
-        poolDistributions: ['leader', 'help', 'club']
+        poolDistributions: ['leader', 'help', 'club'],
       },
-      
+
       // ARIA AI Features (without ElevenLabs)
       aiAssistant: {
-        personalities: ['Revenue Advisor', 'Network Analyzer', 'Success Mentor', 'Binary Strategist'],
+        personalities: [
+          'Revenue Advisor',
+          'Network Analyzer',
+          'Success Mentor',
+          'Binary Strategist',
+        ],
         features: [
           'placement-optimizer',
-          'prospect-scorer', 
+          'prospect-scorer',
           'retention-assistant',
           'training-generator',
-          'success-predictor'
+          'success-predictor',
         ],
         integration: {
           openAI: true,
           voiceEnabled: false, // Disabled ElevenLabs
           contextAware: true,
-          mlmSpecific: true
-        }
+          mlmSpecific: true,
+        },
       },
-      
+
       // Business Plan Features
       compensationPlan: {
         directBonus: true,
@@ -40,27 +45,32 @@ class FeatureRecoveryManager {
         leadershipPool: true,
         globalPool: true,
         rankAdvancement: [
-          'Member', 'Bronze', 'Silver', 'Gold', 
-          'Platinum', 'Diamond', 'Crown'
-        ]
-      }
+          'Member',
+          'Bronze',
+          'Silver',
+          'Gold',
+          'Platinum',
+          'Diamond',
+          'Crown',
+        ],
+      },
     };
   }
 
   // Recover all missing features based on contract analysis
   async recoverMissingFeatures() {
     console.log('🔍 Analyzing smart contract and business plan...');
-    
+
     try {
       const missingFeatures = {
         // From Smart Contract Analysis
         contractFeatures: await this.analyzeSmartContract(),
-        
+
         // From Business Plan
         businessFeatures: this.analyzeBusinessPlan(),
-        
+
         // AI Features (ARIA)
-        aiFeatures: this.getAIFeatures()
+        aiFeatures: this.getAIFeatures(),
       };
 
       console.log('✅ Feature recovery analysis complete');
@@ -75,7 +85,7 @@ class FeatureRecoveryManager {
     try {
       // Connect to BSC
       const provider = new ethers.providers.JsonRpcProvider(this.bscRpcUrl);
-      
+
       // Basic contract interaction
       const contractData = {
         packages: this.features.registration.packages,
@@ -83,12 +93,12 @@ class FeatureRecoveryManager {
         matrix: 'binary',
         features: [
           'user registration',
-          'package purchase', 
+          'package purchase',
           'referral system',
           'binary matrix',
           'commission distribution',
-          'pool sharing'
-        ]
+          'pool sharing',
+        ],
       };
 
       return contractData;
@@ -108,8 +118,8 @@ class FeatureRecoveryManager {
         poolDistribution: {
           leader: '2% of global volume',
           help: '3% for new member support',
-          club: '5% for top performers'
-        }
+          club: '5% for top performers',
+        },
       },
       rankRequirements: {
         bronze: { directReferrals: 2, teamVolume: 1000 },
@@ -117,7 +127,7 @@ class FeatureRecoveryManager {
         gold: { directReferrals: 10, teamVolume: 20000 },
         platinum: { directReferrals: 20, teamVolume: 50000 },
         diamond: { directReferrals: 50, teamVolume: 200000 },
-        crown: { directReferrals: 100, teamVolume: 1000000 }
+        crown: { directReferrals: 100, teamVolume: 1000000 },
       },
       features: [
         'Smart contract automation',
@@ -125,8 +135,8 @@ class FeatureRecoveryManager {
         'Global accessibility',
         'AI-powered assistance',
         'Real-time analytics',
-        'Mobile-first design'
-      ]
+        'Mobile-first design',
+      ],
     };
   }
 
@@ -142,17 +152,17 @@ class FeatureRecoveryManager {
             prompts: [
               'How to optimize my placement strategy?',
               'What package should I upgrade to?',
-              'How to maximize binary bonuses?'
-            ]
+              'How to maximize binary bonuses?',
+            ],
           },
           analyzer: {
-            name: 'Network Analyzer', 
+            name: 'Network Analyzer',
             focus: 'Data insights and network analytics',
             prompts: [
               'Analyze my team performance',
               'Show me growth patterns',
-              'Identify weak spots in my network'
-            ]
+              'Identify weak spots in my network',
+            ],
           },
           mentor: {
             name: 'Success Mentor',
@@ -160,8 +170,8 @@ class FeatureRecoveryManager {
             prompts: [
               'Give me motivation to keep building',
               'Share success strategies',
-              'Help me overcome challenges'
-            ]
+              'Help me overcome challenges',
+            ],
           },
           strategist: {
             name: 'Binary Strategist',
@@ -169,9 +179,9 @@ class FeatureRecoveryManager {
             prompts: [
               'Plan my binary tree growth',
               'Optimize left-right balance',
-              'Predict future earnings'
-            ]
-          }
+              'Predict future earnings',
+            ],
+          },
         },
         features: [
           'Smart placement recommendations',
@@ -179,9 +189,9 @@ class FeatureRecoveryManager {
           'Earnings predictions',
           'Success coaching',
           'Automated training content',
-          'Lead scoring and qualification'
-        ]
-      }
+          'Lead scoring and qualification',
+        ],
+      },
     };
   }
 
@@ -190,7 +200,7 @@ class FeatureRecoveryManager {
       packages: [30, 50, 100, 200],
       pools: ['leader', 'help', 'club'],
       matrix: 'binary',
-      features: ['registration', 'packages', 'referrals', 'matrix']
+      features: ['registration', 'packages', 'referrals', 'matrix'],
     };
   }
 
@@ -198,7 +208,7 @@ class FeatureRecoveryManager {
     return {
       contractFeatures: this.getCachedContractData(),
       businessFeatures: this.analyzeBusinessPlan(),
-      aiFeatures: this.getAIFeatures()
+      aiFeatures: this.getAIFeatures(),
     };
   }
 }

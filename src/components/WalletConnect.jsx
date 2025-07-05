@@ -6,19 +6,23 @@ const WalletConnect = ({ onConnect, onDisconnect }) => {
   const [account, setAccount] = useState(null);
   const [error, setError] = useState(null);
 
-  const formatAddress = (address) => {
+  const formatAddress = address => {
     if (!address) return '';
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
 
   const connectWallet = async () => {
     if (typeof window.ethereum === 'undefined') {
-      setError('MetaMask is not installed. Please install MetaMask to continue.');
+      setError(
+        'MetaMask is not installed. Please install MetaMask to continue.'
+      );
       return;
     }
 
     if (!window.ethereum) {
-      setError('Web3 wallet not detected. Please install MetaMask or another Web3 wallet.');
+      setError(
+        'Web3 wallet not detected. Please install MetaMask or another Web3 wallet.'
+      );
       return;
     }
 
@@ -37,11 +41,11 @@ const WalletConnect = ({ onConnect, onDisconnect }) => {
       }
 
       const selectedAccount = accounts[0];
-      
+
       // Check if we're on BSC network
       const chainId = await window.ethereum.request({ method: 'eth_chainId' });
       const bscChainId = '0x38'; // BSC Mainnet
-      
+
       if (chainId !== bscChainId) {
         try {
           await window.ethereum.request({
@@ -53,17 +57,19 @@ const WalletConnect = ({ onConnect, onDisconnect }) => {
             // Network not added, add BSC network
             await window.ethereum.request({
               method: 'wallet_addEthereumChain',
-              params: [{
-                chainId: bscChainId,
-                chainName: 'Binance Smart Chain',
-                nativeCurrency: {
-                  name: 'BNB',
-                  symbol: 'BNB',
-                  decimals: 18,
+              params: [
+                {
+                  chainId: bscChainId,
+                  chainName: 'Binance Smart Chain',
+                  nativeCurrency: {
+                    name: 'BNB',
+                    symbol: 'BNB',
+                    decimals: 18,
+                  },
+                  rpcUrls: ['https://bsc-dataseed.binance.org/'],
+                  blockExplorerUrls: ['https://bscscan.com/'],
                 },
-                rpcUrls: ['https://bsc-dataseed.binance.org/'],
-                blockExplorerUrls: ['https://bscscan.com/'],
-              }],
+              ],
             });
           } else {
             throw switchError;
@@ -77,7 +83,6 @@ const WalletConnect = ({ onConnect, onDisconnect }) => {
 
       setAccount(selectedAccount);
       onConnect?.(selectedAccount, provider, signer);
-
     } catch (err) {
       console.error('Wallet connection failed:', err);
       setError(err.message || 'Failed to connect wallet');
@@ -100,7 +105,7 @@ const WalletConnect = ({ onConnect, onDisconnect }) => {
           <button onClick={() => setError(null)}>×</button>
         </div>
       )}
-      
+
       <button
         className={`wallet-btn ${account ? 'connected' : 'disconnected'}`}
         onClick={account ? disconnectWallet : connectWallet}
@@ -110,11 +115,11 @@ const WalletConnect = ({ onConnect, onDisconnect }) => {
         {isConnecting
           ? 'Connecting...'
           : account
-          ? formatAddress(account)
-          : 'Connect Wallet'}
+            ? formatAddress(account)
+            : 'Connect Wallet'}
       </button>
 
-      <style jsx>{`
+      <style>{`
         .wallet-connect {
           display: flex;
           flex-direction: column;

@@ -1,0 +1,584 @@
+/**
+ * Security Components Styles
+ * Styling for security-related UI components
+ */
+
+/* ============ SECURITY STATUS INDICATOR ============ */
+.security-status-indicator {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+}
+
+.security-status-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.security-status-btn.secure {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.security-status-btn.warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  animation: pulse-warning 2s infinite;
+}
+
+.security-status-btn.critical {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  animation: pulse-critical 1s infinite;
+}
+
+.security-status-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes pulse-warning {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes pulse-critical {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* ============ SECURITY STATUS PANEL ============ */
+.security-status-panel {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  width: 350px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.security-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.security-panel-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #374151;
+}
+
+.security-panel-content {
+  padding: 16px 24px 24px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* ============ SECURITY OVERALL STATUS ============ */
+.security-overall {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.security-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.security-badge.secure {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.security-badge.warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: #d97706;
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.security-badge.critical {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* ============ SECURITY MODULES ============ */
+.security-modules {
+  margin-bottom: 24px;
+}
+
+.security-modules h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.module-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.module-status svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ============ SECURITY METRICS ============ */
+.security-metrics h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.metric span:first-child {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.metric-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.metric-value.critical {
+  color: #dc2626;
+}
+
+/* ============ THREAT NOTIFICATIONS ============ */
+.security-notifications {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 400px;
+}
+
+.threat-notification {
+  color: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+.threat-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.threat-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.threat-message {
+  font-size: 13px;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.threat-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.dismiss-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dismiss-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ============ SECURE INPUT ============ */
+.secure-input-container {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.secure-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.secure-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.secure-input.invalid {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.password-toggle:hover {
+  color: #374151;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.validation-errors {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.validation-error {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #ef4444;
+  padding: 4px 0;
+}
+
+.validation-error svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+/* ============ SECURE FORM ============ */
+.secure-form {
+  position: relative;
+}
+
+.form-submitting {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #374151;
+  font-weight: 500;
+}
+
+.form-submitting svg {
+  width: 24px;
+  height: 24px;
+  color: #3b82f6;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============ RESPONSIVE DESIGN ============ */
+@media (max-width: 768px) {
+  .security-status-indicator {
+    top: 16px;
+    right: 16px;
+  }
+
+  .security-status-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+
+  .security-status-panel {
+    width: calc(100vw - 32px);
+    right: -150px;
+  }
+
+  .security-notifications {
+    top: 72px;
+    right: 16px;
+    max-width: calc(100vw - 32px);
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .security-panel-header {
+    padding: 16px 20px 12px;
+  }
+
+  .security-panel-content {
+    padding: 12px 20px 20px;
+  }
+
+  .threat-notification {
+    padding: 12px;
+  }
+
+  .secure-input {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+}
+
+/* ============ DARK MODE SUPPORT ============ */
+@media (prefers-color-scheme: dark) {
+  .security-status-panel {
+    background: rgba(31, 41, 55, 0.95);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .security-panel-header {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .security-panel-header h3 {
+    color: #f9fafb;
+  }
+
+  .close-btn {
+    color: #9ca3af;
+  }
+
+  .close-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #d1d5db;
+  }
+
+  .security-modules h4,
+  .security-metrics h4 {
+    color: #d1d5db;
+  }
+
+  .module-status {
+    color: #9ca3af;
+  }
+
+  .metric {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .metric span:first-child {
+    color: #9ca3af;
+  }
+
+  .metric-value {
+    color: #f9fafb;
+  }
+
+  .secure-input {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+
+  .secure-input:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+  }
+
+  .secure-input.invalid {
+    border-color: #f87171;
+    box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.1);
+  }
+
+  .password-toggle {
+    color: #9ca3af;
+  }
+
+  .password-toggle:hover {
+    color: #d1d5db;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .form-submitting {
+    background: rgba(31, 41, 55, 0.9);
+    color: #d1d5db;
+  }
+}
+
+/* ============ HIGH CONTRAST MODE ============ */
+@media (prefers-contrast: high) {
+  .security-status-btn,
+  .threat-notification,
+  .secure-input,
+  .security-status-panel {
+    border-width: 2px;
+    border-color: currentColor;
+  }
+
+  .security-badge {
+    border-width: 2px;
+  }
+
+  .metric {
+    border-width: 2px;
+  }
+}
+
+/* ============ REDUCED MOTION ============ */
+@media (prefers-reduced-motion: reduce) {
+  .security-status-btn,
+  .close-btn,
+  .password-toggle,
+  .dismiss-btn,
+  .secure-input {
+    transition: none;
+  }
+
+  .pulse-warning,
+  .pulse-critical,
+  .spin {
+    animation: none;
+  }
+
+  .security-status-btn:hover {
+    transform: none;
+  }
+}
+
+/* ============ PRINT STYLES ============ */
+@media print {
+  .security-status-indicator,
+  .security-notifications,
+  .form-submitting {
+    display: none;
+  }
+
+  .secure-input {
+    border: 1px solid black;
+    background: white;
+    color: black;
+  }
+}

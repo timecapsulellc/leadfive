@@ -1,5 +1,39 @@
 /* ==================== CONTRACT INTEGRATION STYLES ==================== */
 
+/* Header Enhancement */
+.header-icon {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.blockchain-icon,
+.security-icon,
+.contract-icon,
+.shield-icon {
+  font-size: 1.2rem;
+  margin: 0 0.5rem;
+  vertical-align: middle;
+}
+
+.bsc-badge {
+  background: linear-gradient(135deg, #f3ba2f, #f0b90b);
+  color: #000;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 0 0.5rem;
+  display: inline-block;
+}
+
 /* Balance Display */
 .balance-display {
   display: flex;
@@ -17,6 +51,11 @@
   flex-direction: column;
   align-items: center;
   gap: 5px;
+}
+
+.balance-icon {
+  font-size: 1.4rem;
+  margin-bottom: 4px;
 }
 
 .balance-label {
@@ -89,6 +128,68 @@
   font-weight: 600;
 }
 
+.payment-btn .alt-payment {
+  background: #ff6b35;
+  color: #ffffff;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Package Benefits Enhancement */
+.benefit-icon {
+  font-size: 1.1rem;
+  margin-right: 0.5rem;
+  display: inline-block;
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding: 0.25rem 0;
+  transition: all 0.2s ease;
+}
+
+.benefit-item:hover {
+  transform: translateX(2px);
+}
+
+.benefit-text {
+  flex: 1;
+  text-align: left;
+  line-height: 1.4;
+}
+
+/* Package Icon Enhancement */
+.package-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-5px); }
+  60% { transform: translateY(-3px); }
+}
+
+/* BSC Icon Enhancement */
+.bsc-icon {
+  font-size: 1rem;
+  margin-right: 0.5rem;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { filter: brightness(1); }
+  to { filter: brightness(1.3); }
+}
+
 /* Button Loading States */
 .btn-register:disabled,
 .purchase-btn:disabled {
@@ -148,19 +249,76 @@
     flex-direction: column;
     gap: 15px;
   }
-  
+
   .payment-toggle {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .payment-btn {
     min-width: 200px;
     justify-content: center;
   }
-  
+
   .purchase-btn {
     min-width: auto;
     width: 100%;
+  }
+
+  /* Mobile Icon Adjustments */
+  .header-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .package-icon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .blockchain-icon,
+  .security-icon,
+  .contract-icon,
+  .shield-icon {
+    font-size: 1rem;
+    margin: 0 0.3rem;
+  }
+  
+  .bsc-badge {
+    font-size: 0.7rem;
+    padding: 1px 6px;
+    margin: 0 0.3rem;
+  }
+  
+  .balance-icon {
+    font-size: 1.2rem;
+  }
+  
+  .benefit-icon {
+    font-size: 1rem;
+    min-width: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .payment-btn {
+    flex-direction: column;
+    padding: 10px 15px;
+    gap: 4px;
+  }
+  
+  .payment-btn .token-icon {
+    font-size: 1.5rem;
+  }
+  
+  .benefit-item {
+    margin-bottom: 0.4rem;
+  }
+  
+  /* Disable animations on small mobile to improve performance */
+  .header-icon,
+  .package-icon,
+  .bsc-icon {
+    animation: none;
   }
 }

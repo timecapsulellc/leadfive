@@ -21,13 +21,13 @@
 
 .notification-trigger:hover {
   background: rgba(123, 44, 191, 0.4);
-  border-color: #7B2CBF;
+  border-color: #7b2cbf;
   transform: translateY(-2px);
 }
 
 .notification-trigger.has-unread {
-  background: linear-gradient(135deg, #7B2CBF, #00D4FF);
-  border-color: #7B2CBF;
+  background: linear-gradient(135deg, #7b2cbf, #00d4ff);
+  border-color: #7b2cbf;
   animation: pulse 2s infinite;
 }
 
@@ -35,7 +35,7 @@
   position: absolute;
   top: -4px;
   right: -4px;
-  background: #FF6B35;
+  background: #ff6b35;
   color: white;
   border-radius: 50%;
   min-width: 18px;
@@ -110,24 +110,24 @@
 
 .action-btn:hover {
   background: rgba(123, 44, 191, 0.4);
-  border-color: #7B2CBF;
+  border-color: #7b2cbf;
 }
 
 .action-btn.mark-all:hover {
   background: rgba(0, 255, 136, 0.2);
-  border-color: #00FF88;
+  border-color: #00ff88;
 }
 
 .action-btn.clear-all:hover {
   background: rgba(255, 107, 53, 0.2);
-  border-color: #FF6B35;
+  border-color: #ff6b35;
 }
 
 .notification-list {
   max-height: 400px;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #7B2CBF rgba(255, 255, 255, 0.1);
+  scrollbar-color: #7b2cbf rgba(255, 255, 255, 0.1);
 }
 
 .notification-list::-webkit-scrollbar {
@@ -139,7 +139,7 @@
 }
 
 .notification-list::-webkit-scrollbar-thumb {
-  background: #7B2CBF;
+  background: #7b2cbf;
   border-radius: 3px;
 }
 
@@ -173,7 +173,7 @@
 
 .notification-item.unread {
   background: rgba(123, 44, 191, 0.05);
-  border-left: 3px solid #7B2CBF;
+  border-left: 3px solid #7b2cbf;
 }
 
 .notification-icon {
@@ -227,30 +227,30 @@
   right: 16px;
   width: 8px;
   height: 8px;
-  background: #00D4FF;
+  background: #00d4ff;
   border-radius: 50%;
-  box-shadow: 0 0 4px #00D4FF;
+  box-shadow: 0 0 4px #00d4ff;
 }
 
 /* Notification Type Styles */
 .notification-earning .notification-icon {
   background: rgba(0, 255, 136, 0.2);
-  color: #00FF88;
+  color: #00ff88;
 }
 
 .notification-system .notification-icon {
   background: rgba(0, 212, 255, 0.2);
-  color: #00D4FF;
+  color: #00d4ff;
 }
 
 .notification-referral .notification-icon {
   background: rgba(123, 44, 191, 0.2);
-  color: #7B2CBF;
+  color: #7b2cbf;
 }
 
 .notification-withdrawal .notification-icon {
   background: rgba(255, 107, 53, 0.2);
-  color: #FF6B35;
+  color: #ff6b35;
 }
 
 /* Responsive Design */
@@ -266,11 +266,11 @@
     width: 280px;
     right: -20px;
   }
-  
+
   .notification-item {
     padding: 12px 16px;
   }
-  
+
   .notification-header {
     padding: 16px;
   }

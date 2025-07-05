@@ -17,21 +17,25 @@ class Web3Service {
       if (typeof window.ethereum !== 'undefined') {
         this.provider = new ethers.BrowserProvider(window.ethereum);
         this.signer = await this.provider.getSigner();
-        
+
         // Contract ABI (simplified for key functions)
         const abi = [
-          "function getUserInfo(address user) view returns (tuple(uint256 totalEarned, uint256 totalInvested, uint256 withdrawableAmount, bool isCapped, uint256 directReferrals, uint256 teamSize, uint256 matrixPosition, address leftChild, address rightChild))",
-          "function getEarningsByPool(address user) view returns (uint256[5])",
-          "function withdraw(uint256 amount) external",
-          "function reinvest(uint256 amount) external",
-          "function register(address sponsor) external payable",
-          "function distributeGlobalHelpPool() external",
-          "function distributeLeaderBonus() external",
-          "function pauseContract() external",
-          "function owner() view returns (address)"
+          'function getUserInfo(address user) view returns (tuple(uint256 totalEarned, uint256 totalInvested, uint256 withdrawableAmount, bool isCapped, uint256 directReferrals, uint256 teamSize, uint256 matrixPosition, address leftChild, address rightChild))',
+          'function getEarningsByPool(address user) view returns (uint256[5])',
+          'function withdraw(uint256 amount) external',
+          'function reinvest(uint256 amount) external',
+          'function register(address sponsor) external payable',
+          'function distributeGlobalHelpPool() external',
+          'function distributeLeaderBonus() external',
+          'function pauseContract() external',
+          'function owner() view returns (address)',
         ];
-        
-        this.contract = new ethers.Contract(this.contractAddress, abi, this.signer);
+
+        this.contract = new ethers.Contract(
+          this.contractAddress,
+          abi,
+          this.signer
+        );
         this.isInitialized = true;
         console.log('Web3Service initialized successfully');
       } else {
@@ -51,11 +55,11 @@ class Web3Service {
 
   async getUserEarnings(address) {
     await this.ensureInitialized();
-    
+
     try {
       // First check if user exists in the contract
       const userInfo = await this.contract.getUserInfo(address);
-      
+
       // If user doesn't exist or has no earnings data, return default values
       if (!userInfo || userInfo.totalEarned === 0n) {
         return {
@@ -68,12 +72,12 @@ class Web3Service {
           withdrawableAmount: 0,
           totalInvested: 0,
           isCapped: false,
-          capAmount: 0
+          capAmount: 0,
         };
       }
-      
+
       const earningsByPool = await this.contract.getEarningsByPool(address);
-      
+
       return {
         sponsorCommission: Number(earningsByPool[0]) / 1e18,
         levelBonus: Number(earningsByPool[1]) / 1e18,
@@ -84,10 +88,12 @@ class Web3Service {
         withdrawableAmount: Number(userInfo.withdrawableAmount) / 1e18,
         totalInvested: Number(userInfo.totalInvested) / 1e18,
         isCapped: userInfo.isCapped,
-        capAmount: Number(userInfo.totalInvested) * 4 / 1e18
+        capAmount: (Number(userInfo.totalInvested) * 4) / 1e18,
       };
     } catch (error) {
-      console.warn(`User ${address} not found in contract or has no data. Using default values.`);
+      console.warn(
+        `User ${address} not found in contract or has no data. Using default values.`
+      );
       // Return default values for unregistered users
       return {
         sponsorCommission: 0,
@@ -99,17 +105,17 @@ class Web3Service {
         withdrawableAmount: 0,
         totalInvested: 0,
         isCapped: false,
-        capAmount: 0
+        capAmount: 0,
       };
     }
   }
 
   async getMatrixData(address) {
     await this.ensureInitialized();
-    
+
     try {
       const userInfo = await this.contract.getUserInfo(address);
-      
+
       // If user doesn't exist, return default values
       if (!userInfo) {
         return {
@@ -117,32 +123,40 @@ class Web3Service {
           leftChild: null,
           rightChild: null,
           teamSize: 0,
-          directReferrals: 0
+          directReferrals: 0,
         };
       }
-      
+
       return {
         position: Number(userInfo.matrixPosition),
-        leftChild: userInfo.leftChild !== '0x0000000000000000000000000000000000000000' ? userInfo.leftChild : null,
-        rightChild: userInfo.rightChild !== '0x0000000000000000000000000000000000000000' ? userInfo.rightChild : null,
+        leftChild:
+          userInfo.leftChild !== '0x0000000000000000000000000000000000000000'
+            ? userInfo.leftChild
+            : null,
+        rightChild:
+          userInfo.rightChild !== '0x0000000000000000000000000000000000000000'
+            ? userInfo.rightChild
+            : null,
         teamSize: Number(userInfo.teamSize),
-        directReferrals: Number(userInfo.directReferrals)
+        directReferrals: Number(userInfo.directReferrals),
       };
     } catch (error) {
-      console.warn(`Matrix data not found for ${address}. Using default values.`);
+      console.warn(
+        `Matrix data not found for ${address}. Using default values.`
+      );
       return {
         position: 0,
         leftChild: null,
         rightChild: null,
         teamSize: 0,
-        directReferrals: 0
+        directReferrals: 0,
       };
     }
   }
 
   async withdraw(amount) {
     await this.ensureInitialized();
-    
+
     try {
       const amountWei = ethers.parseEther(amount.toString());
       const tx = await this.contract.withdraw(amountWei);
@@ -155,7 +169,7 @@ class Web3Service {
 
   async reinvest(amount) {
     await this.ensureInitialized();
-    
+
     try {
       const amountWei = ethers.parseEther(amount.toString());
       const tx = await this.contract.reinvest(amountWei);
@@ -169,7 +183,7 @@ class Web3Service {
   // Admin functions
   async isAdmin(address) {
     await this.ensureInitialized();
-    
+
     try {
       const owner = await this.contract.owner();
       return owner.toLowerCase() === address.toLowerCase();
@@ -181,7 +195,7 @@ class Web3Service {
 
   async distributeGlobalHelpPool() {
     await this.ensureInitialized();
-    
+
     try {
       const tx = await this.contract.distributeGlobalHelpPool();
       return await tx.wait();
@@ -193,7 +207,7 @@ class Web3Service {
 
   async distributeLeaderBonus() {
     await this.ensureInitialized();
-    
+
     try {
       const tx = await this.contract.distributeLeaderBonus();
       return await tx.wait();
@@ -211,27 +225,27 @@ class Web3Service {
   formatCurrency(amount, decimals = 2) {
     return Number(amount).toLocaleString(undefined, {
       minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals
+      maximumFractionDigits: decimals,
     });
   }
 
   // Enhanced genealogy tree building method
   async buildGenealogyTree(rootAddress, maxDepth = 5) {
     const visited = new Set();
-    
+
     const buildNode = async (address, depth = 0) => {
       if (depth >= maxDepth || visited.has(address)) {
         return null;
       }
-      
+
       visited.add(address);
-      
+
       try {
         const [matrixData, earningsData] = await Promise.all([
           this.getMatrixData(address),
-          this.getUserEarnings(address)
+          this.getUserEarnings(address),
         ]);
-        
+
         const node = {
           name: address === rootAddress ? 'YOU' : this.formatAddress(address),
           attributes: {
@@ -243,11 +257,11 @@ class Web3Service {
             teamSize: matrixData.teamSize,
             isUser: address === rootAddress,
             isCapped: earningsData.isCapped,
-            level: depth + 1
+            level: depth + 1,
           },
-          children: []
+          children: [],
         };
-        
+
         // Add left and right children
         const childPromises = [];
         if (matrixData.leftChild) {
@@ -256,10 +270,10 @@ class Web3Service {
         if (matrixData.rightChild) {
           childPromises.push(buildNode(matrixData.rightChild, depth + 1));
         }
-        
+
         const children = await Promise.all(childPromises);
         node.children = children.filter(child => child !== null);
-        
+
         return node;
       } catch (error) {
         console.error(`Error building node for ${address}:`, error);
@@ -270,13 +284,13 @@ class Web3Service {
             earnings: '$0.00',
             withdrawable: '$0.00',
             error: 'Failed to load',
-            level: depth + 1
+            level: depth + 1,
           },
-          children: []
+          children: [],
         };
       }
     };
-    
+
     return await buildNode(rootAddress);
   }
 
@@ -284,21 +298,22 @@ class Web3Service {
   async getTeamHierarchy(rootAddress, maxDepth = 10) {
     const teamMembers = [];
     const visited = new Set();
-    
+
     const processNode = async (address, level = 1, sponsor = null) => {
       if (visited.has(address) || level > maxDepth) return;
-      
+
       visited.add(address);
-      
+
       try {
         const [matrixData, earningsData] = await Promise.all([
           this.getMatrixData(address),
-          this.getUserEarnings(address)
+          this.getUserEarnings(address),
         ]);
-        
+
         const memberData = {
           address: address,
-          displayName: address === rootAddress ? 'YOU' : this.formatAddress(address),
+          displayName:
+            address === rootAddress ? 'YOU' : this.formatAddress(address),
           level: level,
           position: matrixData.position,
           totalEarnings: earningsData.totalEarned,
@@ -306,31 +321,36 @@ class Web3Service {
           directReferrals: matrixData.directReferrals,
           teamSize: matrixData.teamSize,
           isCapped: earningsData.isCapped,
-          joinDate: new Date(Date.now() - (Math.random() * 90 * 24 * 60 * 60 * 1000)), // Simulated
+          joinDate: new Date(
+            Date.now() - Math.random() * 90 * 24 * 60 * 60 * 1000
+          ), // Simulated
           sponsor: sponsor,
-          children: []
+          children: [],
         };
-        
+
         teamMembers.push(memberData);
-        
+
         // Process children
         const childPromises = [];
         if (matrixData.leftChild) {
-          childPromises.push(processNode(matrixData.leftChild, level + 1, address));
+          childPromises.push(
+            processNode(matrixData.leftChild, level + 1, address)
+          );
           memberData.children.push(matrixData.leftChild);
         }
         if (matrixData.rightChild) {
-          childPromises.push(processNode(matrixData.rightChild, level + 1, address));
+          childPromises.push(
+            processNode(matrixData.rightChild, level + 1, address)
+          );
           memberData.children.push(matrixData.rightChild);
         }
-        
+
         await Promise.all(childPromises);
-        
       } catch (error) {
         console.error(`Error processing team member ${address}:`, error);
       }
     };
-    
+
     await processNode(rootAddress);
     return teamMembers.filter(member => member.address !== rootAddress); // Exclude root user
   }

@@ -1,4 +1,3 @@
-
 /* Welcome Animation Styles */
 .welcome-animation {
   display: flex;
@@ -6,7 +5,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0A0A0A 100%);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0a0a0a 100%);
   position: relative;
   overflow: hidden;
 }
@@ -18,16 +17,32 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(123, 44, 191, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(255, 107, 53, 0.05) 0%, transparent 50%);
+  background:
+    radial-gradient(
+      circle at 20% 80%,
+      rgba(0, 212, 255, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(123, 44, 191, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 107, 53, 0.05) 0%,
+      transparent 50%
+    );
   animation: backgroundShift 4s ease-in-out infinite alternate;
 }
 
 @keyframes backgroundShift {
-  0% { opacity: 0.5; }
-  100% { opacity: 0.8; }
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.8;
+  }
 }
 
 .logo-container {
@@ -42,15 +57,15 @@
 }
 
 @keyframes logoEntrance {
-  0% { 
+  0% {
     opacity: 0;
     transform: rotate(0deg) scale(0.5);
   }
-  50% { 
+  50% {
     opacity: 0.7;
     transform: rotate(180deg) scale(1.2);
   }
-  100% { 
+  100% {
     opacity: 1;
     transform: rotate(360deg) scale(1);
   }
@@ -58,7 +73,7 @@
 
 .fade-in-title {
   font-size: clamp(2rem, 5vw, 3.5rem);
-  background: linear-gradient(45deg, #00D4FF, #7B2CBF, #FF6B35);
+  background: linear-gradient(45deg, #00d4ff, #7b2cbf, #ff6b35);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -80,7 +95,7 @@
 
 .fade-in-subtitle {
   font-size: clamp(1rem, 3vw, 1.5rem);
-  color: var(--text-secondary, #B8C5D1);
+  color: var(--text-secondary, #b8c5d1);
   text-align: center;
   font-weight: 300;
   margin: 0.5rem 0 2rem 0;
@@ -123,30 +138,35 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, 
-    transparent, 
-    #00D4FF, 
-    #7B2CBF,
-    #FF6B35,
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #00d4ff,
+    #7b2cbf,
+    #ff6b35,
     transparent
   );
   animation: loadingProgress 2s ease-in-out infinite;
 }
 
 @keyframes loadingProgress {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 .loading-indicator.complete .loading-bar::after {
   animation: none;
   left: 0;
   width: 100%;
-  background: var(--success-color, #7ED321);
+  background: var(--success-color, #7ed321);
 }
 
 .loading-text {
-  color: var(--text-secondary, #B8C5D1);
+  color: var(--text-secondary, #b8c5d1);
   font-size: 0.9rem;
   font-weight: 500;
   text-transform: uppercase;
@@ -154,7 +174,7 @@
 }
 
 .loading-indicator.complete .loading-text {
-  color: var(--success-color, #7ED321);
+  color: var(--success-color, #7ed321);
 }
 
 /* Responsive Design */
@@ -162,20 +182,20 @@
   .welcome-animation {
     padding: 2rem 1rem;
   }
-  
+
   .logo-container {
     margin-bottom: 1.5rem;
   }
-  
+
   .fade-in-title {
     font-size: 2.5rem;
   }
-  
+
   .fade-in-subtitle {
     font-size: 1.2rem;
     padding: 0 1rem;
   }
-  
+
   .loading-bar {
     width: 150px;
   }
@@ -185,7 +205,7 @@
   .fade-in-title {
     font-size: 2rem;
   }
-  
+
   .fade-in-subtitle {
     font-size: 1rem;
   }
@@ -199,11 +219,11 @@
     animation: none;
     transition: none;
   }
-  
+
   .loading-bar::after {
     animation: none;
   }
-  
+
   .welcome-animation::before {
     animation: none;
   }

@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { FaExclamationTriangle, FaCheckCircle, FaNetworkWired } from 'react-icons/fa';
+import {
+  FaExclamationTriangle,
+  FaCheckCircle,
+  FaNetworkWired,
+} from 'react-icons/fa';
 import './NetworkStatus.css';
 
 const NetworkStatus = ({ provider, account }) => {
@@ -8,7 +12,7 @@ const NetworkStatus = ({ provider, account }) => {
     networkName: '',
     chainId: '',
     isCorrectNetwork: false,
-    contractDeployed: false
+    contractDeployed: false,
   });
 
   useEffect(() => {
@@ -22,7 +26,7 @@ const NetworkStatus = ({ provider, account }) => {
         networkName: 'No Provider',
         chainId: '',
         isCorrectNetwork: false,
-        contractDeployed: false
+        contractDeployed: false,
       });
       return;
     }
@@ -31,13 +35,13 @@ const NetworkStatus = ({ provider, account }) => {
       const network = await provider.getNetwork();
       const chainId = `0x${network.chainId.toString(16)}`;
       const isCorrectNetwork = chainId === '0x38'; // BSC Mainnet
-      
+
       setNetworkStatus({
         connected: true,
         networkName: network.name || 'Unknown Network',
         chainId: chainId,
         isCorrectNetwork: isCorrectNetwork,
-        contractDeployed: isCorrectNetwork // Assume deployed if correct network
+        contractDeployed: isCorrectNetwork, // Assume deployed if correct network
       });
     } catch (error) {
       console.error('Network check failed:', error);
@@ -46,7 +50,7 @@ const NetworkStatus = ({ provider, account }) => {
         networkName: 'Connection Error',
         chainId: '',
         isCorrectNetwork: false,
-        contractDeployed: false
+        contractDeployed: false,
       });
     }
   };
@@ -103,7 +107,9 @@ const NetworkStatus = ({ provider, account }) => {
       <div className="network-status warning">
         <FaExclamationTriangle />
         <div>
-          <p>Wrong Network: {networkStatus.networkName} ({networkStatus.chainId})</p>
+          <p>
+            Wrong Network: {networkStatus.networkName} ({networkStatus.chainId})
+          </p>
           <button onClick={switchToBSC} className="switch-network-btn">
             Switch to BNB Smart Chain
           </button>

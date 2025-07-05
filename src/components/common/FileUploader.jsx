@@ -8,14 +8,14 @@ import React, { useState, useRef, useCallback } from 'react';
 import FileUploadService from '../../services/FileUploadService.js';
 import OpenAIService from '../../services/OpenAIService.js';
 
-const FileUploader = ({ 
-  userId, 
-  projectId = null, 
-  onUploadComplete = () => {}, 
+const FileUploader = ({
+  userId,
+  projectId = null,
+  onUploadComplete = () => {},
   onError = () => {},
   allowMultiple = false,
   showAIProcessing = true,
-  className = ""
+  className = '',
 }) => {
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploads, setUploads] = useState([]);
@@ -29,138 +29,169 @@ const FileUploader = ({
     accent: '#FF6B35',
     success: '#00FF88',
     error: '#FF4757',
-    background: '#1A1A2E'
+    background: '#1A1A2E',
   };
 
   /**
    * Handle file selection
    */
-  const handleFileSelect = useCallback(async (files) => {
-    const fileArray = Array.from(files);
-    
-    for (const file of fileArray) {
-      const uploadId = Date.now() + Math.random().toString(36).substring(2);
-      
-      // Add file to upload queue
-      const newUpload = {
-        id: uploadId,
-        file: file,
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        status: 'uploading',
-        progress: 0,
-        error: null,
-        aiResult: null
-      };
+  const handleFileSelect = useCallback(
+    async files => {
+      const fileArray = Array.from(files);
 
-      setUploads(prev => [...prev, newUpload]);
+      for (const file of fileArray) {
+        const uploadId = Date.now() + Math.random().toString(36).substring(2);
 
-      try {
-        // Upload file
-        const result = await FileUploadService.uploadFile(file, userId, projectId);
-        
-        if (result.success) {
-          // Update upload status
-          setUploads(prev => prev.map(upload => 
-            upload.id === uploadId 
-              ? { ...upload, status: 'completed', progress: 100, uploadResult: result }
-              : upload
-          ));
+        // Add file to upload queue
+        const newUpload = {
+          id: uploadId,
+          file: file,
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          status: 'uploading',
+          progress: 0,
+          error: null,
+          aiResult: null,
+        };
 
-          // Process with AI if enabled
-          if (showAIProcessing && result.uploadId) {
-            await processWithAI(uploadId, result.uploadId);
+        setUploads(prev => [...prev, newUpload]);
+
+        try {
+          // Upload file
+          const result = await FileUploadService.uploadFile(
+            file,
+            userId,
+            projectId
+          );
+
+          if (result.success) {
+            // Update upload status
+            setUploads(prev =>
+              prev.map(upload =>
+                upload.id === uploadId
+                  ? {
+                      ...upload,
+                      status: 'completed',
+                      progress: 100,
+                      uploadResult: result,
+                    }
+                  : upload
+              )
+            );
+
+            // Process with AI if enabled
+            if (showAIProcessing && result.uploadId) {
+              await processWithAI(uploadId, result.uploadId);
+            }
+
+            onUploadComplete(result);
+          } else {
+            throw new Error(result.error);
           }
-
-          onUploadComplete(result);
-        } else {
-          throw new Error(result.error);
+        } catch (error) {
+          setUploads(prev =>
+            prev.map(upload =>
+              upload.id === uploadId
+                ? { ...upload, status: 'error', error: error.message }
+                : upload
+            )
+          );
+          onError(error);
         }
-
-      } catch (error) {
-        setUploads(prev => prev.map(upload => 
-          upload.id === uploadId 
-            ? { ...upload, status: 'error', error: error.message }
-            : upload
-        ));
-        onError(error);
       }
-    }
-  }, [userId, projectId, showAIProcessing, onUploadComplete, onError]);
+    },
+    [userId, projectId, showAIProcessing, onUploadComplete, onError]
+  );
 
   /**
    * Process file with AI
    */
   const processWithAI = async (uploadId, fileUploadId) => {
     try {
-      setUploads(prev => prev.map(upload => 
-        upload.id === uploadId 
-          ? { ...upload, status: 'processing', aiProcessing: true }
-          : upload
-      ));
+      setUploads(prev =>
+        prev.map(upload =>
+          upload.id === uploadId
+            ? { ...upload, status: 'processing', aiProcessing: true }
+            : upload
+        )
+      );
 
       // Analyze with AI
-      const aiResult = await FileUploadService.processWithAI(fileUploadId, 'analyze');
-      
+      const aiResult = await FileUploadService.processWithAI(
+        fileUploadId,
+        'analyze'
+      );
+
       if (aiResult.success) {
-        setUploads(prev => prev.map(upload => 
-          upload.id === uploadId 
-            ? { 
-                ...upload, 
-                status: 'ai_completed', 
-                aiProcessing: false,
-                aiResult: aiResult.result 
-              }
-            : upload
-        ));
+        setUploads(prev =>
+          prev.map(upload =>
+            upload.id === uploadId
+              ? {
+                  ...upload,
+                  status: 'ai_completed',
+                  aiProcessing: false,
+                  aiResult: aiResult.result,
+                }
+              : upload
+          )
+        );
 
         // AI completion notification (voice synthesis disabled)
-        console.log("File analysis complete! I've extracted valuable insights from your document.");
+        console.log(
+          "File analysis complete! I've extracted valuable insights from your document."
+        );
       }
-
     } catch (error) {
       console.error('AI processing error:', error);
-      setUploads(prev => prev.map(upload => 
-        upload.id === uploadId 
-          ? { ...upload, aiProcessing: false, aiError: error.message }
-          : upload
-      ));
+      setUploads(prev =>
+        prev.map(upload =>
+          upload.id === uploadId
+            ? { ...upload, aiProcessing: false, aiError: error.message }
+            : upload
+        )
+      );
     }
   };
 
   /**
    * Handle drag events
    */
-  const handleDragOver = useCallback((e) => {
+  const handleDragOver = useCallback(e => {
     e.preventDefault();
     setIsDragOver(true);
   }, []);
 
-  const handleDragLeave = useCallback((e) => {
+  const handleDragLeave = useCallback(e => {
     e.preventDefault();
     setIsDragOver(false);
   }, []);
 
-  const handleDrop = useCallback((e) => {
-    e.preventDefault();
-    setIsDragOver(false);
-    
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      handleFileSelect(files);
-    }
-  }, [handleFileSelect]);
+  const handleDrop = useCallback(
+    e => {
+      e.preventDefault();
+      setIsDragOver(false);
+
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        handleFileSelect(files);
+      }
+    },
+    [handleFileSelect]
+  );
 
   /**
    * Handle file input change
    */
-  const handleInputChange = useCallback((e) => {
-    const files = e.target.files;
-    if (files.length > 0) {
-      handleFileSelect(files);
-    }
-  }, [handleFileSelect]);
+  const handleInputChange = useCallback(
+    e => {
+      const files = e.target.files;
+      if (files.length > 0) {
+        handleFileSelect(files);
+      }
+    },
+    [handleFileSelect]
+  );
 
   /**
    * Open file dialog
@@ -172,23 +203,25 @@ const FileUploader = ({
   /**
    * Remove upload from list
    */
-  const removeUpload = (uploadId) => {
+  const removeUpload = uploadId => {
     setUploads(prev => prev.filter(upload => upload.id !== uploadId));
   };
 
   /**
    * Retry failed upload
    */
-  const retryUpload = async (uploadId) => {
+  const retryUpload = async uploadId => {
     const upload = uploads.find(u => u.id === uploadId);
     if (upload && upload.file) {
       // Reset status and retry
-      setUploads(prev => prev.map(u => 
-        u.id === uploadId 
-          ? { ...u, status: 'uploading', progress: 0, error: null }
-          : u
-      ));
-      
+      setUploads(prev =>
+        prev.map(u =>
+          u.id === uploadId
+            ? { ...u, status: 'uploading', progress: 0, error: null }
+            : u
+        )
+      );
+
       await handleFileSelect([upload.file]);
     }
   };
@@ -196,7 +229,7 @@ const FileUploader = ({
   /**
    * Format file size
    */
-  const formatFileSize = (bytes) => {
+  const formatFileSize = bytes => {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
@@ -207,7 +240,7 @@ const FileUploader = ({
   /**
    * Get status icon
    */
-  const getStatusIcon = (status) => {
+  const getStatusIcon = status => {
     switch (status) {
       case 'uploading':
         return '⏳';
@@ -227,7 +260,7 @@ const FileUploader = ({
   /**
    * Get status color
    */
-  const getStatusColor = (status) => {
+  const getStatusColor = status => {
     switch (status) {
       case 'uploading':
         return colors.primary;
@@ -246,7 +279,7 @@ const FileUploader = ({
 
   return (
     <div className={`leadfive-file-uploader ${className}`}>
-      <style jsx>{`
+      <style>{`
         .leadfive-file-uploader {
           font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
@@ -422,7 +455,8 @@ const FileUploader = ({
           Drag & drop files here, or click to browse
         </div>
         <div className="upload-hint">
-          Supports images, PDFs, and documents • Max {(FileUploadService.maxFileSize / 1024 / 1024).toFixed(0)}MB
+          Supports images, PDFs, and documents • Max{' '}
+          {(FileUploadService.maxFileSize / 1024 / 1024).toFixed(0)}MB
         </div>
       </div>
 
@@ -439,17 +473,21 @@ const FileUploader = ({
       {/* Upload List */}
       {uploads.length > 0 && (
         <div className="upload-list">
-          {uploads.map((upload) => (
+          {uploads.map(upload => (
             <div key={upload.id} className="upload-item">
               <div className="upload-header">
                 <div className="upload-info">
-                  <span style={{ fontSize: '1.2rem' }}>{getStatusIcon(upload.status)}</span>
+                  <span style={{ fontSize: '1.2rem' }}>
+                    {getStatusIcon(upload.status)}
+                  </span>
                   <div>
                     <div className="upload-name">{upload.name}</div>
-                    <div className="upload-size">{formatFileSize(upload.size)}</div>
+                    <div className="upload-size">
+                      {formatFileSize(upload.size)}
+                    </div>
                   </div>
                 </div>
-                <div 
+                <div
                   className="upload-status"
                   style={{ color: getStatusColor(upload.status) }}
                 >
@@ -462,13 +500,20 @@ const FileUploader = ({
               </div>
 
               {/* Progress Bar */}
-              {(upload.status === 'uploading' || upload.status === 'processing') && (
+              {(upload.status === 'uploading' ||
+                upload.status === 'processing') && (
                 <div className="progress-bar">
-                  <div 
+                  <div
                     className="progress-fill"
-                    style={{ 
-                      width: upload.status === 'uploading' ? `${upload.progress}%` : '100%',
-                      animation: upload.status === 'processing' ? 'pulse 2s infinite' : 'none'
+                    style={{
+                      width:
+                        upload.status === 'uploading'
+                          ? `${upload.progress}%`
+                          : '100%',
+                      animation:
+                        upload.status === 'processing'
+                          ? 'pulse 2s infinite'
+                          : 'none',
                     }}
                   />
                 </div>
@@ -476,7 +521,13 @@ const FileUploader = ({
 
               {/* Error Message */}
               {upload.error && (
-                <div style={{ color: colors.error, fontSize: '0.8rem', marginTop: '0.5rem' }}>
+                <div
+                  style={{
+                    color: colors.error,
+                    fontSize: '0.8rem',
+                    marginTop: '0.5rem',
+                  }}
+                >
                   {upload.error}
                 </div>
               )}
@@ -484,26 +535,22 @@ const FileUploader = ({
               {/* AI Result */}
               {upload.aiResult && (
                 <div className="ai-result">
-                  <div className="ai-result-title">
-                    🤖 AI Analysis
-                  </div>
-                  <div className="ai-result-content">
-                    {upload.aiResult}
-                  </div>
+                  <div className="ai-result-title">🤖 AI Analysis</div>
+                  <div className="ai-result-content">{upload.aiResult}</div>
                 </div>
               )}
 
               {/* Actions */}
               <div className="upload-actions">
                 {upload.status === 'error' && (
-                  <button 
+                  <button
                     className="action-btn retry-btn"
                     onClick={() => retryUpload(upload.id)}
                   >
                     Retry
                   </button>
                 )}
-                <button 
+                <button
                   className="action-btn remove-btn"
                   onClick={() => removeUpload(upload.id)}
                 >
@@ -518,4 +565,4 @@ const FileUploader = ({
   );
 };
 
-export default FileUploader; 
+export default FileUploader;

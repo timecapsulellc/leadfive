@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Button from '../common/Button';
 import { toast } from 'react-toastify';
@@ -16,18 +15,19 @@ const WhitepaperUpload = ({ isAdmin }) => {
     }
   }, []);
 
-  const saveFilesToStorage = (files) => {
+  const saveFilesToStorage = files => {
     localStorage.setItem('leadfive_whitepapers', JSON.stringify(files));
   };
 
-  const handleFileSelect = (event) => {
+  const handleFileSelect = event => {
     const file = event.target.files[0];
     if (file) {
       if (file.type !== 'application/pdf') {
         toast.error('Please select a PDF file');
         return;
       }
-      if (file.size > 10 * 1024 * 1024) { // 10MB limit
+      if (file.size > 10 * 1024 * 1024) {
+        // 10MB limit
         toast.error('File size must be less than 10MB');
         return;
       }
@@ -50,10 +50,10 @@ const WhitepaperUpload = ({ isAdmin }) => {
     try {
       // In production, this would upload to IPFS, AWS S3, or similar
       // For demo purposes, we'll simulate the upload and store metadata
-      
+
       // Simulate upload delay
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
+
       const fileData = {
         id: Date.now().toString(),
         name: selectedFile.name,
@@ -61,20 +61,19 @@ const WhitepaperUpload = ({ isAdmin }) => {
         uploadDate: new Date().toISOString(),
         url: URL.createObjectURL(selectedFile), // In production, this would be the actual file URL
         hash: `ipfs://Qm${Math.random().toString(36).substring(2, 15)}`, // Mock IPFS hash
-        uploader: 'Admin'
+        uploader: 'Admin',
       };
-      
+
       const updatedFiles = [...uploadedFiles, fileData];
       setUploadedFiles(updatedFiles);
       saveFilesToStorage(updatedFiles);
-      
+
       toast.success(`Whitepaper "${selectedFile.name}" uploaded successfully!`);
       setSelectedFile(null);
-      
+
       // Reset file input
       const fileInput = document.getElementById('whitepaper-upload');
       if (fileInput) fileInput.value = '';
-      
     } catch (error) {
       console.error('Upload failed:', error);
       toast.error('Upload failed. Please try again.');
@@ -83,7 +82,7 @@ const WhitepaperUpload = ({ isAdmin }) => {
     }
   };
 
-  const handleFileDelete = (fileId) => {
+  const handleFileDelete = fileId => {
     if (!isAdmin) {
       toast.error('Admin access required');
       return;
@@ -99,7 +98,7 @@ const WhitepaperUpload = ({ isAdmin }) => {
     toast.success('Whitepaper deleted successfully');
   };
 
-  const formatFileSize = (bytes) => {
+  const formatFileSize = bytes => {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
@@ -113,12 +112,13 @@ const WhitepaperUpload = ({ isAdmin }) => {
         <h3>📄 Whitepapers</h3>
         <div className="whitepaper-list">
           {uploadedFiles.length > 0 ? (
-            uploadedFiles.map((file) => (
+            uploadedFiles.map(file => (
               <div key={file.id} className="whitepaper-item">
                 <div className="file-info">
                   <div className="file-name">{file.name}</div>
                   <div className="file-meta">
-                    {formatFileSize(file.size)} • {new Date(file.uploadDate).toLocaleDateString()}
+                    {formatFileSize(file.size)} •{' '}
+                    {new Date(file.uploadDate).toLocaleDateString()}
                   </div>
                 </div>
                 <Button
@@ -140,7 +140,7 @@ const WhitepaperUpload = ({ isAdmin }) => {
   return (
     <div className="admin-section">
       <h3>📄 Whitepaper Management</h3>
-      
+
       <div className="upload-section">
         <div className="file-input-container">
           <input
@@ -155,7 +155,7 @@ const WhitepaperUpload = ({ isAdmin }) => {
             {selectedFile ? selectedFile.name : 'Choose PDF file...'}
           </label>
         </div>
-        
+
         <Button
           onClick={handleFileUpload}
           disabled={uploading || !selectedFile}
@@ -173,16 +173,17 @@ const WhitepaperUpload = ({ isAdmin }) => {
           <p>Uploading to IPFS...</p>
         </div>
       )}
-      
+
       <div className="uploaded-files">
         <h4>📚 Uploaded Whitepapers</h4>
         {uploadedFiles.length > 0 ? (
-          uploadedFiles.map((file) => (
+          uploadedFiles.map(file => (
             <div key={file.id} className="file-item admin-file-item">
               <div className="file-info">
                 <div className="file-name">{file.name}</div>
                 <div className="file-meta">
-                  {formatFileSize(file.size)} • {new Date(file.uploadDate).toLocaleDateString()}
+                  {formatFileSize(file.size)} •{' '}
+                  {new Date(file.uploadDate).toLocaleDateString()}
                 </div>
                 <div className="file-hash">IPFS: {file.hash}</div>
               </div>

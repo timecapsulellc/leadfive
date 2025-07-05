@@ -4,18 +4,21 @@ import AnimatedWelcome from '../components/AnimatedWelcome';
 import UnifiedAIAssistant from '../components/unified/UnifiedAIAssistant';
 import ErrorBoundary from '../components/ErrorBoundary';
 
-export default function Home({ account, provider, signer, onConnect, onDisconnect }) {
+export default function Home({
+  account,
+  provider,
+  signer,
+  onConnect,
+  onDisconnect,
+}) {
   const navigate = useNavigate();
-  
+
   return (
     <ErrorBoundary>
       <main className="home-page" style={{ minHeight: '100vh' }}>
-        <AnimatedWelcome 
-          account={account}
-          onConnect={onConnect}
-        />
-        
-        <UnifiedAIAssistant 
+        <AnimatedWelcome account={account} onConnect={onConnect} />
+
+        <UnifiedAIAssistant
           mode="floating"
           position="bottom-right"
           account={account}
@@ -25,13 +28,13 @@ export default function Home({ account, provider, signer, onConnect, onDisconnec
             directCount: 0,
             totalEarnings: 0,
             balance: 0,
-            isRegistered: false
+            isRegistered: false,
           }}
           userStats={{
             level: 1,
             teamSize: 0,
             activeNodes: 0,
-            totalEarnings: 0
+            totalEarnings: 0,
           }}
         />
       </main>

@@ -12,6 +12,9 @@
 .env.mainnet
 .env.testnet
 
+# ==================== ARCHIVE ====================
+_archive/
+
 # Private keys and sensitive data
 *.key
 *.pem
@@ -124,6 +127,7 @@ bsc-testnet.json
 
 # ==================== ARCHIVE & BACKUP ====================
 archive/
+_archive/
 backup/
 temp/
 tmp/

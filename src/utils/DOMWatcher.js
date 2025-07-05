@@ -18,11 +18,11 @@ export class DOMWatcher {
     const defaultOptions = {
       childList: true,
       subtree: true,
-      ...options
+      ...options,
     };
 
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
         if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
           callback(mutation.addedNodes, mutation);
         }
@@ -30,10 +30,10 @@ export class DOMWatcher {
     });
 
     observer.observe(target, defaultOptions);
-    
+
     const watcherId = `watcher-${Date.now()}-${Math.random()}`;
     this.observers.set(watcherId, observer);
-    
+
     return watcherId;
   }
 
@@ -46,15 +46,15 @@ export class DOMWatcher {
   watchForAttributeChanges(target, callback, attributeFilter = null) {
     const options = {
       attributes: true,
-      attributeOldValue: true
+      attributeOldValue: true,
     };
 
     if (attributeFilter) {
       options.attributeFilter = attributeFilter;
     }
 
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
         if (mutation.type === 'attributes') {
           callback(mutation.target, mutation.attributeName, mutation.oldValue);
         }
@@ -62,10 +62,10 @@ export class DOMWatcher {
     });
 
     observer.observe(target, options);
-    
+
     const watcherId = `attr-watcher-${Date.now()}-${Math.random()}`;
     this.observers.set(watcherId, observer);
-    
+
     return watcherId;
   }
 
@@ -85,7 +85,7 @@ export class DOMWatcher {
    * Stop all observers
    */
   stopAll() {
-    this.observers.forEach((observer) => {
+    this.observers.forEach(observer => {
       observer.disconnect();
     });
     this.observers.clear();
@@ -96,7 +96,11 @@ export class DOMWatcher {
 export const domWatcher = new DOMWatcher();
 
 // React hook for DOM watching
-export const useDOMWatcher = (callback, target = document.body, dependencies = []) => {
+export const useDOMWatcher = (
+  callback,
+  target = document.body,
+  dependencies = []
+) => {
   const { useEffect, useRef } = require('react');
   const watcherIdRef = useRef(null);
 

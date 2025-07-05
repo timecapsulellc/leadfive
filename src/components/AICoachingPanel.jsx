@@ -10,32 +10,35 @@ const AICoachingPanel = ({ account, data }) => {
     {
       id: 1,
       title: 'Increase Direct Referrals',
-      description: 'Focus on bringing in 3 more direct referrals to qualify for the next level.',
+      description:
+        'Focus on bringing in 3 more direct referrals to qualify for the next level.',
       actionable: true,
       priority: 'high',
-      category: 'growth'
+      category: 'growth',
     },
     {
       id: 2,
       title: 'Optimize Your Team Structure',
-      description: 'Your Level 2 referrals can help you grow faster. Engage with them to activate more downline.',
+      description:
+        'Your Level 2 referrals can help you grow faster. Engage with them to activate more downline.',
       actionable: true,
       priority: 'medium',
-      category: 'strategy'
+      category: 'strategy',
     },
     {
       id: 3,
       title: 'Help Pool Optimization',
-      description: 'You\'re eligible for Help Pool rewards. Make sure your account is properly configured.',
+      description:
+        "You're eligible for Help Pool rewards. Make sure your account is properly configured.",
       actionable: true,
       priority: 'medium',
-      category: 'earnings'
-    }
+      category: 'earnings',
+    },
   ];
-  
+
   // Use mock data if none provided
   const coachingSuggestions = data?.coachingSuggestions || mockSuggestions;
-  
+
   return (
     <div className="ai-coaching-panel">
       <div className="ai-panel-header">
@@ -43,10 +46,13 @@ const AICoachingPanel = ({ account, data }) => {
           <FaRobot /> AI Coaching Insights
         </h3>
       </div>
-      
+
       <div className="ai-suggestions-container">
         {coachingSuggestions.map(suggestion => (
-          <div key={suggestion.id} className={`ai-suggestion-card ${suggestion.priority}`}>
+          <div
+            key={suggestion.id}
+            className={`ai-suggestion-card ${suggestion.priority}`}
+          >
             <div className="suggestion-icon">
               {suggestion.category === 'growth' && <FaChartLine />}
               {suggestion.category === 'strategy' && <FaBrain />}
@@ -63,9 +69,11 @@ const AICoachingPanel = ({ account, data }) => {
           </div>
         ))}
       </div>
-      
+
       <div className="ai-coaching-footer">
-        <button className="ai-coaching-action">Get Personalized Strategy</button>
+        <button className="ai-coaching-action">
+          Get Personalized Strategy
+        </button>
       </div>
     </div>
   );

@@ -1,12 +1,12 @@
 import React from 'react';
 import './UnifiedWalletConnect.css';
 
-const UnifiedWalletConnect = ({ 
-  account, 
-  onConnect, 
-  onDisconnect, 
-  buttonText = "Connect Wallet",
-  compact = false 
+const UnifiedWalletConnect = ({
+  account,
+  onConnect,
+  onDisconnect,
+  buttonText = 'Connect Wallet',
+  compact = false,
 }) => {
   return (
     <div className="unified-wallet-connect">

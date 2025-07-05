@@ -34,21 +34,21 @@ class EngagementOptimizer {
       sessionDuration: { weight: 0.2, target: 300 }, // 5 minutes
       pagesPerSession: { weight: 0.15, target: 5 },
       returnVisitRate: { weight: 0.25, target: 0.7 },
-      
+
       // Feature Usage Metrics
       aiFeatureUsage: { weight: 0.2, target: 0.6 },
       transactionCompletion: { weight: 0.3, target: 0.85 },
       coachingInteraction: { weight: 0.15, target: 0.4 },
-      
+
       // Business Metrics
       referralRate: { weight: 0.25, target: 0.3 },
       packageUpgradeRate: { weight: 0.2, target: 0.15 },
       withdrawalFrequency: { weight: 0.1, target: 0.5 },
-      
+
       // Satisfaction Metrics
       userFeedback: { weight: 0.15, target: 4.5 }, // 1-5 scale
       supportTickets: { weight: -0.1, target: 0.1 }, // negative weight
-      churnRate: { weight: -0.2, target: 0.05 } // negative weight
+      churnRate: { weight: -0.2, target: 0.05 }, // negative weight
     };
 
     console.log('✅ Engagement tracking configured');
@@ -62,90 +62,91 @@ class EngagementOptimizer {
 
     // Rule 1: New User Onboarding Optimization
     this.optimizationRules.set('new_user_onboarding', {
-      condition: (user) => user.daysSinceJoined <= 7,
+      condition: user => user.daysSinceJoined <= 7,
       optimizations: [
         {
           feature: 'ai_coaching',
           setting: 'prominent_display',
-          reason: 'New users benefit from guided experience'
+          reason: 'New users benefit from guided experience',
         },
         {
           feature: 'transaction_helper',
           setting: 'always_enabled',
-          reason: 'Reduce friction for first transactions'
+          reason: 'Reduce friction for first transactions',
         },
         {
           feature: 'voice_features',
           setting: 'optional_intro',
-          reason: 'Introduce voice features gradually'
-        }
-      ]
+          reason: 'Introduce voice features gradually',
+        },
+      ],
     });
 
     // Rule 2: Active User Engagement Boost
     this.optimizationRules.set('active_user_boost', {
-      condition: (user) => user.weeklyLogins >= 5 && user.totalEarnings > 100,
+      condition: user => user.weeklyLogins >= 5 && user.totalEarnings > 100,
       optimizations: [
         {
           feature: 'earnings_prediction',
           setting: 'detailed_view',
-          reason: 'Active users want detailed insights'
+          reason: 'Active users want detailed insights',
         },
         {
           feature: 'smart_notifications',
           setting: 'intelligent_frequency',
-          reason: 'Optimize notification timing for engagement'
+          reason: 'Optimize notification timing for engagement',
         },
         {
           feature: 'network_analysis',
           setting: 'advanced_metrics',
-          reason: 'Power users appreciate detailed analytics'
-        }
-      ]
+          reason: 'Power users appreciate detailed analytics',
+        },
+      ],
     });
 
     // Rule 3: At-Risk User Retention
     this.optimizationRules.set('retention_boost', {
-      condition: (user) => user.daysSinceLastLogin > 3 || user.weeklyActivity < 0.3,
+      condition: user =>
+        user.daysSinceLastLogin > 3 || user.weeklyActivity < 0.3,
       optimizations: [
         {
           feature: 'smart_notifications',
           setting: 'engagement_focused',
-          reason: 'Re-engage inactive users with compelling updates'
+          reason: 'Re-engage inactive users with compelling updates',
         },
         {
           feature: 'ai_coaching',
           setting: 'motivational_mode',
-          reason: 'Provide encouragement and clear next steps'
+          reason: 'Provide encouragement and clear next steps',
         },
         {
           feature: 'achievement_highlights',
           setting: 'prominent',
-          reason: 'Remind users of their progress'
-        }
-      ]
+          reason: 'Remind users of their progress',
+        },
+      ],
     });
 
     // Rule 4: High-Value User Experience
     this.optimizationRules.set('vip_experience', {
-      condition: (user) => user.totalEarnings > 1000 || user.teamSize > 50,
+      condition: user => user.totalEarnings > 1000 || user.teamSize > 50,
       optimizations: [
         {
           feature: 'all_ai_features',
           setting: 'premium_enabled',
-          reason: 'Provide full feature access to valuable users'
+          reason: 'Provide full feature access to valuable users',
         },
         {
           feature: 'personal_account_manager',
           setting: 'enabled',
-          reason: 'High-touch experience for top performers'
+          reason: 'High-touch experience for top performers',
         },
         {
           feature: 'advanced_analytics',
           setting: 'full_access',
-          reason: 'Detailed insights for serious investors'
-        }
-      ]
+          reason: 'Detailed insights for serious investors',
+        },
+      ],
     });
 
     console.log('✅ Optimization rules initialized');
@@ -159,36 +160,44 @@ class EngagementOptimizer {
       // Update user profile
       this.userProfiles.set(userId, {
         ...userProfile,
-        lastOptimization: Date.now()
+        lastOptimization: Date.now(),
       });
 
       // Apply A/B test assignments
-      const aiCoachingVariant = this.abTesting.assignUserToVariant(userId, 'ai-coaching-visibility');
-      const voiceVariant = this.abTesting.assignUserToVariant(userId, 'voice-features');
-      const notificationVariant = this.abTesting.assignUserToVariant(userId, 'smart-notifications');
+      const aiCoachingVariant = this.abTesting.assignUserToVariant(
+        userId,
+        'ai-coaching-visibility'
+      );
+      const voiceVariant = this.abTesting.assignUserToVariant(
+        userId,
+        'voice-features'
+      );
+      const notificationVariant = this.abTesting.assignUserToVariant(
+        userId,
+        'smart-notifications'
+      );
 
       // Determine applicable optimization rules
       const applicableRules = this.getApplicableRules(userProfile);
-      
+
       // Generate personalized configuration
       const personalizedConfig = this.generatePersonalizedConfig(
-        userProfile, 
+        userProfile,
         applicableRules,
         {
           aiCoaching: aiCoachingVariant,
           voice: voiceVariant,
-          notifications: notificationVariant
+          notifications: notificationVariant,
         }
       );
 
       // Track optimization
       this.trackOptimizationEvent(userId, 'experience_optimized', {
         rules: applicableRules.map(r => r.name),
-        config: personalizedConfig
+        config: personalizedConfig,
       });
 
       return personalizedConfig;
-
     } catch (error) {
       console.error('Error optimizing user experience:', error);
       return this.getDefaultConfig();
@@ -205,7 +214,7 @@ class EngagementOptimizer {
       if (rule.condition(userProfile)) {
         applicableRules.push({
           name: ruleName,
-          ...rule
+          ...rule,
         });
       }
     }
@@ -223,32 +232,32 @@ class EngagementOptimizer {
         coaching: {
           visibility: 'sidebar',
           frequency: 'daily',
-          style: 'encouraging'
+          style: 'encouraging',
         },
         transactionHelper: {
           enabled: true,
-          verbosity: 'standard'
+          verbosity: 'standard',
         },
         earningsPrediction: {
           enabled: true,
           timeframes: ['30days', '90days'],
-          confidence: 'medium'
+          confidence: 'medium',
         },
         voiceFeatures: {
           enabled: false,
-          autoPlay: false
-        }
+          autoPlay: false,
+        },
       },
       notifications: {
         frequency: 'moderate',
         types: ['achievements', 'opportunities', 'team_updates'],
-        timing: 'smart'
+        timing: 'smart',
       },
       ui: {
         dashboard: 'standard',
         navigation: 'simplified',
-        theme: 'light'
-      }
+        theme: 'light',
+      },
     };
 
     // Apply optimization rules
@@ -299,7 +308,11 @@ class EngagementOptimizer {
 
       case 'earnings_prediction':
         if (optimization.setting === 'detailed_view') {
-          config.ai.earningsPrediction.timeframes = ['30days', '90days', '12months'];
+          config.ai.earningsPrediction.timeframes = [
+            '30days',
+            '90days',
+            '12months',
+          ];
           config.ai.earningsPrediction.confidence = 'high';
         }
         break;
@@ -308,7 +321,10 @@ class EngagementOptimizer {
         if (optimization.setting === 'intelligent_frequency') {
           config.notifications.frequency = 'intelligent';
         } else if (optimization.setting === 'engagement_focused') {
-          config.notifications.types.push('re_engagement', 'progress_reminders');
+          config.notifications.types.push(
+            're_engagement',
+            'progress_reminders'
+          );
         }
         break;
     }
@@ -370,7 +386,7 @@ class EngagementOptimizer {
    */
   trackEngagementEvent(userId, event, data = {}) {
     const timestamp = Date.now();
-    
+
     if (!this.engagementMetrics.has(userId)) {
       this.engagementMetrics.set(userId, []);
     }
@@ -378,7 +394,7 @@ class EngagementOptimizer {
     this.engagementMetrics.get(userId).push({
       event,
       data,
-      timestamp
+      timestamp,
     });
 
     // Track A/B test interactions
@@ -410,7 +426,7 @@ class EngagementOptimizer {
       'first_referral',
       'withdrawal_completed',
       'team_milestone',
-      'inactivity_warning'
+      'inactivity_warning',
     ];
 
     if (significantEvents.includes(event)) {
@@ -429,7 +445,7 @@ class EngagementOptimizer {
       aiFeatureImpact: this.calculateAIFeatureImpact(),
       abTestResults: this.getABTestSummary(),
       recommendations: this.generateRecommendations(),
-      userSegments: this.analyzeUserSegments()
+      userSegments: this.analyzeUserSegments(),
     };
 
     return report;
@@ -440,15 +456,16 @@ class EngagementOptimizer {
    */
   calculateOverallEngagement() {
     const totalUsers = this.userProfiles.size;
-    const activeUsers = Array.from(this.userProfiles.values())
-      .filter(user => user.daysSinceLastLogin <= 7).length;
+    const activeUsers = Array.from(this.userProfiles.values()).filter(
+      user => user.daysSinceLastLogin <= 7
+    ).length;
 
     return {
       totalUsers,
       activeUsers,
-      engagementRate: totalUsers > 0 ? (activeUsers / totalUsers) : 0,
+      engagementRate: totalUsers > 0 ? activeUsers / totalUsers : 0,
       averageSessionDuration: this.calculateAverageMetric('sessionDuration'),
-      averageReturnRate: this.calculateAverageMetric('returnVisitRate')
+      averageReturnRate: this.calculateAverageMetric('returnVisitRate'),
     };
   }
 
@@ -458,10 +475,14 @@ class EngagementOptimizer {
   calculateAIFeatureImpact() {
     return {
       aiCoachingUsage: this.calculateFeatureUsage('ai_coaching_interaction'),
-      transactionHelperUsage: this.calculateFeatureUsage('transaction_helper_used'),
+      transactionHelperUsage: this.calculateFeatureUsage(
+        'transaction_helper_used'
+      ),
       voiceFeatureUsage: this.calculateFeatureUsage('voice_feature_used'),
-      earningsPredictionViews: this.calculateFeatureUsage('earnings_prediction_viewed'),
-      overallAIEngagement: this.calculateFeatureUsage('ai_feature_used')
+      earningsPredictionViews: this.calculateFeatureUsage(
+        'earnings_prediction_viewed'
+      ),
+      overallAIEngagement: this.calculateFeatureUsage('ai_feature_used'),
     };
   }
 
@@ -470,11 +491,11 @@ class EngagementOptimizer {
    */
   getABTestSummary() {
     const summary = {};
-    
+
     for (const testId of this.abTesting.activeTests.keys()) {
       summary[testId] = this.abTesting.generateTestReport(testId);
     }
-    
+
     return summary;
   }
 
@@ -491,7 +512,7 @@ class EngagementOptimizer {
         priority: 'high',
         category: 'engagement',
         recommendation: 'Implement more prominent AI coaching features',
-        impact: 'Could increase engagement by 20-30%'
+        impact: 'Could increase engagement by 20-30%',
       });
     }
 
@@ -502,7 +523,7 @@ class EngagementOptimizer {
         priority: 'medium',
         category: 'ai_adoption',
         recommendation: 'Improve AI feature discoverability and onboarding',
-        impact: 'Could increase AI adoption by 40%'
+        impact: 'Could increase AI adoption by 40%',
       });
     }
 
@@ -517,7 +538,7 @@ class EngagementOptimizer {
       new_users: { count: 0, engagement: 0 },
       active_users: { count: 0, engagement: 0 },
       power_users: { count: 0, engagement: 0 },
-      at_risk_users: { count: 0, engagement: 0 }
+      at_risk_users: { count: 0, engagement: 0 },
     };
 
     for (const [userId, profile] of this.userProfiles) {
@@ -550,20 +571,21 @@ class EngagementOptimizer {
       }
     }
 
-    return totalUsers > 0 ? (usersWithFeature / totalUsers) : 0;
+    return totalUsers > 0 ? usersWithFeature / totalUsers : 0;
   }
 
   calculateAverageMetric(metricName) {
     const values = [];
-    
+
     for (const profile of this.userProfiles.values()) {
       if (profile[metricName] !== undefined) {
         values.push(profile[metricName]);
       }
     }
 
-    return values.length > 0 ? 
-      values.reduce((a, b) => a + b, 0) / values.length : 0;
+    return values.length > 0
+      ? values.reduce((a, b) => a + b, 0) / values.length
+      : 0;
   }
 
   calculateUserEngagement(userId) {
@@ -571,35 +593,44 @@ class EngagementOptimizer {
     const recentEvents = events.filter(
       event => Date.now() - event.timestamp < 7 * 24 * 60 * 60 * 1000
     );
-    
+
     return recentEvents.length / 7; // Events per day
   }
 
   classifyUserSegment(profile) {
     if (profile.daysSinceJoined <= 7) return 'new_users';
     if (profile.daysSinceLastLogin > 14) return 'at_risk_users';
-    if (profile.totalEarnings > 500 || profile.teamSize > 20) return 'power_users';
+    if (profile.totalEarnings > 500 || profile.teamSize > 20)
+      return 'power_users';
     return 'active_users';
   }
 
   getDefaultConfig() {
     return {
       ai: {
-        coaching: { visibility: 'sidebar', frequency: 'daily', style: 'encouraging' },
+        coaching: {
+          visibility: 'sidebar',
+          frequency: 'daily',
+          style: 'encouraging',
+        },
         transactionHelper: { enabled: true, verbosity: 'standard' },
-        earningsPrediction: { enabled: true, timeframes: ['30days'], confidence: 'medium' },
-        voiceFeatures: { enabled: false, autoPlay: false }
+        earningsPrediction: {
+          enabled: true,
+          timeframes: ['30days'],
+          confidence: 'medium',
+        },
+        voiceFeatures: { enabled: false, autoPlay: false },
       },
       notifications: {
         frequency: 'moderate',
         types: ['achievements', 'opportunities'],
-        timing: 'smart'
+        timing: 'smart',
       },
       ui: {
         dashboard: 'standard',
         navigation: 'simplified',
-        theme: 'light'
-      }
+        theme: 'light',
+      },
     };
   }
 }

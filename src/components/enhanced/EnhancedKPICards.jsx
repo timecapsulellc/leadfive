@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  FaDollarSign, 
-  FaUsers, 
-  FaChartLine, 
+import {
+  FaDollarSign,
+  FaUsers,
+  FaChartLine,
   FaTrophy,
   FaArrowUp,
   FaArrowDown,
-  FaInfoCircle
+  FaInfoCircle,
 } from 'react-icons/fa';
 import './EnhancedKPICards.css';
 
@@ -16,17 +16,23 @@ const EnhancedKPICards = ({ data }) => {
     totalEarnings: 0,
     teamSize: 0,
     growthRate: 0,
-    progressTo4x: 0
+    progressTo4x: 0,
   });
 
   // Animate numbers on mount
   useEffect(() => {
     const interval = setInterval(() => {
       setAnimatedValues(prev => ({
-        totalEarnings: Math.min(prev.totalEarnings + (data.totalEarnings / 50), data.totalEarnings),
-        teamSize: Math.min(prev.teamSize + Math.ceil(data.teamSize / 50), data.teamSize),
+        totalEarnings: Math.min(
+          prev.totalEarnings + data.totalEarnings / 50,
+          data.totalEarnings
+        ),
+        teamSize: Math.min(
+          prev.teamSize + Math.ceil(data.teamSize / 50),
+          data.teamSize
+        ),
         growthRate: Math.min(prev.growthRate + 0.5, 23.5),
-        progressTo4x: Math.min(prev.progressTo4x + 1.5, 73.2)
+        progressTo4x: Math.min(prev.progressTo4x + 1.5, 73.2),
       }));
     }, 50);
 
@@ -47,7 +53,7 @@ const EnhancedKPICards = ({ data }) => {
       icon: FaDollarSign,
       subtitle: 'vs Last Week',
       color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      description: 'Total commissions earned across all streams'
+      description: 'Total commissions earned across all streams',
     },
     {
       id: 'team',
@@ -58,7 +64,7 @@ const EnhancedKPICards = ({ data }) => {
       icon: FaUsers,
       subtitle: 'New Members',
       color: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-      description: 'Direct referrals and team network size'
+      description: 'Direct referrals and team network size',
     },
     {
       id: 'growth',
@@ -69,7 +75,7 @@ const EnhancedKPICards = ({ data }) => {
       icon: FaChartLine,
       subtitle: 'This Week',
       color: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-      description: 'Weekly network and earnings growth'
+      description: 'Weekly network and earnings growth',
     },
     {
       id: 'progress',
@@ -80,8 +86,8 @@ const EnhancedKPICards = ({ data }) => {
       icon: FaTrophy,
       subtitle: 'Target Achievement',
       color: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-      description: 'Progress towards 4x earnings cap'
-    }
+      description: 'Progress towards 4x earnings cap',
+    },
   ];
 
   return (
@@ -92,15 +98,15 @@ const EnhancedKPICards = ({ data }) => {
           className="kpi-card-enhanced"
           initial={{ opacity: 0, y: 30, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ 
-            duration: 0.6, 
+          transition={{
+            duration: 0.6,
             delay: index * 0.1,
-            type: "spring",
-            stiffness: 100
+            type: 'spring',
+            stiffness: 100,
           }}
-          whileHover={{ 
+          whileHover={{
             scale: 1.05,
-            boxShadow: "0 20px 40px rgba(0,0,0,0.15)"
+            boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
           }}
           style={{ background: card.color }}
         >
@@ -116,24 +122,26 @@ const EnhancedKPICards = ({ data }) => {
           <div className="kpi-content">
             <h3 className="kpi-title">{card.title}</h3>
             <div className="kpi-value">{card.value}</div>
-            
+
             <div className="kpi-change">
               <span className={`change-indicator ${card.changeType}`}>
-                {card.changeType === 'positive' ? <FaArrowUp /> : card.changeType === 'negative' ? <FaArrowDown /> : null}
+                {card.changeType === 'positive' ? (
+                  <FaArrowUp />
+                ) : card.changeType === 'negative' ? (
+                  <FaArrowDown />
+                ) : null}
                 {card.change}
               </span>
               <span className="change-subtitle">{card.subtitle}</span>
             </div>
           </div>
 
-          <div className="kpi-description">
-            {card.description}
-          </div>
+          <div className="kpi-description">{card.description}</div>
 
           {/* Progress bar for progress card */}
           {card.id === 'progress' && (
             <div className="progress-bar">
-              <div 
+              <div
                 className="progress-fill"
                 style={{ width: `${animatedValues.progressTo4x}%` }}
               ></div>

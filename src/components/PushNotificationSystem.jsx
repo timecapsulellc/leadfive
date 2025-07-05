@@ -4,7 +4,7 @@ import './PushNotificationSystem.css';
 
 /**
  * OrphiChain Push Notification System
- * 
+ *
  * Features:
  * - Real-time transaction notifications
  * - Error and success state feedback
@@ -20,20 +20,20 @@ const NOTIFICATION_TYPES = {
   ERROR: 'error',
   WARNING: 'warning',
   INFO: 'info',
-  TRANSACTION: 'transaction'
+  TRANSACTION: 'transaction',
 };
 
 const NOTIFICATION_PRIORITIES = {
   HIGH: 3,
   MEDIUM: 2,
-  LOW: 1
+  LOW: 1,
 };
 
-const PushNotificationSystem = ({ 
+const PushNotificationSystem = ({
   maxNotifications = 5,
   defaultDuration = 6000,
   enableSound = true,
-  position = 'top-right' // top-right, top-left, bottom-right, bottom-left
+  position = 'top-right', // top-right, top-left, bottom-right, bottom-left
 }) => {
   const [notifications, setNotifications] = useState([]);
   const [isVisible, setIsVisible] = useState(true);
@@ -51,10 +51,11 @@ const PushNotificationSystem = ({
   // Auto-remove expired notifications
   useEffect(() => {
     const interval = setInterval(() => {
-      setNotifications(prev => 
-        prev.filter(notification => 
-          !notification.autoRemove || 
-          Date.now() - notification.timestamp < notification.duration
+      setNotifications(prev =>
+        prev.filter(
+          notification =>
+            !notification.autoRemove ||
+            Date.now() - notification.timestamp < notification.duration
         )
       );
     }, 1000);
@@ -63,46 +64,51 @@ const PushNotificationSystem = ({
   }, []);
 
   // Add new notification
-  const addNotification = useCallback((notification) => {
-    const id = ++notificationId.current;
-    const timestamp = Date.now();
-    
-    const newNotification = {
-      id,
-      timestamp,
-      type: NOTIFICATION_TYPES.INFO,
-      priority: NOTIFICATION_PRIORITIES.MEDIUM,
-      title: '',
-      message: '',
-      duration: defaultDuration,
-      autoRemove: true,
-      actionButton: null,
-      metadata: {},
-      ...notification
-    };
+  const addNotification = useCallback(
+    notification => {
+      const id = ++notificationId.current;
+      const timestamp = Date.now();
 
-    setNotifications(prev => {
-      // Remove oldest if at max capacity
-      let updatedNotifications = prev;
-      if (prev.length >= maxNotifications) {
-        updatedNotifications = prev.slice(1);
+      const newNotification = {
+        id,
+        timestamp,
+        type: NOTIFICATION_TYPES.INFO,
+        priority: NOTIFICATION_PRIORITIES.MEDIUM,
+        title: '',
+        message: '',
+        duration: defaultDuration,
+        autoRemove: true,
+        actionButton: null,
+        metadata: {},
+        ...notification,
+      };
+
+      setNotifications(prev => {
+        // Remove oldest if at max capacity
+        let updatedNotifications = prev;
+        if (prev.length >= maxNotifications) {
+          updatedNotifications = prev.slice(1);
+        }
+
+        // Add new notification and sort by priority
+        const withNew = [...updatedNotifications, newNotification];
+        return withNew.sort((a, b) => b.priority - a.priority);
+      });
+
+      // Play notification sound
+      if (enableSound && audioRef.current) {
+        audioRef.current
+          .play()
+          .catch(e => console.log('Audio play failed:', e));
       }
 
-      // Add new notification and sort by priority
-      const withNew = [...updatedNotifications, newNotification];
-      return withNew.sort((a, b) => b.priority - a.priority);
-    });
-
-    // Play notification sound
-    if (enableSound && audioRef.current) {
-      audioRef.current.play().catch(e => console.log('Audio play failed:', e));
-    }
-
-    return id;
-  }, [defaultDuration, maxNotifications, enableSound]);
+      return id;
+    },
+    [defaultDuration, maxNotifications, enableSound]
+  );
 
   // Remove specific notification
-  const removeNotification = useCallback((id) => {
+  const removeNotification = useCallback(id => {
     setNotifications(prev => prev.filter(n => n.id !== id));
   }, []);
 
@@ -112,57 +118,72 @@ const PushNotificationSystem = ({
   }, []);
 
   // Pre-built notification creators
-  const showSuccess = useCallback((title, message, options = {}) => {
-    return addNotification({
-      type: NOTIFICATION_TYPES.SUCCESS,
-      title,
-      message,
-      priority: NOTIFICATION_PRIORITIES.MEDIUM,
-      ...options
-    });
-  }, [addNotification]);
+  const showSuccess = useCallback(
+    (title, message, options = {}) => {
+      return addNotification({
+        type: NOTIFICATION_TYPES.SUCCESS,
+        title,
+        message,
+        priority: NOTIFICATION_PRIORITIES.MEDIUM,
+        ...options,
+      });
+    },
+    [addNotification]
+  );
 
-  const showError = useCallback((title, message, options = {}) => {
-    return addNotification({
-      type: NOTIFICATION_TYPES.ERROR,
-      title,
-      message,
-      priority: NOTIFICATION_PRIORITIES.HIGH,
-      autoRemove: false, // Errors should be manually dismissed
-      ...options
-    });
-  }, [addNotification]);
+  const showError = useCallback(
+    (title, message, options = {}) => {
+      return addNotification({
+        type: NOTIFICATION_TYPES.ERROR,
+        title,
+        message,
+        priority: NOTIFICATION_PRIORITIES.HIGH,
+        autoRemove: false, // Errors should be manually dismissed
+        ...options,
+      });
+    },
+    [addNotification]
+  );
 
-  const showWarning = useCallback((title, message, options = {}) => {
-    return addNotification({
-      type: NOTIFICATION_TYPES.WARNING,
-      title,
-      message,
-      priority: NOTIFICATION_PRIORITIES.MEDIUM,
-      duration: 8000, // Warnings stay longer
-      ...options
-    });
-  }, [addNotification]);
+  const showWarning = useCallback(
+    (title, message, options = {}) => {
+      return addNotification({
+        type: NOTIFICATION_TYPES.WARNING,
+        title,
+        message,
+        priority: NOTIFICATION_PRIORITIES.MEDIUM,
+        duration: 8000, // Warnings stay longer
+        ...options,
+      });
+    },
+    [addNotification]
+  );
 
-  const showTransaction = useCallback((title, message, txHash, options = {}) => {
-    return addNotification({
-      type: NOTIFICATION_TYPES.TRANSACTION,
-      title,
-      message,
-      priority: NOTIFICATION_PRIORITIES.HIGH,
-      autoRemove: false,
-      actionButton: txHash ? {
-        label: 'View Transaction',
-        action: () => window.open(`https://polygonscan.com/tx/${txHash}`, '_blank')
-      } : null,
-      metadata: { txHash },
-      ...options
-    });
-  }, [addNotification]);
+  const showTransaction = useCallback(
+    (title, message, txHash, options = {}) => {
+      return addNotification({
+        type: NOTIFICATION_TYPES.TRANSACTION,
+        title,
+        message,
+        priority: NOTIFICATION_PRIORITIES.HIGH,
+        autoRemove: false,
+        actionButton: txHash
+          ? {
+              label: 'View Transaction',
+              action: () =>
+                window.open(`https://polygonscan.com/tx/${txHash}`, '_blank'),
+            }
+          : null,
+        metadata: { txHash },
+        ...options,
+      });
+    },
+    [addNotification]
+  );
 
   // Keyboard shortcuts
   useEffect(() => {
-    const handleKeyPress = (e) => {
+    const handleKeyPress = e => {
       if (e.ctrlKey || e.metaKey) {
         switch (e.key) {
           case 'h': // Hide/show notifications
@@ -191,23 +212,35 @@ const PushNotificationSystem = ({
       transaction: showTransaction,
       remove: removeNotification,
       clear: clearAll,
-      toggle: () => setIsVisible(prev => !prev)
+      toggle: () => setIsVisible(prev => !prev),
     };
 
     return () => {
       delete window.OrphiNotifications;
     };
-  }, [addNotification, showSuccess, showError, showWarning, showTransaction, removeNotification, clearAll]);
+  }, [
+    addNotification,
+    showSuccess,
+    showError,
+    showWarning,
+    showTransaction,
+    removeNotification,
+    clearAll,
+  ]);
 
   if (!isVisible || notifications.length === 0) {
     return null;
   }
 
   return (
-    <div className={`orphi-notifications-container ${position}`} role="region" aria-label="Notifications">
+    <div
+      className={`orphi-notifications-container ${position}`}
+      role="region"
+      aria-label="Notifications"
+    >
       <div className="notifications-header">
         <span className="notifications-count">{notifications.length}</span>
-        <button 
+        <button
           className="notifications-toggle"
           onClick={() => setIsVisible(false)}
           aria-label="Hide notifications"
@@ -217,7 +250,7 @@ const PushNotificationSystem = ({
       </div>
 
       <div className="notifications-list">
-        {notifications.map((notification) => (
+        {notifications.map(notification => (
           <NotificationItem
             key={notification.id}
             notification={notification}
@@ -228,7 +261,7 @@ const PushNotificationSystem = ({
 
       {notifications.length > 2 && (
         <div className="notifications-footer">
-          <button 
+          <button
             className="clear-all-btn"
             onClick={clearAll}
             aria-label="Clear all notifications"
@@ -255,16 +288,16 @@ const NotificationItem = ({ notification, onRemove }) => {
         const elapsed = Date.now() - startTime;
         const remaining = Math.max(0, notification.duration - elapsed);
         const progressPercent = (remaining / notification.duration) * 100;
-        
+
         setProgress(progressPercent);
-        
+
         if (remaining > 0) {
           timeoutRef.current = requestAnimationFrame(updateProgress);
         }
       };
-      
+
       updateProgress();
-      
+
       return () => {
         if (timeoutRef.current) {
           cancelAnimationFrame(timeoutRef.current);
@@ -295,13 +328,15 @@ const NotificationItem = ({ notification, onRemove }) => {
   };
 
   return (
-    <div 
+    <div
       className={`orphi-notification ${notification.type} ${notification.priority === NOTIFICATION_PRIORITIES.HIGH ? 'high-priority' : ''}`}
       role="alert"
-      aria-live={notification.type === NOTIFICATION_TYPES.ERROR ? 'assertive' : 'polite'}
+      aria-live={
+        notification.type === NOTIFICATION_TYPES.ERROR ? 'assertive' : 'polite'
+      }
     >
       {notification.autoRemove && (
-        <div 
+        <div
           className="notification-progress"
           style={{ width: `${progress}%` }}
         />
@@ -309,11 +344,15 @@ const NotificationItem = ({ notification, onRemove }) => {
 
       <div className="notification-content">
         <div className="notification-header">
-          <span className="notification-icon" role="img" aria-label={notification.type}>
+          <span
+            className="notification-icon"
+            role="img"
+            aria-label={notification.type}
+          >
             {getIcon()}
           </span>
           <span className="notification-title">{notification.title}</span>
-          <button 
+          <button
             className="notification-close"
             onClick={() => onRemove(notification.id)}
             aria-label="Close notification"
@@ -324,7 +363,7 @@ const NotificationItem = ({ notification, onRemove }) => {
 
         <div className="notification-body">
           <p className="notification-message">{notification.message}</p>
-          
+
           {notification.metadata?.txHash && (
             <div className="notification-metadata">
               <span className="tx-hash">
@@ -334,10 +373,7 @@ const NotificationItem = ({ notification, onRemove }) => {
           )}
 
           {notification.actionButton && (
-            <button 
-              className="notification-action"
-              onClick={handleActionClick}
-            >
+            <button className="notification-action" onClick={handleActionClick}>
               {notification.actionButton.label}
             </button>
           )}

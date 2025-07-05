@@ -15,7 +15,9 @@ function TransactionStatus({ transactions, deviceInfo }) {
             <span className="tx-user">{tx.user}</span>
             <span className="tx-amount">${tx.amount}</span>
             <span className="tx-status">{tx.status}</span>
-            <span className="tx-time">{new Date(tx.timestamp).toLocaleTimeString()}</span>
+            <span className="tx-time">
+              {new Date(tx.timestamp).toLocaleTimeString()}
+            </span>
           </li>
         ))}
       </ul>

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import OrphiChainLogo from '../OrphiChainLogo';
 
-const WalletConnection = ({ 
-  onWalletConnected, 
-  onBack, 
-  isConnecting = false, 
+const WalletConnection = ({
+  onWalletConnected,
+  onBack,
+  isConnecting = false,
   error = null,
-  onClearError = () => {}
+  onClearError = () => {},
 }) => {
   const [selectedWallet, setSelectedWallet] = useState(null);
   const [networkStatus, setNetworkStatus] = useState('checking');
@@ -20,7 +20,8 @@ const WalletConnection = ({
       icon: '🦊',
       description: 'Connect using browser extension',
       isPopular: true,
-      check: () => typeof window.ethereum !== 'undefined' && window.ethereum.isMetaMask
+      check: () =>
+        typeof window.ethereum !== 'undefined' && window.ethereum.isMetaMask,
     },
     {
       id: 'trustwallet',
@@ -28,7 +29,8 @@ const WalletConnection = ({
       icon: '🛡️',
       description: 'Mobile and desktop wallet',
       isPopular: true,
-      check: () => typeof window.ethereum !== 'undefined' && window.ethereum.isTrust
+      check: () =>
+        typeof window.ethereum !== 'undefined' && window.ethereum.isTrust,
     },
     {
       id: 'walletconnect',
@@ -36,7 +38,7 @@ const WalletConnection = ({
       icon: '🔗',
       description: 'Connect via QR code',
       isPopular: false,
-      check: () => false // Would implement WalletConnect
+      check: () => false, // Would implement WalletConnect
     },
     {
       id: 'binancechain',
@@ -44,8 +46,8 @@ const WalletConnection = ({
       icon: '💛',
       description: 'Official Binance wallet',
       isPopular: false,
-      check: () => typeof window.BinanceChain !== 'undefined'
-    }
+      check: () => typeof window.BinanceChain !== 'undefined',
+    },
   ];
 
   useEffect(() => {
@@ -56,7 +58,7 @@ const WalletConnection = ({
   const checkWalletAvailability = () => {
     const available = wallets.filter(wallet => wallet.check());
     setHasMetaMask(wallets[0].check());
-    
+
     if (available.length === 0) {
       // No wallets detected
       console.log('No Web3 wallets detected');
@@ -71,11 +73,14 @@ const WalletConnection = ({
 
     try {
       const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-      const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-      
+      const accounts = await window.ethereum.request({
+        method: 'eth_accounts',
+      });
+
       setAccounts(accounts);
-      
-      if (chainId === '0x61') { // BSC Testnet
+
+      if (chainId === '0x61') {
+        // BSC Testnet
         setNetworkStatus('correct');
       } else {
         setNetworkStatus('wrong-network');
@@ -98,17 +103,19 @@ const WalletConnection = ({
         try {
           await window.ethereum.request({
             method: 'wallet_addEthereumChain',
-            params: [{
-              chainId: '0x61',
-              chainName: 'BSC Testnet',
-              rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
-              nativeCurrency: {
-                name: 'BNB',
-                symbol: 'BNB',
-                decimals: 18
+            params: [
+              {
+                chainId: '0x61',
+                chainName: 'BSC Testnet',
+                rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+                nativeCurrency: {
+                  name: 'BNB',
+                  symbol: 'BNB',
+                  decimals: 18,
+                },
+                blockExplorerUrls: ['https://testnet.bscscan.com'],
               },
-              blockExplorerUrls: ['https://testnet.bscscan.com']
-            }]
+            ],
           });
           setNetworkStatus('correct');
         } catch (addError) {
@@ -120,7 +127,7 @@ const WalletConnection = ({
     }
   };
 
-  const connectWallet = async (walletId) => {
+  const connectWallet = async walletId => {
     if (!hasMetaMask && walletId === 'metamask') {
       window.open('https://metamask.io/', '_blank');
       return;
@@ -131,20 +138,22 @@ const WalletConnection = ({
 
     try {
       const accounts = await window.ethereum.request({
-        method: 'eth_requestAccounts'
+        method: 'eth_requestAccounts',
       });
 
       if (accounts.length > 0) {
         // Check if we're on BSC Testnet
-        const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-        
+        const chainId = await window.ethereum.request({
+          method: 'eth_chainId',
+        });
+
         if (chainId !== '0x61') {
           // Switch to BSC Testnet
           await switchToBSCTestnet();
         }
 
         // Set up event listeners
-        window.ethereum.on('accountsChanged', (accounts) => {
+        window.ethereum.on('accountsChanged', accounts => {
           if (accounts.length === 0) {
             onBack(); // Disconnected
           } else {
@@ -152,7 +161,7 @@ const WalletConnection = ({
           }
         });
 
-        window.ethereum.on('chainChanged', (chainId) => {
+        window.ethereum.on('chainChanged', chainId => {
           window.location.reload();
         });
 
@@ -173,7 +182,11 @@ const WalletConnection = ({
       case 'wrong-network':
         return { text: 'Wrong network detected', color: '#f44336', icon: '⚠️' };
       case 'no-ethereum':
-        return { text: 'No Web3 wallet detected', color: '#f44336', icon: '❌' };
+        return {
+          text: 'No Web3 wallet detected',
+          color: '#f44336',
+          icon: '❌',
+        };
       case 'error':
         return { text: 'Network check failed', color: '#f44336', icon: '❌' };
       default:
@@ -191,11 +204,13 @@ const WalletConnection = ({
           <button className="back-button" onClick={onBack}>
             ← Back
           </button>
-          
+
           <div className="logo-section">
             <OrphiChainLogo size="medium" variant="symbol" />
             <h1>Connect Your Wallet</h1>
-            <p>Choose your preferred wallet to access the OrphiChain ecosystem</p>
+            <p>
+              Choose your preferred wallet to access the OrphiChain ecosystem
+            </p>
           </div>
         </div>
 
@@ -205,7 +220,10 @@ const WalletConnection = ({
             <span className="status-icon">{networkDisplay.icon}</span>
             <span className="status-text">{networkDisplay.text}</span>
             {networkStatus === 'wrong-network' && (
-              <button className="switch-network-btn" onClick={switchToBSCTestnet}>
+              <button
+                className="switch-network-btn"
+                onClick={switchToBSCTestnet}
+              >
                 Switch to BSC Testnet
               </button>
             )}
@@ -229,11 +247,12 @@ const WalletConnection = ({
               <div>
                 <div className="connected-title">Wallet Already Connected</div>
                 <div className="connected-address">
-                  {accounts[0].substring(0, 6)}...{accounts[0].substring(accounts[0].length - 4)}
+                  {accounts[0].substring(0, 6)}...
+                  {accounts[0].substring(accounts[0].length - 4)}
                 </div>
               </div>
             </div>
-            <button 
+            <button
               className="continue-btn"
               onClick={() => onWalletConnected(accounts[0], 'existing')}
             >
@@ -244,7 +263,7 @@ const WalletConnection = ({
 
         {/* Wallet Options */}
         <div className="wallets-grid">
-          {wallets.map((wallet) => {
+          {wallets.map(wallet => {
             const isAvailable = wallet.check();
             const isSelected = selectedWallet === wallet.id;
             const isWalletConnecting = isSelected && isConnecting;
@@ -255,8 +274,10 @@ const WalletConnection = ({
                 className={`wallet-option ${isSelected ? 'selected' : ''} ${!isAvailable ? 'unavailable' : ''}`}
                 onClick={() => !isWalletConnecting && connectWallet(wallet.id)}
               >
-                {wallet.isPopular && <div className="popular-badge">Popular</div>}
-                
+                {wallet.isPopular && (
+                  <div className="popular-badge">Popular</div>
+                )}
+
                 <div className="wallet-icon">{wallet.icon}</div>
                 <div className="wallet-info">
                   <h3 className="wallet-name">{wallet.name}</h3>
@@ -284,13 +305,27 @@ const WalletConnection = ({
         <div className="help-section">
           <h3>Need Help?</h3>
           <div className="help-links">
-            <a href="https://metamask.io/" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://metamask.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               📥 Install MetaMask
             </a>
-            <a href="https://academy.binance.com/en/articles/connecting-metamask-to-binance-smart-chain" target="_blank" rel="noopener noreferrer">
+            <a
+              href="https://academy.binance.com/en/articles/connecting-metamask-to-binance-smart-chain"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               🔧 Configure BSC Network
             </a>
-            <a href="#" onClick={(e) => { e.preventDefault(); alert('Support coming soon!'); }}>
+            <a
+              href="#"
+              onClick={e => {
+                e.preventDefault();
+                alert('Support coming soon!');
+              }}
+            >
               🆘 Contact Support
             </a>
           </div>
@@ -302,14 +337,14 @@ const WalletConnection = ({
           <div className="notice-content">
             <h4>Your Security Matters</h4>
             <p>
-              OrphiChain will never ask for your private keys or seed phrases. 
+              OrphiChain will never ask for your private keys or seed phrases.
               Only connect to the official OrphiChain application.
             </p>
           </div>
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .wallet-connection {
           min-height: 100vh;
           background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);

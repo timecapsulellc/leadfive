@@ -10,7 +10,7 @@ const WalletIcons = {
   BinanceWallet: '🟡',
   SafePal: '🔐',
   TokenPocket: '💼',
-  MathWallet: '🧮'
+  MathWallet: '🧮',
 };
 
 // BSC Mainnet configuration
@@ -26,7 +26,12 @@ const BSC_CONFIG = {
   blockExplorerUrls: ['https://bscscan.com/'],
 };
 
-const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected }) => {
+const WalletConnector = ({
+  onConnect,
+  onDisconnect,
+  currentAccount,
+  isConnected,
+}) => {
   const [showModal, setShowModal] = useState(false);
   const [connecting, setConnecting] = useState(false);
   const [selectedWallet, setSelectedWallet] = useState(null);
@@ -37,7 +42,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
   // Define detectWallets function outside useEffect to avoid scope issues
   const detectWallets = useCallback(() => {
     const wallets = [];
-    
+
     // MetaMask detection
     if (window.ethereum?.isMetaMask) {
       wallets.push({
@@ -45,10 +50,10 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         name: 'MetaMask',
         icon: '🦊',
         installed: true,
-        provider: window.ethereum
+        provider: window.ethereum,
       });
     }
-    
+
     // Trust Wallet detection
     if (window.ethereum?.isTrust) {
       wallets.push({
@@ -56,21 +61,25 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         name: 'Trust Wallet',
         icon: '🛡️',
         installed: true,
-        provider: window.ethereum
+        provider: window.ethereum,
       });
     }
-    
+
     // Generic Ethereum provider
-    if (window.ethereum && !window.ethereum.isMetaMask && !window.ethereum.isTrust) {
+    if (
+      window.ethereum &&
+      !window.ethereum.isMetaMask &&
+      !window.ethereum.isTrust
+    ) {
       wallets.push({
         id: 'injected',
         name: 'Injected Wallet',
         icon: '🔗',
         installed: true,
-        provider: window.ethereum
+        provider: window.ethereum,
       });
     }
-    
+
     // Add not installed wallets
     if (!wallets.some(w => w.id === 'metamask')) {
       wallets.push({
@@ -78,17 +87,17 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         name: 'MetaMask',
         icon: '🦊',
         installed: false,
-        downloadUrl: 'https://metamask.io/download/'
+        downloadUrl: 'https://metamask.io/download/',
       });
     }
-    
+
     if (!wallets.some(w => w.id === 'trust')) {
       wallets.push({
         id: 'trust',
         name: 'Trust Wallet',
         icon: '🛡️',
         installed: false,
-        downloadUrl: 'https://trustwallet.com/download'
+        downloadUrl: 'https://trustwallet.com/download',
       });
     }
 
@@ -101,7 +110,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
   useEffect(() => {
     // Initial detection
     detectWallets();
-    
+
     // Re-detect when ethereum becomes available
     if (window.ethereum) {
       window.ethereum.on('connect', detectWallets);
@@ -118,11 +127,14 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
     const attemptDetection = () => {
       attempts++;
       console.log(`🔄 Wallet detection attempt ${attempts}/${maxAttempts}`);
-      
+
       detectWallets();
-      
+
       // Continue trying if no wallets found and we haven't reached max attempts
-      if (attempts < maxAttempts && availableWallets.filter(w => w.installed).length === 0) {
+      if (
+        attempts < maxAttempts &&
+        availableWallets.filter(w => w.installed).length === 0
+      ) {
         const delay = baseDelay * attempts; // Exponential backoff
         setTimeout(attemptDetection, delay);
       }
@@ -139,22 +151,31 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
 
     // Multiple event listeners for different wallet injection patterns
     window.addEventListener('ethereum#initialized', handleEthereumAvailable);
-    window.addEventListener('eip6963:announceProvider', handleEthereumAvailable);
-    
+    window.addEventListener(
+      'eip6963:announceProvider',
+      handleEthereumAvailable
+    );
+
     // Also listen for load event in case wallets inject after page load
     if (document.readyState !== 'complete') {
       window.addEventListener('load', () => {
         setTimeout(detectWallets, 1000);
       });
     }
-    
+
     return () => {
-      window.removeEventListener('ethereum#initialized', handleEthereumAvailable);
-      window.removeEventListener('eip6963:announceProvider', handleEthereumAvailable);
+      window.removeEventListener(
+        'ethereum#initialized',
+        handleEthereumAvailable
+      );
+      window.removeEventListener(
+        'eip6963:announceProvider',
+        handleEthereumAvailable
+      );
     };
   }, [detectWallets]);
 
-  const switchToBSC = async (provider) => {
+  const switchToBSC = async provider => {
     try {
       console.log('🔄 Switching to BSC Mainnet...');
       await provider.request({
@@ -163,7 +184,10 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
       });
       console.log('✅ Successfully switched to BSC');
     } catch (switchError) {
-      console.log('⚠️ Network switch failed, attempting to add BSC:', switchError.code);
+      console.log(
+        '⚠️ Network switch failed, attempting to add BSC:',
+        switchError.code
+      );
       if (switchError.code === 4902) {
         try {
           await provider.request({
@@ -181,21 +205,33 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
     }
   };
 
-  const connectWallet = async (walletId) => {
+  const connectWallet = async walletId => {
     console.log('🚀 ConnectWallet function called with walletId:', walletId);
-    console.log('🔍 Current state - connecting:', connecting, 'selectedWallet:', selectedWallet);
+    console.log(
+      '🔍 Current state - connecting:',
+      connecting,
+      'selectedWallet:',
+      selectedWallet
+    );
     console.log('🔍 Available onConnect callback:', !!onConnect);
-    console.log('🔍 Available wallets:', availableWallets.map(w => ({ id: w.id, name: w.name, installed: w.installed })));
-    
+    console.log(
+      '🔍 Available wallets:',
+      availableWallets.map(w => ({
+        id: w.id,
+        name: w.name,
+        installed: w.installed,
+      }))
+    );
+
     setConnecting(true);
     setSelectedWallet(walletId);
     setError(null);
 
     try {
       console.log(`🔗 Attempting to connect ${walletId}...`);
-      
+
       const walletInfo = availableWallets.find(w => w.id === walletId);
-      
+
       if (!walletInfo) {
         throw new Error(`Wallet ${walletId} not found`);
       }
@@ -203,7 +239,9 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
       if (!walletInfo.installed) {
         console.log(`📱 Opening download page for ${walletInfo.name}`);
         window.open(walletInfo.downloadUrl, '_blank');
-        throw new Error(`${walletInfo.name} is not installed. Please install it first.`);
+        throw new Error(
+          `${walletInfo.name} is not installed. Please install it first.`
+        );
       }
 
       const provider = walletInfo.provider;
@@ -212,13 +250,13 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
       }
 
       console.log('📝 Requesting account access...');
-      
+
       // Request account access with timeout
       const accounts = await Promise.race([
         provider.request({ method: 'eth_requestAccounts' }),
-        new Promise((_, reject) => 
+        new Promise((_, reject) =>
           setTimeout(() => reject(new Error('Connection timeout')), 30000)
-        )
+        ),
       ]);
 
       if (!accounts || accounts.length === 0) {
@@ -236,15 +274,21 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
       const address = await signer.getAddress();
 
       console.log('🎉 Wallet connected successfully:', address);
-      console.log('📞 Calling onConnect callback with data:', { address, walletType: walletId });
+      console.log('📞 Calling onConnect callback with data:', {
+        address,
+        walletType: walletId,
+      });
 
       // Store wallet info
-      localStorage.setItem('orphi_wallet', JSON.stringify({
-        type: walletId,
-        address: address,
-        connected: true,
-        timestamp: Date.now()
-      }));
+      localStorage.setItem(
+        'orphi_wallet',
+        JSON.stringify({
+          type: walletId,
+          address: address,
+          connected: true,
+          timestamp: Date.now(),
+        })
+      );
 
       // Call parent callback
       if (onConnect) {
@@ -253,28 +297,28 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
           address,
           provider: ethersProvider,
           signer,
-          walletType: walletId
+          walletType: walletId,
         });
       } else {
         console.warn('⚠️ No onConnect callback provided!');
       }
 
       setShowModal(false);
-
     } catch (error) {
       console.error(`❌ Error connecting ${walletId}:`, error);
-      
+
       let errorMessage = error.message;
       if (error.code === 4001) {
         errorMessage = 'Connection rejected by user';
       } else if (error.code === -32002) {
-        errorMessage = 'Connection request already pending. Please check your wallet.';
+        errorMessage =
+          'Connection request already pending. Please check your wallet.';
       } else if (error.code === 4902) {
         errorMessage = 'Please add BSC Mainnet to your wallet';
       } else if (error.message.includes('timeout')) {
         errorMessage = 'Connection timed out. Please try again.';
       }
-      
+
       setError(errorMessage);
     } finally {
       setConnecting(false);
@@ -300,7 +344,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         address: '0x1234567890123456789012345678901234567890',
         provider: null,
         signer: null,
-        walletType: 'test'
+        walletType: 'test',
       });
     } else {
       console.error('❌ onConnect callback is not available!');
@@ -315,12 +359,17 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         if (storedWallet && !isConnected) {
           const walletData = JSON.parse(storedWallet);
           const timeDiff = Date.now() - walletData.timestamp;
-          
+
           // Auto-reconnect if connection is less than 24 hours old
           if (timeDiff < 24 * 60 * 60 * 1000 && window.ethereum) {
             console.log('🔄 Attempting auto-reconnect...');
-            const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-            if (accounts.length > 0 && accounts[0].toLowerCase() === walletData.address.toLowerCase()) {
+            const accounts = await window.ethereum.request({
+              method: 'eth_accounts',
+            });
+            if (
+              accounts.length > 0 &&
+              accounts[0].toLowerCase() === walletData.address.toLowerCase()
+            ) {
               console.log('✅ Auto-reconnect successful');
               // Trigger connection without showing modal
               connectWallet(walletData.type);
@@ -362,10 +411,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
           </div>
           <div className="connection-indicator"></div>
         </div>
-        <button 
-          onClick={disconnectWallet}
-          className="disconnect-btn"
-        >
+        <button onClick={disconnectWallet} className="disconnect-btn">
           Disconnect
         </button>
       </div>
@@ -374,7 +420,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
 
   return (
     <>
-      <button 
+      <button
         onClick={handleOpenModal}
         className="connect-wallet-btn"
         disabled={isDetecting}
@@ -422,7 +468,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
               }
             `}
           </style>
-          <div 
+          <div
             style={{
               position: 'fixed',
               top: 0,
@@ -438,19 +484,21 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
               padding: '20px',
               animation: 'fadeIn 0.3s ease-out',
             }}
-            onClick={(e) => {
+            onClick={e => {
               if (e.target === e.currentTarget) {
                 setShowModal(false);
               }
             }}
           >
-            <div 
+            <div
               className="wallet-modal-content"
               style={{
-                background: 'linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+                background:
+                  'linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
                 border: '2px solid rgba(0, 212, 255, 0.3)',
                 borderRadius: '20px',
-                boxShadow: '0 20px 60px rgba(0, 212, 255, 0.3), inset 0 1px 0 rgba(255,255,255,0.1)',
+                boxShadow:
+                  '0 20px 60px rgba(0, 212, 255, 0.3), inset 0 1px 0 rgba(255,255,255,0.1)',
                 padding: '32px',
                 maxWidth: '500px',
                 width: '100%',
@@ -462,26 +510,30 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
               }}
             >
               {/* Header */}
-              <div style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: '24px',
-                borderBottom: '1px solid rgba(255,255,255,0.1)',
-                paddingBottom: '16px',
-              }}>
-                <h3 style={{
-                  fontSize: '24px',
-                  fontWeight: '700',
-                  color: 'white',
-                  margin: 0,
-                  background: 'linear-gradient(90deg, #00D4FF, #7B2CBF)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                }}>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  marginBottom: '24px',
+                  borderBottom: '1px solid rgba(255,255,255,0.1)',
+                  paddingBottom: '16px',
+                }}
+              >
+                <h3
+                  style={{
+                    fontSize: '24px',
+                    fontWeight: '700',
+                    color: 'white',
+                    margin: 0,
+                    background: 'linear-gradient(90deg, #00D4FF, #7B2CBF)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                  }}
+                >
                   Connect Wallet
                 </h3>
-                <button 
+                <button
                   onClick={() => setShowModal(false)}
                   style={{
                     background: 'rgba(255,255,255,0.1)',
@@ -493,10 +545,10 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
                     borderRadius: '8px',
                     transition: 'all 0.2s ease',
                   }}
-                  onMouseEnter={(e) => {
+                  onMouseEnter={e => {
                     e.target.style.background = 'rgba(255,255,255,0.2)';
                   }}
-                  onMouseLeave={(e) => {
+                  onMouseLeave={e => {
                     e.target.style.background = 'rgba(255,255,255,0.1)';
                   }}
                 >
@@ -505,36 +557,43 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
               </div>
 
               {/* Description */}
-              <p style={{
-                color: '#B8BCC8',
-                fontSize: '16px',
-                marginBottom: '24px',
-                lineHeight: '1.5',
-                textAlign: 'center',
-              }}>
-                Choose your preferred wallet to connect to ORPHI CrowdFund on BSC Mainnet
+              <p
+                style={{
+                  color: '#B8BCC8',
+                  fontSize: '16px',
+                  marginBottom: '24px',
+                  lineHeight: '1.5',
+                  textAlign: 'center',
+                }}
+              >
+                Choose your preferred wallet to connect to ORPHI CrowdFund on
+                BSC Mainnet
               </p>
 
               {/* Detection Status */}
               {isDetecting && (
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '12px',
-                  padding: '16px',
-                  background: 'rgba(0, 212, 255, 0.1)',
-                  borderRadius: '12px',
-                  marginBottom: '20px',
-                  border: '1px solid rgba(0, 212, 255, 0.3)',
-                }}>
-                  <div style={{
-                    width: '20px',
-                    height: '20px',
-                    border: '2px solid rgba(0, 212, 255, 0.3)',
-                    borderTop: '2px solid #00D4FF',
-                    borderRadius: '50%',
-                    animation: 'spin 1s linear infinite',
-                  }}></div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    padding: '16px',
+                    background: 'rgba(0, 212, 255, 0.1)',
+                    borderRadius: '12px',
+                    marginBottom: '20px',
+                    border: '1px solid rgba(0, 212, 255, 0.3)',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: '20px',
+                      height: '20px',
+                      border: '2px solid rgba(0, 212, 255, 0.3)',
+                      borderTop: '2px solid #00D4FF',
+                      borderRadius: '50%',
+                      animation: 'spin 1s linear infinite',
+                    }}
+                  ></div>
                   <span style={{ color: '#00D4FF', fontWeight: '500' }}>
                     Scanning for installed wallets...
                   </span>
@@ -543,43 +602,51 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
 
               {/* Error Display */}
               {error && (
-                <div style={{
-                  color: '#ff006e',
-                  background: 'rgba(255,0,110,0.15)',
-                  borderRadius: '12px',
-                  padding: '16px',
-                  marginBottom: '20px',
-                  fontWeight: '500',
-                  fontSize: '14px',
-                  border: '1px solid rgba(255,0,110,0.3)',
-                  textAlign: 'center',
-                }}>
+                <div
+                  style={{
+                    color: '#ff006e',
+                    background: 'rgba(255,0,110,0.15)',
+                    borderRadius: '12px',
+                    padding: '16px',
+                    marginBottom: '20px',
+                    fontWeight: '500',
+                    fontSize: '14px',
+                    border: '1px solid rgba(255,0,110,0.3)',
+                    textAlign: 'center',
+                  }}
+                >
                   {error}
                 </div>
               )}
 
               {/* Wallet List */}
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px',
-                marginBottom: '24px',
-              }}>
-                {availableWallets.map((wallet) => (
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '12px',
+                  marginBottom: '24px',
+                }}
+              >
+                {availableWallets.map(wallet => (
                   <button
                     key={wallet.id}
-                    onClick={() => wallet.installed ? connectWallet(wallet.id) : window.open(wallet.downloadUrl, '_blank')}
+                    onClick={() =>
+                      wallet.installed
+                        ? connectWallet(wallet.id)
+                        : window.open(wallet.downloadUrl, '_blank')
+                    }
                     disabled={connecting && selectedWallet === wallet.id}
                     style={{
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       padding: '16px 20px',
-                      background: wallet.installed 
-                        ? 'rgba(0, 212, 255, 0.08)' 
+                      background: wallet.installed
+                        ? 'rgba(0, 212, 255, 0.08)'
                         : 'rgba(255, 255, 255, 0.05)',
-                      border: wallet.installed 
-                        ? '1px solid rgba(0, 212, 255, 0.3)' 
+                      border: wallet.installed
+                        ? '1px solid rgba(0, 212, 255, 0.3)'
                         : '1px solid rgba(255, 255, 255, 0.1)',
                       borderRadius: '12px',
                       cursor: 'pointer',
@@ -587,62 +654,94 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
                       color: 'white',
                       fontSize: '16px',
                       fontWeight: '500',
-                      opacity: (connecting && selectedWallet === wallet.id) ? 0.7 : 1,
-                      transform: (connecting && selectedWallet === wallet.id) ? 'scale(0.98)' : 'scale(1)',
+                      opacity:
+                        connecting && selectedWallet === wallet.id ? 0.7 : 1,
+                      transform:
+                        connecting && selectedWallet === wallet.id
+                          ? 'scale(0.98)'
+                          : 'scale(1)',
                     }}
-                    onMouseEnter={(e) => {
+                    onMouseEnter={e => {
                       if (!connecting || selectedWallet !== wallet.id) {
                         e.target.style.transform = 'scale(1.02)';
-                        e.target.style.background = wallet.installed 
-                          ? 'rgba(0, 212, 255, 0.15)' 
+                        e.target.style.background = wallet.installed
+                          ? 'rgba(0, 212, 255, 0.15)'
                           : 'rgba(255, 255, 255, 0.1)';
                       }
                     }}
-                    onMouseLeave={(e) => {
+                    onMouseLeave={e => {
                       if (!connecting || selectedWallet !== wallet.id) {
                         e.target.style.transform = 'scale(1)';
-                        e.target.style.background = wallet.installed 
-                          ? 'rgba(0, 212, 255, 0.08)' 
+                        e.target.style.background = wallet.installed
+                          ? 'rgba(0, 212, 255, 0.08)'
                           : 'rgba(255, 255, 255, 0.05)';
                       }
                     }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '16px',
+                      }}
+                    >
                       <span style={{ fontSize: '24px' }}>{wallet.icon}</span>
-                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                        <span style={{ fontWeight: '600', fontSize: '16px' }}>{wallet.name}</span>
-                        <span style={{ 
-                          fontSize: '12px', 
-                          color: wallet.installed ? '#00D4FF' : '#B8BCC8',
-                          opacity: 0.8,
-                        }}>
-                          {wallet.installed ? 'Ready to connect' : 'Click to install'}
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'flex-start',
+                        }}
+                      >
+                        <span style={{ fontWeight: '600', fontSize: '16px' }}>
+                          {wallet.name}
+                        </span>
+                        <span
+                          style={{
+                            fontSize: '12px',
+                            color: wallet.installed ? '#00D4FF' : '#B8BCC8',
+                            opacity: 0.8,
+                          }}
+                        >
+                          {wallet.installed
+                            ? 'Ready to connect'
+                            : 'Click to install'}
                         </span>
                       </div>
                     </div>
-                    
+
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       {connecting && selectedWallet === wallet.id ? (
-                        <div style={{
-                          width: '20px',
-                          height: '20px',
-                          border: '2px solid rgba(255, 255, 255, 0.3)',
-                          borderTop: '2px solid white',
-                          borderRadius: '50%',
-                          animation: 'spin 1s linear infinite',
-                        }}></div>
+                        <div
+                          style={{
+                            width: '20px',
+                            height: '20px',
+                            border: '2px solid rgba(255, 255, 255, 0.3)',
+                            borderTop: '2px solid white',
+                            borderRadius: '50%',
+                            animation: 'spin 1s linear infinite',
+                          }}
+                        ></div>
                       ) : wallet.installed ? (
-                        <span style={{ 
-                          color: '#00D4FF', 
-                          fontSize: '14px',
-                          fontWeight: '600',
-                        }}>Connect</span>
+                        <span
+                          style={{
+                            color: '#00D4FF',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                          }}
+                        >
+                          Connect
+                        </span>
                       ) : (
-                        <span style={{ 
-                          color: '#B8BCC8', 
-                          fontSize: '14px',
-                          fontWeight: '600',
-                        }}>Install</span>
+                        <span
+                          style={{
+                            color: '#B8BCC8',
+                            fontSize: '14px',
+                            fontWeight: '600',
+                          }}
+                        >
+                          Install
+                        </span>
                       )}
                     </div>
                   </button>
@@ -650,29 +749,45 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
               </div>
 
               {/* Help Section */}
-              <div style={{
-                background: 'rgba(255, 255, 255, 0.05)',
-                borderRadius: '12px',
-                padding: '16px',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
-              }}>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  marginBottom: '12px',
-                }}>
+              <div
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  borderRadius: '12px',
+                  padding: '16px',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    marginBottom: '12px',
+                  }}
+                >
                   <span style={{ fontSize: '16px' }}>💡</span>
                   <span style={{ color: '#B8BCC8', fontSize: '14px' }}>
                     Make sure your wallet is unlocked and ready to connect
                   </span>
                 </div>
-                
+
                 <details style={{ color: '#B8BCC8', fontSize: '13px' }}>
-                  <summary style={{ cursor: 'pointer', marginBottom: '8px', fontWeight: '500' }}>
+                  <summary
+                    style={{
+                      cursor: 'pointer',
+                      marginBottom: '8px',
+                      fontWeight: '500',
+                    }}
+                  >
                     Having trouble connecting? Click for help
                   </summary>
-                  <ul style={{ paddingLeft: '16px', lineHeight: '1.6', margin: '8px 0' }}>
+                  <ul
+                    style={{
+                      paddingLeft: '16px',
+                      lineHeight: '1.6',
+                      margin: '8px 0',
+                    }}
+                  >
                     <li>🔓 Ensure your wallet is unlocked</li>
                     <li>🔄 Try refreshing the page</li>
                     <li>🚫 Check for browser popup blockers</li>
@@ -684,15 +799,17 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
               </div>
 
               {/* Footer */}
-              <div style={{ 
-                textAlign: 'center', 
-                marginTop: '20px',
-                paddingTop: '16px',
-                borderTop: '1px solid rgba(255,255,255,0.1)',
-              }}>
-                <a 
-                  href="https://academy.binance.com/en/articles/how-to-use-metamask" 
-                  target="_blank" 
+              <div
+                style={{
+                  textAlign: 'center',
+                  marginTop: '20px',
+                  paddingTop: '16px',
+                  borderTop: '1px solid rgba(255,255,255,0.1)',
+                }}
+              >
+                <a
+                  href="https://academy.binance.com/en/articles/how-to-use-metamask"
+                  target="_blank"
                   rel="noopener noreferrer"
                   style={{
                     color: '#00D4FF',
@@ -700,10 +817,10 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
                     fontSize: '13px',
                     transition: 'color 0.2s ease',
                   }}
-                  onMouseEnter={(e) => {
+                  onMouseEnter={e => {
                     e.target.style.color = '#7B2CBF';
                   }}
-                  onMouseLeave={(e) => {
+                  onMouseLeave={e => {
                     e.target.style.color = '#00D4FF';
                   }}
                 >
@@ -743,32 +860,32 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
 
         .status-text {
           font-size: 12px;
-          color: #B8BCC8;
+          color: #b8bcc8;
         }
 
         .wallet-address {
           font-size: 11px;
           font-family: 'Courier New', monospace;
-          color: #00D4FF;
+          color: #00d4ff;
           font-weight: 600;
         }
 
         .network-status {
           font-size: 10px;
-          color: #00FF88;
+          color: #00ff88;
         }
 
         .connection-indicator {
           width: 8px;
           height: 8px;
           border-radius: 50%;
-          background: #00FF88;
+          background: #00ff88;
           animation: pulse 2s infinite;
         }
 
         .disconnect-btn {
           font-size: 11px;
-          color: #B8BCC8;
+          color: #b8bcc8;
           background: none;
           border: none;
           cursor: pointer;
@@ -781,7 +898,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
 
         /* Connect Button */
         .connect-wallet-btn {
-          background: linear-gradient(135deg, #00D4FF 0%, #7B2CBF 100%);
+          background: linear-gradient(135deg, #00d4ff 0%, #7b2cbf 100%);
           border: none;
           padding: 12px 24px;
           border-radius: 12px;
@@ -861,7 +978,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         .modal-close {
           background: none;
           border: none;
-          color: #B8BCC8;
+          color: #b8bcc8;
           font-size: 24px;
           cursor: pointer;
           padding: 4px;
@@ -876,7 +993,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
 
         /* Modal Description */
         .modal-description {
-          color: #B8BCC8;
+          color: #b8bcc8;
           font-size: 14px;
           margin-bottom: 24px;
           line-height: 1.5;
@@ -892,7 +1009,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
           border: 1px solid rgba(0, 212, 255, 0.3);
           border-radius: 12px;
           margin-bottom: 20px;
-          color: #00D4FF;
+          color: #00d4ff;
           font-size: 14px;
         }
 
@@ -900,7 +1017,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
           width: 16px;
           height: 16px;
           border: 2px solid rgba(0, 212, 255, 0.3);
-          border-top: 2px solid #00D4FF;
+          border-top: 2px solid #00d4ff;
           border-radius: 50%;
           animation: spin 1s linear infinite;
         }
@@ -915,7 +1032,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
           border: 1px solid rgba(255, 107, 107, 0.3);
           border-radius: 12px;
           margin-bottom: 20px;
-          color: #FF6B6B;
+          color: #ff6b6b;
           font-size: 14px;
         }
 
@@ -996,7 +1113,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         }
 
         .wallet-status {
-          color: #B8BCC8;
+          color: #b8bcc8;
           font-size: 12px;
         }
 
@@ -1006,13 +1123,13 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         }
 
         .connect-text {
-          color: #00D4FF;
+          color: #00d4ff;
           font-weight: 600;
           font-size: 14px;
         }
 
         .install-text {
-          color: #FFA500;
+          color: #ffa500;
           font-weight: 600;
           font-size: 14px;
         }
@@ -1021,7 +1138,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
           width: 20px;
           height: 20px;
           border: 2px solid rgba(0, 212, 255, 0.3);
-          border-top: 2px solid #00D4FF;
+          border-top: 2px solid #00d4ff;
           border-radius: 50%;
           animation: spin 1s linear infinite;
         }
@@ -1040,7 +1157,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
           border: 1px solid rgba(123, 44, 191, 0.3);
           border-radius: 12px;
           margin-bottom: 16px;
-          color: #B8BCC8;
+          color: #b8bcc8;
           font-size: 13px;
         }
 
@@ -1056,7 +1173,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         }
 
         .troubleshooting summary {
-          color: #00D4FF;
+          color: #00d4ff;
           cursor: pointer;
           font-size: 14px;
           font-weight: 600;
@@ -1066,7 +1183,7 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         .help-list {
           margin: 12px 0 0 0;
           padding: 0 0 0 16px;
-          color: #B8BCC8;
+          color: #b8bcc8;
           font-size: 13px;
           line-height: 1.6;
         }
@@ -1083,21 +1200,25 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         }
 
         .help-link {
-          color: #00D4FF;
+          color: #00d4ff;
           text-decoration: none;
           font-size: 13px;
           transition: color 0.2s ease;
         }
 
         .help-link:hover {
-          color: #7B2CBF;
+          color: #7b2cbf;
           text-decoration: underline;
         }
 
         /* Animations */
         @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
         }
 
         @keyframes slideUp {
@@ -1112,13 +1233,22 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
         }
 
         @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
         }
 
         @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.5; }
+          0%,
+          100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.5;
+          }
         }
 
         /* Mobile Responsive */
@@ -1202,7 +1332,8 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
             font-size: 11px;
           }
 
-          .connect-text, .install-text {
+          .connect-text,
+          .install-text {
             font-size: 13px;
           }
 
@@ -1257,4 +1388,4 @@ const WalletConnector = ({ onConnect, onDisconnect, currentAccount, isConnected 
   );
 };
 
-export default WalletConnector; 
+export default WalletConnector;

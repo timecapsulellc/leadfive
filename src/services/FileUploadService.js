@@ -7,14 +7,20 @@
 class FileUploadService {
   constructor() {
     this.uploadPath = '/uploads/';
-    this.maxFileSize = parseInt(import.meta.env.VITE_MAX_FILE_SIZE) || 10 * 1024 * 1024; // 10MB default
-    this.allowedTypes = (import.meta.env.VITE_ALLOWED_FILE_TYPES || 'image/*,application/pdf,.doc,.docx').split(',');
-    this.rateLimitRequests = parseInt(import.meta.env.VITE_RATE_LIMIT_REQUESTS) || 100;
-    this.rateLimitWindow = parseInt(import.meta.env.VITE_RATE_LIMIT_WINDOW) || 900000; // 15 minutes
-    
+    this.maxFileSize =
+      parseInt(import.meta.env.VITE_MAX_FILE_SIZE) || 10 * 1024 * 1024; // 10MB default
+    this.allowedTypes = (
+      import.meta.env.VITE_ALLOWED_FILE_TYPES ||
+      'image/*,application/pdf,.doc,.docx'
+    ).split(',');
+    this.rateLimitRequests =
+      parseInt(import.meta.env.VITE_RATE_LIMIT_REQUESTS) || 100;
+    this.rateLimitWindow =
+      parseInt(import.meta.env.VITE_RATE_LIMIT_WINDOW) || 900000; // 15 minutes
+
     // Rate limiting storage
     this.uploadHistory = new Map();
-    
+
     // Supported file types with their MIME types
     this.supportedTypes = {
       'image/jpeg': { ext: '.jpg', category: 'image' },
@@ -23,9 +29,10 @@ class FileUploadService {
       'image/webp': { ext: '.webp', category: 'image' },
       'application/pdf': { ext: '.pdf', category: 'document' },
       'application/msword': { ext: '.doc', category: 'document' },
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': { ext: '.docx', category: 'document' },
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document':
+        { ext: '.docx', category: 'document' },
       'text/plain': { ext: '.txt', category: 'text' },
-      'application/json': { ext: '.json', category: 'data' }
+      'application/json': { ext: '.json', category: 'data' },
     };
   }
 
@@ -37,7 +44,9 @@ class FileUploadService {
 
     // Check file size
     if (file.size > this.maxFileSize) {
-      errors.push(`File size exceeds limit of ${(this.maxFileSize / 1024 / 1024).toFixed(1)}MB`);
+      errors.push(
+        `File size exceeds limit of ${(this.maxFileSize / 1024 / 1024).toFixed(1)}MB`
+      );
     }
 
     // Check file type
@@ -52,7 +61,7 @@ class FileUploadService {
 
     return {
       isValid: errors.length === 0,
-      errors: errors
+      errors: errors,
     };
   }
 
@@ -61,10 +70,10 @@ class FileUploadService {
    */
   containsMaliciousPatterns(filename) {
     const maliciousPatterns = [
-      /\.\./,           // Directory traversal
-      /[<>:"|?*]/,      // Invalid filename characters
+      /\.\./, // Directory traversal
+      /[<>:"|?*]/, // Invalid filename characters
       /^(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])$/i, // Windows reserved names
-      /\.exe$|\.bat$|\.cmd$|\.scr$/i // Executable files
+      /\.exe$|\.bat$|\.cmd$|\.scr$/i, // Executable files
     ];
 
     return maliciousPatterns.some(pattern => pattern.test(filename));
@@ -76,14 +85,16 @@ class FileUploadService {
   checkRateLimit(userId) {
     const now = Date.now();
     const userHistory = this.uploadHistory.get(userId) || [];
-    
+
     // Clean old entries
-    const recentUploads = userHistory.filter(timestamp => now - timestamp < this.rateLimitWindow);
-    
+    const recentUploads = userHistory.filter(
+      timestamp => now - timestamp < this.rateLimitWindow
+    );
+
     if (recentUploads.length >= this.rateLimitRequests) {
       return {
         allowed: false,
-        resetTime: recentUploads[0] + this.rateLimitWindow
+        resetTime: recentUploads[0] + this.rateLimitWindow,
       };
     }
 
@@ -101,8 +112,10 @@ class FileUploadService {
     const timestamp = Date.now();
     const random = Math.random().toString(36).substring(2, 8);
     const extension = originalName.substring(originalName.lastIndexOf('.'));
-    const safeName = originalName.replace(/[^a-zA-Z0-9.-]/g, '_').substring(0, 50);
-    
+    const safeName = originalName
+      .replace(/[^a-zA-Z0-9.-]/g, '_')
+      .substring(0, 50);
+
     return `${timestamp}_${userId}_${random}_${safeName}${extension}`;
   }
 
@@ -114,7 +127,9 @@ class FileUploadService {
       // Rate limiting check
       const rateLimitCheck = this.checkRateLimit(userId);
       if (!rateLimitCheck.allowed) {
-        throw new Error(`Rate limit exceeded. Try again after ${new Date(rateLimitCheck.resetTime).toLocaleTimeString()}`);
+        throw new Error(
+          `Rate limit exceeded. Try again after ${new Date(rateLimitCheck.resetTime).toLocaleTimeString()}`
+        );
       }
 
       // Validate file
@@ -125,7 +140,7 @@ class FileUploadService {
 
       // Generate secure filename
       const secureFilename = this.generateSecureFilename(file.name, userId);
-      
+
       // Create file metadata
       const fileMetadata = {
         originalName: file.name,
@@ -136,12 +151,16 @@ class FileUploadService {
         uploadedBy: userId,
         projectId: projectId,
         uploadedAt: new Date().toISOString(),
-        ...metadata
+        ...metadata,
       };
 
       // In a real implementation, you would upload to your server
       // For now, we'll simulate the upload and store metadata locally
-      const uploadResult = await this.simulateUpload(file, secureFilename, fileMetadata);
+      const uploadResult = await this.simulateUpload(
+        file,
+        secureFilename,
+        fileMetadata
+      );
 
       return {
         success: true,
@@ -149,14 +168,13 @@ class FileUploadService {
         fileName: secureFilename,
         originalName: file.name,
         metadata: fileMetadata,
-        uploadId: uploadResult.uploadId
+        uploadId: uploadResult.uploadId,
       };
-
     } catch (error) {
       console.error('File upload error:', error);
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -165,24 +183,29 @@ class FileUploadService {
    * Simulate file upload (replace with actual server upload)
    */
   async simulateUpload(file, filename, metadata) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       // Simulate upload delay
-      setTimeout(() => {
-        // Store metadata in localStorage for demo purposes
-        const uploads = JSON.parse(localStorage.getItem('leadfive_uploads') || '[]');
-        const uploadId = Date.now().toString();
-        
-        uploads.push({
-          uploadId,
-          filename,
-          metadata,
-          uploadedAt: new Date().toISOString()
-        });
-        
-        localStorage.setItem('leadfive_uploads', JSON.stringify(uploads));
-        
-        resolve({ uploadId });
-      }, 1000 + Math.random() * 2000); // 1-3 second delay
+      setTimeout(
+        () => {
+          // Store metadata in localStorage for demo purposes
+          const uploads = JSON.parse(
+            localStorage.getItem('leadfive_uploads') || '[]'
+          );
+          const uploadId = Date.now().toString();
+
+          uploads.push({
+            uploadId,
+            filename,
+            metadata,
+            uploadedAt: new Date().toISOString(),
+          });
+
+          localStorage.setItem('leadfive_uploads', JSON.stringify(uploads));
+
+          resolve({ uploadId });
+        },
+        1000 + Math.random() * 2000
+      ); // 1-3 second delay
     });
   }
 
@@ -190,7 +213,9 @@ class FileUploadService {
    * Get upload history for a user
    */
   getUserUploads(userId) {
-    const uploads = JSON.parse(localStorage.getItem('leadfive_uploads') || '[]');
+    const uploads = JSON.parse(
+      localStorage.getItem('leadfive_uploads') || '[]'
+    );
     return uploads.filter(upload => upload.metadata.uploadedBy === userId);
   }
 
@@ -199,9 +224,12 @@ class FileUploadService {
    */
   async deleteFile(uploadId, userId) {
     try {
-      const uploads = JSON.parse(localStorage.getItem('leadfive_uploads') || '[]');
-      const fileIndex = uploads.findIndex(upload => 
-        upload.uploadId === uploadId && upload.metadata.uploadedBy === userId
+      const uploads = JSON.parse(
+        localStorage.getItem('leadfive_uploads') || '[]'
+      );
+      const fileIndex = uploads.findIndex(
+        upload =>
+          upload.uploadId === uploadId && upload.metadata.uploadedBy === userId
       );
 
       if (fileIndex === -1) {
@@ -223,7 +251,9 @@ class FileUploadService {
    */
   async processWithAI(uploadId, processingType = 'analyze') {
     try {
-      const uploads = JSON.parse(localStorage.getItem('leadfive_uploads') || '[]');
+      const uploads = JSON.parse(
+        localStorage.getItem('leadfive_uploads') || '[]'
+      );
       const upload = uploads.find(u => u.uploadId === uploadId);
 
       if (!upload) {
@@ -251,14 +281,13 @@ class FileUploadService {
       return {
         success: true,
         result: result,
-        processedAt: new Date().toISOString()
+        processedAt: new Date().toISOString(),
       };
-
     } catch (error) {
       console.error('AI processing error:', error);
       return {
         success: false,
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -274,7 +303,7 @@ class FileUploadService {
     return await openAIService.generateResponse(prompt, {
       fileType: upload.metadata.type,
       category: upload.metadata.category,
-      context: 'file_analysis'
+      context: 'file_analysis',
     });
   }
 
@@ -287,7 +316,7 @@ class FileUploadService {
 
     return await openAIService.generateResponse(prompt, {
       fileType: upload.metadata.type,
-      context: 'content_summary'
+      context: 'content_summary',
     });
   }
 
@@ -302,7 +331,7 @@ class FileUploadService {
     return await openAIService.generateResponse(prompt, {
       fileType: upload.metadata.type,
       context: 'data_extraction',
-      responseFormat: 'json'
+      responseFormat: 'json',
     });
   }
 
@@ -310,15 +339,19 @@ class FileUploadService {
    * Get file statistics
    */
   getUploadStats(userId = null) {
-    const uploads = JSON.parse(localStorage.getItem('leadfive_uploads') || '[]');
-    const userUploads = userId ? uploads.filter(u => u.metadata.uploadedBy === userId) : uploads;
+    const uploads = JSON.parse(
+      localStorage.getItem('leadfive_uploads') || '[]'
+    );
+    const userUploads = userId
+      ? uploads.filter(u => u.metadata.uploadedBy === userId)
+      : uploads;
 
     const stats = {
       totalFiles: userUploads.length,
       totalSize: userUploads.reduce((sum, u) => sum + u.metadata.size, 0),
       byCategory: {},
       byType: {},
-      recentUploads: userUploads.slice(-5).reverse()
+      recentUploads: userUploads.slice(-5).reverse(),
     };
 
     userUploads.forEach(upload => {
@@ -335,8 +368,11 @@ class FileUploadService {
   /**
    * Clean up old uploads (maintenance function)
    */
-  cleanupOldUploads(maxAge = 30 * 24 * 60 * 60 * 1000) { // 30 days default
-    const uploads = JSON.parse(localStorage.getItem('leadfive_uploads') || '[]');
+  cleanupOldUploads(maxAge = 30 * 24 * 60 * 60 * 1000) {
+    // 30 days default
+    const uploads = JSON.parse(
+      localStorage.getItem('leadfive_uploads') || '[]'
+    );
     const cutoffDate = Date.now() - maxAge;
 
     const activeUploads = uploads.filter(upload => {
@@ -345,12 +381,12 @@ class FileUploadService {
     });
 
     localStorage.setItem('leadfive_uploads', JSON.stringify(activeUploads));
-    
+
     return {
       cleaned: uploads.length - activeUploads.length,
-      remaining: activeUploads.length
+      remaining: activeUploads.length,
     };
   }
 }
 
-export default new FileUploadService(); 
+export default new FileUploadService();

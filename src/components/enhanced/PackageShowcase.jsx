@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  FaCrown, 
-  FaGem, 
-  FaMedal, 
+import {
+  FaCrown,
+  FaGem,
+  FaMedal,
   FaTrophy,
   FaRocket,
   FaCheckCircle,
   FaCalculator,
   FaChartLine,
   FaUsers,
-  FaDollarSign
+  FaDollarSign,
 } from 'react-icons/fa';
 import './PackageShowcase.css';
 
@@ -21,7 +21,7 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
     totalMembers: 12847,
     totalEarnings: 2456789,
     activeMatrices: 8432,
-    avgMonthlyGrowth: 23.7
+    avgMonthlyGrowth: 23.7,
   });
 
   // Real-time stats animation
@@ -31,7 +31,7 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
         totalMembers: prev.totalMembers + Math.floor(Math.random() * 3),
         totalEarnings: prev.totalEarnings + Math.floor(Math.random() * 1000),
         activeMatrices: prev.activeMatrices + Math.floor(Math.random() * 2),
-        avgMonthlyGrowth: prev.avgMonthlyGrowth + (Math.random() - 0.5) * 0.1
+        avgMonthlyGrowth: prev.avgMonthlyGrowth + (Math.random() - 0.5) * 0.1,
       }));
     }, 5000);
 
@@ -41,11 +41,11 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
   const packages = [
     {
       id: 1,
-      name: "STARTER",
+      name: 'STARTER',
       icon: FaMedal,
       price: 30,
       popular: false,
-      gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       features: {
         directBonus: 20,
         levelBonus: 5,
@@ -55,25 +55,25 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
         clubPool: 5,
         maxEarnings: 120,
         matrixPositions: 2,
-        reinvestmentRate: 30
+        reinvestmentRate: 30,
       },
       benefits: [
-        "Entry-level network participation",
-        "Basic spillover benefits",
-        "Community support access",
-        "Educational resources",
-        "Mobile app access"
+        'Entry-level network participation',
+        'Basic spillover benefits',
+        'Community support access',
+        'Educational resources',
+        'Mobile app access',
       ],
-      idealFor: "Beginners exploring MLM",
-      roi: "4x return potential"
+      idealFor: 'Beginners exploring MLM',
+      roi: '4x return potential',
     },
     {
       id: 2,
-      name: "PREMIUM",
+      name: 'PREMIUM',
       icon: FaGem,
       price: 100,
       popular: true,
-      gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
       features: {
         directBonus: 25,
         levelBonus: 7,
@@ -83,26 +83,26 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
         clubPool: 7,
         maxEarnings: 400,
         matrixPositions: 6,
-        reinvestmentRate: 35
+        reinvestmentRate: 35,
       },
       benefits: [
-        "Enhanced earning potential",
-        "Priority matrix placement",
-        "Advanced analytics dashboard",
-        "Personal success coach",
-        "Exclusive webinar access",
-        "Higher pool distributions"
+        'Enhanced earning potential',
+        'Priority matrix placement',
+        'Advanced analytics dashboard',
+        'Personal success coach',
+        'Exclusive webinar access',
+        'Higher pool distributions',
       ],
-      idealFor: "Serious network builders",
-      roi: "4x return with bonuses"
+      idealFor: 'Serious network builders',
+      roi: '4x return with bonuses',
     },
     {
       id: 3,
-      name: "ELITE",
+      name: 'ELITE',
       icon: FaCrown,
       price: 200,
       popular: false,
-      gradient: "linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)",
+      gradient: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
       features: {
         directBonus: 30,
         levelBonus: 8,
@@ -112,26 +112,26 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
         clubPool: 8,
         maxEarnings: 800,
         matrixPositions: 14,
-        reinvestmentRate: 40
+        reinvestmentRate: 40,
       },
       benefits: [
-        "Maximum earning potential",
-        "VIP support priority",
-        "Custom landing pages",
-        "Advanced team tools",
-        "Monthly leader calls",
-        "Cryptocurrency bonuses",
-        "Global recognition program"
+        'Maximum earning potential',
+        'VIP support priority',
+        'Custom landing pages',
+        'Advanced team tools',
+        'Monthly leader calls',
+        'Cryptocurrency bonuses',
+        'Global recognition program',
       ],
-      idealFor: "Professional marketers",
-      roi: "4x+ with elite bonuses"
-    }
+      idealFor: 'Professional marketers',
+      roi: '4x+ with elite bonuses',
+    },
   ];
 
-  const handlePackageSelect = (packageData) => {
+  const handlePackageSelect = packageData => {
     setSelectedPackage(packageData.id);
     setIsCalculating(true);
-    
+
     setTimeout(() => {
       setIsCalculating(false);
       if (onSelectPackage) {
@@ -144,12 +144,12 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
     const base = packageData.price;
     const maxReturn = packageData.features.maxEarnings;
     const avgDailyReturn = maxReturn / timeframe;
-    
+
     return {
       daily: avgDailyReturn.toFixed(2),
       monthly: (avgDailyReturn * 30).toFixed(2),
       total: maxReturn,
-      breakeven: Math.ceil(base / avgDailyReturn)
+      breakeven: Math.ceil(base / avgDailyReturn),
     };
   };
 
@@ -157,7 +157,7 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
     <section className="package-showcase">
       <div className="container">
         {/* Section Header */}
-        <motion.div 
+        <motion.div
           className="showcase-header"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -165,8 +165,11 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
           viewport={{ once: true }}
         >
           <h2>Choose Your Success Path</h2>
-          <p>Select the perfect package to match your ambition and maximize your earning potential</p>
-          
+          <p>
+            Select the perfect package to match your ambition and maximize your
+            earning potential
+          </p>
+
           {/* Live Stats Bar */}
           <div className="live-stats">
             <div className="stat">
@@ -197,7 +200,7 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
           {packages.map((pkg, index) => {
             const roi = calculateROI(pkg);
             const isSelected = selectedPackage === pkg.id;
-            
+
             return (
               <motion.div
                 key={pkg.id}
@@ -215,7 +218,10 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
                   </div>
                 )}
 
-                <div className="card-header" style={{ background: pkg.gradient }}>
+                <div
+                  className="card-header"
+                  style={{ background: pkg.gradient }}
+                >
                   <div className="package-icon">
                     <pkg.icon />
                   </div>
@@ -237,15 +243,21 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
                     <div className="commission-grid">
                       <div className="commission-item">
                         <span className="label">Direct Bonus</span>
-                        <span className="value">{pkg.features.directBonus}%</span>
+                        <span className="value">
+                          {pkg.features.directBonus}%
+                        </span>
                       </div>
                       <div className="commission-item">
                         <span className="label">Level Bonus</span>
-                        <span className="value">{pkg.features.levelBonus}%</span>
+                        <span className="value">
+                          {pkg.features.levelBonus}%
+                        </span>
                       </div>
                       <div className="commission-item">
                         <span className="label">Leader Pool</span>
-                        <span className="value">{pkg.features.leaderPool}%</span>
+                        <span className="value">
+                          {pkg.features.leaderPool}%
+                        </span>
                       </div>
                       <div className="commission-item">
                         <span className="label">Help Pool</span>
@@ -315,7 +327,7 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
                 </div>
 
                 <div className="card-footer">
-                  <button 
+                  <button
                     className={`select-button ${isSelected ? 'selected' : ''}`}
                     disabled={isCalculating}
                   >
@@ -336,7 +348,7 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
                       </>
                     )}
                   </button>
-                  
+
                   <div className="package-guarantee">
                     <small>
                       <FaCheckCircle /> {pkg.roi} guaranteed or money back*
@@ -349,7 +361,7 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
         </div>
 
         {/* Comparison Table */}
-        <motion.div 
+        <motion.div
           className="comparison-section"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -367,22 +379,54 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
                 </div>
               ))}
             </div>
-            
+
             {[
               { label: 'Investment', key: 'price', format: '$' },
-              { label: 'Max Return', key: 'maxEarnings', format: '$', path: 'features' },
-              { label: 'Direct Bonus', key: 'directBonus', format: '%', path: 'features' },
-              { label: 'Level Bonus', key: 'levelBonus', format: '%', path: 'features' },
-              { label: 'Leader Pool', key: 'leaderPool', format: '%', path: 'features' },
-              { label: 'Help Pool', key: 'helpPool', format: '%', path: 'features' },
-              { label: 'Matrix Positions', key: 'matrixPositions', format: '', path: 'features' }
+              {
+                label: 'Max Return',
+                key: 'maxEarnings',
+                format: '$',
+                path: 'features',
+              },
+              {
+                label: 'Direct Bonus',
+                key: 'directBonus',
+                format: '%',
+                path: 'features',
+              },
+              {
+                label: 'Level Bonus',
+                key: 'levelBonus',
+                format: '%',
+                path: 'features',
+              },
+              {
+                label: 'Leader Pool',
+                key: 'leaderPool',
+                format: '%',
+                path: 'features',
+              },
+              {
+                label: 'Help Pool',
+                key: 'helpPool',
+                format: '%',
+                path: 'features',
+              },
+              {
+                label: 'Matrix Positions',
+                key: 'matrixPositions',
+                format: '',
+                path: 'features',
+              },
             ].map((feature, idx) => (
               <div key={idx} className="table-row">
                 <div className="feature-label">{feature.label}</div>
                 {packages.map(pkg => (
                   <div key={pkg.id} className="feature-value">
                     {feature.format}
-                    {feature.path ? pkg[feature.path][feature.key] : pkg[feature.key]}
+                    {feature.path
+                      ? pkg[feature.path][feature.key]
+                      : pkg[feature.key]}
                     {feature.format === '%' ? '%' : ''}
                   </div>
                 ))}
@@ -392,7 +436,7 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
         </motion.div>
 
         {/* Call to Action */}
-        <motion.div 
+        <motion.div
           className="cta-section"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -400,8 +444,10 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
           viewport={{ once: true }}
         >
           <h3>Ready to Start Your Journey?</h3>
-          <p>Join thousands of successful members building generational wealth</p>
-          
+          <p>
+            Join thousands of successful members building generational wealth
+          </p>
+
           <div className="cta-buttons">
             <button className="primary-cta">
               <FaRocket />
@@ -415,7 +461,10 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
 
           <div className="guarantee-text">
             <FaCheckCircle />
-            <span>30-Day Money Back Guarantee • Smart Contract Protected • BSC Verified</span>
+            <span>
+              30-Day Money Back Guarantee • Smart Contract Protected • BSC
+              Verified
+            </span>
           </div>
         </motion.div>
       </div>

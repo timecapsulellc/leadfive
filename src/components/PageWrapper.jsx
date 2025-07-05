@@ -9,9 +9,7 @@ const PageWrapper = ({ children, className = '' }) => {
         <div className="gradient-overlay"></div>
         <div className="grid-pattern"></div>
       </div>
-      <div className="page-content">
-        {children}
-      </div>
+      <div className="page-content">{children}</div>
     </div>
   );
 };

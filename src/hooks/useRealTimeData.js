@@ -1,16 +1,16 @@
 /**
  * Real-time Data Hook
- * 
+ *
  * Provides live data updates for the dashboard with optimized polling
  * and WebSocket connections for instant updates.
- * 
+ *
  * Performance Features:
  * - Smart polling intervals based on user activity
  * - WebSocket fallback for real-time events
  * - Data caching and deduplication
  * - Error handling and reconnection logic
  * - Memory efficient data structures
- * 
+ *
  * Real-time Features:
  * - Live balance updates
  * - Transaction monitoring
@@ -25,14 +25,14 @@ import Web3Service from '../services/Web3Service';
 // Configuration constants
 const REALTIME_CONFIG = {
   POLLING_INTERVALS: {
-    ACTIVE: 5000,      // 5 seconds when user is active
-    INACTIVE: 30000,   // 30 seconds when user is inactive
-    BACKGROUND: 60000  // 1 minute when tab is in background
+    ACTIVE: 5000, // 5 seconds when user is active
+    INACTIVE: 30000, // 30 seconds when user is inactive
+    BACKGROUND: 60000, // 1 minute when tab is in background
   },
   WEBSOCKET_RETRY_DELAY: 5000,
   MAX_RETRY_ATTEMPTS: 5,
   DATA_CACHE_TTL: 10000, // 10 seconds cache TTL
-  ACTIVITY_TIMEOUT: 60000 // 1 minute without activity = inactive
+  ACTIVITY_TIMEOUT: 60000, // 1 minute without activity = inactive
 };
 
 // Event types for real-time updates
@@ -42,7 +42,7 @@ const EVENT_TYPES = {
   REFERRAL: 'referral',
   WITHDRAWAL: 'withdrawal',
   PRICE_UPDATE: 'price_update',
-  NETWORK_ACTIVITY: 'network_activity'
+  NETWORK_ACTIVITY: 'network_activity',
 };
 
 /**
@@ -59,7 +59,7 @@ export const useRealTimeData = (account, provider, signer) => {
     lastUpdated: null,
     priceData: null,
     recentTransactions: [],
-    networkActivity: []
+    networkActivity: [],
   });
 
   const [isConnected, setIsConnected] = useState(false);
@@ -98,7 +98,8 @@ export const useRealTimeData = (account, provider, signer) => {
     // Check activity periodically
     const activityChecker = setInterval(() => {
       const timeSinceActivity = Date.now() - lastActivity.current;
-      isUserActive.current = timeSinceActivity < REALTIME_CONFIG.ACTIVITY_TIMEOUT;
+      isUserActive.current =
+        timeSinceActivity < REALTIME_CONFIG.ACTIVITY_TIMEOUT;
     }, 10000);
 
     return () => {
@@ -115,15 +116,18 @@ export const useRealTimeData = (account, provider, signer) => {
     if (!isTabVisible.current) {
       return REALTIME_CONFIG.POLLING_INTERVALS.BACKGROUND;
     }
-    return isUserActive.current 
-      ? REALTIME_CONFIG.POLLING_INTERVALS.ACTIVE 
+    return isUserActive.current
+      ? REALTIME_CONFIG.POLLING_INTERVALS.ACTIVE
       : REALTIME_CONFIG.POLLING_INTERVALS.INACTIVE;
   }, []);
 
   // Cache management
-  const getCachedData = useCallback((key) => {
+  const getCachedData = useCallback(key => {
     const cached = dataCache.current.get(key);
-    if (cached && (Date.now() - cached.timestamp) < REALTIME_CONFIG.DATA_CACHE_TTL) {
+    if (
+      cached &&
+      Date.now() - cached.timestamp < REALTIME_CONFIG.DATA_CACHE_TTL
+    ) {
       return cached.data;
     }
     return null;
@@ -132,7 +136,7 @@ export const useRealTimeData = (account, provider, signer) => {
   const setCachedData = useCallback((key, data) => {
     dataCache.current.set(key, {
       data,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     });
   }, []);
 
@@ -147,17 +151,23 @@ export const useRealTimeData = (account, provider, signer) => {
 
       const [userInfo, balance] = await Promise.all([
         Web3Service.contract?.getUserInfo(account).catch(() => null),
-        provider.getBalance(account).catch(() => '0')
+        provider.getBalance(account).catch(() => '0'),
       ]);
 
       const userData = {
         balance: balance ? (parseFloat(balance) / 1e18).toFixed(4) : '0',
-        earnings: userInfo?.totalEarnings ? (parseFloat(userInfo.totalEarnings) / 1e18).toFixed(4) : '0',
+        earnings: userInfo?.totalEarnings
+          ? (parseFloat(userInfo.totalEarnings) / 1e18).toFixed(4)
+          : '0',
         referrals: userInfo?.directReferrals || 0,
         networkSize: userInfo?.teamSize || 0,
-        pendingWithdrawals: userInfo?.pendingWithdrawals ? (parseFloat(userInfo.pendingWithdrawals) / 1e18).toFixed(4) : '0',
+        pendingWithdrawals: userInfo?.pendingWithdrawals
+          ? (parseFloat(userInfo.pendingWithdrawals) / 1e18).toFixed(4)
+          : '0',
         level: userInfo?.level || 0,
-        package: userInfo?.packageValue ? (parseFloat(userInfo.packageValue) / 1e18).toFixed(4) : '0'
+        package: userInfo?.packageValue
+          ? (parseFloat(userInfo.packageValue) / 1e18).toFixed(4)
+          : '0',
       };
 
       setCachedData(cacheKey, userData);
@@ -175,15 +185,17 @@ export const useRealTimeData = (account, provider, signer) => {
       const cached = getCachedData(cacheKey);
       if (cached) return cached;
 
-      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd&include_24hr_change=true');
+      const response = await fetch(
+        'https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd&include_24hr_change=true'
+      );
       const priceData = await response.json();
-      
+
       const result = {
         bnb: {
           usd: priceData.binancecoin?.usd || 0,
-          change24h: priceData.binancecoin?.usd_24h_change || 0
+          change24h: priceData.binancecoin?.usd_24h_change || 0,
         },
-        lastUpdated: Date.now()
+        lastUpdated: Date.now(),
       };
 
       setCachedData(cacheKey, result);
@@ -210,18 +222,20 @@ export const useRealTimeData = (account, provider, signer) => {
       const filter = {
         address: Web3Service.contractAddress,
         fromBlock,
-        toBlock: 'latest'
+        toBlock: 'latest',
       };
 
       const logs = await provider.getLogs(filter);
       const recentTransactions = logs
-        .filter(log => log.topics.some(topic => topic.includes(account.slice(2))))
+        .filter(log =>
+          log.topics.some(topic => topic.includes(account.slice(2)))
+        )
         .slice(-10) // Last 10 transactions
         .map(log => ({
           hash: log.transactionHash,
           blockNumber: log.blockNumber,
           timestamp: Date.now(), // We'd need to fetch block data for actual timestamp
-          type: 'contract_interaction'
+          type: 'contract_interaction',
         }));
 
       setCachedData(cacheKey, recentTransactions);
@@ -243,7 +257,7 @@ export const useRealTimeData = (account, provider, signer) => {
       const [userData, priceData, transactions] = await Promise.all([
         fetchUserData(),
         fetchPriceData(),
-        fetchRecentTransactions()
+        fetchRecentTransactions(),
       ]);
 
       setData(prevData => ({
@@ -251,7 +265,7 @@ export const useRealTimeData = (account, provider, signer) => {
         ...(userData || {}),
         priceData,
         recentTransactions: transactions,
-        lastUpdated: new Date()
+        lastUpdated: new Date(),
       }));
 
       setConnectionStatus('connected');
@@ -274,7 +288,7 @@ export const useRealTimeData = (account, provider, signer) => {
       const ws = {
         readyState: 1, // OPEN
         close: () => {},
-        send: () => {}
+        send: () => {},
       };
 
       websocket.current = ws;
@@ -283,9 +297,16 @@ export const useRealTimeData = (account, provider, signer) => {
 
       // Simulate periodic WebSocket events
       const eventSimulator = setInterval(() => {
-        if (Math.random() < 0.1) { // 10% chance of event every interval
-          const eventType = Object.values(EVENT_TYPES)[Math.floor(Math.random() * Object.values(EVENT_TYPES).length)];
-          handleWebSocketEvent({ type: eventType, data: { timestamp: Date.now() } });
+        if (Math.random() < 0.1) {
+          // 10% chance of event every interval
+          const eventType =
+            Object.values(EVENT_TYPES)[
+              Math.floor(Math.random() * Object.values(EVENT_TYPES).length)
+            ];
+          handleWebSocketEvent({
+            type: eventType,
+            data: { timestamp: Date.now() },
+          });
         }
       }, 10000);
 
@@ -300,28 +321,31 @@ export const useRealTimeData = (account, provider, signer) => {
   }, [account]);
 
   // Handle WebSocket events
-  const handleWebSocketEvent = useCallback((event) => {
-    console.log('WebSocket event:', event);
-    
-    switch (event.type) {
-      case EVENT_TYPES.BALANCE_UPDATE:
-      case EVENT_TYPES.TRANSACTION:
-      case EVENT_TYPES.REFERRAL:
-      case EVENT_TYPES.WITHDRAWAL:
-        // Trigger immediate data refresh for important events
-        updateData();
-        break;
-      case EVENT_TYPES.PRICE_UPDATE:
-        fetchPriceData().then(priceData => {
-          if (priceData) {
-            setData(prevData => ({ ...prevData, priceData }));
-          }
-        });
-        break;
-      default:
-        break;
-    }
-  }, [updateData, fetchPriceData]);
+  const handleWebSocketEvent = useCallback(
+    event => {
+      console.log('WebSocket event:', event);
+
+      switch (event.type) {
+        case EVENT_TYPES.BALANCE_UPDATE:
+        case EVENT_TYPES.TRANSACTION:
+        case EVENT_TYPES.REFERRAL:
+        case EVENT_TYPES.WITHDRAWAL:
+          // Trigger immediate data refresh for important events
+          updateData();
+          break;
+        case EVENT_TYPES.PRICE_UPDATE:
+          fetchPriceData().then(priceData => {
+            if (priceData) {
+              setData(prevData => ({ ...prevData, priceData }));
+            }
+          });
+          break;
+        default:
+          break;
+      }
+    },
+    [updateData, fetchPriceData]
+  );
 
   // Schedule WebSocket reconnection
   const scheduleReconnect = useCallback(() => {
@@ -382,7 +406,14 @@ export const useRealTimeData = (account, provider, signer) => {
         websocket.current = null;
       }
     };
-  }, [account, provider, updateData, startPolling, stopPolling, connectWebSocket]);
+  }, [
+    account,
+    provider,
+    updateData,
+    startPolling,
+    stopPolling,
+    connectWebSocket,
+  ]);
 
   // Manual refresh function
   const refresh = useCallback(() => {
@@ -394,7 +425,7 @@ export const useRealTimeData = (account, provider, signer) => {
   const subscribe = useCallback((eventType, callback) => {
     // In a real implementation, this would subscribe to specific WebSocket events
     console.log(`Subscribed to ${eventType}`);
-    
+
     return () => {
       console.log(`Unsubscribed from ${eventType}`);
     };
@@ -413,7 +444,7 @@ export const useRealTimeData = (account, provider, signer) => {
       cacheSize: dataCache.current.size,
       lastActivity: lastActivity.current,
       isUserActive: isUserActive.current,
-      pollingInterval: getPollingInterval()
-    }
+      pollingInterval: getPollingInterval(),
+    },
   };
 };

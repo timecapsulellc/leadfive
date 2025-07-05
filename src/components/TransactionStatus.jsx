@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { FaSpinner, FaCheckCircle, FaExclamationCircle, FaTimes } from 'react-icons/fa';
+import {
+  FaSpinner,
+  FaCheckCircle,
+  FaExclamationCircle,
+  FaTimes,
+} from 'react-icons/fa';
 import './TransactionStatus.css';
 
-const TransactionStatus = ({ 
-  isVisible, 
-  onClose, 
-  transactionHash, 
+const TransactionStatus = ({
+  isVisible,
+  onClose,
+  transactionHash,
   status, // 'pending', 'success', 'error'
   message,
-  explorerUrl = 'https://bscscan.com' 
+  explorerUrl = 'https://bscscan.com',
 }) => {
   const [timeElapsed, setTimeElapsed] = useState(0);
 
@@ -49,7 +54,7 @@ const TransactionStatus = ({
     }
   };
 
-  const formatTime = (seconds) => {
+  const formatTime = seconds => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
@@ -59,9 +64,7 @@ const TransactionStatus = ({
     <div className="transaction-status-overlay">
       <div className={`transaction-status-modal ${getStatusClass()}`}>
         <div className="status-header">
-          <div className="status-icon">
-            {getStatusIcon()}
-          </div>
+          <div className="status-icon">{getStatusIcon()}</div>
           <button className="close-btn" onClick={onClose}>
             <FaTimes />
           </button>
@@ -86,7 +89,7 @@ const TransactionStatus = ({
           {transactionHash && (
             <div className="transaction-details">
               <p>Transaction Hash:</p>
-              <a 
+              <a
                 href={`${explorerUrl}/tx/${transactionHash}`}
                 target="_blank"
                 rel="noopener noreferrer"

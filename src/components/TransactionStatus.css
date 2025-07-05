@@ -73,8 +73,12 @@
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .close-btn {
@@ -212,20 +216,37 @@
 }
 
 @keyframes pulseOrange {
-  0%, 100% { border-color: rgba(245, 158, 11, 0.3); }
-  50% { border-color: rgba(245, 158, 11, 0.6); }
+  0%,
+  100% {
+    border-color: rgba(245, 158, 11, 0.3);
+  }
+  50% {
+    border-color: rgba(245, 158, 11, 0.6);
+  }
 }
 
 @keyframes pulseGreen {
-  0% { border-color: rgba(16, 185, 129, 0.3); }
-  50% { border-color: rgba(16, 185, 129, 0.8); }
-  100% { border-color: rgba(16, 185, 129, 0.3); }
+  0% {
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+  50% {
+    border-color: rgba(16, 185, 129, 0.8);
+  }
+  100% {
+    border-color: rgba(16, 185, 129, 0.3);
+  }
 }
 
 @keyframes pulseRed {
-  0% { border-color: rgba(239, 68, 68, 0.3); }
-  50% { border-color: rgba(239, 68, 68, 0.8); }
-  100% { border-color: rgba(239, 68, 68, 0.3); }
+  0% {
+    border-color: rgba(239, 68, 68, 0.3);
+  }
+  50% {
+    border-color: rgba(239, 68, 68, 0.8);
+  }
+  100% {
+    border-color: rgba(239, 68, 68, 0.3);
+  }
 }
 
 /* Mobile responsive */
@@ -234,11 +255,11 @@
     min-width: 90vw;
     padding: 1.5rem;
   }
-  
+
   .status-content h3 {
     font-size: 1.1rem;
   }
-  
+
   .tx-hash-link {
     font-size: 0.8rem;
   }

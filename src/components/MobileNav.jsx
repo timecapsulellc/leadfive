@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { 
-  FaHome, 
-  FaChartLine, 
-  FaNetworkWired, 
-  FaUsers, 
+import {
+  FaHome,
+  FaChartLine,
+  FaNetworkWired,
+  FaUsers,
   FaWallet,
   FaBars,
   FaTimes,
   FaCog,
-  FaShoppingBag
+  FaShoppingBag,
 } from 'react-icons/fa';
 import '../styles/MobileNav.css';
 
@@ -20,10 +20,20 @@ const MobileNav = ({ account, onDisconnect }) => {
 
   const navItems = [
     { path: '/', label: 'Home', icon: FaHome },
-    { path: '/dashboard', label: 'Dashboard', icon: FaChartLine, requiresAuth: true },
-    { path: '/genealogy', label: 'Network', icon: FaNetworkWired, requiresAuth: true },
+    {
+      path: '/dashboard',
+      label: 'Dashboard',
+      icon: FaChartLine,
+      requiresAuth: true,
+    },
+    {
+      path: '/genealogy',
+      label: 'Network',
+      icon: FaNetworkWired,
+      requiresAuth: true,
+    },
     { path: '/packages', label: 'Packages', icon: FaShoppingBag },
-    { path: '/referrals', label: 'Team', icon: FaUsers, requiresAuth: true }
+    { path: '/referrals', label: 'Team', icon: FaUsers, requiresAuth: true },
   ];
 
   const handleNavClick = (path, requiresAuth) => {
@@ -35,20 +45,21 @@ const MobileNav = ({ account, onDisconnect }) => {
     setIsOpen(false);
   };
 
-  const isActive = (path) => {
+  const isActive = path => {
     if (path === '/' && location.pathname === '/') return true;
     if (path !== '/' && location.pathname.startsWith(path)) return true;
     return false;
   };
 
-  const displayAddress = typeof account === 'string'
-    ? `${account.slice(0, 6)}...${account.slice(-4)}`
-    : '';
+  const displayAddress =
+    typeof account === 'string'
+      ? `${account.slice(0, 6)}...${account.slice(-4)}`
+      : '';
 
   return (
     <>
       {/* Mobile Menu Toggle */}
-      <button 
+      <button
         className="mobile-menu-toggle"
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Toggle menu"
@@ -60,7 +71,7 @@ const MobileNav = ({ account, onDisconnect }) => {
       <nav className={`mobile-nav ${isOpen ? 'active' : ''}`}>
         <div className="mobile-nav-header">
           <h2>LeadFive</h2>
-          <button 
+          <button
             className="close-btn"
             onClick={() => setIsOpen(false)}
             aria-label="Close menu"
@@ -81,7 +92,7 @@ const MobileNav = ({ account, onDisconnect }) => {
           )}
 
           <ul className="mobile-nav-items">
-            {navItems.map((item) => {
+            {navItems.map(item => {
               const IconComponent = item.icon;
               return (
                 <li key={item.path}>
@@ -103,14 +114,14 @@ const MobileNav = ({ account, onDisconnect }) => {
           <div className="mobile-nav-actions">
             {account ? (
               <>
-                <Link 
-                  to="/settings" 
+                <Link
+                  to="/settings"
                   className="nav-action-btn"
                   onClick={() => setIsOpen(false)}
                 >
                   <FaCog /> Settings
                 </Link>
-                <button 
+                <button
                   className="nav-action-btn disconnect"
                   onClick={() => {
                     onDisconnect();
@@ -121,8 +132,8 @@ const MobileNav = ({ account, onDisconnect }) => {
                 </button>
               </>
             ) : (
-              <Link 
-                to="/register" 
+              <Link
+                to="/register"
                 className="nav-action-btn primary"
                 onClick={() => setIsOpen(false)}
               >
@@ -135,7 +146,7 @@ const MobileNav = ({ account, onDisconnect }) => {
 
       {/* Bottom Tab Navigation for Mobile */}
       <div className="mobile-bottom-nav">
-        {navItems.slice(0, 5).map((item) => {
+        {navItems.slice(0, 5).map(item => {
           const IconComponent = item.icon;
           return (
             <button
@@ -156,10 +167,7 @@ const MobileNav = ({ account, onDisconnect }) => {
 
       {/* Overlay */}
       {isOpen && (
-        <div 
-          className="mobile-nav-overlay"
-          onClick={() => setIsOpen(false)}
-        />
+        <div className="mobile-nav-overlay" onClick={() => setIsOpen(false)} />
       )}
     </>
   );

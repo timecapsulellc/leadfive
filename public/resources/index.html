@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeadFive Resources</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0b14 0%, #151829 25%, #1a1c35 50%, #1e2344 75%, #0a0b14 100%);
+            color: white;
+            margin: 0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .resource-list {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+        }
+        .resource-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin: 1rem 0;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .download-btn {
+            background: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 100%);
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+        }
+        .back-link {
+            color: #00d4ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 LeadFive Resources</h1>
+        <p>Download official LeadFive documentation and presentations</p>
+        
+        <div class="resource-list">
+            <h2>📚 Available Resources</h2>
+            
+            <div class="resource-item">
+                <div>
+                    <strong>🤖 LeadFive AIRA Presentation</strong>
+                    <p style="margin: 0.5rem 0; color: rgba(255,255,255,0.7); font-size: 0.9rem;">
+                        AI Integration Strategy & Roadmap (PDF)
+                    </p>
+                </div>
+                <a href="./LeadFive_AIRA_presentation.pdf" download class="download-btn">
+                    📥 Download
+                </a>
+            </div>
+        </div>
+        
+        <p>
+            <a href="/" class="back-link">← Back to LeadFive Platform</a>
+        </p>
+        
+        <p style="font-size: 0.875rem; color: rgba(255,255,255,0.6); margin-top: 2rem;">
+            All resources are provided for informational purposes only. 
+            Please review our Terms of Service before downloading.
+        </p>
+    </div>
+</body>
+</html>

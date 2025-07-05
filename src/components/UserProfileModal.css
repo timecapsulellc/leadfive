@@ -31,7 +31,11 @@
   gap: 1.5rem;
   padding: 2rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  background: linear-gradient(135deg, rgba(123, 44, 191, 0.1), rgba(0, 212, 255, 0.05));
+  background: linear-gradient(
+    135deg,
+    rgba(123, 44, 191, 0.1),
+    rgba(0, 212, 255, 0.05)
+  );
 }
 
 .user-avatar-large {
@@ -42,7 +46,7 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #7B2CBF, #00D4FF);
+  background: linear-gradient(135deg, #7b2cbf, #00d4ff);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,13 +66,13 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #00FF88;
+  background: #00ff88;
   border: 3px solid #1a1a2e;
   box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
 }
 
 .status-dot-large.capped {
-  background: #FF6B35;
+  background: #ff6b35;
   box-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
 }
 
@@ -92,7 +96,7 @@
 
 .capped-badge {
   display: inline-block;
-  background: linear-gradient(135deg, #FF6B35, #FF4500);
+  background: linear-gradient(135deg, #ff6b35, #ff4500);
   color: white;
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
@@ -144,8 +148,8 @@
 }
 
 .tab-btn.active {
-  color: #00D4FF;
-  border-bottom-color: #00D4FF;
+  color: #00d4ff;
+  border-bottom-color: #00d4ff;
   background: rgba(0, 212, 255, 0.1);
 }
 
@@ -156,7 +160,8 @@
 }
 
 /* Loading and Error States */
-.loading-state, .error-state {
+.loading-state,
+.error-state {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -169,15 +174,19 @@
   width: 40px;
   height: 40px;
   border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top: 3px solid #00D4FF;
+  border-top: 3px solid #00d4ff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 1rem;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Overview Tab */
@@ -212,15 +221,15 @@
 }
 
 .stat-value.earnings {
-  color: #00FF88;
+  color: #00ff88;
 }
 
 .stat-value.withdrawable {
-  color: #00D4FF;
+  color: #00d4ff;
 }
 
 .stat-value.roi {
-  color: #FFD700;
+  color: #ffd700;
 }
 
 /* Earnings Tab */
@@ -241,7 +250,11 @@
 }
 
 .earning-item.total {
-  background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 212, 255, 0.05));
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 136, 0.1),
+    rgba(0, 212, 255, 0.05)
+  );
   border: 1px solid rgba(0, 255, 136, 0.3);
   font-weight: 600;
 }
@@ -251,7 +264,7 @@
 }
 
 .earning-value {
-  color: #00FF88;
+  color: #00ff88;
   font-weight: 600;
 }
 
@@ -264,7 +277,7 @@
 }
 
 .cap-info h4 {
-  color: #FF6B35;
+  color: #ff6b35;
   margin: 0 0 0.5rem 0;
 }
 
@@ -289,7 +302,7 @@
 }
 
 .matrix-position h4 {
-  color: #7B2CBF;
+  color: #7b2cbf;
   margin: 0 0 1rem 0;
 }
 
@@ -349,7 +362,7 @@
 .metric-value {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #00D4FF;
+  color: #00d4ff;
   margin-bottom: 0.5rem;
 }
 
@@ -364,27 +377,27 @@
     width: 95%;
     max-height: 90vh;
   }
-  
+
   .modal-header {
     flex-direction: column;
     text-align: center;
     gap: 1rem;
   }
-  
+
   .stats-grid,
   .performance-metrics {
     grid-template-columns: 1fr;
   }
-  
+
   .network-info {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .modal-tabs {
     flex-wrap: wrap;
   }
-  
+
   .tab-btn {
     flex: 1 1 50%;
     min-width: 120px;

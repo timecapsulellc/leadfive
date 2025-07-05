@@ -6,11 +6,15 @@
   right: 20px;
   width: 380px;
   max-width: calc(100vw - 40px);
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95) 0%, rgba(22, 33, 62, 0.95) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(26, 26, 46, 0.95) 0%,
+    rgba(22, 33, 62, 0.95) 100%
+  );
   border: 1px solid rgba(0, 212, 255, 0.3);
   border-radius: 20px;
   backdrop-filter: blur(20px);
-  box-shadow: 
+  box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.5),
     0 0 50px rgba(0, 212, 255, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -34,7 +38,11 @@
 .pwa-particle-2,
 .pwa-particle-3 {
   position: absolute;
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.4) 0%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(0, 212, 255, 0.4) 0%,
+    transparent 70%
+  );
   border-radius: 50%;
   animation: pwaPulse 4s ease-in-out infinite;
 }
@@ -64,11 +72,12 @@
 }
 
 @keyframes pwaPulse {
-  0%, 100% { 
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.3;
   }
-  50% { 
+  50% {
     transform: scale(1.5);
     opacity: 0.6;
   }
@@ -97,14 +106,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(123, 44, 191, 0.1));
+  background: linear-gradient(
+    45deg,
+    rgba(0, 212, 255, 0.1),
+    rgba(123, 44, 191, 0.1)
+  );
   backdrop-filter: blur(10px);
   animation: ringRotate 8s linear infinite;
 }
 
 @keyframes ringRotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .pwa-logo {
@@ -114,7 +131,7 @@
 
 /* Typography */
 .pwa-install-content h3 {
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 1.4rem;
   font-weight: 700;
   margin-bottom: 10px;
@@ -194,7 +211,12 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   transition: left 0.5s;
 }
 
@@ -203,13 +225,17 @@
 }
 
 .cinematic-button.primary {
-  background: linear-gradient(45deg, #00D4FF, #7B2CBF);
+  background: linear-gradient(45deg, #00d4ff, #7b2cbf);
   color: white;
   box-shadow: 0 8px 25px rgba(0, 212, 255, 0.3);
 }
 
 .cinematic-button.secondary {
-  background: linear-gradient(45deg, rgba(123, 44, 191, 0.2), rgba(255, 107, 53, 0.2));
+  background: linear-gradient(
+    45deg,
+    rgba(123, 44, 191, 0.2),
+    rgba(255, 107, 53, 0.2)
+  );
   color: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(123, 44, 191, 0.5);
   box-shadow: 0 8px 25px rgba(123, 44, 191, 0.2);
@@ -224,21 +250,21 @@
     width: auto;
     max-width: none;
   }
-  
+
   .pwa-install-content {
     padding: 20px;
   }
-  
+
   .pwa-install-features {
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
   }
-  
+
   .pwa-install-buttons {
     flex-direction: column;
     gap: 10px;
   }
-  
+
   .cinematic-button {
     width: 100%;
   }
@@ -247,6 +273,10 @@
 /* Dark mode compatibility */
 @media (prefers-color-scheme: dark) {
   .pwa-install-prompt.cinematic-pwa {
-    background: linear-gradient(135deg, rgba(10, 10, 10, 0.98) 0%, rgba(26, 26, 46, 0.98) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(10, 10, 10, 0.98) 0%,
+      rgba(26, 26, 46, 0.98) 100%
+    );
   }
 }

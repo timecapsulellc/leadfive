@@ -13,7 +13,7 @@ const AIEarningsPrediction = ({ userStats }) => {
   const generatePrediction = async () => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
       const prompt = `As a network marketing AI analyst, predict earnings for a LeadFive user with these metrics:
       
@@ -40,7 +40,7 @@ const AIEarningsPrediction = ({ userStats }) => {
       }`;
 
       const response = await OpenAIService.generateResponse(prompt);
-      
+
       try {
         // Try to parse as JSON first
         const predictionData = JSON.parse(response);
@@ -49,30 +49,38 @@ const AIEarningsPrediction = ({ userStats }) => {
         // Fallback: extract numbers and create prediction
         const numbers = response.match(/\$?(\d+(?:,\d{3})*(?:\.\d{2})?)/g);
         const factors = [
-          "Team growth momentum",
-          "Market engagement trends", 
-          "Package optimization potential"
+          'Team growth momentum',
+          'Market engagement trends',
+          'Package optimization potential',
         ];
-        
+
         setPrediction({
-          conservative: numbers?.[0]?.replace(/\$|,/g, '') || Math.max(50, (userStats?.totalEarnings || 0) * 0.1),
-          optimistic: numbers?.[1]?.replace(/\$|,/g, '') || Math.max(150, (userStats?.totalEarnings || 0) * 0.3),
+          conservative:
+            numbers?.[0]?.replace(/\$|,/g, '') ||
+            Math.max(50, (userStats?.totalEarnings || 0) * 0.1),
+          optimistic:
+            numbers?.[1]?.replace(/\$|,/g, '') ||
+            Math.max(150, (userStats?.totalEarnings || 0) * 0.3),
           factors: factors,
           confidence: 75,
-          reasoning: "Based on current performance metrics and market analysis"
+          reasoning: 'Based on current performance metrics and market analysis',
         });
       }
     } catch (error) {
       console.error('Prediction error:', error);
       setError('Unable to generate prediction. Please try again.');
-      
+
       // Fallback prediction based on user stats
       setPrediction({
         conservative: Math.max(25, (userStats?.totalEarnings || 0) * 0.05),
         optimistic: Math.max(100, (userStats?.totalEarnings || 0) * 0.2),
-        factors: ["Historical performance", "Network growth", "Market conditions"],
+        factors: [
+          'Historical performance',
+          'Network growth',
+          'Market conditions',
+        ],
         confidence: 60,
-        reasoning: "Estimate based on available data"
+        reasoning: 'Estimate based on available data',
       });
     } finally {
       setIsLoading(false);
@@ -81,9 +89,9 @@ const AIEarningsPrediction = ({ userStats }) => {
 
   const speakPrediction = async () => {
     if (!prediction) return;
-    
+
     const speech = `Your ${timeframe}-day earnings prediction: Conservative estimate is $${prediction.conservative}, optimistic estimate is $${prediction.optimistic}, with ${prediction.confidence}% confidence. ${prediction.reasoning}`;
-    
+
     try {
       // Speech synthesis temporarily disabled - use AI chat instead
       console.log('Speech text:', speech);
@@ -92,7 +100,7 @@ const AIEarningsPrediction = ({ userStats }) => {
     }
   };
 
-  const getConfidenceColor = (confidence) => {
+  const getConfidenceColor = confidence => {
     if (confidence >= 80) return '#00FF00';
     if (confidence >= 60) return '#FFA500';
     return '#FF6B6B';
@@ -101,11 +109,13 @@ const AIEarningsPrediction = ({ userStats }) => {
   return (
     <div className="ai-earnings-prediction">
       <div className="prediction-header">
-        <h3><FaBrain /> AI Earnings Prediction</h3>
+        <h3>
+          <FaBrain /> AI Earnings Prediction
+        </h3>
         <div className="timeframe-selector">
-          <select 
-            value={timeframe} 
-            onChange={(e) => setTimeframe(e.target.value)}
+          <select
+            value={timeframe}
+            onChange={e => setTimeframe(e.target.value)}
             disabled={isLoading}
           >
             <option value="7">7 Days</option>
@@ -116,18 +126,14 @@ const AIEarningsPrediction = ({ userStats }) => {
       </div>
 
       <div className="prediction-controls">
-        <button 
-          onClick={generatePrediction} 
+        <button
+          onClick={generatePrediction}
           disabled={isLoading}
           className="predict-btn"
         >
-          {isLoading ? (
-            <>🔄 Analyzing...</>
-          ) : (
-            <>🎯 Predict Earnings</>
-          )}
+          {isLoading ? <>🔄 Analyzing...</> : <>🎯 Predict Earnings</>}
         </button>
-        
+
         {prediction && !error && (
           <button onClick={speakPrediction} className="speak-btn">
             <FaVolumeUp /> Hear Prediction
@@ -135,17 +141,15 @@ const AIEarningsPrediction = ({ userStats }) => {
         )}
       </div>
 
-      {error && (
-        <div className="prediction-error">
-          ⚠️ {error}
-        </div>
-      )}
+      {error && <div className="prediction-error">⚠️ {error}</div>}
 
       {prediction && !error && (
         <div className="prediction-results">
           <div className="prediction-range">
             <div className="estimate conservative">
-              <h4><FaChartLine /> Conservative</h4>
+              <h4>
+                <FaChartLine /> Conservative
+              </h4>
               <div className="amount">${prediction.conservative}</div>
               <span className="confidence-label">80% Likely</span>
             </div>
@@ -155,22 +159,22 @@ const AIEarningsPrediction = ({ userStats }) => {
               <span className="confidence-label">Best Case</span>
             </div>
           </div>
-          
+
           <div className="confidence-meter">
             <div className="confidence-label">
               <FaPercent /> Overall Confidence: {prediction.confidence}%
             </div>
             <div className="confidence-bar">
-              <div 
-                className="confidence-fill" 
-                style={{ 
+              <div
+                className="confidence-fill"
+                style={{
                   width: `${prediction.confidence}%`,
-                  backgroundColor: getConfidenceColor(prediction.confidence)
+                  backgroundColor: getConfidenceColor(prediction.confidence),
                 }}
               ></div>
             </div>
           </div>
-          
+
           <div className="growth-factors">
             <h4>🎯 Key Growth Factors:</h4>
             <ul>

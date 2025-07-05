@@ -4,32 +4,42 @@
 /* General Mobile Optimizations */
 @media (max-width: 768px) {
   /* Improve touch targets */
-  button, .btn, .view-btn, .toggle-btn {
+  button,
+  .btn,
+  .view-btn,
+  .toggle-btn {
     min-height: 44px;
     min-width: 44px;
     padding: 12px 16px;
   }
 
   /* Better spacing for mobile */
-  .container, .page-container {
+  .container,
+  .page-container {
     padding: 1rem;
   }
 
   /* Improve form elements */
-  input, select, textarea {
+  input,
+  select,
+  textarea {
     font-size: 16px; /* Prevents zoom on iOS */
     padding: 12px;
     border-radius: 8px;
   }
 
   /* Stack navigation elements */
-  .header-controls, .genealogy-controls, .dashboard-nav {
+  .header-controls,
+  .genealogy-controls,
+  .dashboard-nav {
     flex-direction: column;
     gap: 0.75rem;
   }
 
   /* Better modal handling on mobile */
-  .modal, .user-profile-modal, .export-modal {
+  .modal,
+  .user-profile-modal,
+  .export-modal {
     margin: 1rem;
     max-height: calc(100vh - 2rem);
     overflow-y: auto;
@@ -113,7 +123,8 @@
 /* Extra small devices (phones in portrait mode) */
 @media (max-width: 480px) {
   /* Typography adjustments */
-  h1, .page-title {
+  h1,
+  .page-title {
     font-size: 1.8rem;
   }
 
@@ -142,7 +153,8 @@
   }
 
   /* Smaller buttons */
-  .btn, button {
+  .btn,
+  button {
     padding: 10px 14px;
     font-size: 0.9rem;
   }
@@ -160,7 +172,9 @@
   }
 
   /* Single column layout for cards */
-  .performer-card, .activity-item, .withdrawal-item {
+  .performer-card,
+  .activity-item,
+  .withdrawal-item {
     margin-bottom: 1rem;
   }
 
@@ -249,12 +263,15 @@
 /* Touch device optimizations */
 @media (hover: none) and (pointer: coarse) {
   /* Remove hover effects on touch devices */
-  .btn:hover, .view-btn:hover, .metric-card:hover {
+  .btn:hover,
+  .view-btn:hover,
+  .metric-card:hover {
     transform: none;
   }
 
   /* Add touch feedback */
-  .btn:active, .view-btn:active {
+  .btn:active,
+  .view-btn:active {
     transform: scale(0.98);
     transition: transform 0.1s;
   }
@@ -280,7 +297,8 @@
 /* Dark mode preferences */
 @media (prefers-color-scheme: dark) {
   /* Ensure good contrast in dark mode */
-  .modal, .card {
+  .modal,
+  .card {
     background: rgba(30, 41, 59, 0.95);
     border-color: rgba(71, 85, 105, 0.5);
   }
@@ -293,7 +311,9 @@
 /* Reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   /* Disable animations for users who prefer reduced motion */
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -308,16 +328,20 @@
 /* Print styles */
 @media print {
   /* Optimize for printing */
-  .header, .footer, .floating-controls {
+  .header,
+  .footer,
+  .floating-controls {
     display: none;
   }
 
-  .genealogy-analytics, .dashboard {
+  .genealogy-analytics,
+  .dashboard {
     background: white;
     color: black;
   }
 
-  .metric-card, .chart-container {
+  .metric-card,
+  .chart-container {
     background: white;
     border: 1px solid #ccc;
     break-inside: avoid;
@@ -331,7 +355,8 @@
 /* Accessibility improvements */
 @media (prefers-contrast: high) {
   /* High contrast mode */
-  button, .btn {
+  button,
+  .btn {
     border: 2px solid;
   }
 
@@ -342,7 +367,10 @@
 
 /* Focus improvements for keyboard navigation */
 @media (pointer: fine) {
-  .btn:focus, .view-btn:focus, input:focus, select:focus {
+  .btn:focus,
+  .view-btn:focus,
+  input:focus,
+  select:focus {
     outline: 2px solid #3b82f6;
     outline-offset: 2px;
   }
@@ -647,7 +675,8 @@
     font-size: 14px !important;
   }
 
-  th, td {
+  th,
+  td {
     padding: 12px 8px !important;
     white-space: nowrap !important;
   }
@@ -708,7 +737,10 @@
 /* Touch Device Optimizations */
 @media (hover: none) and (pointer: coarse) {
   /* Increase touch targets */
-  a, button, .clickable, .menu-item {
+  a,
+  button,
+  .clickable,
+  .menu-item {
     min-height: 44px !important;
     min-width: 44px !important;
     display: flex !important;

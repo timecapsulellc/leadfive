@@ -16,15 +16,15 @@ class ErrorBoundary extends React.Component {
     console.error('ErrorBoundary caught an error:', error, errorInfo);
     this.setState({
       error: error,
-      errorInfo: errorInfo
+      errorInfo: errorInfo,
     });
   }
 
   handleRetry = () => {
-    this.setState({ 
-      hasError: false, 
-      error: null, 
-      errorInfo: null 
+    this.setState({
+      hasError: false,
+      error: null,
+      errorInfo: null,
     });
   };
 
@@ -41,52 +41,50 @@ class ErrorBoundary extends React.Component {
 
       // Use custom fallback render function if provided
       if (this.props.fallbackComponent) {
-        return this.props.fallbackComponent(this.state.error, this.state.errorInfo);
+        return this.props.fallbackComponent(
+          this.state.error,
+          this.state.errorInfo
+        );
       }
 
       const isProduction = process.env.NODE_ENV === 'production';
-      
+
       return (
         <div className="error-boundary">
           <div className="error-container">
             <div className="error-icon">
               <AlertTriangle size={64} />
             </div>
-            
+
             <div className="error-content">
               <h1>Oops! Something went wrong</h1>
               <p className="error-message">
-                We encountered an unexpected error. Our team has been notified and is working on a fix.
+                We encountered an unexpected error. Our team has been notified
+                and is working on a fix.
               </p>
-              
+
               <div className="error-actions">
-                <button 
-                  onClick={this.handleRetry}
-                  className="retry-btn"
-                >
+                <button onClick={this.handleRetry} className="retry-btn">
                   <RefreshCw size={20} />
                   Try Again
                 </button>
-                
-                <button 
-                  onClick={this.handleGoHome}
-                  className="home-btn"
-                >
+
+                <button onClick={this.handleGoHome} className="home-btn">
                   <Home size={20} />
                   Go Home
                 </button>
               </div>
-              
+
               {!isProduction && this.state.error && (
                 <details className="error-details">
                   <summary>Error Details (Development Mode)</summary>
                   <div className="error-stack">
                     <h3>Error:</h3>
                     <pre>{this.state.error && this.state.error.toString()}</pre>
-                    
+
                     <h3>Component Stack:</h3>
                     <pre>{this.state.errorInfo.componentStack}</pre>
-                    
+
                     <h3>Error Stack:</h3>
                     <pre>{this.state.error.stack}</pre>
                   </div>
@@ -94,7 +92,7 @@ class ErrorBoundary extends React.Component {
               )}
             </div>
           </div>
-          
+
           <div className="error-suggestions">
             <h3>What you can try:</h3>
             <ul>
@@ -134,7 +132,7 @@ export const useErrorHandler = () => {
     setError(null);
   }, []);
 
-  const captureError = React.useCallback((error) => {
+  const captureError = React.useCallback(error => {
     console.error('Captured error:', error);
     setError(error);
   }, []);

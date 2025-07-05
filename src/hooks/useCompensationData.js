@@ -13,14 +13,14 @@ export function useCompensationData(teamData) {
     globalHelpPool: 0,
     totalEarnings: 0,
     earningsCap: 0,
-    isNearCap: false
+    isNearCap: false,
   });
 
   // Base investment amount for calculations
   const investment = 100;
 
   // Get level bonus rate based on LeadFive compensation plan
-  const getLevelBonusRate = React.useCallback((level) => {
+  const getLevelBonusRate = React.useCallback(level => {
     if (level === 1) return 3; // 3% for direct referrals
     if (level <= 6) return 1; // 1% for levels 2-6
     if (level <= 10) return 0.5; // 0.5% for levels 7-10
@@ -44,7 +44,7 @@ export function useCompensationData(teamData) {
         if (i === 1) percentage = 0.03;
         else if (i <= 6) percentage = 0.01;
         else if (i <= 10) percentage = 0.005;
-        
+
         const bonus = levelData.count * investment * percentage;
         levelBonuses[i] = bonus;
         totalLevelBonuses += bonus;
@@ -66,7 +66,8 @@ export function useCompensationData(teamData) {
     const globalHelpPool = teamData.totalVolume * 0.3;
 
     // Calculate total earnings
-    const totalEarnings = sponsorCommissions + totalLevelBonuses + uplineBonuses + leaderBonuses;
+    const totalEarnings =
+      sponsorCommissions + totalLevelBonuses + uplineBonuses + leaderBonuses;
 
     // Calculate earnings cap (typically 5x the investment)
     const earningsCap = investment * 5;
@@ -80,12 +81,12 @@ export function useCompensationData(teamData) {
       globalHelpPool,
       totalEarnings,
       earningsCap,
-      isNearCap
+      isNearCap,
     });
   }, [teamData, investment]);
 
   // Format earnings display
-  const formatEarnings = React.useCallback((amount) => {
+  const formatEarnings = React.useCallback(amount => {
     if (amount >= 1000000) {
       return `$${(amount / 1000000).toFixed(2)}M`;
     } else if (amount >= 1000) {
@@ -95,7 +96,7 @@ export function useCompensationData(teamData) {
   }, []);
 
   // Get level color based on compensation tier
-  const getLevelColor = React.useCallback((level) => {
+  const getLevelColor = React.useCallback(level => {
     if (level <= 3) return '#00FF88'; // High commission levels
     if (level <= 6) return '#00D4FF'; // Medium commission levels
     if (level <= 10) return '#7B2CBF'; // Low commission levels
@@ -109,19 +110,28 @@ export function useCompensationData(teamData) {
   }, [compensationData.totalEarnings, teamData.totalVolume]);
 
   // Get earnings projection based on team growth
-  const getEarningsProjection = React.useCallback((growthRate = 0.1) => {
-    const projectedVolume = teamData.totalVolume * (1 + growthRate);
-    const projectedEarnings = compensationData.totalEarnings * (1 + growthRate);
-    
-    return {
-      projectedVolume,
-      projectedEarnings,
-      growthPotential: projectedEarnings - compensationData.totalEarnings,
-      timeToCapReach: compensationData.earningsCap > compensationData.totalEarnings 
-        ? Math.ceil((compensationData.earningsCap - compensationData.totalEarnings) / (compensationData.totalEarnings * growthRate))
-        : 0
-    };
-  }, [teamData.totalVolume, compensationData]);
+  const getEarningsProjection = React.useCallback(
+    (growthRate = 0.1) => {
+      const projectedVolume = teamData.totalVolume * (1 + growthRate);
+      const projectedEarnings =
+        compensationData.totalEarnings * (1 + growthRate);
+
+      return {
+        projectedVolume,
+        projectedEarnings,
+        growthPotential: projectedEarnings - compensationData.totalEarnings,
+        timeToCapReach:
+          compensationData.earningsCap > compensationData.totalEarnings
+            ? Math.ceil(
+                (compensationData.earningsCap -
+                  compensationData.totalEarnings) /
+                  (compensationData.totalEarnings * growthRate)
+              )
+            : 0,
+      };
+    },
+    [teamData.totalVolume, compensationData]
+  );
 
   return {
     compensationData,
@@ -129,6 +139,6 @@ export function useCompensationData(teamData) {
     formatEarnings,
     getLevelColor,
     getCompensationEfficiency,
-    getEarningsProjection
+    getEarningsProjection,
   };
 }

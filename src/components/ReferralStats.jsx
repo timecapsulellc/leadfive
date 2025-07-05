@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { FaUsers, FaUserPlus, FaChartLine, FaCopy, FaCheckCircle, FaUserCircle, FaDollarSign } from 'react-icons/fa';
+import {
+  FaUsers,
+  FaUserPlus,
+  FaChartLine,
+  FaCopy,
+  FaCheckCircle,
+  FaUserCircle,
+  FaDollarSign,
+} from 'react-icons/fa';
 import './ReferralStats.css';
 
 export default function ReferralStats({ account }) {
@@ -8,7 +16,7 @@ export default function ReferralStats({ account }) {
     activeReferrals: 89,
     pendingReferrals: 12,
     referralEarnings: 2345.67,
-    referralLink: ''
+    referralLink: '',
   });
   const [copied, setCopied] = useState(false);
 
@@ -17,7 +25,7 @@ export default function ReferralStats({ account }) {
       const baseUrl = window.location.origin;
       setStats(prev => ({
         ...prev,
-        referralLink: `${baseUrl}/register?ref=${account.slice(0, 8)}`
+        referralLink: `${baseUrl}/register?ref=${account.slice(0, 8)}`,
       }));
     }
   }, [account]);
@@ -33,26 +41,26 @@ export default function ReferralStats({ account }) {
       icon: FaUsers,
       label: 'Total Referrals',
       value: stats.totalReferrals,
-      color: '#00D4FF'
+      color: '#00D4FF',
     },
     {
       icon: FaUserPlus,
       label: 'Active Referrals',
       value: stats.activeReferrals,
-      color: '#7B2CBF'
+      color: '#7B2CBF',
     },
     {
       icon: FaChartLine,
       label: 'Pending',
       value: stats.pendingReferrals,
-      color: '#FF6B35'
+      color: '#FF6B35',
     },
     {
       icon: () => '$',
       label: 'Earnings',
       value: `$${stats.referralEarnings}`,
-      color: '#00D4FF'
-    }
+      color: '#00D4FF',
+    },
   ];
 
   return (
@@ -65,9 +73,11 @@ export default function ReferralStats({ account }) {
       <div className="referral-stats-grid">
         {referralData.map((item, index) => (
           <div key={index} className="referral-stat-card">
-            <div 
-              className="stat-icon" 
-              style={{ background: `linear-gradient(45deg, ${item.color}22, ${item.color}44)` }}
+            <div
+              className="stat-icon"
+              style={{
+                background: `linear-gradient(45deg, ${item.color}22, ${item.color}44)`,
+              }}
             >
               <item.icon style={{ color: item.color }} />
             </div>
@@ -81,18 +91,18 @@ export default function ReferralStats({ account }) {
 
       <div className="referral-link-section">
         <h3>Your Referral Link</h3>
-        <p>Share this link to earn 10% direct referral bonus on every registration!</p>
+        <p>
+          Share this link to earn 10% direct referral bonus on every
+          registration!
+        </p>
         <div className="referral-link-box">
-          <input 
-            type="text" 
-            value={stats.referralLink} 
-            readOnly 
+          <input
+            type="text"
+            value={stats.referralLink}
+            readOnly
             className="referral-input"
           />
-          <button 
-            onClick={copyReferralLink} 
-            className="copy-btn"
-          >
+          <button onClick={copyReferralLink} className="copy-btn">
             {copied ? <FaCheckCircle /> : <FaCopy />}
             {copied ? 'Copied!' : 'Copy'}
           </button>
@@ -111,9 +121,7 @@ export default function ReferralStats({ account }) {
                 <p className="referral-name">User {index + 1}</p>
                 <span className="referral-date">Joined 2 days ago</span>
               </div>
-              <div className="referral-status active">
-                Active
-              </div>
+              <div className="referral-status active">Active</div>
             </div>
           ))}
         </div>

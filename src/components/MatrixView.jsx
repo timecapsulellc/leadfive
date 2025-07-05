@@ -15,35 +15,48 @@ const MatrixView = ({ account, contract }) => {
   const fetchMatrixData = async () => {
     try {
       setLoading(true);
-      
+
       // Mock 5x5 matrix data
       const mockMatrix = {
         level1: {
-          positions: Array(25).fill(null).map((_, i) => ({
-            id: i + 1,
-            address: i < 15 ? `0x${Math.random().toString(16).substr(2, 8)}...${Math.random().toString(16).substr(2, 4)}` : null,
-            isActive: i < 15,
-            package: ['Entry', 'Standard', 'Advanced', 'Premium'][Math.floor(Math.random() * 4)],
-            earnings: i < 15 ? (Math.random() * 500 + 50).toFixed(2) : '0.00'
-          })),
+          positions: Array(25)
+            .fill(null)
+            .map((_, i) => ({
+              id: i + 1,
+              address:
+                i < 15
+                  ? `0x${Math.random().toString(16).substr(2, 8)}...${Math.random().toString(16).substr(2, 4)}`
+                  : null,
+              isActive: i < 15,
+              package: ['Entry', 'Standard', 'Advanced', 'Premium'][
+                Math.floor(Math.random() * 4)
+              ],
+              earnings: i < 15 ? (Math.random() * 500 + 50).toFixed(2) : '0.00',
+            })),
           totalEarnings: '2,450.75',
-          cycleCount: 3
+          cycleCount: 3,
         },
         level2: {
-          positions: Array(25).fill(null).map((_, i) => ({
-            id: i + 1,
-            address: i < 8 ? `0x${Math.random().toString(16).substr(2, 8)}...${Math.random().toString(16).substr(2, 4)}` : null,
-            isActive: i < 8,
-            package: ['Standard', 'Advanced', 'Premium'][Math.floor(Math.random() * 3)],
-            earnings: i < 8 ? (Math.random() * 800 + 100).toFixed(2) : '0.00'
-          })),
+          positions: Array(25)
+            .fill(null)
+            .map((_, i) => ({
+              id: i + 1,
+              address:
+                i < 8
+                  ? `0x${Math.random().toString(16).substr(2, 8)}...${Math.random().toString(16).substr(2, 4)}`
+                  : null,
+              isActive: i < 8,
+              package: ['Standard', 'Advanced', 'Premium'][
+                Math.floor(Math.random() * 3)
+              ],
+              earnings: i < 8 ? (Math.random() * 800 + 100).toFixed(2) : '0.00',
+            })),
           totalEarnings: '1,875.50',
-          cycleCount: 1
-        }
+          cycleCount: 1,
+        },
       };
-      
+
       setMatrixData(mockMatrix);
-      
     } catch (error) {
       console.error('Error fetching matrix data:', error);
     } finally {
@@ -51,7 +64,7 @@ const MatrixView = ({ account, contract }) => {
     }
   };
 
-  const renderMatrixGrid = (levelData) => {
+  const renderMatrixGrid = levelData => {
     return (
       <div className="matrix-grid">
         {levelData.positions.map((position, index) => (
@@ -131,9 +144,7 @@ const MatrixView = ({ account, contract }) => {
         </div>
       </div>
 
-      <div className="matrix-container">
-        {renderMatrixGrid(currentLevel)}
-      </div>
+      <div className="matrix-container">{renderMatrixGrid(currentLevel)}</div>
 
       <div className="matrix-legend">
         <div className="legend-item">

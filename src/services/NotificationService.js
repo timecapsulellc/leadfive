@@ -8,7 +8,7 @@ class LeadFiveNotificationService {
     this.isEnabled = false;
     this.vapidKey = null; // Will be set from environment
     this.subscription = null;
-    
+
     this.init();
   }
 
@@ -26,7 +26,8 @@ class LeadFiveNotificationService {
     } catch (error) {
       console.error('Notification service init failed:', error);
       return false;
-    }  }
+    }
+  }
 
   async loadVapidKey() {
     // Simplified version without service worker dependency
@@ -57,10 +58,10 @@ class LeadFiveNotificationService {
 
     if (permission === 'granted') {
       this.isEnabled = true;
-      
+
       // Show welcome notification
       await this.showNotification('🎉 LeadFive Notifications Enabled', {
-        body: 'You\'ll receive real-time updates about your Web3 activities',
+        body: "You'll receive real-time updates about your Web3 activities",
         icon: '/icons/icon-192x192.png',
         badge: '/icons/icon-72x72.png',
         tag: 'welcome',
@@ -69,11 +70,11 @@ class LeadFiveNotificationService {
           {
             action: 'open-dashboard',
             title: 'Open Dashboard',
-            icon: '/icons/icon-72x72.png'
-          }
-        ]
+            icon: '/icons/icon-72x72.png',
+          },
+        ],
       });
-      
+
       return true;
     }
 
@@ -102,7 +103,7 @@ class LeadFiveNotificationService {
       // Create new subscription
       this.subscription = await this.registration.pushManager.subscribe({
         userVisibleOnly: true,
-        applicationServerKey: this.urlBase64ToUint8Array(key)
+        applicationServerKey: this.urlBase64ToUint8Array(key),
       });
 
       this.vapidKey = key;
@@ -147,8 +148,8 @@ class LeadFiveNotificationService {
       vibrate: [200, 100, 200],
       data: {
         timestamp: Date.now(),
-        source: 'LeadFive'
-      }
+        source: 'LeadFive',
+      },
     };
 
     const notificationOptions = {
@@ -156,8 +157,8 @@ class LeadFiveNotificationService {
       ...options,
       data: {
         ...defaultOptions.data,
-        ...options.data
-      }
+        ...options.data,
+      },
     };
 
     try {
@@ -177,8 +178,12 @@ class LeadFiveNotificationService {
         body: `User ID ${data.userId} joined the network${data.sponsor ? ` via ${data.sponsor.slice(0, 8)}...` : ''}`,
         tag: 'user-activity',
         actions: [
-          { action: 'view-user', title: 'View User', icon: '/icons/icon-72x72.png' }
-        ]
+          {
+            action: 'view-user',
+            title: 'View User',
+            icon: '/icons/icon-72x72.png',
+          },
+        ],
       },
 
       'withdrawal-made': {
@@ -187,8 +192,12 @@ class LeadFiveNotificationService {
         tag: 'withdrawal',
         requireInteraction: true,
         actions: [
-          { action: 'view-transaction', title: 'View Transaction', icon: '/icons/icon-72x72.png' }
-        ]
+          {
+            action: 'view-transaction',
+            title: 'View Transaction',
+            icon: '/icons/icon-72x72.png',
+          },
+        ],
       },
 
       'pool-distribution': {
@@ -196,8 +205,12 @@ class LeadFiveNotificationService {
         body: `${data.amount || 'Funds'} distributed to ${data.participants || 'participants'} in ${data.poolType || 'pool'}`,
         tag: 'distribution',
         actions: [
-          { action: 'view-pool', title: 'View Pool', icon: '/icons/icon-72x72.png' }
-        ]
+          {
+            action: 'view-pool',
+            title: 'View Pool',
+            icon: '/icons/icon-72x72.png',
+          },
+        ],
       },
 
       'system-alert': {
@@ -206,8 +219,12 @@ class LeadFiveNotificationService {
         tag: 'system-alert',
         requireInteraction: true,
         actions: [
-          { action: 'view-dashboard', title: 'Check Dashboard', icon: '/icons/icon-72x72.png' }
-        ]
+          {
+            action: 'view-dashboard',
+            title: 'Check Dashboard',
+            icon: '/icons/icon-72x72.png',
+          },
+        ],
       },
 
       'network-congestion': {
@@ -215,8 +232,12 @@ class LeadFiveNotificationService {
         body: `Network congestion: ${data.level || 'Unknown'}. Gas price: ${data.gasPrice || 'N/A'}`,
         tag: 'network-status',
         actions: [
-          { action: 'view-network', title: 'View Network', icon: '/icons/icon-72x72.png' }
-        ]
+          {
+            action: 'view-network',
+            title: 'View Network',
+            icon: '/icons/icon-72x72.png',
+          },
+        ],
       },
 
       'emergency-mode': {
@@ -226,8 +247,12 @@ class LeadFiveNotificationService {
         requireInteraction: true,
         vibrate: [200, 100, 200, 100, 200],
         actions: [
-          { action: 'view-emergency', title: 'View Details', icon: '/icons/icon-72x72.png' }
-        ]
+          {
+            action: 'view-emergency',
+            title: 'View Details',
+            icon: '/icons/icon-72x72.png',
+          },
+        ],
       },
 
       'connection-lost': {
@@ -235,16 +260,20 @@ class LeadFiveNotificationService {
         body: 'Real-time updates disconnected. Attempting to reconnect...',
         tag: 'connection-status',
         actions: [
-          { action: 'retry-connection', title: 'Retry', icon: '/icons/icon-72x72.png' }
-        ]
+          {
+            action: 'retry-connection',
+            title: 'Retry',
+            icon: '/icons/icon-72x72.png',
+          },
+        ],
       },
 
       'connection-restored': {
         title: '✅ Connection Restored',
         body: 'Real-time updates are now active',
         tag: 'connection-status',
-        vibrate: [100, 50, 100]
-      }
+        vibrate: [100, 50, 100],
+      },
     };
 
     const config = notifications[type];
@@ -258,14 +287,14 @@ class LeadFiveNotificationService {
       data: {
         type,
         timestamp: Date.now(),
-        ...data
-      }
+        ...data,
+      },
     });
   }
 
   // Schedule delayed notifications
   async scheduleNotification(title, options, delay) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(async () => {
         const result = await this.showNotification(title, options);
         resolve(result);
@@ -288,11 +317,15 @@ class LeadFiveNotificationService {
       tag: 'batch-update',
       data: {
         events: events,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       },
       actions: [
-        { action: 'view-all', title: 'View All', icon: '/icons/icon-72x72.png' }
-      ]
+        {
+          action: 'view-all',
+          title: 'View All',
+          icon: '/icons/icon-72x72.png',
+        },
+      ],
     });
   }
 
@@ -305,7 +338,7 @@ class LeadFiveNotificationService {
     const typeNames = {
       'user-registered': 'registrations',
       'withdrawal-made': 'withdrawals',
-      'pool-distribution': 'distributions'
+      'pool-distribution': 'distributions',
     };
 
     const summary = Object.entries(counts)
@@ -314,13 +347,13 @@ class LeadFiveNotificationService {
 
     return {
       title: `📊 ${events.length} Updates`,
-      body: `Recent activity: ${summary}`
+      body: `Recent activity: ${summary}`,
     };
   }
 
   // Utility function to convert VAPID key
   urlBase64ToUint8Array(base64String) {
-    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
     const base64 = (base64String + padding)
       .replace(/-/g, '+')
       .replace(/_/g, '/');
@@ -341,17 +374,29 @@ class LeadFiveNotificationService {
     return {
       endpoint: this.subscription.endpoint,
       keys: {
-        p256dh: btoa(String.fromCharCode.apply(null, new Uint8Array(this.subscription.getKey('p256dh')))),
-        auth: btoa(String.fromCharCode.apply(null, new Uint8Array(this.subscription.getKey('auth'))))
-      }
+        p256dh: btoa(
+          String.fromCharCode.apply(
+            null,
+            new Uint8Array(this.subscription.getKey('p256dh'))
+          )
+        ),
+        auth: btoa(
+          String.fromCharCode.apply(
+            null,
+            new Uint8Array(this.subscription.getKey('auth'))
+          )
+        ),
+      },
     };
   }
 
   // Check if notifications are supported and enabled
   isSupported() {
-    return 'serviceWorker' in navigator && 
-           'PushManager' in window && 
-           'Notification' in window;
+    return (
+      'serviceWorker' in navigator &&
+      'PushManager' in window &&
+      'Notification' in window
+    );
   }
 
   getStatus() {
@@ -359,7 +404,7 @@ class LeadFiveNotificationService {
       supported: this.isSupported(),
       permission: this.permission,
       enabled: this.isEnabled,
-      subscribed: !!this.subscription
+      subscribed: !!this.subscription,
     };
   }
 
@@ -373,7 +418,7 @@ class LeadFiveNotificationService {
     await this.showNotification('🔔 Test Push Notification', {
       body: 'This is a test push notification from LeadFive.',
       tag: 'test-push',
-      requireInteraction: false
+      requireInteraction: false,
     });
   }
 
@@ -391,8 +436,8 @@ class LeadFiveNotificationService {
         body: JSON.stringify({
           subscription: this.getSubscriptionDetails(),
           userId,
-          walletAddress
-        })
+          walletAddress,
+        }),
       });
 
       const result = await response.json();
@@ -414,11 +459,15 @@ class LeadFiveNotificationService {
       const response = await fetch('http://localhost:3002/unsubscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, walletAddress })
+        body: JSON.stringify({ userId, walletAddress }),
       });
 
       const result = await response.json();
-      console.log(result.success ? '✅ Unregistered from push server' : '❌ Server unregistration failed');
+      console.log(
+        result.success
+          ? '✅ Unregistered from push server'
+          : '❌ Server unregistration failed'
+      );
       return result.success;
     } catch (error) {
       console.error('❌ Server unregistration failed:', error);
@@ -431,10 +480,10 @@ class LeadFiveNotificationService {
     try {
       // First subscribe to push notifications
       await this.subscribe(vapidKey);
-      
+
       // Then register with push server
       await this.registerWithServer(userId, walletAddress);
-      
+
       console.log('✅ Full push notification setup complete');
       return true;
     } catch (error) {

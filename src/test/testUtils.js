@@ -6,15 +6,13 @@ import { BrowserRouter } from 'react-router-dom';
 
 // Test utilities and helpers
 export const TestWrapper = ({ children }) => (
-  <BrowserRouter>
-    {children}
-  </BrowserRouter>
+  <BrowserRouter>{children}</BrowserRouter>
 );
 
 export const renderWithRouter = (component, options = {}) => {
   return render(component, {
     wrapper: TestWrapper,
-    ...options
+    ...options,
   });
 };
 
@@ -26,8 +24,8 @@ export const createMockProvider = () => ({
   getNetwork: vi.fn(() => Promise.resolve({ chainId: 56, name: 'bsc' })),
   getBalance: vi.fn(() => Promise.resolve('1000000000000000000')),
   getSigner: vi.fn(() => ({
-    getAddress: vi.fn(() => Promise.resolve('0x123...'))
-  }))
+    getAddress: vi.fn(() => Promise.resolve('0x123...')),
+  })),
 });
 
 // Mock contract for testing
@@ -36,12 +34,12 @@ export const createMockContract = () => ({
   balanceOf: vi.fn(() => Promise.resolve('1000000000000000000')),
   transfer: vi.fn(() => Promise.resolve({ hash: '0x456...' })),
   estimateGas: {
-    transfer: vi.fn(() => Promise.resolve('21000'))
-  }
+    transfer: vi.fn(() => Promise.resolve('21000')),
+  },
 });
 
 // Performance testing helpers
-export const measureRenderTime = async (component) => {
+export const measureRenderTime = async component => {
   const start = performance.now();
   render(component);
   const end = performance.now();
@@ -49,15 +47,22 @@ export const measureRenderTime = async (component) => {
 };
 
 // Accessibility testing helpers
-export const checkAccessibility = async (component) => {
+export const checkAccessibility = async component => {
   const { container } = render(component);
-  
+
   // Check for common accessibility issues
   const results = {
     hasAriaLabels: container.querySelectorAll('[aria-label]').length > 0,
-    hasSemanticElements: container.querySelectorAll('h1, h2, h3, button, nav, main, section').length > 0,
-    hasAltText: Array.from(container.querySelectorAll('img')).every(img => img.hasAttribute('alt')),
-    hasKeyboardSupport: container.querySelectorAll('[tabindex], button, input, select, textarea, a').length > 0
+    hasSemanticElements:
+      container.querySelectorAll('h1, h2, h3, button, nav, main, section')
+        .length > 0,
+    hasAltText: Array.from(container.querySelectorAll('img')).every(img =>
+      img.hasAttribute('alt')
+    ),
+    hasKeyboardSupport:
+      container.querySelectorAll(
+        '[tabindex], button, input, select, textarea, a'
+      ).length > 0,
   };
 
   return results;
@@ -73,25 +78,27 @@ export const ThrowError = ({ shouldThrow = false }) => {
 
 // Custom matchers for testing
 export const customMatchers = {
-  toBeAccessible: (received) => {
+  toBeAccessible: received => {
     const accessibility = checkAccessibility(received);
     const pass = Object.values(accessibility).every(Boolean);
-    
+
     return {
-      message: () => `Expected component to be accessible. Issues: ${JSON.stringify(accessibility)}`,
-      pass
+      message: () =>
+        `Expected component to be accessible. Issues: ${JSON.stringify(accessibility)}`,
+      pass,
     };
   },
-  
+
   toRenderWithinTime: (received, maxTime) => {
     const renderTime = measureRenderTime(received);
     const pass = renderTime <= maxTime;
-    
+
     return {
-      message: () => `Expected component to render within ${maxTime}ms, but took ${renderTime}ms`,
-      pass
+      message: () =>
+        `Expected component to render within ${maxTime}ms, but took ${renderTime}ms`,
+      pass,
     };
-  }
+  },
 };
 
 // Integration test helpers
@@ -130,12 +137,12 @@ export class PerformanceBenchmark {
     const start = performance.now();
     const result = await fn();
     const end = performance.now();
-    
+
     const measurement = {
       duration: end - start,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
-    
+
     this.measurements.push(measurement);
     return { result, measurement };
   }
@@ -150,7 +157,7 @@ export class PerformanceBenchmark {
       min: Math.min(...durations),
       max: Math.max(...durations),
       avg: durations.reduce((sum, d) => sum + d, 0) / durations.length,
-      count: this.measurements.length
+      count: this.measurements.length,
     };
   }
 }
@@ -162,7 +169,7 @@ export const generateMockUser = (overrides = {}) => ({
   referrals: 5,
   packages: ['basic'],
   joinDate: Date.now(),
-  ...overrides
+  ...overrides,
 });
 
 export const generateMockTransaction = (overrides = {}) => ({
@@ -173,7 +180,7 @@ export const generateMockTransaction = (overrides = {}) => ({
   gasUsed: '21000',
   timestamp: Date.now(),
   status: 'confirmed',
-  ...overrides
+  ...overrides,
 });
 
 export {
@@ -187,5 +194,5 @@ export {
   it,
   expect,
   beforeEach,
-  afterEach
+  afterEach,
 };

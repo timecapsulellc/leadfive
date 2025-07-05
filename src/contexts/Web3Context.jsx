@@ -1,7 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { BrowserProvider, JsonRpcProvider } from 'ethers';
 import { toast } from 'react-toastify';
-import { CONTRACT_ADDRESS, CONTRACT_ABI, SUPPORTED_NETWORKS } from '../config/contracts';
+import {
+  CONTRACT_ADDRESS,
+  CONTRACT_ABI,
+  SUPPORTED_NETWORKS,
+} from '../config/contracts';
 
 const Web3Context = createContext(undefined);
 
@@ -63,8 +67,10 @@ export const Web3Provider = ({ children }) => {
       setIsConnecting(true);
       setNetworkStatus('connecting');
 
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts',
+      });
+
       if (accounts.length === 0) {
         throw new Error('No accounts found');
       }
@@ -106,17 +112,21 @@ export const Web3Provider = ({ children }) => {
 
   const getNetworkName = () => {
     switch (chainId) {
-      case 56: return 'BSC Mainnet';
-      case 97: return 'BSC Testnet';
-      case 1: return 'Ethereum Mainnet';
-      default: return `Unknown Network (${chainId})`;
+      case 56:
+        return 'BSC Mainnet';
+      case 97:
+        return 'BSC Testnet';
+      case 1:
+        return 'Ethereum Mainnet';
+      default:
+        return `Unknown Network (${chainId})`;
     }
   };
 
   // Handle wallet events
   useEffect(() => {
     if (window.ethereum) {
-      const handleAccountsChanged = (accounts) => {
+      const handleAccountsChanged = accounts => {
         if (accounts.length === 0) {
           disconnectWallet();
         } else {
@@ -125,10 +135,10 @@ export const Web3Provider = ({ children }) => {
         }
       };
 
-      const handleChainChanged = (chainId) => {
+      const handleChainChanged = chainId => {
         const newChainId = Number(chainId);
         setChainId(newChainId);
-        
+
         if (newChainId === BSC_MAINNET.chainId) {
           toast.success('Switched to BSC Mainnet');
           setNetworkStatus('connected');
@@ -144,15 +154,21 @@ export const Web3Provider = ({ children }) => {
       // Check if already connected
       const checkConnection = async () => {
         try {
-          const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+          const accounts = await window.ethereum.request({
+            method: 'eth_accounts',
+          });
           if (accounts.length > 0) {
             const provider = new BrowserProvider(window.ethereum);
             const network = await provider.getNetwork();
-            
+
             setAccount(accounts[0]);
             setProvider(provider);
             setChainId(Number(network.chainId));
-            setNetworkStatus(Number(network.chainId) === BSC_MAINNET.chainId ? 'connected' : 'wrong-network');
+            setNetworkStatus(
+              Number(network.chainId) === BSC_MAINNET.chainId
+                ? 'connected'
+                : 'wrong-network'
+            );
           }
         } catch (error) {
           console.error('Error checking connection:', error);
@@ -163,7 +179,10 @@ export const Web3Provider = ({ children }) => {
 
       return () => {
         if (window.ethereum.removeListener) {
-          window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+          window.ethereum.removeListener(
+            'accountsChanged',
+            handleAccountsChanged
+          );
           window.ethereum.removeListener('chainChanged', handleChainChanged);
         }
       };

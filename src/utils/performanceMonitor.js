@@ -5,7 +5,7 @@ class PerformanceMonitor {
       loadTimes: [],
       interactionTimes: [],
       memoryUsage: [],
-      errors: []
+      errors: [],
     };
     this.observers = {};
     this.init();
@@ -21,12 +21,12 @@ class PerformanceMonitor {
 
   initNavigationObserver() {
     if ('PerformanceObserver' in window) {
-      const observer = new PerformanceObserver((list) => {
+      const observer = new PerformanceObserver(list => {
         for (const entry of list.getEntries()) {
           this.recordNavigationMetrics(entry);
         }
       });
-      
+
       try {
         observer.observe({ entryTypes: ['navigation'] });
         this.observers.navigation = observer;
@@ -38,12 +38,12 @@ class PerformanceMonitor {
 
   initResourceObserver() {
     if ('PerformanceObserver' in window) {
-      const observer = new PerformanceObserver((list) => {
+      const observer = new PerformanceObserver(list => {
         for (const entry of list.getEntries()) {
           this.recordResourceMetrics(entry);
         }
       });
-      
+
       try {
         observer.observe({ entryTypes: ['resource'] });
         this.observers.resource = observer;
@@ -55,12 +55,12 @@ class PerformanceMonitor {
 
   initLongTaskObserver() {
     if ('PerformanceObserver' in window) {
-      const observer = new PerformanceObserver((list) => {
+      const observer = new PerformanceObserver(list => {
         for (const entry of list.getEntries()) {
           this.recordLongTask(entry);
         }
       });
-      
+
       try {
         observer.observe({ entryTypes: ['longtask'] });
         this.observers.longtask = observer;
@@ -81,10 +81,11 @@ class PerformanceMonitor {
     const metrics = {
       timestamp: Date.now(),
       loadTime: entry.loadEventEnd - entry.loadEventStart,
-      domContentLoaded: entry.domContentLoadedEventEnd - entry.domContentLoadedEventStart,
+      domContentLoaded:
+        entry.domContentLoadedEventEnd - entry.domContentLoadedEventStart,
       firstPaint: this.getFirstPaintTime(),
       firstContentfulPaint: this.getFirstContentfulPaintTime(),
-      largestContentfulPaint: this.getLargestContentfulPaintTime()
+      largestContentfulPaint: this.getLargestContentfulPaintTime(),
     };
 
     this.metrics.loadTimes.push(metrics);
@@ -97,7 +98,7 @@ class PerformanceMonitor {
       name: entry.name,
       duration: entry.duration,
       size: entry.transferSize || 0,
-      type: this.getResourceType(entry.name)
+      type: this.getResourceType(entry.name),
     };
 
     // Track slow resources
@@ -110,7 +111,7 @@ class PerformanceMonitor {
     const metrics = {
       timestamp: Date.now(),
       duration: entry.duration,
-      startTime: entry.startTime
+      startTime: entry.startTime,
     };
 
     this.reportMetrics('long-task', metrics);
@@ -124,7 +125,7 @@ class PerformanceMonitor {
         usedJSHeapSize: memory.usedJSHeapSize,
         totalJSHeapSize: memory.totalJSHeapSize,
         jsHeapSizeLimit: memory.jsHeapSizeLimit,
-        usagePercentage: (memory.usedJSHeapSize / memory.jsHeapSizeLimit) * 100
+        usagePercentage: (memory.usedJSHeapSize / memory.jsHeapSizeLimit) * 100,
       };
 
       this.metrics.memoryUsage.push(metrics);
@@ -144,13 +145,17 @@ class PerformanceMonitor {
 
   getFirstContentfulPaintTime() {
     const paintTiming = performance.getEntriesByType('paint');
-    const fcp = paintTiming.find(entry => entry.name === 'first-contentful-paint');
+    const fcp = paintTiming.find(
+      entry => entry.name === 'first-contentful-paint'
+    );
     return fcp ? fcp.startTime : null;
   }
 
   getLargestContentfulPaintTime() {
     const lcpEntries = performance.getEntriesByType('largest-contentful-paint');
-    return lcpEntries.length > 0 ? lcpEntries[lcpEntries.length - 1].startTime : null;
+    return lcpEntries.length > 0
+      ? lcpEntries[lcpEntries.length - 1].startTime
+      : null;
   }
 
   getResourceType(url) {
@@ -166,14 +171,15 @@ class PerformanceMonitor {
     const startTime = performance.now();
     const result = renderFunction();
     const endTime = performance.now();
-    
+
     const metrics = {
       timestamp: Date.now(),
       component: componentName,
-      renderTime: endTime - startTime
+      renderTime: endTime - startTime,
     };
 
-    if (metrics.renderTime > 16) { // Slower than 60fps
+    if (metrics.renderTime > 16) {
+      // Slower than 60fps
       this.reportMetrics('slow-render', metrics);
     }
 
@@ -186,24 +192,24 @@ class PerformanceMonitor {
     try {
       const result = await asyncFunction();
       const endTime = performance.now();
-      
+
       this.reportMetrics('async-operation', {
         timestamp: Date.now(),
         operation: operationName,
         duration: endTime - startTime,
-        success: true
+        success: true,
       });
 
       return result;
     } catch (error) {
       const endTime = performance.now();
-      
+
       this.reportMetrics('async-operation', {
         timestamp: Date.now(),
         operation: operationName,
         duration: endTime - startTime,
         success: false,
-        error: error.message
+        error: error.message,
       });
 
       throw error;
@@ -213,11 +219,14 @@ class PerformanceMonitor {
   // Get performance summary
   getPerformanceSummary() {
     const summary = {
-      averageLoadTime: this.calculateAverage(this.metrics.loadTimes, 'loadTime'),
+      averageLoadTime: this.calculateAverage(
+        this.metrics.loadTimes,
+        'loadTime'
+      ),
       memoryUsage: this.getLatestMemoryUsage(),
       slowResources: this.getSlowResources(),
       errorCount: this.metrics.errors.length,
-      recommendations: this.getPerformanceRecommendations()
+      recommendations: this.getPerformanceRecommendations(),
     };
 
     return summary;
@@ -230,7 +239,7 @@ class PerformanceMonitor {
   }
 
   getLatestMemoryUsage() {
-    return this.metrics.memoryUsage.length > 0 
+    return this.metrics.memoryUsage.length > 0
       ? this.metrics.memoryUsage[this.metrics.memoryUsage.length - 1]
       : null;
   }
@@ -245,12 +254,19 @@ class PerformanceMonitor {
     const memoryUsage = this.getLatestMemoryUsage();
 
     if (memoryUsage && memoryUsage.usagePercentage > 70) {
-      recommendations.push('High memory usage detected. Consider implementing virtual scrolling or pagination.');
+      recommendations.push(
+        'High memory usage detected. Consider implementing virtual scrolling or pagination.'
+      );
     }
 
-    const avgLoadTime = this.calculateAverage(this.metrics.loadTimes, 'loadTime');
+    const avgLoadTime = this.calculateAverage(
+      this.metrics.loadTimes,
+      'loadTime'
+    );
     if (avgLoadTime > 3000) {
-      recommendations.push('Slow load times detected. Consider code splitting and lazy loading.');
+      recommendations.push(
+        'Slow load times detected. Consider code splitting and lazy loading.'
+      );
     }
 
     return recommendations;
@@ -267,7 +283,7 @@ class PerformanceMonitor {
       window.gtag('event', 'performance_metric', {
         event_category: 'Performance',
         event_label: type,
-        value: data.duration || data.renderTime || 0
+        value: data.duration || data.renderTime || 0,
       });
     }
   }
@@ -280,7 +296,7 @@ class PerformanceMonitor {
       stack: error.stack,
       context,
       url: window.location.href,
-      userAgent: navigator.userAgent
+      userAgent: navigator.userAgent,
     };
 
     this.metrics.errors.push(errorInfo);
@@ -302,14 +318,13 @@ const performanceMonitor = new PerformanceMonitor();
 // React hook for performance monitoring
 export const usePerformanceMonitor = () => {
   return {
-    measureRender: (componentName, renderFn) => 
+    measureRender: (componentName, renderFn) =>
       performanceMonitor.measureComponentRender(componentName, renderFn),
-    measureAsync: (operationName, asyncFn) => 
+    measureAsync: (operationName, asyncFn) =>
       performanceMonitor.measureAsyncOperation(operationName, asyncFn),
-    recordError: (error, context) => 
+    recordError: (error, context) =>
       performanceMonitor.recordError(error, context),
-    getSummary: () => 
-      performanceMonitor.getPerformanceSummary()
+    getSummary: () => performanceMonitor.getPerformanceSummary(),
   };
 };
 

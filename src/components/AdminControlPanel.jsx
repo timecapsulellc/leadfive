@@ -287,7 +287,7 @@ const AdminControlPanel = ({ onSystemAction, userInfo }) => {
         )}
       </div>
 
-      <style jsx>{`
+      <style>{`
         .admin-control-panel {
           background: rgba(255, 107, 53, 0.1);
           border: 2px solid #FF6B35;

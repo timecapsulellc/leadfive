@@ -106,7 +106,7 @@
   --border-color: #333;
   --text-primary: #fff;
   --text-secondary: #888;
-  --primary-color: #00D4FF;
+  --primary-color: #00d4ff;
   --primary-color-hover: #00b8e6;
   --error-color: #ff4444;
   --success-color: #00c853;
@@ -120,9 +120,9 @@
   --border-color: #ddd;
   --text-primary: #333;
   --text-secondary: #666;
-  --primary-color: #007AFF;
+  --primary-color: #007aff;
   --primary-color-hover: #0056b3;
   --error-color: #dc3545;
   --success-color: #28a745;
   --warning-color: #ffc107;
-} 
+}

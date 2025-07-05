@@ -78,7 +78,7 @@
 }
 
 .level-badge {
-  background: linear-gradient(45deg, #FFD700, #FFA500);
+  background: linear-gradient(45deg, #ffd700, #ffa500);
   color: #1a1a2e;
   padding: 8px 16px;
   border-radius: 20px;
@@ -193,7 +193,7 @@
 
 .achievement-reward {
   font-size: 0.9rem;
-  color: #FFD700;
+  color: #ffd700;
 }
 
 .completed-badge {
@@ -239,7 +239,7 @@
 .milestone-amount {
   font-size: 2rem;
   font-weight: 700;
-  color: #FFD700;
+  color: #ffd700;
   margin-bottom: 8px;
 }
 
@@ -314,9 +314,15 @@
   font-size: 1.2rem;
 }
 
-.crown.rank-1 { color: #FFD700; }
-.crown.rank-2 { color: #C0C0C0; }
-.crown.rank-3 { color: #CD7F32; }
+.crown.rank-1 {
+  color: #ffd700;
+}
+.crown.rank-2 {
+  color: #c0c0c0;
+}
+.crown.rank-3 {
+  color: #cd7f32;
+}
 
 .address {
   font-family: monospace;
@@ -329,7 +335,7 @@
 }
 
 .badge {
-  color: #FFD700;
+  color: #ffd700;
   font-size: 0.9rem;
 }
 
@@ -420,7 +426,7 @@
 }
 
 .quest-reward {
-  color: #FFD700;
+  color: #ffd700;
   font-weight: 600;
 }
 
@@ -469,10 +475,18 @@
   margin-bottom: 8px;
 }
 
-.legendary-badge { color: #FFD700; }
-.epic-badge { color: #9B59B6; }
-.rare-badge { color: #3498DB; }
-.common-badge { color: #95A5A6; }
+.legendary-badge {
+  color: #ffd700;
+}
+.epic-badge {
+  color: #9b59b6;
+}
+.rare-badge {
+  color: #3498db;
+}
+.common-badge {
+  color: #95a5a6;
+}
 
 .badge-name {
   font-weight: 600;
@@ -486,23 +500,31 @@
   letter-spacing: 1px;
 }
 
-.badge-rarity.legendary { color: #FFD700; }
-.badge-rarity.epic { color: #9B59B6; }
-.badge-rarity.rare { color: #3498DB; }
-.badge-rarity.common { color: #95A5A6; }
+.badge-rarity.legendary {
+  color: #ffd700;
+}
+.badge-rarity.epic {
+  color: #9b59b6;
+}
+.badge-rarity.rare {
+  color: #3498db;
+}
+.badge-rarity.common {
+  color: #95a5a6;
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .gamification-nav {
     flex-direction: column;
   }
-  
+
   .achievements-grid,
   .milestones-grid,
   .quests-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .leaderboard-header,
   .leaderboard-row {
     grid-template-columns: 60px 1fr 100px 60px 120px;
@@ -510,12 +532,12 @@
     padding: 12px 16px;
     font-size: 0.9rem;
   }
-  
+
   .level-info {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .experience-points {
     align-items: flex-start;
   }
@@ -525,17 +547,17 @@
   .gamification-system {
     padding: 16px;
   }
-  
+
   .badges-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .leaderboard-header,
   .leaderboard-row {
     grid-template-columns: 50px 1fr 80px;
     gap: 8px;
   }
-  
+
   .leaderboard-header span:nth-child(4),
   .leaderboard-header span:nth-child(5),
   .leaderboard-row span:nth-child(4),

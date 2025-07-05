@@ -2,26 +2,38 @@
 
 /* CSS Variables - LeadFive Brand Colors */
 :root {
-  --leadfive-primary: #00D4FF;
+  --leadfive-primary: #00d4ff;
   --leadfive-secondary: #5a67d8;
   --leadfive-accent: #ed64a6;
   --leadfive-dark: #1a1a2e;
-  --leadfive-darker: #0A0A0A;
+  --leadfive-darker: #0a0a0a;
   --leadfive-light: #f0f0f5;
   --leadfive-success: #10b981;
   --leadfive-warning: #f59e0b;
   --leadfive-error: #ef4444;
-  
+
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, var(--leadfive-primary) 0%, var(--leadfive-secondary) 100%);
-  --gradient-accent: linear-gradient(135deg, var(--leadfive-accent) 0%, var(--leadfive-secondary) 100%);
-  --gradient-dark: linear-gradient(135deg, var(--leadfive-darker) 0%, var(--leadfive-dark) 100%);
-  
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--leadfive-primary) 0%,
+    var(--leadfive-secondary) 100%
+  );
+  --gradient-accent: linear-gradient(
+    135deg,
+    var(--leadfive-accent) 0%,
+    var(--leadfive-secondary) 100%
+  );
+  --gradient-dark: linear-gradient(
+    135deg,
+    var(--leadfive-darker) 0%,
+    var(--leadfive-dark) 100%
+  );
+
   /* Shadows */
   --shadow-sm: 0 2px 4px rgba(0, 212, 255, 0.1);
   --shadow-md: 0 4px 20px rgba(0, 212, 255, 0.2);
   --shadow-lg: 0 10px 40px rgba(0, 212, 255, 0.3);
-  
+
   /* Spacing */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
@@ -38,7 +50,12 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
   background: var(--leadfive-darker);
   color: var(--leadfive-light);
   line-height: 1.6;
@@ -199,8 +216,12 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Content Sections */
@@ -453,7 +474,9 @@ body {
 }
 
 @keyframes typing {
-  0%, 60%, 100% {
+  0%,
+  60%,
+  100% {
     transform: translateY(0);
     opacity: 0.7;
   }
@@ -570,19 +593,19 @@ body {
   .dashboard-body {
     flex-direction: column;
   }
-  
+
   .dashboard-sidebar {
     width: 100%;
     height: auto;
     padding: var(--spacing-md);
   }
-  
+
   .sidebar-nav {
     flex-direction: row;
     overflow-x: auto;
     gap: var(--spacing-sm);
   }
-  
+
   .nav-item {
     flex-shrink: 0;
     min-width: 140px;
@@ -595,19 +618,19 @@ body {
     gap: var(--spacing-md);
     text-align: center;
   }
-  
+
   .header-stats {
     justify-content: center;
   }
-  
+
   .dashboard-content {
     padding: var(--spacing-md);
   }
-  
+
   .stats-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .aria-chat-container {
     width: calc(100vw - 20px);
     height: calc(100vh - 140px);
@@ -620,18 +643,18 @@ body {
   .logo-section h1 {
     font-size: 1.5rem;
   }
-  
+
   .stat-value {
     font-size: 2rem !important;
   }
-  
+
   .aria-float-button {
     width: 60px;
     height: 60px;
     bottom: 20px;
     right: 20px;
   }
-  
+
   .aria-icon {
     font-size: 24px;
   }

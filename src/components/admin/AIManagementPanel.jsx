@@ -13,8 +13,12 @@ import FileUploader from '../common/FileUploader.jsx';
 const AIManagementPanel = ({ isOpen, onClose }) => {
   const [activeTab, setActiveTab] = useState('overview');
   const [services, setServices] = useState({
-    openai: { status: 'disconnected', apiKey: '', model: 'gpt-4-turbo-preview' },
-    elevenlabs: { status: 'disconnected', apiKey: '', voiceId: 'Bella' }
+    openai: {
+      status: 'disconnected',
+      apiKey: '',
+      model: 'gpt-4-turbo-preview',
+    },
+    elevenlabs: { status: 'disconnected', apiKey: '', voiceId: 'Bella' },
   });
   const [uploadStats, setUploadStats] = useState(null);
   const [testResults, setTestResults] = useState({});
@@ -29,7 +33,7 @@ const AIManagementPanel = ({ isOpen, onClose }) => {
     error: '#FF4757',
     warning: '#FFD700',
     background: '#1A1A2E',
-    surface: '#16213E'
+    surface: '#16213E',
   };
 
   useEffect(() => {
@@ -50,13 +54,13 @@ const AIManagementPanel = ({ isOpen, onClose }) => {
       openai: {
         status: openaiStatus.initialized ? 'connected' : 'disconnected',
         apiKey: openaiStatus.hasApiKey ? '••••••••••••••••' : '',
-        model: openaiStatus.model || 'gpt-4-turbo-preview'
+        model: openaiStatus.model || 'gpt-4-turbo-preview',
       },
       elevenlabs: {
         status: elevenlabsStatus.initialized ? 'connected' : 'fallback',
         apiKey: elevenlabsStatus.hasApiKey ? '••••••••••••••••' : '',
-        voiceId: elevenlabsStatus.service || 'Browser Speech'
-      }
+        voiceId: elevenlabsStatus.service || 'Browser Speech',
+      },
     });
   };
 
@@ -71,32 +75,41 @@ const AIManagementPanel = ({ isOpen, onClose }) => {
   /**
    * Test AI service connection
    */
-  const testService = async (serviceName) => {
+  const testService = async serviceName => {
     setIsLoading(true);
-    setTestResults(prev => ({ ...prev, [serviceName]: { status: 'testing', message: 'Testing connection...' } }));
+    setTestResults(prev => ({
+      ...prev,
+      [serviceName]: { status: 'testing', message: 'Testing connection...' },
+    }));
 
     try {
       let result;
-      
+
       if (serviceName === 'openai') {
-        result = await OpenAIService.generateResponse('Test connection', { context: 'connection_test' });
+        result = await OpenAIService.generateResponse('Test connection', {
+          context: 'connection_test',
+        });
         setTestResults(prev => ({
           ...prev,
           openai: {
             status: 'success',
             message: 'OpenAI connection successful!',
-            response: result.substring(0, 100) + '...'
-          }
+            response: result.substring(0, 100) + '...',
+          },
         }));
       } else if (serviceName === 'elevenlabs') {
-        result = await ElevenLabsService.generateSpeech('Testing ElevenLabs connection');
+        result = await ElevenLabsService.generateSpeech(
+          'Testing ElevenLabs connection'
+        );
         setTestResults(prev => ({
           ...prev,
           elevenlabs: {
             status: result.success ? 'success' : 'error',
-            message: result.success ? 'ElevenLabs connection successful!' : 'Connection failed',
-            service: ElevenLabsService.getStatus().service
-          }
+            message: result.success
+              ? 'ElevenLabs connection successful!'
+              : 'Connection failed',
+            service: ElevenLabsService.getStatus().service,
+          },
         }));
       }
     } catch (error) {
@@ -104,8 +117,8 @@ const AIManagementPanel = ({ isOpen, onClose }) => {
         ...prev,
         [serviceName]: {
           status: 'error',
-          message: `Connection failed: ${error.message}`
-        }
+          message: `Connection failed: ${error.message}`,
+        },
       }));
     } finally {
       setIsLoading(false);
@@ -121,7 +134,11 @@ const AIManagementPanel = ({ isOpen, onClose }) => {
       if (success) {
         setServices(prev => ({
           ...prev,
-          openai: { ...prev.openai, status: 'connected', apiKey: '••••••••••••••••' }
+          openai: {
+            ...prev.openai,
+            status: 'connected',
+            apiKey: '••••••••••••••••',
+          },
         }));
       }
     } else if (serviceName === 'elevenlabs') {
@@ -129,7 +146,11 @@ const AIManagementPanel = ({ isOpen, onClose }) => {
       if (success) {
         setServices(prev => ({
           ...prev,
-          elevenlabs: { ...prev.elevenlabs, status: 'connected', apiKey: '••••••••••••••••' }
+          elevenlabs: {
+            ...prev.elevenlabs,
+            status: 'connected',
+            apiKey: '••••••••••••••••',
+          },
         }));
       }
     }
@@ -138,7 +159,7 @@ const AIManagementPanel = ({ isOpen, onClose }) => {
   /**
    * Format file size
    */
-  const formatFileSize = (bytes) => {
+  const formatFileSize = bytes => {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
     const sizes = ['Bytes', 'KB', 'MB', 'GB'];
@@ -149,82 +170,102 @@ const AIManagementPanel = ({ isOpen, onClose }) => {
   /**
    * Get status color
    */
-  const getStatusColor = (status) => {
+  const getStatusColor = status => {
     switch (status) {
-      case 'connected': return colors.success;
-      case 'disconnected': return colors.error;
-      case 'fallback': return colors.warning;
-      case 'testing': return colors.primary;
-      default: return '#666';
+      case 'connected':
+        return colors.success;
+      case 'disconnected':
+        return colors.error;
+      case 'fallback':
+        return colors.warning;
+      case 'testing':
+        return colors.primary;
+      default:
+        return '#666';
     }
   };
 
   /**
    * Get status icon
    */
-  const getStatusIcon = (status) => {
+  const getStatusIcon = status => {
     switch (status) {
-      case 'connected': return '✅';
-      case 'disconnected': return '❌';
-      case 'fallback': return '⚠️';
-      case 'testing': return '🔄';
-      default: return '❓';
+      case 'connected':
+        return '✅';
+      case 'disconnected':
+        return '❌';
+      case 'fallback':
+        return '⚠️';
+      case 'testing':
+        return '🔄';
+      default:
+        return '❓';
     }
   };
 
   if (!isOpen) return null;
 
   return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      background: 'rgba(0, 0, 0, 0.8)',
-      backdropFilter: 'blur(10px)',
-      zIndex: 10000,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center'
-    }}>
-      <div style={{
-        background: colors.background,
-        borderRadius: '16px',
-        width: '90vw',
-        maxWidth: '800px',
-        height: '80vh',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: 'rgba(0, 0, 0, 0.8)',
+        backdropFilter: 'blur(10px)',
+        zIndex: 10000,
         display: 'flex',
-        flexDirection: 'column'
-      }}>
-        <div style={{
-          padding: '1.5rem 2rem',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <div
+        style={{
+          background: colors.background,
+          borderRadius: '16px',
+          width: '90vw',
+          maxWidth: '800px',
+          height: '80vh',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}>
-          <h2 style={{ color: '#fff', margin: 0 }}>🤖 AI Services Management</h2>
-          <button 
+          flexDirection: 'column',
+        }}
+      >
+        <div
+          style={{
+            padding: '1.5rem 2rem',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <h2 style={{ color: '#fff', margin: 0 }}>
+            🤖 AI Services Management
+          </h2>
+          <button
             onClick={onClose}
             style={{
               background: 'none',
               border: 'none',
               color: '#fff',
               fontSize: '1.5rem',
-              cursor: 'pointer'
+              cursor: 'pointer',
             }}
           >
             ✕
           </button>
         </div>
-        
+
         <div style={{ padding: '2rem', flex: 1, overflow: 'auto' }}>
           <div style={{ color: '#fff', textAlign: 'center' }}>
             <h3>AI Management Panel</h3>
-            <p style={{ color: '#ccc' }}>Configure and monitor your AI services</p>
-            
+            <p style={{ color: '#ccc' }}>
+              Configure and monitor your AI services
+            </p>
+
             <FileUploader
               userId="admin"
               allowMultiple={true}
@@ -238,4 +279,4 @@ const AIManagementPanel = ({ isOpen, onClose }) => {
   );
 };
 
-export default AIManagementPanel; 
+export default AIManagementPanel;

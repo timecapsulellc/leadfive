@@ -11,7 +11,12 @@ function ExportControls({ onExport, analyticsData, deviceInfo }) {
       <button onClick={() => onExport('json')}>Export JSON</button>
       <button onClick={() => onExport('csv')}>Export CSV</button>
       <div className="export-info">
-        <span>Exported: {analyticsData.exportData ? analyticsData.exportData.timestamp : 'Never'}</span>
+        <span>
+          Exported:{' '}
+          {analyticsData.exportData
+            ? analyticsData.exportData.timestamp
+            : 'Never'}
+        </span>
       </div>
     </div>
   );

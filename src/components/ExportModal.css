@@ -16,7 +16,11 @@
   align-items: center;
   padding: 1.5rem 2rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  background: linear-gradient(135deg, rgba(123, 44, 191, 0.1), rgba(0, 212, 255, 0.05));
+  background: linear-gradient(
+    135deg,
+    rgba(123, 44, 191, 0.1),
+    rgba(0, 212, 255, 0.05)
+  );
 }
 
 .export-header h2 {
@@ -95,7 +99,7 @@
 
 .format-card.selected {
   background: rgba(0, 212, 255, 0.1);
-  border-color: #00D4FF;
+  border-color: #00d4ff;
 }
 
 .format-icon {
@@ -149,7 +153,7 @@
 
 .file-input:focus,
 .quality-select:focus {
-  border-color: #00D4FF;
+  border-color: #00d4ff;
   background: rgba(255, 255, 255, 0.15);
   box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
 }
@@ -200,27 +204,31 @@
 .export-status.loading {
   background: rgba(0, 212, 255, 0.1);
   border: 1px solid rgba(0, 212, 255, 0.3);
-  color: #00D4FF;
+  color: #00d4ff;
 }
 
 .export-status.success {
   background: rgba(0, 255, 136, 0.1);
   border: 1px solid rgba(0, 255, 136, 0.3);
-  color: #00FF88;
+  color: #00ff88;
 }
 
 .status-spinner {
   width: 20px;
   height: 20px;
   border: 2px solid rgba(0, 212, 255, 0.3);
-  border-top: 2px solid #00D4FF;
+  border-top: 2px solid #00d4ff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Footer */
@@ -255,7 +263,7 @@
 }
 
 .export-btn {
-  background: linear-gradient(135deg, #00D4FF, #7B2CBF);
+  background: linear-gradient(135deg, #00d4ff, #7b2cbf);
   color: white;
   min-width: 120px;
 }
@@ -279,29 +287,29 @@
     width: 95%;
     max-height: 90vh;
   }
-  
+
   .export-header {
     padding: 1rem 1.5rem;
   }
-  
+
   .export-content {
     padding: 1.5rem;
   }
-  
+
   .format-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .settings-grid,
   .info-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .export-footer {
     padding: 1rem 1.5rem;
     flex-direction: column;
   }
-  
+
   .cancel-btn,
   .export-btn {
     width: 100%;

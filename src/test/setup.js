@@ -7,7 +7,7 @@ global.window.ethereum = {
   request: vi.fn(),
   on: vi.fn(),
   removeListener: vi.fn(),
-  isMetaMask: true
+  isMetaMask: true,
 };
 
 // Mock localStorage
@@ -37,9 +37,9 @@ Object.defineProperty(global, 'crypto', {
       decrypt: vi.fn(),
       generateKey: vi.fn(),
       importKey: vi.fn(),
-      exportKey: vi.fn()
-    }
-  }
+      exportKey: vi.fn(),
+    },
+  },
 });
 
 // Mock performance API
@@ -63,14 +63,14 @@ Object.defineProperty(global, 'performance', {
 global.IntersectionObserver = vi.fn(() => ({
   observe: vi.fn(),
   disconnect: vi.fn(),
-  unobserve: vi.fn()
+  unobserve: vi.fn(),
 }));
 
 // Mock ResizeObserver
 global.ResizeObserver = vi.fn(() => ({
   observe: vi.fn(),
   disconnect: vi.fn(),
-  unobserve: vi.fn()
+  unobserve: vi.fn(),
 }));
 
 // Mock fetch
@@ -80,7 +80,7 @@ global.fetch = vi.fn();
 global.ResizeObserver = vi.fn(() => ({
   observe: vi.fn(),
   disconnect: vi.fn(),
-  unobserve: vi.fn()
+  unobserve: vi.fn(),
 }));
 
 // Mock matchMedia
@@ -108,19 +108,19 @@ global.performance = global.performance || {
   memory: {
     usedJSHeapSize: 1000000,
     totalJSHeapSize: 2000000,
-    jsHeapSizeLimit: 4000000
-  }
+    jsHeapSizeLimit: 4000000,
+  },
 };
 
 // Mock PerformanceObserver
 global.PerformanceObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
-  disconnect: vi.fn()
+  disconnect: vi.fn(),
 }));
 
 // Suppress console warnings in tests
 global.console = {
   ...console,
   warn: vi.fn(),
-  error: vi.fn()
+  error: vi.fn(),
 };

@@ -4,7 +4,7 @@ import './EnhancedErrorFeedback.css';
 
 /**
  * EnhancedErrorFeedback - Production-ready error handling and user guidance
- * 
+ *
  * Features:
  * - Contextual error messages with solutions
  * - Smart retry mechanisms with exponential backoff
@@ -18,19 +18,19 @@ import './EnhancedErrorFeedback.css';
 
 const ERROR_TYPES = {
   NETWORK: 'network',
-  TRANSACTION: 'transaction', 
+  TRANSACTION: 'transaction',
   VALIDATION: 'validation',
   CONTRACT: 'contract',
   WALLET: 'wallet',
   SYSTEM: 'system',
-  USER_INPUT: 'user_input'
+  USER_INPUT: 'user_input',
 };
 
 const ERROR_SEVERITY = {
   LOW: 'low',
   MEDIUM: 'medium',
   HIGH: 'high',
-  CRITICAL: 'critical'
+  CRITICAL: 'critical',
 };
 
 const EnhancedErrorFeedback = ({
@@ -41,7 +41,7 @@ const EnhancedErrorFeedback = ({
   showRetryButton = true,
   maxRetries = 3,
   enableErrorReporting = true,
-  className = ''
+  className = '',
 }) => {
   const [expandedErrors, setExpandedErrors] = useState(new Set());
   const [retryAttempts, setRetryAttempts] = useState(new Map());
@@ -56,7 +56,7 @@ const EnhancedErrorFeedback = ({
         action: 'Retry Connection',
         severity: ERROR_SEVERITY.HIGH,
         icon: '🌐',
-        helpUrl: '/help/network-issues'
+        helpUrl: '/help/network-issues',
       },
       'RPC endpoint unavailable': {
         solution: 'Switch to a different RPC endpoint in your wallet settings',
@@ -67,25 +67,26 @@ const EnhancedErrorFeedback = ({
           'Open your wallet settings',
           'Navigate to network settings',
           'Select a different RPC endpoint',
-          'Try the transaction again'
-        ]
+          'Try the transaction again',
+        ],
       },
       'Network congestion': {
-        solution: 'Network is congested. Increase gas price or wait for lower traffic',
+        solution:
+          'Network is congested. Increase gas price or wait for lower traffic',
         action: 'Increase Gas',
         severity: ERROR_SEVERITY.MEDIUM,
-        icon: '🚦'
-      }
+        icon: '🚦',
+      },
     },
     [ERROR_TYPES.TRANSACTION]: {
       'Transaction failed': {
         solution: 'Transaction was reverted. Check your balance and try again',
         action: 'Retry Transaction',
         severity: ERROR_SEVERITY.MEDIUM,
-        icon: '❌'
+        icon: '❌',
       },
       'Insufficient funds': {
-        solution: 'You don\'t have enough funds to complete this transaction',
+        solution: "You don't have enough funds to complete this transaction",
         action: 'Add Funds',
         severity: ERROR_SEVERITY.HIGH,
         icon: '💰',
@@ -93,28 +94,29 @@ const EnhancedErrorFeedback = ({
           'Check your wallet balance',
           'Ensure you have enough for gas fees',
           'Add funds if needed',
-          'Try the transaction again'
-        ]
+          'Try the transaction again',
+        ],
       },
       'Gas estimation failed': {
         solution: 'Unable to estimate gas. The transaction might fail',
         action: 'Set Gas Manually',
         severity: ERROR_SEVERITY.MEDIUM,
-        icon: '⛽'
+        icon: '⛽',
       },
       'Transaction timeout': {
-        solution: 'Transaction took too long to confirm. It might still be pending',
+        solution:
+          'Transaction took too long to confirm. It might still be pending',
         action: 'Check Status',
         severity: ERROR_SEVERITY.MEDIUM,
-        icon: '⏱️'
-      }
+        icon: '⏱️',
+      },
     },
     [ERROR_TYPES.WALLET]: {
       'Wallet not connected': {
         solution: 'Connect your wallet to continue',
         action: 'Connect Wallet',
         severity: ERROR_SEVERITY.HIGH,
-        icon: '🔗'
+        icon: '🔗',
       },
       'Wrong network': {
         solution: 'Switch to the correct network in your wallet',
@@ -125,140 +127,151 @@ const EnhancedErrorFeedback = ({
           'Open your wallet',
           'Click on the network selector',
           'Select Polygon Mainnet',
-          'Refresh the page'
-        ]
+          'Refresh the page',
+        ],
       },
       'Transaction rejected': {
         solution: 'You rejected the transaction in your wallet',
         action: 'Try Again',
         severity: ERROR_SEVERITY.LOW,
-        icon: '🚫'
-      }
+        icon: '🚫',
+      },
     },
     [ERROR_TYPES.CONTRACT]: {
       'Contract call failed': {
-        solution: 'Smart contract interaction failed. Try again or contact support',
+        solution:
+          'Smart contract interaction failed. Try again or contact support',
         action: 'Retry',
         severity: ERROR_SEVERITY.HIGH,
-        icon: '📋'
+        icon: '📋',
       },
       'Invalid package tier': {
         solution: 'Selected package tier is not valid',
         action: 'Select Valid Package',
         severity: ERROR_SEVERITY.MEDIUM,
-        icon: '📦'
+        icon: '📦',
       },
       'User already registered': {
         solution: 'This address is already registered in the system',
         action: 'Check Dashboard',
         severity: ERROR_SEVERITY.LOW,
-        icon: '✅'
-      }
+        icon: '✅',
+      },
     },
     [ERROR_TYPES.VALIDATION]: {
       'Invalid address': {
         solution: 'Enter a valid Ethereum address',
         action: 'Fix Address',
         severity: ERROR_SEVERITY.MEDIUM,
-        icon: '📮'
+        icon: '📮',
       },
       'Amount too low': {
         solution: 'Minimum amount requirement not met',
         action: 'Increase Amount',
         severity: ERROR_SEVERITY.MEDIUM,
-        icon: '💵'
+        icon: '💵',
       },
       'Required field missing': {
         solution: 'Please fill in all required fields',
         action: 'Complete Form',
         severity: ERROR_SEVERITY.MEDIUM,
-        icon: '📝'
-      }
+        icon: '📝',
+      },
     },
     [ERROR_TYPES.SYSTEM]: {
       'System maintenance': {
         solution: 'System is under maintenance. Please try again later',
         action: 'Try Later',
         severity: ERROR_SEVERITY.HIGH,
-        icon: '🔧'
+        icon: '🔧',
       },
       'Rate limit exceeded': {
         solution: 'Too many requests. Please wait and try again',
         action: 'Wait and Retry',
         severity: ERROR_SEVERITY.MEDIUM,
-        icon: '⏳'
-      }
-    }
+        icon: '⏳',
+      },
+    },
   };
 
   // Get error details with solution
-  const getErrorDetails = useCallback((error) => {
+  const getErrorDetails = useCallback(error => {
     const { type, message, code, details } = error;
-    
+
     // Find matching solution
     const typeSpecificSolutions = errorSolutions[type] || {};
-    const matchingSolution = Object.entries(typeSpecificSolutions).find(([key]) => 
-      message.toLowerCase().includes(key.toLowerCase())
+    const matchingSolution = Object.entries(typeSpecificSolutions).find(
+      ([key]) => message.toLowerCase().includes(key.toLowerCase())
     );
 
     const solution = matchingSolution?.[1] || {
-      solution: 'An unexpected error occurred. Please try again or contact support',
+      solution:
+        'An unexpected error occurred. Please try again or contact support',
       action: 'Retry',
       severity: ERROR_SEVERITY.MEDIUM,
-      icon: '⚠️'
+      icon: '⚠️',
     };
 
     return {
       ...error,
       ...solution,
-      id: error.id || `error_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
-      timestamp: error.timestamp || Date.now()
+      id:
+        error.id ||
+        `error_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      timestamp: error.timestamp || Date.now(),
     };
   }, []);
 
   // Handle retry with exponential backoff
-  const handleRetry = useCallback(async (error) => {
-    const errorId = error.id;
-    const currentAttempts = retryAttempts.get(errorId) || 0;
-    
-    if (currentAttempts >= maxRetries) {
-      console.warn(`Max retries (${maxRetries}) reached for error: ${error.message}`);
-      return;
-    }
+  const handleRetry = useCallback(
+    async error => {
+      const errorId = error.id;
+      const currentAttempts = retryAttempts.get(errorId) || 0;
 
-    // Clear any existing timeout
-    if (retryTimeouts.current.has(errorId)) {
-      clearTimeout(retryTimeouts.current.get(errorId));
-    }
-
-    // Calculate delay with exponential backoff
-    const delay = Math.min(1000 * Math.pow(2, currentAttempts), 10000); // Max 10 seconds
-    
-    setRetryAttempts(prev => new Map(prev.set(errorId, currentAttempts + 1)));
-
-    console.log(`Retrying in ${delay}ms (attempt ${currentAttempts + 1}/${maxRetries})`);
-
-    const timeoutId = setTimeout(async () => {
-      try {
-        await onRetry?.(error);
-        // Reset retry count on success
-        setRetryAttempts(prev => {
-          const newMap = new Map(prev);
-          newMap.delete(errorId);
-          return newMap;
-        });
-      } catch (retryError) {
-        console.error('Retry failed:', retryError);
+      if (currentAttempts >= maxRetries) {
+        console.warn(
+          `Max retries (${maxRetries}) reached for error: ${error.message}`
+        );
+        return;
       }
-      
-      retryTimeouts.current.delete(errorId);
-    }, delay);
 
-    retryTimeouts.current.set(errorId, timeoutId);
-  }, [maxRetries, onRetry]);
+      // Clear any existing timeout
+      if (retryTimeouts.current.has(errorId)) {
+        clearTimeout(retryTimeouts.current.get(errorId));
+      }
+
+      // Calculate delay with exponential backoff
+      const delay = Math.min(1000 * Math.pow(2, currentAttempts), 10000); // Max 10 seconds
+
+      setRetryAttempts(prev => new Map(prev.set(errorId, currentAttempts + 1)));
+
+      console.log(
+        `Retrying in ${delay}ms (attempt ${currentAttempts + 1}/${maxRetries})`
+      );
+
+      const timeoutId = setTimeout(async () => {
+        try {
+          await onRetry?.(error);
+          // Reset retry count on success
+          setRetryAttempts(prev => {
+            const newMap = new Map(prev);
+            newMap.delete(errorId);
+            return newMap;
+          });
+        } catch (retryError) {
+          console.error('Retry failed:', retryError);
+        }
+
+        retryTimeouts.current.delete(errorId);
+      }, delay);
+
+      retryTimeouts.current.set(errorId, timeoutId);
+    },
+    [maxRetries, onRetry]
+  );
 
   // Toggle error expansion for details
-  const toggleErrorExpansion = useCallback((errorId) => {
+  const toggleErrorExpansion = useCallback(errorId => {
     setExpandedErrors(prev => {
       const newSet = new Set(prev);
       if (newSet.has(errorId)) {
@@ -271,41 +284,52 @@ const EnhancedErrorFeedback = ({
   }, []);
 
   // Dismiss error
-  const dismissError = useCallback((error) => {
-    setDismissedErrors(prev => new Set(prev.add(error.id)));
-    onDismiss?.(error);
-    
-    // Clear any pending retry timeout
-    if (retryTimeouts.current.has(error.id)) {
-      clearTimeout(retryTimeouts.current.get(error.id));
-      retryTimeouts.current.delete(error.id);
-    }
-  }, [onDismiss]);
+  const dismissError = useCallback(
+    error => {
+      setDismissedErrors(prev => new Set(prev.add(error.id)));
+      onDismiss?.(error);
+
+      // Clear any pending retry timeout
+      if (retryTimeouts.current.has(error.id)) {
+        clearTimeout(retryTimeouts.current.get(error.id));
+        retryTimeouts.current.delete(error.id);
+      }
+    },
+    [onDismiss]
+  );
 
   // Report error for analytics
-  const reportError = useCallback((error) => {
-    if (!enableErrorReporting) return;
-    
-    const errorReport = {
-      ...error,
-      userAgent: navigator.userAgent,
-      url: window.location.href,
-      timestamp: Date.now(),
-      retryAttempts: retryAttempts.get(error.id) || 0
-    };
-    
-    onReportError?.(errorReport);
-    console.log('Error reported:', errorReport);
-  }, [enableErrorReporting, onReportError, retryAttempts]);
+  const reportError = useCallback(
+    error => {
+      if (!enableErrorReporting) return;
+
+      const errorReport = {
+        ...error,
+        userAgent: navigator.userAgent,
+        url: window.location.href,
+        timestamp: Date.now(),
+        retryAttempts: retryAttempts.get(error.id) || 0,
+      };
+
+      onReportError?.(errorReport);
+      console.log('Error reported:', errorReport);
+    },
+    [enableErrorReporting, onReportError, retryAttempts]
+  );
 
   // Get severity color class
-  const getSeverityClass = useCallback((severity) => {
+  const getSeverityClass = useCallback(severity => {
     switch (severity) {
-      case ERROR_SEVERITY.LOW: return 'severity-low';
-      case ERROR_SEVERITY.MEDIUM: return 'severity-medium';
-      case ERROR_SEVERITY.HIGH: return 'severity-high';
-      case ERROR_SEVERITY.CRITICAL: return 'severity-critical';
-      default: return 'severity-medium';
+      case ERROR_SEVERITY.LOW:
+        return 'severity-low';
+      case ERROR_SEVERITY.MEDIUM:
+        return 'severity-medium';
+      case ERROR_SEVERITY.HIGH:
+        return 'severity-high';
+      case ERROR_SEVERITY.CRITICAL:
+        return 'severity-critical';
+      default:
+        return 'severity-medium';
     }
   }, []);
 
@@ -327,14 +351,19 @@ const EnhancedErrorFeedback = ({
   }
 
   return (
-    <div className={`enhanced-error-feedback ${className}`} role="alert" aria-live="polite">
+    <div
+      className={`enhanced-error-feedback ${className}`}
+      role="alert"
+      aria-live="polite"
+    >
       {visibleErrors.map(error => {
         const isExpanded = expandedErrors.has(error.id);
         const attemptCount = retryAttempts.get(error.id) || 0;
-        const canRetry = showRetryButton && attemptCount < maxRetries && onRetry;
+        const canRetry =
+          showRetryButton && attemptCount < maxRetries && onRetry;
 
         return (
-          <div 
+          <div
             key={error.id}
             className={`error-item ${getSeverityClass(error.severity)}`}
             role="alertdialog"
@@ -343,18 +372,19 @@ const EnhancedErrorFeedback = ({
           >
             {/* Error Header */}
             <div className="error-header">
-              <div className="error-icon" role="img" aria-label={`${error.severity} severity error`}>
+              <div
+                className="error-icon"
+                role="img"
+                aria-label={`${error.severity} severity error`}
+              >
                 {error.icon}
               </div>
-              
+
               <div className="error-content">
-                <h4 
-                  id={`error-title-${error.id}`}
-                  className="error-title"
-                >
+                <h4 id={`error-title-${error.id}`} className="error-title">
                   {error.message}
                 </h4>
-                
+
                 {error.code && (
                   <span className="error-code">Code: {error.code}</span>
                 )}
@@ -370,7 +400,7 @@ const EnhancedErrorFeedback = ({
                 >
                   {isExpanded ? '▼' : '▶'}
                 </button>
-                
+
                 <button
                   className="dismiss-button"
                   onClick={() => dismissError(error)}
@@ -384,12 +414,12 @@ const EnhancedErrorFeedback = ({
 
             {/* Error Details */}
             {isExpanded && (
-              <div 
+              <div
                 id={`error-details-${error.id}`}
                 className="error-details"
                 aria-hidden={!isExpanded}
               >
-                <div 
+                <div
                   id={`error-description-${error.id}`}
                   className="error-solution"
                 >
@@ -416,7 +446,7 @@ const EnhancedErrorFeedback = ({
 
                 {error.helpUrl && (
                   <div className="error-help">
-                    <a 
+                    <a
                       href={error.helpUrl}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -435,10 +465,12 @@ const EnhancedErrorFeedback = ({
                       onClick={() => handleRetry(error)}
                       disabled={attemptCount >= maxRetries}
                     >
-                      {attemptCount > 0 ? `Retry (${attemptCount}/${maxRetries})` : error.action}
+                      {attemptCount > 0
+                        ? `Retry (${attemptCount}/${maxRetries})`
+                        : error.action}
                     </button>
                   )}
-                  
+
                   <button
                     className="report-button"
                     onClick={() => reportError(error)}

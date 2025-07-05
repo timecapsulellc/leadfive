@@ -11,7 +11,7 @@ const QuickActionsPanel = ({ userInfo, onAction }) => {
       amount: userInfo?.withdrawable || 245,
       icon: '💰',
       type: 'primary',
-      disabled: !userInfo?.withdrawable || userInfo.withdrawable === 0
+      disabled: !userInfo?.withdrawable || userInfo.withdrawable === 0,
     },
     {
       id: 'invite',
@@ -19,7 +19,7 @@ const QuickActionsPanel = ({ userInfo, onAction }) => {
       description: 'Share your referral link',
       icon: '👥',
       type: 'secondary',
-      disabled: false
+      disabled: false,
     },
     {
       id: 'upgrade',
@@ -27,7 +27,7 @@ const QuickActionsPanel = ({ userInfo, onAction }) => {
       description: 'View upgrade requirements',
       icon: '⬆️',
       type: 'secondary',
-      disabled: false
+      disabled: false,
     },
     {
       id: 'genealogy',
@@ -35,7 +35,7 @@ const QuickActionsPanel = ({ userInfo, onAction }) => {
       description: 'Open your team tree',
       icon: '🌳',
       type: 'secondary',
-      disabled: false
+      disabled: false,
     },
     {
       id: 'analytics',
@@ -43,7 +43,7 @@ const QuickActionsPanel = ({ userInfo, onAction }) => {
       description: 'View performance report',
       icon: '📊',
       type: 'secondary',
-      disabled: false
+      disabled: false,
     },
     {
       id: 'history',
@@ -51,13 +51,13 @@ const QuickActionsPanel = ({ userInfo, onAction }) => {
       description: 'Download transaction history',
       icon: '📈',
       type: 'secondary',
-      disabled: false
-    }
+      disabled: false,
+    },
   ];
 
-  const handleAction = async (action) => {
+  const handleAction = async action => {
     setPendingAction(action.id);
-    
+
     try {
       switch (action.id) {
         case 'claim':
@@ -92,28 +92,32 @@ const QuickActionsPanel = ({ userInfo, onAction }) => {
     }
   };
 
-  const simulateClaimRewards = (amount) => {
-    return new Promise((resolve) => {
+  const simulateClaimRewards = amount => {
+    return new Promise(resolve => {
       setTimeout(() => {
-        alert(`💰 Reward Claim\n\nProcessing your reward claim of $${amount}...\nFunds will be transferred to your wallet shortly.`);
+        alert(
+          `💰 Reward Claim\n\nProcessing your reward claim of $${amount}...\nFunds will be transferred to your wallet shortly.`
+        );
         resolve();
       }, 1500);
     });
   };
 
   const simulateShareReferral = () => {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(() => {
         const referralLink = `https://orphicrowdfund.com/ref/${userInfo?.id || 'demo123'}`;
         if (navigator.share) {
           navigator.share({
             title: 'Join OrphiCrowdFund',
             text: 'Join my team on OrphiCrowdFund!',
-            url: referralLink
+            url: referralLink,
           });
         } else {
           navigator.clipboard.writeText(referralLink);
-          alert(`🔗 Referral Link Copied!\n\n${referralLink}\n\nShare this link to invite new members!`);
+          alert(
+            `🔗 Referral Link Copied!\n\n${referralLink}\n\nShare this link to invite new members!`
+          );
         }
         resolve();
       }, 500);
@@ -121,19 +125,22 @@ const QuickActionsPanel = ({ userInfo, onAction }) => {
   };
 
   const simulateUpgradeView = () => {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(() => {
-        alert(`⬆️ Level Upgrade Requirements\n\nCurrent: ${userInfo?.level || 'Bronze'}\nNext: Platinum\n\nRequirements:\n• 500+ team members\n• $50K total volume\n• 90% activity rate`);
+        alert(
+          `⬆️ Level Upgrade Requirements\n\nCurrent: ${userInfo?.level || 'Bronze'}\nNext: Platinum\n\nRequirements:\n• 500+ team members\n• $50K total volume\n• 90% activity rate`
+        );
         resolve();
       }, 500);
     });
   };
 
   const simulateDownloadHistory = () => {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(() => {
         // Simulate download
-        const csvContent = "Date,Type,Amount,Status\n2024-01-15,Commission,$125,Complete\n2024-01-10,Bonus,$75,Complete";
+        const csvContent =
+          'Date,Type,Amount,Status\n2024-01-15,Commission,$125,Complete\n2024-01-10,Bonus,$75,Complete';
         const blob = new Blob([csvContent], { type: 'text/csv' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -149,12 +156,14 @@ const QuickActionsPanel = ({ userInfo, onAction }) => {
     <div className="quick-actions-panel">
       <div className="actions-header">
         <h3>⚡ Quick Actions</h3>
-        <div className="actions-count">{actions.filter(a => !a.disabled).length} Available</div>
+        <div className="actions-count">
+          {actions.filter(a => !a.disabled).length} Available
+        </div>
       </div>
 
       <div className="actions-grid">
-        {actions.map((action) => (
-          <div 
+        {actions.map(action => (
+          <div
             key={action.id}
             className={`action-card ${action.type} ${action.disabled ? 'disabled' : ''}`}
           >
@@ -166,22 +175,24 @@ const QuickActionsPanel = ({ userInfo, onAction }) => {
                 <div className="action-amount">${action.amount}</div>
               )}
             </div>
-            <button 
+            <button
               className={`action-btn ${action.type}`}
               onClick={() => handleAction(action)}
               disabled={action.disabled || pendingAction === action.id}
             >
               {pendingAction === action.id ? (
                 <span className="loading-spinner">⏳</span>
+              ) : action.amount ? (
+                `Claim $${action.amount}`
               ) : (
-                action.amount ? `Claim $${action.amount}` : 'Execute'
+                'Execute'
               )}
             </button>
           </div>
         ))}
       </div>
 
-      <style jsx>{`
+      <style>{`
         .quick-actions-panel {
           background: rgba(255, 255, 255, 0.1);
           border: 1px solid #00D4FF;

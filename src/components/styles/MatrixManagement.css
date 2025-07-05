@@ -518,8 +518,12 @@
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Responsive Design */
@@ -527,26 +531,26 @@
   .matrix-management-system {
     padding: 15px;
   }
-  
+
   .matrix-header {
     flex-direction: column;
     gap: 15px;
     text-align: center;
   }
-  
+
   .matrix-stats-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .leg-comparison {
     grid-template-columns: 1fr;
     gap: 15px;
   }
-  
+
   .detailed-matrix {
     grid-template-columns: 1fr;
   }
-  
+
   .placement-zones {
     grid-template-columns: 1fr;
   }

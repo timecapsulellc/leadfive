@@ -2,7 +2,13 @@
 
 .comprehensive-dashboard {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0A0A0A 0%, #1A1A2E 30%, #16213E 70%, #0F1419 100%);
+  background: linear-gradient(
+    135deg,
+    #0a0a0a 0%,
+    #1a1a2e 30%,
+    #16213e 70%,
+    #0f1419 100%
+  );
   color: white;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -21,7 +27,7 @@
 .header-content h1 {
   font-size: 2.2rem;
   font-weight: 700;
-  background: linear-gradient(45deg, #00D4FF, #7B2CBF, #FF6B35);
+  background: linear-gradient(45deg, #00d4ff, #7b2cbf, #ff6b35);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -31,8 +37,13 @@
 }
 
 @keyframes gradientFlow {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .header-content p {
@@ -74,7 +85,11 @@
 }
 
 .nav-tab.active {
-  background: linear-gradient(45deg, var(--tab-color), rgba(var(--tab-color-rgb, 79, 172, 254), 0.8));
+  background: linear-gradient(
+    45deg,
+    var(--tab-color),
+    rgba(var(--tab-color-rgb, 79, 172, 254), 0.8)
+  );
   border-color: var(--tab-color);
   color: white;
   box-shadow: 0 4px 15px rgba(var(--tab-color-rgb, 79, 172, 254), 0.3);
@@ -115,7 +130,7 @@
 }
 
 .section-icon {
-  color: #00D4FF;
+  color: #00d4ff;
 }
 
 .section-header p {
@@ -152,7 +167,7 @@
 
 .earning-icon {
   font-size: 1.2rem;
-  color: #00D4FF;
+  color: #00d4ff;
 }
 
 .earning-info h4 {
@@ -162,7 +177,7 @@
 }
 
 .percentage {
-  color: #FFD700;
+  color: #ffd700;
   font-weight: bold;
   font-size: 0.9rem;
 }
@@ -170,7 +185,7 @@
 .earning-amount {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #00FF88;
+  color: #00ff88;
   margin: 10px 0;
 }
 
@@ -181,8 +196,11 @@
 }
 
 /* MLM Section Styles */
-.earnings-section, .packages-section, .team-section, 
-.achievements-section, .reports-section {
+.earnings-section,
+.packages-section,
+.team-section,
+.achievements-section,
+.reports-section {
   background: rgba(26, 26, 46, 0.6);
   border-radius: 20px;
   padding: 30px;
@@ -214,12 +232,12 @@
 .summary-card .amount {
   font-size: 2.2rem;
   font-weight: bold;
-  color: #00FF88;
+  color: #00ff88;
   margin-bottom: 10px;
 }
 
 .summary-card .growth {
-  color: #FFD700;
+  color: #ffd700;
   font-size: 0.9rem;
 }
 
@@ -253,7 +271,7 @@
 
 .breakdown-icon {
   font-size: 1.2rem;
-  color: #7B2CBF;
+  color: #7b2cbf;
 }
 
 .breakdown-header h4 {
@@ -271,7 +289,7 @@
 .breakdown-amount {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #00FF88;
+  color: #00ff88;
 }
 
 /* Packages Section */
@@ -293,7 +311,7 @@
   font-size: 1.5rem;
   font-weight: bold;
   padding: 10px 20px;
-  background: linear-gradient(45deg, #7B2CBF, #00D4FF);
+  background: linear-gradient(45deg, #7b2cbf, #00d4ff);
   border-radius: 25px;
   color: white;
 }
@@ -313,10 +331,18 @@
   transition: all 0.3s ease;
 }
 
-.package-card.bronze { border-color: #CD7F32; }
-.package-card.silver { border-color: #C0C0C0; }
-.package-card.gold { border-color: #FFD700; }
-.package-card.diamond { border-color: #7B2CBF; }
+.package-card.bronze {
+  border-color: #cd7f32;
+}
+.package-card.silver {
+  border-color: #c0c0c0;
+}
+.package-card.gold {
+  border-color: #ffd700;
+}
+.package-card.diamond {
+  border-color: #7b2cbf;
+}
 
 .package-card:hover {
   transform: translateY(-5px);
@@ -326,12 +352,12 @@
 .package-price {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #00FF88;
+  color: #00ff88;
   margin: 10px 0;
 }
 
 .package-earning {
-  color: #FFD700;
+  color: #ffd700;
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -355,7 +381,7 @@
 .stat-number {
   font-size: 2rem;
   font-weight: bold;
-  color: #00D4FF;
+  color: #00d4ff;
   margin: 10px 0;
 }
 
@@ -390,7 +416,7 @@
 }
 
 .level-volume {
-  color: #00FF88;
+  color: #00ff88;
   font-weight: bold;
 }
 
@@ -411,12 +437,12 @@
 }
 
 .achievement-card.completed {
-  border-color: #00FF88;
+  border-color: #00ff88;
   background: rgba(0, 255, 136, 0.1);
 }
 
 .achievement-card.in-progress {
-  border-color: #FFD700;
+  border-color: #ffd700;
   background: rgba(255, 215, 0, 0.1);
 }
 
@@ -428,7 +454,7 @@
 .achievement-icon {
   font-size: 2rem;
   margin-bottom: 15px;
-  color: #7B2CBF;
+  color: #7b2cbf;
 }
 
 .achievement-card h4 {
@@ -450,13 +476,13 @@
 }
 
 .achievement-card.completed .status {
-  background: #00FF88;
-  color: #0A0A0A;
+  background: #00ff88;
+  color: #0a0a0a;
 }
 
 .achievement-card.in-progress .status {
-  background: #FFD700;
-  color: #0A0A0A;
+  background: #ffd700;
+  color: #0a0a0a;
 }
 
 .achievement-card.locked .status {
@@ -496,7 +522,7 @@
 }
 
 .download-btn {
-  background: linear-gradient(45deg, #00D4FF, #7B2CBF);
+  background: linear-gradient(45deg, #00d4ff, #7b2cbf);
   border: none;
   padding: 10px 20px;
   border-radius: 20px;
@@ -516,11 +542,11 @@
   .dashboard-nav {
     justify-content: center;
   }
-  
+
   .earnings-grid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
-  
+
   .packages-grid {
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   }
@@ -532,33 +558,33 @@
     gap: 15px;
     text-align: center;
   }
-  
+
   .dashboard-nav {
     padding: 0 15px 15px 15px;
   }
-  
+
   .nav-tab {
     padding: 8px 16px;
     font-size: 0.8rem;
   }
-  
+
   .dashboard-content {
     padding: 20px 15px;
   }
-  
+
   .earnings-grid,
   .packages-grid,
   .achievements-grid,
   .reports-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .breakdown-item {
     flex-direction: column;
     gap: 10px;
     text-align: center;
   }
-  
+
   .level-item {
     flex-direction: column;
     gap: 5px;

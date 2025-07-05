@@ -9,11 +9,17 @@ import AIEnhancedFeatures from '../services/AIEnhancedFeatures.js';
 export const useAITransactionHelper = () => {
   const explainTransaction = async (txType, params) => {
     try {
-      const explanation = await AIEnhancedFeatures.explainTransaction(txType, params);
+      const explanation = await AIEnhancedFeatures.explainTransaction(
+        txType,
+        params
+      );
       return explanation;
     } catch (error) {
       console.error('AI transaction explanation failed:', error);
-      return { text: `Processing ${txType} transaction...`, confidence: 'fallback' };
+      return {
+        text: `Processing ${txType} transaction...`,
+        confidence: 'fallback',
+      };
     }
   };
 
@@ -23,11 +29,17 @@ export const useAITransactionHelper = () => {
 export const useAINetworkAnalysis = () => {
   const analyzePosition = async (userAddress, treeData) => {
     try {
-      const analysis = await AIEnhancedFeatures.analyzeNetworkPosition(userAddress, treeData);
+      const analysis = await AIEnhancedFeatures.analyzeNetworkPosition(
+        userAddress,
+        treeData
+      );
       return analysis;
     } catch (error) {
       console.error('AI network analysis failed:', error);
-      return { recommendations: ['Focus on team building'], confidence: 'fallback' };
+      return {
+        recommendations: ['Focus on team building'],
+        confidence: 'fallback',
+      };
     }
   };
 
@@ -35,7 +47,7 @@ export const useAINetworkAnalysis = () => {
 };
 
 export const useAIEarningsPredictor = () => {
-  const predictEarnings = async (userData) => {
+  const predictEarnings = async userData => {
     try {
       const predictions = await AIEnhancedFeatures.predictEarnings(userData);
       return predictions;
@@ -49,30 +61,34 @@ export const useAIEarningsPredictor = () => {
 };
 
 export const useAICoaching = () => {
-  const getCoachingAdvice = async (userMetrics) => {
+  const getCoachingAdvice = async userMetrics => {
     try {
-      const advice = await AIEnhancedFeatures.generateCoachingAdvice(userMetrics);
+      const advice =
+        await AIEnhancedFeatures.generateCoachingAdvice(userMetrics);
       return advice;
     } catch (error) {
       console.error('AI coaching failed:', error);
-      return { 
-        message: 'Keep building your network!', 
+      return {
+        message: 'Keep building your network!',
         action: 'Focus on daily activities',
-        confidence: 'fallback' 
+        confidence: 'fallback',
       };
     }
   };
 
   const getSmartNotification = async (userData, triggerType) => {
     try {
-      const notification = await AIEnhancedFeatures.generateSmartNotification(userData, triggerType);
+      const notification = await AIEnhancedFeatures.generateSmartNotification(
+        userData,
+        triggerType
+      );
       return notification;
     } catch (error) {
       console.error('Smart notification failed:', error);
-      return { 
-        message: 'Check your dashboard for updates!', 
+      return {
+        message: 'Check your dashboard for updates!',
         type: 'general',
-        priority: 'low' 
+        priority: 'low',
       };
     }
   };
@@ -85,7 +101,7 @@ export const useOpenAI = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const generateResponse = async (prompt) => {
+  const generateResponse = async prompt => {
     setIsLoading(true);
     setError(null);
     try {
@@ -94,10 +110,10 @@ export const useOpenAI = () => {
         const response = await AIEnhancedFeatures.generateAIResponse(prompt);
         return response;
       }
-      
+
       // Fallback to simulated response
       await new Promise(resolve => setTimeout(resolve, 1000));
-      return "This is a simulated AI response. Configure your OpenAI API key to get real responses.";
+      return 'This is a simulated AI response. Configure your OpenAI API key to get real responses.';
     } catch (err) {
       setError(err.message);
       return null;
@@ -113,7 +129,7 @@ export const useElevenLabs = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [error, setError] = useState(null);
 
-  const speak = async (text) => {
+  const speak = async text => {
     setError(null);
     try {
       // Use the existing AIEnhancedFeatures service if possible
@@ -123,7 +139,7 @@ export const useElevenLabs = () => {
         setIsPlaying(false);
         return;
       }
-      
+
       // Fallback to browser's speech synthesis
       if ('speechSynthesis' in window) {
         const utterance = new SpeechSynthesisUtterance(text);
@@ -156,7 +172,7 @@ export const AITransactionExamples = {
       amount,
       withdrawalRate: rate,
       gasFee,
-      enableVoice: true
+      enableVoice: true,
     });
   },
 
@@ -166,7 +182,7 @@ export const AITransactionExamples = {
     return await explainTransaction('register', {
       packagePrice,
       referrer,
-      enableVoice: true
+      enableVoice: true,
     });
   },
 
@@ -178,35 +194,38 @@ export const AITransactionExamples = {
       new: newLevel,
       cost,
       estimatedROI: roi,
-      enableVoice: true
+      enableVoice: true,
     });
-  }
+  },
 };
 
 export const AINetworkExamples = {
   // Example for NetworkTreeVisualization.jsx
   analyzeUserPosition: async (userAddress, networkData) => {
     const { analyzePosition } = useAINetworkAnalysis();
-    
+
     const treeData = {
       directCount: networkData.directReferrals?.length || 0,
       teamSize: networkData.totalTeamSize || 0,
       leftLegVolume: networkData.leftLegVolume || 0,
       rightLegVolume: networkData.rightLegVolume || 0,
-      strongLeg: networkData.leftLegVolume > networkData.rightLegVolume ? 'left' : 'right',
+      strongLeg:
+        networkData.leftLegVolume > networkData.rightLegVolume
+          ? 'left'
+          : 'right',
       weeklyGrowth: networkData.weeklyGrowthRate || 0,
-      currentPackage: networkData.userPackage || 30
+      currentPackage: networkData.userPackage || 30,
     };
 
     return await analyzePosition(userAddress, treeData);
-  }
+  },
 };
 
 export const AIEarningsExamples = {
   // Example for Dashboard.jsx
-  generateEarningsReport: async (userStats) => {
+  generateEarningsReport: async userStats => {
     const { predictEarnings } = useAIEarningsPredictor();
-    
+
     const userData = {
       currentPackage: userStats.packageLevel || 30,
       teamSize: userStats.totalTeam || 0,
@@ -215,18 +234,18 @@ export const AIEarningsExamples = {
       binaryVolume: userStats.binaryVolume || 0,
       activeReferrals: userStats.activeReferrals || 0,
       accountAge: userStats.daysSinceJoined || 0,
-      totalEarnings: userStats.totalEarnings || 0
+      totalEarnings: userStats.totalEarnings || 0,
     };
 
     return await predictEarnings(userData);
-  }
+  },
 };
 
 export const AICoachingExamples = {
   // Example for Dashboard.jsx coaching panel
-  getDailyCoaching: async (userActivity) => {
+  getDailyCoaching: async userActivity => {
     const { getCoachingAdvice } = useAICoaching();
-    
+
     const userMetrics = {
       lastActivity: userActivity.daysSinceLastLogin || 0,
       teamGrowth: userActivity.teamGrowthRate || 0,
@@ -235,7 +254,7 @@ export const AICoachingExamples = {
       monthlyGoal: userActivity.monthlyGoal || 1000,
       currentPackage: userActivity.packageLevel || 30,
       daysSinceLastReferral: userActivity.daysSinceLastReferral || 0,
-      enableVoice: userActivity.voiceEnabled || false
+      enableVoice: userActivity.voiceEnabled || false,
     };
 
     return await getCoachingAdvice(userMetrics);
@@ -244,19 +263,19 @@ export const AICoachingExamples = {
   // Example for smart notifications
   checkUpgradeOpportunity: async (userBalance, currentPackage) => {
     const { getSmartNotification } = useAICoaching();
-    
+
     if (userBalance >= currentPackage * 2) {
       const userData = {
         availableFunds: userBalance,
         suggestedPackage: currentPackage * 2,
-        earningIncrease: 25 // Estimated increase percentage
+        earningIncrease: 25, // Estimated increase percentage
       };
-      
+
       return await getSmartNotification(userData, 'upgradeOpportunity');
     }
-    
+
     return null;
-  }
+  },
 };
 
 // ==================== UTILITY FUNCTIONS ====================
@@ -272,7 +291,7 @@ export const AIIntegrationUtils = {
       earningsPrediction: userPreferences.aiEarningsPrediction !== false,
       personalizedCoaching: userPreferences.aiCoaching !== false,
       voiceSynthesis: userPreferences.voiceEnabled === true,
-      smartNotifications: userPreferences.smartNotifications !== false
+      smartNotifications: userPreferences.smartNotifications !== false,
     };
   },
 
@@ -281,29 +300,33 @@ export const AIIntegrationUtils = {
    */
   formatAIResponse: (response, maxLength = 200) => {
     if (!response || !response.text) return '';
-    
-    const text = response.text.length > maxLength 
-      ? response.text.substring(0, maxLength) + '...'
-      : response.text;
-      
+
+    const text =
+      response.text.length > maxLength
+        ? response.text.substring(0, maxLength) + '...'
+        : response.text;
+
     return {
       ...response,
       displayText: text,
       isAI: response.confidence !== 'fallback',
-      timestamp: response.timestamp || new Date().toISOString()
+      timestamp: response.timestamp || new Date().toISOString(),
     };
   },
 
   /**
    * Handle AI service errors gracefully
    */
-  handleAIError: (error, fallbackMessage = 'AI service temporarily unavailable') => {
+  handleAIError: (
+    error,
+    fallbackMessage = 'AI service temporarily unavailable'
+  ) => {
     console.error('AI Integration Error:', error);
     return {
       text: fallbackMessage,
       confidence: 'fallback',
       error: true,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
   },
 
@@ -312,7 +335,7 @@ export const AIIntegrationUtils = {
    */
   getAIStatus: () => {
     return AIEnhancedFeatures.getStatus();
-  }
+  },
 };
 
 export default {
@@ -326,5 +349,5 @@ export default {
   AICoachingExamples,
   AIIntegrationUtils,
   useOpenAI,
-  useElevenLabs
+  useElevenLabs,
 };

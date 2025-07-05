@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { FaChartLine, FaDollarSign, FaArrowUp, FaArrowDown } from 'react-icons/fa';
+import {
+  FaChartLine,
+  FaDollarSign,
+  FaArrowUp,
+  FaArrowDown,
+} from 'react-icons/fa';
 
 const UnifiedEarningsChart = ({ account, provider, signer, data }) => {
   const [earnings, setEarnings] = useState({
@@ -7,7 +12,7 @@ const UnifiedEarningsChart = ({ account, provider, signer, data }) => {
     daily: 0,
     weekly: 0,
     monthly: 0,
-    trend: 'up'
+    trend: 'up',
   });
   const [loading, setLoading] = useState(true);
 
@@ -18,7 +23,7 @@ const UnifiedEarningsChart = ({ account, provider, signer, data }) => {
   const loadEarningsData = async () => {
     try {
       setLoading(true);
-      
+
       // TODO: Replace with actual smart contract calls
       // For now, using mock data
       const mockEarnings = {
@@ -26,9 +31,9 @@ const UnifiedEarningsChart = ({ account, provider, signer, data }) => {
         daily: 45.32,
         weekly: 312.87,
         monthly: 1234.56,
-        trend: 'up'
+        trend: 'up',
       };
-      
+
       setEarnings(mockEarnings);
     } catch (error) {
       console.error('Error loading earnings data:', error);
@@ -63,41 +68,37 @@ const UnifiedEarningsChart = ({ account, provider, signer, data }) => {
           )}
         </div>
       </div>
-      
+
       <div className="earnings-stats">
         <div className="stat-card">
           <div className="stat-label">Total Earnings</div>
           <div className="stat-value">
-            <FaDollarSign />
-            ${earnings.total.toFixed(2)}
+            <FaDollarSign />${earnings.total.toFixed(2)}
           </div>
         </div>
-        
+
         <div className="stat-card">
           <div className="stat-label">Daily</div>
           <div className="stat-value">
-            <FaDollarSign />
-            ${earnings.daily.toFixed(2)}
+            <FaDollarSign />${earnings.daily.toFixed(2)}
           </div>
         </div>
-        
+
         <div className="stat-card">
           <div className="stat-label">Weekly</div>
           <div className="stat-value">
-            <FaDollarSign />
-            ${earnings.weekly.toFixed(2)}
+            <FaDollarSign />${earnings.weekly.toFixed(2)}
           </div>
         </div>
-        
+
         <div className="stat-card">
           <div className="stat-label">Monthly</div>
           <div className="stat-value">
-            <FaDollarSign />
-            ${earnings.monthly.toFixed(2)}
+            <FaDollarSign />${earnings.monthly.toFixed(2)}
           </div>
         </div>
       </div>
-      
+
       <div className="chart-placeholder">
         <FaChartLine className="chart-icon" />
         <p>Detailed chart visualization coming soon...</p>

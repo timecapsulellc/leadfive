@@ -1,0 +1,435 @@
+/**
+ * Accessibility Styles
+ * WCAG 2.1 AA Compliance Support
+ */
+
+/* ============ SCREEN READER ONLY ============ */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Show on focus for keyboard users */
+.sr-only-focusable:focus {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  padding: inherit !important;
+  margin: inherit !important;
+  overflow: visible !important;
+  clip: auto !important;
+  white-space: normal !important;
+}
+
+/* ============ FOCUS STYLES ============ */
+.focus-visible {
+  outline: 2px solid #00e5ff;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Enhanced focus for dark backgrounds */
+.focus-visible-light {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip to content link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 10000;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* ============ KEYBOARD NAVIGATION ============ */
+[tabindex='-1']:focus {
+  outline: none !important;
+}
+
+/* Focus trap container */
+.focus-trap {
+  position: relative;
+}
+
+/* Keyboard-only focus indicators */
+.js-focus-visible .focus-visible:not(.focus-visible) {
+  outline: none;
+}
+
+/* ============ HIGH CONTRAST MODE ============ */
+@media (prefers-contrast: high) {
+  * {
+    border-color: currentColor !important;
+  }
+
+  .btn,
+  .card,
+  .modal,
+  .dropdown {
+    border-width: 2px !important;
+  }
+
+  /* Ensure sufficient contrast for interactive elements */
+  button,
+  a,
+  input,
+  select,
+  textarea {
+    border: 2px solid currentColor !important;
+  }
+
+  /* Remove subtle backgrounds that may not show in high contrast */
+  .subtle-bg {
+    background: transparent !important;
+  }
+}
+
+/* ============ REDUCED MOTION ============ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable parallax effects */
+  .parallax {
+    transform: none !important;
+  }
+
+  /* Replace animations with static states */
+  .loading-spinner {
+    animation: none !important;
+    border: 2px solid currentColor !important;
+    border-radius: 2px !important;
+  }
+
+  /* Disable auto-playing content */
+  video {
+    animation: none !important;
+  }
+}
+
+/* ============ COLOR BLIND SUPPORT ============ */
+/* Ensure important information isn't conveyed by color alone */
+.status-success::before {
+  content: '✓ ';
+  color: inherit;
+}
+
+.status-error::before {
+  content: '✗ ';
+  color: inherit;
+}
+
+.status-warning::before {
+  content: '⚠ ';
+  color: inherit;
+}
+
+.status-info::before {
+  content: 'ℹ ';
+  color: inherit;
+}
+
+/* ============ FONT SIZE SCALING ============ */
+/* Support for user font size preferences */
+@media (min-resolution: 2dppx) {
+  /* Ensure text remains readable on high-DPI displays */
+  body {
+    font-size: max(16px, 1rem);
+  }
+}
+
+/* Large text preference */
+@media (prefers-reduced-data: reduce) {
+  /* Optimize for users with data constraints */
+  * {
+    background-image: none !important;
+  }
+
+  .hero-bg,
+  .decorative-image {
+    display: none !important;
+  }
+}
+
+/* ============ TOUCH TARGET SIZING ============ */
+/* Ensure minimum 44px touch targets */
+@media (pointer: coarse) {
+  button,
+  a,
+  input,
+  select,
+  textarea,
+  [role='button'],
+  [role='link'] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Spacing for easier touch interaction */
+  .btn + .btn {
+    margin-left: 8px;
+  }
+
+  .nav-item + .nav-item {
+    margin-left: 8px;
+  }
+}
+
+/* ============ ERROR AND SUCCESS STATES ============ */
+.error-message {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.error-message::before {
+  content: 'Error: ';
+  font-weight: 700;
+}
+
+.success-message {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.success-message::before {
+  content: 'Success: ';
+  font-weight: 700;
+}
+
+.warning-message {
+  color: #d97706;
+  font-weight: 600;
+}
+
+.warning-message::before {
+  content: 'Warning: ';
+  font-weight: 700;
+}
+
+/* Dark mode variants */
+@media (prefers-color-scheme: dark) {
+  .error-message {
+    color: #f87171;
+  }
+
+  .success-message {
+    color: #4ade80;
+  }
+
+  .warning-message {
+    color: #fbbf24;
+  }
+}
+
+/* ============ FORM ACCESSIBILITY ============ */
+/* Required field indicators */
+.required::after {
+  content: ' *';
+  color: #dc2626;
+  font-weight: bold;
+}
+
+/* Error state for form fields */
+.field-error {
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 0 1px #dc2626 !important;
+}
+
+.field-error:focus {
+  outline-color: #dc2626 !important;
+}
+
+/* Valid state for form fields */
+.field-valid {
+  border-color: #16a34a !important;
+}
+
+/* Help text styling */
+.help-text {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .help-text {
+    color: #9ca3af;
+  }
+}
+
+/* ============ MODAL AND DIALOG ACCESSIBILITY ============ */
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  /* Ensure modal is positioned correctly for screen readers */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1050;
+
+  /* Ensure modal content is readable */
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* ============ HEADING HIERARCHY ============ */
+/* Visual hierarchy that doesn't rely on heading levels */
+.heading-primary {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.heading-secondary {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.heading-tertiary {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.heading-quaternary {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* ============ RESPONSIVE TEXT ============ */
+/* Ensure text scales appropriately */
+@media (min-width: 768px) {
+  .heading-primary {
+    font-size: 3rem;
+  }
+
+  .heading-secondary {
+    font-size: 2.25rem;
+  }
+}
+
+/* ============ PRINT ACCESSIBILITY ============ */
+@media print {
+  /* Ensure sufficient contrast for printing */
+  * {
+    color: black !important;
+    background: white !important;
+  }
+
+  /* Show link URLs for printed content */
+  a::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.8em;
+  }
+
+  /* Hide decorative elements */
+  .decorative,
+  .animation,
+  .video {
+    display: none !important;
+  }
+
+  /* Ensure page breaks */
+  .page-break {
+    page-break-before: always;
+  }
+}
+
+/* ============ LANGUAGE SUPPORT ============ */
+/* Right-to-left language support */
+[dir='rtl'] {
+  text-align: right;
+}
+
+[dir='rtl'] .float-left {
+  float: right;
+}
+
+[dir='rtl'] .float-right {
+  float: left;
+}
+
+[dir='rtl'] .margin-left {
+  margin-left: 0;
+  margin-right: var(--spacing);
+}
+
+[dir='rtl'] .margin-right {
+  margin-right: 0;
+  margin-left: var(--spacing);
+}
+
+/* ============ UTILITY CLASSES ============ */
+/* Hide elements but keep them accessible to screen readers */
+.visually-hidden {
+  position: absolute !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  -webkit-clip-path: inset(50%) !important;
+  clip-path: inset(50%) !important;
+}
+
+/* Force focus visibility */
+.force-focus:focus {
+  outline: 3px solid #00e5ff !important;
+  outline-offset: 2px !important;
+}
+
+/* Announce changes to screen readers */
+.announce {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ============ BROWSER COMPATIBILITY ============ */
+/* Ensure focus-visible polyfill works */
+.js-focus-visible :focus:not(.focus-visible) {
+  outline: none;
+}
+
+/* IE11 fallbacks */
+@media screen and (-ms-high-contrast: active) {
+  /* High contrast mode for IE11 */
+  .btn {
+    border: 2px solid;
+  }
+}

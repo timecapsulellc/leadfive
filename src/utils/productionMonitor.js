@@ -1,3 +1,4 @@
+/* global process */
 // Production monitoring and analytics system
 class ProductionMonitor {
   constructor() {
@@ -7,14 +8,14 @@ class ProductionMonitor {
       pageViews: 0,
       userActions: 0,
       errors: 0,
-      performanceIssues: 0
+      performanceIssues: 0,
     };
     this.sessionData = {
       sessionId: this.generateSessionId(),
       startTime: Date.now(),
       userId: null,
       userAgent: navigator.userAgent,
-      viewport: this.getViewportSize()
+      viewport: this.getViewportSize(),
     };
 
     this.init();
@@ -36,7 +37,7 @@ class ProductionMonitor {
   getViewportSize() {
     return {
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight,
     };
   }
 
@@ -47,8 +48,8 @@ class ProductionMonitor {
       window.gtag('config', process.env.REACT_APP_GA_MEASUREMENT_ID, {
         session_id: this.sessionData.sessionId,
         custom_map: {
-          custom_parameter_1: 'wallet_connected'
-        }
+          custom_parameter_1: 'wallet_connected',
+        },
       });
     }
 
@@ -58,7 +59,7 @@ class ProductionMonitor {
 
   // Error Tracking
   initErrorTracking() {
-    window.addEventListener('error', (event) => {
+    window.addEventListener('error', event => {
       this.trackError({
         type: 'javascript_error',
         message: event.message,
@@ -66,16 +67,16 @@ class ProductionMonitor {
         lineno: event.lineno,
         colno: event.colno,
         stack: event.error?.stack,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     });
 
-    window.addEventListener('unhandledrejection', (event) => {
+    window.addEventListener('unhandledrejection', event => {
       this.trackError({
         type: 'unhandled_promise_rejection',
         message: event.reason?.message || 'Unhandled Promise Rejection',
         reason: event.reason,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
     });
   }
@@ -84,50 +85,65 @@ class ProductionMonitor {
   initPerformanceTracking() {
     // Track Core Web Vitals
     this.trackCoreWebVitals();
-    
+
     // Track custom performance metrics
     this.trackCustomPerformanceMetrics();
   }
 
   trackCoreWebVitals() {
     // Largest Contentful Paint (LCP)
-    new PerformanceObserver((entryList) => {
+    new PerformanceObserver(entryList => {
       for (const entry of entryList.getEntries()) {
-        if (entry.startTime < 10000) { // Only consider LCP within first 10 seconds
+        if (entry.startTime < 10000) {
+          // Only consider LCP within first 10 seconds
           this.trackMetric('core_web_vitals', {
             metric: 'lcp',
             value: entry.startTime,
-            rating: entry.startTime <= 2500 ? 'good' : entry.startTime <= 4000 ? 'needs_improvement' : 'poor'
+            rating:
+              entry.startTime <= 2500
+                ? 'good'
+                : entry.startTime <= 4000
+                  ? 'needs_improvement'
+                  : 'poor',
           });
         }
       }
     }).observe({ entryTypes: ['largest-contentful-paint'] });
 
     // First Input Delay (FID)
-    new PerformanceObserver((entryList) => {
+    new PerformanceObserver(entryList => {
       for (const entry of entryList.getEntries()) {
         this.trackMetric('core_web_vitals', {
           metric: 'fid',
           value: entry.processingStart - entry.startTime,
-          rating: (entry.processingStart - entry.startTime) <= 100 ? 'good' : 
-                  (entry.processingStart - entry.startTime) <= 300 ? 'needs_improvement' : 'poor'
+          rating:
+            entry.processingStart - entry.startTime <= 100
+              ? 'good'
+              : entry.processingStart - entry.startTime <= 300
+                ? 'needs_improvement'
+                : 'poor',
         });
       }
     }).observe({ entryTypes: ['first-input'] });
 
     // Cumulative Layout Shift (CLS)
     let clsValue = 0;
-    new PerformanceObserver((entryList) => {
+    new PerformanceObserver(entryList => {
       for (const entry of entryList.getEntries()) {
         if (!entry.hadRecentInput) {
           clsValue += entry.value;
         }
       }
-      
+
       this.trackMetric('core_web_vitals', {
         metric: 'cls',
         value: clsValue,
-        rating: clsValue <= 0.1 ? 'good' : clsValue <= 0.25 ? 'needs_improvement' : 'poor'
+        rating:
+          clsValue <= 0.1
+            ? 'good'
+            : clsValue <= 0.25
+              ? 'needs_improvement'
+              : 'poor',
       });
     }).observe({ entryTypes: ['layout-shift'] });
   }
@@ -137,25 +153,29 @@ class ProductionMonitor {
     window.addEventListener('load', () => {
       setTimeout(() => {
         const navigation = performance.getEntriesByType('navigation')[0];
-        
+
         this.trackMetric('performance', {
           metric: 'page_load_time',
           value: navigation.loadEventEnd - navigation.loadEventStart,
-          domContentLoaded: navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart,
-          timeToInteractive: navigation.domInteractive - navigation.navigationStart
+          domContentLoaded:
+            navigation.domContentLoadedEventEnd -
+            navigation.domContentLoadedEventStart,
+          timeToInteractive:
+            navigation.domInteractive - navigation.navigationStart,
         });
       }, 0);
     });
 
     // Track resource loading
-    new PerformanceObserver((entryList) => {
+    new PerformanceObserver(entryList => {
       for (const entry of entryList.getEntries()) {
-        if (entry.duration > 1000) { // Track slow resources
+        if (entry.duration > 1000) {
+          // Track slow resources
           this.trackMetric('performance', {
             metric: 'slow_resource',
             resource: entry.name,
             duration: entry.duration,
-            size: entry.transferSize
+            size: entry.transferSize,
           });
         }
       }
@@ -165,26 +185,33 @@ class ProductionMonitor {
   // User Behavior Tracking
   initUserBehaviorTracking() {
     // Track clicks
-    document.addEventListener('click', (event) => {
+    document.addEventListener('click', event => {
       this.trackUserAction('click', {
         element: event.target.tagName,
         className: event.target.className,
         id: event.target.id,
-        text: event.target.textContent?.slice(0, 50)
+        text: event.target.textContent?.slice(0, 50),
       });
     });
 
     // Track scroll depth
     let maxScrollDepth = 0;
-    window.addEventListener('scroll', this.throttle(() => {
-      const scrollDepth = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
-      if (scrollDepth > maxScrollDepth) {
-        maxScrollDepth = scrollDepth;
-        if (maxScrollDepth % 25 === 0) { // Track at 25%, 50%, 75%, 100%
-          this.trackUserAction('scroll', { depth: maxScrollDepth });
+    window.addEventListener(
+      'scroll',
+      this.throttle(() => {
+        const scrollDepth = Math.round(
+          (window.scrollY / (document.body.scrollHeight - window.innerHeight)) *
+            100
+        );
+        if (scrollDepth > maxScrollDepth) {
+          maxScrollDepth = scrollDepth;
+          if (maxScrollDepth % 25 === 0) {
+            // Track at 25%, 50%, 75%, 100%
+            this.trackUserAction('scroll', { depth: maxScrollDepth });
+          }
         }
-      }
-    }, 100));
+      }, 100)
+    );
 
     // Track time on page
     let startTime = Date.now();
@@ -193,7 +220,7 @@ class ProductionMonitor {
       this.trackMetric('engagement', {
         metric: 'time_on_page',
         value: timeOnPage,
-        page: window.location.pathname
+        page: window.location.pathname,
       });
     });
   }
@@ -201,13 +228,13 @@ class ProductionMonitor {
   // Tracking Methods
   trackPageView(path) {
     this.metrics.pageViews++;
-    
+
     const event = {
       type: 'page_view',
       path,
       referrer: document.referrer,
       timestamp: Date.now(),
-      sessionId: this.sessionData.sessionId
+      sessionId: this.sessionData.sessionId,
     };
 
     this.queueEvent(event);
@@ -215,20 +242,20 @@ class ProductionMonitor {
     if (window.gtag) {
       window.gtag('event', 'page_view', {
         page_location: window.location.href,
-        page_path: path
+        page_path: path,
       });
     }
   }
 
   trackUserAction(action, data = {}) {
     this.metrics.userActions++;
-    
+
     const event = {
       type: 'user_action',
       action,
       data,
       timestamp: Date.now(),
-      sessionId: this.sessionData.sessionId
+      sessionId: this.sessionData.sessionId,
     };
 
     this.queueEvent(event);
@@ -236,21 +263,21 @@ class ProductionMonitor {
     if (window.gtag) {
       window.gtag('event', action, {
         event_category: 'User Interaction',
-        ...data
+        ...data,
       });
     }
   }
 
   trackError(error) {
     this.metrics.errors++;
-    
+
     const event = {
       type: 'error',
       error,
       timestamp: Date.now(),
       sessionId: this.sessionData.sessionId,
       url: window.location.href,
-      userAgent: navigator.userAgent
+      userAgent: navigator.userAgent,
     };
 
     this.queueEvent(event);
@@ -258,12 +285,15 @@ class ProductionMonitor {
     if (window.gtag) {
       window.gtag('event', 'exception', {
         description: error.message,
-        fatal: false
+        fatal: false,
       });
     }
 
     // Send critical errors immediately
-    if (error.type === 'javascript_error' || error.type === 'unhandled_promise_rejection') {
+    if (
+      error.type === 'javascript_error' ||
+      error.type === 'unhandled_promise_rejection'
+    ) {
       this.flushEvents();
     }
   }
@@ -274,7 +304,7 @@ class ProductionMonitor {
       category,
       data,
       timestamp: Date.now(),
-      sessionId: this.sessionData.sessionId
+      sessionId: this.sessionData.sessionId,
     };
 
     this.queueEvent(event);
@@ -283,7 +313,7 @@ class ProductionMonitor {
       window.gtag('event', data.metric, {
         event_category: 'Web Vitals',
         value: Math.round(data.value),
-        metric_rating: data.rating
+        metric_rating: data.rating,
       });
     }
   }
@@ -294,7 +324,7 @@ class ProductionMonitor {
       action,
       data,
       timestamp: Date.now(),
-      sessionId: this.sessionData.sessionId
+      sessionId: this.sessionData.sessionId,
     };
 
     this.queueEvent(event);
@@ -303,7 +333,7 @@ class ProductionMonitor {
       window.gtag('event', 'wallet_action', {
         event_category: 'Blockchain',
         action_type: action,
-        ...data
+        ...data,
       });
     }
   }
@@ -315,7 +345,7 @@ class ProductionMonitor {
       value,
       metadata,
       timestamp: Date.now(),
-      sessionId: this.sessionData.sessionId
+      sessionId: this.sessionData.sessionId,
     };
 
     this.queueEvent(event);
@@ -324,7 +354,7 @@ class ProductionMonitor {
       window.gtag('event', 'custom_business_metric', {
         event_category: 'Business',
         metric_name: metric,
-        metric_value: value
+        metric_value: value,
       });
     }
   }
@@ -332,7 +362,7 @@ class ProductionMonitor {
   // Event Queue Management
   queueEvent(event) {
     this.analyticsQueue.push(event);
-    
+
     // Auto-flush queue when it gets large
     if (this.analyticsQueue.length >= 10) {
       this.flushEvents();
@@ -362,8 +392,8 @@ class ProductionMonitor {
           },
           body: JSON.stringify({
             events,
-            session: this.sessionData
-          })
+            session: this.sessionData,
+          }),
         });
       }
 
@@ -388,13 +418,13 @@ class ProductionMonitor {
   // Utility Methods
   throttle(func, limit) {
     let inThrottle;
-    return function() {
+    return function () {
       const args = arguments;
       const context = this;
       if (!inThrottle) {
         func.apply(context, args);
         inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
+        setTimeout(() => (inThrottle = false), limit);
       }
     };
   }
@@ -402,10 +432,10 @@ class ProductionMonitor {
   // Public API
   setUserId(userId) {
     this.sessionData.userId = userId;
-    
+
     if (window.gtag) {
       window.gtag('config', process.env.REACT_APP_GA_MEASUREMENT_ID, {
-        user_id: userId
+        user_id: userId,
       });
     }
   }
@@ -414,14 +444,14 @@ class ProductionMonitor {
     return {
       ...this.metrics,
       sessionDuration: Date.now() - this.sessionData.startTime,
-      queueSize: this.analyticsQueue.length
+      queueSize: this.analyticsQueue.length,
     };
   }
 
   // Cleanup
   destroy() {
     this.flushEvents();
-    
+
     // Remove event listeners
     // (In a real implementation, you'd track and remove all listeners)
   }
@@ -436,14 +466,16 @@ export const useProductionMonitor = () => {
   }, [monitor]);
 
   return {
-    trackPageView: (path) => monitor.trackPageView(path),
+    trackPageView: path => monitor.trackPageView(path),
     trackUserAction: (action, data) => monitor.trackUserAction(action, data),
-    trackError: (error) => monitor.trackError(error),
+    trackError: error => monitor.trackError(error),
     trackMetric: (category, data) => monitor.trackMetric(category, data),
-    trackWalletAction: (action, data) => monitor.trackWalletAction(action, data),
-    trackBusinessMetric: (metric, value, metadata) => monitor.trackBusinessMetric(metric, value, metadata),
-    setUserId: (userId) => monitor.setUserId(userId),
-    getMetrics: () => monitor.getSessionMetrics()
+    trackWalletAction: (action, data) =>
+      monitor.trackWalletAction(action, data),
+    trackBusinessMetric: (metric, value, metadata) =>
+      monitor.trackBusinessMetric(metric, value, metadata),
+    setUserId: userId => monitor.setUserId(userId),
+    getMetrics: () => monitor.getSessionMetrics(),
   };
 };
 

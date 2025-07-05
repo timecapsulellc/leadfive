@@ -1,0 +1,440 @@
+/**
+ * Micro-interactions Component Styles
+ * Subtle animations that enhance user experience
+ */
+
+/* ============ ANIMATED BUTTON ============ */
+.animated-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  /* Typography */
+  font-family: var(--font-sans, 'Inter', sans-serif);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+
+  /* Layout */
+  border: 1px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+
+  /* Interaction */
+  user-select: none;
+  outline: none;
+
+  /* Focus state */
+  &:focus-visible {
+    outline: 2px solid var(--color-primary-500, #00e5ff);
+    outline-offset: 2px;
+  }
+}
+
+.animated-btn__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Ripple effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  transform: scale(0);
+  animation: ripple-animation 600ms ease-out;
+  z-index: 1;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+/* Size variants */
+.animated-btn--sm {
+  height: 36px;
+  padding: 0 16px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.animated-btn--md {
+  height: 44px;
+  padding: 0 20px;
+  font-size: 16px;
+}
+
+.animated-btn--lg {
+  height: 52px;
+  padding: 0 24px;
+  font-size: 18px;
+  border-radius: 14px;
+}
+
+/* Color variants */
+.animated-btn--primary {
+  background: linear-gradient(135deg, #00e5ff 0%, #00bcd4 100%);
+  color: white;
+  box-shadow: 0 4px 14px 0 rgba(0, 229, 255, 0.25);
+}
+
+.animated-btn--secondary {
+  background: rgba(0, 229, 255, 0.1);
+  color: #00e5ff;
+  border-color: rgba(0, 229, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.animated-btn--tertiary {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+/* ============ HOVER CARD ============ */
+.hover-card {
+  position: relative;
+  transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.hover-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 229, 255, 0.1) 0%,
+    rgba(0, 188, 212, 0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 300ms ease;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.hover-card:hover::before {
+  opacity: 1;
+}
+
+/* ============ FLOATING ACTION BUTTON ============ */
+.fab {
+  position: fixed;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00e5ff 0%, #00bcd4 100%);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 229, 255, 0.3);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fab:focus-visible {
+  outline: 2px solid var(--color-primary-500, #00e5ff);
+  outline-offset: 2px;
+}
+
+/* Position variants */
+.fab--top-left {
+  top: 24px;
+  left: 24px;
+}
+
+.fab--top-right {
+  top: 24px;
+  right: 24px;
+}
+
+.fab--bottom-left {
+  bottom: 24px;
+  left: 24px;
+}
+
+.fab--bottom-right {
+  bottom: 24px;
+  right: 24px;
+}
+
+/* ============ STAGGER ANIMATIONS ============ */
+.stagger-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stagger-item {
+  transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ============ PARALLAX ELEMENT ============ */
+.parallax-element {
+  will-change: transform;
+  transition: transform 100ms ease-out;
+}
+
+/* ============ REVEAL ON SCROLL ============ */
+.reveal-on-scroll {
+  will-change: transform, opacity;
+}
+
+/* ============ MAGNETIC ELEMENT ============ */
+.magnetic-element {
+  position: relative;
+  cursor: pointer;
+  will-change: transform;
+  transition: transform 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.magnetic-element::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 229, 255, 0.1) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 300ms ease;
+  pointer-events: none;
+}
+
+.magnetic-element:hover::before {
+  opacity: 1;
+}
+
+/* ============ PULSE ELEMENT ============ */
+.pulse-element {
+  position: relative;
+  will-change: transform;
+}
+
+.pulse-element::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  background: inherit;
+  z-index: -1;
+  animation: pulse-ring 2s infinite ease-out;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* ============ LOADING DOTS ============ */
+.loading-dots {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.loading-dot {
+  border-radius: 50%;
+  will-change: transform;
+}
+
+/* Size variants */
+.loading-dots--sm .loading-dot {
+  width: 4px;
+  height: 4px;
+}
+
+.loading-dots--md .loading-dot {
+  width: 6px;
+  height: 6px;
+}
+
+.loading-dots--lg .loading-dot {
+  width: 8px;
+  height: 8px;
+}
+
+/* Color variants */
+.loading-dots--primary .loading-dot {
+  background: #00e5ff;
+}
+
+.loading-dots--secondary .loading-dot {
+  background: rgba(0, 229, 255, 0.6);
+}
+
+.loading-dots--white .loading-dot {
+  background: white;
+}
+
+/* ============ RESPONSIVE DESIGN ============ */
+@media (max-width: 768px) {
+  .fab {
+    width: 48px;
+    height: 48px;
+  }
+
+  .fab--top-left,
+  .fab--top-right {
+    top: 16px;
+  }
+
+  .fab--top-left,
+  .fab--bottom-left {
+    left: 16px;
+  }
+
+  .fab--top-right,
+  .fab--bottom-right {
+    right: 16px;
+  }
+
+  .fab--bottom-left,
+  .fab--bottom-right {
+    bottom: 16px;
+  }
+
+  .animated-btn--lg {
+    height: 48px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stagger-container {
+    gap: 12px;
+  }
+
+  .animated-btn {
+    min-width: 44px; /* Touch target */
+  }
+}
+
+/* ============ DARK MODE SUPPORT ============ */
+@media (prefers-color-scheme: dark) {
+  .animated-btn--tertiary {
+    background: rgba(0, 0, 0, 0.3);
+    color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .hover-card::before {
+    background: linear-gradient(
+      135deg,
+      rgba(0, 229, 255, 0.15) 0%,
+      rgba(0, 188, 212, 0.15) 100%
+    );
+  }
+
+  .magnetic-element::before {
+    background: radial-gradient(
+      circle at center,
+      rgba(0, 229, 255, 0.15) 0%,
+      transparent 70%
+    );
+  }
+}
+
+/* ============ HIGH CONTRAST MODE ============ */
+@media (prefers-contrast: high) {
+  .animated-btn {
+    border-width: 2px;
+  }
+
+  .animated-btn--primary,
+  .animated-btn--secondary,
+  .animated-btn--tertiary {
+    border-color: currentColor;
+  }
+
+  .fab {
+    border: 2px solid currentColor;
+  }
+
+  .loading-dot {
+    border: 1px solid currentColor;
+  }
+}
+
+/* ============ REDUCED MOTION ============ */
+@media (prefers-reduced-motion: reduce) {
+  .animated-btn,
+  .hover-card,
+  .fab,
+  .stagger-item,
+  .parallax-element,
+  .reveal-on-scroll,
+  .magnetic-element,
+  .pulse-element {
+    transition: none;
+    animation: none;
+  }
+
+  .pulse-element::after {
+    display: none;
+  }
+
+  .ripple {
+    display: none;
+  }
+
+  .loading-dot {
+    animation: none;
+  }
+}
+
+/* ============ PRINT STYLES ============ */
+@media print {
+  .fab,
+  .loading-dots {
+    display: none;
+  }
+
+  .animated-btn,
+  .hover-card {
+    box-shadow: none !important;
+    background: transparent !important;
+    color: black !important;
+    border: 1px solid black !important;
+  }
+}

@@ -1,206 +1,389 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PageWrapper from '../components/PageWrapper';
-import UnifiedWalletConnect from '../components/unified/UnifiedWalletConnect';
-import CleanBinaryTree from '../components/CleanBinaryTree';
-import { motion } from 'framer-motion';
+import ErrorBoundary from '../components/ErrorBoundary';
+import GenealogyTree from '../components/enhanced/GenealogyTree';
+import '../styles/brandColors.css';
 import './Genealogy.css';
 
-const Genealogy = ({ account, provider, signer, onConnect, onDisconnect }) => {
+export default function Genealogy({ account, provider }) {
   const navigate = useNavigate();
+  const [treeData, setTreeData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!account) {
+      navigate('/');
+      return;
+    }
+    loadGenealogyData();
+  }, [account, navigate]);
+
+  const loadGenealogyData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      console.log('Loading genealogy data for account:', account);
+
+      // Validate account is a string
+      const accountStr = typeof account === 'string' ? account : account?.address || '';
+      
+      // Use the enhanced LeadFive business model tree structure
+      const enhancedTreeData = {
+        name: accountStr
+          ? `You (${accountStr.slice(0, 6)}...${accountStr.slice(-4)})`
+          : 'You (Root)',
+        id: 'user',
+        level: 0,
+        package: 'Professional',
+        packageValue: 100,
+        totalEarnings: 1240.5,
+        directCommission: 0,
+        levelBonus: 185.3,
+        leaderPool: 45.3,
+        helpPool: 155.9,
+        uplineBonus: 0,
+        status: 'active',
+        rank: 'Silver Star',
+        avatar: '👤',
+        joinDate: new Date().toISOString().split('T')[0],
+        directReferrals: 2,
+        teamSize: 25,
+        children: [
+          {
+            name: 'Alice Chen',
+            id: 'alice',
+            level: 1,
+            position: 'left',
+            package: 'Elite',
+            packageValue: 200,
+            totalEarnings: 820.0,
+            directCommission: 240.0,
+            levelBonus: 125.0,
+            leaderPool: 15.0,
+            helpPool: 85.0,
+            uplineBonus: 20.0,
+            status: 'active',
+            rank: 'Bronze Leader',
+            avatar: '👩',
+            joinDate: '2024-02-15',
+            directReferrals: 2,
+            teamSize: 12,
+            children: [
+              {
+                name: 'Bob Wilson',
+                id: 'bob',
+                level: 2,
+                position: 'left',
+                package: 'Professional',
+                packageValue: 100,
+                totalEarnings: 340.0,
+                directCommission: 120.0,
+                levelBonus: 45.0,
+                leaderPool: 0,
+                helpPool: 35.0,
+                uplineBonus: 10.0,
+                status: 'active',
+                rank: 'Member',
+                avatar: '👨',
+                joinDate: '2024-03-10',
+                directReferrals: 2,
+                teamSize: 6,
+              },
+              {
+                name: 'Sarah Johnson',
+                id: 'sarah',
+                level: 2,
+                position: 'right',
+                package: 'Growth',
+                packageValue: 50,
+                totalEarnings: 320.0,
+                directCommission: 120.0,
+                levelBonus: 35.0,
+                leaderPool: 0,
+                helpPool: 28.0,
+                uplineBonus: 8.0,
+                status: 'active',
+                rank: 'Member',
+                avatar: '👩',
+                joinDate: '2024-03-15',
+                directReferrals: 1,
+                teamSize: 3,
+              },
+            ],
+          },
+          {
+            name: 'David Kim',
+            id: 'david',
+            level: 1,
+            position: 'right',
+            package: 'Professional',
+            packageValue: 100,
+            totalEarnings: 620.0,
+            directCommission: 200.0,
+            levelBonus: 85.0,
+            leaderPool: 12.0,
+            helpPool: 55.0,
+            uplineBonus: 15.0,
+            status: 'active',
+            rank: 'Bronze Leader',
+            avatar: '👨',
+            joinDate: '2024-02-28',
+            directReferrals: 2,
+            teamSize: 8,
+            children: [
+              {
+                name: 'Maria Santos',
+                id: 'maria',
+                level: 2,
+                position: 'left',
+                package: 'Elite',
+                packageValue: 200,
+                totalEarnings: 450.0,
+                directCommission: 160.0,
+                levelBonus: 35.0,
+                leaderPool: 0,
+                helpPool: 40.0,
+                uplineBonus: 12.0,
+                status: 'active',
+                rank: 'Member',
+                avatar: '👩',
+                joinDate: '2024-04-10',
+                directReferrals: 1,
+                teamSize: 3,
+              },
+              {
+                name: 'Ahmed Hassan',
+                id: 'ahmed',
+                level: 2,
+                position: 'right',
+                package: 'Growth',
+                packageValue: 50,
+                totalEarnings: 195.0,
+                directCommission: 80.0,
+                levelBonus: 18.0,
+                leaderPool: 0,
+                helpPool: 22.0,
+                uplineBonus: 6.0,
+                status: 'active',
+                rank: 'Member',
+                avatar: '👨',
+                joinDate: '2024-05-01',
+                directReferrals: 1,
+                teamSize: 2,
+              },
+            ],
+          },
+        ],
+      };
+
+      setTreeData(enhancedTreeData);
+    } catch (error) {
+      console.error('Error loading genealogy data:', error);
+      setError(`Failed to load genealogy data: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="genealogy-loading">
+        <div className="loading-spinner"></div>
+        <p>Loading your genealogy tree...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="genealogy-error">
+        <p>{error}</p>
+        <button onClick={loadGenealogyData}>Retry</button>
+      </div>
+    );
+  }
 
   return (
-    <PageWrapper>
+    <ErrorBoundary>
       <div className="genealogy-page">
-        {/* Page Header */}
-        <motion.div 
-          className="page-header"
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h1>🌳 Community Levels</h1>
-          <p>Visualize and analyze your community structure with advanced insights and real-time analytics.</p>
-        </motion.div>
+        <div className="page-header">
+          <h1>🌳 LeadFive Genealogy Tree</h1>
+          <p>
+            Interactive network visualization with complete earnings breakdown
+          </p>
+        </div>
 
-        {/* Wallet Connection */}
-        {!account ? (
-          <motion.div 
-            className="wallet-connect-section"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <div className="connection-prompt">
-              <h3>Connect Your Wallet</h3>
-              <p>Connect your wallet to view your community levels and structure.</p>
-              <UnifiedWalletConnect 
-                onConnect={onConnect}
-                onDisconnect={onDisconnect}
-                account={account}
-                showBalance={true}
-              />
+        {/* Connected User Info */}
+        {account && (
+          <div className="connected-user-info">
+            <div className="user-card">
+              <div className="user-details">
+                <div className="user-address">
+                  <strong>Connected Wallet:</strong>
+                  <div className="address-display">
+                    {account.slice(0, 8)}...{account.slice(-6)}
+                  </div>
+                </div>
+              </div>
+              <div className="quick-actions">
+                <button className="action-btn primary" onClick={() => navigate('/dashboard')}>
+                  Dashboard
+                </button>
+                <button className="action-btn secondary" onClick={loadGenealogyData}>
+                  Refresh Tree
+                </button>
+              </div>
             </div>
-          </motion.div>
-        ) : (
-          <>
-            {/* Connected User Info */}
-            <motion.div 
-              className="connected-user-info"
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <div className="user-card">
-                <div className="user-details">
-                  <div className="user-address">
-                    <strong>Connected Wallet:</strong>
-                    <span className="address-display">
-                      {account?.substring(0, 6)}...{account?.substring(account.length - 4)}
-                    </span>
-                  </div>
-                  <button onClick={onDisconnect} className="disconnect-btn">
-                    Disconnect Wallet
-                  </button>
-                </div>
-                <div className="quick-actions">
-                  <button 
-                    onClick={() => navigate('/dashboard')} 
-                    className="action-btn primary"
-                  >
-                    Go to Dashboard
-                  </button>
-                  <button 
-                    onClick={() => navigate('/referrals')} 
-                    className="action-btn secondary"
-                  >
-                    View Introductions
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Binary Tree Visualization */}
-            <motion.div 
-              className="community-visualization-section"
-              initial={{ y: 30, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              <CleanBinaryTree 
-                userAddress={account}
-                account={account}
-                data={null} // Will be passed from contract/provider
-                showControls={true}
-              />
-            </motion.div>
-
-            {/* Business Plan Information */}
-            <motion.div 
-              className="business-info-section"
-              initial={{ y: 30, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
-              <div className="info-grid">
-                <div className="info-card">
-                  <h4>🎯 4X Reward System</h4>
-                  <p>Each member can earn up to 4 times their initial membership investment through our comprehensive reward structure.</p>
-                  <div className="reward-breakdown">
-                    <div className="reward-item">
-                      <span className="reward-percentage">40%</span>
-                      <span className="reward-name">Direct Community Bonus</span>
-                    </div>
-                    <div className="reward-item">
-                      <span className="reward-percentage">10%</span>
-                      <span className="reward-name">Network Level Rewards</span>
-                    </div>
-                    <div className="reward-item">
-                      <span className="reward-percentage">10%</span>
-                      <span className="reward-name">Global Network Rewards</span>
-                    </div>
-                    <div className="reward-item">
-                      <span className="reward-percentage">10%</span>
-                      <span className="reward-name">Leadership Rewards</span>
-                    </div>
-                    <div className="reward-item">
-                      <span className="reward-percentage">30%</span>
-                      <span className="reward-name">Community Growth Pool</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="info-card">
-                  <h4>💎 Membership Tiers</h4>
-                  <p>Choose the membership level that best fits your goals and unlock increasing earning potential.</p>
-                  <div className="tier-list">
-                    <div className="tier-item bronze">
-                      <span className="tier-name">Bronze</span>
-                      <span className="tier-price">$30</span>
-                      <span className="tier-max">Max: $120</span>
-                    </div>
-                    <div className="tier-item silver">
-                      <span className="tier-name">Silver</span>
-                      <span className="tier-price">$50</span>
-                      <span className="tier-max">Max: $200</span>
-                    </div>
-                    <div className="tier-item gold">
-                      <span className="tier-name">Gold</span>
-                      <span className="tier-price">$100</span>
-                      <span className="tier-max">Max: $400</span>
-                    </div>
-                    <div className="tier-item diamond">
-                      <span className="tier-name">Diamond</span>
-                      <span className="tier-price">$200</span>
-                      <span className="tier-max">Max: $800</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="info-card">
-                  <h4>📊 Collection Rates</h4>
-                  <p>Your collection rate improves as you build your community through direct introductions.</p>
-                  <div className="collection-rates">
-                    <div className="rate-item">
-                      <span className="rate-condition">0 Introductions</span>
-                      <span className="rate-split">70% Collection / 30% Reinvestment</span>
-                    </div>
-                    <div className="rate-item">
-                      <span className="rate-condition">5+ Introductions</span>
-                      <span className="rate-split">80% Collection / 20% Reinvestment</span>
-                    </div>
-                    <div className="rate-item highlighted">
-                      <span className="rate-condition">20+ Introductions</span>
-                      <span className="rate-split">90% Collection / 10% Reinvestment</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="info-card">
-                  <h4>🏆 Leadership Qualification</h4>
-                  <p>Qualify for leadership rewards by building an active community and meeting our qualification criteria.</p>
-                  <div className="leadership-requirements">
-                    <div className="requirement-item">
-                      <span className="requirement-icon">✅</span>
-                      <span>Minimum 5 direct introductions</span>
-                    </div>
-                    <div className="requirement-item">
-                      <span className="requirement-icon">✅</span>
-                      <span>Minimum community size of 20 members</span>
-                    </div>
-                    <div className="requirement-item">
-                      <span className="requirement-icon">✅</span>
-                      <span>Maintain active status</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </>
+          </div>
         )}
-      </div>
-    </PageWrapper>
-  );
-};
 
-export default Genealogy;
+        {/* Community Visualization Section */}
+        <div className="community-visualization-section">
+          <ErrorBoundary
+            fallback={
+              <div
+                style={{
+                  padding: '40px',
+                  textAlign: 'center',
+                  background: 'rgba(26, 26, 46, 0.8)',
+                  borderRadius: '16px',
+                  border: '1px solid rgba(0, 212, 255, 0.2)',
+                  margin: '20px',
+                  color: 'white'
+                }}
+              >
+                <h3>⚠️ Tree Visualization Error</h3>
+                <p>
+                  Unable to display the genealogy tree. This might be due to
+                  browser compatibility or data issues.
+                </p>
+                <button
+                  onClick={loadGenealogyData}
+                  className="action-btn primary"
+                  style={{ marginTop: '20px' }}
+                >
+                  Retry Loading
+                </button>
+              </div>
+            }
+          >
+            <GenealogyTree
+              treeData={treeData}
+              onNodeClick={nodeData => {
+                console.log('Node clicked:', nodeData);
+                // Add any additional click handler logic here
+              }}
+            />
+          </ErrorBoundary>
+        </div>
+
+        {/* Business Info Section */}
+        <div className="business-info-section">
+          <div className="info-grid">
+            {/* Reward Structure */}
+            <div className="info-card">
+              <h4>💰 Reward Structure</h4>
+              <p>LeadFive's comprehensive reward system ensures fair distribution across all levels.</p>
+              <div className="reward-breakdown">
+                <div className="reward-item">
+                  <span className="reward-percentage">40%</span>
+                  <span className="reward-name">Direct Referral Bonus</span>
+                </div>
+                <div className="reward-item">
+                  <span className="reward-percentage">10%</span>
+                  <span className="reward-name">Level Bonus</span>
+                </div>
+                <div className="reward-item">
+                  <span className="reward-percentage">10%</span>
+                  <span className="reward-name">Upline Bonus</span>
+                </div>
+                <div className="reward-item">
+                  <span className="reward-percentage">10%</span>
+                  <span className="reward-name">Leader Pool</span>
+                </div>
+                <div className="reward-item">
+                  <span className="reward-percentage">30%</span>
+                  <span className="reward-name">Help Pool</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Package Tiers */}
+            <div className="info-card">
+              <h4>📦 Package Tiers</h4>
+              <p>Choose the package that best fits your investment goals.</p>
+              <div className="tier-list">
+                <div className="tier-item bronze">
+                  <div className="tier-name">Starter</div>
+                  <div className="tier-price">$30</div>
+                  <div className="tier-max">Max: $120</div>
+                </div>
+                <div className="tier-item silver">
+                  <div className="tier-name">Growth</div>
+                  <div className="tier-price">$50</div>
+                  <div className="tier-max">Max: $200</div>
+                </div>
+                <div className="tier-item gold">
+                  <div className="tier-name">Professional</div>
+                  <div className="tier-price">$100</div>
+                  <div className="tier-max">Max: $400</div>
+                </div>
+                <div className="tier-item diamond">
+                  <div className="tier-name">Elite</div>
+                  <div className="tier-price">$200</div>
+                  <div className="tier-max">Max: $800</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Collection Rates */}
+            <div className="info-card">
+              <h4>💳 Collection Rates</h4>
+              <p>Withdrawal/reinvestment rates based on direct referrals.</p>
+              <div className="collection-rates">
+                <div className="rate-item">
+                  <span className="rate-condition">0 Direct Referrals</span>
+                  <span className="rate-split">70% / 30%</span>
+                </div>
+                <div className="rate-item">
+                  <span className="rate-condition">1 Direct Referral</span>
+                  <span className="rate-split">80% / 20%</span>
+                </div>
+                <div className="rate-item highlighted">
+                  <span className="rate-condition">2+ Direct Referrals</span>
+                  <span className="rate-split">100% / 0%</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Leadership Requirements */}
+            <div className="info-card">
+              <h4>🏆 Leadership Requirements</h4>
+              <p>Become a leader and unlock exclusive pool rewards.</p>
+              <div className="leadership-requirements">
+                <div className="requirement-item">
+                  <span className="requirement-icon">⭐</span>
+                  <span>Shining Star: 25 active referrals</span>
+                </div>
+                <div className="requirement-item">
+                  <span className="requirement-icon">🥈</span>
+                  <span>Silver Star: 125 active referrals</span>
+                </div>
+                <div className="requirement-item">
+                  <span className="requirement-icon">🥇</span>
+                  <span>Gold Star: 625 active referrals</span>
+                </div>
+                <div className="requirement-item">
+                  <span className="requirement-icon">💎</span>
+                  <span>Diamond Star: 3,125 active referrals</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ErrorBoundary>
+  );
+}

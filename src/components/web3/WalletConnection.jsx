@@ -3,24 +3,24 @@ import UnifiedWalletConnect from '../UnifiedWalletConnect';
 import useWallet from '../../hooks/useWallet';
 
 const WalletConnection = () => {
-  const { 
-    account, 
-    isConnecting, 
+  const {
+    account,
+    isConnecting,
     isConnected,
     provider,
     signer,
     error,
-    handleConnect, 
-    handleDisconnect, 
+    handleConnect,
+    handleDisconnect,
     handleError,
     getNetworkName,
-    isCorrectNetwork
+    isCorrectNetwork,
   } = useWallet();
 
   return (
     <div className="wallet-connection">
       <h2>Wallet Connection</h2>
-      
+
       <UnifiedWalletConnect
         onConnect={handleConnect}
         onDisconnect={handleDisconnect}
@@ -29,14 +29,17 @@ const WalletConnection = () => {
       />
 
       {error && (
-        <div className="error-message" style={{ 
-          color: '#ff4444', 
-          background: 'rgba(255, 68, 68, 0.1)', 
-          padding: '10px', 
-          borderRadius: '8px', 
-          margin: '10px 0',
-          border: '1px solid #ff4444'
-        }}>
+        <div
+          className="error-message"
+          style={{
+            color: '#ff4444',
+            background: 'rgba(255, 68, 68, 0.1)',
+            padding: '10px',
+            borderRadius: '8px',
+            margin: '10px 0',
+            border: '1px solid #ff4444',
+          }}
+        >
           ⚠️ {error}
         </div>
       )}
@@ -55,8 +58,13 @@ const WalletConnection = () => {
             )}
           </div>
           <div className="detail-item" style={{ margin: '8px 0' }}>
-            <strong>Status:</strong> 
-            <span style={{ color: isCorrectNetwork() ? '#00ff88' : '#ff4444', marginLeft: '8px' }}>
+            <strong>Status:</strong>
+            <span
+              style={{
+                color: isCorrectNetwork() ? '#00ff88' : '#ff4444',
+                marginLeft: '8px',
+              }}
+            >
               {isCorrectNetwork() ? '✓ Connected' : '⚠️ Wrong Network'}
             </span>
           </div>

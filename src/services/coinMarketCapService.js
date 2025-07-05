@@ -4,11 +4,15 @@
 class CoinMarketCapService {
   constructor() {
     // Check for environment configuration
-    this.enablePriceTicker = import.meta.env.VITE_ENABLE_PRICE_TICKER !== 'false';
-    this.refreshInterval = parseInt(import.meta.env.VITE_PRICE_REFRESH_INTERVAL) || 30000;
-    this.enablePortfolioTracking = import.meta.env.VITE_ENABLE_PORTFOLIO_TRACKING !== 'false';
-    this.enableMarketWidgets = import.meta.env.VITE_ENABLE_MARKET_WIDGETS !== 'false';
-    
+    this.enablePriceTicker =
+      import.meta.env.VITE_ENABLE_PRICE_TICKER !== 'false';
+    this.refreshInterval =
+      parseInt(import.meta.env.VITE_PRICE_REFRESH_INTERVAL) || 30000;
+    this.enablePortfolioTracking =
+      import.meta.env.VITE_ENABLE_PORTFOLIO_TRACKING !== 'false';
+    this.enableMarketWidgets =
+      import.meta.env.VITE_ENABLE_MARKET_WIDGETS !== 'false';
+
     // Using CoinGecko API as primary (free, no API key required)
     // CoinMarketCap API key would be used server-side for premium features
     this.baseURL = 'https://api.coingecko.com/api/v3';
@@ -17,10 +21,12 @@ class CoinMarketCapService {
   }
 
   // Get current prices for major cryptocurrencies
-  async getCurrentPrices(symbols = ['tether', 'binancecoin', 'bitcoin', 'ethereum']) {
+  async getCurrentPrices(
+    symbols = ['tether', 'binancecoin', 'bitcoin', 'ethereum']
+  ) {
     const cacheKey = symbols.join(',');
     const cachedData = this.priceCache.get(cacheKey);
-    
+
     if (cachedData && Date.now() - cachedData.timestamp < this.cacheTimeout) {
       return cachedData.data;
     }
@@ -30,25 +36,25 @@ class CoinMarketCapService {
       const response = await fetch(
         `${this.baseURL}/simple/price?ids=${symbolsString}&vs_currencies=usd&include_24hr_change=true&include_market_cap=true&include_24hr_vol=true`
       );
-      
+
       if (!response.ok) {
         throw new Error('Failed to fetch price data');
       }
-      
+
       const data = await response.json();
-      
+
       // Transform data to match our needs
       const transformedData = this.transformPriceData(data);
-      
+
       // Cache the result
       this.priceCache.set(cacheKey, {
         data: transformedData,
-        timestamp: Date.now()
+        timestamp: Date.now(),
       });
-      
+
       return transformedData;
     } catch (error) {
-      console.error('Error fetching cryptocurrency prices:', error);
+      console.warn('Cannot fetch live prices (CORS or network issue), using fallback data:', error.message);
       return this.getFallbackPrices();
     }
   }
@@ -56,11 +62,11 @@ class CoinMarketCapService {
   // Transform CoinGecko data to our format
   transformPriceData(data) {
     const priceData = {};
-    
+
     Object.keys(data).forEach(coinId => {
       const coin = data[coinId];
       let symbol = '';
-      
+
       // Map coin IDs to symbols
       switch (coinId) {
         case 'tether':
@@ -78,17 +84,17 @@ class CoinMarketCapService {
         default:
           symbol = coinId.toUpperCase();
       }
-      
+
       priceData[symbol] = {
         symbol,
         price: coin.usd,
         change24h: coin.usd_24h_change || 0,
         marketCap: coin.usd_market_cap || 0,
         volume24h: coin.usd_24h_vol || 0,
-        lastUpdated: new Date().toISOString()
+        lastUpdated: new Date().toISOString(),
       };
     });
-    
+
     return priceData;
   }
 
@@ -97,11 +103,11 @@ class CoinMarketCapService {
     return {
       USDT: {
         symbol: 'USDT',
-        price: 1.00,
+        price: 1.0,
         change24h: 0,
         marketCap: 0,
         volume24h: 0,
-        lastUpdated: new Date().toISOString()
+        lastUpdated: new Date().toISOString(),
       },
       BNB: {
         symbol: 'BNB',
@@ -109,7 +115,7 @@ class CoinMarketCapService {
         change24h: 0,
         marketCap: 0,
         volume24h: 0,
-        lastUpdated: new Date().toISOString()
+        lastUpdated: new Date().toISOString(),
       },
       BTC: {
         symbol: 'BTC',
@@ -117,7 +123,7 @@ class CoinMarketCapService {
         change24h: 0,
         marketCap: 0,
         volume24h: 0,
-        lastUpdated: new Date().toISOString()
+        lastUpdated: new Date().toISOString(),
       },
       ETH: {
         symbol: 'ETH',
@@ -125,8 +131,8 @@ class CoinMarketCapService {
         change24h: 0,
         marketCap: 0,
         volume24h: 0,
-        lastUpdated: new Date().toISOString()
-      }
+        lastUpdated: new Date().toISOString(),
+      },
     };
   }
 
@@ -150,7 +156,7 @@ class CoinMarketCapService {
   async calculateUSDValue(usdtAmount) {
     const usdtData = await this.getUSDTPrice();
     if (!usdtData) return usdtAmount; // Fallback to 1:1 ratio
-    
+
     return parseFloat(usdtAmount) * usdtData.price;
   }
 
@@ -160,15 +166,15 @@ class CoinMarketCapService {
       { level: 1, usdt: 30 },
       { level: 2, usdt: 50 },
       { level: 3, usdt: 100 },
-      { level: 4, usdt: 200 }
+      { level: 4, usdt: 200 },
     ];
 
     const usdtPrice = await this.getUSDTPrice();
-    
+
     return packages.map(pkg => ({
       ...pkg,
       usd: pkg.usdt * (usdtPrice?.price || 1),
-      maxEarnings: pkg.usdt * 4 * (usdtPrice?.price || 1)
+      maxEarnings: pkg.usdt * 4 * (usdtPrice?.price || 1),
     }));
   }
 
@@ -176,12 +182,19 @@ class CoinMarketCapService {
   async getMarketSummary() {
     try {
       const prices = await this.getCurrentPrices();
-      
+
       return {
-        totalMarketCap: Object.values(prices).reduce((sum, coin) => sum + (coin.marketCap || 0), 0),
-        averageChange: Object.values(prices).reduce((sum, coin) => sum + (coin.change24h || 0), 0) / Object.keys(prices).length,
+        totalMarketCap: Object.values(prices).reduce(
+          (sum, coin) => sum + (coin.marketCap || 0),
+          0
+        ),
+        averageChange:
+          Object.values(prices).reduce(
+            (sum, coin) => sum + (coin.change24h || 0),
+            0
+          ) / Object.keys(prices).length,
         lastUpdated: new Date().toISOString(),
-        cryptos: prices
+        cryptos: prices,
       };
     } catch (error) {
       console.error('Error getting market summary:', error);
@@ -196,15 +209,15 @@ class CoinMarketCapService {
         style: 'currency',
         currency: 'USD',
         minimumFractionDigits: 0,
-        maximumFractionDigits: 0
+        maximumFractionDigits: 0,
       }).format(price);
     }
-    
+
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals
+      maximumFractionDigits: decimals,
     }).format(price);
   }
 

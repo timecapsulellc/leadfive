@@ -6,95 +6,101 @@
 import { APP_CONFIG } from '../config/app.js';
 
 class KnowledgeBaseManager {
-    constructor() {
-        // Singleton pattern
-        if (KnowledgeBaseManager.instance) {
-            return KnowledgeBaseManager.instance;
-        }
-        
-        this.documents = [];
-        this.embeddings = null;
-        this.vectorStore = null;
-        this.isEmbedded = false;
-        
-        KnowledgeBaseManager.instance = this;
-        this.init();
+  constructor() {
+    // Singleton pattern
+    if (KnowledgeBaseManager.instance) {
+      return KnowledgeBaseManager.instance;
     }
 
-    async init() {
-        console.log('🧠 Initializing AI Knowledge Base Manager...');
-        try {
-            // Initialize with local storage for now
-            this.loadExistingKnowledge();
-            console.log('✅ Knowledge base manager initialized');
-        } catch (error) {
-            console.error('❌ Failed to initialize knowledge base:', error);
-        }
+    this.documents = [];
+    this.embeddings = null;
+    this.vectorStore = null;
+    this.isEmbedded = false;
+
+    KnowledgeBaseManager.instance = this;
+    this.init();
+  }
+
+  async init() {
+    console.log('🧠 Initializing AI Knowledge Base Manager...');
+    try {
+      // Initialize with local storage for now
+      this.loadExistingKnowledge();
+      console.log('✅ Knowledge base manager initialized');
+    } catch (error) {
+      console.error('❌ Failed to initialize knowledge base:', error);
+    }
+  }
+
+  /**
+   * Embed marketing PDF and contract documentation
+   */
+  async embedMarketingMaterials() {
+    if (this.isEmbedded) {
+      console.log('📄 Marketing materials already embedded, skipping...');
+      return;
     }
 
-    /**
-     * Embed marketing PDF and contract documentation
-     */
-    async embedMarketingMaterials() {
-        if (this.isEmbedded) {
-            console.log('📄 Marketing materials already embedded, skipping...');
-            return;
-        }
-        
-        console.log('📄 Embedding marketing materials and contract documentation...');
-        
-        try {
-            // Simulated PDF content extraction (in production, use PDF parsing library)
-            const marketingContent = {
-                title: 'LEAD FIVE Presentation',
-                content: await this.extractPDFContent(),
-                metadata: {
-                    source: 'LEAD_FIVE_presentation.pdf',
-                    type: 'marketing_material',
-                    timestamp: new Date().toISOString(),
-                    contract_address: APP_CONFIG.contract.address,
-                    network: APP_CONFIG.contract.network.name
-                }
-            };
+    console.log(
+      '📄 Embedding marketing materials and contract documentation...'
+    );
 
-            // Contract documentation
-            const contractContent = {
-                title: 'Smart Contract Documentation',
-                content: this.getContractDocumentation(),
-                metadata: {
-                    source: 'smart_contract_abi',
-                    type: 'technical_documentation',
-                    timestamp: new Date().toISOString(),
-                    contract_address: APP_CONFIG.contract.address
-                }
-            };
+    try {
+      // Simulated PDF content extraction (in production, use PDF parsing library)
+      const marketingContent = {
+        title: 'LEAD FIVE Presentation',
+        content: await this.extractPDFContent(),
+        metadata: {
+          source: 'LEAD_FIVE_presentation.pdf',
+          type: 'marketing_material',
+          timestamp: new Date().toISOString(),
+          contract_address: APP_CONFIG.contract.address,
+          network: APP_CONFIG.contract.network.name,
+        },
+      };
 
-            // Compensation plan documentation
-            const compensationContent = {
-                title: 'Compensation Plan Rules',
-                content: this.getCompensationRules(),
-                metadata: {
-                    source: 'compensation_rules',
-                    type: 'business_logic',
-                    timestamp: new Date().toISOString()
-                }
-            };
+      // Contract documentation
+      const contractContent = {
+        title: 'Smart Contract Documentation',
+        content: this.getContractDocumentation(),
+        metadata: {
+          source: 'smart_contract_abi',
+          type: 'technical_documentation',
+          timestamp: new Date().toISOString(),
+          contract_address: APP_CONFIG.contract.address,
+        },
+      };
 
-            this.documents.push(marketingContent, contractContent, compensationContent);
-            await this.indexDocuments();
-            
-            this.isEmbedded = true;
-            console.log('✅ Marketing materials embedded successfully');
-            return { success: true, documentsCount: this.documents.length };
-        } catch (error) {
-            console.error('❌ Failed to embed marketing materials:', error);
-            return { success: false, error: error.message };
-        }
+      // Compensation plan documentation
+      const compensationContent = {
+        title: 'Compensation Plan Rules',
+        content: this.getCompensationRules(),
+        metadata: {
+          source: 'compensation_rules',
+          type: 'business_logic',
+          timestamp: new Date().toISOString(),
+        },
+      };
+
+      this.documents.push(
+        marketingContent,
+        contractContent,
+        compensationContent
+      );
+      await this.indexDocuments();
+
+      this.isEmbedded = true;
+      console.log('✅ Marketing materials embedded successfully');
+      return { success: true, documentsCount: this.documents.length };
+    } catch (error) {
+      console.error('❌ Failed to embed marketing materials:', error);
+      return { success: false, error: error.message };
     }
+  }
 
-    async extractPDFContent() {
-        // In production, this would use a PDF parsing library
-        return `
+  async extractPDFContent() {
+    // In production, this would use a PDF parsing library
+    return `
         LEAD FIVE: The Decentralized Incentive Platform
 
         BUSINESS MODEL:
@@ -129,10 +135,10 @@ class KnowledgeBaseManager {
         - Income opportunity seekers
         - Blockchain technology adopters
         `;
-    }
+  }
 
-    getContractDocumentation() {
-        return `
+  getContractDocumentation() {
+    return `
         LEADFIVE SMART CONTRACT DOCUMENTATION
 
         CONTRACT ADDRESS: ${APP_CONFIG.contract.address}
@@ -179,10 +185,10 @@ class KnowledgeBaseManager {
         - Admin blacklist capabilities
         - Upgradeable proxy pattern for maintenance
         `;
-    }
+  }
 
-    getCompensationRules() {
-        return `
+  getCompensationRules() {
+    return `
         LEADFIVE COMPENSATION PLAN RULES
 
         DIRECT REFERRAL COMMISSION:
@@ -227,149 +233,158 @@ class KnowledgeBaseManager {
         - Processing fees may apply
         - Real-time balance updates
         `;
+  }
+
+  async indexDocuments() {
+    console.log('🔍 Indexing documents for AI retrieval...');
+
+    // In production, this would use vector embeddings
+    this.documents.forEach((doc, index) => {
+      doc.id = index;
+      doc.searchable = doc.content.toLowerCase();
+    });
+
+    // Save to local storage for persistence
+    localStorage.setItem(
+      'leadfive_knowledge_base',
+      JSON.stringify(this.documents)
+    );
+    console.log(`✅ Indexed ${this.documents.length} documents`);
+  }
+
+  loadExistingKnowledge() {
+    try {
+      const stored = localStorage.getItem('leadfive_knowledge_base');
+      if (stored) {
+        this.documents = JSON.parse(stored);
+        console.log(`📚 Loaded ${this.documents.length} existing documents`);
+      }
+    } catch (error) {
+      console.log('📚 No existing knowledge base found, starting fresh');
+    }
+  }
+
+  /**
+   * Search knowledge base for relevant information
+   */
+  async searchKnowledge(query, type = null) {
+    console.log(`🔍 Searching knowledge base for: "${query}"`);
+
+    const queryLower = query.toLowerCase();
+    const results = this.documents.filter(doc => {
+      const matchesContent = doc.searchable.includes(queryLower);
+      const matchesType = !type || doc.metadata.type === type;
+      return matchesContent && matchesType;
+    });
+
+    // Score results by relevance
+    const scoredResults = results.map(doc => {
+      const contentMatches = (
+        doc.searchable.match(new RegExp(queryLower, 'g')) || []
+      ).length;
+      const titleMatches = doc.title.toLowerCase().includes(queryLower)
+        ? 10
+        : 0;
+
+      return {
+        ...doc,
+        relevanceScore: contentMatches + titleMatches,
+      };
+    });
+
+    // Sort by relevance and return top results
+    const sortedResults = scoredResults.sort(
+      (a, b) => b.relevanceScore - a.relevanceScore
+    );
+
+    console.log(`✅ Found ${sortedResults.length} relevant documents`);
+    return sortedResults.slice(0, 5); // Return top 5 results
+  }
+
+  /**
+   * Get context for AI queries
+   */
+  async getContextForQuery(query) {
+    const results = await this.searchKnowledge(query);
+
+    const context = results.map(doc => ({
+      source: doc.metadata.source,
+      type: doc.metadata.type,
+      relevantContent: this.extractRelevantContent(doc.content, query),
+      timestamp: doc.metadata.timestamp,
+    }));
+
+    return {
+      query: query,
+      contextDocuments: context,
+      totalRelevantDocs: results.length,
+      timestamp: new Date().toISOString(),
+    };
+  }
+
+  extractRelevantContent(content, query, maxLength = 500) {
+    const queryWords = query.toLowerCase().split(' ');
+    const sentences = content.split('.');
+
+    // Find sentences containing query words
+    const relevantSentences = sentences.filter(sentence => {
+      const sentenceLower = sentence.toLowerCase();
+      return queryWords.some(word => sentenceLower.includes(word));
+    });
+
+    // Join and truncate if necessary
+    let relevantContent = relevantSentences.join('. ').trim();
+    if (relevantContent.length > maxLength) {
+      relevantContent = relevantContent.substring(0, maxLength) + '...';
     }
 
-    async indexDocuments() {
-        console.log('🔍 Indexing documents for AI retrieval...');
-        
-        // In production, this would use vector embeddings
-        this.documents.forEach((doc, index) => {
-            doc.id = index;
-            doc.searchable = doc.content.toLowerCase();
-        });
-        
-        // Save to local storage for persistence
-        localStorage.setItem('leadfive_knowledge_base', JSON.stringify(this.documents));
-        console.log(`✅ Indexed ${this.documents.length} documents`);
-    }
+    return relevantContent || content.substring(0, maxLength) + '...';
+  }
 
-    loadExistingKnowledge() {
-        try {
-            const stored = localStorage.getItem('leadfive_knowledge_base');
-            if (stored) {
-                this.documents = JSON.parse(stored);
-                console.log(`📚 Loaded ${this.documents.length} existing documents`);
-            }
-        } catch (error) {
-            console.log('📚 No existing knowledge base found, starting fresh');
-        }
-    }
+  /**
+   * Update knowledge base with new information
+   */
+  async updateKnowledge(title, content, metadata) {
+    const newDocument = {
+      title: title,
+      content: content,
+      metadata: {
+        ...metadata,
+        timestamp: new Date().toISOString(),
+        updated: true,
+      },
+      searchable: content.toLowerCase(),
+    };
 
-    /**
-     * Search knowledge base for relevant information
-     */
-    async searchKnowledge(query, type = null) {
-        console.log(`🔍 Searching knowledge base for: "${query}"`);
-        
-        const queryLower = query.toLowerCase();
-        const results = this.documents.filter(doc => {
-            const matchesContent = doc.searchable.includes(queryLower);
-            const matchesType = !type || doc.metadata.type === type;
-            return matchesContent && matchesType;
-        });
+    this.documents.push(newDocument);
+    await this.indexDocuments();
 
-        // Score results by relevance
-        const scoredResults = results.map(doc => {
-            const contentMatches = (doc.searchable.match(new RegExp(queryLower, 'g')) || []).length;
-            const titleMatches = doc.title.toLowerCase().includes(queryLower) ? 10 : 0;
-            
-            return {
-                ...doc,
-                relevanceScore: contentMatches + titleMatches
-            };
-        });
+    console.log(`✅ Added new knowledge: ${title}`);
+    return { success: true, documentId: this.documents.length - 1 };
+  }
 
-        // Sort by relevance and return top results
-        const sortedResults = scoredResults.sort((a, b) => b.relevanceScore - a.relevanceScore);
-        
-        console.log(`✅ Found ${sortedResults.length} relevant documents`);
-        return sortedResults.slice(0, 5); // Return top 5 results
-    }
+  /**
+   * Get knowledge base statistics
+   */
+  getStats() {
+    const stats = {
+      totalDocuments: this.documents.length,
+      documentTypes: {},
+      lastUpdated: null,
+      size: JSON.stringify(this.documents).length,
+    };
 
-    /**
-     * Get context for AI queries
-     */
-    async getContextForQuery(query) {
-        const results = await this.searchKnowledge(query);
-        
-        const context = results.map(doc => ({
-            source: doc.metadata.source,
-            type: doc.metadata.type,
-            relevantContent: this.extractRelevantContent(doc.content, query),
-            timestamp: doc.metadata.timestamp
-        }));
+    this.documents.forEach(doc => {
+      const type = doc.metadata.type;
+      stats.documentTypes[type] = (stats.documentTypes[type] || 0) + 1;
 
-        return {
-            query: query,
-            contextDocuments: context,
-            totalRelevantDocs: results.length,
-            timestamp: new Date().toISOString()
-        };
-    }
+      if (!stats.lastUpdated || doc.metadata.timestamp > stats.lastUpdated) {
+        stats.lastUpdated = doc.metadata.timestamp;
+      }
+    });
 
-    extractRelevantContent(content, query, maxLength = 500) {
-        const queryWords = query.toLowerCase().split(' ');
-        const sentences = content.split('.');
-        
-        // Find sentences containing query words
-        const relevantSentences = sentences.filter(sentence => {
-            const sentenceLower = sentence.toLowerCase();
-            return queryWords.some(word => sentenceLower.includes(word));
-        });
-
-        // Join and truncate if necessary
-        let relevantContent = relevantSentences.join('. ').trim();
-        if (relevantContent.length > maxLength) {
-            relevantContent = relevantContent.substring(0, maxLength) + '...';
-        }
-
-        return relevantContent || content.substring(0, maxLength) + '...';
-    }
-
-    /**
-     * Update knowledge base with new information
-     */
-    async updateKnowledge(title, content, metadata) {
-        const newDocument = {
-            title: title,
-            content: content,
-            metadata: {
-                ...metadata,
-                timestamp: new Date().toISOString(),
-                updated: true
-            },
-            searchable: content.toLowerCase()
-        };
-
-        this.documents.push(newDocument);
-        await this.indexDocuments();
-        
-        console.log(`✅ Added new knowledge: ${title}`);
-        return { success: true, documentId: this.documents.length - 1 };
-    }
-
-    /**
-     * Get knowledge base statistics
-     */
-    getStats() {
-        const stats = {
-            totalDocuments: this.documents.length,
-            documentTypes: {},
-            lastUpdated: null,
-            size: JSON.stringify(this.documents).length
-        };
-
-        this.documents.forEach(doc => {
-            const type = doc.metadata.type;
-            stats.documentTypes[type] = (stats.documentTypes[type] || 0) + 1;
-            
-            if (!stats.lastUpdated || doc.metadata.timestamp > stats.lastUpdated) {
-                stats.lastUpdated = doc.metadata.timestamp;
-            }
-        });
-
-        return stats;
-    }
+    return stats;
+  }
 }
 
 export default KnowledgeBaseManager;

@@ -13,19 +13,21 @@ const clearCachePlugin = () => {
         res.setHeader('Expires', '0');
         res.setHeader('Surrogate-Control', 'no-store');
         
-        // Comprehensive security headers
+        // Enhanced security headers with proper API access and fonts
         res.setHeader('Content-Security-Policy', 
           "default-src 'self'; " +
-          "script-src 'self' 'unsafe-inline' 'unsafe-eval' https:; " +
-          "style-src 'self' 'unsafe-inline' https: https://fonts.googleapis.com; " +
+          "script-src 'self' 'unsafe-inline' 'unsafe-eval' https: blob:; " +
+          "style-src 'self' 'unsafe-inline' https: https://fonts.googleapis.com https://cdn.jsdelivr.net; " +
+          "style-src-elem 'self' 'unsafe-inline' https: https://fonts.googleapis.com https://cdn.jsdelivr.net; " +
           "font-src 'self' data: https: https://fonts.gstatic.com; " +
           "img-src 'self' data: https: blob:; " +
-          "connect-src 'self' https: wss: ws:; " +
-          "frame-ancestors 'self'; " +
+          "connect-src 'self' https: wss: ws: https://api.coingecko.com https://*.bsc.org https://*.binance.org https://*.infura.io https://*.alchemy.com; " +
+          "frame-ancestors 'none'; " +
           "base-uri 'self'; " +
-          "object-src 'none'"
+          "object-src 'none'; " +
+          "media-src 'self' blob: data: https:"
         );
-        res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+        res.setHeader('X-Frame-Options', 'DENY');
         res.setHeader('X-Content-Type-Options', 'nosniff');
         res.setHeader('X-XSS-Protection', '1; mode=block');
         res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
@@ -40,18 +42,20 @@ const clearCachePlugin = () => {
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react()
+    react(),
+    // Only apply clearCache plugin in development when needed
+    ...(process.env.NODE_ENV === 'development' ? [] : [])
   ],
   
   server: {
     host: '0.0.0.0',
-    port: 5175,
+    port: 5176,
     strictPort: true
   },
   
   preview: {
     host: '0.0.0.0',
-    port: 5175,
+    port: 5176,
   },
   
   define: {

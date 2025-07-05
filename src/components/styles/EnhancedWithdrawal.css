@@ -355,8 +355,12 @@
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Referral Tier Status */
@@ -607,11 +611,11 @@
   .withdrawal-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .breakdown-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .tier-levels {
     grid-template-columns: 1fr;
   }
@@ -621,22 +625,22 @@
   .enhanced-withdrawal-system {
     padding: 15px;
   }
-  
+
   .withdrawal-header {
     flex-direction: column;
     gap: 15px;
     text-align: center;
   }
-  
+
   .header-stats {
     justify-content: center;
   }
-  
+
   .amount-input-wrapper input {
     padding: 12px 40px;
     font-size: 1rem;
   }
-  
+
   .quick-amounts {
     grid-template-columns: repeat(4, 1fr);
   }

@@ -16,7 +16,7 @@
 .logo-text {
   font-size: 1.5rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #00D4FF 0%, #7B2CBF 50%, #FF6B35 100%);
+  background: linear-gradient(135deg, #00d4ff 0%, #7b2cbf 50%, #ff6b35 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -25,7 +25,8 @@
 
 /* Animation for the logo */
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -56,4 +57,4 @@
   .logo-text {
     font-size: 1.2rem;
   }
-} 
+}

@@ -13,10 +13,12 @@ const PerformanceMonitor = ({ componentName }) => {
     return () => {
       const endTime = performance.now();
       const renderTime = endTime - renderTimeRef.current;
-      
+
       // Only log in development mode
       if (process.env.NODE_ENV === 'development' && renderTime > 16) {
-        console.warn(`🐌 Slow render detected in ${componentName}: ${renderTime.toFixed(2)}ms (Render #${renderCountRef.current})`);
+        console.warn(
+          `🐌 Slow render detected in ${componentName}: ${renderTime.toFixed(2)}ms (Render #${renderCountRef.current})`
+        );
       }
     };
   });
@@ -26,10 +28,12 @@ const PerformanceMonitor = ({ componentName }) => {
     if (process.env.NODE_ENV === 'development') {
       console.log(`🎯 ${componentName} mounted`);
     }
-    
+
     return () => {
       if (process.env.NODE_ENV === 'development') {
-        console.log(`👋 ${componentName} unmounted after ${renderCountRef.current} renders`);
+        console.log(
+          `👋 ${componentName} unmounted after ${renderCountRef.current} renders`
+        );
       }
     };
   }, [componentName]);

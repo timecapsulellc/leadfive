@@ -1,9 +1,9 @@
 /**
  * Mobile Security Headers Utility
- * 
+ *
  * Implements comprehensive security headers for mobile browsers and PWA security.
  * Provides protection against XSS, CSRF, clickjacking, and other mobile-specific attacks.
- * 
+ *
  * Security Features:
  * - Content Security Policy (CSP) for XSS protection
  * - X-Frame-Options for clickjacking protection
@@ -26,7 +26,16 @@ const CSP_DIRECTIVES = {
     'https://unpkg.com', // For package CDN
     'blob:', // For Web3 blob URLs
   ],
-  'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com', 'https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net', 'https://use.fontawesome.com', 'https://maxcdn.bootstrapcdn.com', 'https://unpkg.com'], // style-src directive includes cdn.jsdelivr.net
+  'style-src': [
+    "'self'",
+    "'unsafe-inline'",
+    'https://fonts.googleapis.com',
+    'https://cdnjs.cloudflare.com',
+    'https://cdn.jsdelivr.net',
+    'https://use.fontawesome.com',
+    'https://maxcdn.bootstrapcdn.com',
+    'https://unpkg.com',
+  ], // style-src directive includes cdn.jsdelivr.net
   'img-src': [
     "'self'",
     'data:', // For base64 images
@@ -36,7 +45,7 @@ const CSP_DIRECTIVES = {
   'font-src': [
     "'self'",
     'https://fonts.gstatic.com',
-    'data:' // For base64 fonts
+    'data:', // For base64 fonts
   ],
   'connect-src': [
     "'self'",
@@ -80,23 +89,23 @@ export const generateCSPHeader = () => {
 export const SECURITY_HEADERS = {
   // Content Security Policy
   'Content-Security-Policy': generateCSPHeader(),
-  
+
   // Prevent clickjacking
   'X-Frame-Options': 'DENY',
   'frame-ancestors': 'none',
-  
+
   // Prevent MIME type sniffing
   'X-Content-Type-Options': 'nosniff',
-  
+
   // XSS Protection (legacy but still useful)
   'X-XSS-Protection': '1; mode=block',
-  
+
   // Referrer Policy for privacy
   'Referrer-Policy': 'strict-origin-when-cross-origin',
-  
+
   // HTTPS enforcement
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
-  
+
   // Permissions Policy (Feature Policy)
   'Permissions-Policy': [
     'geolocation=()',
@@ -111,18 +120,18 @@ export const SECURITY_HEADERS = {
     'autoplay=()',
     'encrypted-media=()',
     'fullscreen=(self)',
-    'picture-in-picture=()'
+    'picture-in-picture=()',
   ].join(', '),
-  
+
   // Cross-Origin policies
   'Cross-Origin-Embedder-Policy': 'require-corp',
   'Cross-Origin-Opener-Policy': 'same-origin',
   'Cross-Origin-Resource-Policy': 'same-origin',
-  
+
   // Cache control for security-sensitive pages
   'Cache-Control': 'no-store, no-cache, must-revalidate, private',
-  'Pragma': 'no-cache',
-  'Expires': '0',
+  Pragma: 'no-cache',
+  Expires: '0',
 };
 
 /**
@@ -131,20 +140,20 @@ export const SECURITY_HEADERS = {
 export const MOBILE_SECURITY_HEADERS = {
   // Prevent mobile browser address bar spoofing
   'X-Permitted-Cross-Domain-Policies': 'none',
-  
+
   // Mobile viewport security
   'X-UA-Compatible': 'IE=edge',
-  
+
   // Prevent auto-detection of phone numbers, emails, etc.
   'format-detection': 'telephone=no, email=no, address=no',
-  
+
   // Mobile app integration security
   'apple-mobile-web-app-capable': 'yes',
   'apple-mobile-web-app-status-bar-style': 'black-translucent',
   'mobile-web-app-capable': 'yes',
-  
+
   // Prevent mobile browser caching of sensitive data
-  'Vary': 'User-Agent, Accept-Encoding',
+  Vary: 'User-Agent, Accept-Encoding',
 };
 
 /**
@@ -154,10 +163,8 @@ export const MOBILE_SECURITY_HEADERS = {
 export const applyClientSideSecurityMeta = () => {
   try {
     // Skip CSP and X-Frame-Options meta tags - these should be set server-side only
-    // CSP and frame-ancestors directives are ignored when delivered via meta elements
-    console.warn('X-Frame-Options may only be set via an HTTP header sent along with a document. It may not be set inside <meta>.');
-    
     // Only add safe meta tags that don't conflict with HTTP headers
+
     // Add referrer policy
     if (!document.querySelector('meta[name="referrer"]')) {
       const referrerMeta = document.createElement('meta');
@@ -168,9 +175,15 @@ export const applyClientSideSecurityMeta = () => {
 
     // Mobile-specific meta tags
     const mobileMetaTags = [
-      { name: 'format-detection', content: 'telephone=no, email=no, address=no' },
+      {
+        name: 'format-detection',
+        content: 'telephone=no, email=no, address=no',
+      },
       { name: 'apple-mobile-web-app-capable', content: 'yes' },
-      { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+      {
+        name: 'apple-mobile-web-app-status-bar-style',
+        content: 'black-translucent',
+      },
       { name: 'mobile-web-app-capable', content: 'yes' },
     ];
 
@@ -198,7 +211,7 @@ export const validateSecurityHeaders = async () => {
   try {
     const response = await fetch(window.location.href, { method: 'HEAD' });
     const headers = {};
-    
+
     for (const [key, value] of response.headers.entries()) {
       headers[key] = value;
     }
@@ -208,14 +221,14 @@ export const validateSecurityHeaders = async () => {
       passed: 0,
       failed: 0,
       warnings: [],
-      recommendations: []
+      recommendations: [],
     };
 
     const criticalHeaders = [
       'content-security-policy',
       'x-frame-options',
       'x-content-type-options',
-      'strict-transport-security'
+      'strict-transport-security',
     ];
 
     criticalHeaders.forEach(header => {
@@ -229,25 +242,45 @@ export const validateSecurityHeaders = async () => {
     });
 
     // Check HTTPS enforcement
-    if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost') {
+    if (
+      window.location.protocol !== 'https:' &&
+      window.location.hostname !== 'localhost'
+    ) {
       securityScore.warnings.push('Page not served over HTTPS');
-      securityScore.recommendations.push('Enforce HTTPS for production deployment');
+      securityScore.recommendations.push(
+        'Enforce HTTPS for production deployment'
+      );
     }
 
     // Check for mixed content
-    const mixedContentElements = document.querySelectorAll('img[src^="http:"], script[src^="http:"], link[href^="http:"]');
+    const mixedContentElements = document.querySelectorAll(
+      'img[src^="http:"], script[src^="http:"], link[href^="http:"]'
+    );
     if (mixedContentElements.length > 0) {
-      securityScore.warnings.push(`${mixedContentElements.length} mixed content resources found`);
+      securityScore.warnings.push(
+        `${mixedContentElements.length} mixed content resources found`
+      );
       securityScore.recommendations.push('Update all resources to use HTTPS');
     }
 
-    const score = Math.round((securityScore.passed / securityScore.total) * 100);
-    
+    const score = Math.round(
+      (securityScore.passed / securityScore.total) * 100
+    );
+
     return {
       score,
-      grade: score >= 90 ? 'A+' : score >= 80 ? 'A' : score >= 70 ? 'B' : score >= 60 ? 'C' : 'F',
+      grade:
+        score >= 90
+          ? 'A+'
+          : score >= 80
+            ? 'A'
+            : score >= 70
+              ? 'B'
+              : score >= 60
+                ? 'C'
+                : 'F',
       details: securityScore,
-      headers
+      headers,
     };
   } catch (error) {
     console.error('Error validating security headers:', error);
@@ -265,7 +298,7 @@ export const initializeMobileSecurity = () => {
 
     // Disable right-click context menu on mobile (optional security measure)
     if (window.innerWidth <= 768) {
-      document.addEventListener('contextmenu', (e) => {
+      document.addEventListener('contextmenu', e => {
         e.preventDefault();
       });
     }
@@ -275,7 +308,7 @@ export const initializeMobileSecurity = () => {
       '.private-key',
       '.seed-phrase',
       '.wallet-address',
-      '.balance-amount'
+      '.balance-amount',
     ];
 
     sensitiveSelectors.forEach(selector => {
@@ -315,7 +348,7 @@ export const reportSecurityEvent = (eventType, details) => {
       timestamp: new Date().toISOString(),
       userAgent: navigator.userAgent,
       url: window.location.href,
-      details: details || {}
+      details: details || {},
     };
 
     // Log to console for development

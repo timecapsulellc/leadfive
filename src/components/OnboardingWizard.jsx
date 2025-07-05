@@ -10,8 +10,8 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
     userInfo: {
       name: '',
       email: '',
-      phone: ''
-    }
+      phone: '',
+    },
   });
 
   const [isProcessing, setIsProcessing] = useState(false);
@@ -20,7 +20,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
     { id: 1, title: 'Connect Wallet', icon: '🔗' },
     { id: 2, title: 'Choose Package', icon: '📦' },
     { id: 3, title: 'User Details', icon: '👤' },
-    { id: 4, title: 'Confirm & Register', icon: '✅' }
+    { id: 4, title: 'Confirm & Register', icon: '✅' },
   ];
 
   const packages = [
@@ -33,9 +33,9 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         'Basic compensation plan',
         'Standard support',
         'Mobile app access',
-        'Basic analytics'
+        'Basic analytics',
       ],
-      recommended: false
+      recommended: false,
     },
     {
       id: 'premium',
@@ -47,9 +47,9 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         'Priority support',
         'Advanced analytics',
         'Team management tools',
-        'Custom referral links'
+        'Custom referral links',
       ],
-      recommended: true
+      recommended: true,
     },
     {
       id: 'platinum',
@@ -62,10 +62,10 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         'Full analytics suite',
         'Advanced team tools',
         'Personal account manager',
-        'White-label options'
+        'White-label options',
       ],
-      recommended: false
-    }
+      recommended: false,
+    },
   ];
 
   const handleNext = () => {
@@ -94,14 +94,14 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
     }
   };
 
-  const handlePackageSelect = (packageId) => {
+  const handlePackageSelect = packageId => {
     setFormData({ ...formData, selectedPackage: packageId });
   };
 
   const handleUserInfoChange = (field, value) => {
     setFormData({
       ...formData,
-      userInfo: { ...formData.userInfo, [field]: value }
+      userInfo: { ...formData.userInfo, [field]: value },
     });
   };
 
@@ -115,12 +115,12 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
     try {
       // Simulate registration process
       await new Promise(resolve => setTimeout(resolve, 3000));
-      
+
       const selectedPkg = packages.find(p => p.id === formData.selectedPackage);
       onComplete?.({
         package: selectedPkg,
         userInfo: formData.userInfo,
-        walletConnected: formData.walletConnected
+        walletConnected: formData.walletConnected,
       });
     } catch (error) {
       alert('Registration failed');
@@ -131,11 +131,16 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
 
   const isStepValid = () => {
     switch (currentStep) {
-      case 1: return formData.walletConnected;
-      case 2: return formData.selectedPackage;
-      case 3: return formData.userInfo.name && formData.userInfo.email;
-      case 4: return formData.acceptTerms;
-      default: return false;
+      case 1:
+        return formData.walletConnected;
+      case 2:
+        return formData.selectedPackage;
+      case 3:
+        return formData.userInfo.name && formData.userInfo.email;
+      case 4:
+        return formData.acceptTerms;
+      default:
+        return false;
     }
   };
 
@@ -145,8 +150,10 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         <div className="step-icon">🔗</div>
         <h3>Connect Your Wallet</h3>
         <p>Connect your MetaMask wallet to get started with OrphiCrowdFund</p>
-        
-        <div className={`wallet-status ${formData.walletConnected ? 'connected' : ''}`}>
+
+        <div
+          className={`wallet-status ${formData.walletConnected ? 'connected' : ''}`}
+        >
           {formData.walletConnected ? (
             <>
               <div className="status-icon">✅</div>
@@ -158,7 +165,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
               <div className="status-icon">🔌</div>
               <h4>Wallet Not Connected</h4>
               <p>Please connect your MetaMask wallet to continue</p>
-              <button 
+              <button
                 className="connect-btn"
                 onClick={handleWalletConnect}
                 disabled={isProcessing}
@@ -183,15 +190,17 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         <div className="step-icon">📦</div>
         <h3>Choose Your Package</h3>
         <p>Select the package that best fits your goals</p>
-        
+
         <div className="packages-grid">
-          {packages.map((pkg) => (
-            <div 
+          {packages.map(pkg => (
+            <div
               key={pkg.id}
               className={`package-card ${formData.selectedPackage === pkg.id ? 'selected' : ''}`}
               onClick={() => handlePackageSelect(pkg.id)}
             >
-              {pkg.recommended && <div className="recommended-badge">Recommended</div>}
+              {pkg.recommended && (
+                <div className="recommended-badge">Recommended</div>
+              )}
               <div className="package-header">
                 <div className="package-price">${pkg.price}</div>
                 <div className="package-name">{pkg.name}</div>
@@ -215,14 +224,14 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         <div className="step-icon">👤</div>
         <h3>Your Information</h3>
         <p>Please provide your details for account setup</p>
-        
+
         <div className="form-grid">
           <div className="form-group">
             <label>Full Name *</label>
             <input
               type="text"
               value={formData.userInfo.name}
-              onChange={(e) => handleUserInfoChange('name', e.target.value)}
+              onChange={e => handleUserInfoChange('name', e.target.value)}
               placeholder="Enter your full name"
             />
           </div>
@@ -231,7 +240,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
             <input
               type="email"
               value={formData.userInfo.email}
-              onChange={(e) => handleUserInfoChange('email', e.target.value)}
+              onChange={e => handleUserInfoChange('email', e.target.value)}
               placeholder="Enter your email"
             />
           </div>
@@ -240,7 +249,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
             <input
               type="tel"
               value={formData.userInfo.phone}
-              onChange={(e) => handleUserInfoChange('phone', e.target.value)}
+              onChange={e => handleUserInfoChange('phone', e.target.value)}
               placeholder="Enter your phone number"
             />
           </div>
@@ -249,7 +258,9 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
             <input
               type="text"
               value={formData.referrerAddress}
-              onChange={(e) => setFormData({...formData, referrerAddress: e.target.value})}
+              onChange={e =>
+                setFormData({ ...formData, referrerAddress: e.target.value })
+              }
               placeholder="0x... (Optional)"
             />
           </div>
@@ -260,30 +271,38 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
 
   const renderStep4 = () => {
     const selectedPkg = packages.find(p => p.id === formData.selectedPackage);
-    
+
     return (
       <div className="wizard-step">
         <div className="step-content">
           <div className="step-icon">✅</div>
           <h3>Confirm & Register</h3>
           <p>Review your information and complete registration</p>
-          
+
           <div className="confirmation-summary">
             <div className="summary-section">
               <h4>Selected Package</h4>
               <div className="package-summary">
-                <div className="package-name">{selectedPkg?.name} - ${selectedPkg?.price}</div>
+                <div className="package-name">
+                  {selectedPkg?.name} - ${selectedPkg?.price}
+                </div>
                 <div className="package-tier">Tier {selectedPkg?.tier}</div>
               </div>
             </div>
-            
+
             <div className="summary-section">
               <h4>Account Information</h4>
               <div className="info-summary">
-                <p><strong>Name:</strong> {formData.userInfo.name}</p>
-                <p><strong>Email:</strong> {formData.userInfo.email}</p>
+                <p>
+                  <strong>Name:</strong> {formData.userInfo.name}
+                </p>
+                <p>
+                  <strong>Email:</strong> {formData.userInfo.email}
+                </p>
                 {formData.userInfo.phone && (
-                  <p><strong>Phone:</strong> {formData.userInfo.phone}</p>
+                  <p>
+                    <strong>Phone:</strong> {formData.userInfo.phone}
+                  </p>
                 )}
               </div>
             </div>
@@ -294,10 +313,18 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
               <input
                 type="checkbox"
                 checked={formData.acceptTerms}
-                onChange={(e) => setFormData({...formData, acceptTerms: e.target.checked})}
+                onChange={e =>
+                  setFormData({ ...formData, acceptTerms: e.target.checked })
+                }
               />
-              <span className="checkmark"></span>
-              I accept the <a href="#" target="_blank">Terms & Conditions</a> and <a href="#" target="_blank">Privacy Policy</a>
+              <span className="checkmark"></span>I accept the{' '}
+              <a href="#" target="_blank">
+                Terms & Conditions
+              </a>{' '}
+              and{' '}
+              <a href="#" target="_blank">
+                Privacy Policy
+              </a>
             </label>
           </div>
         </div>
@@ -317,12 +344,16 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         <div className="progress-tracker">
           {steps.map((step, index) => (
             <div key={step.id} className="progress-step">
-              <div className={`step-circle ${currentStep >= step.id ? 'active' : ''} ${currentStep > step.id ? 'completed' : ''}`}>
+              <div
+                className={`step-circle ${currentStep >= step.id ? 'active' : ''} ${currentStep > step.id ? 'completed' : ''}`}
+              >
                 {currentStep > step.id ? '✓' : step.id}
               </div>
               <div className="step-label">{step.title}</div>
               {index < steps.length - 1 && (
-                <div className={`step-line ${currentStep > step.id ? 'completed' : ''}`}></div>
+                <div
+                  className={`step-line ${currentStep > step.id ? 'completed' : ''}`}
+                ></div>
               )}
             </div>
           ))}
@@ -338,19 +369,23 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
 
         {/* Navigation */}
         <div className="wizard-navigation">
-          <button 
+          <button
             className="nav-btn secondary"
             onClick={currentStep === 1 ? onCancel : handlePrevious}
           >
             {currentStep === 1 ? 'Cancel' : 'Previous'}
           </button>
-          
-          <button 
+
+          <button
             className="nav-btn primary"
             onClick={currentStep === 4 ? handleSubmit : handleNext}
             disabled={!isStepValid() || isProcessing}
           >
-            {isProcessing ? '⏳ Processing...' : currentStep === 4 ? 'Complete Registration' : 'Next Step'}
+            {isProcessing
+              ? '⏳ Processing...'
+              : currentStep === 4
+                ? 'Complete Registration'
+                : 'Next Step'}
           </button>
         </div>
       </div>
@@ -372,7 +407,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
 
         .wizard-container {
           background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-          border: 2px solid #00D4FF;
+          border: 2px solid #00d4ff;
           border-radius: 20px;
           padding: 40px;
           max-width: 800px;
@@ -387,7 +422,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         }
 
         .wizard-header h1 {
-          color: #00D4FF;
+          color: #00d4ff;
           font-size: 2.2rem;
           margin-bottom: 10px;
         }
@@ -427,14 +462,14 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         }
 
         .step-circle.active {
-          background: #00D4FF;
-          border-color: #00D4FF;
+          background: #00d4ff;
+          border-color: #00d4ff;
           color: #1a1a2e;
         }
 
         .step-circle.completed {
-          background: #00FF88;
-          border-color: #00FF88;
+          background: #00ff88;
+          border-color: #00ff88;
           color: #1a1a2e;
         }
 
@@ -454,7 +489,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         }
 
         .step-line.completed {
-          background: #00FF88;
+          background: #00ff88;
         }
 
         .wizard-content {
@@ -475,7 +510,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         }
 
         .step-content h3 {
-          color: #00D4FF;
+          color: #00d4ff;
           margin-bottom: 10px;
           font-size: 1.8rem;
         }
@@ -488,7 +523,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
 
         .wallet-status {
           background: rgba(255, 107, 107, 0.2);
-          border: 2px solid #FF6B6B;
+          border: 2px solid #ff6b6b;
           border-radius: 15px;
           padding: 30px;
           margin: 20px 0;
@@ -496,7 +531,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
 
         .wallet-status.connected {
           background: rgba(0, 255, 136, 0.2);
-          border-color: #00FF88;
+          border-color: #00ff88;
         }
 
         .status-icon {
@@ -505,7 +540,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         }
 
         .connect-btn {
-          background: #00D4FF;
+          background: #00d4ff;
           color: #1a1a2e;
           border: none;
           padding: 12px 24px;
@@ -544,12 +579,12 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         }
 
         .package-card:hover {
-          border-color: #00D4FF;
+          border-color: #00d4ff;
           transform: translateY(-5px);
         }
 
         .package-card.selected {
-          border-color: #00D4FF;
+          border-color: #00d4ff;
           background: rgba(0, 212, 255, 0.1);
         }
 
@@ -557,7 +592,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
           position: absolute;
           top: -10px;
           right: -10px;
-          background: #FF6B6B;
+          background: #ff6b6b;
           color: white;
           padding: 5px 15px;
           border-radius: 20px;
@@ -567,7 +602,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
 
         .package-price {
           font-size: 2rem;
-          color: #00D4FF;
+          color: #00d4ff;
           font-weight: bold;
           margin-bottom: 10px;
         }
@@ -597,8 +632,8 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         }
 
         .package-features li::before {
-          content: "✓";
-          color: #00FF88;
+          content: '✓';
+          color: #00ff88;
           position: absolute;
           left: 0;
         }
@@ -630,7 +665,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
 
         .form-group input:focus {
           outline: none;
-          border-color: #00D4FF;
+          border-color: #00d4ff;
         }
 
         .confirmation-summary {
@@ -647,7 +682,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         }
 
         .summary-section h4 {
-          color: #00D4FF;
+          color: #00d4ff;
           margin-bottom: 15px;
         }
 
@@ -674,7 +709,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         }
 
         .checkbox-container a {
-          color: #00D4FF;
+          color: #00d4ff;
           text-decoration: none;
         }
 
@@ -697,7 +732,7 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         }
 
         .nav-btn.primary {
-          background: #00D4FF;
+          background: #00d4ff;
           color: #1a1a2e;
         }
 
@@ -726,8 +761,14 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
         }
 
         @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
         @media (max-width: 768px) {
@@ -735,22 +776,22 @@ const OnboardingWizard = ({ onComplete, onCancel }) => {
             padding: 20px;
             width: 95%;
           }
-          
+
           .progress-tracker {
             flex-direction: column;
             gap: 10px;
           }
-          
+
           .step-line {
             width: 2px;
             height: 20px;
             margin: 5px 0;
           }
-          
+
           .packages-grid {
             grid-template-columns: 1fr;
           }
-          
+
           .wizard-navigation {
             flex-direction: column;
             gap: 15px;

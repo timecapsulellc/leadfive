@@ -9,7 +9,7 @@ import {
   Title,
   Tooltip,
   Legend,
-  Filler
+  Filler,
 } from 'chart.js';
 import './EarningsChart.css';
 
@@ -26,14 +26,30 @@ ChartJS.register(
 
 export default function EarningsChart({ detailed = false }) {
   const data = {
-    labels: detailed 
-      ? ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    labels: detailed
+      ? [
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dec',
+        ]
       : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     datasets: [
       {
         label: 'Earnings (USDT)',
-        data: detailed 
-          ? [1200, 1900, 2300, 2900, 3200, 3800, 4200, 4567, 4900, 5200, 5500, 5800]
+        data: detailed
+          ? [
+              1200, 1900, 2300, 2900, 3200, 3800, 4200, 4567, 4900, 5200, 5500,
+              5800,
+            ]
           : [120, 190, 230, 290, 320, 380, 420],
         borderColor: '#00D4FF',
         backgroundColor: 'rgba(0, 212, 255, 0.1)',
@@ -49,7 +65,7 @@ export default function EarningsChart({ detailed = false }) {
         backgroundColor: 'rgba(123, 44, 191, 0.1)',
         tension: 0.4,
         fill: true,
-      }
+      },
     ],
   };
 
@@ -64,9 +80,9 @@ export default function EarningsChart({ detailed = false }) {
           color: '#B8C5D1',
           padding: 20,
           font: {
-            size: 12
-          }
-        }
+            size: 12,
+          },
+        },
       },
       tooltip: {
         mode: 'index',
@@ -79,7 +95,7 @@ export default function EarningsChart({ detailed = false }) {
         padding: 12,
         displayColors: true,
         callbacks: {
-          label: function(context) {
+          label: function (context) {
             let label = context.dataset.label || '';
             if (label) {
               label += ': ';
@@ -88,9 +104,9 @@ export default function EarningsChart({ detailed = false }) {
               label += '$' + context.parsed.y.toFixed(2);
             }
             return label;
-          }
-        }
-      }
+          },
+        },
+      },
     },
     scales: {
       x: {
@@ -99,7 +115,7 @@ export default function EarningsChart({ detailed = false }) {
         },
         ticks: {
           color: '#B8C5D1',
-        }
+        },
       },
       y: {
         grid: {
@@ -107,17 +123,17 @@ export default function EarningsChart({ detailed = false }) {
         },
         ticks: {
           color: '#B8C5D1',
-          callback: function(value) {
+          callback: function (value) {
             return '$' + value;
-          }
-        }
-      }
+          },
+        },
+      },
     },
     interaction: {
       mode: 'nearest',
       axis: 'x',
-      intersect: false
-    }
+      intersect: false,
+    },
   };
 
   return (

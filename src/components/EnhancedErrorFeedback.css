@@ -8,7 +8,8 @@
   max-height: 80vh;
   overflow-y: auto;
   z-index: 1000;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 /* Mobile responsiveness */
@@ -48,25 +49,30 @@
 
 /* Severity-based styling */
 .error-item.severity-low {
-  border-left: 4px solid #4CAF50;
+  border-left: 4px solid #4caf50;
 }
 
 .error-item.severity-medium {
-  border-left: 4px solid #FF9800;
+  border-left: 4px solid #ff9800;
 }
 
 .error-item.severity-high {
-  border-left: 4px solid #F44336;
+  border-left: 4px solid #f44336;
 }
 
 .error-item.severity-critical {
-  border-left: 4px solid #9C27B0;
+  border-left: 4px solid #9c27b0;
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
 }
 
 /* Error Header */
@@ -136,7 +142,7 @@
 
 .expand-button:focus,
 .dismiss-button:focus {
-  outline: 2px solid #00D4FF;
+  outline: 2px solid #00d4ff;
   outline-offset: 2px;
 }
 
@@ -153,13 +159,13 @@
   background: rgba(76, 175, 80, 0.1);
   border: 1px solid rgba(76, 175, 80, 0.2);
   border-radius: 8px;
-  color: #2E7D32;
+  color: #2e7d32;
   font-size: 14px;
   line-height: 1.5;
 }
 
 .error-solution strong {
-  color: #1B5E20;
+  color: #1b5e20;
 }
 
 .error-steps {
@@ -212,7 +218,7 @@
 }
 
 .help-link {
-  color: #00D4FF;
+  color: #00d4ff;
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
@@ -220,7 +226,7 @@
 }
 
 .help-link:hover {
-  color: #0099CC;
+  color: #0099cc;
   text-decoration: underline;
 }
 
@@ -245,14 +251,14 @@
 }
 
 .retry-button {
-  background: #00D4FF;
+  background: #00d4ff;
   color: white;
   flex: 1;
   min-width: 120px;
 }
 
 .retry-button:hover:not(:disabled) {
-  background: #0099CC;
+  background: #0099cc;
   transform: translateY(-1px);
 }
 
@@ -289,7 +295,7 @@
 .dismiss-all-button {
   padding: 10px 20px;
   background: rgba(244, 67, 54, 0.1);
-  color: #F44336;
+  color: #f44336;
   border: 1px solid rgba(244, 67, 54, 0.2);
   border-radius: 8px;
   font-size: 14px;
@@ -414,7 +420,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Screen reader only content */

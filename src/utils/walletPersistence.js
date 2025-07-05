@@ -1,15 +1,15 @@
 /**
  * Wallet Persistence Utility
- * 
+ *
  * Handles secure wallet connection persistence across browser sessions.
  * Implements security best practices for storing wallet state.
- * 
+ *
  * Security Features:
  * - Encrypted storage of sensitive wallet data
  * - Session timeout management
  * - Automatic cleanup of expired sessions
  * - Safe wallet state restoration
- * 
+ *
  * Performance Features:
  * - <500ms reconnection time
  * - Efficient state management
@@ -22,7 +22,7 @@ const STORAGE_KEYS = {
   WALLET_CONNECTION: 'leadfive_wallet_connection',
   SESSION_TIMESTAMP: 'leadfive_session_timestamp',
   WALLET_PREFERENCES: 'leadfive_wallet_preferences',
-  NETWORK_CONFIG: 'leadfive_network_config'
+  NETWORK_CONFIG: 'leadfive_network_config',
 };
 
 const SESSION_TIMEOUT = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
@@ -32,7 +32,7 @@ const RECONNECTION_ATTEMPTS = 3;
  * Simple encryption/decryption for wallet data
  * Note: This is basic obfuscation. For production, consider using proper encryption libraries
  */
-const encryptData = (data) => {
+const encryptData = data => {
   try {
     const jsonString = JSON.stringify(data);
     return btoa(jsonString); // Base64 encoding as basic obfuscation
@@ -42,7 +42,7 @@ const encryptData = (data) => {
   }
 };
 
-const decryptData = (encryptedData) => {
+const decryptData = encryptedData => {
   try {
     const jsonString = atob(encryptedData);
     return JSON.parse(jsonString);
@@ -57,18 +57,34 @@ const decryptData = (encryptedData) => {
  */
 export const storeWalletConnection = (account, chainId, walletType) => {
   try {
+    // Ensure we only store the account address as a string
+    let accountAddress;
+    if (typeof account === 'string') {
+      accountAddress = account.toLowerCase();
+    } else if (account && typeof account === 'object' && account.address) {
+      accountAddress = account.address.toLowerCase();
+    } else if (account && typeof account.toString === 'function') {
+      accountAddress = account.toString().toLowerCase();
+    } else {
+      console.warn('Invalid account format, skipping wallet persistence');
+      return false;
+    }
+
     const connectionData = {
-      account: typeof account === 'string' ? account.toLowerCase() : account,
-      chainId,
-      walletType,
+      account: accountAddress,
+      chainId: typeof chainId === 'string' ? chainId : chainId.toString(),
+      walletType: walletType || 'unknown',
       timestamp: Date.now(),
-      version: '1.0'
+      version: '1.0',
     };
 
     const encryptedData = encryptData(connectionData);
     if (encryptedData) {
       localStorage.setItem(STORAGE_KEYS.WALLET_CONNECTION, encryptedData);
-      localStorage.setItem(STORAGE_KEYS.SESSION_TIMESTAMP, Date.now().toString());
+      localStorage.setItem(
+        STORAGE_KEYS.SESSION_TIMESTAMP,
+        Date.now().toString()
+      );
       return true;
     }
     return false;
@@ -84,7 +100,9 @@ export const storeWalletConnection = (account, chainId, walletType) => {
 export const getStoredWalletConnection = () => {
   try {
     const encryptedData = localStorage.getItem(STORAGE_KEYS.WALLET_CONNECTION);
-    const sessionTimestamp = localStorage.getItem(STORAGE_KEYS.SESSION_TIMESTAMP);
+    const sessionTimestamp = localStorage.getItem(
+      STORAGE_KEYS.SESSION_TIMESTAMP
+    );
 
     if (!encryptedData || !sessionTimestamp) {
       return null;
@@ -93,7 +111,7 @@ export const getStoredWalletConnection = () => {
     // Check session timeout
     const currentTime = Date.now();
     const sessionAge = currentTime - parseInt(sessionTimestamp);
-    
+
     if (sessionAge > SESSION_TIMEOUT) {
       clearWalletConnection();
       return null;
@@ -105,7 +123,7 @@ export const getStoredWalletConnection = () => {
         account: connectionData.account,
         chainId: connectionData.chainId,
         walletType: connectionData.walletType,
-        sessionAge: sessionAge
+        sessionAge: sessionAge,
       };
     }
 
@@ -136,7 +154,7 @@ export const clearWalletConnection = () => {
 /**
  * Store user wallet preferences
  */
-export const storeWalletPreferences = (preferences) => {
+export const storeWalletPreferences = preferences => {
   try {
     const encryptedPrefs = encryptData(preferences);
     if (encryptedPrefs) {
@@ -155,7 +173,9 @@ export const storeWalletPreferences = (preferences) => {
  */
 export const getWalletPreferences = () => {
   try {
-    const encryptedPrefs = localStorage.getItem(STORAGE_KEYS.WALLET_PREFERENCES);
+    const encryptedPrefs = localStorage.getItem(
+      STORAGE_KEYS.WALLET_PREFERENCES
+    );
     if (encryptedPrefs) {
       return decryptData(encryptedPrefs);
     }
@@ -171,7 +191,7 @@ export const getWalletPreferences = () => {
  */
 export const autoReconnectWallet = async (onSuccess, onError) => {
   const storedConnection = getStoredWalletConnection();
-  
+
   if (!storedConnection) {
     return false;
   }
@@ -179,16 +199,20 @@ export const autoReconnectWallet = async (onSuccess, onError) => {
   let attempts = 0;
   const attemptReconnection = async () => {
     attempts++;
-    
+
     try {
       if (!window.ethereum) {
         throw new Error('MetaMask not available');
       }
 
       // Check if the stored account is still available
-      const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+      const accounts = await window.ethereum.request({
+        method: 'eth_accounts',
+      });
       const targetAccount = storedConnection.account.toLowerCase();
-      const availableAccount = accounts.find(acc => acc.toLowerCase() === targetAccount);
+      const availableAccount = accounts.find(
+        acc => acc.toLowerCase() === targetAccount
+      );
 
       if (!availableAccount) {
         throw new Error('Stored account not available');
@@ -197,7 +221,7 @@ export const autoReconnectWallet = async (onSuccess, onError) => {
       // Restore provider and signer
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
-      
+
       // Verify network
       const network = await provider.getNetwork();
       if (network.chainId !== BigInt(storedConnection.chainId)) {
@@ -212,10 +236,12 @@ export const autoReconnectWallet = async (onSuccess, onError) => {
       return true;
     } catch (error) {
       console.error(`Reconnection attempt ${attempts} failed:`, error);
-      
+
       if (attempts < RECONNECTION_ATTEMPTS) {
         // Wait before retry (exponential backoff)
-        await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempts) * 1000));
+        await new Promise(resolve =>
+          setTimeout(resolve, Math.pow(2, attempts) * 1000)
+        );
         return attemptReconnection();
       } else {
         // All attempts failed, clear stored connection
@@ -249,7 +275,9 @@ export const extendSession = () => {
  */
 export const isSessionValid = () => {
   try {
-    const sessionTimestamp = localStorage.getItem(STORAGE_KEYS.SESSION_TIMESTAMP);
+    const sessionTimestamp = localStorage.getItem(
+      STORAGE_KEYS.SESSION_TIMESTAMP
+    );
     if (!sessionTimestamp) {
       return false;
     }
@@ -267,7 +295,9 @@ export const isSessionValid = () => {
  */
 export const getSessionMetrics = () => {
   try {
-    const sessionTimestamp = localStorage.getItem(STORAGE_KEYS.SESSION_TIMESTAMP);
+    const sessionTimestamp = localStorage.getItem(
+      STORAGE_KEYS.SESSION_TIMESTAMP
+    );
     if (!sessionTimestamp) {
       return null;
     }
@@ -279,7 +309,9 @@ export const getSessionMetrics = () => {
       sessionAge,
       remainingTime,
       isValid: remainingTime > 0,
-      expiresAt: new Date(parseInt(sessionTimestamp) + SESSION_TIMEOUT).toISOString()
+      expiresAt: new Date(
+        parseInt(sessionTimestamp) + SESSION_TIMEOUT
+      ).toISOString(),
     };
   } catch (error) {
     console.error('Error getting session metrics:', error);

@@ -4,17 +4,25 @@
  */
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { 
-  FaTree, FaUsers, FaChartLine, FaCoins, FaRocket, 
-  FaSync, FaBullseye, FaGem, FaCrown, FaFireAlt 
+import {
+  FaTree,
+  FaUsers,
+  FaChartLine,
+  FaCoins,
+  FaRocket,
+  FaSync,
+  FaBullseye,
+  FaGem,
+  FaCrown,
+  FaFireAlt,
 } from 'react-icons/fa';
 import '../styles/MatrixManagement.css';
 
-const CommunityStructureSystem = ({ 
-  userAddress, 
-  contractInstance, 
+const CommunityStructureSystem = ({
+  userAddress,
+  contractInstance,
   userInfo,
-  onUpdate 
+  onUpdate,
 }) => {
   // State management
   const [matrixData, setMatrixData] = useState(null);
@@ -28,14 +36,14 @@ const CommunityStructureSystem = ({
   // Matrix calculations and predictions
   const matrixAnalytics = useMemo(() => {
     if (!matrixData) return null;
-    
+
     return {
       totalVolume: calculateTotalVolume(matrixData),
       leftLegBalance: calculateLegBalance(matrixData.leftLeg),
       rightLegBalance: calculateLegBalance(matrixData.rightLeg),
       cyclesPotential: calculateCyclesPotential(matrixData),
       optimizationScore: calculateOptimizationScore(matrixData),
-      nextCycleProjection: getNextCycleProjection(matrixData)
+      nextCycleProjection: getNextCycleProjection(matrixData),
     };
   }, [matrixData]);
 
@@ -53,26 +61,26 @@ const CommunityStructureSystem = ({
   const loadMatrixData = async () => {
     try {
       setLoading(true);
-      
+
       // Fetch matrix position data
       const position = await contractInstance.getMatrixPosition(userAddress);
       const cycles = await contractInstance.getUserCycles(userAddress);
-      const spillovers = await contractInstance.getPendingSpillovers(userAddress);
-      
+      const spillovers =
+        await contractInstance.getPendingSpillovers(userAddress);
+
       // Build comprehensive matrix tree
       const matrixTree = await buildMatrixTree(position, contractInstance);
-      
+
       setMatrixData({
         position: position,
         leftLeg: matrixTree.leftLeg,
         rightLeg: matrixTree.rightLeg,
         depth: calculateTreeDepth(matrixTree),
-        width: calculateTreeWidth(matrixTree)
+        width: calculateTreeWidth(matrixTree),
       });
-      
+
       setCycleStats(cycles);
       setSpilloverQueue(spillovers);
-      
     } catch (error) {
       console.error('Matrix data loading error:', error);
       // Fallback to demo data for development
@@ -89,19 +97,19 @@ const CommunityStructureSystem = ({
       <div className="matrix-header">
         <h3>🌳 Your Binary Matrix Position</h3>
         <div className="matrix-controls">
-          <button 
+          <button
             className={`view-btn ${viewMode === 'overview' ? 'active' : ''}`}
             onClick={() => setViewMode('overview')}
           >
             Overview
           </button>
-          <button 
+          <button
             className={`view-btn ${viewMode === 'detailed' ? 'active' : ''}`}
             onClick={() => setViewMode('detailed')}
           >
             Detailed
           </button>
-          <button 
+          <button
             className={`view-btn ${viewMode === 'placement' ? 'active' : ''}`}
             onClick={() => setViewMode('placement')}
           >
@@ -124,7 +132,9 @@ const CommunityStructureSystem = ({
           <div className="stat-info">
             <h4>Total Team</h4>
             <span className="stat-value">{matrixData?.totalMembers || 0}</span>
-            <span className="stat-change">+{Math.floor(Math.random() * 15 + 5)} this week</span>
+            <span className="stat-change">
+              +{Math.floor(Math.random() * 15 + 5)} this week
+            </span>
           </div>
         </div>
 
@@ -133,7 +143,9 @@ const CommunityStructureSystem = ({
           <div className="stat-info">
             <h4>Total Cycles</h4>
             <span className="stat-value">{cycleStats?.totalCycles || 0}</span>
-            <span className="stat-change">+{cycleStats?.weeklyCycles || 0} this week</span>
+            <span className="stat-change">
+              +{cycleStats?.weeklyCycles || 0} this week
+            </span>
           </div>
         </div>
 
@@ -141,9 +153,15 @@ const CommunityStructureSystem = ({
           <FaChartLine className="stat-icon" />
           <div className="stat-info">
             <h4>Balance Score</h4>
-            <span className="stat-value">{matrixAnalytics?.optimizationScore || 0}%</span>
-            <span className={`stat-change ${matrixAnalytics?.optimizationScore > 75 ? 'positive' : 'negative'}`}>
-              {matrixAnalytics?.optimizationScore > 75 ? 'Excellent' : 'Needs Work'}
+            <span className="stat-value">
+              {matrixAnalytics?.optimizationScore || 0}%
+            </span>
+            <span
+              className={`stat-change ${matrixAnalytics?.optimizationScore > 75 ? 'positive' : 'negative'}`}
+            >
+              {matrixAnalytics?.optimizationScore > 75
+                ? 'Excellent'
+                : 'Needs Work'}
             </span>
           </div>
         </div>
@@ -152,7 +170,9 @@ const CommunityStructureSystem = ({
           <FaRocket className="stat-icon" />
           <div className="stat-info">
             <h4>Next Cycle</h4>
-            <span className="stat-value">{matrixAnalytics?.nextCycleProjection || 'TBD'}</span>
+            <span className="stat-value">
+              {matrixAnalytics?.nextCycleProjection || 'TBD'}
+            </span>
             <span className="stat-change">Estimated time</span>
           </div>
         </div>
@@ -183,7 +203,13 @@ const CommunityStructureSystem = ({
         <div className="balance-indicator">
           <div className="balance-circle">
             <span className="balance-percentage">
-              {Math.round((matrixData?.leftLeg?.members || 0) / ((matrixData?.leftLeg?.members || 0) + (matrixData?.rightLeg?.members || 1)) * 100)}%
+              {Math.round(
+                ((matrixData?.leftLeg?.members || 0) /
+                  ((matrixData?.leftLeg?.members || 0) +
+                    (matrixData?.rightLeg?.members || 1))) *
+                  100
+              )}
+              %
             </span>
             <span className="balance-label">Balance</span>
           </div>
@@ -222,7 +248,7 @@ const CommunityStructureSystem = ({
             <span>YOU</span>
           </div>
         </div>
-        
+
         <div className="tree-level level-1">
           <div className="tree-node left-node">
             <FaUsers className="node-icon" />
@@ -254,8 +280,14 @@ const CommunityStructureSystem = ({
             <FaBullseye className="insight-icon" />
             <div className="insight-content">
               <h5>Optimization Opportunity</h5>
-              <p>Your {matrixData?.leftLeg?.members > matrixData?.rightLeg?.members ? 'right' : 'left'} leg needs attention. 
-              Focus on placing strong builders there to improve balance.</p>
+              <p>
+                Your{' '}
+                {matrixData?.leftLeg?.members > matrixData?.rightLeg?.members
+                  ? 'right'
+                  : 'left'}{' '}
+                leg needs attention. Focus on placing strong builders there to
+                improve balance.
+              </p>
             </div>
           </div>
 
@@ -263,8 +295,10 @@ const CommunityStructureSystem = ({
             <FaFireAlt className="insight-icon" />
             <div className="insight-content">
               <h5>Spillover Potential</h5>
-              <p>You're in a prime position to receive spillovers from your upline. 
-              Monitor placements for maximum benefit.</p>
+              <p>
+                You're in a prime position to receive spillovers from your
+                upline. Monitor placements for maximum benefit.
+              </p>
             </div>
           </div>
 
@@ -272,8 +306,10 @@ const CommunityStructureSystem = ({
             <FaRocket className="insight-icon" />
             <div className="insight-content">
               <h5>Cycle Acceleration</h5>
-              <p>With {Math.max(0, 6 - (cycleStats?.totalCycles || 0))} more placements, 
-              you could trigger your next major cycle.</p>
+              <p>
+                With {Math.max(0, 6 - (cycleStats?.totalCycles || 0))} more
+                placements, you could trigger your next major cycle.
+              </p>
             </div>
           </div>
         </div>
@@ -297,9 +333,20 @@ const CommunityStructureSystem = ({
             <h5>Optimal Placement Zone</h5>
           </div>
           <div className="zone-details">
-            <p><strong>Location:</strong> {matrixData?.leftLeg?.members > matrixData?.rightLeg?.members ? 'Right' : 'Left'} leg, Level 3-4</p>
-            <p><strong>Reason:</strong> Maximum spillover potential with balanced growth</p>
-            <p><strong>Expected Impact:</strong> +25% cycle acceleration</p>
+            <p>
+              <strong>Location:</strong>{' '}
+              {matrixData?.leftLeg?.members > matrixData?.rightLeg?.members
+                ? 'Right'
+                : 'Left'}{' '}
+              leg, Level 3-4
+            </p>
+            <p>
+              <strong>Reason:</strong> Maximum spillover potential with balanced
+              growth
+            </p>
+            <p>
+              <strong>Expected Impact:</strong> +25% cycle acceleration
+            </p>
           </div>
         </div>
 
@@ -309,9 +356,15 @@ const CommunityStructureSystem = ({
             <h5>Secondary Placement</h5>
           </div>
           <div className="zone-details">
-            <p><strong>Location:</strong> Strong leg surface positions</p>
-            <p><strong>Reason:</strong> Momentum building for personal recruits</p>
-            <p><strong>Expected Impact:</strong> +15% team growth</p>
+            <p>
+              <strong>Location:</strong> Strong leg surface positions
+            </p>
+            <p>
+              <strong>Reason:</strong> Momentum building for personal recruits
+            </p>
+            <p>
+              <strong>Expected Impact:</strong> +15% team growth
+            </p>
           </div>
         </div>
       </div>
@@ -319,41 +372,53 @@ const CommunityStructureSystem = ({
       <div className="placement-rules">
         <h5>📋 Placement Best Practices</h5>
         <ul>
-          <li><strong>Strong Builders:</strong> Always place in weaker leg for balance</li>
-          <li><strong>Personal Introductions:</strong> Place in stronger leg for momentum</li>
-          <li><strong>Spillover Catches:</strong> Position for maximum future benefit</li>
-          <li><strong>Team Leaders:</strong> Strategic depth placement for long-term growth</li>
+          <li>
+            <strong>Strong Builders:</strong> Always place in weaker leg for
+            balance
+          </li>
+          <li>
+            <strong>Personal Introductions:</strong> Place in stronger leg for
+            momentum
+          </li>
+          <li>
+            <strong>Spillover Catches:</strong> Position for maximum future
+            benefit
+          </li>
+          <li>
+            <strong>Team Leaders:</strong> Strategic depth placement for
+            long-term growth
+          </li>
         </ul>
       </div>
     </div>
   );
 
   // Utility functions
-  const calculateTotalVolume = (matrix) => {
+  const calculateTotalVolume = matrix => {
     return (matrix?.leftLeg?.volume || 0) + (matrix?.rightLeg?.volume || 0);
   };
 
-  const calculateLegBalance = (leg) => {
+  const calculateLegBalance = leg => {
     return leg?.members || 0;
   };
 
-  const calculateCyclesPotential = (matrix) => {
+  const calculateCyclesPotential = matrix => {
     const leftVol = matrix?.leftLeg?.volume || 0;
     const rightVol = matrix?.rightLeg?.volume || 0;
     return Math.floor(Math.min(leftVol, rightVol) / 100); // 100 volume per cycle
   };
 
-  const calculateOptimizationScore = (matrix) => {
+  const calculateOptimizationScore = matrix => {
     const left = matrix?.leftLeg?.members || 0;
     const right = matrix?.rightLeg?.members || 0;
     const total = left + right;
     if (total === 0) return 0;
-    
+
     const balance = Math.min(left, right) / Math.max(left, right);
     return Math.round(balance * 100);
   };
 
-  const getNextCycleProjection = (matrix) => {
+  const getNextCycleProjection = matrix => {
     const needed = 6 - (cycleStats?.weeklyCycles || 0);
     if (needed <= 0) return 'Ready!';
     return `${needed} placements`;
@@ -363,13 +428,13 @@ const CommunityStructureSystem = ({
     totalMembers: 47,
     leftLeg: { members: 18, volume: 1800, depth: 4, directMembers: 3 },
     rightLeg: { members: 29, volume: 2900, depth: 5, directMembers: 2 },
-    position: 'active'
+    position: 'active',
   });
 
   const generateDemoCycleStats = () => ({
     totalCycles: 12,
     weeklyCycles: 3,
-    monthlyCycles: 15
+    monthlyCycles: 15,
   });
 
   // Main render
@@ -390,7 +455,7 @@ const CommunityStructureSystem = ({
           <p>Advanced binary tree analytics and placement optimization</p>
         </div>
         <div className="header-controls">
-          <button 
+          <button
             className={`update-toggle ${realTimeUpdates ? 'active' : ''}`}
             onClick={() => setRealTimeUpdates(!realTimeUpdates)}
           >
@@ -408,7 +473,9 @@ const CommunityStructureSystem = ({
             {spilloverQueue.map((spillover, index) => (
               <div key={index} className="spillover-item">
                 <FaGem className="spillover-icon" />
-                <span>New spillover in {spillover.leg} leg - Level {spillover.level}</span>
+                <span>
+                  New spillover in {spillover.leg} leg - Level {spillover.level}
+                </span>
                 <span className="spillover-value">${spillover.value}</span>
               </div>
             ))}
@@ -426,22 +493,22 @@ const buildMatrixTree = async (position, contract) => {
     // For now, return demo structure
     return {
       leftLeg: { members: 18, volume: 1800, depth: 4, directMembers: 3 },
-      rightLeg: { members: 29, volume: 2900, depth: 5, directMembers: 2 }
+      rightLeg: { members: 29, volume: 2900, depth: 5, directMembers: 2 },
     };
   } catch (error) {
     console.error('Error building matrix tree:', error);
     return {
       leftLeg: { members: 0, volume: 0, depth: 0, directMembers: 0 },
-      rightLeg: { members: 0, volume: 0, depth: 0, directMembers: 0 }
+      rightLeg: { members: 0, volume: 0, depth: 0, directMembers: 0 },
     };
   }
 };
 
-const calculateTreeDepth = (tree) => {
+const calculateTreeDepth = tree => {
   return Math.max(tree.leftLeg?.depth || 0, tree.rightLeg?.depth || 0);
 };
 
-const calculateTreeWidth = (tree) => {
+const calculateTreeWidth = tree => {
   return (tree.leftLeg?.members || 0) + (tree.rightLeg?.members || 0);
 };
 

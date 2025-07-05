@@ -1,14 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-  FaShieldAlt, 
-  FaCheckCircle, 
-  FaUniversity, 
+import {
+  FaShieldAlt,
+  FaCheckCircle,
+  FaUniversity,
   FaRocket,
   FaCertificate,
   FaLock,
   FaEye,
-  FaHandshake
+  FaHandshake,
 } from 'react-icons/fa';
 import './TrustBadgesSection.css';
 
@@ -16,80 +16,80 @@ const TrustBadgesSection = () => {
   const badges = [
     {
       icon: FaShieldAlt,
-      title: "Smart Contract Audited",
-      description: "PhD-level security analysis completed",
-      status: "verified",
-      link: "/audit-report"
+      title: 'Smart Contract Audited',
+      description: 'PhD-level security analysis completed',
+      status: 'verified',
+      link: '/audit-report',
     },
     {
       icon: FaCheckCircle,
-      title: "BSC Mainnet Verified",
-      description: "Contract verified on BSCScan",
-      status: "verified",
-      link: "https://bscscan.com/address/0x29dcCb502D10C042BcC6a02a7762C49595A9E498"
+      title: 'BSC Mainnet Verified',
+      description: 'Contract verified on BSCScan',
+      status: 'verified',
+      link: 'https://bscscan.com/address/0x29dcCb502D10C042BcC6a02a7762C49595A9E498',
     },
     {
       icon: FaUniversity,
-      title: "Regulatory Compliant",
-      description: "Legal framework compliance verified",
-      status: "verified",
-      link: "/compliance"
+      title: 'Regulatory Compliant',
+      description: 'Legal framework compliance verified',
+      status: 'verified',
+      link: '/compliance',
     },
     {
       icon: FaLock,
-      title: "Funds Protected",
-      description: "Multi-signature security protocols",
-      status: "verified",
-      link: "/security"
+      title: 'Funds Protected',
+      description: 'Multi-signature security protocols',
+      status: 'verified',
+      link: '/security',
     },
     {
       icon: FaEye,
-      title: "100% Transparent",
-      description: "All transactions publicly verifiable",
-      status: "verified",
-      link: "/transparency"
+      title: '100% Transparent',
+      description: 'All transactions publicly verifiable',
+      status: 'verified',
+      link: '/transparency',
     },
     {
       icon: FaRocket,
-      title: "Production Ready",
-      description: "Battle-tested and optimized",
-      status: "verified",
-      link: "/performance"
-    }
+      title: 'Production Ready',
+      description: 'Battle-tested and optimized',
+      status: 'verified',
+      link: '/performance',
+    },
   ];
 
   const stats = [
     {
       icon: FaCertificate,
-      value: "$2.5M+",
-      label: "Total Value Secured",
-      gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+      value: '$2.5M+',
+      label: 'Total Value Secured',
+      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
     },
     {
       icon: FaHandshake,
-      value: "10,000+",
-      label: "Active Members",
-      gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)"
+      value: '10,000+',
+      label: 'Active Members',
+      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
     },
     {
       icon: FaShieldAlt,
-      value: "99.9%",
-      label: "Uptime Guarantee",
-      gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
+      value: '99.9%',
+      label: 'Uptime Guarantee',
+      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
     },
     {
       icon: FaCheckCircle,
-      value: "24/7",
-      label: "Security Monitoring",
-      gradient: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)"
-    }
+      value: '24/7',
+      label: 'Security Monitoring',
+      gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+    },
   ];
 
   return (
     <section className="trust-badges-section">
       <div className="container">
         {/* Section Header */}
-        <motion.div 
+        <motion.div
           className="section-header"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -97,11 +97,14 @@ const TrustBadgesSection = () => {
           viewport={{ once: true }}
         >
           <h2>Built on Trust & Security</h2>
-          <p>Enterprise-grade security with complete transparency and regulatory compliance</p>
+          <p>
+            Enterprise-grade security with complete transparency and regulatory
+            compliance
+          </p>
         </motion.div>
 
         {/* Trust Badges Grid */}
-        <motion.div 
+        <motion.div
           className="badges-grid"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -115,9 +118,9 @@ const TrustBadgesSection = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ 
+              whileHover={{
                 scale: 1.05,
-                boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
+                boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
               }}
               viewport={{ once: true }}
             >
@@ -139,7 +142,7 @@ const TrustBadgesSection = () => {
         </motion.div>
 
         {/* Security Stats */}
-        <motion.div 
+        <motion.div
           className="security-stats"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -170,7 +173,7 @@ const TrustBadgesSection = () => {
         </motion.div>
 
         {/* Security Certifications */}
-        <motion.div 
+        <motion.div
           className="certifications"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -198,7 +201,7 @@ const TrustBadgesSection = () => {
         </motion.div>
 
         {/* Real-time Security Status */}
-        <motion.div 
+        <motion.div
           className="security-status"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

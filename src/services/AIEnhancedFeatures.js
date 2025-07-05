@@ -12,10 +12,10 @@ class AIEnhancedFeatures {
     this.openai = OpenAIService;
     this.aiChat = {
       isInitialized: true,
-      generateResponse: async (text) => {
+      generateResponse: async text => {
         // Modern AI chat implementation
         return `AI Assistant: ${text}`;
-      }
+      },
     };
     this.isInitialized = false;
     this.init();
@@ -32,7 +32,7 @@ class AIEnhancedFeatures {
   }
 
   // ==================== 1. SMART CONTRACT INTERACTION HELPER ====================
-  
+
   /**
    * Explain transaction details in human-friendly language with voice synthesis
    */
@@ -40,18 +40,20 @@ class AIEnhancedFeatures {
     try {
       const explanations = {
         register: `You're about to join LeadFive with a $${params.packagePrice} package. This will place you in the binary matrix under ${params.referrer || 'the system'}. Your position will be optimized for maximum spillover benefits.`,
-        
+
         withdraw: `You're withdrawing $${params.amount} USDT from your LeadFive earnings. Current withdrawal rate: ${params.withdrawalRate}%. Estimated gas fee: ~$${params.gasFee}. Processing time: 2-5 minutes.`,
-        
+
         upgrade: `Upgrading from Package ${params.current} to ${params.new} will cost $${params.cost} and unlock higher earning potential. Your binary tree position remains the same, but commission rates increase.`,
-        
+
         purchase: `Purchasing Package ${params.level} for $${params.price}. This activates commission levels 1-${params.levels} and pool participation. Estimated ROI: ${params.estimatedROI}% over 12 months.`,
-        
-        referral: `You're referring ${params.newUser} to LeadFive. You'll earn $${params.directBonus} direct bonus plus ongoing binary commissions from their team's volume.`
+
+        referral: `You're referring ${params.newUser} to LeadFive. You'll earn $${params.directBonus} direct bonus plus ongoing binary commissions from their team's volume.`,
       };
 
-      let response = explanations[txType] || `Processing ${txType} transaction with parameters: ${JSON.stringify(params)}`;
-      
+      let response =
+        explanations[txType] ||
+        `Processing ${txType} transaction with parameters: ${JSON.stringify(params)}`;
+
       // Enhance with AI if available
       if (this.openai.isInitialized) {
         const aiPrompt = `Explain this LeadFive transaction in simple, encouraging terms:
@@ -59,7 +61,7 @@ class AIEnhancedFeatures {
         Details: ${response}
         
         Make it sound exciting and beneficial, maximum 100 words:`;
-        
+
         try {
           const aiResponse = await this.openai.generateResponse(aiPrompt);
           if (aiResponse) {
@@ -84,22 +86,21 @@ class AIEnhancedFeatures {
         text: response,
         type: txType,
         confidence: 'high',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
-
     } catch (error) {
       console.error('Error explaining transaction:', error);
       return {
         text: `Processing ${txType} transaction...`,
         type: txType,
         confidence: 'fallback',
-        error: error.message
+        error: error.message,
       };
     }
   }
 
   // ==================== 2. GENEALOGY TREE AI NAVIGATOR ====================
-  
+
   /**
    * Analyze network position and provide strategic insights
    */
@@ -108,7 +109,7 @@ class AIEnhancedFeatures {
       const analysis = {
         position: this.calculatePositionStrength(treeData),
         growth: this.analyzeGrowthPattern(treeData),
-        recommendations: []
+        recommendations: [],
       };
 
       // AI-enhanced analysis if available
@@ -146,28 +147,32 @@ class AIEnhancedFeatures {
 
       // Fallback recommendations
       if (!analysis.aiInsights) {
-        analysis.recommendations = this.generateFallbackRecommendations(treeData);
+        analysis.recommendations =
+          this.generateFallbackRecommendations(treeData);
       }
 
       return {
         ...analysis,
         userAddress,
         analysisDate: new Date().toISOString(),
-        confidence: analysis.aiInsights ? 'high' : 'medium'
+        confidence: analysis.aiInsights ? 'high' : 'medium',
       };
-
     } catch (error) {
       console.error('Error analyzing network position:', error);
       return {
-        recommendations: ['Focus on direct referrals', 'Upgrade package for higher commissions', 'Balance your binary legs'],
+        recommendations: [
+          'Focus on direct referrals',
+          'Upgrade package for higher commissions',
+          'Balance your binary legs',
+        ],
         confidence: 'fallback',
-        error: error.message
+        error: error.message,
       };
     }
   }
 
   // ==================== 3. EARNINGS PREDICTOR ====================
-  
+
   /**
    * Predict future earnings based on current metrics and AI analysis
    */
@@ -178,7 +183,7 @@ class AIEnhancedFeatures {
         teamSize: userData.teamSize || 0,
         growthRate: userData.weeklyGrowth || 0,
         package: userData.currentPackage || 30,
-        binaryVolume: userData.binaryVolume || 0
+        binaryVolume: userData.binaryVolume || 0,
       };
 
       // Mathematical prediction model
@@ -225,24 +230,24 @@ class AIEnhancedFeatures {
         ...predictions,
         generatedAt: new Date().toISOString(),
         model: predictions.aiEnhanced ? 'ai-enhanced' : 'mathematical',
-        disclaimer: 'Predictions are estimates based on current performance and market conditions. Actual results may vary.'
+        disclaimer:
+          'Predictions are estimates based on current performance and market conditions. Actual results may vary.',
       };
-
     } catch (error) {
       console.error('Error predicting earnings:', error);
       return {
         predictions: {
           '30days': { likely: 0, confidence: 'low' },
           '90days': { likely: 0, confidence: 'low' },
-          '12months': { likely: 0, confidence: 'low' }
+          '12months': { likely: 0, confidence: 'low' },
         },
-        error: error.message
+        error: error.message,
       };
     }
   }
 
   // ==================== 4. PERSONALIZED SUCCESS COACH ====================
-  
+
   /**
    * Generate personalized coaching advice based on user metrics and behavior
    */
@@ -250,17 +255,18 @@ class AIEnhancedFeatures {
     try {
       const context = {
         mood: userMetrics.lastActivity < 3 ? 'active' : 'inactive',
-        performance: userMetrics.teamGrowth > 10 ? 'excellent' : 'needs improvement',
+        performance:
+          userMetrics.teamGrowth > 10 ? 'excellent' : 'needs improvement',
         earnings: userMetrics.totalEarnings || 0,
         streak: userMetrics.loginStreak || 0,
-        goals: userMetrics.monthlyGoal || 0
+        goals: userMetrics.monthlyGoal || 0,
       };
 
       let advice = {
         message: '',
         action: '',
         motivation: '',
-        priority: 'medium'
+        priority: 'medium',
       };
 
       // AI-powered coaching if available
@@ -321,23 +327,23 @@ class AIEnhancedFeatures {
         ...advice,
         timestamp: new Date().toISOString(),
         userContext: context,
-        type: 'coaching'
+        type: 'coaching',
       };
-
     } catch (error) {
       console.error('Error generating coaching advice:', error);
       return {
-        message: "Keep building your LeadFive business one step at a time!",
-        action: "Focus on referring one new member this week.",
-        motivation: "Success in network marketing comes from consistent daily action.",
+        message: 'Keep building your LeadFive business one step at a time!',
+        action: 'Focus on referring one new member this week.',
+        motivation:
+          'Success in network marketing comes from consistent daily action.',
         priority: 'medium',
-        error: error.message
+        error: error.message,
       };
     }
   }
 
   // ==================== 5. SMART NOTIFICATIONS & ALERTS ====================
-  
+
   /**
    * Generate intelligent notifications based on user activity and opportunities
    */
@@ -345,17 +351,18 @@ class AIEnhancedFeatures {
     try {
       const notifications = {
         upgradeOpportunity: `Great news! You have $${userData.availableFunds} available. Upgrading to Package ${userData.suggestedPackage} will increase your earning potential by ${userData.earningIncrease}%.`,
-        
+
         spilloverAlert: `New team member placed in your downline! ${userData.newMember} joined under ${userData.sponsor}. Your binary volume increased by $${userData.volumeIncrease}.`,
-        
+
         withdrawalReady: `You can now withdraw $${userData.availableWithdrawal}! Your account balance has reached the minimum withdrawal threshold.`,
-        
+
         teamMilestone: `Congratulations! Your team has reached ${userData.teamSize} members. You're now eligible for the ${userData.newRank} rank benefits.`,
-        
-        inactivityAlert: `We miss you! Log in to check your team's progress. Your network grew by ${userData.growthWhileAway} members while you were away.`
+
+        inactivityAlert: `We miss you! Log in to check your team's progress. Your network grew by ${userData.growthWhileAway} members while you were away.`,
       };
 
-      let message = notifications[triggerType] || `LeadFive update: ${triggerType}`;
+      let message =
+        notifications[triggerType] || `LeadFive update: ${triggerType}`;
 
       // AI enhancement for personalized notifications
       if (this.openai.isInitialized) {
@@ -382,16 +389,15 @@ class AIEnhancedFeatures {
         type: triggerType,
         priority: this.getNotificationPriority(triggerType),
         actionUrl: this.getNotificationAction(triggerType),
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
-
     } catch (error) {
       console.error('Error generating smart notification:', error);
       return {
         message: 'Check your LeadFive dashboard for updates!',
         type: 'general',
         priority: 'low',
-        error: error.message
+        error: error.message,
       };
     }
   }
@@ -399,16 +405,20 @@ class AIEnhancedFeatures {
   // ==================== HELPER METHODS ====================
 
   calculatePositionStrength(treeData) {
-    const balance = Math.min(treeData.leftLegVolume || 0, treeData.rightLegVolume || 0);
-    const total = (treeData.leftLegVolume || 0) + (treeData.rightLegVolume || 0);
-    return total > 0 ? (balance / total * 2) : 0; // 0-1 score
+    const balance = Math.min(
+      treeData.leftLegVolume || 0,
+      treeData.rightLegVolume || 0
+    );
+    const total =
+      (treeData.leftLegVolume || 0) + (treeData.rightLegVolume || 0);
+    return total > 0 ? (balance / total) * 2 : 0; // 0-1 score
   }
 
   analyzeGrowthPattern(treeData) {
     return {
       trend: treeData.weeklyGrowth > 5 ? 'accelerating' : 'steady',
       sustainability: treeData.teamSize > 10 ? 'high' : 'building',
-      balance: this.calculateBinaryRatio(treeData)
+      balance: this.calculateBinaryRatio(treeData),
     };
   }
 
@@ -416,78 +426,85 @@ class AIEnhancedFeatures {
     const left = treeData.leftLegVolume || 0;
     const right = treeData.rightLegVolume || 0;
     if (left + right === 0) return 'No volume';
-    return `${Math.round(left/(left+right)*100)}:${Math.round(right/(left+right)*100)}`;
+    return `${Math.round((left / (left + right)) * 100)}:${Math.round((right / (left + right)) * 100)}`;
   }
 
   generateFallbackRecommendations(treeData) {
     const recommendations = [];
-    
+
     if (treeData.teamSize < 5) {
-      recommendations.push("Focus on direct referrals to build your foundation");
+      recommendations.push(
+        'Focus on direct referrals to build your foundation'
+      );
     }
-    
+
     const leftVol = treeData.leftLegVolume || 0;
     const rightVol = treeData.rightLegVolume || 0;
     if (Math.abs(leftVol - rightVol) > leftVol + rightVol * 0.3) {
-      recommendations.push("Balance your binary legs for maximum commission");
+      recommendations.push('Balance your binary legs for maximum commission');
     }
-    
+
     if (treeData.currentPackage < 100) {
-      recommendations.push("Consider upgrading your package for higher earning rates");
+      recommendations.push(
+        'Consider upgrading your package for higher earning rates'
+      );
     }
-    
+
     return recommendations;
   }
 
   calculateEarningsPredictions(metrics) {
-    const growthFactor = 1 + (metrics.growthRate / 100);
+    const growthFactor = 1 + metrics.growthRate / 100;
     const baseEarnings = metrics.currentEarnings;
-    
+
     return {
       predictions: {
         '30days': {
           min: Math.round(baseEarnings * 0.8),
           max: Math.round(baseEarnings * growthFactor * 1.5),
           likely: Math.round(baseEarnings * growthFactor),
-          confidence: '70%'
+          confidence: '70%',
         },
         '90days': {
           min: Math.round(baseEarnings * 2),
           max: Math.round(baseEarnings * Math.pow(growthFactor, 3) * 2),
           likely: Math.round(baseEarnings * Math.pow(growthFactor, 2.5)),
-          confidence: '60%'
+          confidence: '60%',
         },
         '12months': {
           min: Math.round(baseEarnings * 5),
           max: Math.round(baseEarnings * Math.pow(growthFactor, 12) * 3),
           likely: Math.round(baseEarnings * Math.pow(growthFactor, 8)),
-          confidence: '45%'
-        }
-      }
+          confidence: '45%',
+        },
+      },
     };
   }
 
   generateFallbackCoaching(context) {
     if (context.mood === 'inactive') {
       return {
-        message: "Welcome back to LeadFive! Your network is ready for your leadership.",
-        action: "Check your team's recent activity and reach out to 3 members today.",
-        motivation: "Consistent engagement builds lasting success!",
-        priority: 'high'
+        message:
+          'Welcome back to LeadFive! Your network is ready for your leadership.',
+        action:
+          "Check your team's recent activity and reach out to 3 members today.",
+        motivation: 'Consistent engagement builds lasting success!',
+        priority: 'high',
       };
     } else if (context.performance === 'excellent') {
       return {
-        message: "Outstanding performance! You're setting a great example for your team.",
-        action: "Share your success strategy with your downline this week.",
-        motivation: "Leaders who teach create lasting legacies!",
-        priority: 'medium'
+        message:
+          "Outstanding performance! You're setting a great example for your team.",
+        action: 'Share your success strategy with your downline this week.',
+        motivation: 'Leaders who teach create lasting legacies!',
+        priority: 'medium',
       };
     } else {
       return {
-        message: "Every successful leader started where you are now.",
-        action: "Set a goal to make 5 new contacts this week.",
-        motivation: "Your breakthrough is just one conversation away!",
-        priority: 'medium'
+        message: 'Every successful leader started where you are now.',
+        action: 'Set a goal to make 5 new contacts this week.',
+        motivation: 'Your breakthrough is just one conversation away!',
+        priority: 'medium',
       };
     }
   }
@@ -498,7 +515,7 @@ class AIEnhancedFeatures {
       spilloverAlert: 'medium',
       withdrawalReady: 'high',
       teamMilestone: 'medium',
-      inactivityAlert: 'low'
+      inactivityAlert: 'low',
     };
     return priorities[triggerType] || 'medium';
   }
@@ -509,7 +526,7 @@ class AIEnhancedFeatures {
       spilloverAlert: '/genealogy',
       withdrawalReady: '/withdrawals',
       teamMilestone: '/dashboard',
-      inactivityAlert: '/dashboard'
+      inactivityAlert: '/dashboard',
     };
     return actions[triggerType] || '/dashboard';
   }
@@ -544,8 +561,8 @@ class AIEnhancedFeatures {
         earningsPrediction: this.openai.isInitialized,
         personalizedCoaching: this.openai.isInitialized,
         smartNotifications: this.openai.isInitialized,
-        aiChatAssistant: this.aiChat.isInitialized
-      }
+        aiChatAssistant: this.aiChat.isInitialized,
+      },
     };
   }
 }

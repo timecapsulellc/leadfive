@@ -1,6 +1,6 @@
 /**
  * Clean Binary Tree Genealogy - LeadFive MLM Structure
- * 
+ *
  * Features:
  * - Pure 1:2 binary tree structure (left/right legs)
  * - Real data integration with smart contract
@@ -11,10 +11,22 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import * as d3 from 'd3';
-import { FaUsers, FaChartLine, FaExpand, FaCompress, FaSearch, FaDownload } from 'react-icons/fa';
+import {
+  FaUsers,
+  FaChartLine,
+  FaExpand,
+  FaCompress,
+  FaSearch,
+  FaDownload,
+} from 'react-icons/fa';
 import './CleanBinaryTree.css';
 
-const CleanBinaryTree = ({ userAddress, account, data, showControls = true }) => {
+const CleanBinaryTree = ({
+  userAddress,
+  account,
+  data,
+  showControls = true,
+}) => {
   const svgRef = useRef(null);
   const [treeData, setTreeData] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -25,373 +37,496 @@ const CleanBinaryTree = ({ userAddress, account, data, showControls = true }) =>
     activeNodes: 0,
     leftLegCount: 0,
     rightLegCount: 0,
-    maxDepth: 0
+    maxDepth: 0,
   });
 
   // Real MLM binary tree data structure from smart contract
   const generateRealTreeData = useCallback(() => {
     return {
-      id: "root",
-      name: account ? `${account.slice(0, 6)}...${account.slice(-4)}` : "You",
-      address: account || "0x29dcCb502D10C042BcC6a02a7762C49595A9E498",
+      id: 'root',
+      name: account ? `${account.slice(0, 6)}...${account.slice(-4)}` : 'You',
+      address: account || '0x29dcCb502D10C042BcC6a02a7762C49595A9E498',
       level: 0,
-      position: "root",
+      position: 'root',
       package: data?.currentPackage || 100, // From getUserInfo()
-      earnings: data?.totalEarnings || 0,    // From smart contract
-      status: "active",
+      earnings: data?.totalEarnings || 0, // From smart contract
+      status: 'active',
       joinDate: new Date().toISOString().split('T')[0],
       children: [
         {
-          id: "left-1",
-          name: "0x7890...abcd",
-          address: "0x7890abcdef123456",
+          id: 'left-1',
+          name: '0x7890...abcd',
+          address: '0x7890abcdef123456',
           level: 1,
-          position: "left",
+          position: 'left',
           package: 50,
-          earnings: 124.50,
-          status: "active",
-          joinDate: "2024-12-01",
+          earnings: 124.5,
+          status: 'active',
+          joinDate: '2024-12-01',
           children: [
             {
-              id: "left-2-1",
-              name: "0x2345...6789",
-              address: "0x23456789abcdef12",
+              id: 'left-2-1',
+              name: '0x2345...6789',
+              address: '0x23456789abcdef12',
               level: 2,
-              position: "left",
+              position: 'left',
               package: 30,
               earnings: 67.25,
-              status: "active",
-              joinDate: "2024-12-15",
+              status: 'active',
+              joinDate: '2024-12-15',
               children: [
                 {
-                  id: "left-3-1",
-                  name: "0x5678...9012",
-                  address: "0x56789012cdef3456",
+                  id: 'left-3-1',
+                  name: '0x5678...9012',
+                  address: '0x56789012cdef3456',
                   level: 3,
-                  position: "left",
+                  position: 'left',
                   package: 30,
-                  earnings: 34.50,
-                  status: "active",
-                  joinDate: "2025-01-02"
+                  earnings: 34.5,
+                  status: 'active',
+                  joinDate: '2025-01-02',
                 },
                 {
-                  id: "left-3-2",
-                  name: "0x9012...3456",
-                  address: "0x90123456def78901",
+                  id: 'left-3-2',
+                  name: '0x9012...3456',
+                  address: '0x90123456def78901',
                   level: 3,
-                  position: "right",
+                  position: 'right',
                   package: 50,
                   earnings: 45.75,
-                  status: "inactive",
-                  joinDate: "2025-01-05"
-                }
-              ]
+                  status: 'inactive',
+                  joinDate: '2025-01-05',
+                },
+              ],
             },
             {
-              id: "left-2-2",
-              name: "0x3456...7890",
-              address: "0x3456789012abcdef",
+              id: 'left-2-2',
+              name: '0x3456...7890',
+              address: '0x3456789012abcdef',
               level: 2,
-              position: "right",
+              position: 'right',
               package: 100,
-              earnings: 189.50,
-              status: "active",
-              joinDate: "2024-12-20",
+              earnings: 189.5,
+              status: 'active',
+              joinDate: '2024-12-20',
               children: [
                 {
-                  id: "left-3-3",
-                  name: "0x6789...0123",
-                  address: "0x67890123456abcde",
+                  id: 'left-3-3',
+                  name: '0x6789...0123',
+                  address: '0x67890123456abcde',
                   level: 3,
-                  position: "left",
+                  position: 'left',
                   package: 50,
                   earnings: 78.25,
-                  status: "active",
-                  joinDate: "2025-01-07"
-                }
-              ]
-            }
-          ]
+                  status: 'active',
+                  joinDate: '2025-01-07',
+                },
+              ],
+            },
+          ],
         },
         {
-          id: "right-1",
-          name: "0x4567...8901",
-          address: "0x456789012345abcd",
+          id: 'right-1',
+          name: '0x4567...8901',
+          address: '0x456789012345abcd',
           level: 1,
-          position: "right",
+          position: 'right',
           package: 100,
           earnings: 234.75,
-          status: "active",
-          joinDate: "2024-11-28",
+          status: 'active',
+          joinDate: '2024-11-28',
           children: [
             {
-              id: "right-2-1",
-              name: "0x8901...2345",
-              address: "0x890123456789abcd",
+              id: 'right-2-1',
+              name: '0x8901...2345',
+              address: '0x890123456789abcd',
               level: 2,
-              position: "left",
+              position: 'left',
               package: 50,
               earnings: 89.25,
-              status: "active",
-              joinDate: "2024-12-10",
+              status: 'active',
+              joinDate: '2024-12-10',
               children: [
                 {
-                  id: "right-3-1",
-                  name: "0x1234...5678",
-                  address: "0x123456789abcdef0",
+                  id: 'right-3-1',
+                  name: '0x1234...5678',
+                  address: '0x123456789abcdef0',
                   level: 3,
-                  position: "left",
+                  position: 'left',
                   package: 30,
-                  earnings: 23.50,
-                  status: "active",
-                  joinDate: "2025-01-01"
+                  earnings: 23.5,
+                  status: 'active',
+                  joinDate: '2025-01-01',
                 },
                 {
-                  id: "right-3-2",
-                  name: "0x5678...9012",
-                  address: "0x56789012abcdef34",
+                  id: 'right-3-2',
+                  name: '0x5678...9012',
+                  address: '0x56789012abcdef34',
                   level: 3,
-                  position: "right",
+                  position: 'right',
                   package: 50,
-                  earnings: 67.80,
-                  status: "active",
-                  joinDate: "2025-01-03"
-                }
-              ]
+                  earnings: 67.8,
+                  status: 'active',
+                  joinDate: '2025-01-03',
+                },
+              ],
             },
             {
-              id: "right-2-2",
-              name: "0x9012...3456",
-              address: "0x9012345678abcdef",
+              id: 'right-2-2',
+              name: '0x9012...3456',
+              address: '0x9012345678abcdef',
               level: 2,
-              position: "right",
+              position: 'right',
               package: 200,
-              earnings: 345.60,
-              status: "active",
-              joinDate: "2024-12-05",
+              earnings: 345.6,
+              status: 'active',
+              joinDate: '2024-12-05',
               children: [
                 {
-                  id: "right-3-3",
-                  name: "0x2345...6789",
-                  address: "0x23456789abcdef90",
+                  id: 'right-3-3',
+                  name: '0x2345...6789',
+                  address: '0x23456789abcdef90',
                   level: 3,
-                  position: "left",
+                  position: 'left',
                   package: 100,
                   earnings: 156.75,
-                  status: "active",
-                  joinDate: "2024-12-28"
+                  status: 'active',
+                  joinDate: '2024-12-28',
                 },
                 {
-                  id: "right-3-4",
-                  name: "0x6789...0123",
-                  address: "0x67890123456789ab",
+                  id: 'right-3-4',
+                  name: '0x6789...0123',
+                  address: '0x67890123456789ab',
                   level: 3,
-                  position: "right",
+                  position: 'right',
                   package: 100,
                   earnings: 198.45,
-                  status: "active",
-                  joinDate: "2025-01-06"
-                }
-              ]
-            }
-          ]
-        }
-      ]
+                  status: 'active',
+                  joinDate: '2025-01-06',
+                },
+              ],
+            },
+          ],
+        },
+      ],
     };
   }, [account, data]);
 
   // Calculate tree statistics
-  const calculateTreeStats = useCallback((node, depth = 0, stats = { totalNodes: 0, activeNodes: 0, leftLegCount: 0, rightLegCount: 0, maxDepth: 0 }) => {
-    stats.totalNodes++;
-    stats.maxDepth = Math.max(stats.maxDepth, depth);
-    
-    if (node.status === 'active') {
-      stats.activeNodes++;
-    }
-    
-    if (node.position === 'left' && depth > 0) {
-      stats.leftLegCount++;
-    } else if (node.position === 'right' && depth > 0) {
-      stats.rightLegCount++;
-    }
-    
-    if (node.children) {
-      node.children.forEach(child => calculateTreeStats(child, depth + 1, stats));
-    }
-    
-    return stats;
-  }, []);
+  const calculateTreeStats = useCallback(
+    (
+      node,
+      depth = 0,
+      stats = {
+        totalNodes: 0,
+        activeNodes: 0,
+        leftLegCount: 0,
+        rightLegCount: 0,
+        maxDepth: 0,
+      }
+    ) => {
+      stats.totalNodes++;
+      stats.maxDepth = Math.max(stats.maxDepth, depth);
+
+      if (node.status === 'active') {
+        stats.activeNodes++;
+      }
+
+      if (node.position === 'left' && depth > 0) {
+        stats.leftLegCount++;
+      } else if (node.position === 'right' && depth > 0) {
+        stats.rightLegCount++;
+      }
+
+      if (node.children) {
+        node.children.forEach(child =>
+          calculateTreeStats(child, depth + 1, stats)
+        );
+      }
+
+      return stats;
+    },
+    []
+  );
 
   // Initialize tree data
   useEffect(() => {
-    const data = generateRealTreeData();
-    setTreeData(data);
-    setTreeStats(calculateTreeStats(data));
-  }, [generateRealTreeData, calculateTreeStats]);
+    // Use data prop if available, otherwise generate demo data
+    const treeDataToUse = data || generateRealTreeData();
+    setTreeData(treeDataToUse);
+    setTreeStats(calculateTreeStats(treeDataToUse));
+  }, [data, generateRealTreeData, calculateTreeStats]);
 
   // D3 Tree Rendering
   useEffect(() => {
-    if (!treeData || !svgRef.current) return;
+    if (!treeData || !svgRef.current) {
+      console.log('CleanBinaryTree D3: Missing data or ref', {
+        treeData: !!treeData,
+        svgRef: !!svgRef.current,
+      });
+      return;
+    }
 
-    const svg = d3.select(svgRef.current);
-    svg.selectAll("*").remove();
+    console.log('CleanBinaryTree D3: Starting render with data:', treeData);
 
-    const margin = { top: 40, right: 40, bottom: 40, left: 40 };
-    const width = 800 - margin.left - margin.right;
-    const height = 600 - margin.top - margin.bottom;
+    try {
+      const svg = d3.select(svgRef.current);
+      svg.selectAll('*').remove();
 
-    const g = svg
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform", `translate(${margin.left},${margin.top})`);
+      // Get the container dimensions
+      const containerElement = svgRef.current.parentElement;
+      const containerWidth = containerElement
+        ? containerElement.clientWidth
+        : 800;
+      const containerHeight = containerElement
+        ? containerElement.clientHeight
+        : 600;
 
-    // Create tree layout with proper binary structure
-    const tree = d3.tree()
-      .size([width, height])
-      .separation((a, b) => {
-        // Enhanced separation for better visibility
-        return a.parent === b.parent ? 1.2 : 2;
+      const margin = { top: 60, right: 60, bottom: 60, left: 60 };
+      const width = Math.max(containerWidth - margin.left - margin.right, 600);
+      const height = Math.max(
+        containerHeight - margin.top - margin.bottom,
+        400
+      );
+
+      console.log('CleanBinaryTree D3: SVG dimensions', {
+        width,
+        height,
+        containerWidth,
+        containerHeight,
       });
 
-    const root = d3.hierarchy(treeData);
-    tree(root);
+      // Set SVG attributes and ensure it's visible
+      svg
+        .attr('width', width + margin.left + margin.right)
+        .attr('height', height + margin.top + margin.bottom)
+        .attr(
+          'viewBox',
+          `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`
+        )
+        .style('background', 'rgba(255, 255, 255, 0.1)')
+        .style('border', '2px solid #4facfe')
+        .style('border-radius', '8px');
 
-    // Create gradient definitions
-    const defs = svg.append("defs");
-    
-    // Active node gradient
-    const activeGradient = defs.append("linearGradient")
-      .attr("id", "activeNodeGradient")
-      .attr("x1", "0%").attr("y1", "0%")
-      .attr("x2", "100%").attr("y2", "100%");
-    
-    activeGradient.append("stop")
-      .attr("offset", "0%")
-      .attr("stop-color", "#4facfe");
-    
-    activeGradient.append("stop")
-      .attr("offset", "100%")
-      .attr("stop-color", "#00f2fe");
+      const g = svg
+        .append('g')
+        .attr('transform', `translate(${margin.left},${margin.top})`);
 
-    // Inactive node gradient
-    const inactiveGradient = defs.append("linearGradient")
-      .attr("id", "inactiveNodeGradient")
-      .attr("x1", "0%").attr("y1", "0%")
-      .attr("x2", "100%").attr("y2", "100%");
-    
-    inactiveGradient.append("stop")
-      .attr("offset", "0%")
-      .attr("stop-color", "#6b7280");
-    
-    inactiveGradient.append("stop")
-      .attr("offset", "100%")
-      .attr("stop-color", "#4b5563");
+      // Create tree layout with proper binary structure
+      const tree = d3
+        .tree()
+        .size([width, height])
+        .separation((a, b) => {
+          // Enhanced separation for better visibility
+          return a.parent === b.parent ? 1.2 : 2;
+        });
 
-    // Root node gradient
-    const rootGradient = defs.append("linearGradient")
-      .attr("id", "rootNodeGradient")
-      .attr("x1", "0%").attr("y1", "0%")
-      .attr("x2", "100%").attr("y2", "100%");
-    
-    rootGradient.append("stop")
-      .attr("offset", "0%")
-      .attr("stop-color", "#10b981");
-    
-    rootGradient.append("stop")
-      .attr("offset", "100%")
-      .attr("stop-color", "#34d399");
+      const root = d3.hierarchy(treeData);
+      tree(root);
 
-    // Draw links (connections between nodes)
-    g.selectAll(".link")
-      .data(root.links())
-      .enter().append("path")
-      .attr("class", "link")
-      .attr("fill", "none")
-      .attr("stroke", "#4facfe")
-      .attr("stroke-width", 2)
-      .attr("stroke-opacity", 0.6)
-      .attr("d", d3.linkVertical()
-        .x(d => d.x)
-        .y(d => d.y));
+      // Create gradient definitions
+      const defs = svg.append('defs');
 
-    // Draw nodes
-    const node = g.selectAll(".node")
-      .data(root.descendants())
-      .enter().append("g")
-      .attr("class", "node")
-      .attr("transform", d => `translate(${d.x},${d.y})`)
-      .style("cursor", "pointer")
-      .on("click", (event, d) => {
-        setSelectedNode(d.data);
-      });
+      // Active node gradient
+      const activeGradient = defs
+        .append('linearGradient')
+        .attr('id', 'activeNodeGradient')
+        .attr('x1', '0%')
+        .attr('y1', '0%')
+        .attr('x2', '100%')
+        .attr('y2', '100%');
 
-    // Node circles
-    node.append("circle")
-      .attr("r", d => d.data.position === 'root' ? 25 : 20)
-      .attr("fill", d => {
-        if (d.data.position === 'root') return "url(#rootNodeGradient)";
-        return d.data.status === 'active' ? "url(#activeNodeGradient)" : "url(#inactiveNodeGradient)";
-      })
-      .attr("stroke", "#ffffff")
-      .attr("stroke-width", 3)
-      .attr("filter", "drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))")
-      .on("mouseover", function() {
-        d3.select(this).transition().duration(200).attr("r", d => d.data.position === 'root' ? 28 : 23);
-      })
-      .on("mouseout", function() {
-        d3.select(this).transition().duration(200).attr("r", d => d.data.position === 'root' ? 25 : 20);
-      });
+      activeGradient
+        .append('stop')
+        .attr('offset', '0%')
+        .attr('stop-color', '#4facfe');
 
-    // Node labels (address)
-    node.append("text")
-      .attr("dy", "-30")
-      .attr("text-anchor", "middle")
-      .style("font-family", "'SF Mono', 'Monaco', 'Inconsolata', monospace")
-      .style("font-size", "12px")
-      .style("font-weight", "600")
-      .style("fill", "#ffffff")
-      .style("text-shadow", "0 1px 2px rgba(0, 0, 0, 0.8)")
-      .text(d => d.data.name);
+      activeGradient
+        .append('stop')
+        .attr('offset', '100%')
+        .attr('stop-color', '#00f2fe');
 
-    // Package info
-    node.append("text")
-      .attr("dy", "5")
-      .attr("text-anchor", "middle")
-      .style("font-size", "10px")
-      .style("font-weight", "bold")
-      .style("fill", "#ffffff")
-      .style("text-shadow", "0 1px 2px rgba(0, 0, 0, 0.8)")
-      .text(d => `$${d.data.package}`);
+      // Inactive node gradient
+      const inactiveGradient = defs
+        .append('linearGradient')
+        .attr('id', 'inactiveNodeGradient')
+        .attr('x1', '0%')
+        .attr('y1', '0%')
+        .attr('x2', '100%')
+        .attr('y2', '100%');
 
-    // Earnings info
-    node.append("text")
-      .attr("dy", "40")
-      .attr("text-anchor", "middle")
-      .style("font-size", "11px")
-      .style("font-weight", "600")
-      .style("fill", "#fbbf24")
-      .style("text-shadow", "0 1px 2px rgba(0, 0, 0, 0.8)")
-      .text(d => `$${d.data.earnings.toFixed(2)}`);
+      inactiveGradient
+        .append('stop')
+        .attr('offset', '0%')
+        .attr('stop-color', '#6b7280');
 
-    // Status indicator
-    node.append("circle")
-      .attr("r", 4)
-      .attr("cx", 18)
-      .attr("cy", -18)
-      .attr("fill", d => d.data.status === 'active' ? "#10b981" : "#ef4444")
-      .attr("stroke", "#ffffff")
-      .attr("stroke-width", 1);
+      inactiveGradient
+        .append('stop')
+        .attr('offset', '100%')
+        .attr('stop-color', '#4b5563');
 
-    // Add zoom and pan functionality
-    const zoom = d3.zoom()
-      .scaleExtent([0.5, 3])
-      .on("zoom", (event) => {
-        g.attr("transform", event.transform);
-      });
+      // Root node gradient
+      const rootGradient = defs
+        .append('linearGradient')
+        .attr('id', 'rootNodeGradient')
+        .attr('x1', '0%')
+        .attr('y1', '0%')
+        .attr('x2', '100%')
+        .attr('y2', '100%');
 
-    svg.call(zoom);
+      rootGradient
+        .append('stop')
+        .attr('offset', '0%')
+        .attr('stop-color', '#10b981');
 
+      rootGradient
+        .append('stop')
+        .attr('offset', '100%')
+        .attr('stop-color', '#34d399');
+
+      // Draw links (connections between nodes)
+      g.selectAll('.link')
+        .data(root.links())
+        .enter()
+        .append('path')
+        .attr('class', 'link')
+        .attr('fill', 'none')
+        .attr('stroke', '#4facfe')
+        .attr('stroke-width', 2)
+        .attr('stroke-opacity', 0.6)
+        .attr(
+          'd',
+          d3
+            .linkVertical()
+            .x(d => d.x)
+            .y(d => d.y)
+        );
+
+      // Draw nodes
+      const node = g
+        .selectAll('.node')
+        .data(root.descendants())
+        .enter()
+        .append('g')
+        .attr('class', 'node')
+        .attr('transform', d => `translate(${d.x},${d.y})`)
+        .style('cursor', 'pointer')
+        .on('click', (event, d) => {
+          setSelectedNode(d.data);
+        });
+
+      // Node circles
+      node
+        .append('circle')
+        .attr('r', d => (d.data.position === 'root' ? 25 : 20))
+        .attr('fill', d => {
+          if (d.data.position === 'root') return 'url(#rootNodeGradient)';
+          return d.data.status === 'active'
+            ? 'url(#activeNodeGradient)'
+            : 'url(#inactiveNodeGradient)';
+        })
+        .attr('stroke', '#ffffff')
+        .attr('stroke-width', 3)
+        .attr('filter', 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3))')
+        .on('mouseover', function () {
+          d3.select(this)
+            .transition()
+            .duration(200)
+            .attr('r', d => (d.data.position === 'root' ? 28 : 23));
+        })
+        .on('mouseout', function () {
+          d3.select(this)
+            .transition()
+            .duration(200)
+            .attr('r', d => (d.data.position === 'root' ? 25 : 20));
+        });
+
+      // Node labels (address)
+      node
+        .append('text')
+        .attr('dy', '-30')
+        .attr('text-anchor', 'middle')
+        .style('font-family', "'SF Mono', 'Monaco', 'Inconsolata', monospace")
+        .style('font-size', '12px')
+        .style('font-weight', '600')
+        .style('fill', '#ffffff')
+        .style('text-shadow', '0 1px 2px rgba(0, 0, 0, 0.8)')
+        .text(d => d.data.name);
+
+      // Package info
+      node
+        .append('text')
+        .attr('dy', '5')
+        .attr('text-anchor', 'middle')
+        .style('font-size', '10px')
+        .style('font-weight', 'bold')
+        .style('fill', '#ffffff')
+        .style('text-shadow', '0 1px 2px rgba(0, 0, 0, 0.8)')
+        .text(d => `$${d.data.package}`);
+
+      // Earnings info
+      node
+        .append('text')
+        .attr('dy', '40')
+        .attr('text-anchor', 'middle')
+        .style('font-size', '11px')
+        .style('font-weight', '600')
+        .style('fill', '#fbbf24')
+        .style('text-shadow', '0 1px 2px rgba(0, 0, 0, 0.8)')
+        .text(d => `$${d.data.earnings.toFixed(2)}`);
+
+      // Status indicator
+      node
+        .append('circle')
+        .attr('r', 4)
+        .attr('cx', 18)
+        .attr('cy', -18)
+        .attr('fill', d => (d.data.status === 'active' ? '#10b981' : '#ef4444'))
+        .attr('stroke', '#ffffff')
+        .attr('stroke-width', 1);
+
+      // Add zoom and pan functionality
+      const zoom = d3
+        .zoom()
+        .scaleExtent([0.5, 3])
+        .on('zoom', event => {
+          g.attr('transform', event.transform);
+        });
+
+      svg.call(zoom);
+
+      console.log(
+        'CleanBinaryTree D3: Hierarchy created with',
+        root.descendants().length,
+        'nodes'
+      );
+    } catch (error) {
+      console.error('CleanBinaryTree D3 Rendering Error:', error);
+
+      // Clear the SVG and show error message
+      const svg = d3.select(svgRef.current);
+      svg.selectAll('*').remove();
+
+      svg
+        .append('text')
+        .attr('x', '50%')
+        .attr('y', '50%')
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'middle')
+        .style('font-size', '16px')
+        .style('fill', '#ef4444')
+        .text('Unable to render tree visualization');
+
+      svg
+        .append('text')
+        .attr('x', '50%')
+        .attr('y', '60%')
+        .attr('text-anchor', 'middle')
+        .attr('dominant-baseline', 'middle')
+        .style('font-size', '12px')
+        .style('fill', '#6b7280')
+        .text('Please try refreshing the page');
+    }
   }, [treeData]);
 
   const exportTree = () => {
@@ -409,6 +544,29 @@ const CleanBinaryTree = ({ userAddress, account, data, showControls = true }) =>
 
   const filteredData = treeData; // Add search filtering if needed
 
+  // Fallback if no tree data
+  if (!treeData) {
+    return (
+      <div
+        className="clean-binary-tree"
+        style={{ padding: '40px', textAlign: 'center' }}
+      >
+        <h3>🌳 Binary Tree Structure</h3>
+        <p>Loading your genealogy tree...</p>
+        <div
+          style={{
+            marginTop: '20px',
+            padding: '20px',
+            background: '#f3f4f6',
+            borderRadius: '8px',
+          }}
+        >
+          <p>Your team structure will appear here once data is loaded.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={`clean-binary-tree ${isFullscreen ? 'fullscreen' : ''}`}>
       {/* Tree Controls */}
@@ -421,17 +579,17 @@ const CleanBinaryTree = ({ userAddress, account, data, showControls = true }) =>
                 type="text"
                 placeholder="Search addresses..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={e => setSearchTerm(e.target.value)}
               />
             </div>
           </div>
-          
+
           <div className="controls-right">
             <button className="control-btn" onClick={exportTree}>
               <FaDownload />
               Export
             </button>
-            <button 
+            <button
               className="control-btn"
               onClick={() => setIsFullscreen(!isFullscreen)}
             >
@@ -494,7 +652,9 @@ const CleanBinaryTree = ({ userAddress, account, data, showControls = true }) =>
             </div>
             <div className="detail-item">
               <span className="detail-label">Earnings:</span>
-              <span className="detail-value">${selectedNode.earnings.toFixed(2)}</span>
+              <span className="detail-value">
+                ${selectedNode.earnings.toFixed(2)}
+              </span>
             </div>
             <div className="detail-item">
               <span className="detail-label">Status:</span>
@@ -511,7 +671,7 @@ const CleanBinaryTree = ({ userAddress, account, data, showControls = true }) =>
               <span className="detail-value">{selectedNode.level}</span>
             </div>
           </div>
-          <button 
+          <button
             className="close-details"
             onClick={() => setSelectedNode(null)}
           >

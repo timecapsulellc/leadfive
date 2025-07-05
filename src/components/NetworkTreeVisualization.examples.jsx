@@ -1,9 +1,9 @@
 /**
  * NetworkTreeVisualization Usage Examples
- * 
+ *
  * This file demonstrates various ways to use the NetworkTreeVisualization component
  * in different scenarios within the OrphiChain platform.
- * 
+ *
  * @author OrphiChain Development Team
  * @version 2.0.0
  * @since 2025-06-14
@@ -27,7 +27,7 @@ export const BasicNetworkTreeExample = () => {
         showLegend={true}
         showStats={true}
         theme="dark"
-        onNodeClick={(node) => {
+        onNodeClick={node => {
           console.log('Node clicked:', node);
         }}
       />
@@ -48,7 +48,7 @@ export const SmartContractNetworkTree = () => {
       try {
         // Example: Fetch from your Web3Service or smart contract
         // const data = await Web3Service.buildGenealogyTree(userAddress);
-        
+
         // For demo purposes, using sample data
         const sampleData = {
           name: 'Current User',
@@ -57,7 +57,7 @@ export const SmartContractNetworkTree = () => {
             packageTier: 4,
             volume: 25000,
             registrationDate: new Date().toISOString(),
-            downlineCount: 15
+            downlineCount: 15,
           },
           children: [
             {
@@ -66,9 +66,11 @@ export const SmartContractNetworkTree = () => {
                 address: '0x1234567890ABCDEF1234567890ABCDEF12345678',
                 packageTier: 3,
                 volume: 12000,
-                registrationDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-                downlineCount: 8
-              }
+                registrationDate: new Date(
+                  Date.now() - 7 * 24 * 60 * 60 * 1000
+                ).toISOString(),
+                downlineCount: 8,
+              },
             },
             {
               name: 'Referral #2',
@@ -76,13 +78,15 @@ export const SmartContractNetworkTree = () => {
                 address: '0xABCDEF1234567890ABCDEF1234567890ABCDEF12',
                 packageTier: 2,
                 volume: 8500,
-                registrationDate: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString(),
-                downlineCount: 5
-              }
-            }
-          ]
+                registrationDate: new Date(
+                  Date.now() - 14 * 24 * 60 * 60 * 1000
+                ).toISOString(),
+                downlineCount: 5,
+              },
+            },
+          ],
         };
-        
+
         setNetworkData(sampleData);
         setLoading(false);
       } catch (error) {
@@ -110,7 +114,7 @@ export const SmartContractNetworkTree = () => {
         showStats={true}
         showNodeDetails={true}
         theme="dark"
-        onNodeClick={(node) => {
+        onNodeClick={node => {
           console.log('Live node clicked:', node);
           // Handle real node interactions here
         }}
@@ -148,10 +152,10 @@ export const MinimalNetworkTree = ({ userData }) => {
 // ============================================================================
 
 export const CustomStyledNetworkTree = () => {
-  const customNodeRenderer = (rd3tProps) => {
+  const customNodeRenderer = rd3tProps => {
     const { nodeDatum } = rd3tProps;
     const radius = 20;
-    
+
     return (
       <g>
         {/* Custom circle with company branding */}
@@ -162,7 +166,7 @@ export const CustomStyledNetworkTree = () => {
           strokeWidth="2"
           style={{ cursor: 'pointer' }}
         />
-        
+
         {/* Custom text with different styling */}
         <text
           fill="#ffffff"
@@ -173,7 +177,7 @@ export const CustomStyledNetworkTree = () => {
         >
           {nodeDatum.name.split(' ')[0]}
         </text>
-        
+
         {/* Volume indicator */}
         {nodeDatum.attributes?.volume && (
           <text
@@ -185,10 +189,16 @@ export const CustomStyledNetworkTree = () => {
             ${(nodeDatum.attributes.volume / 1000).toFixed(1)}K
           </text>
         )}
-        
+
         {/* Define gradient */}
         <defs>
-          <linearGradient id="orphiGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient
+            id="orphiGradient"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="100%"
+          >
             <stop offset="0%" stopColor="#7B2CBF" />
             <stop offset="100%" stopColor="#00D4FF" />
           </linearGradient>
@@ -215,14 +225,14 @@ export const CustomStyledNetworkTree = () => {
 // EXAMPLE 5: Dashboard Integration
 // ============================================================================
 
-export const DashboardNetworkTreeWidget = ({ 
-  userAddress, 
-  onUserSelect, 
-  selectedTheme = 'dark' 
+export const DashboardNetworkTreeWidget = ({
+  userAddress,
+  onUserSelect,
+  selectedTheme = 'dark',
 }) => {
   const [selectedUser, setSelectedUser] = useState(null);
 
-  const handleNodeClick = (node) => {
+  const handleNodeClick = node => {
     setSelectedUser(node);
     if (onUserSelect) {
       onUserSelect(node);
@@ -234,12 +244,10 @@ export const DashboardNetworkTreeWidget = ({
       <div className="widget-header">
         <h3>Network Genealogy</h3>
         {selectedUser && (
-          <span className="selected-user">
-            Selected: {selectedUser.name}
-          </span>
+          <span className="selected-user">Selected: {selectedUser.name}</span>
         )}
       </div>
-      
+
       <div className="widget-content" style={{ height: '500px' }}>
         <NetworkTreeVisualization
           data={null} // Replace with real data from Web3Service
@@ -277,13 +285,13 @@ export const ExportableNetworkTree = () => {
         summary: {
           totalUsers: countNodes(treeData),
           maxDepth: calculateDepth(treeData),
-          totalVolume: calculateVolume(treeData)
-        }
+          totalVolume: calculateVolume(treeData),
+        },
       };
 
       // Create and download JSON file
       const blob = new Blob([JSON.stringify(exportData, null, 2)], {
-        type: 'application/json'
+        type: 'application/json',
       });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
@@ -298,22 +306,24 @@ export const ExportableNetworkTree = () => {
 
   // Helper functions for export
   const flattenTreeData = (node, level = 0) => {
-    const result = [{
-      name: node.name,
-      level,
-      ...node.attributes
-    }];
-    
+    const result = [
+      {
+        name: node.name,
+        level,
+        ...node.attributes,
+      },
+    ];
+
     if (node.children) {
       node.children.forEach(child => {
         result.push(...flattenTreeData(child, level + 1));
       });
     }
-    
+
     return result;
   };
 
-  const countNodes = (node) => {
+  const countNodes = node => {
     let count = 1;
     if (node.children) {
       node.children.forEach(child => {
@@ -327,10 +337,12 @@ export const ExportableNetworkTree = () => {
     if (!node.children || node.children.length === 0) {
       return depth;
     }
-    return Math.max(...node.children.map(child => calculateDepth(child, depth + 1)));
+    return Math.max(
+      ...node.children.map(child => calculateDepth(child, depth + 1))
+    );
   };
 
-  const calculateVolume = (node) => {
+  const calculateVolume = node => {
     let total = node.attributes?.volume || 0;
     if (node.children) {
       node.children.forEach(child => {
@@ -343,7 +355,7 @@ export const ExportableNetworkTree = () => {
   return (
     <div style={{ height: '800px', padding: '20px' }}>
       <div style={{ marginBottom: '20px' }}>
-        <button 
+        <button
           onClick={handleExportTree}
           style={{
             padding: '10px 20px',
@@ -352,18 +364,18 @@ export const ExportableNetworkTree = () => {
             border: 'none',
             borderRadius: '5px',
             cursor: 'pointer',
-            fontWeight: '600'
+            fontWeight: '600',
           }}
         >
           Export Network Data
         </button>
       </div>
-      
+
       <NetworkTreeVisualization
         demoMode={true}
         showControls={true}
         showExport={true}
-        onTreeLoad={(data) => setTreeData(data)}
+        onTreeLoad={data => setTreeData(data)}
       />
     </div>
   );
@@ -375,5 +387,5 @@ export default {
   MinimalNetworkTree,
   CustomStyledNetworkTree,
   DashboardNetworkTreeWidget,
-  ExportableNetworkTree
+  ExportableNetworkTree,
 };

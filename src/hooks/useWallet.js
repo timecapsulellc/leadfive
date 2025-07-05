@@ -31,8 +31,10 @@ const useWallet = () => {
           const web3Provider = new BrowserProvider(window.ethereum);
           const web3Signer = await web3Provider.getSigner();
           const address = await web3Signer.getAddress();
-          const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-          
+          const chainId = await window.ethereum.request({
+            method: 'eth_chainId',
+          });
+
           setAccount(address);
           setProvider(web3Provider);
           setSigner(web3Signer);
@@ -48,7 +50,7 @@ const useWallet = () => {
 
     // Set up event listeners
     if (window.ethereum) {
-      const handleAccountsChanged = (accounts) => {
+      const handleAccountsChanged = accounts => {
         if (accounts.length === 0) {
           disconnectWallet();
         } else if (accounts[0] !== account) {
@@ -56,7 +58,7 @@ const useWallet = () => {
         }
       };
 
-      const handleChainChanged = (chainId) => {
+      const handleChainChanged = chainId => {
         setNetwork(chainId);
         // Optionally reload to avoid state issues
         // window.location.reload();
@@ -71,7 +73,10 @@ const useWallet = () => {
       window.ethereum.on('disconnect', handleDisconnect);
 
       return () => {
-        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+        window.ethereum.removeListener(
+          'accountsChanged',
+          handleAccountsChanged
+        );
         window.ethereum.removeListener('chainChanged', handleChainChanged);
         window.ethereum.removeListener('disconnect', handleDisconnect);
       };
@@ -81,7 +86,9 @@ const useWallet = () => {
   // Connect wallet function
   const connectWallet = useCallback(async () => {
     if (!window.ethereum) {
-      setError('No Web3 wallet detected. Please install MetaMask or another Web3 wallet.');
+      setError(
+        'No Web3 wallet detected. Please install MetaMask or another Web3 wallet.'
+      );
       return;
     }
 
@@ -128,7 +135,6 @@ const useWallet = () => {
       setSigner(web3Signer);
       setNetwork(BSC_MAINNET_CONFIG.chainId);
       setIsConnected(true);
-
     } catch (err) {
       console.error('Wallet connection failed:', err);
       setError(err.message || 'Failed to connect wallet');
@@ -148,13 +154,16 @@ const useWallet = () => {
   }, []);
 
   // Handle connection from external component
-  const handleConnect = useCallback((walletAccount, walletProvider, walletSigner) => {
-    setAccount(walletAccount);
-    setProvider(walletProvider);
-    setSigner(walletSigner);
-    setIsConnected(true);
-    setError(null);
-  }, []);
+  const handleConnect = useCallback(
+    (walletAccount, walletProvider, walletSigner) => {
+      setAccount(walletAccount);
+      setProvider(walletProvider);
+      setSigner(walletSigner);
+      setIsConnected(true);
+      setError(null);
+    },
+    []
+  );
 
   // Handle disconnection from external component
   const handleDisconnect = useCallback(() => {
@@ -162,14 +171,14 @@ const useWallet = () => {
   }, [disconnectWallet]);
 
   // Handle errors from external component
-  const handleError = useCallback((errorMessage) => {
+  const handleError = useCallback(errorMessage => {
     setError(errorMessage);
   }, []);
 
   // Get network name
   const getNetworkName = useCallback(() => {
     if (!network) return null;
-    
+
     switch (network) {
       case '0x38':
         return 'BSC Mainnet';
@@ -196,14 +205,14 @@ const useWallet = () => {
     provider,
     signer,
     error,
-    
+
     // Functions
     connectWallet,
     disconnectWallet,
     handleConnect,
     handleDisconnect,
     handleError,
-    
+
     // Utilities
     getNetworkName,
     isCorrectNetwork,

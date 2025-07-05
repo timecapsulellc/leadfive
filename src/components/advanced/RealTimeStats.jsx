@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  FaChartLine, 
-  FaBolt, 
-  FaUsers, 
+import {
+  FaChartLine,
+  FaBolt,
+  FaUsers,
   FaDollarSign,
   FaNetworkWired,
   FaClock,
@@ -10,7 +10,7 @@ import {
   FaArrowDown,
   FaEquals,
   FaRedo,
-  FaEye
+  FaEye,
 } from 'react-icons/fa';
 
 const RealTimeStats = ({ dashboardData, userStats, className = '' }) => {
@@ -24,7 +24,7 @@ const RealTimeStats = ({ dashboardData, userStats, className = '' }) => {
     withdrawalsProcessed: Math.floor(Math.random() * 30) + 10,
     teamGrowthRate: 12.5,
     earningsVelocity: 284,
-    networkHealth: dashboardData?.protocolHealth || 95
+    networkHealth: dashboardData?.protocolHealth || 95,
   });
 
   const [performanceMetrics, setPerformanceMetrics] = useState({
@@ -33,14 +33,38 @@ const RealTimeStats = ({ dashboardData, userStats, className = '' }) => {
     monthlyGrowth: 42.3,
     teamActivity: 96,
     conversionRate: 8.4,
-    retentionRate: 91.2
+    retentionRate: 91.2,
   });
 
   const [liveUpdates, setLiveUpdates] = useState([
-    { id: 1, type: 'registration', message: 'New member joined Package Level 3', time: '2 min ago', trend: 'up' },
-    { id: 2, type: 'upgrade', message: 'Member upgraded to Package Level 5', time: '5 min ago', trend: 'up' },
-    { id: 3, type: 'withdrawal', message: 'Withdrawal processed: $234.50', time: '8 min ago', trend: 'neutral' },
-    { id: 4, type: 'team', message: 'Your team gained 3 new members', time: '12 min ago', trend: 'up' }
+    {
+      id: 1,
+      type: 'registration',
+      message: 'New member joined Package Level 3',
+      time: '2 min ago',
+      trend: 'up',
+    },
+    {
+      id: 2,
+      type: 'upgrade',
+      message: 'Member upgraded to Package Level 5',
+      time: '5 min ago',
+      trend: 'up',
+    },
+    {
+      id: 3,
+      type: 'withdrawal',
+      message: 'Withdrawal processed: $234.50',
+      time: '8 min ago',
+      trend: 'neutral',
+    },
+    {
+      id: 4,
+      type: 'team',
+      message: 'Your team gained 3 new members',
+      time: '12 min ago',
+      trend: 'up',
+    },
   ]);
 
   // Simulate real-time updates
@@ -49,39 +73,65 @@ const RealTimeStats = ({ dashboardData, userStats, className = '' }) => {
       // Update metrics with slight variations
       setRealTimeData(prev => ({
         ...prev,
-        networkActivity: Math.max(85, Math.min(100, prev.networkActivity + (Math.random() - 0.5) * 4)),
-        transactionsToday: prev.transactionsToday + Math.floor(Math.random() * 3),
+        networkActivity: Math.max(
+          85,
+          Math.min(100, prev.networkActivity + (Math.random() - 0.5) * 4)
+        ),
+        transactionsToday:
+          prev.transactionsToday + Math.floor(Math.random() * 3),
         volumeToday: prev.volumeToday + Math.floor(Math.random() * 1000),
         newRegistrations: prev.newRegistrations + (Math.random() > 0.7 ? 1 : 0),
         packageUpgrades: prev.packageUpgrades + (Math.random() > 0.8 ? 1 : 0),
-        withdrawalsProcessed: prev.withdrawalsProcessed + (Math.random() > 0.9 ? 1 : 0),
-        earningsVelocity: Math.max(200, Math.min(400, prev.earningsVelocity + (Math.random() - 0.5) * 20))
+        withdrawalsProcessed:
+          prev.withdrawalsProcessed + (Math.random() > 0.9 ? 1 : 0),
+        earningsVelocity: Math.max(
+          200,
+          Math.min(400, prev.earningsVelocity + (Math.random() - 0.5) * 20)
+        ),
       }));
 
       setPerformanceMetrics(prev => ({
         ...prev,
-        teamActivity: Math.max(90, Math.min(100, prev.teamActivity + (Math.random() - 0.5) * 2)),
-        conversionRate: Math.max(5, Math.min(15, prev.conversionRate + (Math.random() - 0.5) * 0.5))
+        teamActivity: Math.max(
+          90,
+          Math.min(100, prev.teamActivity + (Math.random() - 0.5) * 2)
+        ),
+        conversionRate: Math.max(
+          5,
+          Math.min(15, prev.conversionRate + (Math.random() - 0.5) * 0.5)
+        ),
       }));
 
       // Add new live update occasionally
       if (Math.random() > 0.6) {
         const updates = [
-          { type: 'registration', message: 'New member joined the network', trend: 'up' },
-          { type: 'upgrade', message: 'Package upgrade completed', trend: 'up' },
-          { type: 'withdrawal', message: `Withdrawal processed: $${(Math.random() * 500 + 100).toFixed(2)}`, trend: 'neutral' },
+          {
+            type: 'registration',
+            message: 'New member joined the network',
+            trend: 'up',
+          },
+          {
+            type: 'upgrade',
+            message: 'Package upgrade completed',
+            trend: 'up',
+          },
+          {
+            type: 'withdrawal',
+            message: `Withdrawal processed: $${(Math.random() * 500 + 100).toFixed(2)}`,
+            trend: 'neutral',
+          },
           { type: 'team', message: 'Team structure updated', trend: 'up' },
-          { type: 'bonus', message: 'Binary commission earned', trend: 'up' }
+          { type: 'bonus', message: 'Binary commission earned', trend: 'up' },
         ];
-        
+
         const newUpdate = updates[Math.floor(Math.random() * updates.length)];
         setLiveUpdates(prev => [
           {
             id: Date.now(),
             ...newUpdate,
-            time: 'Just now'
+            time: 'Just now',
           },
-          ...prev.slice(0, 4) // Keep only 5 most recent
+          ...prev.slice(0, 4), // Keep only 5 most recent
         ]);
       }
     }, 15000); // Update every 15 seconds
@@ -89,22 +139,31 @@ const RealTimeStats = ({ dashboardData, userStats, className = '' }) => {
     return () => clearInterval(interval);
   }, []);
 
-  const getTrendIcon = (trend) => {
+  const getTrendIcon = trend => {
     switch (trend) {
-      case 'up': return <FaArrowUp className="trend-up" />;
-      case 'down': return <FaArrowDown className="trend-down" />;
-      default: return <FaEquals className="trend-neutral" />;
+      case 'up':
+        return <FaArrowUp className="trend-up" />;
+      case 'down':
+        return <FaArrowDown className="trend-down" />;
+      default:
+        return <FaEquals className="trend-neutral" />;
     }
   };
 
-  const getUpdateTypeIcon = (type) => {
+  const getUpdateTypeIcon = type => {
     switch (type) {
-      case 'registration': return <FaUsers />;
-      case 'upgrade': return <FaArrowUp />;
-      case 'withdrawal': return <FaDollarSign />;
-      case 'team': return <FaNetworkWired />;
-      case 'bonus': return <FaBolt />;
-      default: return <FaEye />;
+      case 'registration':
+        return <FaUsers />;
+      case 'upgrade':
+        return <FaArrowUp />;
+      case 'withdrawal':
+        return <FaDollarSign />;
+      case 'team':
+        return <FaNetworkWired />;
+      case 'bonus':
+        return <FaBolt />;
+      default:
+        return <FaEye />;
     }
   };
 
@@ -135,7 +194,9 @@ const RealTimeStats = ({ dashboardData, userStats, className = '' }) => {
             </div>
             <div className="metric-info">
               <span className="metric-label">Network Activity</span>
-              <span className="metric-value">{realTimeData.networkActivity.toFixed(1)}%</span>
+              <span className="metric-value">
+                {realTimeData.networkActivity.toFixed(1)}%
+              </span>
               <span className="metric-trend positive">
                 <FaArrowUp /> +2.3%
               </span>
@@ -148,7 +209,9 @@ const RealTimeStats = ({ dashboardData, userStats, className = '' }) => {
             </div>
             <div className="metric-info">
               <span className="metric-label">Active Members</span>
-              <span className="metric-value">{(realTimeData.activeMembers || 0).toLocaleString()}</span>
+              <span className="metric-value">
+                {(realTimeData.activeMembers || 0).toLocaleString()}
+              </span>
               <span className="metric-trend positive">
                 <FaArrowUp /> Online
               </span>
@@ -161,7 +224,9 @@ const RealTimeStats = ({ dashboardData, userStats, className = '' }) => {
             </div>
             <div className="metric-info">
               <span className="metric-label">Today's Transactions</span>
-              <span className="metric-value">{realTimeData.transactionsToday}</span>
+              <span className="metric-value">
+                {realTimeData.transactionsToday}
+              </span>
               <span className="metric-trend positive">
                 <FaArrowUp /> +{Math.floor(Math.random() * 5) + 1}
               </span>
@@ -174,7 +239,9 @@ const RealTimeStats = ({ dashboardData, userStats, className = '' }) => {
             </div>
             <div className="metric-info">
               <span className="metric-label">Volume Today</span>
-              <span className="metric-value">${(realTimeData.volumeToday || 0).toLocaleString()}</span>
+              <span className="metric-value">
+                ${(realTimeData.volumeToday || 0).toLocaleString()}
+              </span>
               <span className="metric-trend positive">
                 <FaArrowUp /> +12.4%
               </span>
@@ -189,23 +256,40 @@ const RealTimeStats = ({ dashboardData, userStats, className = '' }) => {
             <div className="performance-item">
               <span className="perf-label">Team Growth Rate</span>
               <div className="perf-bar">
-                <div className="perf-fill" style={{ width: `${Math.min(100, realTimeData.teamGrowthRate * 8)}%` }}></div>
+                <div
+                  className="perf-fill"
+                  style={{
+                    width: `${Math.min(100, realTimeData.teamGrowthRate * 8)}%`,
+                  }}
+                ></div>
               </div>
-              <span className="perf-value">{realTimeData.teamGrowthRate.toFixed(1)}%</span>
+              <span className="perf-value">
+                {realTimeData.teamGrowthRate.toFixed(1)}%
+              </span>
             </div>
 
             <div className="performance-item">
               <span className="perf-label">Earnings Velocity</span>
               <div className="perf-bar">
-                <div className="perf-fill" style={{ width: `${Math.min(100, (realTimeData.earningsVelocity / 400) * 100)}%` }}></div>
+                <div
+                  className="perf-fill"
+                  style={{
+                    width: `${Math.min(100, (realTimeData.earningsVelocity / 400) * 100)}%`,
+                  }}
+                ></div>
               </div>
-              <span className="perf-value">{realTimeData.earningsVelocity}</span>
+              <span className="perf-value">
+                {realTimeData.earningsVelocity}
+              </span>
             </div>
 
             <div className="performance-item">
               <span className="perf-label">Network Health</span>
               <div className="perf-bar">
-                <div className="perf-fill health" style={{ width: `${realTimeData.networkHealth}%` }}></div>
+                <div
+                  className="perf-fill health"
+                  style={{ width: `${realTimeData.networkHealth}%` }}
+                ></div>
               </div>
               <span className="perf-value">{realTimeData.networkHealth}%</span>
             </div>
@@ -219,7 +303,9 @@ const RealTimeStats = ({ dashboardData, userStats, className = '' }) => {
             <div className="highlight-item">
               <FaUsers className="highlight-icon registrations" />
               <div className="highlight-info">
-                <span className="highlight-number">{realTimeData.newRegistrations}</span>
+                <span className="highlight-number">
+                  {realTimeData.newRegistrations}
+                </span>
                 <span className="highlight-label">New Registrations</span>
               </div>
             </div>
@@ -227,7 +313,9 @@ const RealTimeStats = ({ dashboardData, userStats, className = '' }) => {
             <div className="highlight-item">
               <FaArrowUp className="highlight-icon upgrades" />
               <div className="highlight-info">
-                <span className="highlight-number">{realTimeData.packageUpgrades}</span>
+                <span className="highlight-number">
+                  {realTimeData.packageUpgrades}
+                </span>
                 <span className="highlight-label">Package Upgrades</span>
               </div>
             </div>
@@ -235,7 +323,9 @@ const RealTimeStats = ({ dashboardData, userStats, className = '' }) => {
             <div className="highlight-item">
               <FaDollarSign className="highlight-icon withdrawals" />
               <div className="highlight-info">
-                <span className="highlight-number">{realTimeData.withdrawalsProcessed}</span>
+                <span className="highlight-number">
+                  {realTimeData.withdrawalsProcessed}
+                </span>
                 <span className="highlight-label">Withdrawals Processed</span>
               </div>
             </div>
@@ -251,9 +341,9 @@ const RealTimeStats = ({ dashboardData, userStats, className = '' }) => {
               <span>Live</span>
             </div>
           </div>
-          
+
           <div className="activity-feed">
-            {(liveUpdates || []).map((update) => (
+            {(liveUpdates || []).map(update => (
               <div key={update.id} className="activity-item">
                 <div className="activity-icon">
                   {getUpdateTypeIcon(update.type)}

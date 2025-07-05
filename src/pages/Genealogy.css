@@ -1,39 +1,81 @@
 /* Genealogy Page - Community Levels Styling */
 
+/* Global box-sizing for consistent layout */
+.genealogy-page *,
+.genealogy-page *::before,
+.genealogy-page *::after {
+  box-sizing: border-box;
+}
+
 .genealogy-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0A0A0A 0%, #1A1A2E 30%, #16213E 70%, #0F1419 100%);
+  background: linear-gradient(
+    135deg,
+    #0a0b14 0%,
+    #151829 25%,
+    #1a1c35 50%,
+    #1e2344 75%,
+    #0a0b14 100%
+  );
   color: white;
-  padding: 20px;
+  padding: 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
 }
 
 /* Page Header */
 .page-header {
   text-align: center;
-  margin-bottom: 40px;
-  padding: 30px 20px;
-  background: rgba(26, 26, 46, 0.6);
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 20px;
-  border: 1px solid rgba(0, 212, 255, 0.2);
-  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .page-header h1 {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 700;
-  margin: 0 0 15px 0;
-  background: linear-gradient(45deg, #00D4FF, #7B2CBF, #FF6B35);
-  background-size: 200% 200%;
+  margin: 0 0 1rem 0;
+  background: linear-gradient(135deg, #00d4ff 0%, #8b5cf6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradientFlow 4s ease-in-out infinite;
+}
+
+.page-header p {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
 }
 
 @keyframes gradientFlow {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 .page-header p {
@@ -48,36 +90,37 @@
 .wallet-connect-section {
   display: flex;
   justify-content: center;
-  margin-bottom: 40px;
+  width: 100%;
 }
 
 .connection-prompt {
   text-align: center;
-  padding: 40px;
-  background: rgba(26, 26, 46, 0.8);
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 20px;
-  border: 1px solid rgba(0, 212, 255, 0.3);
-  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
   max-width: 500px;
   width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .connection-prompt h3 {
-  color: #00D4FF;
-  font-size: 1.4rem;
+  color: #00d4ff;
+  font-size: 1.5rem;
   font-weight: 600;
-  margin: 0 0 15px 0;
+  margin: 0 0 1rem 0;
 }
 
 .connection-prompt p {
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 30px;
-  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 2rem;
+  line-height: 1.6;
 }
 
 /* Connected User Info */
 .connected-user-info {
-  margin-bottom: 40px;
+  width: 100%;
 }
 
 .user-card {
@@ -114,7 +157,7 @@
 .address-display {
   font-family: monospace;
   font-size: 1rem;
-  color: #00D4FF;
+  color: #00d4ff;
   background: rgba(0, 0, 0, 0.3);
   padding: 6px 12px;
   border-radius: 8px;
@@ -126,7 +169,7 @@
   background: rgba(239, 68, 68, 0.2);
   border: 1px solid rgba(239, 68, 68, 0.5);
   border-radius: 8px;
-  color: #EF4444;
+  color: #ef4444;
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 500;
@@ -135,7 +178,7 @@
 
 .disconnect-btn:hover {
   background: rgba(239, 68, 68, 0.3);
-  border-color: #EF4444;
+  border-color: #ef4444;
   transform: translateY(-1px);
 }
 
@@ -156,7 +199,7 @@
 }
 
 .action-btn.primary {
-  background: linear-gradient(45deg, #00D4FF, #7B2CBF);
+  background: linear-gradient(45deg, #00d4ff, #7b2cbf);
   border: none;
   color: white;
   box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
@@ -170,24 +213,122 @@
 .action-btn.secondary {
   background: rgba(123, 44, 191, 0.2);
   border: 1px solid rgba(123, 44, 191, 0.5);
-  color: #7B2CBF;
+  color: #7b2cbf;
 }
 
 .action-btn.secondary:hover {
   background: rgba(123, 44, 191, 0.3);
-  border-color: #7B2CBF;
+  border-color: #7b2cbf;
   color: white;
   transform: translateY(-2px);
 }
 
 /* Community Visualization Section */
 .community-visualization-section {
-  margin-bottom: 40px;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   border: 1px solid rgba(0, 212, 255, 0.2);
   overflow: hidden;
-  min-height: 600px;
+  min-height: 640px;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+  isolation: isolate;
+  contain: layout style;
+  width: 100%;
+}
+
+/* Genealogy Tree Container */
+.genealogy-tree-container {
+  width: 100% !important;
+  height: 600px !important;
+  position: relative !important;
+  z-index: 1 !important;
+  isolation: isolate !important;
+  contain: layout style !important;
+  background: rgba(0, 0, 0, 0.1) !important;
+  border-radius: 12px !important;
+  overflow: auto !important;
+  transform: translateZ(0) !important;
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+}
+
+.genealogy-tree-container svg {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  position: relative !important;
+  z-index: 1 !important;
+  transform: translateZ(0) !important;
+}
+
+/* Loading and Error States */
+.genealogy-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 30%, #16213e 70%, #0f1419 100%);
+  color: white;
+  padding: 40px;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(0, 212, 255, 0.3);
+  border-top: 4px solid #00d4ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.genealogy-loading p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+.genealogy-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 30%, #16213e 70%, #0f1419 100%);
+  color: white;
+  padding: 40px;
+  text-align: center;
+}
+
+.genealogy-error p {
+  font-size: 1.1rem;
+  color: #ff6b6b;
+  margin-bottom: 20px;
+  max-width: 500px;
+}
+
+.genealogy-error button {
+  padding: 12px 24px;
+  background: linear-gradient(45deg, #00d4ff, #7b2cbf);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.genealogy-error button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
 }
 
 /* Business Info Section */
@@ -217,7 +358,7 @@
 }
 
 .info-card h4 {
-  color: #00D4FF;
+  color: #00d4ff;
   font-size: 1.2rem;
   font-weight: 600;
   margin: 0 0 15px 0;
@@ -250,7 +391,7 @@
 }
 
 .reward-percentage {
-  color: #FFD700;
+  color: #ffd700;
   font-weight: bold;
   font-size: 1rem;
   width: 50px;
@@ -286,22 +427,22 @@
 
 .tier-item.bronze {
   background: rgba(205, 127, 50, 0.1);
-  border-color: #CD7F32;
+  border-color: #cd7f32;
 }
 
 .tier-item.silver {
   background: rgba(192, 192, 192, 0.1);
-  border-color: #C0C0C0;
+  border-color: #c0c0c0;
 }
 
 .tier-item.gold {
   background: rgba(255, 215, 0, 0.1);
-  border-color: #FFD700;
+  border-color: #ffd700;
 }
 
 .tier-item.diamond {
   background: rgba(123, 44, 191, 0.1);
-  border-color: #7B2CBF;
+  border-color: #7b2cbf;
 }
 
 .tier-name {
@@ -311,7 +452,7 @@
 }
 
 .tier-price {
-  color: #00D4FF;
+  color: #00d4ff;
   font-weight: bold;
   font-size: 1rem;
   margin-bottom: 3px;
@@ -351,12 +492,12 @@
 }
 
 .rate-split {
-  color: #00D4FF;
+  color: #00d4ff;
   font-weight: 600;
 }
 
 .rate-item.highlighted .rate-split {
-  color: #FFD700;
+  color: #ffd700;
 }
 
 /* Leadership Requirements */
@@ -377,7 +518,7 @@
 }
 
 .requirement-icon {
-  color: #10B981;
+  color: #10b981;
   font-size: 1rem;
 }
 
@@ -386,19 +527,84 @@
   font-weight: 500;
 }
 
+/* Quick Navigation Section */
+.quick-nav-section {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Navigation Buttons */
+.nav-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  margin: 8px;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.nav-btn.dashboard {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: rgba(0, 212, 255, 0.3);
+  color: #00d4ff;
+}
+
+.nav-btn.dashboard:hover {
+  background: rgba(0, 212, 255, 0.2);
+  border-color: #00d4ff;
+  color: white;
+}
+
+.nav-btn.referrals {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.3);
+  color: #8b5cf6;
+}
+
+.nav-btn.referrals:hover {
+  background: rgba(139, 92, 246, 0.2);
+  border-color: #8b5cf6;
+  color: white;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .info-grid {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
   }
-  
+
   .user-card {
     flex-direction: column;
     align-items: stretch;
     text-align: center;
   }
-  
+
   .user-details {
     justify-content: center;
   }
@@ -408,26 +614,41 @@
   .genealogy-page {
     padding: 15px;
   }
-  
+
   .page-header {
     padding: 20px 15px;
   }
-  
+
   .info-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .tier-list {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .quick-actions {
     flex-direction: column;
     width: 100%;
   }
-  
+
   .action-btn {
     text-align: center;
+  }
+
+  .nav-btn {
+    width: 100%;
+    justify-content: center;
+    margin: 4px 0;
+  }
+
+  .nav-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .genealogy-tree-container {
+    height: 400px !important;
   }
 }
 
@@ -436,24 +657,38 @@
     padding: 25px 20px;
     margin: 0 10px;
   }
-  
+
   .user-card {
     padding: 20px;
   }
-  
+
   .info-card {
     padding: 20px;
   }
-  
+
   .tier-list {
     grid-template-columns: 1fr;
   }
-  
+
   .reward-item,
   .rate-item,
   .requirement-item {
     flex-direction: column;
     gap: 8px;
     text-align: center;
+  }
+
+  .nav-btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    margin: 4px 0;
+  }
+
+  .genealogy-tree-container {
+    height: 300px !important;
+  }
+
+  .page-header h1 {
+    font-size: 1.8rem;
   }
 }

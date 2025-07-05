@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { LEAD_FIVE_ABI, LEAD_FIVE_CONFIG } from '../contracts-leadfive.js';
 
-const useContract = (provider) => {
+const useContract = provider => {
   const [contract, setContract] = useState(null);
 
   useEffect(() => {

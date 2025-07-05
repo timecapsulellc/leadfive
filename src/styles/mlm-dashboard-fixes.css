@@ -79,7 +79,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
     transform: scale(1);
   }
@@ -302,7 +303,11 @@
 }
 
 .stat-card.primary {
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(102, 126, 234, 0.1),
+    rgba(118, 75, 162, 0.1)
+  );
   border-color: rgba(102, 126, 234, 0.3);
 }
 
@@ -400,7 +405,7 @@
     width: 250px;
     min-width: 250px;
   }
-  
+
   .dashboard-main-content {
     margin-left: 250px;
   }
@@ -413,20 +418,20 @@
     position: static;
     min-height: auto;
   }
-  
+
   .dashboard-main-content {
     margin-left: 0;
     height: auto;
   }
-  
+
   .advanced-mlm-dashboard {
     flex-direction: column;
   }
-  
+
   .mlm-stats-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .metrics-grid {
     grid-template-columns: 1fr;
   }
@@ -456,7 +461,12 @@
 
 /* Loading states */
 .loading-shimmer {
-  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 75%
+  );
   background-size: 200% 100%;
   animation: shimmer 2s infinite;
 }

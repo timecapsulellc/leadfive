@@ -6,7 +6,11 @@
   padding: 8px 0;
   overflow: hidden;
   position: relative;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
 }
 
 .ticker-container {
@@ -136,7 +140,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -149,25 +154,25 @@
   .ticker-container {
     padding: 0 16px;
   }
-  
+
   .ticker-scroll {
     gap: 24px;
   }
-  
+
   .coin-info {
     gap: 8px;
   }
-  
+
   .coin-symbol,
   .coin-price {
     font-size: 0.8rem;
   }
-  
+
   .coin-change {
     font-size: 0.7rem;
     padding: 1px 4px;
   }
-  
+
   .last-updated {
     display: none;
   }
@@ -178,11 +183,11 @@
     gap: 16px;
     animation-duration: 20s;
   }
-  
+
   .coin-symbol {
     min-width: 35px;
   }
-  
+
   .ticker-controls {
     gap: 8px;
   }

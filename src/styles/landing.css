@@ -1,16 +1,16 @@
 /* Root variables */
 :root {
-  --primary-color: #00D4FF;      /* Cyber Blue */
-  --secondary-color: #7B2CBF;    /* Royal Purple */
-  --accent-color: #FF6B35;       /* Energy Orange */
-  --success-color: #4CAF50;
-  --error-color: #F44336;
-  --warning-color: #FF9800;
-  --text-primary: #FFFFFF;
+  --primary-color: #00d4ff; /* Cyber Blue */
+  --secondary-color: #7b2cbf; /* Royal Purple */
+  --accent-color: #ff6b35; /* Energy Orange */
+  --success-color: #4caf50;
+  --error-color: #f44336;
+  --warning-color: #ff9800;
+  --text-primary: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.7);
   --background-dark: #111827;
-  --background-light: #1F2937;
-  --card-background: #2D3748;
+  --background-light: #1f2937;
+  --card-background: #2d3748;
   --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-glow: 0 0 20px rgba(0, 212, 255, 0.2);
   --transition: all 0.3s ease;
@@ -24,7 +24,18 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Open Sans',
+    'Helvetica Neue',
+    sans-serif;
   line-height: 1.6;
   color: var(--text-primary);
   background: var(--background-dark);
@@ -33,7 +44,7 @@ body {
 /* Landing page */
 .landing-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #7B2CBF 100%);
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #7b2cbf 100%);
   color: white;
   padding: 2rem 0;
 }
@@ -132,7 +143,7 @@ nav a:hover::after {
   font-size: 4rem !important;
   font-weight: 700 !important;
   margin-bottom: 1rem !important;
-  background: linear-gradient(135deg, #00D4FF, #7B2CBF);
+  background: linear-gradient(135deg, #00d4ff, #7b2cbf);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -145,7 +156,7 @@ nav a:hover::after {
 }
 
 .cta-button {
-  background: linear-gradient(135deg, #00D4FF, #7B2CBF) !important;
+  background: linear-gradient(135deg, #00d4ff, #7b2cbf) !important;
   color: white !important;
   padding: 1rem 2rem !important;
   font-size: 1.2rem !important;
@@ -176,7 +187,7 @@ nav a:hover::after {
 }
 
 .feature-card h5 {
-  color: #00D4FF;
+  color: #00d4ff;
   margin-bottom: 1rem !important;
 }
 
@@ -188,7 +199,7 @@ nav a:hover::after {
 .section-title {
   text-align: center;
   margin-bottom: 3rem !important;
-  color: #00D4FF;
+  color: #00d4ff;
 }
 
 .step-card {
@@ -205,13 +216,13 @@ nav a:hover::after {
 }
 
 .step-card h3 {
-  color: #7B2CBF;
+  color: #7b2cbf;
   font-size: 3rem !important;
   margin-bottom: 1rem !important;
 }
 
 .step-card h6 {
-  color: #00D4FF;
+  color: #00d4ff;
   margin-bottom: 1rem !important;
 }
 
@@ -262,7 +273,7 @@ nav a:hover::after {
 }
 
 .plan-card li:before {
-  content: "✓";
+  content: '✓';
   color: var(--primary-color);
   position: absolute;
   left: 0;
@@ -427,4 +438,4 @@ nav a:hover::after {
 .landing-page {
   background-size: 200% 200%;
   animation: gradient 15s ease infinite;
-} 
+}

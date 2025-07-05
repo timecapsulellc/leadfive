@@ -1,0 +1,607 @@
+/**
+ * Advanced Genealogy Tree Styles
+ * Comprehensive styling for LeadFive MLM business tree visualization
+ */
+
+.advanced-genealogy-tree {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Control Panel Styles */
+.tree-controls {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.control-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 0 10px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.control-group:last-child {
+  border-right: none;
+}
+
+.control-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.control-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #5a67d8, #6b46c1);
+}
+
+.control-btn.active {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.filter-select {
+  padding: 8px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background: white;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Business Metrics Panel */
+.business-metrics-panel {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 320px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 1000;
+}
+
+.business-metrics-panel h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.metric-card {
+  padding: 15px;
+  background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.metric-icon {
+  font-size: 24px;
+  color: #667eea;
+  margin-bottom: 8px;
+}
+
+.metric-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 4px;
+}
+
+.metric-label {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+/* Leg Balance Analysis */
+.leg-balance {
+  margin-bottom: 25px;
+}
+
+.leg-balance h4 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.balance-bars {
+  gap: 12px;
+}
+
+.leg-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.leg-bar span:first-child {
+  width: 60px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.leg-bar span:last-child {
+  width: 80px;
+  text-align: right;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.bar {
+  flex: 1;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.bar .fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #059669);
+  transition: all 0.3s ease;
+}
+
+.leg-bar.right .bar .fill {
+  background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+}
+
+.balance-ratio {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+  padding: 8px;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 8px;
+}
+
+/* Reward Distribution */
+.reward-breakdown h4 {
+  margin: 0 0 15px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.reward-items {
+  gap: 8px;
+}
+
+.reward-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: rgba(16, 185, 129, 0.05);
+  border-radius: 8px;
+  border-left: 4px solid #10b981;
+  margin-bottom: 8px;
+}
+
+.reward-label {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.reward-amount {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+/* Tree Container */
+.tree-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.tree-svg {
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+
+.tree-svg:active {
+  cursor: grabbing;
+}
+
+/* Node Styles */
+.node {
+  transition: all 0.3s ease;
+}
+
+.node:hover .node-card {
+  filter: brightness(1.1);
+}
+
+.node-card {
+  transition: all 0.3s ease;
+}
+
+.node text {
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Link Styles */
+.link {
+  transition: all 0.3s ease;
+}
+
+.link:hover {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+}
+
+/* Node Details Panel */
+.node-details-panel {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 400px;
+  max-height: 500px;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 1000;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 20px 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.panel-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.panel-header button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.panel-header button:hover {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.panel-content {
+  padding: 20px;
+}
+
+.detail-section {
+  margin-bottom: 20px;
+}
+
+.detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.detail-section h4 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.detail-section p {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #4b5563;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-section strong {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.status {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status.active {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+}
+
+.status.inactive {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+}
+
+/* Mini Map */
+.mini-map {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 200px;
+  height: 150px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 999;
+}
+
+.mini-map-content {
+  width: 100%;
+  height: 100%;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .business-metrics-panel {
+    width: 280px;
+  }
+  
+  .node-details-panel {
+    width: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .tree-controls {
+    position: static;
+    margin: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .control-group {
+    padding: 0 5px;
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+  }
+  
+  .control-group:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+  
+  .business-metrics-panel {
+    position: static;
+    width: 100%;
+    margin: 10px;
+    max-height: none;
+  }
+  
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .node-details-panel {
+    position: static;
+    width: 100%;
+    margin: 10px;
+    max-height: none;
+  }
+  
+  .mini-map {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .advanced-genealogy-tree {
+    height: 100vh;
+  }
+  
+  .tree-controls {
+    padding: 10px;
+  }
+  
+  .control-btn {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+  
+  .business-metrics-panel {
+    padding: 15px;
+  }
+  
+  .panel-content {
+    padding: 15px;
+  }
+}
+
+/* Animation Enhancements */
+@keyframes nodeAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes linkDraw {
+  from {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 0;
+  }
+}
+
+.node {
+  animation: nodeAppear 0.6s ease-out;
+}
+
+.link {
+  animation: linkDraw 1s ease-out;
+}
+
+/* Loading States */
+.tree-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Accessibility */
+.advanced-genealogy-tree button:focus,
+.advanced-genealogy-tree select:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.advanced-genealogy-tree .node[tabindex]:focus {
+  outline: 3px solid #fbbf24;
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  .tree-controls,
+  .business-metrics-panel,
+  .node-details-panel,
+  .mini-map {
+    display: none;
+  }
+  
+  .advanced-genealogy-tree {
+    height: auto;
+    background: white;
+  }
+  
+  .tree-svg {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .node-card rect {
+    shape-rendering: geometricPrecision;
+  }
+  
+  .link {
+    shape-rendering: geometricPrecision;
+  }
+}

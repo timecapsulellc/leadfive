@@ -4,7 +4,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, var(--background-dark) 0%, var(--background-light) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--background-dark) 0%,
+    var(--background-light) 100%
+  );
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,10 +44,11 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
     opacity: 0.5;
   }
-} 
+}

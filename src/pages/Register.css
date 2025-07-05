@@ -1,11 +1,94 @@
+/* Enhanced Register Page Styles */
 .register-page {
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 1rem;
-  background: #1a1a2e;
-  color: #ffffff;
-  border-radius: 8px;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: white;
+  padding: 2rem 0;
 }
+
+/* Referral Display for invited users */
+.referral-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 0.75rem 1.5rem;
+  background: rgba(0, 212, 255, 0.1);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.referral-label {
+  color: #ffffff;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.referral-code {
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #00d4ff;
+  background: rgba(0, 212, 255, 0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+}
+
+/* Referral Info Styles */
+.referral-info {
+  margin: 2rem auto;
+  max-width: 600px;
+  padding: 0 1rem;
+}
+
+.referral-card {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.referral-icon {
+  font-size: 2.5rem;
+  color: #00d4ff;
+  margin-right: 1.5rem;
+}
+
+.referral-details h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
+.referral-code {
+  font-family: 'Courier New', monospace;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #00d4ff;
+  background: rgba(0, 212, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  display: inline-block;
+  margin: 0.5rem 0;
+}
+
+.root-badge {
+  background: linear-gradient(135deg, #7b2cbf 0%, #ff6b35 100%);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+/* Original styles maintained */
 .register-page label {
   display: block;
   margin-top: 1rem;

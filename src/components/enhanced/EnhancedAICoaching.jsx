@@ -5,20 +5,33 @@
  */
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { 
-  FaBrain, FaRocket, FaTarget, FaChartLine, FaLightbulb, 
-  FaTrophy, FaUsers, FaGem, FaCrown, FaFireAlt, FaSync,
-  FaPlay, FaPause, FaVolumeUp, FaVolumeDown, FaMicrophone
+import {
+  FaBrain,
+  FaRocket,
+  FaBullseye,
+  FaChartLine,
+  FaLightbulb,
+  FaTrophy,
+  FaUsers,
+  FaGem,
+  FaCrown,
+  FaFireAlt,
+  FaSync,
+  FaPlay,
+  FaPause,
+  FaVolumeUp,
+  FaVolumeDown,
+  FaMicrophone,
 } from 'react-icons/fa';
 import EnhancedKnowledgeBase from '../../services/EnhancedKnowledgeBase';
-import { ElevenLabsService } from '../../services/ElevenLabsOnlyService';
+import elevenLabsService from '../../services/ElevenLabsOnlyService';
 import './EnhancedAICoaching.css';
 
-const EnhancedAICoaching = ({ 
-  userStats, 
-  userInfo, 
+const EnhancedAICoaching = ({
+  userStats,
+  userInfo,
   contractData,
-  mode = "comprehensive" // comprehensive, quick, strategic, motivational
+  mode = 'comprehensive', // comprehensive, quick, strategic, motivational
 }) => {
   // State management
   const [activeTab, setActiveTab] = useState('insights');
@@ -29,15 +42,15 @@ const EnhancedAICoaching = ({
   const [currentAudio, setCurrentAudio] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [coachingLevel, setCoachingLevel] = useState('beginner'); // beginner, intermediate, advanced, expert
-  
+
   // AI Coaching Categories
   const coachingCategories = [
     { id: 'insights', name: '🧠 AI Insights', icon: FaBrain },
-    { id: 'strategy', name: '🎯 Strategy', icon: FaTarget },
+    { id: 'strategy', name: '🎯 Strategy', icon: FaBullseye },
     { id: 'motivation', name: '🚀 Motivation', icon: FaRocket },
     { id: 'performance', name: '📊 Performance', icon: FaChartLine },
     { id: 'growth', name: '🌱 Growth Plan', icon: FaFireAlt },
-    { id: 'optimization', name: '⚡ Optimization', icon: FaLightbulb }
+    { id: 'optimization', name: '⚡ Optimization', icon: FaLightbulb },
   ];
 
   // Initialize knowledge base
@@ -46,99 +59,111 @@ const EnhancedAICoaching = ({
   // Advanced analytics calculations
   const analytics = useMemo(() => {
     if (!userStats) return null;
-    
+
     return {
       performanceScore: calculatePerformanceScore(userStats),
       growthPotential: calculateGrowthPotential(userStats),
       teamEfficiency: calculateTeamEfficiency(userStats),
       marketPosition: calculateMarketPosition(userStats),
       recommendedActions: generateRecommendedActions(userStats),
-      motivationalLevel: calculateMotivationalLevel(userStats)
+      motivationalLevel: calculateMotivationalLevel(userStats),
     };
   }, [userStats]);
 
   // Generate comprehensive coaching based on user data
-  const generateCoaching = useCallback(async (category = 'insights') => {
-    setIsGenerating(true);
-    
-    try {
-      const context = {
-        userStats,
-        userInfo,
-        contractData,
-        analytics,
-        category,
-        coachingLevel,
-        previousCoaching: coachingHistory.slice(-3) // Last 3 coaching sessions for context
-      };
+  const generateCoaching = useCallback(
+    async (category = 'insights') => {
+      setIsGenerating(true);
 
-      let coaching;
-      
-      switch (category) {
-        case 'insights':
-          coaching = await generateInsightsCoaching(context);
-          break;
-        case 'strategy':
-          coaching = await generateStrategyCoaching(context);
-          break;
-        case 'motivation':
-          coaching = await generateMotivationalCoaching(context);
-          break;
-        case 'performance':
-          coaching = await generatePerformanceCoaching(context);
-          break;
-        case 'growth':
-          coaching = await generateGrowthCoaching(context);
-          break;
-        case 'optimization':
-          coaching = await generateOptimizationCoaching(context);
-          break;
-        default:
-          coaching = await generateGeneralCoaching(context);
-      }
+      try {
+        const context = {
+          userStats,
+          userInfo,
+          contractData,
+          analytics,
+          category,
+          coachingLevel,
+          previousCoaching: coachingHistory.slice(-3), // Last 3 coaching sessions for context
+        };
 
-      setCurrentCoaching(coaching);
-      setCoachingHistory(prev => [...prev, { ...coaching, timestamp: new Date() }]);
-      
-      // Auto-play voice if enabled
-      if (voiceEnabled && coaching.speech) {
-        await playCoachingAudio(coaching.speech);
+        let coaching;
+
+        switch (category) {
+          case 'insights':
+            coaching = await generateInsightsCoaching(context);
+            break;
+          case 'strategy':
+            coaching = await generateStrategyCoaching(context);
+            break;
+          case 'motivation':
+            coaching = await generateMotivationalCoaching(context);
+            break;
+          case 'performance':
+            coaching = await generatePerformanceCoaching(context);
+            break;
+          case 'growth':
+            coaching = await generateGrowthCoaching(context);
+            break;
+          case 'optimization':
+            coaching = await generateOptimizationCoaching(context);
+            break;
+          default:
+            coaching = await generateGeneralCoaching(context);
+        }
+
+        setCurrentCoaching(coaching);
+        setCoachingHistory(prev => [
+          ...prev,
+          { ...coaching, timestamp: new Date() },
+        ]);
+
+        // Auto-play voice if enabled
+        if (voiceEnabled && coaching.speech) {
+          await playCoachingAudio(coaching.speech);
+        }
+      } catch (error) {
+        console.error('Error generating coaching:', error);
+        setCurrentCoaching(generateFallbackCoaching(category));
+      } finally {
+        setIsGenerating(false);
       }
-      
-    } catch (error) {
-      console.error('Error generating coaching:', error);
-      setCurrentCoaching(generateFallbackCoaching(category));
-    } finally {
-      setIsGenerating(false);
-    }
-  }, [userStats, userInfo, contractData, analytics, coachingLevel, coachingHistory, voiceEnabled]);
+    },
+    [
+      userStats,
+      userInfo,
+      contractData,
+      analytics,
+      coachingLevel,
+      coachingHistory,
+      voiceEnabled,
+    ]
+  );
 
   // Voice functionality
-  const playCoachingAudio = async (text) => {
+  const playCoachingAudio = async text => {
     try {
       if (currentAudio) {
         currentAudio.pause();
       }
 
-      const audioBlob = await ElevenLabsService.generateSpeech(text, {
+      const audioBlob = await elevenLabsService.generateSpeech(text, {
         voice: 'motivational-coach',
         stability: 0.75,
-        clarity: 0.85
+        clarity: 0.85,
       });
-      
+
       const audioUrl = URL.createObjectURL(audioBlob);
       const audio = new Audio(audioUrl);
-      
+
       audio.onplay = () => setIsPlaying(true);
       audio.onpause = () => setIsPlaying(false);
       audio.onended = () => {
         setIsPlaying(false);
         URL.revokeObjectURL(audioUrl);
       };
-      
+
       setCurrentAudio(audio);
       await audio.play();
-      
     } catch (error) {
       console.error('Voice generation failed:', error);
     }
@@ -160,18 +185,18 @@ const EnhancedAICoaching = ({
   }, []);
 
   // Coaching content generators
-  const generateInsightsCoaching = async (context) => {
+  const generateInsightsCoaching = async context => {
     const insights = [
       `🎯 Your performance score is ${context.analytics?.performanceScore}% - ${getPerformanceMessage(context.analytics?.performanceScore)}`,
       `🚀 Growth potential analysis shows ${context.analytics?.growthPotential}% upward trajectory`,
       `👥 Team efficiency rating: ${context.analytics?.teamEfficiency}% - ${getEfficiencyMessage(context.analytics?.teamEfficiency)}`,
-      `🏆 Market position: ${context.analytics?.marketPosition} tier performer`
+      `🏆 Market position: ${context.analytics?.marketPosition} tier performer`,
     ];
 
     const actionItems = context.analytics?.recommendedActions || [
-      "Focus on direct referral activation",
-      "Optimize team placement strategy", 
-      "Enhance engagement with existing team"
+      'Focus on direct referral activation',
+      'Optimize team placement strategy',
+      'Enhance engagement with existing team',
     ];
 
     const speech = `Hello! Based on your current performance data, you're showing strong potential. Your performance score of ${context.analytics?.performanceScore}% indicates you're on the right track. Here are your key focus areas: ${actionItems.slice(0, 2).join(', ')}. Keep up the excellent work!`;
@@ -183,27 +208,29 @@ const EnhancedAICoaching = ({
       actionItems,
       speech,
       priority: 'high',
-      confidence: 92
+      confidence: 92,
     };
   };
 
-  const generateMotivationalCoaching = async (context) => {
+  const generateMotivationalCoaching = async context => {
     const motivationPrompts = [
       "🌟 You're building something extraordinary! Every successful leader started exactly where you are now.",
-      "💪 Your dedication to growth sets you apart from 95% of people who just dream about financial freedom.",
+      '💪 Your dedication to growth sets you apart from 95% of people who just dream about financial freedom.',
       "🎯 Remember: You're not just building income, you're building a legacy that will impact generations.",
       "🚀 Every 'no' brings you closer to your breakthrough 'yes'. Persistence is your superpower!",
-      "👑 You have everything it takes to succeed. Trust the process, trust yourself."
+      '👑 You have everything it takes to succeed. Trust the process, trust yourself.',
     ];
 
     const successStories = [
-      "Sarah started with just 2 referrals and built a $50K/month income in 18 months",
-      "Mike overcame 67 rejections before finding his winning formula",
-      "Lisa transformed from $0 to $25K monthly by focusing on helping others succeed"
+      'Sarah started with just 2 referrals and built a $50K/month income in 18 months',
+      'Mike overcame 67 rejections before finding his winning formula',
+      'Lisa transformed from $0 to $25K monthly by focusing on helping others succeed',
     ];
 
-    const randomMotivation = motivationPrompts[Math.floor(Math.random() * motivationPrompts.length)];
-    const randomStory = successStories[Math.floor(Math.random() * successStories.length)];
+    const randomMotivation =
+      motivationPrompts[Math.floor(Math.random() * motivationPrompts.length)];
+    const randomStory =
+      successStories[Math.floor(Math.random() * successStories.length)];
 
     const speech = `${randomMotivation} Here's inspiration: ${randomStory}. You've got this! Your success is inevitable when you combine consistent action with unwavering belief.`;
 
@@ -213,52 +240,53 @@ const EnhancedAICoaching = ({
       message: randomMotivation,
       successStory: randomStory,
       affirmations: [
-        "I am worthy of massive success",
-        "I attract opportunities effortlessly", 
-        "My network grows stronger every day",
-        "I help others while building wealth"
+        'I am worthy of massive success',
+        'I attract opportunities effortlessly',
+        'My network grows stronger every day',
+        'I help others while building wealth',
       ],
       speech,
       priority: 'medium',
-      confidence: 100
+      confidence: 100,
     };
   };
 
-  const generateStrategyCoaching = async (context) => {
+  const generateStrategyCoaching = async context => {
     const strategicFocus = determineStrategicFocus(context);
-    
+
     const strategies = {
       recruitment: {
-        title: "🎯 Recruitment Excellence Strategy",
+        title: '🎯 Recruitment Excellence Strategy',
         tactics: [
-          "Focus on warm market first - friends and family convert 3x better",
+          'Focus on warm market first - friends and family convert 3x better',
           "Use the 'curiosity' approach: share results, not opportunity",
-          "Master the 48-hour follow-up rule for maximum conversion",
-          "Leverage social proof with testimonials and success stories"
-        ]
+          'Master the 48-hour follow-up rule for maximum conversion',
+          'Leverage social proof with testimonials and success stories',
+        ],
       },
       retention: {
-        title: "🤝 Team Retention & Activation",
+        title: '🤝 Team Retention & Activation',
         tactics: [
-          "Implement weekly team calls for connection and training",
-          "Create a mentorship buddy system for new members",
-          "Celebrate small wins publicly to build momentum",
-          "Provide clear 90-day success roadmaps"
-        ]
+          'Implement weekly team calls for connection and training',
+          'Create a mentorship buddy system for new members',
+          'Celebrate small wins publicly to build momentum',
+          'Provide clear 90-day success roadmaps',
+        ],
       },
       scaling: {
-        title: "📈 Advanced Scaling Techniques",
+        title: '📈 Advanced Scaling Techniques',
         tactics: [
-          "Develop leaders within your organization",
-          "Focus on depth over width for compound growth",
-          "Create systems that work without your direct involvement",
-          "Expand to new markets systematically"
-        ]
-      }
+          'Develop leaders within your organization',
+          'Focus on depth over width for compound growth',
+          'Create systems that work without your direct involvement',
+          'Expand to new markets systematically',
+        ],
+      },
     };
 
-    const currentStrategy = strategies[strategicFocus] || strategies.recruitment;
-    
+    const currentStrategy =
+      strategies[strategicFocus] || strategies.recruitment;
+
     const speech = `Your strategic focus should be on ${strategicFocus}. ${currentStrategy.tactics[0]} This approach has proven most effective for leaders at your level.`;
 
     return {
@@ -266,34 +294,34 @@ const EnhancedAICoaching = ({
       title: currentStrategy.title,
       focus: strategicFocus,
       tactics: currentStrategy.tactics,
-      timeframe: "30-day implementation",
-      expectedResults: "15-25% improvement in target metrics",
+      timeframe: '30-day implementation',
+      expectedResults: '15-25% improvement in target metrics',
       speech,
       priority: 'high',
-      confidence: 88
+      confidence: 88,
     };
   };
 
-  const generatePerformanceCoaching = async (context) => {
+  const generatePerformanceCoaching = async context => {
     const metrics = [
-      { 
-        name: "Conversion Rate", 
+      {
+        name: 'Conversion Rate',
         current: context.analytics?.conversionRate || 12,
         target: 18,
-        status: "improving"
+        status: 'improving',
       },
       {
-        name: "Team Activation",
+        name: 'Team Activation',
         current: context.analytics?.teamActivation || 65,
         target: 80,
-        status: "needs_focus"
+        status: 'needs_focus',
       },
       {
-        name: "Monthly Growth",
+        name: 'Monthly Growth',
         current: context.analytics?.monthlyGrowth || 8,
         target: 15,
-        status: "on_track"
-      }
+        status: 'on_track',
+      },
     ];
 
     const improvements = metrics
@@ -308,32 +336,44 @@ const EnhancedAICoaching = ({
       metrics,
       improvements,
       benchmarks: {
-        industry: "Top 20% performer",
-        peer: "Above average in 3/4 categories"
+        industry: 'Top 20% performer',
+        peer: 'Above average in 3/4 categories',
       },
       speech,
       priority: 'medium',
-      confidence: 85
+      confidence: 85,
     };
   };
 
-  const generateGrowthCoaching = async (context) => {
+  const generateGrowthCoaching = async context => {
     const growthPlan = {
       phase1: {
-        title: "Foundation (Days 1-30)",
-        goals: ["Secure 5 quality referrals", "Master presentation skills", "Build local network"],
-        metrics: "Aim for $1K monthly income"
+        title: 'Foundation (Days 1-30)',
+        goals: [
+          'Secure 5 quality referrals',
+          'Master presentation skills',
+          'Build local network',
+        ],
+        metrics: 'Aim for $1K monthly income',
       },
       phase2: {
-        title: "Momentum (Days 31-90)", 
-        goals: ["Develop 2 team leaders", "Expand to online marketing", "Systemize processes"],
-        metrics: "Target $3K monthly income"
+        title: 'Momentum (Days 31-90)',
+        goals: [
+          'Develop 2 team leaders',
+          'Expand to online marketing',
+          'Systemize processes',
+        ],
+        metrics: 'Target $3K monthly income',
       },
       phase3: {
-        title: "Scale (Days 91-180)",
-        goals: ["Build multiple income streams", "Mentor emerging leaders", "Expand territories"],
-        metrics: "Reach $5K+ monthly income"
-      }
+        title: 'Scale (Days 91-180)',
+        goals: [
+          'Build multiple income streams',
+          'Mentor emerging leaders',
+          'Expand territories',
+        ],
+        metrics: 'Reach $5K+ monthly income',
+      },
     };
 
     const currentPhase = determineGrowthPhase(context);
@@ -347,40 +387,40 @@ const EnhancedAICoaching = ({
       currentPhase,
       phases: growthPlan,
       nextSteps,
-      timeline: "Progressive 90-day cycles",
+      timeline: 'Progressive 90-day cycles',
       speech,
       priority: 'high',
-      confidence: 90
+      confidence: 90,
     };
   };
 
-  const generateOptimizationCoaching = async (context) => {
+  const generateOptimizationCoaching = async context => {
     const optimizations = [
       {
-        area: "Time Management",
-        current: "3.5 hours/day",
-        optimized: "2 hours/day with better focus",
-        impact: "75% efficiency gain"
+        area: 'Time Management',
+        current: '3.5 hours/day',
+        optimized: '2 hours/day with better focus',
+        impact: '75% efficiency gain',
       },
       {
-        area: "Lead Quality",
-        current: "Mixed quality prospects",
-        optimized: "Pre-qualified warm leads only",
-        impact: "3x higher conversion rate"
+        area: 'Lead Quality',
+        current: 'Mixed quality prospects',
+        optimized: 'Pre-qualified warm leads only',
+        impact: '3x higher conversion rate',
       },
       {
-        area: "Team Support",
-        current: "Reactive assistance",
-        optimized: "Proactive coaching system",
-        impact: "40% better team retention"
-      }
+        area: 'Team Support',
+        current: 'Reactive assistance',
+        optimized: 'Proactive coaching system',
+        impact: '40% better team retention',
+      },
     ];
 
     const quickWins = [
-      "Batch process all follow-ups between 2-4 PM",
-      "Use voice messages instead of typing for personal touch",
-      "Schedule team recognition posts for maximum engagement",
-      "Automate initial prospect qualification process"
+      'Batch process all follow-ups between 2-4 PM',
+      'Use voice messages instead of typing for personal touch',
+      'Schedule team recognition posts for maximum engagement',
+      'Automate initial prospect qualification process',
     ];
 
     const speech = `Here are your optimization opportunities: ${quickWins[0]} and ${quickWins[1]}. These simple changes can immediately improve your efficiency by up to 75%.`;
@@ -390,26 +430,28 @@ const EnhancedAICoaching = ({
       title: '⚡ Performance Optimization',
       optimizations,
       quickWins,
-      timeToImplement: "1-2 weeks",
-      expectedImpact: "25-40% efficiency improvement",
+      timeToImplement: '1-2 weeks',
+      expectedImpact: '25-40% efficiency improvement',
       speech,
       priority: 'medium',
-      confidence: 82
+      confidence: 82,
     };
   };
 
-  const generateFallbackCoaching = (category) => ({
+  const generateFallbackCoaching = category => ({
     type: category,
     title: `${getCategoryIcon(category)} ${category.charAt(0).toUpperCase() + category.slice(1)} Coaching`,
-    message: "I'm here to help you succeed! Your dedication to growth is already setting you apart.",
+    message:
+      "I'm here to help you succeed! Your dedication to growth is already setting you apart.",
     actionItems: [
-      "Stay consistent with daily activities",
-      "Focus on helping others succeed", 
-      "Believe in your unlimited potential"
+      'Stay consistent with daily activities',
+      'Focus on helping others succeed',
+      'Believe in your unlimited potential',
     ],
-    speech: "Keep pushing forward! Every expert was once a beginner. Your success story is being written right now.",
+    speech:
+      'Keep pushing forward! Every expert was once a beginner. Your success story is being written right now.',
     priority: 'medium',
-    confidence: 75
+    confidence: 75,
   });
 
   // Render coaching interface
@@ -458,7 +500,7 @@ const EnhancedAICoaching = ({
           {currentCoaching.confidence}% Confidence
         </div>
       </div>
-      
+
       <div className="insights-grid">
         {currentCoaching.insights?.map((insight, index) => (
           <div key={index} className="insight-card">
@@ -466,7 +508,7 @@ const EnhancedAICoaching = ({
           </div>
         ))}
       </div>
-      
+
       <div className="action-items">
         <h4>🎯 Recommended Actions:</h4>
         <ul>
@@ -483,16 +525,16 @@ const EnhancedAICoaching = ({
       <div className="motivation-header">
         <h3>{currentCoaching.title}</h3>
       </div>
-      
+
       <div className="motivation-message">
         <p className="main-message">{currentCoaching.message}</p>
       </div>
-      
+
       <div className="success-story">
         <h4>🌟 Success Story:</h4>
         <p>{currentCoaching.successStory}</p>
       </div>
-      
+
       <div className="affirmations">
         <h4>💫 Daily Affirmations:</h4>
         <div className="affirmation-grid">
@@ -512,7 +554,7 @@ const EnhancedAICoaching = ({
         <h3>{currentCoaching.title}</h3>
         <span className="focus-tag">Focus: {currentCoaching.focus}</span>
       </div>
-      
+
       <div className="tactics-list">
         <h4>📋 Implementation Tactics:</h4>
         <ol>
@@ -521,10 +563,12 @@ const EnhancedAICoaching = ({
           ))}
         </ol>
       </div>
-      
+
       <div className="strategy-footer">
         <div className="timeframe">⏱️ {currentCoaching.timeframe}</div>
-        <div className="expected-results">📈 {currentCoaching.expectedResults}</div>
+        <div className="expected-results">
+          📈 {currentCoaching.expectedResults}
+        </div>
       </div>
     </div>
   );
@@ -534,7 +578,7 @@ const EnhancedAICoaching = ({
       <div className="performance-header">
         <h3>{currentCoaching.title}</h3>
       </div>
-      
+
       <div className="metrics-grid">
         {currentCoaching.metrics?.map((metric, index) => (
           <div key={index} className={`metric-card ${metric.status}`}>
@@ -545,15 +589,15 @@ const EnhancedAICoaching = ({
               <span className="target">{metric.target}%</span>
             </div>
             <div className="progress-bar">
-              <div 
-                className="progress-fill" 
+              <div
+                className="progress-fill"
                 style={{ width: `${(metric.current / metric.target) * 100}%` }}
               ></div>
             </div>
           </div>
         ))}
       </div>
-      
+
       <div className="improvements">
         <h4>🎯 Focus Areas:</h4>
         <ul>
@@ -569,13 +613,15 @@ const EnhancedAICoaching = ({
     <div className="growth-coaching">
       <div className="growth-header">
         <h3>{currentCoaching.title}</h3>
-        <span className="phase-indicator">Current: {currentCoaching.currentPhase}</span>
+        <span className="phase-indicator">
+          Current: {currentCoaching.currentPhase}
+        </span>
       </div>
-      
+
       <div className="phases-timeline">
         {Object.entries(currentCoaching.phases || {}).map(([key, phase]) => (
-          <div 
-            key={key} 
+          <div
+            key={key}
             className={`phase-card ${key === currentCoaching.currentPhase ? 'active' : ''}`}
           >
             <h4>{phase.title}</h4>
@@ -588,7 +634,7 @@ const EnhancedAICoaching = ({
           </div>
         ))}
       </div>
-      
+
       <div className="next-steps">
         <h4>🚀 Next Steps:</h4>
         <ul>
@@ -606,7 +652,7 @@ const EnhancedAICoaching = ({
         <h3>{currentCoaching.title}</h3>
         <span className="impact-tag">{currentCoaching.expectedImpact}</span>
       </div>
-      
+
       <div className="optimizations-grid">
         {currentCoaching.optimizations?.map((opt, index) => (
           <div key={index} className="optimization-card">
@@ -625,7 +671,7 @@ const EnhancedAICoaching = ({
           </div>
         ))}
       </div>
-      
+
       <div className="quick-wins">
         <h4>⚡ Quick Wins:</h4>
         <ul>
@@ -658,11 +704,11 @@ const EnhancedAICoaching = ({
           <h2>🧠 AI Business Coach</h2>
           <p>PhD-Level Strategic Guidance & Motivation</p>
         </div>
-        
+
         <div className="header-controls">
-          <select 
-            value={coachingLevel} 
-            onChange={(e) => setCoachingLevel(e.target.value)}
+          <select
+            value={coachingLevel}
+            onChange={e => setCoachingLevel(e.target.value)}
             className="level-selector"
           >
             <option value="beginner">Beginner</option>
@@ -670,15 +716,15 @@ const EnhancedAICoaching = ({
             <option value="advanced">Advanced</option>
             <option value="expert">Expert</option>
           </select>
-          
-          <button 
+
+          <button
             onClick={() => setVoiceEnabled(!voiceEnabled)}
             className={`voice-toggle ${voiceEnabled ? 'active' : ''}`}
           >
             {voiceEnabled ? <FaVolumeUp /> : <FaVolumeDown />}
             Voice
           </button>
-          
+
           {currentAudio && (
             <button onClick={toggleAudioPlayback} className="audio-control">
               {isPlaying ? <FaPause /> : <FaPlay />}
@@ -703,12 +749,10 @@ const EnhancedAICoaching = ({
         ))}
       </div>
 
-      <div className="coaching-content">
-        {renderCoachingContent()}
-      </div>
+      <div className="coaching-content">{renderCoachingContent()}</div>
 
       <div className="coaching-actions">
-        <button 
+        <button
           onClick={() => generateCoaching(activeTab)}
           disabled={isGenerating}
           className="refresh-coaching"
@@ -716,9 +760,9 @@ const EnhancedAICoaching = ({
           <FaSync className={isGenerating ? 'spinning' : ''} />
           {isGenerating ? 'Generating...' : 'Refresh Coaching'}
         </button>
-        
+
         {currentCoaching?.speech && (
-          <button 
+          <button
             onClick={() => playCoachingAudio(currentCoaching.speech)}
             className="play-audio"
           >
@@ -732,7 +776,7 @@ const EnhancedAICoaching = ({
 };
 
 // Helper functions
-const calculatePerformanceScore = (userStats) => {
+const calculatePerformanceScore = userStats => {
   if (!userStats) return 65;
   const base = 50;
   const teamSize = Math.min((userStats.teamSize || 0) * 2, 30);
@@ -740,17 +784,17 @@ const calculatePerformanceScore = (userStats) => {
   return Math.round(base + teamSize + earnings);
 };
 
-const calculateGrowthPotential = (userStats) => {
+const calculateGrowthPotential = userStats => {
   if (!userStats) return 75;
   return Math.round(60 + Math.random() * 30);
 };
 
-const calculateTeamEfficiency = (userStats) => {
+const calculateTeamEfficiency = userStats => {
   if (!userStats) return 70;
   return Math.round(65 + Math.random() * 25);
 };
 
-const calculateMarketPosition = (userStats) => {
+const calculateMarketPosition = userStats => {
   const score = calculatePerformanceScore(userStats);
   if (score >= 85) return 'Elite';
   if (score >= 75) return 'Advanced';
@@ -758,52 +802,52 @@ const calculateMarketPosition = (userStats) => {
   return 'Developing';
 };
 
-const generateRecommendedActions = (userStats) => [
-  "Increase direct referral outreach by 25%",
-  "Focus on team member activation and support",
-  "Implement systematic follow-up processes",
-  "Develop leadership skills through training"
+const generateRecommendedActions = userStats => [
+  'Increase direct referral outreach by 25%',
+  'Focus on team member activation and support',
+  'Implement systematic follow-up processes',
+  'Develop leadership skills through training',
 ];
 
-const calculateMotivationalLevel = (userStats) => {
+const calculateMotivationalLevel = userStats => {
   return Math.round(75 + Math.random() * 20);
 };
 
-const getPerformanceMessage = (score) => {
-  if (score >= 85) return "Outstanding performance!";
-  if (score >= 75) return "Strong progress, keep pushing!";
-  if (score >= 65) return "Good foundation, room to grow";
-  return "Focus on fundamentals";
+const getPerformanceMessage = score => {
+  if (score >= 85) return 'Outstanding performance!';
+  if (score >= 75) return 'Strong progress, keep pushing!';
+  if (score >= 65) return 'Good foundation, room to grow';
+  return 'Focus on fundamentals';
 };
 
-const getEfficiencyMessage = (efficiency) => {
-  if (efficiency >= 80) return "Highly efficient team";
-  if (efficiency >= 65) return "Good team dynamics";
-  return "Needs optimization";
+const getEfficiencyMessage = efficiency => {
+  if (efficiency >= 80) return 'Highly efficient team';
+  if (efficiency >= 65) return 'Good team dynamics';
+  return 'Needs optimization';
 };
 
-const determineStrategicFocus = (context) => {
+const determineStrategicFocus = context => {
   const score = context.analytics?.performanceScore || 65;
   if (score < 70) return 'recruitment';
   if (score < 80) return 'retention';
   return 'scaling';
 };
 
-const determineGrowthPhase = (context) => {
+const determineGrowthPhase = context => {
   const earnings = context.userStats?.totalEarnings || 0;
   if (earnings < 1000) return 'phase1';
   if (earnings < 3000) return 'phase2';
   return 'phase3';
 };
 
-const getCategoryIcon = (category) => {
+const getCategoryIcon = category => {
   const icons = {
     insights: '🧠',
-    strategy: '🎯', 
+    strategy: '🎯',
     motivation: '🚀',
     performance: '📊',
     growth: '🌱',
-    optimization: '⚡'
+    optimization: '⚡',
   };
   return icons[category] || '💡';
 };

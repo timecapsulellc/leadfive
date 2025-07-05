@@ -60,14 +60,14 @@
 
 .activity-time {
   font-size: 0.8rem;
-  color: #B8C5D1;
+  color: #b8c5d1;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .activity-description {
   font-size: 0.9rem;
-  color: #B8C5D1;
+  color: #b8c5d1;
   margin: 0 0 0.5rem 0;
   line-height: 1.4;
 }
@@ -76,7 +76,7 @@
   display: inline-block;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #00D4FF;
+  color: #00d4ff;
   background: rgba(0, 212, 255, 0.1);
   padding: 0.25rem 0.75rem;
   border-radius: 15px;
@@ -88,7 +88,7 @@
   align-items: center;
   justify-content: center;
   padding: 3rem;
-  color: #B8C5D1;
+  color: #b8c5d1;
   text-align: center;
 }
 
@@ -122,11 +122,11 @@
     flex-direction: column;
     gap: 0.25rem;
   }
-  
+
   .activity-time {
     align-self: flex-start;
   }
-  
+
   .activity-item {
     padding: 0.75rem;
   }

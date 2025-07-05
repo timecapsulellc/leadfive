@@ -15,13 +15,13 @@ const AIEmotionTracker = ({ account }) => {
     recommendations: [
       'Your positive engagement helps your team grow faster',
       'Consider sharing your success stories with your downline',
-      'Regular community engagement correlates with higher earnings'
-    ]
+      'Regular community engagement correlates with higher earnings',
+    ],
   };
-  
+
   // Emotion icon mapping
-  const getEmotionIcon = (emotion) => {
-    switch(emotion) {
+  const getEmotionIcon = emotion => {
+    switch (emotion) {
       case 'positive':
         return <FaSmile className="emotion-icon positive" />;
       case 'neutral':
@@ -32,7 +32,7 @@ const AIEmotionTracker = ({ account }) => {
         return <FaSmile className="emotion-icon positive" />;
     }
   };
-  
+
   return (
     <div className="ai-emotion-tracker">
       <div className="emotion-tracker-header">
@@ -40,7 +40,7 @@ const AIEmotionTracker = ({ account }) => {
           <FaRobot /> Community Engagement Monitor
         </h3>
       </div>
-      
+
       <div className="current-emotion">
         <div className="emotion-visualization">
           {getEmotionIcon(emotionData.currentEmotion)}
@@ -51,24 +51,33 @@ const AIEmotionTracker = ({ account }) => {
           </span>
         </div>
       </div>
-      
+
       <div className="emotion-history">
         <h4>Engagement History</h4>
         <div className="emotion-timeline">
           {emotionData.historicalEmotions.map((entry, index) => (
             <div key={index} className="emotion-entry">
-              <div className="emotion-date">{new Date(entry.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
-              <div className="emotion-indicator">{getEmotionIcon(entry.emotion)}</div>
+              <div className="emotion-date">
+                {new Date(entry.date).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                })}
+              </div>
+              <div className="emotion-indicator">
+                {getEmotionIcon(entry.emotion)}
+              </div>
             </div>
           ))}
         </div>
       </div>
-      
+
       <div className="emotion-recommendations">
         <h4>AI Recommendations</h4>
         <ul className="recommendations-list">
           {emotionData.recommendations.map((recommendation, index) => (
-            <li key={index} className="recommendation-item">{recommendation}</li>
+            <li key={index} className="recommendation-item">
+              {recommendation}
+            </li>
           ))}
         </ul>
       </div>

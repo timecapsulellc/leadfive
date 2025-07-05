@@ -28,7 +28,7 @@
 }
 
 .history-table th {
-  color: #B8C5D1;
+  color: #b8c5d1;
   font-weight: 600;
   font-size: 0.9rem;
   text-transform: uppercase;
@@ -40,7 +40,7 @@
 
 .amount {
   font-weight: 600;
-  color: #00D4FF;
+  color: #00d4ff;
 }
 
 .status-badge {
@@ -56,17 +56,17 @@
 
 .status-badge.completed {
   background: rgba(0, 212, 255, 0.2);
-  color: #00D4FF;
+  color: #00d4ff;
 }
 
 .status-badge.pending {
   background: rgba(255, 193, 7, 0.2);
-  color: #FFC107;
+  color: #ffc107;
 }
 
 .status-badge.failed {
   background: rgba(255, 107, 53, 0.2);
-  color: #FF6B35;
+  color: #ff6b35;
 }
 
 .status-icon {
@@ -74,39 +74,39 @@
 }
 
 .status-icon.completed {
-  color: #00D4FF;
+  color: #00d4ff;
 }
 
 .status-icon.pending {
-  color: #FFC107;
+  color: #ffc107;
 }
 
 .status-icon.failed {
-  color: #FF6B35;
+  color: #ff6b35;
 }
 
 .tx-link {
-  color: #00D4FF;
+  color: #00d4ff;
   text-decoration: none;
   transition: all 0.3s ease;
 }
 
 .tx-link:hover {
-  color: #7B2CBF;
+  color: #7b2cbf;
   text-decoration: underline;
 }
 
 .no-history {
   text-align: center;
   padding: 3rem;
-  color: #B8C5D1;
+  color: #b8c5d1;
 }
 
 @media (max-width: 768px) {
   .history-table {
     font-size: 0.9rem;
   }
-  
+
   .history-table th,
   .history-table td {
     padding: 0.75rem 0.5rem;

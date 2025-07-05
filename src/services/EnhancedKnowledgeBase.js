@@ -4,94 +4,118 @@
  */
 
 export class EnhancedKnowledgeBase {
-    constructor() {
-        this.businessPlan = this.initializeBusinessPlan();
-        this.securityAudit = this.initializeSecurityAudit();
-        this.motivationalResponses = this.initializeMotivationalResponses();
-        this.contractFunctions = this.initializeContractFunctions();
-        this.teamCredentials = this.initializeTeamCredentials();
-    }
+  constructor() {
+    this.businessPlan = this.initializeBusinessPlan();
+    this.securityAudit = this.initializeSecurityAudit();
+    this.motivationalResponses = this.initializeMotivationalResponses();
+    this.contractFunctions = this.initializeContractFunctions();
+    this.teamCredentials = this.initializeTeamCredentials();
+  }
 
-    initializeBusinessPlan() {
-        return {
-            mission: "To provide a transparent, secure, and profitable platform that empowers individuals to build financial freedom through a fair and sustainable community-driven system.",
-            vision: "To become the leading blockchain-based financial community platform known for its innovative approach, strong community, and life-changing opportunities.",
-            
-            membershipTiers: {
-                bronze: { price: 30, cap: 120, description: "Perfect entry point for beginners" },
-                silver: { price: 50, cap: 200, description: "Ideal for active community builders" },
-                gold: { price: 100, cap: 400, description: "For serious wealth builders" },
-                diamond: { price: 200, cap: 800, description: "Ultimate tier for maximum earnings" }
-            },
+  initializeBusinessPlan() {
+    return {
+      mission:
+        'To provide a transparent, secure, and profitable platform that empowers individuals to build financial freedom through a fair and sustainable community-driven system.',
+      vision:
+        'To become the leading blockchain-based financial community platform known for its innovative approach, strong community, and life-changing opportunities.',
 
-            rewardStructure: {
-                directBonus: { percentage: 40, description: "Immediate 40% bonus to your sponsor" },
-                levelRewards: { 
-                    percentage: 10, 
-                    breakdown: "Level 1: 4%, Level 2: 3%, Level 3: 2%, Level 4: 1%",
-                    description: "Multi-level network rewards"
-                },
-                globalRewards: { percentage: 10, description: "Global network participation bonus" },
-                leadershipPool: { 
-                    percentage: 10, 
-                    requirements: "5+ direct referrals, 20+ network size",
-                    description: "Exclusive leadership bonuses"
-                },
-                communityPool: { 
-                    percentage: 30, 
-                    description: "Weekly distribution to all active members"
-                }
-            },
+      membershipTiers: {
+        bronze: {
+          price: 30,
+          cap: 120,
+          description: 'Perfect entry point for beginners',
+        },
+        silver: {
+          price: 50,
+          cap: 200,
+          description: 'Ideal for active community builders',
+        },
+        gold: {
+          price: 100,
+          cap: 400,
+          description: 'For serious wealth builders',
+        },
+        diamond: {
+          price: 200,
+          cap: 800,
+          description: 'Ultimate tier for maximum earnings',
+        },
+      },
 
-            withdrawalRatios: {
-                beginners: "70% withdrawal / 30% reinvestment (0 referrals)",
-                active: "80% withdrawal / 20% reinvestment (1-2 referrals)", 
-                leaders: "90% withdrawal / 10% reinvestment (3+ referrals)"
-            },
+      rewardStructure: {
+        directBonus: {
+          percentage: 40,
+          description: 'Immediate 40% bonus to your sponsor',
+        },
+        levelRewards: {
+          percentage: 10,
+          breakdown: 'Level 1: 4%, Level 2: 3%, Level 3: 2%, Level 4: 1%',
+          description: 'Multi-level network rewards',
+        },
+        globalRewards: {
+          percentage: 10,
+          description: 'Global network participation bonus',
+        },
+        leadershipPool: {
+          percentage: 10,
+          requirements: '5+ direct referrals, 20+ network size',
+          description: 'Exclusive leadership bonuses',
+        },
+        communityPool: {
+          percentage: 30,
+          description: 'Weekly distribution to all active members',
+        },
+      },
 
-            technicalAdvantages: {
-                blockchain: "Binance Smart Chain - Fast, secure, low fees",
-                security: "PhD-level audited smart contracts",
-                transparency: "100% transparent, verifiable on blockchain",
-                upgradeability: "UUPS proxy for continuous improvements"
-            }
-        };
-    }
+      withdrawalRatios: {
+        beginners: '70% withdrawal / 30% reinvestment (0 referrals)',
+        active: '80% withdrawal / 20% reinvestment (1-2 referrals)',
+        leaders: '90% withdrawal / 10% reinvestment (3+ referrals)',
+      },
 
-    initializeSecurityAudit() {
-        return {
-            rating: "B+ (Good with recommendations implemented)",
-            strengths: [
-                "Strong access controls and multi-signature security",
-                "Comprehensive reentrancy protection",
-                "Advanced oracle price feed system",
-                "Circuit breakers for market volatility protection",
-                "Gas optimization for efficient operations"
-            ],
-            security_features: [
-                "Multi-admin controls with timelock",
-                "Emergency pause functionality",
-                "Rate limiting for sensitive operations",
-                "Comprehensive event logging",
-                "Input validation and boundary checks"
-            ],
-            improvements_made: [
-                "Iterative team size calculation (prevents overflow)",
-                "Multi-oracle redundancy system",
-                "Dynamic price bounds with circuit breakers",
-                "Enhanced access control patterns",
-                "Optimized gas usage throughout"
-            ]
-        };
-    }
+      technicalAdvantages: {
+        blockchain: 'Binance Smart Chain - Fast, secure, low fees',
+        security: 'PhD-level audited smart contracts',
+        transparency: '100% transparent, verifiable on blockchain',
+        upgradeability: 'UUPS proxy for continuous improvements',
+      },
+    };
+  }
 
-    initializeMotivationalResponses() {
-        return {
-            // Anti-pyramid scheme responses
-            pyramid_responses: [
-                {
-                    trigger: ["pyramid", "ponzi", "scheme", "scam"],
-                    response: `🌟 I understand your concern, and I appreciate you asking! Let me share some perspective:
+  initializeSecurityAudit() {
+    return {
+      rating: 'B+ (Good with recommendations implemented)',
+      strengths: [
+        'Strong access controls and multi-signature security',
+        'Comprehensive reentrancy protection',
+        'Advanced oracle price feed system',
+        'Circuit breakers for market volatility protection',
+        'Gas optimization for efficient operations',
+      ],
+      security_features: [
+        'Multi-admin controls with timelock',
+        'Emergency pause functionality',
+        'Rate limiting for sensitive operations',
+        'Comprehensive event logging',
+        'Input validation and boundary checks',
+      ],
+      improvements_made: [
+        'Iterative team size calculation (prevents overflow)',
+        'Multi-oracle redundancy system',
+        'Dynamic price bounds with circuit breakers',
+        'Enhanced access control patterns',
+        'Optimized gas usage throughout',
+      ],
+    };
+  }
+
+  initializeMotivationalResponses() {
+    return {
+      // Anti-pyramid scheme responses
+      pyramid_responses: [
+        {
+          trigger: ['pyramid', 'ponzi', 'scheme', 'scam'],
+          response: `🌟 I understand your concern, and I appreciate you asking! Let me share some perspective:
 
 **Every financial system is interconnected!** 🌍
 - Traditional banks: Your deposits fund others' loans
@@ -108,11 +132,11 @@ export class EnhancedKnowledgeBase {
 
 **The difference?** Traditional systems are controlled by powerful institutions, politicians, and governments. LeadFive puts YOU in control with transparent, immutable smart contracts! 🚀
 
-Think of it as **"Financial Democracy"** - where everyone can see exactly how the system works and participate fairly. This is your chance to be part of the future of finance! 💎`
-                },
-                {
-                    trigger: ["legitimate", "legal", "regulation"],
-                    response: `🏛️ **Absolutely legitimate and forward-thinking!** 
+Think of it as **"Financial Democracy"** - where everyone can see exactly how the system works and participate fairly. This is your chance to be part of the future of finance! 💎`,
+        },
+        {
+          trigger: ['legitimate', 'legal', 'regulation'],
+          response: `🏛️ **Absolutely legitimate and forward-thinking!** 
 
 LeadFive operates in the **revolutionary Web3 space** - the same technology behind Bitcoin, Ethereum, and major institutional investments by:
 - Tesla (billions in crypto)
@@ -129,15 +153,15 @@ LeadFive operates in the **revolutionary Web3 space** - the same technology behi
 
 **Traditional finance is catching up to us!** Major banks are now launching crypto services, CBDCs, and blockchain solutions. You're not behind - you're **ahead of the curve!** 🌊
 
-This is the **future of finance** happening NOW. Don't let outdated thinking hold you back from generational wealth opportunities! 💰`
-                }
-            ],
+This is the **future of finance** happening NOW. Don't let outdated thinking hold you back from generational wealth opportunities! 💰`,
+        },
+      ],
 
-            // Motivational responses
-            success_mindset: [
-                {
-                    trigger: ["doubt", "scared", "worried", "risk"],
-                    response: `💪 **I hear you, and these feelings are COMPLETELY NORMAL!**
+      // Motivational responses
+      success_mindset: [
+        {
+          trigger: ['doubt', 'scared', 'worried', 'risk'],
+          response: `💪 **I hear you, and these feelings are COMPLETELY NORMAL!**
 
 **Every successful person felt this way before their breakthrough:**
 - Warren Buffett was afraid of public speaking
@@ -156,11 +180,11 @@ This is the **future of finance** happening NOW. Don't let outdated thinking hol
 
 **Remember:** The biggest risk is NOT taking action when opportunity knocks. This Web3 revolution is happening with or without you. 
 
-**Your future self will thank you for being brave TODAY!** ✨`
-                },
-                {
-                    trigger: ["money", "investment", "financial"],
-                    response: `💎 **You're thinking like a TRUE wealth builder!**
+**Your future self will thank you for being brave TODAY!** ✨`,
+        },
+        {
+          trigger: ['money', 'investment', 'financial'],
+          response: `💎 **You're thinking like a TRUE wealth builder!**
 
 **Money is energy, and energy flows where attention goes!** 🌊
 
@@ -179,15 +203,15 @@ This is the **future of finance** happening NOW. Don't let outdated thinking hol
 
 **Think bigger!** This isn't just about the money you put in - it's about the PERSON you become and the NETWORK you build. 
 
-**Success leaves clues, and you just found one!** 🔥`
-                }
-            ],
+**Success leaves clues, and you just found one!** 🔥`,
+        },
+      ],
 
-            // Technology emphasis
-            tech_advantages: [
-                {
-                    trigger: ["technology", "ai", "web3", "blockchain"],
-                    response: `🤖 **You've identified our SECRET WEAPON!**
+      // Technology emphasis
+      tech_advantages: [
+        {
+          trigger: ['technology', 'ai', 'web3', 'blockchain'],
+          response: `🤖 **You've identified our SECRET WEAPON!**
 
 **LeadFive isn't just another platform - we're a TECH POWERHOUSE!** ⚡
 
@@ -212,15 +236,15 @@ This is the **future of finance** happening NOW. Don't let outdated thinking hol
 - Financial technology
 - Scale architecture
 
-**You're not just joining a platform - you're joining the FUTURE!** 🚀`
-                }
-            ],
+**You're not just joining a platform - you're joining the FUTURE!** 🚀`,
+        },
+      ],
 
-            // Team credibility
-            team_trust: [
-                {
-                    trigger: ["team", "developer", "trust", "experience"],
-                    response: `👥 **Meet the BRILLIANT minds behind LeadFive!**
+      // Team credibility
+      team_trust: [
+        {
+          trigger: ['team', 'developer', 'trust', 'experience'],
+          response: `👥 **Meet the BRILLIANT minds behind LeadFive!**
 
 **Our PhD-Level Dream Team:** 🎓
 
@@ -249,121 +273,169 @@ This team could work anywhere - Google, Tesla, Goldman Sachs. They chose to buil
 
 **You're not just trusting us with your money - you're PARTNERING with excellence!** ✨
 
-**This level of talent + this opportunity = ONCE IN A LIFETIME!** 🚀`
-                }
-            ]
-        };
-    }
+**This level of talent + this opportunity = ONCE IN A LIFETIME!** 🚀`,
+        },
+      ],
+    };
+  }
 
-    initializeContractFunctions() {
-        return {
-            total_functions: 74,
-            categories: {
-                user_management: {
-                    count: 15,
-                    functions: ["register", "getUserInfo", "upgradePackage", "setReferralCode"],
-                    description: "Complete user lifecycle management"
-                },
-                earnings_system: {
-                    count: 18,
-                    functions: ["withdrawEnhanced", "getWithdrawalSplit", "toggleAutoCompound", "calculateEarnings"],
-                    description: "Advanced earnings and withdrawal system"
-                },
-                matrix_management: {
-                    count: 12,
-                    functions: ["getMatrixPosition", "processMatrixSpillover", "calculateMatrixBonus"],
-                    description: "Binary matrix management system"
-                },
-                pool_distribution: {
-                    count: 10,
-                    functions: ["distributePools", "claimPoolRewards", "getPoolEligibility"],
-                    description: "Community pool reward system"
-                },
-                admin_controls: {
-                    count: 12,
-                    functions: ["pauseContract", "setEmergencyMode", "updateOracles", "manageBlacklist"],
-                    description: "Advanced security and admin controls"
-                },
-                analytics: {
-                    count: 7,
-                    functions: ["getNetworkStats", "calculateROI", "trackAchievements"],
-                    description: "Comprehensive analytics and reporting"
-                }
-            }
-        };
-    }
+  initializeContractFunctions() {
+    return {
+      total_functions: 74,
+      categories: {
+        user_management: {
+          count: 15,
+          functions: [
+            'register',
+            'getUserInfo',
+            'upgradePackage',
+            'setReferralCode',
+          ],
+          description: 'Complete user lifecycle management',
+        },
+        earnings_system: {
+          count: 18,
+          functions: [
+            'withdrawEnhanced',
+            'getWithdrawalSplit',
+            'toggleAutoCompound',
+            'calculateEarnings',
+          ],
+          description: 'Advanced earnings and withdrawal system',
+        },
+        matrix_management: {
+          count: 12,
+          functions: [
+            'getMatrixPosition',
+            'processMatrixSpillover',
+            'calculateMatrixBonus',
+          ],
+          description: 'Binary matrix management system',
+        },
+        pool_distribution: {
+          count: 10,
+          functions: [
+            'distributePools',
+            'claimPoolRewards',
+            'getPoolEligibility',
+          ],
+          description: 'Community pool reward system',
+        },
+        admin_controls: {
+          count: 12,
+          functions: [
+            'pauseContract',
+            'setEmergencyMode',
+            'updateOracles',
+            'manageBlacklist',
+          ],
+          description: 'Advanced security and admin controls',
+        },
+        analytics: {
+          count: 7,
+          functions: ['getNetworkStats', 'calculateROI', 'trackAchievements'],
+          description: 'Comprehensive analytics and reporting',
+        },
+      },
+    };
+  }
 
-    initializeTeamCredentials() {
-        return {
-            lead_developer: {
-                experience: "20+ years in financial technology",
-                expertise: ["Blockchain architecture", "Smart contract security", "Scalable systems"],
-                achievements: ["Multiple successful exits", "Patents in fintech", "Published researcher"]
-            },
-            international_team: {
-                harvard: "Business strategy and financial modeling",
-                germany: "Precision engineering and security protocols", 
-                spain: "Innovation and user experience design",
-                china: "AI integration and scalable architecture",
-                india: "IIT-level technical excellence and optimization"
-            },
-            current_projects: [
-                "Next-generation DeFi protocols",
-                "AI-powered trading systems", 
-                "Global financial inclusion platforms",
-                "Trillion-dollar market opportunities"
-            ]
-        };
-    }
+  initializeTeamCredentials() {
+    return {
+      lead_developer: {
+        experience: '20+ years in financial technology',
+        expertise: [
+          'Blockchain architecture',
+          'Smart contract security',
+          'Scalable systems',
+        ],
+        achievements: [
+          'Multiple successful exits',
+          'Patents in fintech',
+          'Published researcher',
+        ],
+      },
+      international_team: {
+        harvard: 'Business strategy and financial modeling',
+        germany: 'Precision engineering and security protocols',
+        spain: 'Innovation and user experience design',
+        china: 'AI integration and scalable architecture',
+        india: 'IIT-level technical excellence and optimization',
+      },
+      current_projects: [
+        'Next-generation DeFi protocols',
+        'AI-powered trading systems',
+        'Global financial inclusion platforms',
+        'Trillion-dollar market opportunities',
+      ],
+    };
+  }
 
-    // Enhanced response generation with motivational training
-    generateResponse(query, context = {}) {
-        const queryLower = query.toLowerCase();
-        
-        // Check for negative/doubt patterns first
-        for (const category of Object.values(this.motivationalResponses)) {
-            for (const responseSet of category) {
-                if (responseSet.trigger.some(trigger => queryLower.includes(trigger))) {
-                    return this.addPersonalTouch(responseSet.response, context);
-                }
-            }
+  // Enhanced response generation with motivational training
+  generateResponse(query, context = {}) {
+    const queryLower = query.toLowerCase();
+
+    // Check for negative/doubt patterns first
+    for (const category of Object.values(this.motivationalResponses)) {
+      for (const responseSet of category) {
+        if (responseSet.trigger.some(trigger => queryLower.includes(trigger))) {
+          return this.addPersonalTouch(responseSet.response, context);
         }
-
-        // Business plan queries
-        if (this.containsBusinessQuery(queryLower)) {
-            return this.generateBusinessResponse(queryLower, context);
-        }
-
-        // Technical queries
-        if (this.containsTechQuery(queryLower)) {
-            return this.generateTechResponse(queryLower, context);
-        }
-
-        // Default motivational response
-        return this.generateDefaultMotivationalResponse(context);
+      }
     }
 
-    containsBusinessQuery(query) {
-        const businessKeywords = [
-            'plan', 'business', 'model', 'earning', 'profit', 'tier', 'membership',
-            'reward', 'bonus', 'withdrawal', 'investment', 'return'
-        ];
-        return businessKeywords.some(keyword => query.includes(keyword));
+    // Business plan queries
+    if (this.containsBusinessQuery(queryLower)) {
+      return this.generateBusinessResponse(queryLower, context);
     }
 
-    containsTechQuery(query) {
-        const techKeywords = [
-            'technology', 'blockchain', 'smart contract', 'security', 'audit',
-            'web3', 'ai', 'features', 'functions'
-        ];
-        return techKeywords.some(keyword => query.includes(keyword));
+    // Technical queries
+    if (this.containsTechQuery(queryLower)) {
+      return this.generateTechResponse(queryLower, context);
     }
 
-    generateBusinessResponse(query, context) {
-        const plan = this.businessPlan;
-        
-        if (query.includes('tier') || query.includes('membership')) {
-            return `🎯 **Choose Your Wealth Building Level!**
+    // Default motivational response
+    return this.generateDefaultMotivationalResponse(context);
+  }
+
+  containsBusinessQuery(query) {
+    const businessKeywords = [
+      'plan',
+      'business',
+      'model',
+      'earning',
+      'profit',
+      'tier',
+      'membership',
+      'reward',
+      'bonus',
+      'withdrawal',
+      'investment',
+      'return',
+    ];
+    return businessKeywords.some(keyword => query.includes(keyword));
+  }
+
+  containsTechQuery(query) {
+    const techKeywords = [
+      'technology',
+      'blockchain',
+      'smart contract',
+      'security',
+      'audit',
+      'web3',
+      'ai',
+      'features',
+      'functions',
+    ];
+    return techKeywords.some(keyword => query.includes(keyword));
+  }
+
+  generateBusinessResponse(query, context) {
+    const plan = this.businessPlan;
+
+    if (query.includes('tier') || query.includes('membership')) {
+      return `🎯 **Choose Your Wealth Building Level!**
 
 **💎 Membership Tiers Designed for YOUR Success:**
 
@@ -382,10 +454,10 @@ Ultimate tier for maximum impact
 **Why the 4X cap?** It ensures SUSTAINABILITY and FAIRNESS for everyone! Unlike traditional schemes that collapse, our system is designed for long-term success! 🚀
 
 **Start where you're comfortable and upgrade anytime!** Your future self will thank you! ✨`;
-        }
+    }
 
-        if (query.includes('reward') || query.includes('earning')) {
-            return `💰 **Your Money Works HARDER in LeadFive!**
+    if (query.includes('reward') || query.includes('earning')) {
+      return `💰 **Your Money Works HARDER in LeadFive!**
 
 **100% Transparent Reward Distribution:** 📊
 
@@ -401,10 +473,10 @@ Ultimate tier for maximum impact
 - Leaders: 90% cash / 10% reinvest (maximum freedom!)
 
 **This isn't just earning - it's WEALTH ARCHITECTURE!** 🏗️`;
-        }
+    }
 
-        // Default business response
-        return `🚀 **LeadFive: Where Dreams Meet Technology!**
+    // Default business response
+    return `🚀 **LeadFive: Where Dreams Meet Technology!**
 
 Our mission is simple: **Transform lives through transparent, fair, and profitable community building!**
 
@@ -416,11 +488,11 @@ Our mission is simple: **Transform lives through transparent, fair, and profitab
 ✅ Cutting-edge technology
 
 **Ready to start your financial transformation?** 💎`;
-    }
+  }
 
-    generateTechResponse(query, context) {
-        if (query.includes('security') || query.includes('audit')) {
-            return `🔒 **PhD-Level Security You Can TRUST!**
+  generateTechResponse(query, context) {
+    if (query.includes('security') || query.includes('audit')) {
+      return `🔒 **PhD-Level Security You Can TRUST!**
 
 **Our Security Rating: B+ (Excellent with improvements)** 🛡️
 
@@ -438,10 +510,10 @@ Our mission is simple: **Transform lives through transparent, fair, and profitab
 🔧 Enhanced access controls (military-grade security)
 
 **Your funds are safer than most traditional banks!** 🏦`;
-        }
+    }
 
-        if (query.includes('function') || query.includes('feature')) {
-            return `⚡ **74 Functions of Pure INNOVATION!**
+    if (query.includes('function') || query.includes('feature')) {
+      return `⚡ **74 Functions of Pure INNOVATION!**
 
 **Our Technical Arsenal:** 🛡️
 
@@ -460,10 +532,10 @@ Our mission is simple: **Transform lives through transparent, fair, and profitab
 - AI-powered predictions and coaching
 
 **This is enterprise-level technology accessible to EVERYONE!** 🚀`;
-        }
+    }
 
-        // Default tech response
-        return `🤖 **Technology That Changes Everything!**
+    // Default tech response
+    return `🤖 **Technology That Changes Everything!**
 
 LeadFive combines the best of Web3, AI, and traditional finance to create something truly revolutionary!
 
@@ -475,11 +547,11 @@ LeadFive combines the best of Web3, AI, and traditional finance to create someth
 - Real-time analytics
 
 **You're not just using technology - you're PIONEERING the future!** ✨`;
-    }
+  }
 
-    generateDefaultMotivationalResponse(context) {
-        const responses = [
-            `🌟 **Welcome to Your Financial Evolution!**
+  generateDefaultMotivationalResponse(context) {
+    const responses = [
+      `🌟 **Welcome to Your Financial Evolution!**
 
 You've just discovered LeadFive - where cutting-edge technology meets life-changing opportunity!
 
@@ -489,7 +561,7 @@ You've just discovered LeadFive - where cutting-edge technology meets life-chang
 
 What would you like to know about securing your financial future? 🚀`,
 
-            `💎 **You're in the RIGHT place at the RIGHT time!**
+      `💎 **You're in the RIGHT place at the RIGHT time!**
 
 LeadFive isn't just another platform - it's a **movement of forward-thinking individuals** who refuse to settle for financial mediocrity!
 
@@ -504,7 +576,7 @@ LeadFive isn't just another platform - it's a **movement of forward-thinking ind
 
 **Ready to write your success story?** ✨`,
 
-            `🚀 **Success Leaves Clues - And You Just Found One!**
+      `🚀 **Success Leaves Clues - And You Just Found One!**
 
 **Consider this:**
 - Bitcoin early adopters became millionaires
@@ -516,54 +588,55 @@ LeadFive isn't just another platform - it's a **movement of forward-thinking ind
 
 **The question isn't whether Web3 will change everything. It's whether YOU'LL be part of the change!** 
 
-What's your first step toward financial transformation? 💪`
-        ];
+What's your first step toward financial transformation? 💪`,
+    ];
 
-        return responses[Math.floor(Math.random() * responses.length)];
-    }
+    return responses[Math.floor(Math.random() * responses.length)];
+  }
 
-    addPersonalTouch(response, context) {
-        const personalizers = [
-            "🌟 Great question! ",
-            "💪 I love your thinking! ",
-            "🎯 Smart observation! ",
-            "✨ Excellent point! "
-        ];
+  addPersonalTouch(response, context) {
+    const personalizers = [
+      '🌟 Great question! ',
+      '💪 I love your thinking! ',
+      '🎯 Smart observation! ',
+      '✨ Excellent point! ',
+    ];
 
-        const endings = [
-            "\n\n💬 What other questions can I help you with?",
-            "\n\n🚀 Ready to take the next step?", 
-            "\n\n💎 Want to know more about any specific aspect?",
-            "\n\n✨ How else can I support your journey?"
-        ];
+    const endings = [
+      '\n\n💬 What other questions can I help you with?',
+      '\n\n🚀 Ready to take the next step?',
+      '\n\n💎 Want to know more about any specific aspect?',
+      '\n\n✨ How else can I support your journey?',
+    ];
 
-        const personalizer = personalizers[Math.floor(Math.random() * personalizers.length)];
-        const ending = endings[Math.floor(Math.random() * endings.length)];
+    const personalizer =
+      personalizers[Math.floor(Math.random() * personalizers.length)];
+    const ending = endings[Math.floor(Math.random() * endings.length)];
 
-        return personalizer + response + ending;
-    }
+    return personalizer + response + ending;
+  }
 
-    // Get specific knowledge for advanced queries
-    getBusinessPlanDetails() {
-        return this.businessPlan;
-    }
+  // Get specific knowledge for advanced queries
+  getBusinessPlanDetails() {
+    return this.businessPlan;
+  }
 
-    getSecurityAuditDetails() {
-        return this.securityAudit;
-    }
+  getSecurityAuditDetails() {
+    return this.securityAudit;
+  }
 
-    getContractFunctionsList() {
-        return this.contractFunctions;
-    }
+  getContractFunctionsList() {
+    return this.contractFunctions;
+  }
 
-    getTeamCredentials() {
-        return this.teamCredentials;
-    }
+  getTeamCredentials() {
+    return this.teamCredentials;
+  }
 
-    // Generate FAQ responses
-    generateFAQResponse(question) {
-        const faqDatabase = {
-            "How does LeadFive work?": `🎯 **LeadFive is beautifully simple yet powerfully sophisticated!**
+  // Generate FAQ responses
+  generateFAQResponse(question) {
+    const faqDatabase = {
+      'How does LeadFive work?': `🎯 **LeadFive is beautifully simple yet powerfully sophisticated!**
 
 **Your Journey:**
 1️⃣ **Choose Your Tier** ($30-$200 investment)
@@ -574,7 +647,7 @@ What's your first step toward financial transformation? 💪`
 
 **The Magic:** Our smart contracts automatically handle all calculations, distributions, and security - so you focus on what matters: **BUILDING WEALTH!** 🚀`,
 
-            "Is this legal?": `⚖️ **Absolutely! LeadFive operates in full compliance with Web3 standards.**
+      'Is this legal?': `⚖️ **Absolutely! LeadFive operates in full compliance with Web3 standards.**
 
 **Legal Foundation:**
 ✅ Software application (not securities)
@@ -585,7 +658,7 @@ What's your first step toward financial transformation? 💪`
 
 **Remember:** Major institutions like Tesla, MicroStrategy, and BlackRock have billions in crypto. We're riding the same technological wave! 🌊`,
 
-            "What makes you different?": `🌟 **LeadFive is the ONLY platform combining ALL these advantages:**
+      'What makes you different?': `🌟 **LeadFive is the ONLY platform combining ALL these advantages:**
 
 ✨ **PhD-audited security** (bank-level protection)
 🤖 **AI integration** (ChatGPT + ElevenLabs)  
@@ -595,11 +668,11 @@ What's your first step toward financial transformation? 💪`
 📱 **Mobile PWA** (app-like experience)
 🎯 **Complete ecosystem** (not just MLM)
 
-**Most platforms offer ONE advantage. We offer EVERYTHING!** 🚀`
-        };
+**Most platforms offer ONE advantage. We offer EVERYTHING!** 🚀`,
+    };
 
-        return faqDatabase[question] || this.generateDefaultMotivationalResponse();
-    }
+    return faqDatabase[question] || this.generateDefaultMotivationalResponse();
+  }
 }
 
 export default EnhancedKnowledgeBase;

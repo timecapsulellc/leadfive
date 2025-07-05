@@ -1,6 +1,6 @@
 /**
  * Web3 Contract Service for LeadFive
- * 
+ *
  * Handles all blockchain interactions with the deployed contract
  * Contract Address: 0x29dcCb502D10C042BcC6a02a7762C49595A9E498 (BSC Mainnet - UPDATED DEPLOYMENT)
  */
@@ -10,7 +10,6 @@ import { APP_CONFIG } from '../config/app.js';
 import CompensationPlanService from './CompensationPlanService';
 
 export class Web3ContractService {
-  
   // Contract configuration from secure app config
   static CONTRACT_ADDRESS = APP_CONFIG.contract.address;
   static USDT_ADDRESS = APP_CONFIG.contract.network.tokens.usdt;
@@ -24,59 +23,59 @@ export class Web3ContractService {
     nativeCurrency: {
       name: 'BNB',
       symbol: 'BNB',
-      decimals: 18
+      decimals: 18,
     },
     rpcUrls: ['https://bsc-dataseed.binance.org/'],
-    blockExplorerUrls: ['https://bscscan.com/']
+    blockExplorerUrls: ['https://bscscan.com/'],
   };
 
   // Basic ABI for common functions (will be expanded with actual contract ABI)
   static CONTRACT_ABI = [
     // User registration and package purchase
-    "function register(address sponsor, uint256 packageAmount) external",
-    "function purchasePackage(uint256 packageAmount) external",
-    
+    'function register(address sponsor, uint256 packageAmount) external',
+    'function purchasePackage(uint256 packageAmount) external',
+
     // User information
-    "function users(address user) external view returns (bool isActive, address sponsor, uint256 packageAmount, uint256 totalEarnings, uint256 directReferrals, uint256 teamSize)",
-    "function getUserInfo(address user) external view returns (tuple(bool isActive, address sponsor, uint256 packageAmount, uint256 totalEarnings, uint256 directReferrals, uint256 teamSize))",
-    
+    'function users(address user) external view returns (bool isActive, address sponsor, uint256 packageAmount, uint256 totalEarnings, uint256 directReferrals, uint256 teamSize)',
+    'function getUserInfo(address user) external view returns (tuple(bool isActive, address sponsor, uint256 packageAmount, uint256 totalEarnings, uint256 directReferrals, uint256 teamSize))',
+
     // Matrix and genealogy
-    "function getDownline(address user, uint256 level) external view returns (address[])",
-    "function getUpline(address user, uint256 levels) external view returns (address[])",
-    "function getMatrixPosition(address user) external view returns (uint256 level, uint256 position)",
-    
+    'function getDownline(address user, uint256 level) external view returns (address[])',
+    'function getUpline(address user, uint256 levels) external view returns (address[])',
+    'function getMatrixPosition(address user) external view returns (uint256 level, uint256 position)',
+
     // Earnings and withdrawals
-    "function getAvailableEarnings(address user) external view returns (uint256)",
-    "function withdraw(uint256 amount) external",
-    "function getEarningsBreakdown(address user) external view returns (uint256 sponsor, uint256 level, uint256 upline, uint256 leader, uint256 pool)",
-    
+    'function getAvailableEarnings(address user) external view returns (uint256)',
+    'function withdraw(uint256 amount) external',
+    'function getEarningsBreakdown(address user) external view returns (uint256 sponsor, uint256 level, uint256 upline, uint256 leader, uint256 pool)',
+
     // Leader qualifications
-    "function getLeaderStatus(address user) external view returns (bool isShining, bool isSilver)",
-    "function getLeaderPool() external view returns (uint256 shiningPool, uint256 silverPool)",
-    
+    'function getLeaderStatus(address user) external view returns (bool isShining, bool isSilver)',
+    'function getLeaderPool() external view returns (uint256 shiningPool, uint256 silverPool)',
+
     // Global Help Pool
-    "function getGlobalHelpPool() external view returns (uint256 totalPool, uint256 weeklyDistribution)",
-    "function isEligibleForPool(address user) external view returns (bool)",
-    
+    'function getGlobalHelpPool() external view returns (uint256 totalPool, uint256 weeklyDistribution)',
+    'function isEligibleForPool(address user) external view returns (bool)',
+
     // Package and level information
-    "function getPackageInfo(uint256 amount) external pure returns (bool isValid)",
-    "function getLevelRequirements(uint256 level) external pure returns (uint256 requiredTeam, uint256 upgradeAmount)",
-    
+    'function getPackageInfo(uint256 amount) external pure returns (bool isValid)',
+    'function getLevelRequirements(uint256 level) external pure returns (uint256 requiredTeam, uint256 upgradeAmount)',
+
     // Events
-    "event UserRegistered(address indexed user, address indexed sponsor, uint256 packageAmount)",
-    "event PackagePurchased(address indexed user, uint256 packageAmount)",
-    "event EarningsDistributed(address indexed user, uint256 amount, string source)",
-    "event Withdrawal(address indexed user, uint256 amount)",
-    "event LeaderQualified(address indexed user, string rank)"
+    'event UserRegistered(address indexed user, address indexed sponsor, uint256 packageAmount)',
+    'event PackagePurchased(address indexed user, uint256 packageAmount)',
+    'event EarningsDistributed(address indexed user, uint256 amount, string source)',
+    'event Withdrawal(address indexed user, uint256 amount)',
+    'event LeaderQualified(address indexed user, string rank)',
   ];
 
   // USDT ABI for token operations
   static USDT_ABI = [
-    "function balanceOf(address owner) external view returns (uint256)",
-    "function transfer(address to, uint256 amount) external returns (bool)",
-    "function approve(address spender, uint256 amount) external returns (bool)",
-    "function allowance(address owner, address spender) external view returns (uint256)",
-    "function decimals() external view returns (uint8)"
+    'function balanceOf(address owner) external view returns (uint256)',
+    'function transfer(address to, uint256 amount) external returns (bool)',
+    'function approve(address spender, uint256 amount) external returns (bool)',
+    'function allowance(address owner, address spender) external view returns (uint256)',
+    'function decimals() external view returns (uint8)',
   ];
 
   constructor() {
@@ -116,7 +115,7 @@ export class Web3ContractService {
       }
 
       const accounts = await window.ethereum.request({
-        method: 'eth_requestAccounts'
+        method: 'eth_requestAccounts',
       });
 
       if (accounts.length > 0) {
@@ -136,7 +135,7 @@ export class Web3ContractService {
         return {
           success: true,
           address: this.userAddress,
-          network: await this.provider.getNetwork()
+          network: await this.provider.getNetwork(),
         };
       }
     } catch (error) {
@@ -151,11 +150,11 @@ export class Web3ContractService {
   async checkNetwork() {
     try {
       const network = await this.provider.getNetwork();
-      
+
       if (network.chainId !== Web3ContractService.CHAIN_ID) {
         await this.switchToBSC();
       }
-      
+
       return network;
     } catch (error) {
       console.error('Network check failed:', error);
@@ -170,14 +169,14 @@ export class Web3ContractService {
     try {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: Web3ContractService.BSC_CONFIG.chainId }]
+        params: [{ chainId: Web3ContractService.BSC_CONFIG.chainId }],
       });
     } catch (switchError) {
       // If BSC is not added to MetaMask, add it
       if (switchError.code === 4902) {
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
-          params: [Web3ContractService.BSC_CONFIG]
+          params: [Web3ContractService.BSC_CONFIG],
         });
       } else {
         throw switchError;
@@ -196,14 +195,14 @@ export class Web3ContractService {
       // Try to get user info from contract
       try {
         const userInfo = await this.contract.getUserInfo(userAddr);
-        
+
         return {
           isActive: userInfo.isActive,
           sponsor: userInfo.sponsor,
           packageAmount: ethers.utils.formatUnits(userInfo.packageAmount, 18),
           totalEarnings: ethers.utils.formatUnits(userInfo.totalEarnings, 18),
           directReferrals: userInfo.directReferrals.toNumber(),
-          teamSize: userInfo.teamSize.toNumber()
+          teamSize: userInfo.teamSize.toNumber(),
         };
       } catch (contractError) {
         // If contract call fails, return demo data based on compensation plan
@@ -223,10 +222,10 @@ export class Web3ContractService {
     const demoPackage = 100;
     const demoTeamSize = 47;
     const demoDirectReferrals = 5;
-    
+
     const dashboardData = CompensationPlanService.calculateDashboardData(
-      demoPackage, 
-      demoTeamSize, 
+      demoPackage,
+      demoTeamSize,
       demoDirectReferrals
     );
 
@@ -237,7 +236,7 @@ export class Web3ContractService {
       totalEarnings: dashboardData.earnings.total,
       directReferrals: demoDirectReferrals,
       teamSize: demoTeamSize,
-      isDemoData: true
+      isDemoData: true,
     };
   }
 
@@ -266,18 +265,18 @@ export class Web3ContractService {
 
       // Convert package amount to wei
       const amount = ethers.utils.parseUnits(packageAmount.toString(), 18);
-      
+
       // Check USDT allowance and approve if needed
       await this.approveUSDT(amount);
-      
+
       // Register user
       const tx = await this.contract.register(sponsorAddress, amount);
       const receipt = await tx.wait();
-      
+
       return {
         success: true,
         txHash: receipt.transactionHash,
-        blockNumber: receipt.blockNumber
+        blockNumber: receipt.blockNumber,
       };
     } catch (error) {
       console.error('Registration failed:', error);
@@ -293,16 +292,16 @@ export class Web3ContractService {
       if (!this.contract) throw new Error('Contract not initialized');
 
       const amount = ethers.utils.parseUnits(packageAmount.toString(), 18);
-      
+
       await this.approveUSDT(amount);
-      
+
       const tx = await this.contract.purchasePackage(amount);
       const receipt = await tx.wait();
-      
+
       return {
         success: true,
         txHash: receipt.transactionHash,
-        blockNumber: receipt.blockNumber
+        blockNumber: receipt.blockNumber,
       };
     } catch (error) {
       console.error('Package purchase failed:', error);
@@ -318,13 +317,13 @@ export class Web3ContractService {
       if (!this.usdtContract) throw new Error('USDT contract not initialized');
 
       const allowance = await this.usdtContract.allowance(
-        this.userAddress, 
+        this.userAddress,
         Web3ContractService.CONTRACT_ADDRESS
       );
 
       if (allowance.lt(amount)) {
         const tx = await this.usdtContract.approve(
-          Web3ContractService.CONTRACT_ADDRESS, 
+          Web3ContractService.CONTRACT_ADDRESS,
           amount
         );
         await tx.wait();
@@ -345,11 +344,11 @@ export class Web3ContractService {
       const amountWei = ethers.utils.parseUnits(amount.toString(), 18);
       const tx = await this.contract.withdraw(amountWei);
       const receipt = await tx.wait();
-      
+
       return {
         success: true,
         txHash: receipt.transactionHash,
-        blockNumber: receipt.blockNumber
+        blockNumber: receipt.blockNumber,
       };
     } catch (error) {
       console.error('Withdrawal failed:', error);
@@ -372,11 +371,14 @@ export class Web3ContractService {
       try {
         const userInfo = await this.getUserInfo(userAddr);
         const downline = await this.contract.getDownline(userAddr, depth);
-        
+
         // Build tree structure from contract data
         return this.buildTreeFromContractData(userInfo, downline, depth);
       } catch (contractError) {
-        console.warn('Contract genealogy call failed, using demo data:', contractError);
+        console.warn(
+          'Contract genealogy call failed, using demo data:',
+          contractError
+        );
         return CompensationPlanService.generateGenealogyTreeData(100, depth);
       }
     } catch (error) {
@@ -392,7 +394,10 @@ export class Web3ContractService {
     // This would build the actual tree from contract data
     // For now, return demo data with real user info if available
     const packageAmount = userInfo?.packageAmount || 100;
-    return CompensationPlanService.generateGenealogyTreeData(packageAmount, depth);
+    return CompensationPlanService.generateGenealogyTreeData(
+      packageAmount,
+      depth
+    );
   }
 
   /**
@@ -404,28 +409,37 @@ export class Web3ContractService {
       if (!userAddr || !this.contract) {
         // Return demo breakdown
         const userInfo = this.getDemoUserInfo();
-        return CompensationPlanService.calculateCompensationBreakdown(userInfo.packageAmount);
+        return CompensationPlanService.calculateCompensationBreakdown(
+          userInfo.packageAmount
+        );
       }
 
       try {
         const breakdown = await this.contract.getEarningsBreakdown(userAddr);
-        
+
         return {
           sponsorCommission: ethers.utils.formatUnits(breakdown.sponsor, 18),
           levelBonus: ethers.utils.formatUnits(breakdown.level, 18),
           globalUplineBonus: ethers.utils.formatUnits(breakdown.upline, 18),
           leaderBonus: ethers.utils.formatUnits(breakdown.leader, 18),
-          globalHelpPool: ethers.utils.formatUnits(breakdown.pool, 18)
+          globalHelpPool: ethers.utils.formatUnits(breakdown.pool, 18),
         };
       } catch (contractError) {
-        console.warn('Contract earnings call failed, using demo data:', contractError);
+        console.warn(
+          'Contract earnings call failed, using demo data:',
+          contractError
+        );
         const userInfo = this.getDemoUserInfo();
-        return CompensationPlanService.calculateCompensationBreakdown(userInfo.packageAmount);
+        return CompensationPlanService.calculateCompensationBreakdown(
+          userInfo.packageAmount
+        );
       }
     } catch (error) {
       console.error('Failed to get earnings breakdown:', error);
       const userInfo = this.getDemoUserInfo();
-      return CompensationPlanService.calculateCompensationBreakdown(userInfo.packageAmount);
+      return CompensationPlanService.calculateCompensationBreakdown(
+        userInfo.packageAmount
+      );
     }
   }
 
@@ -438,7 +452,7 @@ export class Web3ContractService {
       if (!userAddr || !this.contract) {
         const userInfo = this.getDemoUserInfo();
         return CompensationPlanService.checkLeaderQualification(
-          userInfo.teamSize, 
+          userInfo.teamSize,
           userInfo.directReferrals
         );
       }
@@ -446,16 +460,19 @@ export class Web3ContractService {
       try {
         const status = await this.contract.getLeaderStatus(userAddr);
         const qualifications = [];
-        
+
         if (status.isShining) qualifications.push('SHINING_STAR');
         if (status.isSilver) qualifications.push('SILVER_STAR');
-        
+
         return qualifications;
       } catch (contractError) {
-        console.warn('Contract leader status call failed, using demo data:', contractError);
+        console.warn(
+          'Contract leader status call failed, using demo data:',
+          contractError
+        );
         const userInfo = this.getDemoUserInfo();
         return CompensationPlanService.checkLeaderQualification(
-          userInfo.teamSize, 
+          userInfo.teamSize,
           userInfo.directReferrals
         );
       }

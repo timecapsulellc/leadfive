@@ -8,16 +8,16 @@ class PWAManager {
 
   init() {
     console.log('🚀 PWA Manager: Initializing...');
-    
+
     // Register service worker
     this.registerServiceWorker();
-    
+
     // Setup network monitoring
     this.setupNetworkMonitoring();
-    
+
     // Setup install prompt
     this.setupInstallPrompt();
-    
+
     console.log('✅ PWA Manager: Initialization complete');
   }
 
@@ -25,14 +25,22 @@ class PWAManager {
     if ('serviceWorker' in navigator) {
       try {
         const registration = await navigator.serviceWorker.register('/sw.js');
-        console.log('✅ Service Worker registered successfully:', registration.scope);
-        
+        console.log(
+          '✅ Service Worker registered successfully:',
+          registration.scope
+        );
+
         // Handle updates
         registration.addEventListener('updatefound', () => {
           const newWorker = registration.installing;
           newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              console.log('🔄 New service worker available, prompting for update...');
+            if (
+              newWorker.state === 'installed' &&
+              navigator.serviceWorker.controller
+            ) {
+              console.log(
+                '🔄 New service worker available, prompting for update...'
+              );
               // Show update available notification
               this.showUpdateAvailable();
             }
@@ -59,7 +67,7 @@ class PWAManager {
   }
 
   setupInstallPrompt() {
-    window.addEventListener('beforeinstallprompt', (e) => {
+    window.addEventListener('beforeinstallprompt', e => {
       e.preventDefault();
       this.deferredPrompt = e;
       console.log('📱 PWA install prompt available');

@@ -19,7 +19,11 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 50%
+  );
   pointer-events: none;
 }
 
@@ -49,8 +53,13 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
 .ai-subtitle {
@@ -68,8 +77,8 @@
 
 .mode-btn {
   padding: 8px 16px;
-  border: 2px solid rgba(255,255,255,0.3);
-  background: rgba(255,255,255,0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
   color: white;
   border-radius: 20px;
   cursor: pointer;
@@ -81,8 +90,8 @@
 }
 
 .mode-btn:hover {
-  background: rgba(255,255,255,0.2);
-  border-color: rgba(255,255,255,0.5);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-2px);
 }
 
@@ -102,14 +111,14 @@
 }
 
 .stat-card {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 15px;
   padding: 15px;
   display: flex;
   align-items: center;
   gap: 12px;
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .stat-icon {
@@ -144,7 +153,7 @@
 }
 
 .tips-icon {
-  color: #FFD700;
+  color: #ffd700;
 }
 
 .tips-grid {
@@ -154,10 +163,10 @@
 }
 
 .tip-card {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   padding: 15px;
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .tip-card h4 {
@@ -183,7 +192,7 @@
 }
 
 .insights-icon {
-  color: #FFD700;
+  color: #ffd700;
 }
 
 .insights-grid {
@@ -194,10 +203,10 @@
 
 /* Insight Cards */
 .insight-card {
-  background: rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   padding: 20px;
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
   position: relative;
@@ -206,8 +215,8 @@
 
 .insight-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-  background: rgba(255,255,255,0.15);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .insight-card.high {
@@ -230,7 +239,7 @@
 .insight-icon {
   font-size: 1.5rem;
   color: #00ff88;
-  background: rgba(0,255,136,0.2);
+  background: rgba(0, 255, 136, 0.2);
   padding: 10px;
   border-radius: 10px;
 }
@@ -267,7 +276,7 @@
 
 .impact-badge {
   padding: 3px 8px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 8px;
   font-size: 0.7rem;
   color: #00ff88;
@@ -335,13 +344,13 @@
 }
 
 .insight-action-btn.secondary {
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   color: white;
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .insight-action-btn.secondary:hover {
-  background: rgba(255,255,255,0.3);
+  background: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
 }
 
@@ -380,9 +389,9 @@
 }
 
 .ai-action-btn.secondary {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
   color: white;
-  border: 2px solid rgba(255,255,255,0.3);
+  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .ai-action-btn.tertiary {
@@ -393,7 +402,7 @@
 
 .ai-action-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
 .ai-disclaimer {
@@ -414,26 +423,26 @@
     padding: 20px;
     margin: 15px 0;
   }
-  
+
   .ai-panel-header {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .coaching-modes {
     width: 100%;
     justify-content: center;
   }
-  
+
   .insights-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .footer-actions {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .ai-action-btn {
     width: 100%;
     max-width: 280px;
@@ -445,15 +454,15 @@
   .ai-coaching-panel {
     padding: 15px;
   }
-  
+
   .header-content .section-title {
     font-size: 1.2rem;
   }
-  
+
   .ai-stats-overview {
     grid-template-columns: 1fr;
   }
-  
+
   .tips-grid {
     grid-template-columns: 1fr;
   }

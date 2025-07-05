@@ -7,24 +7,38 @@
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { ethers, parseUnits, formatUnits } from 'ethers';
-import { 
-  FaWallet, FaCalculator, FaRocket, FaCoins, FaChartPie, 
-  FaToggleOn, FaToggleOff, FaHistory, FaInfoCircle, FaGem,
-  FaPercentage, FaDollarSign, FaSync, FaBolt
+import {
+  FaWallet,
+  FaCalculator,
+  FaRocket,
+  FaCoins,
+  FaChartPie,
+  FaToggleOn,
+  FaToggleOff,
+  FaHistory,
+  FaInfoCircle,
+  FaGem,
+  FaPercentage,
+  FaDollarSign,
+  FaSync,
+  FaBolt,
 } from 'react-icons/fa';
 import '../styles/EnhancedWithdrawal.css';
 
-const EnhancedCollectionsSystem = ({ 
-  userAddress, 
-  contractInstance, 
+const EnhancedCollectionsSystem = ({
+  userAddress,
+  contractInstance,
   userInfo,
   onWithdrawal,
-  balance = 0 
+  balance = 0,
 }) => {
   // State management
   const [collectionAmount, setCollectionAmount] = useState('');
   const [autoCompoundEnabled, setAutoCompoundEnabled] = useState(false);
-  const [collectionSplit, setCollectionSplit] = useState({ collect: 70, reinvest: 30 });
+  const [collectionSplit, setCollectionSplit] = useState({
+    collect: 70,
+    reinvest: 30,
+  });
   const [introductionCount, setIntroductionCount] = useState(0);
   const [calculations, setCalculations] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -43,24 +57,25 @@ const EnhancedCollectionsSystem = ({
     try {
       // Fetch user's collection configuration
       const [split] = await contractInstance.getWithdrawalSplit(userAddress);
-      const introductions = await contractInstance.getUserReferralCount(userAddress);
-      const autoCompound = await contractInstance.isAutoCompoundEnabled(userAddress);
+      const introductions =
+        await contractInstance.getUserReferralCount(userAddress);
+      const autoCompound =
+        await contractInstance.isAutoCompoundEnabled(userAddress);
       const treasury = await contractInstance.getTreasuryWallet();
       const fees = await contractInstance.totalAdminFeesCollected();
-      
-      setCollectionSplit({ 
-        collect: split[0].toNumber(), 
-        reinvest: split[1].toNumber() 
+
+      setCollectionSplit({
+        collect: split[0].toNumber(),
+        reinvest: split[1].toNumber(),
       });
       setIntroductionCount(introductions.toNumber());
       setAutoCompoundEnabled(autoCompound);
       setTreasuryWallet(treasury);
       setTotalFeesCollected(fees);
-      
+
       // Load withdrawal history
       const history = await loadWithdrawalHistory(userAddress);
       setCollectionHistory(history);
-      
     } catch (error) {
       console.error('Error loading withdrawal data:', error);
       // Use demo data for development
@@ -73,20 +88,21 @@ const EnhancedCollectionsSystem = ({
   // Calculate withdrawal breakdown in real-time
   const withdrawalBreakdown = useMemo(() => {
     if (!collectionAmount || parseFloat(collectionAmount) <= 0) return null;
-    
+
     const amount = parseFloat(collectionAmount);
-    const { collect: withdrawPercent, reinvest: reinvestPercent } = collectionSplit;
-    
+    const { collect: withdrawPercent, reinvest: reinvestPercent } =
+      collectionSplit;
+
     // Calculate amounts based on corrected specification
     const withdrawAmount = (amount * withdrawPercent) / 100;
     const adminFee = (withdrawAmount * 5) / 100; // 5% fee ONLY on withdrawal portion
     const userReceives = withdrawAmount - adminFee;
     const reinvestAmount = (amount * reinvestPercent) / 100;
-    
+
     // Auto-compound bonus calculation
     const compoundBonus = autoCompoundEnabled ? (reinvestAmount * 5) / 100 : 0;
     const totalReinvest = reinvestAmount + compoundBonus;
-    
+
     return {
       totalAmount: amount,
       withdrawAmount: withdrawAmount,
@@ -95,8 +111,8 @@ const EnhancedCollectionsSystem = ({
       reinvestAmount: reinvestAmount,
       compoundBonus: compoundBonus,
       totalReinvest: totalReinvest,
-      feePercentage: ((adminFee / amount) * 100),
-      split: `${withdrawPercent}/${reinvestPercent}`
+      feePercentage: (adminFee / amount) * 100,
+      split: `${withdrawPercent}/${reinvestPercent}`,
     };
   }, [collectionAmount, collectionSplit, autoCompoundEnabled]);
 
@@ -106,7 +122,7 @@ const EnhancedCollectionsSystem = ({
       setIsProcessing(true);
       await contractInstance.toggleAutoCompound(!autoCompoundEnabled);
       setAutoCompoundEnabled(!autoCompoundEnabled);
-      
+
       // Update split when auto-compound changes
       if (!autoCompoundEnabled) {
         setCollectionSplit({ collect: 0, reinvest: 100 });
@@ -125,26 +141,25 @@ const EnhancedCollectionsSystem = ({
   // Execute enhanced withdrawal
   const handleWithdrawal = async () => {
     if (!collectionAmount || parseFloat(collectionAmount) <= 0) return;
-    
+
     try {
       setIsProcessing(true);
       const amount = parseFloat(collectionAmount);
-      
+
       // Convert to wei for contract interaction
       const amountWei = parseUnits(amount.toString(), 18);
-      
+
       // Execute enhanced withdrawal
       const tx = await contractInstance.withdrawEnhanced(amountWei);
       await tx.wait();
-      
+
       // Update history and reset form
       await loadCollectionData();
       setCollectionAmount('');
-      
+
       if (onWithdrawal) {
         onWithdrawal(withdrawalBreakdown);
       }
-      
     } catch (error) {
       console.error('Withdrawal error:', error);
     } finally {
@@ -153,7 +168,7 @@ const EnhancedCollectionsSystem = ({
   };
 
   // Calculate split based on referral count
-  const calculateSplitByReferrals = (referrals) => {
+  const calculateSplitByReferrals = referrals => {
     if (referrals >= 20) return { withdraw: 80, reinvest: 20 };
     if (referrals >= 5) return { withdraw: 75, reinvest: 25 };
     return { withdraw: 70, reinvest: 30 };
@@ -178,7 +193,7 @@ const EnhancedCollectionsSystem = ({
             <input
               type="number"
               value={collectionAmount}
-              onChange={(e) => setCollectionAmount(e.target.value)}
+              onChange={e => setCollectionAmount(e.target.value)}
               placeholder="Enter amount..."
               max={balance}
               step="0.01"
@@ -186,17 +201,31 @@ const EnhancedCollectionsSystem = ({
             <span className="currency-label">USDT</span>
           </div>
           <div className="quick-amounts">
-            <button onClick={() => setCollectionAmount((balance * 0.25).toFixed(2))}>25%</button>
-            <button onClick={() => setCollectionAmount((balance * 0.5).toFixed(2))}>50%</button>
-            <button onClick={() => setCollectionAmount((balance * 0.75).toFixed(2))}>75%</button>
-            <button onClick={() => setCollectionAmount(balance.toFixed(2))}>Max</button>
+            <button
+              onClick={() => setCollectionAmount((balance * 0.25).toFixed(2))}
+            >
+              25%
+            </button>
+            <button
+              onClick={() => setCollectionAmount((balance * 0.5).toFixed(2))}
+            >
+              50%
+            </button>
+            <button
+              onClick={() => setCollectionAmount((balance * 0.75).toFixed(2))}
+            >
+              75%
+            </button>
+            <button onClick={() => setCollectionAmount(balance.toFixed(2))}>
+              Max
+            </button>
           </div>
         </div>
 
         <div className="auto-compound-toggle">
           <div className="toggle-header">
             <span>Auto-Compound Mode</span>
-            <button 
+            <button
               className={`toggle-btn ${autoCompoundEnabled ? 'active' : ''}`}
               onClick={handleAutoCompoundToggle}
               disabled={isProcessing}
@@ -206,20 +235,25 @@ const EnhancedCollectionsSystem = ({
             </button>
           </div>
           <p className="toggle-description">
-            {autoCompoundEnabled 
+            {autoCompoundEnabled
               ? '🚀 All funds will be reinvested with 5% bonus!'
-              : '💰 Funds will be split based on your referral tier'
-            }
+              : '💰 Funds will be split based on your referral tier'}
           </p>
         </div>
       </div>
 
-      {withdrawalBreakdown && <WithdrawalBreakdown breakdown={withdrawalBreakdown} />}
+      {withdrawalBreakdown && (
+        <WithdrawalBreakdown breakdown={withdrawalBreakdown} />
+      )}
 
-      <button 
+      <button
         className={`withdrawal-btn ${!collectionAmount || isProcessing ? 'disabled' : ''}`}
         onClick={handleWithdrawal}
-        disabled={!collectionAmount || isProcessing || parseFloat(collectionAmount) > balance}
+        disabled={
+          !collectionAmount ||
+          isProcessing ||
+          parseFloat(collectionAmount) > balance
+        }
       >
         {isProcessing ? <FaSync className="spinning" /> : <FaWallet />}
         {isProcessing ? 'Processing...' : 'Execute Withdrawal'}
@@ -298,17 +332,23 @@ const EnhancedCollectionsSystem = ({
 
       <div className="tier-progress">
         <div className="tier-levels">
-          <div className={`tier-level ${introductionCount >= 0 ? 'achieved' : ''}`}>
+          <div
+            className={`tier-level ${introductionCount >= 0 ? 'achieved' : ''}`}
+          >
             <span className="tier-name">Starter</span>
             <span className="tier-split">70/30</span>
             <span className="tier-requirement">0+ referrals</span>
           </div>
-          <div className={`tier-level ${introductionCount >= 5 ? 'achieved' : ''}`}>
+          <div
+            className={`tier-level ${introductionCount >= 5 ? 'achieved' : ''}`}
+          >
             <span className="tier-name">Active</span>
             <span className="tier-split">75/25</span>
             <span className="tier-requirement">5+ referrals</span>
           </div>
-          <div className={`tier-level ${introductionCount >= 20 ? 'achieved' : ''}`}>
+          <div
+            className={`tier-level ${introductionCount >= 20 ? 'achieved' : ''}`}
+          >
             <span className="tier-name">Leader</span>
             <span className="tier-split">80/20</span>
             <span className="tier-requirement">20+ referrals</span>
@@ -322,15 +362,17 @@ const EnhancedCollectionsSystem = ({
           </div>
           <div className="status-item">
             <span>Current Split:</span>
-            <strong>{collectionSplit.collect}/{collectionSplit.reinvest}</strong>
+            <strong>
+              {collectionSplit.collect}/{collectionSplit.reinvest}
+            </strong>
           </div>
           <div className="status-item">
             <span>Next Tier Progress:</span>
             <div className="progress-bar">
-              <div 
-                className="progress-fill" 
-                style={{ 
-                  width: `${Math.min(100, (introductionCount / (introductionCount >= 5 ? 20 : 5)) * 100)}%` 
+              <div
+                className="progress-fill"
+                style={{
+                  width: `${Math.min(100, (introductionCount / (introductionCount >= 5 ? 20 : 5)) * 100)}%`,
                 }}
               ></div>
             </div>
@@ -398,12 +440,12 @@ const EnhancedCollectionsSystem = ({
   );
 
   // Load withdrawal history (mock implementation)
-  const loadWithdrawalHistory = async (address) => {
+  const loadWithdrawalHistory = async address => {
     // This would fetch actual history from contract events
     return [
       { amount: '150.00', fee: '7.50', split: '70/30', date: '2025-01-01' },
       { amount: '250.00', fee: '12.50', split: '75/25', date: '2024-12-28' },
-      { amount: '100.00', fee: '5.00', split: '70/30', date: '2024-12-25' }
+      { amount: '100.00', fee: '5.00', split: '70/30', date: '2024-12-25' },
     ];
   };
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { 
+import {
   FaChartBar,
   FaChartLine,
   FaChartPie,
@@ -14,7 +14,7 @@ import {
   FaUsers,
   FaDollarSign,
   FaNetworkWired,
-  FaGift
+  FaGift,
 } from 'react-icons/fa';
 
 const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
@@ -27,10 +27,10 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
       total: dashboardData?.totalEarnings || 0,
       directBonus: Math.floor((dashboardData?.totalEarnings || 0) * 0.25),
       binaryBonus: Math.floor((dashboardData?.totalEarnings || 0) * 0.45),
-      infinityBonus: Math.floor((dashboardData?.totalEarnings || 0) * 0.20),
-      globalPool: Math.floor((dashboardData?.totalEarnings || 0) * 0.10),
+      infinityBonus: Math.floor((dashboardData?.totalEarnings || 0) * 0.2),
+      globalPool: Math.floor((dashboardData?.totalEarnings || 0) * 0.1),
       growth: 23.7,
-      trend: 'up'
+      trend: 'up',
     },
     team: {
       totalMembers: dashboardData?.daoParticipants || 0,
@@ -39,7 +39,7 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
       rightLeg: Math.floor((dashboardData?.daoParticipants || 0) * 0.35),
       activeMembers: Math.floor((dashboardData?.daoParticipants || 0) * 0.8),
       newThisMonth: Math.floor((dashboardData?.daoParticipants || 0) * 0.15),
-      retentionRate: 89.5
+      retentionRate: 89.5,
     },
     performance: {
       rankAdvancement: 2,
@@ -48,19 +48,19 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
         level2: 30,
         level3: 15,
         level4: 7,
-        level5: 3
+        level5: 3,
       },
       conversionRate: 12.4,
       averagePackageValue: 285,
-      teamVolume: 45620
-    }
+      teamVolume: 45620,
+    },
   });
 
   const [timeSeriesData, setTimeSeriesData] = useState({
     labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
     earnings: [1200, 1850, 2340, 2890],
     teamGrowth: [45, 67, 89, 112],
-    volume: [8500, 12300, 18700, 24500]
+    volume: [8500, 12300, 18700, 24500],
   });
 
   const [comparisonData, setComparisonData] = useState({
@@ -68,14 +68,14 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
       earnings: 18.5,
       team: 24.2,
       volume: 31.7,
-      rank: 2
+      rank: 2,
     },
     vsAverage: {
       earnings: 145,
       team: 132,
       volume: 167,
-      rank: 'Above Average'
-    }
+      rank: 'Above Average',
+    },
   });
 
   const [topPerformers, setTopPerformers] = useState([
@@ -83,35 +83,38 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
     { id: 2, name: 'Team Beta', volume: 9870, growth: 28.2, level: 4 },
     { id: 3, name: 'Team Gamma', volume: 8650, growth: 22.8, level: 4 },
     { id: 4, name: 'Team Delta', volume: 7320, growth: 19.4, level: 3 },
-    { id: 5, name: 'Team Epsilon', volume: 6890, growth: 16.7, level: 3 }
+    { id: 5, name: 'Team Epsilon', volume: 6890, growth: 16.7, level: 3 },
   ]);
 
   const tabs = [
     { id: 'earnings', label: 'Earnings Analysis', icon: FaDollarSign },
     { id: 'team', label: 'Team Analytics', icon: FaUsers },
     { id: 'performance', label: 'Performance', icon: FaChartLine },
-    { id: 'comparison', label: 'Comparisons', icon: FaChartBar }
+    { id: 'comparison', label: 'Comparisons', icon: FaChartBar },
   ];
 
   const timeRanges = [
     { value: '7d', label: '7 Days' },
     { value: '30d', label: '30 Days' },
     { value: '90d', label: '90 Days' },
-    { value: '1y', label: '1 Year' }
+    { value: '1y', label: '1 Year' },
   ];
 
-  const getTrendIcon = (trend) => {
+  const getTrendIcon = trend => {
     switch (trend) {
-      case 'up': return <FaArrowUp className="trend-up" />;
-      case 'down': return <FaArrowDown className="trend-down" />;
-      default: return <FaEquals className="trend-neutral" />;
+      case 'up':
+        return <FaArrowUp className="trend-up" />;
+      case 'down':
+        return <FaArrowDown className="trend-down" />;
+      default:
+        return <FaEquals className="trend-neutral" />;
     }
   };
 
-  const formatCurrency = (amount) => {
+  const formatCurrency = amount => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'USD'
+      currency: 'USD',
     }).format(amount);
   };
 
@@ -121,10 +124,12 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
         <h4>Earnings Breakdown</h4>
         <div className="total-earnings">
           <span className="total-label">Total Earnings:</span>
-          <span className="total-amount">{formatCurrency(analyticsData.earnings.total)}</span>
+          <span className="total-amount">
+            {formatCurrency(analyticsData.earnings.total)}
+          </span>
           <span className="total-growth">
-            {getTrendIcon(analyticsData.earnings.trend)}
-            +{analyticsData.earnings.growth}%
+            {getTrendIcon(analyticsData.earnings.trend)}+
+            {analyticsData.earnings.growth}%
           </span>
         </div>
       </div>
@@ -142,7 +147,9 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
             <div className="breakdown-color direct"></div>
             <div className="breakdown-info">
               <span className="breakdown-label">Direct Sponsor Bonus</span>
-              <span className="breakdown-amount">{formatCurrency(analyticsData.earnings.directBonus)}</span>
+              <span className="breakdown-amount">
+                {formatCurrency(analyticsData.earnings.directBonus)}
+              </span>
               <span className="breakdown-percentage">25%</span>
             </div>
           </div>
@@ -151,7 +158,9 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
             <div className="breakdown-color binary"></div>
             <div className="breakdown-info">
               <span className="breakdown-label">Binary Commission</span>
-              <span className="breakdown-amount">{formatCurrency(analyticsData.earnings.binaryBonus)}</span>
+              <span className="breakdown-amount">
+                {formatCurrency(analyticsData.earnings.binaryBonus)}
+              </span>
               <span className="breakdown-percentage">45%</span>
             </div>
           </div>
@@ -160,7 +169,9 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
             <div className="breakdown-color infinity"></div>
             <div className="breakdown-info">
               <span className="breakdown-label">Infinity Bonus</span>
-              <span className="breakdown-amount">{formatCurrency(analyticsData.earnings.infinityBonus)}</span>
+              <span className="breakdown-amount">
+                {formatCurrency(analyticsData.earnings.infinityBonus)}
+              </span>
               <span className="breakdown-percentage">20%</span>
             </div>
           </div>
@@ -169,7 +180,9 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
             <div className="breakdown-color global"></div>
             <div className="breakdown-info">
               <span className="breakdown-label">Global Pool</span>
-              <span className="breakdown-amount">{formatCurrency(analyticsData.earnings.globalPool)}</span>
+              <span className="breakdown-amount">
+                {formatCurrency(analyticsData.earnings.globalPool)}
+              </span>
               <span className="breakdown-percentage">10%</span>
             </div>
           </div>
@@ -195,7 +208,9 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
           <div className="team-stat">
             <FaUsers className="stat-icon" />
             <div className="stat-info">
-              <span className="stat-value">{analyticsData.team.totalMembers}</span>
+              <span className="stat-value">
+                {analyticsData.team.totalMembers}
+              </span>
               <span className="stat-label">Total Team Members</span>
             </div>
           </div>
@@ -203,7 +218,9 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
           <div className="team-stat">
             <FaNetworkWired className="stat-icon" />
             <div className="stat-info">
-              <span className="stat-value">{analyticsData.team.directReferrals}</span>
+              <span className="stat-value">
+                {analyticsData.team.directReferrals}
+              </span>
               <span className="stat-label">Direct Referrals</span>
             </div>
           </div>
@@ -211,7 +228,9 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
           <div className="team-stat">
             <FaArrowUp className="stat-icon" />
             <div className="stat-info">
-              <span className="stat-value">{analyticsData.team.newThisMonth}</span>
+              <span className="stat-value">
+                {analyticsData.team.newThisMonth}
+              </span>
               <span className="stat-label">New This Month</span>
             </div>
           </div>
@@ -219,7 +238,9 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
           <div className="team-stat">
             <FaChartLine className="stat-icon" />
             <div className="stat-info">
-              <span className="stat-value">{analyticsData.team.retentionRate}%</span>
+              <span className="stat-value">
+                {analyticsData.team.retentionRate}%
+              </span>
               <span className="stat-label">Retention Rate</span>
             </div>
           </div>
@@ -232,7 +253,9 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
           <div className="binary-leg left">
             <div className="leg-header">
               <span className="leg-title">Left Leg</span>
-              <span className="leg-count">{analyticsData.team.leftLeg} members</span>
+              <span className="leg-count">
+                {analyticsData.team.leftLeg} members
+              </span>
             </div>
             <div className="leg-bar">
               <div className="leg-fill" style={{ width: '65%' }}></div>
@@ -249,7 +272,9 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
           <div className="binary-leg right">
             <div className="leg-header">
               <span className="leg-title">Right Leg</span>
-              <span className="leg-count">{analyticsData.team.rightLeg} members</span>
+              <span className="leg-count">
+                {analyticsData.team.rightLeg} members
+              </span>
             </div>
             <div className="leg-bar">
               <div className="leg-fill" style={{ width: '58%' }}></div>
@@ -269,7 +294,9 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
                 <span className="performer-level">Level {performer.level}</span>
               </div>
               <div className="performer-stats">
-                <span className="performer-volume">{formatCurrency(performer.volume)}</span>
+                <span className="performer-volume">
+                  {formatCurrency(performer.volume)}
+                </span>
                 <span className="performer-growth">+{performer.growth}%</span>
               </div>
             </div>
@@ -288,7 +315,9 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
               <span className="metric-title">Conversion Rate</span>
               <FaChartLine className="metric-icon" />
             </div>
-            <div className="metric-value">{analyticsData.performance.conversionRate}%</div>
+            <div className="metric-value">
+              {analyticsData.performance.conversionRate}%
+            </div>
             <div className="metric-trend positive">
               <FaArrowUp /> +2.3% from last month
             </div>
@@ -299,7 +328,9 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
               <span className="metric-title">Avg Package Value</span>
               <FaDollarSign className="metric-icon" />
             </div>
-            <div className="metric-value">{formatCurrency(analyticsData.performance.averagePackageValue)}</div>
+            <div className="metric-value">
+              {formatCurrency(analyticsData.performance.averagePackageValue)}
+            </div>
             <div className="metric-trend positive">
               <FaArrowUp /> +12.4% from last month
             </div>
@@ -310,7 +341,9 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
               <span className="metric-title">Team Volume</span>
               <FaNetworkWired className="metric-icon" />
             </div>
-            <div className="metric-value">{formatCurrency(analyticsData.performance.teamVolume)}</div>
+            <div className="metric-value">
+              {formatCurrency(analyticsData.performance.teamVolume)}
+            </div>
             <div className="metric-trend positive">
               <FaArrowUp /> +18.7% from last month
             </div>
@@ -321,7 +354,9 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
               <span className="metric-title">Rank Advancement</span>
               <FaArrowUp className="metric-icon" />
             </div>
-            <div className="metric-value">+{analyticsData.performance.rankAdvancement}</div>
+            <div className="metric-value">
+              +{analyticsData.performance.rankAdvancement}
+            </div>
             <div className="metric-trend positive">
               <FaArrowUp /> Levels this quarter
             </div>
@@ -332,12 +367,16 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
       <div className="package-distribution">
         <h5>Package Level Distribution</h5>
         <div className="distribution-chart">
-          {Object.entries(analyticsData.performance.packageDistribution || {}).map(([level, count]) => (
+          {Object.entries(
+            analyticsData.performance.packageDistribution || {}
+          ).map(([level, count]) => (
             <div key={level} className="distribution-item">
-              <span className="distribution-label">Level {level.slice(-1)}</span>
+              <span className="distribution-label">
+                Level {level.slice(-1)}
+              </span>
               <div className="distribution-bar">
-                <div 
-                  className="distribution-fill" 
+                <div
+                  className="distribution-fill"
                   style={{ width: `${(count / 100) * 100}%` }}
                 ></div>
               </div>
@@ -357,15 +396,21 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
           <div className="comparison-metrics">
             <div className="comparison-metric">
               <span className="comparison-label">Earnings</span>
-              <span className="comparison-value positive">+{comparisonData.vsLastMonth.earnings}%</span>
+              <span className="comparison-value positive">
+                +{comparisonData.vsLastMonth.earnings}%
+              </span>
             </div>
             <div className="comparison-metric">
               <span className="comparison-label">Team Growth</span>
-              <span className="comparison-value positive">+{comparisonData.vsLastMonth.team}%</span>
+              <span className="comparison-value positive">
+                +{comparisonData.vsLastMonth.team}%
+              </span>
             </div>
             <div className="comparison-metric">
               <span className="comparison-label">Volume</span>
-              <span className="comparison-value positive">+{comparisonData.vsLastMonth.volume}%</span>
+              <span className="comparison-value positive">
+                +{comparisonData.vsLastMonth.volume}%
+              </span>
             </div>
           </div>
         </div>
@@ -375,15 +420,21 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
           <div className="comparison-metrics">
             <div className="comparison-metric">
               <span className="comparison-label">Earnings</span>
-              <span className="comparison-value positive">{comparisonData.vsAverage.earnings}%</span>
+              <span className="comparison-value positive">
+                {comparisonData.vsAverage.earnings}%
+              </span>
             </div>
             <div className="comparison-metric">
               <span className="comparison-label">Team Size</span>
-              <span className="comparison-value positive">{comparisonData.vsAverage.team}%</span>
+              <span className="comparison-value positive">
+                {comparisonData.vsAverage.team}%
+              </span>
             </div>
             <div className="comparison-metric">
               <span className="comparison-label">Volume</span>
-              <span className="comparison-value positive">{comparisonData.vsAverage.volume}%</span>
+              <span className="comparison-value positive">
+                {comparisonData.vsAverage.volume}%
+              </span>
             </div>
           </div>
         </div>
@@ -413,14 +464,16 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
           <FaChartBar className="header-icon" />
           <div>
             <h3>Advanced Analytics</h3>
-            <span className="analytics-subtitle">Comprehensive performance insights</span>
+            <span className="analytics-subtitle">
+              Comprehensive performance insights
+            </span>
           </div>
         </div>
-        
+
         <div className="analytics-controls">
-          <select 
-            value={timeRange} 
-            onChange={(e) => setTimeRange(e.target.value)}
+          <select
+            value={timeRange}
+            onChange={e => setTimeRange(e.target.value)}
             className="time-range-select"
           >
             {(timeRanges || []).map(range => (
@@ -429,7 +482,7 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
               </option>
             ))}
           </select>
-          
+
           <button className="export-btn">
             <FaDownload />
             Export
@@ -450,9 +503,7 @@ const AdvancedAnalytics = ({ dashboardData, userStats, className = '' }) => {
         ))}
       </div>
 
-      <div className="analytics-content">
-        {renderActiveTab()}
-      </div>
+      <div className="analytics-content">{renderActiveTab()}</div>
     </div>
   );
 };

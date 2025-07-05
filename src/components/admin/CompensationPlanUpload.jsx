@@ -8,11 +8,11 @@ const CompensationPlanUpload = ({ onAnalysisComplete }) => {
   const [analysis, setAnalysis] = useState(null);
   const [error, setError] = useState(null);
   const [dragActive, setDragActive] = useState(false);
-  
+
   const fileInputRef = useRef(null);
 
   // Handle file selection
-  const handleFileSelect = (file) => {
+  const handleFileSelect = file => {
     if (!file) return;
 
     // Validate file type
@@ -33,20 +33,20 @@ const CompensationPlanUpload = ({ onAnalysisComplete }) => {
   };
 
   // Process the uploaded PDF
-  const processFile = async (file) => {
+  const processFile = async file => {
     setUploading(true);
     setAnalyzing(false);
 
     try {
       // Read file as text (simplified - in production, use proper PDF parsing)
       const text = await extractTextFromPDF(file);
-      
+
       setUploading(false);
       setAnalyzing(true);
 
       // Analyze with OpenAI
       const analysisResult = await OpenAIService.analyzeCompensationPlan(text);
-      
+
       setAnalysis(analysisResult);
       setAnalyzing(false);
 
@@ -55,10 +55,9 @@ const CompensationPlanUpload = ({ onAnalysisComplete }) => {
         onAnalysisComplete({
           file: file,
           analysis: analysisResult,
-          extractedText: text
+          extractedText: text,
         });
       }
-
     } catch (error) {
       console.error('File processing error:', error);
       setError('Failed to process PDF. Please try again.');
@@ -68,16 +67,16 @@ const CompensationPlanUpload = ({ onAnalysisComplete }) => {
   };
 
   // Extract text from PDF (simplified version)
-  const extractTextFromPDF = async (file) => {
+  const extractTextFromPDF = async file => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      
-      reader.onload = async (e) => {
+
+      reader.onload = async e => {
         try {
           // In a real implementation, you'd use pdf-parse or similar
           // For now, we'll simulate text extraction
           const arrayBuffer = e.target.result;
-          
+
           // Simulate PDF text extraction
           const simulatedText = `
             LEADFIVE COMPENSATION PLAN DOCUMENT
@@ -108,42 +107,42 @@ const CompensationPlanUpload = ({ onAnalysisComplete }) => {
             - Blockchain transparency
             - Smart contract automation
           `;
-          
+
           resolve(simulatedText);
         } catch (error) {
           reject(error);
         }
       };
-      
+
       reader.onerror = () => reject(new Error('Failed to read file'));
       reader.readAsArrayBuffer(file);
     });
   };
 
   // Handle drag events
-  const handleDrag = (e) => {
+  const handleDrag = e => {
     e.preventDefault();
     e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
+    if (e.type === 'dragenter' || e.type === 'dragover') {
       setDragActive(true);
-    } else if (e.type === "dragleave") {
+    } else if (e.type === 'dragleave') {
       setDragActive(false);
     }
   };
 
   // Handle drop
-  const handleDrop = (e) => {
+  const handleDrop = e => {
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       handleFileSelect(e.dataTransfer.files[0]);
     }
   };
 
   // Handle file input change
-  const handleInputChange = (e) => {
+  const handleInputChange = e => {
     if (e.target.files && e.target.files[0]) {
       handleFileSelect(e.target.files[0]);
     }
@@ -189,7 +188,7 @@ const CompensationPlanUpload = ({ onAnalysisComplete }) => {
               <p>• AI analysis included</p>
             </div>
           </div>
-          
+
           <input
             ref={fileInputRef}
             type="file"
@@ -237,7 +236,8 @@ const CompensationPlanUpload = ({ onAnalysisComplete }) => {
             AI Analysis in Progress...
           </h3>
           <p className="text-silver-mist text-center">
-            ChatGPT is analyzing your compensation plan for insights and compliance
+            ChatGPT is analyzing your compensation plan for insights and
+            compliance
           </p>
         </div>
       )}
@@ -251,7 +251,9 @@ const CompensationPlanUpload = ({ onAnalysisComplete }) => {
               <div className="flex items-center">
                 <i className="fas fa-file-pdf text-royal-purple text-2xl mr-3"></i>
                 <div>
-                  <h4 className="text-white font-semibold">{uploadedFile.name}</h4>
+                  <h4 className="text-white font-semibold">
+                    {uploadedFile.name}
+                  </h4>
                   <p className="text-silver-mist text-sm">
                     {(uploadedFile.size / 1024 / 1024).toFixed(2)} MB
                   </p>
@@ -270,9 +272,11 @@ const CompensationPlanUpload = ({ onAnalysisComplete }) => {
           <div className="analysis-summary glass-morphism rounded-lg p-6">
             <div className="flex items-center mb-4">
               <i className="fas fa-brain text-premium-gold text-2xl mr-3"></i>
-              <h3 className="text-xl font-bold text-white">AI Analysis Summary</h3>
+              <h3 className="text-xl font-bold text-white">
+                AI Analysis Summary
+              </h3>
             </div>
-            
+
             <div className="bg-gradient-to-r from-royal-purple/20 to-cyber-blue/20 rounded-lg p-4 mb-4">
               <p className="text-white leading-relaxed">{analysis.summary}</p>
             </div>
@@ -350,7 +354,7 @@ const CompensationPlanUpload = ({ onAnalysisComplete }) => {
 
       <style jsx>{`
         .upload-dropzone {
-          border: 2px dashed #7B2CBF;
+          border: 2px dashed #7b2cbf;
           border-radius: 12px;
           padding: 3rem 2rem;
           text-align: center;
@@ -361,7 +365,7 @@ const CompensationPlanUpload = ({ onAnalysisComplete }) => {
 
         .upload-dropzone:hover,
         .upload-dropzone.drag-active {
-          border-color: #00D4FF;
+          border-color: #00d4ff;
           background: rgba(0, 212, 255, 0.1);
           transform: scale(1.02);
         }
@@ -392,7 +396,7 @@ const CompensationPlanUpload = ({ onAnalysisComplete }) => {
         }
 
         .btn-gradient-secondary {
-          background: linear-gradient(135deg, #7B2CBF, #FF6B35);
+          background: linear-gradient(135deg, #7b2cbf, #ff6b35);
           color: white;
           border: none;
         }
@@ -401,4 +405,4 @@ const CompensationPlanUpload = ({ onAnalysisComplete }) => {
   );
 };
 
-export default CompensationPlanUpload; 
+export default CompensationPlanUpload;

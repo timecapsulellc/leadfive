@@ -23,8 +23,9 @@ const SUPPORTED_WALLETS = [
     icon: '🦊',
     description: 'Most popular crypto wallet',
     downloadUrl: 'https://metamask.io/',
-    check: () => typeof window.ethereum !== 'undefined' && window.ethereum.isMetaMask,
-    color: '#f6851b'
+    check: () =>
+      typeof window.ethereum !== 'undefined' && window.ethereum.isMetaMask,
+    color: '#f6851b',
   },
   {
     id: 'trustwallet',
@@ -32,8 +33,9 @@ const SUPPORTED_WALLETS = [
     icon: '🛡️',
     description: 'Mobile-first crypto wallet',
     downloadUrl: 'https://trustwallet.com/',
-    check: () => typeof window.ethereum !== 'undefined' && window.ethereum.isTrust,
-    color: '#3375bb'
+    check: () =>
+      typeof window.ethereum !== 'undefined' && window.ethereum.isTrust,
+    color: '#3375bb',
   },
   {
     id: 'binancewallet',
@@ -42,7 +44,7 @@ const SUPPORTED_WALLETS = [
     description: 'Official Binance Chain Wallet',
     downloadUrl: 'https://www.binance.org/wallet',
     check: () => typeof window.BinanceChain !== 'undefined',
-    color: '#f3ba2f'
+    color: '#f3ba2f',
   },
   {
     id: 'coinbase',
@@ -50,8 +52,10 @@ const SUPPORTED_WALLETS = [
     icon: '🔵',
     description: 'Self-custody wallet by Coinbase',
     downloadUrl: 'https://wallet.coinbase.com/',
-    check: () => typeof window.ethereum !== 'undefined' && window.ethereum.isCoinbaseWallet,
-    color: '#0052ff'
+    check: () =>
+      typeof window.ethereum !== 'undefined' &&
+      window.ethereum.isCoinbaseWallet,
+    color: '#0052ff',
   },
   {
     id: 'injected',
@@ -60,18 +64,18 @@ const SUPPORTED_WALLETS = [
     description: 'Any other Web3 wallet',
     downloadUrl: null,
     check: () => typeof window.ethereum !== 'undefined',
-    color: '#6366f1'
-  }
+    color: '#6366f1',
+  },
 ];
 
-const UnifiedWalletConnect = ({ 
-  onConnect, 
-  onDisconnect, 
+const UnifiedWalletConnect = ({
+  onConnect,
+  onDisconnect,
   onError,
-  buttonText = "Connect Wallet",
+  buttonText = 'Connect Wallet',
   showModal = false,
   onCloseModal,
-  compact = false
+  compact = false,
 }) => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [connectedAccount, setConnectedAccount] = useState(null);
@@ -90,7 +94,7 @@ const UnifiedWalletConnect = ({
     };
 
     checkWallets();
-    
+
     // Check if already connected
     if (window.ethereum && window.ethereum.selectedAddress) {
       handleAccountsChanged([window.ethereum.selectedAddress]);
@@ -105,7 +109,10 @@ const UnifiedWalletConnect = ({
 
     return () => {
       if (window.ethereum) {
-        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+        window.ethereum.removeListener(
+          'accountsChanged',
+          handleAccountsChanged
+        );
         window.ethereum.removeListener('chainChanged', handleChainChanged);
         window.ethereum.removeListener('disconnect', handleDisconnect);
       }
@@ -113,19 +120,22 @@ const UnifiedWalletConnect = ({
   }, []);
 
   // Handle account changes
-  const handleAccountsChanged = useCallback((accounts) => {
-    if (accounts.length === 0) {
-      disconnectWallet();
-    } else if (accounts[0] !== connectedAccount) {
-      setConnectedAccount(accounts[0]);
-      if (onConnect && provider && signer) {
-        onConnect(accounts[0], provider, signer);
+  const handleAccountsChanged = useCallback(
+    accounts => {
+      if (accounts.length === 0) {
+        disconnectWallet();
+      } else if (accounts[0] !== connectedAccount) {
+        setConnectedAccount(accounts[0]);
+        if (onConnect && provider && signer) {
+          onConnect(accounts[0], provider, signer);
+        }
       }
-    }
-  }, [connectedAccount, provider, signer, onConnect]);
+    },
+    [connectedAccount, provider, signer, onConnect]
+  );
 
   // Handle chain changes
-  const handleChainChanged = useCallback((chainId) => {
+  const handleChainChanged = useCallback(chainId => {
     // Reload the page when chain changes for safety
     window.location.reload();
   }, []);
@@ -136,7 +146,7 @@ const UnifiedWalletConnect = ({
   }, []);
 
   // Format address for display
-  const formatAddress = (address) => {
+  const formatAddress = address => {
     if (!address) return '';
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
@@ -173,7 +183,7 @@ const UnifiedWalletConnect = ({
   };
 
   // Connect to specific wallet
-  const connectWallet = async (walletId) => {
+  const connectWallet = async walletId => {
     const wallet = SUPPORTED_WALLETS.find(w => w.id === walletId);
     if (!wallet) {
       onError?.('Unsupported wallet');
@@ -239,7 +249,6 @@ const UnifiedWalletConnect = ({
       if (onConnect) {
         onConnect(accounts[0], web3Provider, web3Signer);
       }
-
     } catch (error) {
       console.error('Wallet connection failed:', error);
       const errorMessage = error.message || 'Failed to connect wallet';
@@ -284,13 +293,19 @@ const UnifiedWalletConnect = ({
         {connectedAccount ? (
           <div className="connected-wallet">
             <div className="wallet-info">
-              <span className="wallet-icon">{connectedWallet?.icon || '👛'}</span>
+              <span className="wallet-icon">
+                {connectedWallet?.icon || '👛'}
+              </span>
               <div className="wallet-details">
-                <span className="wallet-name">{connectedWallet?.name || 'Connected'}</span>
-                <span className="wallet-address">{formatAddress(connectedAccount)}</span>
+                <span className="wallet-name">
+                  {connectedWallet?.name || 'Connected'}
+                </span>
+                <span className="wallet-address">
+                  {formatAddress(connectedAccount)}
+                </span>
               </div>
             </div>
-            <button 
+            <button
               className="disconnect-btn"
               onClick={disconnectWallet}
               title="Disconnect wallet"
@@ -320,27 +335,34 @@ const UnifiedWalletConnect = ({
       {/* Wallet Selection Modal */}
       {isModalOpen && (
         <div className="wallet-modal" onClick={closeModal}>
-          <div className="wallet-modal-content" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="wallet-modal-content"
+            onClick={e => e.stopPropagation()}
+          >
             <div className="modal-header">
               <h3 className="modal-title">Connect Your Wallet</h3>
-              <button className="close-btn" onClick={closeModal}>×</button>
+              <button className="close-btn" onClick={closeModal}>
+                ×
+              </button>
             </div>
 
             <div className="wallet-options">
-              {availableWallets.map((wallet) => (
+              {availableWallets.map(wallet => (
                 <div
                   key={wallet.id}
                   className="wallet-option"
                   onClick={() => connectWallet(wallet.id)}
                 >
-                  <div className="wallet-option-icon">
-                    {wallet.icon}
-                  </div>
+                  <div className="wallet-option-icon">{wallet.icon}</div>
                   <div className="wallet-option-info">
                     <h4 className="wallet-option-name">{wallet.name}</h4>
-                    <p className="wallet-option-description">{wallet.description}</p>
+                    <p className="wallet-option-description">
+                      {wallet.description}
+                    </p>
                   </div>
-                  <div className={`wallet-option-status ${!wallet.check() ? 'not-installed' : ''}`}>
+                  <div
+                    className={`wallet-option-status ${!wallet.check() ? 'not-installed' : ''}`}
+                  >
                     {wallet.check() ? 'Available' : 'Install'}
                   </div>
                 </div>
@@ -350,7 +372,7 @@ const UnifiedWalletConnect = ({
                 <div className="no-wallets">
                   <p>No Web3 wallets detected</p>
                   <div className="install-suggestions">
-                    {SUPPORTED_WALLETS.slice(0, 2).map((wallet) => (
+                    {SUPPORTED_WALLETS.slice(0, 2).map(wallet => (
                       <a
                         key={wallet.id}
                         href={wallet.downloadUrl}

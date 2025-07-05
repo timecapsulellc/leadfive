@@ -7,7 +7,7 @@
 .dashboard-container {
   display: flex;
   min-height: calc(100vh - 140px);
-  background: #0A0A0A;
+  background: #0a0a0a;
   position: relative;
   /* Ensure consistent spacing */
   gap: 0;
@@ -47,7 +47,11 @@
 }
 
 .stat-card {
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.95));
+  background: linear-gradient(
+    135deg,
+    rgba(26, 26, 46, 0.95),
+    rgba(22, 33, 62, 0.95)
+  );
   border: 1px solid rgba(0, 212, 255, 0.2);
   border-radius: 15px;
   padding: 1.5rem;
@@ -143,7 +147,11 @@
   transform: translateY(-50%);
   width: 320px;
   max-height: 80vh;
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.95));
+  background: linear-gradient(
+    135deg,
+    rgba(26, 26, 46, 0.95),
+    rgba(22, 33, 62, 0.95)
+  );
   border: 1px solid rgba(123, 44, 191, 0.3);
   border-radius: 16px;
   padding: 1.5rem;
@@ -168,7 +176,11 @@
 }
 
 .summary-card {
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.95));
+  background: linear-gradient(
+    135deg,
+    rgba(26, 26, 46, 0.95),
+    rgba(22, 33, 62, 0.95)
+  );
   border: 1px solid rgba(0, 212, 255, 0.2);
   border-radius: 15px;
   padding: 1.5rem;
@@ -196,7 +208,7 @@
   background: rgba(0, 212, 255, 0.1);
   border: 1px solid rgba(0, 212, 255, 0.3);
   border-radius: 10px;
-  color: #00D4FF;
+  color: #00d4ff;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -240,14 +252,14 @@
   .dashboard-container {
     flex-direction: column;
   }
-  
+
   .dashboard-sidebar {
     width: 100%;
     height: auto;
     position: relative;
     top: 0;
   }
-  
+
   .ai-assistant-panel {
     position: relative;
     right: auto;
@@ -257,15 +269,15 @@
     max-height: none;
     margin-top: 2rem;
   }
-  
+
   .stats-grid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
-  
+
   .overview-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .ai-features-grid {
     grid-template-columns: 1fr;
   }
@@ -276,20 +288,20 @@
     padding: 1rem;
     gap: 1.5rem;
   }
-  
+
   .stats-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .earnings-summary {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .quick-actions {
     grid-template-columns: 1fr;
   }
-  
+
   .tools-grid {
     grid-template-columns: 1fr;
   }
@@ -299,13 +311,13 @@
   .earnings-summary {
     grid-template-columns: 1fr;
   }
-  
+
   .stat-card {
     flex-direction: column;
     text-align: center;
     min-height: 140px;
   }
-  
+
   .stat-icon {
     margin-bottom: 1rem;
   }
@@ -315,7 +327,7 @@
 .advanced-defi-dashboard {
   display: flex;
   min-height: 100vh;
-  background: #0A0A0A;
+  background: #0a0a0a;
   position: relative;
   gap: 0;
   align-items: stretch;
@@ -407,7 +419,11 @@
 }
 
 .menu-item.active {
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(59, 130, 246, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(124, 58, 237, 0.2),
+    rgba(59, 130, 246, 0.1)
+  );
   color: #7c3aed;
   border-right: 3px solid #7c3aed;
 }
@@ -525,7 +541,11 @@
 }
 
 .advanced-ai-success-coach {
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.95));
+  background: linear-gradient(
+    135deg,
+    rgba(26, 26, 46, 0.95),
+    rgba(22, 33, 62, 0.95)
+  );
   border: 1px solid rgba(124, 58, 237, 0.2);
   border-radius: 16px;
   padding: 2rem;
@@ -576,7 +596,11 @@
 }
 
 .defi-stat-card {
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.95));
+  background: linear-gradient(
+    135deg,
+    rgba(26, 26, 46, 0.95),
+    rgba(22, 33, 62, 0.95)
+  );
   border: 1px solid rgba(124, 58, 237, 0.2);
   border-radius: 16px;
   padding: 2rem;
@@ -663,7 +687,11 @@
 }
 
 .overview-card {
-  background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.95));
+  background: linear-gradient(
+    135deg,
+    rgba(26, 26, 46, 0.95),
+    rgba(22, 33, 62, 0.95)
+  );
   border: 1px solid rgba(124, 58, 237, 0.2);
   border-radius: 16px;
   padding: 2rem;
@@ -708,7 +736,7 @@
 .overview-card:focus,
 .quick-btn:focus,
 .tool-card:focus {
-  outline: 2px solid #00D4FF;
+  outline: 2px solid #00d4ff;
   outline-offset: 2px;
 }
 
@@ -737,7 +765,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: 
+  background-image:
     linear-gradient(rgba(0, 212, 255, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 212, 255, 0.1) 1px, transparent 1px);
   background-size: 20px 20px;
@@ -777,22 +805,50 @@
 }
 
 /* 17. PERFECT SPACING SYSTEM */
-.p-0 { padding: 0; }
-.p-1 { padding: 0.5rem; }
-.p-2 { padding: 1rem; }
-.p-3 { padding: 1.5rem; }
-.p-4 { padding: 2rem; }
+.p-0 {
+  padding: 0;
+}
+.p-1 {
+  padding: 0.5rem;
+}
+.p-2 {
+  padding: 1rem;
+}
+.p-3 {
+  padding: 1.5rem;
+}
+.p-4 {
+  padding: 2rem;
+}
 
-.m-0 { margin: 0; }
-.m-1 { margin: 0.5rem; }
-.m-2 { margin: 1rem; }
-.m-3 { margin: 1.5rem; }
-.m-4 { margin: 2rem; }
+.m-0 {
+  margin: 0;
+}
+.m-1 {
+  margin: 0.5rem;
+}
+.m-2 {
+  margin: 1rem;
+}
+.m-3 {
+  margin: 1.5rem;
+}
+.m-4 {
+  margin: 2rem;
+}
 
-.gap-1 { gap: 0.5rem; }
-.gap-2 { gap: 1rem; }
-.gap-3 { gap: 1.5rem; }
-.gap-4 { gap: 2rem; }
+.gap-1 {
+  gap: 0.5rem;
+}
+.gap-2 {
+  gap: 1rem;
+}
+.gap-3 {
+  gap: 1.5rem;
+}
+.gap-4 {
+  gap: 2rem;
+}
 
 /* 18. FINAL POLISH - Micro-interactions */
 .hover-lift:hover {
