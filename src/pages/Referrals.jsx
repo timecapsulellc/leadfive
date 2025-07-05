@@ -19,6 +19,7 @@ import {
 } from '../utils/contractErrorHandler';
 import QRCode from 'qrcode';
 import './Referrals_Enhanced.css';
+import '../styles/mobile-master.css';
 
 const AdvancedReferrals = ({
   account,
@@ -229,14 +230,30 @@ const AdvancedReferrals = ({
 
   return (
     <div className="referrals-page">
+      {/* Fixed Background Elements */}
+      <div className="referrals-background"></div>
+      
       <div className="page-container">
-        {/* Hero Header */}
+        {/* Enhanced Hero Header */}
         <div className="hero-header">
+          <div className="hero-icon-badge">
+            <span className="hero-icon">🚀</span>
+          </div>
           <h1 className="hero-title">Advanced Referral System</h1>
           <p className="hero-subtitle">
             Your complete referral management dashboard with real-time
             analytics, team visualization, and advanced earning tracking.
           </p>
+          <div className="hero-stats">
+            <div className="hero-stat">
+              <span className="stat-number">{teamStats.directReferrals}</span>
+              <span className="stat-text">Referrals</span>
+            </div>
+            <div className="hero-stat">
+              <span className="stat-number">${teamStats.totalEarnings.toFixed(2)}</span>
+              <span className="stat-text">Earned</span>
+            </div>
+          </div>
         </div>
 
         {/* Wallet Connection Section */}
@@ -298,43 +315,81 @@ const AdvancedReferrals = ({
               </div>
             </div>
 
-            {/* Statistics Dashboard */}
+            {/* Enhanced Statistics Dashboard */}
             <div className="stats-dashboard">
-              <div className="glass-card stat-card">
-                <div className="stat-icon">👥</div>
-                <div className="stat-value">{teamStats.directReferrals}</div>
-                <div className="stat-label">Direct Referrals</div>
-                <div className="stat-change positive">+2 this week</div>
-              </div>
-
-              <div className="glass-card stat-card">
-                <div className="stat-icon">🌐</div>
-                <div className="stat-value">{teamStats.totalTeam}</div>
-                <div className="stat-label">Total Team</div>
-                <div className="stat-change positive">+5 this month</div>
-              </div>
-
-              <div className="glass-card stat-card">
-                <div className="stat-icon">⚡</div>
-                <div className="stat-value">{teamStats.activeMembers}</div>
-                <div className="stat-label">Active Members</div>
-                <div className="stat-change positive">+3 today</div>
-              </div>
-
-              <div className="glass-card stat-card">
-                <div className="stat-icon">💰</div>
-                <div className="stat-value">
-                  ${teamStats.totalEarnings.toFixed(2)}
+              <div className="glass-card stat-card enhanced-stat">
+                <div className="stat-header">
+                  <div className="stat-icon referrals-icon">👥</div>
+                  <div className="stat-trend positive">↗</div>
                 </div>
-                <div className="stat-label">Total Earnings</div>
-                <div className="stat-change positive">+$125.50 today</div>
+                <div className="stat-content">
+                  <div className="stat-value">{teamStats.directReferrals}</div>
+                  <div className="stat-label">Direct Referrals</div>
+                  <div className="stat-change positive">+2 this week</div>
+                </div>
+                <div className="stat-progress">
+                  <div className="progress-bar" style={{width: `${Math.min(100, (teamStats.directReferrals / 10) * 100)}%`}}></div>
+                </div>
+              </div>
+
+              <div className="glass-card stat-card enhanced-stat">
+                <div className="stat-header">
+                  <div className="stat-icon team-icon">🌐</div>
+                  <div className="stat-trend positive">↗</div>
+                </div>
+                <div className="stat-content">
+                  <div className="stat-value">{teamStats.totalTeam}</div>
+                  <div className="stat-label">Total Team</div>
+                  <div className="stat-change positive">+5 this month</div>
+                </div>
+                <div className="stat-progress">
+                  <div className="progress-bar" style={{width: `${Math.min(100, (teamStats.totalTeam / 50) * 100)}%`}}></div>
+                </div>
+              </div>
+
+              <div className="glass-card stat-card enhanced-stat">
+                <div className="stat-header">
+                  <div className="stat-icon active-icon">⚡</div>
+                  <div className="stat-trend positive">↗</div>
+                </div>
+                <div className="stat-content">
+                  <div className="stat-value">{teamStats.activeMembers}</div>
+                  <div className="stat-label">Active Members</div>
+                  <div className="stat-change positive">+3 today</div>
+                </div>
+                <div className="stat-progress">
+                  <div className="progress-bar" style={{width: `${Math.min(100, (teamStats.activeMembers / teamStats.totalTeam || 1) * 100)}%`}}></div>
+                </div>
+              </div>
+
+              <div className="glass-card stat-card enhanced-stat earnings-card">
+                <div className="stat-header">
+                  <div className="stat-icon earnings-icon">💰</div>
+                  <div className="stat-trend positive">↗</div>
+                </div>
+                <div className="stat-content">
+                  <div className="stat-value earnings-value">
+                    ${teamStats.totalEarnings.toFixed(2)}
+                  </div>
+                  <div className="stat-label">Total Earnings</div>
+                  <div className="stat-change positive">+$125.50 today</div>
+                </div>
+                <div className="stat-progress">
+                  <div className="progress-bar earnings-progress" style={{width: '75%'}}></div>
+                </div>
               </div>
             </div>
 
-            {/* Referral Link Management */}
+            {/* Enhanced Referral Link Management */}
             <div className="referral-manager">
-              <div className="glass-card referral-card">
-                <h3>Referral Link Management</h3>
+              <div className="glass-card referral-card enhanced-referral">
+                <div className="referral-header">
+                  <h3>🔗 Referral Link Management</h3>
+                  <div className="referral-status">
+                    <span className="status-indicator active"></span>
+                    <span className="status-text">Active</span>
+                  </div>
+                </div>
 
                 <div className="referral-types">
                   <button
@@ -389,52 +444,65 @@ const AdvancedReferrals = ({
                     )}
                   </div>
 
-                  {/* QR Code Section */}
-                  <div className="qr-code-section">
-                    <h4>📱 QR Code</h4>
-                    <div className="qr-code-container">
-                      {qrCodeDataUrl ? (
-                        <img
-                          src={qrCodeDataUrl}
-                          alt="Referral QR Code"
-                          className="qr-code-image"
-                          onError={() => {
-                            console.log('QR code image failed to load');
-                            setQrCodeDataUrl('');
-                          }}
-                        />
-                      ) : (
-                        <div className="qr-code-placeholder">
-                          <div className="qr-placeholder-icon">📱</div>
-                          <p>
-                            {referralLink
-                              ? 'Generating QR Code...'
-                              : 'QR Code will appear here'}
-                          </p>
-                          {referralLink && (
-                            <button
-                              onClick={() => generateQRCode(referralLink)}
-                              className="retry-qr-btn"
-                              style={{
-                                marginTop: '0.5rem',
-                                padding: '0.5rem 1rem',
-                                background: 'rgba(0, 212, 255, 0.2)',
-                                border: '1px solid rgba(0, 212, 255, 0.5)',
-                                borderRadius: '8px',
-                                color: '#00d4ff',
-                                cursor: 'pointer',
-                                fontSize: '0.8rem',
-                              }}
-                            >
-                              🔄 Retry
-                            </button>
-                          )}
-                        </div>
-                      )}
+                  {/* Enhanced QR Code Section */}
+                  <div className="qr-code-section enhanced-qr">
+                    <div className="qr-header">
+                      <h4>📱 Mobile QR Code</h4>
+                      <div className="qr-actions">
+                        <button className="qr-action-btn" onClick={() => generateQRCode(referralLink)}>
+                          🔄
+                        </button>
+                        <button className="qr-action-btn" onClick={() => {
+                          if (qrCodeDataUrl) {
+                            const link = document.createElement('a');
+                            link.download = 'leadfive-referral-qr.png';
+                            link.href = qrCodeDataUrl;
+                            link.click();
+                          }
+                        }}>
+                          💾
+                        </button>
+                      </div>
+                    </div>
+                    <div className="qr-code-wrapper">
+                      <div className="qr-code-container">
+                        {qrCodeDataUrl ? (
+                          <img
+                            src={qrCodeDataUrl}
+                            alt="Referral QR Code"
+                            className="qr-code-image"
+                            onError={() => {
+                              console.log('QR code image failed to load');
+                              setQrCodeDataUrl('');
+                            }}
+                          />
+                        ) : (
+                          <div className="qr-code-placeholder">
+                            <div className="qr-placeholder-content">
+                              <div className="qr-placeholder-icon">📱</div>
+                              <p className="qr-placeholder-text">
+                                {referralLink
+                                  ? 'Generating QR Code...'
+                                  : 'QR Code will appear here'}
+                              </p>
+                              {referralLink && (
+                                <button
+                                  onClick={() => generateQRCode(referralLink)}
+                                  className="retry-qr-btn"
+                                >
+                                  🔄 Generate QR Code
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      <div className="qr-scan-indicator">
+                        <div className="scan-line"></div>
+                      </div>
                     </div>
                     <p className="qr-code-description">
-                      Share this QR code for easy mobile access to your referral
-                      link
+                      💡 <strong>Scan with mobile camera</strong> for instant access to your referral link
                     </p>
                   </div>
                 </div>
@@ -503,19 +571,75 @@ const AdvancedReferrals = ({
               </div>
             </div>
 
-            {/* Analytics Section */}
+            {/* Enhanced Analytics Section */}
             <div className="analytics-section">
-              <div className="glass-card analytics-card">
-                <h4>📊 Earnings Analytics</h4>
-                <div className="analytics-chart">
-                  <p>Earnings growth chart will be displayed here</p>
+              <div className="glass-card analytics-card enhanced-analytics">
+                <div className="analytics-header">
+                  <h4>📊 Earnings Analytics</h4>
+                  <div className="analytics-filter">
+                    <select className="filter-select">
+                      <option>Last 7 days</option>
+                      <option>Last 30 days</option>
+                      <option>Last 90 days</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="analytics-chart earnings-chart">
+                  <div className="chart-placeholder">
+                    <div className="chart-bars">
+                      <div className="chart-bar" style={{height: '40%'}}></div>
+                      <div className="chart-bar" style={{height: '65%'}}></div>
+                      <div className="chart-bar" style={{height: '30%'}}></div>
+                      <div className="chart-bar" style={{height: '80%'}}></div>
+                      <div className="chart-bar" style={{height: '55%'}}></div>
+                      <div className="chart-bar" style={{height: '90%'}}></div>
+                      <div className="chart-bar" style={{height: '75%'}}></div>
+                    </div>
+                    <p className="chart-label">Earnings growth trending upward 📈</p>
+                  </div>
+                </div>
+                <div className="analytics-summary">
+                  <div className="summary-item">
+                    <span className="summary-label">Average Daily</span>
+                    <span className="summary-value">$12.50</span>
+                  </div>
+                  <div className="summary-item">
+                    <span className="summary-label">Best Day</span>
+                    <span className="summary-value">$45.20</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="glass-card analytics-card">
-                <h4>📈 Team Growth Analytics</h4>
-                <div className="analytics-chart">
-                  <p>Team growth trends will be displayed here</p>
+              <div className="glass-card analytics-card enhanced-analytics">
+                <div className="analytics-header">
+                  <h4>📈 Team Growth Analytics</h4>
+                  <div className="growth-indicator positive">+25%</div>
+                </div>
+                <div className="analytics-chart growth-chart">
+                  <div className="chart-placeholder">
+                    <div className="growth-line">
+                      <svg viewBox="0 0 300 100" className="growth-svg">
+                        <polyline
+                          fill="none"
+                          stroke="#00D4FF"
+                          strokeWidth="3"
+                          points="0,80 50,70 100,60 150,40 200,30 250,20 300,15"
+                        />
+                        <circle cx="300" cy="15" r="4" fill="#00D4FF" />
+                      </svg>
+                    </div>
+                    <p className="chart-label">Consistent team growth 🚀</p>
+                  </div>
+                </div>
+                <div className="analytics-summary">
+                  <div className="summary-item">
+                    <span className="summary-label">This Month</span>
+                    <span className="summary-value">+5 members</span>
+                  </div>
+                  <div className="summary-item">
+                    <span className="summary-label">Growth Rate</span>
+                    <span className="summary-value">25%</span>
+                  </div>
                 </div>
               </div>
             </div>

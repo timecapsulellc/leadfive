@@ -8,6 +8,9 @@ import './styles/mobile-optimizations.css';
 import SentryService from './services/SentryService';
 SentryService.init();
 
+// Initialize Production Reset Utility (makes global functions available)
+import './utils/ProductionReset.js';
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <App />

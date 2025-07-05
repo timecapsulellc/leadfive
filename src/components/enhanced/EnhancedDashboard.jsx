@@ -67,6 +67,9 @@ import { MarketSummaryCard } from '../MarketDataWidget';
 import { contractService } from '../../services/ContractService';
 import { useDashboardStore } from '../../stores/dashboardStore';
 
+// ✅ PRODUCTION DATA SERVICE - REAL BLOCKCHAIN INTEGRATION
+import { productionDataService } from '../../services/ProductionDataService';
+
 // Advanced PhD-Level Components
 import AdvancedDirectReferrals from './AdvancedDirectReferrals';
 import AdvancedUplineBonus from './AdvancedUplineBonus';
@@ -150,7 +153,30 @@ export default function EnhancedDashboard({ account, provider, onDisconnect }) {
       return;
     }
     loadDashboardData();
-  }, [account, navigate]);
+    initializeProductionDataService();
+  }, [account, navigate, provider]);
+
+  // ✅ INITIALIZE PRODUCTION DATA SERVICE
+  const initializeProductionDataService = async () => {
+    if (provider && account) {
+      try {
+        const signer = provider.getSigner();
+        await productionDataService.initialize(provider, signer);
+        console.log('✅ Production Data Service initialized for:', account);
+        
+        // Setup real-time event listeners
+        productionDataService.setupEventListeners((eventType, data) => {
+          console.log('🔴 Live Event:', eventType, data);
+          // Refresh dashboard data when events occur
+          if (eventType === 'bonus_distributed' && data.recipient === account) {
+            loadDashboardData(); // Refresh when user receives earnings
+          }
+        });
+      } catch (error) {
+        console.error('❌ Failed to initialize Production Data Service:', error);
+      }
+    }
+  };
 
   // PhD-Level Business Logic Calculator
   const calculateLeadFiveBusinessMetrics = (packageValue, directReferrals, totalCommissions) => {
@@ -212,75 +238,69 @@ export default function EnhancedDashboard({ account, provider, onDisconnect }) {
     };
   };
 
-  // PRESERVE your existing data loading function
+  // ✅ PRODUCTION DATA LOADING - REAL BLOCKCHAIN INTEGRATION
   const loadDashboardData = async () => {
     try {
       setLoading(true);
-      // PhD-Level LeadFive Business Logic Implementation
-      setTimeout(() => {
-        const packageValue = 100; // $100 package
-        const totalCommissions = 456.78;
-        const directRefs = 2; // User has 2 direct referrals
-        
-        // Calculate all business metrics using sophisticated algorithm
-        const businessMetrics = calculateLeadFiveBusinessMetrics(packageValue, directRefs, totalCommissions);
-        
+      console.log('🔄 Loading real user data from blockchain for:', account);
+      
+      // ✅ GET REAL DATA FROM SMART CONTRACT
+      const realUserData = await productionDataService.getRealUserData(account);
+      
+      if (realUserData.isLiveData) {
+        // ✅ USING REAL BLOCKCHAIN DATA
+        console.log('✅ Using live blockchain data:', realUserData);
         setDashboardData({
-          // Total earnings from all sources
-          totalEarnings: totalCommissions,
+          ...realUserData,
           
-          // LeadFive Commission Distribution (PhD-calculated)
-          directReferralEarnings: businessMetrics.commissionBreakdown.directReferralEarnings,
-          levelBonusEarnings: businessMetrics.commissionBreakdown.levelBonusEarnings,
-          uplineBonusEarnings: businessMetrics.commissionBreakdown.uplineBonusEarnings,
-          leaderPoolEarnings: businessMetrics.commissionBreakdown.leaderPoolEarnings,
-          helpPoolEarnings: businessMetrics.commissionBreakdown.helpPoolEarnings,
+          // Add computed business intelligence
+          conversionRate: realUserData.directReferrals > 0 
+            ? (realUserData.activeReferrals / realUserData.directReferrals) * 100 
+            : 0,
           
-          // Team Structure
-          teamSize: 15,                    // Total team members in matrix
-          directReferrals: directRefs,     // 2 direct referrals
-          activeReferrals: directRefs,     // Both are active
+          averagePackageValue: realUserData.directReferrals > 0 
+            ? realUserData.currentPackage 
+            : 0,
+            
+          retentionRate: realUserData.teamSize > 0 
+            ? (realUserData.activeReferrals / realUserData.teamSize) * 100 
+            : 0,
+            
+          performanceScore: Math.min(100, 
+            (realUserData.packageProgress + 
+             (realUserData.directReferrals * 10) + 
+             (realUserData.teamSize * 2)) / 3
+          ),
           
-          // Package Information (Advanced Metrics)
-          currentPackage: packageValue,
-          maxEarnings: businessMetrics.packageMetrics.maxEarnings,
-          packageProgress: businessMetrics.packageMetrics.packageProgress,
-          remainingCapacity: businessMetrics.packageMetrics.remainingCapacity,
-          
-          // Ranking System
-          currentTier: 1,                  // Tier 1 (entry level)
-          currentLevel: 2,                 // Level 2 in matrix
-          leaderRank: businessMetrics.qualifications.leaderPoolEligible ? 'shining-star' : 'none',
-          
-          // Performance Metrics
-          dailyEarnings: 12.45,            // Last 24h
-          weeklyEarnings: 87.15,           // Last 7 days  
-          monthlyEarnings: 345.60,         // Last 30 days
-          pendingRewards: 68.25,           // Available for withdrawal
-          
-          // Advanced Withdrawal System
-          withdrawalRatio: businessMetrics.withdrawalRatio,
-          referralBasedRatio: true,
-          
-          // Eligibility Status (PhD-calculated)
-          helpPoolEligible: businessMetrics.qualifications.helpPoolEligible,
-          leaderPoolEligible: businessMetrics.qualifications.leaderPoolEligible,
-          matrixEligible: businessMetrics.qualifications.matrixEligible,
-          
-          // Business Intelligence (Advanced)
-          conversionRate: businessMetrics.businessIntelligence.conversionRate,
-          averagePackageValue: businessMetrics.businessIntelligence.averageReferralValue,
-          performanceScore: businessMetrics.businessIntelligence.performanceScore,
-          retentionRate: 95,
-          
-          // Projections (Future Planning)
-          monthlyProjection: businessMetrics.projections.monthlyProjection,
-          timeToMaxEarnings: businessMetrics.projections.timeToMaxEarnings,
+          // Real-time status
+          dataSource: 'BLOCKCHAIN',
+          lastUpdated: new Date().toISOString(),
         });
-        setLoading(false);
-      }, 1000);
+      } else {
+        // ⚠️ FALLBACK: Show empty state for new users
+        console.log('⚠️ No blockchain data found, showing empty state for new user');
+        setDashboardData({
+          ...realUserData,
+          dataSource: 'FALLBACK',
+          lastUpdated: new Date().toISOString(),
+          
+          // Show helpful message for new users
+          isNewUser: true,
+          message: 'Welcome! Register with a package to start earning.',
+        });
+      }
+      
+      setLoading(false);
     } catch (error) {
-      console.error('Error loading dashboard:', error);
+      console.error('❌ Error loading dashboard data:', error);
+      
+      // ⚠️ ERROR FALLBACK
+      setDashboardData({
+        ...productionDataService.getFallbackUserData(),
+        dataSource: 'ERROR_FALLBACK',
+        lastUpdated: new Date().toISOString(),
+        error: error.message,
+      });
       setLoading(false);
     }
   };

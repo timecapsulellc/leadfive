@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+// import { motion, div } from 'framer-motion';
 import {
   FaCrown,
   FaGem,
@@ -157,12 +157,12 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
     <section className="package-showcase">
       <div className="container">
         {/* Section Header */}
-        <motion.div
+        <div
           className="showcase-header"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          }
+          }
+          }
+          }
         >
           <h2>Choose Your Success Path</h2>
           <p>
@@ -193,7 +193,7 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
               <label>Active Matrices</label>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Package Cards */}
         <div className="packages-grid">
@@ -202,15 +202,15 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
             const isSelected = selectedPackage === pkg.id;
 
             return (
-              <motion.div
+              <div
                 key={pkg.id}
                 className={`package-card ${isSelected ? 'selected' : ''} ${pkg.popular ? 'popular' : ''}`}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ scale: 1.02, y: -10 }}
+                }
+                }
+                }
+                }
                 onClick={() => handlePackageSelect(pkg)}
-                viewport={{ once: true }}
+                }
               >
                 {pkg.popular && (
                   <div className="popular-badge">
@@ -355,18 +355,18 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
                     </small>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>
 
         {/* Comparison Table */}
-        <motion.div
+        <div
           className="comparison-section"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
+          }
+          }
+          }
+          }
         >
           <h3>Package Comparison</h3>
           <div className="comparison-table">
@@ -433,15 +433,15 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
               </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* Call to Action */}
-        <motion.div
+        <div
           className="cta-section"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          viewport={{ once: true }}
+          }
+          }
+          }
+          }
         >
           <h3>Ready to Start Your Journey?</h3>
           <p>
@@ -466,7 +466,7 @@ const PackageShowcase = ({ onSelectPackage, userAccount }) => {
               Verified
             </span>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

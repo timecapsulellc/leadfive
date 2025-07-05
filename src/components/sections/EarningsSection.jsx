@@ -10,7 +10,7 @@ import {
   FaGem,
   FaFire,
   FaCrown,
-  FaStars,
+  FaStar,
   FaEye,
   FaDownload,
   FaShare
@@ -356,7 +356,7 @@ export default function EarningsSection({ account, provider, contractInstance })
           </div>
           <div className="card-footer">
             <div className="performance-metrics">
-              <span className="metric"><FaStars />Premium tier</span>
+              <span className="metric"><FaStar />Premium tier</span>
             </div>
           </div>
         </motion.div>
@@ -540,7 +540,7 @@ export default function EarningsSection({ account, provider, contractInstance })
             </div>
             <div className="breakdown-footer">
               <div className="performance-indicator good">
-                <FaStars className="indicator-icon" />
+                <FaStar className="indicator-icon" />
                 <span>Team synergy</span>
               </div>
             </div>
