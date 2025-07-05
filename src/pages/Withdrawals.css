@@ -3,10 +3,15 @@
  * 
  * Brand-compliant design following LeadFive guidelines
  * Optimized for real USDT transactions and BSC integration
+ * Enhanced with premium UI components and advanced animations
  */
 
 /* Import LeadFive Design System */
 @import '../styles/leadfive-design-system.css';
+
+/* ============================================================================
+   ENHANCED WITHDRAWAL PAGE STYLES
+   ============================================================================ */
 
 /* ============================================================================
    BASE LAYOUT

@@ -171,7 +171,7 @@ export default function Register({
       return;
     }
 
-    if (!contract || !usdtContract) {
+    if (!contractInstance || !usdtContract) {
       alert('Contracts not initialized. Please refresh and try again.');
       return;
     }

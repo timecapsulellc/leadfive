@@ -20,6 +20,34 @@
   --chatbot-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Enhanced AIRA Icon Styling */
+.aria-icon,
+.aria-chat-toggle svg,
+.aria-chat-header svg {
+  font-size: 1.5rem !important;
+  color: #ffffff !important;
+  filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
+  transition: all 0.3s ease;
+}
+
+.aria-chat-toggle:hover svg,
+.aria-chat-toggle:hover .aria-icon {
+  color: #ffffff !important;
+  filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.6));
+  transform: scale(1.1);
+}
+
+.aria-message-icon {
+  font-size: 1.2rem !important;
+  filter: drop-shadow(0 0 6px rgba(0, 212, 255, 0.3));
+  margin-top: 2px;
+}
+
+.aria-header-info .aria-icon {
+  font-size: 1.4rem !important;
+  margin-right: 4px;
+}
+
 /* Main Chatbot Container */
 .aria-chatbot {
   position: fixed;
@@ -30,24 +58,29 @@
   font-feature-settings: 'kern' 1, 'liga' 1;
 }
 
-/* Chat Toggle Button */
+/* Enhanced Chat Toggle Button */
 .aria-chat-toggle {
   background: linear-gradient(135deg, var(--chatbot-primary), var(--chatbot-secondary));
-  border: none;
+  border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 50px;
-  padding: 15px 20px;
+  padding: 18px 24px;
   color: var(--chatbot-text-primary);
   cursor: pointer;
-  box-shadow: var(--chatbot-shadow);
+  box-shadow: 
+    var(--chatbot-shadow),
+    0 0 0 2px rgba(0, 212, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-size: 14px;
   font-weight: 600;
   transition: var(--chatbot-transition);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
   position: relative;
   overflow: hidden;
+  min-width: 140px;
+  justify-content: center;
 }
 
 .aria-chat-toggle::before {
@@ -66,38 +99,131 @@
 }
 
 .aria-chat-toggle:hover {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 25px 80px rgba(0, 212, 255, 0.4);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 
+    0 25px 80px rgba(0, 212, 255, 0.5),
+    0 0 0 3px rgba(0, 212, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.aria-chat-toggle:hover .aria-badge {
+  animation-duration: 1s;
 }
 
 .aria-chat-toggle:active {
   transform: translateY(0) scale(0.98);
 }
 
-.aria-badge {
-  font-weight: 700;
-  font-size: 16px;
+/* Enhanced AIRA Header Styling */
+.aria-chat-header {
+  background: linear-gradient(135deg, var(--chatbot-primary), var(--chatbot-secondary)) !important;
+  padding: 20px 24px !important;
+  border-radius: var(--chatbot-radius) var(--chatbot-radius) 0 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+}
+
+.aria-header-info {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+}
+
+.aria-header-info h3 {
+  margin: 0 !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   letter-spacing: 0.5px;
 }
 
-.personality-indicator {
-  font-size: 12px;
-  opacity: 0.9;
-  white-space: nowrap;
-  max-width: 120px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.aria-status {
+  font-size: 12px !important;
+  opacity: 0.9 !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-weight: 500;
 }
 
-/* Chat Window */
+.aria-header-controls {
+  display: flex !important;
+  gap: 8px !important;
+}
+
+.aria-header-controls button {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s ease !important;
+  backdrop-filter: blur(10px);
+}
+
+.aria-header-controls button:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  transform: translateY(-1px) scale(1.05);
+}
+
+.aria-header-controls button svg {
+  font-size: 14px !important;
+  color: #ffffff !important;
+}
+
+.aria-badge {
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  background: linear-gradient(45deg, #ffffff, #00d4ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(0, 212, 255, 0.3);
+  }
+  100% {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 30px rgba(0, 212, 255, 0.5);
+  }
+}
+
+.personality-indicator {
+  font-size: 11px;
+  opacity: 0.95;
+  white-space: nowrap;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Enhanced Chat Window */
 .aria-chat-window {
   position: absolute;
-  bottom: 70px;
+  bottom: 75px;
   right: 0;
-  width: 400px;
-  height: 600px;
+  width: 420px;
+  height: 620px;
   background: var(--chatbot-bg-card);
   border-radius: var(--chatbot-radius);
+  border: 2px solid rgba(0, 212, 255, 0.2);
+  box-shadow: 
+    var(--chatbot-shadow),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   box-shadow: var(--chatbot-shadow);
   overflow: hidden;
   transition: var(--chatbot-transition);

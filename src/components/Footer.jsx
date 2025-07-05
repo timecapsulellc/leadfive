@@ -1,4 +1,6 @@
 import React from 'react';
+import { LEAD_FIVE_CONFIG } from '../contracts-leadfive.js';
+import './Footer.css';
 
 export default function Footer() {
   return (
@@ -75,7 +77,15 @@ export default function Footer() {
         <div className="footer-contract">
           <div className="contract-badge">
             <span className="contract-label">Contract:</span>
-            <code className="contract-address">0x423f...569</code>
+            <a 
+              href={LEAD_FIVE_CONFIG.contractUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contract-address"
+              title="View contract on BSCScan"
+            >
+              {`${LEAD_FIVE_CONFIG.address.slice(0, 6)}...${LEAD_FIVE_CONFIG.address.slice(-4)}`}
+            </a>
           </div>
           <div className="network-badge">
             <span className="network-indicator">🟢</span>
