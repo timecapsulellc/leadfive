@@ -9,6 +9,25 @@
 /* Import LeadFive Design System */
 @import '../styles/leadfive-design-system.css';
 
+/* CSS Variables Fallbacks */
+:root {
+  --leadfive-bg-primary: #0a0b14;
+  --leadfive-bg-secondary: #151829;
+  --leadfive-bg-tertiary: #1a1c35;
+  --leadfive-text-primary: #ffffff;
+  --leadfive-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --leadfive-space-lg: 1.5rem;
+  --leadfive-space-xl: 2rem;
+  --leadfive-space-md: 1rem;
+  --leadfive-bg-card: rgba(255, 255, 255, 0.05);
+  --leadfive-border-primary: rgba(255, 255, 255, 0.1);
+  --leadfive-radius-xl: 20px;
+  --leadfive-radius-md: 12px;
+  --leadfive-transition-base: 0.3s ease;
+  --leadfive-gradient-primary: linear-gradient(135deg, #00d4ff 0%, #bd00ff 100%);
+  --leadfive-font-size-sm: 0.875rem;
+}
+
 /* ============================================================================
    ENHANCED WITHDRAWAL PAGE STYLES
    ============================================================================ */
@@ -29,6 +48,10 @@
   color: var(--leadfive-text-primary);
   font-family: var(--leadfive-font-family);
   overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 .page-background {
@@ -167,11 +190,13 @@
   z-index: 1;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 6rem 2rem 2rem 2rem; /* Added top padding for fixed header */
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 /* ============================================================================
@@ -816,7 +841,7 @@
   }
 
   .page-content {
-    padding: var(--mobile-space-lg, 1rem);
+    padding: 5rem var(--mobile-space-lg, 1rem) var(--mobile-space-lg, 1rem) var(--mobile-space-lg, 1rem); /* Adjusted for mobile header */
     max-width: 100%;
     overflow-x: hidden;
   }

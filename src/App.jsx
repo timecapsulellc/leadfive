@@ -7,6 +7,8 @@ import { LoadingSpinner, preloadComponents } from './components/LazyLoader';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import MobileNav from './components/MobileNav';
+import MobileOptimizer from './components/MobileOptimizer';
+import MobileWalletConnect from './components/MobileWalletConnect';
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from './config/contracts';
 import { contractService } from './services/ContractService';
 
@@ -167,7 +169,21 @@ function App() {
     web3Signer
   ) => {
     setIsConnecting(true);
-    await connectWallet(connectedAccount, web3Provider, web3Signer);
+    try {
+      // Mobile-specific wallet connection logic
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
+      if (isMobile && !window.ethereum) {
+        // Mobile user without wallet - show instructions
+        console.warn('Mobile wallet not detected');
+        setIsConnecting(false);
+        return;
+      }
+      
+      await connectWallet(connectedAccount, web3Provider, web3Signer);
+    } catch (error) {
+      console.error('Mobile wallet connection failed:', error);
+    }
     setIsConnecting(false);
   };
 
@@ -310,13 +326,14 @@ function App() {
   };
 
   return (
-    <ErrorBoundary>
-      <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-        <MobileNav account={account} onDisconnect={handleDisconnect} />
-        <Suspense
-          fallback={<LoadingSpinner message="Loading application..." />}
-        >
-          <Routes>
+    <MobileOptimizer>
+      <ErrorBoundary>
+        <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <MobileNav account={account} onDisconnect={handleDisconnect} />
+          <Suspense
+            fallback={<LoadingSpinner message="Loading application..." />}
+          >
+            <Routes>
             {/* Public routes */}
             <Route
               path="/"
@@ -510,10 +527,11 @@ function App() {
                 <Navigate to="/genealogy" replace />
               }
             />
-          </Routes>
-        </Suspense>
-      </Router>
-    </ErrorBoundary>
+            </Routes>
+          </Suspense>
+        </Router>
+      </ErrorBoundary>
+    </MobileOptimizer>
   );
 }
 

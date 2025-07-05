@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import MobileWalletConnect from './MobileWalletConnect';
 import './Header.css';
 
 export default function Header({ account, onConnect, onDisconnect }) {
@@ -85,22 +86,11 @@ export default function Header({ account, onConnect, onDisconnect }) {
       </nav>
       
       <div className="wallet-section">
-        {account ? (
-          <div className="wallet-info">
-            <span className="wallet-address">
-              {typeof account === 'string'
-                ? `${account.substring(0, 6)}...${account.slice(-4)}`
-                : 'Connected'}
-            </span>
-            <button className="disconnect-btn" onClick={onDisconnect}>
-              Disconnect
-            </button>
-          </div>
-        ) : (
-          <button className="connect-btn" onClick={onConnect}>
-            Connect Wallet
-          </button>
-        )}
+        <MobileWalletConnect 
+          account={account}
+          onConnect={onConnect}
+          onDisconnect={onDisconnect}
+        />
       </div>
     </header>
   );
