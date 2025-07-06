@@ -196,14 +196,25 @@ const SuperWalletConnect = ({
 
   // Main connection handler
   const handleConnect = useCallback(async (walletId = null) => {
+    console.log('🚀 SuperWalletConnect: handleConnect called', { walletId, effectiveMode });
     setIsConnecting(true);
     setError(null);
 
     try {
+      // Enhanced debugging
+      console.log('🔍 Wallet detection:', {
+        hasEthereum: !!window.ethereum,
+        isMetaMask: window.ethereum?.isMetaMask,
+        isMobile: effectiveMode === 'mobile',
+        userAgent: navigator.userAgent
+      });
+
       // Mobile wallet handling
       if (effectiveMode === 'mobile' && !window.ethereum) {
+        console.log('📱 Mobile mode without ethereum, generating deep link...');
         const deepLink = generateDeepLink(walletId || 'metamask');
         if (deepLink) {
+          console.log('🔗 Redirecting to deep link:', deepLink);
           window.location.href = deepLink;
           return;
         } else {
@@ -213,29 +224,40 @@ const SuperWalletConnect = ({
 
       // Check if wallet is available
       if (!window.ethereum) {
+        console.error('❌ No window.ethereum detected');
         throw new Error('No wallet detected. Please install MetaMask or another Web3 wallet.');
       }
+
+      console.log('✅ window.ethereum detected, requesting accounts...');
 
       // Request accounts
       const accounts = await window.ethereum.request({
         method: 'eth_requestAccounts',
       });
 
+      console.log('📝 Accounts received:', accounts);
+
       if (!accounts || accounts.length === 0) {
         throw new Error('No accounts found. Please unlock your wallet.');
       }
 
       const account = accounts[0];
+      console.log('🎯 Selected account:', account);
 
       // Verify network
+      console.log('🌐 Verifying network...');
       await verifyNetwork();
 
       // Create provider and signer
+      console.log('⚡ Creating ethers provider...');
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
 
       // Verify signer address matches account
       const signerAddress = await signer.getAddress();
+      console.log('🔐 Signer address:', signerAddress);
+      console.log('🔍 Address match:', signerAddress.toLowerCase() === account.toLowerCase());
+      
       if (signerAddress.toLowerCase() !== account.toLowerCase()) {
         throw new Error('Address mismatch after connection');
       }
@@ -244,10 +266,12 @@ const SuperWalletConnect = ({
       await fetchBalance(account, provider);
 
       // Notify parent component
+      console.log('📡 Calling onConnect callback...');
       if (onConnect) {
         onConnect(account, provider, signer);
       }
 
+      console.log('✅ Connection successful, closing modal');
       setShowModal(false);
       setRetryCount(0);
 
@@ -362,6 +386,7 @@ const SuperWalletConnect = ({
               key={wallet.id}
               className={`wallet-option ${selectedWallet === wallet.id ? 'selected' : ''}`}
               onClick={() => {
+                console.log('🦊 Wallet option clicked:', wallet.id, wallet.name);
                 setSelectedWallet(wallet.id);
                 handleConnect(wallet.id);
               }}
@@ -435,7 +460,16 @@ const SuperWalletConnect = ({
     <div className={`super-wallet-connect ${compact ? 'compact' : ''}`}>
       <button
         className={`connect-btn ${isConnecting ? 'connecting' : ''}`}
-        onClick={showWalletList ? () => setShowModal(true) : handleMobileConnect}
+        onClick={() => {
+          console.log('🖱️ Connect button clicked!', { showWalletList, isConnecting });
+          if (showWalletList) {
+            console.log('📋 Opening wallet selection modal');
+            setShowModal(true);
+          } else {
+            console.log('📱 Direct mobile connect');
+            handleMobileConnect();
+          }
+        }}
         disabled={isConnecting}
       >
         {isConnecting ? (

@@ -45,8 +45,8 @@ const clearCachePlugin = () => {
 export default defineConfig({
   plugins: [
     react(),
-    // Remove console statements in production (safe version)
-    removeConsoleSafe(),
+    // Remove console statements in production (safe version) - TEMPORARILY DISABLED FOR DEBUGGING
+    // removeConsoleSafe(),
     // Bundle analyzer for optimization insights
     bundleAnalyzer({ enabled: process.env.ANALYZE === 'true' }),
     // Only apply clearCache plugin in development when needed
@@ -190,9 +190,9 @@ export default defineConfig({
     minify: 'terser',
     terserOptions: {
       compress: {
-        drop_console: true,
+        drop_console: false, // TEMPORARILY DISABLED FOR DEBUGGING
         drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn']
+        // pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn'] // DISABLED
       },
       format: {
         comments: false

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallet Connection Debug</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a2e;
+            color: white;
+            padding: 20px;
+        }
+        button {
+            background: #00d4ff;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        button:hover {
+            background: #0099cc;
+        }
+        .status {
+            background: #333;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        .error {
+            background: #ff4444;
+            color: white;
+        }
+        .success {
+            background: #44ff44;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Wallet Connection Debug Tool</h1>
+    
+    <div class="status" id="status">
+        Status: Checking wallet availability...
+    </div>
+    
+    <button onclick="checkWallet()">Check Wallet</button>
+    <button onclick="connectWallet()">Connect Wallet</button>
+    <button onclick="checkNetwork()">Check Network</button>
+    <button onclick="clearAll()">Clear Console</button>
+    
+    <div id="logs"></div>
+
+    <script>
+        let logs = [];
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${message}`;
+            logs.push(logEntry);
+            
+            console.log(logEntry);
+            
+            const logsDiv = document.getElementById('logs');
+            const logDiv = document.createElement('div');
+            logDiv.className = `status ${type}`;
+            logDiv.textContent = logEntry;
+            logsDiv.appendChild(logDiv);
+            
+            // Keep only last 10 logs
+            if (logsDiv.children.length > 10) {
+                logsDiv.removeChild(logsDiv.firstChild);
+            }
+        }
+        
+        function updateStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = `Status: ${message}`;
+            statusDiv.className = `status ${type}`;
+            log(message, type);
+        }
+        
+        async function checkWallet() {
+            try {
+                updateStatus('Checking for wallet...');
+                
+                if (typeof window.ethereum === 'undefined') {
+                    updateStatus('❌ No wallet detected', 'error');
+                    log('window.ethereum is undefined', 'error');
+                    return false;
+                }
+                
+                log('✅ window.ethereum detected');
+                log(`Wallet details: ${JSON.stringify({
+                    isMetaMask: window.ethereum.isMetaMask,
+                    isTrust: window.ethereum.isTrust,
+                    isCoinbaseWallet: window.ethereum.isCoinbaseWallet,
+                    chainId: window.ethereum.chainId
+                }, null, 2)}`);
+                
+                // Check for existing accounts
+                const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                log(`Existing accounts: ${accounts.length > 0 ? accounts : 'None'}`);
+                
+                updateStatus(`✅ Wallet available: ${accounts.length} accounts`, 'success');
+                return true;
+            } catch (error) {
+                updateStatus(`❌ Error checking wallet: ${error.message}`, 'error');
+                log(`Wallet check error: ${error.toString()}`, 'error');
+                return false;
+            }
+        }
+        
+        async function connectWallet() {
+            try {
+                updateStatus('Attempting to connect wallet...');
+                
+                if (!await checkWallet()) {
+                    return;
+                }
+                
+                log('Requesting account access...');
+                const accounts = await window.ethereum.request({
+                    method: 'eth_requestAccounts',
+                });
+                
+                if (!accounts || accounts.length === 0) {
+                    updateStatus('❌ No accounts returned', 'error');
+                    return;
+                }
+                
+                const account = accounts[0];
+                log(`Connected account: ${account}`);
+                
+                // Check network
+                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                log(`Current chain ID: ${chainId}`);
+                
+                if (chainId !== '0x38') {
+                    log('Wrong network detected, attempting to switch to BSC...');
+                    try {
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: '0x38' }],
+                        });
+                        log('✅ Switched to BSC network');
+                    } catch (switchError) {
+                        if (switchError.code === 4902) {
+                            log('BSC network not found, adding it...');
+                            await window.ethereum.request({
+                                method: 'wallet_addEthereumChain',
+                                params: [{
+                                    chainId: '0x38',
+                                    chainName: 'BNB Smart Chain',
+                                    nativeCurrency: {
+                                        name: 'BNB',
+                                        symbol: 'BNB',
+                                        decimals: 18,
+                                    },
+                                    rpcUrls: ['https://bsc-dataseed.binance.org/'],
+                                    blockExplorerUrls: ['https://bscscan.com/'],
+                                }],
+                            });
+                            log('✅ Added BSC network');
+                        } else {
+                            throw switchError;
+                        }
+                    }
+                }
+                
+                // Test creating provider
+                log('Creating ethers provider...');
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                const signer = await provider.getSigner();
+                const signerAddress = await signer.getAddress();
+                
+                log(`Provider created successfully`);
+                log(`Signer address: ${signerAddress}`);
+                log(`Address match: ${signerAddress.toLowerCase() === account.toLowerCase()}`);
+                
+                updateStatus(`✅ Successfully connected: ${account.substring(0, 6)}...${account.slice(-4)}`, 'success');
+                
+            } catch (error) {
+                updateStatus(`❌ Connection failed: ${error.message}`, 'error');
+                log(`Connection error: ${error.toString()}`, 'error');
+                log(`Error stack: ${error.stack}`, 'error');
+            }
+        }
+        
+        async function checkNetwork() {
+            try {
+                if (!window.ethereum) {
+                    updateStatus('❌ No wallet to check network', 'error');
+                    return;
+                }
+                
+                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                const networkId = await window.ethereum.request({ method: 'net_version' });
+                
+                log(`Chain ID: ${chainId} (${parseInt(chainId, 16)})`);
+                log(`Network ID: ${networkId}`);
+                log(`Is BSC: ${chainId === '0x38'}`);
+                
+                if (chainId === '0x38') {
+                    updateStatus('✅ Connected to BSC network', 'success');
+                } else {
+                    updateStatus(`❌ Wrong network: ${chainId}`, 'error');
+                }
+                
+            } catch (error) {
+                updateStatus(`❌ Network check failed: ${error.message}`, 'error');
+                log(`Network error: ${error.toString()}`, 'error');
+            }
+        }
+        
+        function clearAll() {
+            logs = [];
+            document.getElementById('logs').innerHTML = '';
+            console.clear();
+            updateStatus('Console cleared');
+        }
+        
+        // Auto-check on load
+        window.addEventListener('load', () => {
+            log('🚀 Debug tool loaded');
+            checkWallet();
+        });
+        
+        // Listen for account changes
+        if (window.ethereum) {
+            window.ethereum.on('accountsChanged', (accounts) => {
+                log(`Account changed: ${accounts}`);
+            });
+            
+            window.ethereum.on('chainChanged', (chainId) => {
+                log(`Chain changed: ${chainId}`);
+            });
+        }
+    </script>
+</body>
+</html>

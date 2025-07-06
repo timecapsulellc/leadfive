@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Force Refresh - Clear All Caches</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a2e;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+        }
+        .info {
+            background: #333;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Force Clear All Caches</h1>
+    
+    <div class="info">
+        <p>This tool will clear all service worker caches and force a complete refresh.</p>
+        <p>Use this if you're seeing old/cached versions of the app.</p>
+    </div>
+    
+    <button onclick="clearAllCaches()">Clear All Caches</button>
+    <button onclick="unregisterServiceWorker()">Unregister Service Worker</button>
+    <button onclick="clearLocalStorage()">Clear Local Storage</button>
+    <button onclick="forceReload()">Force Reload</button>
+    <button onclick="clearEverything()">🚨 CLEAR EVERYTHING</button>
+    
+    <div id="status"></div>
+
+    <script>
+        function log(message) {
+            const status = document.getElementById('status');
+            status.innerHTML += `<div class="info">${message}</div>`;
+        }
+        
+        async function clearAllCaches() {
+            try {
+                const cacheNames = await caches.keys();
+                log(`Found ${cacheNames.length} caches`);
+                
+                for (const cacheName of cacheNames) {
+                    await caches.delete(cacheName);
+                    log(`✅ Deleted cache: ${cacheName}`);
+                }
+                
+                log('🎉 All caches cleared!');
+            } catch (error) {
+                log(`❌ Error clearing caches: ${error.message}`);
+            }
+        }
+        
+        async function unregisterServiceWorker() {
+            try {
+                if ('serviceWorker' in navigator) {
+                    const registrations = await navigator.serviceWorker.getRegistrations();
+                    log(`Found ${registrations.length} service workers`);
+                    
+                    for (const registration of registrations) {
+                        await registration.unregister();
+                        log(`✅ Unregistered service worker: ${registration.scope}`);
+                    }
+                    
+                    log('🎉 All service workers unregistered!');
+                } else {
+                    log('❌ Service Worker not supported');
+                }
+            } catch (error) {
+                log(`❌ Error unregistering service workers: ${error.message}`);
+            }
+        }
+        
+        function clearLocalStorage() {
+            try {
+                localStorage.clear();
+                sessionStorage.clear();
+                log('✅ Local storage cleared!');
+            } catch (error) {
+                log(`❌ Error clearing local storage: ${error.message}`);
+            }
+        }
+        
+        function forceReload() {
+            log('🔄 Force reloading...');
+            location.reload(true);
+        }
+        
+        async function clearEverything() {
+            log('🚨 CLEARING EVERYTHING...');
+            await clearAllCaches();
+            await unregisterServiceWorker();
+            clearLocalStorage();
+            
+            // Clear cookies
+            document.cookie.split(";").forEach(function(c) { 
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+            });
+            
+            log('🎉 Everything cleared! Reloading in 3 seconds...');
+            setTimeout(() => {
+                location.reload(true);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
