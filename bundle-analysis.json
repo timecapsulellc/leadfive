@@ -1,0 +1,1256 @@
+{
+  "chunks": [
+    {
+      "fileName": "assets/d3-vendor-0ff1103a.js",
+      "size": 271301,
+      "sizeFormatted": "264.94 KB",
+      "modules": 560,
+      "isEntry": false,
+      "isDynamicEntry": false,
+      "imports": [
+        "assets/vendor-f32340c7.js"
+      ],
+      "exports": [
+        "d",
+        "h",
+        "i",
+        "l",
+        "s",
+        "t",
+        "z"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/node_modules/d3-array/src/ascending.js",
+        "/Users/dadou/LEAD FIVE/node_modules/d3-array/src/descending.js",
+        "/Users/dadou/LEAD FIVE/node_modules/d3-array/src/bisector.js",
+        "/Users/dadou/LEAD FIVE/node_modules/d3-array/src/number.js",
+        "/Users/dadou/LEAD FIVE/node_modules/d3-array/src/bisect.js",
+        "/Users/dadou/LEAD FIVE/node_modules/d3-array/src/blur.js",
+        "/Users/dadou/LEAD FIVE/node_modules/d3-array/src/count.js",
+        "/Users/dadou/LEAD FIVE/node_modules/d3-array/src/cross.js",
+        "/Users/dadou/LEAD FIVE/node_modules/d3-array/src/cumsum.js",
+        "/Users/dadou/LEAD FIVE/node_modules/d3-array/src/variance.js"
+      ]
+    },
+    {
+      "fileName": "assets/react-vendor-ca521aae.js",
+      "size": 229858,
+      "sizeFormatted": "224.47 KB",
+      "modules": 1257,
+      "isEntry": false,
+      "isDynamicEntry": false,
+      "imports": [
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js"
+      ],
+      "exports": [
+        "$",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z",
+        "_",
+        "a",
+        "a0",
+        "a1",
+        "a2",
+        "a3",
+        "a4",
+        "a5",
+        "a6",
+        "a7",
+        "a8",
+        "a9",
+        "aA",
+        "aB",
+        "aC",
+        "aD",
+        "aE",
+        "aF",
+        "aG",
+        "aH",
+        "aI",
+        "aJ",
+        "aK",
+        "aL",
+        "aM",
+        "aN",
+        "aO",
+        "aP",
+        "aQ",
+        "aR",
+        "aS",
+        "aT",
+        "aU",
+        "aV",
+        "aW",
+        "aa",
+        "ab",
+        "ac",
+        "ad",
+        "ae",
+        "af",
+        "ag",
+        "ah",
+        "ai",
+        "aj",
+        "ak",
+        "al",
+        "am",
+        "an",
+        "ao",
+        "ap",
+        "aq",
+        "ar",
+        "as",
+        "at",
+        "au",
+        "av",
+        "aw",
+        "ax",
+        "ay",
+        "az",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z"
+      ],
+      "moduleList": [
+        "\u0000commonjsHelpers.js",
+        "\u0000/Users/dadou/LEAD FIVE/node_modules/react/jsx-runtime.js?commonjs-module",
+        "\u0000/Users/dadou/LEAD FIVE/node_modules/react/cjs/react-jsx-runtime.production.min.js?commonjs-exports",
+        "\u0000/Users/dadou/LEAD FIVE/node_modules/react/index.js?commonjs-module",
+        "\u0000/Users/dadou/LEAD FIVE/node_modules/react/cjs/react.production.min.js?commonjs-exports",
+        "/Users/dadou/LEAD FIVE/node_modules/react/cjs/react.production.min.js",
+        "\u0000/Users/dadou/LEAD FIVE/node_modules/react/cjs/react.production.min.js?commonjs-proxy",
+        "/Users/dadou/LEAD FIVE/node_modules/react/index.js",
+        "\u0000/Users/dadou/LEAD FIVE/node_modules/react/index.js?commonjs-proxy",
+        "/Users/dadou/LEAD FIVE/node_modules/react/cjs/react-jsx-runtime.production.min.js"
+      ]
+    },
+    {
+      "fileName": "assets/web3-vendor-9f6819bf.js",
+      "size": 194111,
+      "sizeFormatted": "189.56 KB",
+      "modules": 118,
+      "isEntry": false,
+      "isDynamicEntry": false,
+      "imports": [
+        "assets/vendor-f32340c7.js"
+      ],
+      "exports": [
+        "B",
+        "C",
+        "Z",
+        "a",
+        "b",
+        "f",
+        "i",
+        "p"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/node_modules/ethers/lib.esm/_version.js",
+        "/Users/dadou/LEAD FIVE/node_modules/ethers/lib.esm/utils/properties.js",
+        "/Users/dadou/LEAD FIVE/node_modules/ethers/lib.esm/utils/errors.js",
+        "/Users/dadou/LEAD FIVE/node_modules/ethers/lib.esm/utils/data.js",
+        "/Users/dadou/LEAD FIVE/node_modules/ethers/lib.esm/utils/maths.js",
+        "/Users/dadou/LEAD FIVE/node_modules/ethers/lib.esm/utils/base58.js",
+        "/Users/dadou/LEAD FIVE/node_modules/ethers/lib.esm/utils/base64-browser.js",
+        "/Users/dadou/LEAD FIVE/node_modules/ethers/lib.esm/utils/events.js",
+        "/Users/dadou/LEAD FIVE/node_modules/ethers/lib.esm/utils/utf8.js",
+        "/Users/dadou/LEAD FIVE/node_modules/ethers/lib.esm/utils/geturl-browser.js"
+      ]
+    },
+    {
+      "fileName": "assets/components-enhanced-2126cc69.js",
+      "size": 185012,
+      "sizeFormatted": "180.68 KB",
+      "modules": 39,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/services-16e687ac.js",
+        "assets/animation-vendor-01f9a78f.js",
+        "assets/vendor-f32340c7.js",
+        "assets/components-ai-fa68c0e5.js",
+        "assets/charts-vendor-562ef28a.js"
+      ],
+      "exports": [
+        "E",
+        "L",
+        "P",
+        "_",
+        "a",
+        "b",
+        "p"
+      ],
+      "moduleList": [
+        "\u0000vite/preload-helper",
+        "/Users/dadou/LEAD FIVE/src/components/ErrorBoundary.css",
+        "/Users/dadou/LEAD FIVE/src/components/ErrorBoundary.jsx",
+        "/Users/dadou/LEAD FIVE/src/components/LazyLoader.jsx",
+        "/Users/dadou/LEAD FIVE/src/components/PageWrapper.css",
+        "/Users/dadou/LEAD FIVE/src/components/PageWrapper.jsx",
+        "/Users/dadou/LEAD FIVE/src/components/PriceTicker.css",
+        "/Users/dadou/LEAD FIVE/src/components/PriceTicker.jsx",
+        "/Users/dadou/LEAD FIVE/src/components/MobileNavigation.css",
+        "/Users/dadou/LEAD FIVE/src/components/MobileNavigation.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/charts-vendor-562ef28a.js",
+      "size": 177041,
+      "sizeFormatted": "172.89 KB",
+      "modules": 2,
+      "isEntry": false,
+      "isDynamicEntry": false,
+      "imports": [
+        "assets/vendor-f32340c7.js"
+      ],
+      "exports": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "L",
+        "P",
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "i",
+        "p"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/node_modules/chart.js/dist/chunks/helpers.dataset.js",
+        "/Users/dadou/LEAD FIVE/node_modules/chart.js/dist/chart.js"
+      ]
+    },
+    {
+      "fileName": "assets/vendor-f32340c7.js",
+      "size": 122438,
+      "sizeFormatted": "119.57 KB",
+      "modules": 118,
+      "isEntry": false,
+      "isDynamicEntry": false,
+      "imports": [],
+      "exports": [
+        "A",
+        "C",
+        "D",
+        "I",
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/node_modules/@remix-run/router/dist/router.js",
+        "/Users/dadou/LEAD FIVE/node_modules/@noble/hashes/esm/_assert.js",
+        "/Users/dadou/LEAD FIVE/node_modules/@noble/hashes/esm/crypto.js",
+        "/Users/dadou/LEAD FIVE/node_modules/@noble/hashes/esm/utils.js",
+        "/Users/dadou/LEAD FIVE/node_modules/@noble/hashes/esm/hmac.js",
+        "/Users/dadou/LEAD FIVE/node_modules/@noble/hashes/esm/pbkdf2.js",
+        "/Users/dadou/LEAD FIVE/node_modules/@noble/hashes/esm/_sha2.js",
+        "/Users/dadou/LEAD FIVE/node_modules/@noble/hashes/esm/sha256.js",
+        "/Users/dadou/LEAD FIVE/node_modules/@noble/hashes/esm/_u64.js",
+        "/Users/dadou/LEAD FIVE/node_modules/@noble/hashes/esm/sha512.js"
+      ]
+    },
+    {
+      "fileName": "assets/animation-vendor-01f9a78f.js",
+      "size": 102299,
+      "sizeFormatted": "99.9 KB",
+      "modules": 291,
+      "isEntry": false,
+      "isDynamicEntry": false,
+      "imports": [
+        "assets/react-vendor-ca521aae.js"
+      ],
+      "exports": [
+        "A",
+        "m"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/node_modules/framer-motion/dist/es/context/MotionConfigContext.mjs",
+        "/Users/dadou/LEAD FIVE/node_modules/framer-motion/dist/es/context/MotionContext/index.mjs",
+        "/Users/dadou/LEAD FIVE/node_modules/framer-motion/dist/es/context/PresenceContext.mjs",
+        "/Users/dadou/LEAD FIVE/node_modules/framer-motion/dist/es/utils/is-browser.mjs",
+        "/Users/dadou/LEAD FIVE/node_modules/framer-motion/dist/es/utils/use-isomorphic-effect.mjs",
+        "/Users/dadou/LEAD FIVE/node_modules/framer-motion/dist/es/context/LazyContext.mjs",
+        "/Users/dadou/LEAD FIVE/node_modules/framer-motion/dist/es/render/dom/utils/camel-to-dash.mjs",
+        "/Users/dadou/LEAD FIVE/node_modules/framer-motion/dist/es/animation/optimized-appear/data-id.mjs",
+        "/Users/dadou/LEAD FIVE/node_modules/framer-motion/dist/es/motion/utils/use-visual-element.mjs",
+        "/Users/dadou/LEAD FIVE/node_modules/framer-motion/dist/es/utils/is-ref-object.mjs"
+      ]
+    },
+    {
+      "fileName": "assets/services-16e687ac.js",
+      "size": 101173,
+      "sizeFormatted": "98.8 KB",
+      "modules": 14,
+      "isEntry": false,
+      "isDynamicEntry": false,
+      "imports": [
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/services-web3-87e2d940.js"
+      ],
+      "exports": [
+        "C",
+        "E",
+        "L",
+        "S",
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "p",
+        "r",
+        "s"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/config/contracts.js",
+        "/Users/dadou/LEAD FIVE/src/contracts-leadfive.js",
+        "/Users/dadou/LEAD FIVE/src/services/SentryService.js",
+        "/Users/dadou/LEAD FIVE/src/services/ProductionDataService.js",
+        "/Users/dadou/LEAD FIVE/src/services/RealTimeGenealogyService.js",
+        "/Users/dadou/LEAD FIVE/src/services/ProductionRegistrationService.js",
+        "/Users/dadou/LEAD FIVE/src/services/coinMarketCapService.js",
+        "/Users/dadou/LEAD FIVE/src/services/api/secureProxy.js",
+        "/Users/dadou/LEAD FIVE/src/services/WebSocketService.js",
+        "/Users/dadou/LEAD FIVE/src/services/BlockchainWebSocketService.js"
+      ]
+    },
+    {
+      "fileName": "assets/components-ai-fa68c0e5.js",
+      "size": 35736,
+      "sizeFormatted": "34.9 KB",
+      "modules": 12,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/services-ai-15ea6570.js",
+        "assets/hooks-c27ed092.js",
+        "assets/services-16e687ac.js"
+      ],
+      "exports": [
+        "A",
+        "U",
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/unified/UnifiedAIAssistant.css",
+        "/Users/dadou/LEAD FIVE/src/components/unified/UnifiedAIAssistant.jsx",
+        "/Users/dadou/LEAD FIVE/src/styles/brandColors.css",
+        "/Users/dadou/LEAD FIVE/src/components/AICoachingPanel.jsx",
+        "/Users/dadou/LEAD FIVE/src/components/AIEarningsPrediction.css",
+        "/Users/dadou/LEAD FIVE/src/components/AIEarningsPrediction.jsx",
+        "/Users/dadou/LEAD FIVE/src/components/AITransactionHelper.jsx",
+        "/Users/dadou/LEAD FIVE/src/components/AIMarketInsights.jsx",
+        "/Users/dadou/LEAD FIVE/src/components/AISuccessStories.jsx",
+        "/Users/dadou/LEAD FIVE/src/components/AIEmotionTracker.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/index-3f35724d.js",
+      "size": 24959,
+      "sizeFormatted": "24.37 KB",
+      "modules": 18,
+      "isEntry": true,
+      "isDynamicEntry": false,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/components-enhanced-2126cc69.js",
+        "assets/services-web3-87e2d940.js",
+        "assets/components-web3-21d04675.js",
+        "assets/services-16e687ac.js",
+        "assets/utils-4c13584e.js",
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js",
+        "assets/animation-vendor-01f9a78f.js",
+        "assets/components-ai-fa68c0e5.js",
+        "assets/services-ai-15ea6570.js",
+        "assets/hooks-c27ed092.js"
+      ],
+      "exports": [],
+      "moduleList": [
+        "\u0000vite/modulepreload-polyfill",
+        "/Users/dadou/LEAD FIVE/index.html?html-proxy&inline-css&index=0.css",
+        "/Users/dadou/LEAD FIVE/src/components/ProtectedRoute.jsx",
+        "/Users/dadou/LEAD FIVE/src/components/Header.css",
+        "/Users/dadou/LEAD FIVE/src/components/Header.jsx",
+        "/Users/dadou/LEAD FIVE/src/components/Footer.css",
+        "/Users/dadou/LEAD FIVE/src/components/Footer.jsx",
+        "/Users/dadou/LEAD FIVE/src/styles/MobileNav.css",
+        "/Users/dadou/LEAD FIVE/src/components/MobileNav.jsx",
+        "/Users/dadou/LEAD FIVE/src/components/MobileOptimizer.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/Withdrawals-a7aed083.js",
+      "size": 22979,
+      "sizeFormatted": "22.44 KB",
+      "modules": 2,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/components-web3-21d04675.js",
+        "assets/components-enhanced-2126cc69.js",
+        "assets/services-16e687ac.js",
+        "assets/hooks-c27ed092.js",
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js",
+        "assets/animation-vendor-01f9a78f.js",
+        "assets/components-ai-fa68c0e5.js",
+        "assets/services-ai-15ea6570.js",
+        "assets/services-web3-87e2d940.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/pages/Withdrawals.css",
+        "/Users/dadou/LEAD FIVE/src/pages/Withdrawals.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/EarningsSection-a56c36f9.js",
+      "size": 21629,
+      "sizeFormatted": "21.12 KB",
+      "modules": 1,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/EarningsChart-f46aa2ea.js",
+        "assets/PerformanceMetrics-c019328b.js",
+        "assets/services-web3-87e2d940.js",
+        "assets/hooks-c27ed092.js",
+        "assets/components-genealogy-756d013b.js",
+        "assets/animation-vendor-01f9a78f.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js",
+        "assets/components-ai-fa68c0e5.js",
+        "assets/services-ai-15ea6570.js",
+        "assets/services-16e687ac.js",
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/d3-vendor-0ff1103a.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/sections/EarningsSection.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/services-ai-15ea6570.js",
+      "size": 19962,
+      "sizeFormatted": "19.49 KB",
+      "modules": 2,
+      "isEntry": false,
+      "isDynamicEntry": false,
+      "imports": [
+        "assets/services-16e687ac.js"
+      ],
+      "exports": [
+        "A",
+        "O"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/services/OpenAIService.js",
+        "/Users/dadou/LEAD FIVE/src/services/AIEnhancedFeatures.js"
+      ]
+    },
+    {
+      "fileName": "assets/Referrals-6d8c8683.js",
+      "size": 15425,
+      "sizeFormatted": "15.06 KB",
+      "modules": 3,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/components-web3-21d04675.js",
+        "assets/components-enhanced-2126cc69.js",
+        "assets/PortfolioValue-cdc36ba7.js",
+        "assets/MarketDataWidget-803d80c1.js",
+        "assets/utils-4c13584e.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js",
+        "assets/hooks-c27ed092.js",
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/services-ai-15ea6570.js",
+        "assets/services-16e687ac.js",
+        "assets/services-web3-87e2d940.js",
+        "assets/animation-vendor-01f9a78f.js",
+        "assets/components-ai-fa68c0e5.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/pages/Referrals_Enhanced.css",
+        "/Users/dadou/LEAD FIVE/src/styles/mobile-master.css",
+        "/Users/dadou/LEAD FIVE/src/pages/Referrals.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/components-genealogy-756d013b.js",
+      "size": 14866,
+      "sizeFormatted": "14.52 KB",
+      "modules": 3,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/d3-vendor-0ff1103a.js",
+        "assets/services-web3-87e2d940.js",
+        "assets/animation-vendor-01f9a78f.js"
+      ],
+      "exports": [
+        "B",
+        "G"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/enhanced/GenealogyTree.jsx",
+        "/Users/dadou/LEAD FIVE/src/components/sections/sections.css",
+        "/Users/dadou/LEAD FIVE/src/components/sections/BinaryTreeSection.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/utils-4c13584e.js",
+      "size": 13195,
+      "sizeFormatted": "12.89 KB",
+      "modules": 4,
+      "isEntry": false,
+      "isDynamicEntry": false,
+      "imports": [
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/services-16e687ac.js"
+      ],
+      "exports": [
+        "D",
+        "a",
+        "b",
+        "c",
+        "e",
+        "f",
+        "g",
+        "i",
+        "s",
+        "v"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/utils/walletPersistence.js",
+        "/Users/dadou/LEAD FIVE/src/utils/securityHeaders.js",
+        "/Users/dadou/LEAD FIVE/src/utils/ProductionReset.js",
+        "/Users/dadou/LEAD FIVE/src/utils/contractErrorHandler.js"
+      ]
+    },
+    {
+      "fileName": "assets/About-6d78fe32.js",
+      "size": 11549,
+      "sizeFormatted": "11.28 KB",
+      "modules": 2,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/pages/About.css",
+        "/Users/dadou/LEAD FIVE/src/pages/About.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/WithdrawalsSection-032d159b.js",
+      "size": 9522,
+      "sizeFormatted": "9.3 KB",
+      "modules": 1,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/WithdrawalHistory-f9131567.js",
+        "assets/services-web3-87e2d940.js",
+        "assets/components-genealogy-756d013b.js",
+        "assets/animation-vendor-01f9a78f.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js",
+        "assets/services-16e687ac.js",
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/d3-vendor-0ff1103a.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/sections/WithdrawalsSection.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/Register-05af8529.js",
+      "size": 9503,
+      "sizeFormatted": "9.28 KB",
+      "modules": 3,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/services-16e687ac.js",
+        "assets/components-enhanced-2126cc69.js",
+        "assets/ContractIntegration-4293273d.js",
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js",
+        "assets/services-web3-87e2d940.js",
+        "assets/animation-vendor-01f9a78f.js",
+        "assets/components-ai-fa68c0e5.js",
+        "assets/services-ai-15ea6570.js",
+        "assets/hooks-c27ed092.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/config/rootUser.js",
+        "/Users/dadou/LEAD FIVE/src/pages/Register.css",
+        "/Users/dadou/LEAD FIVE/src/pages/Register.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/services-web3-87e2d940.js",
+      "size": 8948,
+      "sizeFormatted": "8.74 KB",
+      "modules": 1,
+      "isEntry": false,
+      "isDynamicEntry": false,
+      "imports": [
+        "assets/services-16e687ac.js",
+        "assets/web3-vendor-9f6819bf.js"
+      ],
+      "exports": [
+        "c"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/services/ContractService.js"
+      ]
+    },
+    {
+      "fileName": "assets/Genealogy-62e9658b.js",
+      "size": 8844,
+      "sizeFormatted": "8.64 KB",
+      "modules": 2,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/components-enhanced-2126cc69.js",
+        "assets/components-genealogy-756d013b.js",
+        "assets/components-ai-fa68c0e5.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js",
+        "assets/services-16e687ac.js",
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/services-web3-87e2d940.js",
+        "assets/animation-vendor-01f9a78f.js",
+        "assets/d3-vendor-0ff1103a.js",
+        "assets/services-ai-15ea6570.js",
+        "assets/hooks-c27ed092.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/pages/Genealogy.css",
+        "/Users/dadou/LEAD FIVE/src/pages/Genealogy.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/Packages-b8c8783e.js",
+      "size": 8209,
+      "sizeFormatted": "8.02 KB",
+      "modules": 1,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/services-16e687ac.js",
+        "assets/components-web3-21d04675.js",
+        "assets/components-enhanced-2126cc69.js",
+        "assets/ContractIntegration-4293273d.js",
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js",
+        "assets/services-web3-87e2d940.js",
+        "assets/hooks-c27ed092.js",
+        "assets/services-ai-15ea6570.js",
+        "assets/animation-vendor-01f9a78f.js",
+        "assets/components-ai-fa68c0e5.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/pages/Packages.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/ReferralsSection-18ac9029.js",
+      "size": 7786,
+      "sizeFormatted": "7.6 KB",
+      "modules": 1,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/ReferralStats-798454a8.js",
+        "assets/services-web3-87e2d940.js",
+        "assets/components-genealogy-756d013b.js",
+        "assets/animation-vendor-01f9a78f.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js",
+        "assets/services-16e687ac.js",
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/d3-vendor-0ff1103a.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/sections/ReferralsSection.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/hooks-c27ed092.js",
+      "size": 7257,
+      "sizeFormatted": "7.09 KB",
+      "modules": 4,
+      "isEntry": false,
+      "isDynamicEntry": false,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/services-ai-15ea6570.js",
+        "assets/services-16e687ac.js"
+      ],
+      "exports": [
+        "A",
+        "a",
+        "b",
+        "c",
+        "u"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/hooks/useMobileWallet.js",
+        "/Users/dadou/LEAD FIVE/src/hooks/useAIIntegration.js",
+        "/Users/dadou/LEAD FIVE/src/hooks/useBlockchainWebSocket.js",
+        "/Users/dadou/LEAD FIVE/src/hooks/useMemoryMonitor.js"
+      ]
+    },
+    {
+      "fileName": "assets/Home-96b95dfa.js",
+      "size": 6184,
+      "sizeFormatted": "6.04 KB",
+      "modules": 3,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/animation-vendor-01f9a78f.js",
+        "assets/components-ai-fa68c0e5.js",
+        "assets/components-enhanced-2126cc69.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js",
+        "assets/services-ai-15ea6570.js",
+        "assets/services-16e687ac.js",
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/services-web3-87e2d940.js",
+        "assets/hooks-c27ed092.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/AnimatedWelcome.css",
+        "/Users/dadou/LEAD FIVE/src/components/AnimatedWelcome.jsx",
+        "/Users/dadou/LEAD FIVE/src/pages/Home.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/Security-87d29905.js",
+      "size": 5458,
+      "sizeFormatted": "5.33 KB",
+      "modules": 2,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/components-web3-21d04675.js",
+        "assets/components-enhanced-2126cc69.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js",
+        "assets/hooks-c27ed092.js",
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/services-ai-15ea6570.js",
+        "assets/services-16e687ac.js",
+        "assets/services-web3-87e2d940.js",
+        "assets/animation-vendor-01f9a78f.js",
+        "assets/components-ai-fa68c0e5.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/SecurityBadges.jsx",
+        "/Users/dadou/LEAD FIVE/src/pages/Security.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/components-web3-21d04675.js",
+      "size": 4714,
+      "sizeFormatted": "4.6 KB",
+      "modules": 4,
+      "isEntry": false,
+      "isDynamicEntry": false,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/hooks-c27ed092.js"
+      ],
+      "exports": [
+        "M",
+        "U"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/MobileWalletConnect.css",
+        "/Users/dadou/LEAD FIVE/src/components/MobileWalletConnect.jsx",
+        "/Users/dadou/LEAD FIVE/src/components/unified/UnifiedWalletConnect.css",
+        "/Users/dadou/LEAD FIVE/src/components/unified/UnifiedWalletConnect.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/MarketDataWidget-803d80c1.js",
+      "size": 4459,
+      "sizeFormatted": "4.35 KB",
+      "modules": 2,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/services-16e687ac.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js",
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/services-web3-87e2d940.js"
+      ],
+      "exports": [
+        "MarketSummaryCard",
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/MarketDataWidget.css",
+        "/Users/dadou/LEAD FIVE/src/components/MarketDataWidget.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/GamificationSystem-f39f8814.js",
+      "size": 4291,
+      "sizeFormatted": "4.19 KB",
+      "modules": 1,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/GamificationSystem.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/PerformanceMetrics-c019328b.js",
+      "size": 3694,
+      "sizeFormatted": "3.61 KB",
+      "modules": 1,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/components-ai-fa68c0e5.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js",
+        "assets/services-ai-15ea6570.js",
+        "assets/services-16e687ac.js",
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/services-web3-87e2d940.js",
+        "assets/hooks-c27ed092.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/PerformanceMetrics.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/PortfolioValue-cdc36ba7.js",
+      "size": 3374,
+      "sizeFormatted": "3.29 KB",
+      "modules": 2,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/services-16e687ac.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js",
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/services-web3-87e2d940.js"
+      ],
+      "exports": [
+        "EarningsDisplay",
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/PortfolioValue.css",
+        "/Users/dadou/LEAD FIVE/src/components/PortfolioValue.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/ReferralStats-798454a8.js",
+      "size": 2523,
+      "sizeFormatted": "2.46 KB",
+      "modules": 2,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/ReferralStats.css",
+        "/Users/dadou/LEAD FIVE/src/components/ReferralStats.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/NotificationSystem-e751c5d5.js",
+      "size": 2081,
+      "sizeFormatted": "2.03 KB",
+      "modules": 1,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/NotificationSystem.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/LevelVisualization-eaaaeef4.js",
+      "size": 2035,
+      "sizeFormatted": "1.99 KB",
+      "modules": 1,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/LevelVisualization.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/EarningsChart-f46aa2ea.js",
+      "size": 1579,
+      "sizeFormatted": "1.54 KB",
+      "modules": 2,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/charts-vendor-562ef28a.js",
+        "assets/vendor-f32340c7.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/EarningsChart.css",
+        "/Users/dadou/LEAD FIVE/src/components/EarningsChart.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/WithdrawalHistory-f9131567.js",
+      "size": 1460,
+      "sizeFormatted": "1.43 KB",
+      "modules": 2,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/WithdrawalHistory.css",
+        "/Users/dadou/LEAD FIVE/src/components/WithdrawalHistory.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/ActivityFeed-14870bf4.js",
+      "size": 1228,
+      "sizeFormatted": "1.2 KB",
+      "modules": 1,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/react-vendor-ca521aae.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/components/ActivityFeed.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/Dashboard-a2f8fe2c.js",
+      "size": 1048,
+      "sizeFormatted": "1.02 KB",
+      "modules": 2,
+      "isEntry": false,
+      "isDynamicEntry": true,
+      "imports": [
+        "assets/components-enhanced-2126cc69.js",
+        "assets/react-vendor-ca521aae.js",
+        "assets/services-16e687ac.js",
+        "assets/components-ai-fa68c0e5.js",
+        "assets/web3-vendor-9f6819bf.js",
+        "assets/animation-vendor-01f9a78f.js",
+        "assets/vendor-f32340c7.js",
+        "assets/charts-vendor-562ef28a.js",
+        "assets/services-web3-87e2d940.js",
+        "assets/services-ai-15ea6570.js",
+        "assets/hooks-c27ed092.js"
+      ],
+      "exports": [
+        "default"
+      ],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/pages/Dashboard.css",
+        "/Users/dadou/LEAD FIVE/src/pages/Dashboard.jsx"
+      ]
+    },
+    {
+      "fileName": "assets/ContractIntegration-4293273d.js",
+      "size": 1,
+      "sizeFormatted": "1 Bytes",
+      "modules": 1,
+      "isEntry": false,
+      "isDynamicEntry": false,
+      "imports": [],
+      "exports": [],
+      "moduleList": [
+        "/Users/dadou/LEAD FIVE/src/styles/ContractIntegration.css"
+      ]
+    }
+  ],
+  "totalSize": 1667731,
+  "gzippedSize": 0,
+  "warnings": [
+    {
+      "type": "large-chunk",
+      "fileName": "assets/services-16e687ac.js",
+      "size": "98.8 KB",
+      "message": "Large chunk detected. Consider code splitting."
+    },
+    {
+      "type": "large-chunk",
+      "fileName": "assets/animation-vendor-01f9a78f.js",
+      "size": "99.9 KB",
+      "message": "Large chunk detected. Consider code splitting."
+    },
+    {
+      "type": "large-chunk",
+      "fileName": "assets/components-enhanced-2126cc69.js",
+      "size": "180.68 KB",
+      "message": "Large chunk detected. Consider code splitting."
+    },
+    {
+      "type": "large-chunk",
+      "fileName": "assets/vendor-f32340c7.js",
+      "size": "119.57 KB",
+      "message": "Large chunk detected. Consider code splitting."
+    },
+    {
+      "type": "large-chunk",
+      "fileName": "assets/react-vendor-ca521aae.js",
+      "size": "224.47 KB",
+      "message": "Large chunk detected. Consider code splitting."
+    },
+    {
+      "type": "large-chunk",
+      "fileName": "assets/charts-vendor-562ef28a.js",
+      "size": "172.89 KB",
+      "message": "Large chunk detected. Consider code splitting."
+    },
+    {
+      "type": "large-chunk",
+      "fileName": "assets/web3-vendor-9f6819bf.js",
+      "size": "189.56 KB",
+      "message": "Large chunk detected. Consider code splitting."
+    },
+    {
+      "type": "large-chunk",
+      "fileName": "assets/d3-vendor-0ff1103a.js",
+      "size": "264.94 KB",
+      "message": "Large chunk detected. Consider code splitting."
+    }
+  ],
+  "optimizations": [
+    {
+      "type": "heavy-library",
+      "library": "framer-motion",
+      "fileName": "assets/animation-vendor-01f9a78f.js",
+      "message": "framer-motion detected. Consider lazy loading if not critical."
+    },
+    {
+      "type": "duplicate-react",
+      "fileName": "assets/react-vendor-ca521aae.js",
+      "message": "Multiple React imports detected. Ensure proper chunk splitting."
+    },
+    {
+      "type": "heavy-library",
+      "library": "chart.js",
+      "fileName": "assets/charts-vendor-562ef28a.js",
+      "message": "chart.js detected. Consider lazy loading if not critical."
+    },
+    {
+      "type": "heavy-library",
+      "library": "ethers",
+      "fileName": "assets/web3-vendor-9f6819bf.js",
+      "message": "ethers detected. Consider lazy loading if not critical."
+    },
+    {
+      "type": "heavy-library",
+      "library": "d3",
+      "fileName": "assets/d3-vendor-0ff1103a.js",
+      "message": "d3 detected. Consider lazy loading if not critical."
+    }
+  ],
+  "recommendations": [
+    {
+      "type": "bundle-size",
+      "priority": "high",
+      "message": "Total bundle size exceeds 1MB. Consider aggressive code splitting and lazy loading."
+    },
+    {
+      "type": "chunk-count",
+      "priority": "medium",
+      "message": "High number of chunks detected. Consider consolidating smaller chunks."
+    }
+  ]
+}

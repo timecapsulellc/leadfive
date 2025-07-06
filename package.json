@@ -8,6 +8,7 @@
     "build": "NODE_ENV=production vite build",
     "build:clean": "rm -rf dist && rm -rf node_modules/.vite && npm run build",
     "build:prod": "npm run clean:console && NODE_ENV=production vite build",
+    "build:analyze": "ANALYZE=true NODE_ENV=production vite build",
     "clean:console": "node scripts/remove-console-logs.js",
     "clean:console:check": "node scripts/remove-console-logs.js --dry-run --verbose",
     "preview": "vite preview --host 0.0.0.0 --port 5175",

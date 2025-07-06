@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import removeConsoleSafe from './vite-plugin-remove-console-safe'
+import bundleAnalyzer from './vite-plugin-bundle-analyzer'
 
 // Clear cache plugin for development
 const clearCachePlugin = () => {
@@ -46,6 +47,8 @@ export default defineConfig({
     react(),
     // Remove console statements in production (safe version)
     removeConsoleSafe(),
+    // Bundle analyzer for optimization insights
+    bundleAnalyzer({ enabled: process.env.ANALYZE === 'true' }),
     // Only apply clearCache plugin in development when needed
     ...(process.env.NODE_ENV === 'development' ? [] : [])
   ],
@@ -81,14 +84,118 @@ export default defineConfig({
         return false;
       },
       output: {
-        manualChunks: {
-          react: ['react', 'react-dom'],
-          router: ['react-router-dom'],
-          icons: ['react-icons'],
-          web3: ['ethers'],
-          charts: ['chart.js', 'react-chartjs-2'],
-          // ai: ['openai'] // Removed as we're using secure proxy
+        manualChunks(id) {
+          // Core vendor chunks
+          if (id.includes('node_modules')) {
+            // React ecosystem
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react-vendor';
+            }
+            // Router
+            if (id.includes('react-router')) {
+              return 'router-vendor';
+            }
+            // Web3 libraries
+            if (id.includes('ethers') || id.includes('@ethersproject')) {
+              return 'web3-vendor';
+            }
+            // Charting libraries
+            if (id.includes('chart.js') || id.includes('react-chartjs')) {
+              return 'charts-vendor';
+            }
+            // Icon libraries
+            if (id.includes('react-icons')) {
+              return 'icons-vendor';
+            }
+            // D3 for genealogy visualization
+            if (id.includes('d3')) {
+              return 'd3-vendor';
+            }
+            // Animation libraries
+            if (id.includes('framer-motion')) {
+              return 'animation-vendor';
+            }
+            // Form libraries
+            if (id.includes('react-hook-form') || id.includes('yup')) {
+              return 'forms-vendor';
+            }
+            // UI libraries
+            if (id.includes('react-toastify') || id.includes('react-modal')) {
+              return 'ui-vendor';
+            }
+            // Everything else from node_modules
+            return 'vendor';
+          }
+          
+          // Application code splitting by feature
+          if (id.includes('src/')) {
+            // Services
+            if (id.includes('src/services/')) {
+              if (id.includes('Web3') || id.includes('Contract')) {
+                return 'services-web3';
+              }
+              if (id.includes('AI') || id.includes('OpenAI') || id.includes('ElevenLabs')) {
+                return 'services-ai';
+              }
+              return 'services';
+            }
+            // Components by feature
+            if (id.includes('src/components/')) {
+              if (id.includes('Genealogy') || id.includes('Tree')) {
+                return 'components-genealogy';
+              }
+              if (id.includes('Wallet') || id.includes('Web3')) {
+                return 'components-web3';
+              }
+              if (id.includes('AI') || id.includes('Chat')) {
+                return 'components-ai';
+              }
+              if (id.includes('enhanced/')) {
+                return 'components-enhanced';
+              }
+              if (id.includes('admin/')) {
+                return 'components-admin';
+              }
+            }
+            // Utils
+            if (id.includes('src/utils/')) {
+              return 'utils';
+            }
+            // Hooks
+            if (id.includes('src/hooks/')) {
+              return 'hooks';
+            }
+          }
+        },
+        // Optimize chunk names
+        chunkFileNames: (chunkInfo) => {
+          const facadeModuleId = chunkInfo.facadeModuleId ? chunkInfo.facadeModuleId.split('/').pop() : 'chunk';
+          return `assets/${chunkInfo.name || facadeModuleId}-[hash].js`;
+        },
+        // Optimize asset names
+        assetFileNames: (assetInfo) => {
+          const info = assetInfo.name.split('.');
+          const ext = info[info.length - 1];
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
+            return `assets/images/[name]-[hash][extname]`;
+          } else if (/woff2?|ttf|otf|eot/i.test(ext)) {
+            return `assets/fonts/[name]-[hash][extname]`;
+          } else {
+            return `assets/[name]-[hash][extname]`;
+          }
         }
+      }
+    },
+    // Minification options
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.warn']
+      },
+      format: {
+        comments: false
       }
     }
   },
