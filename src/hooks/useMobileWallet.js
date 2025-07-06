@@ -54,12 +54,12 @@ const generateDeepLink = (walletType, dappUrl) => {
 // Mobile-optimized provider setup
 const createMobileProvider = async () => {
   try {
-    // Wait for mobile wallet injection
+    // Wait for mobile wallet injection - extended for mobile reliability
     let attempts = 0;
-    const maxAttempts = 10;
+    const maxAttempts = 30; // Increased from 10 to 30
     
     while (!window.ethereum && attempts < maxAttempts) {
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise(resolve => setTimeout(resolve, 200)); // Increased from 100ms to 200ms
       attempts++;
     }
 
@@ -101,10 +101,17 @@ export const useMobileWallet = () => {
       
       // Extended timeout for mobile wallet injection
       if (!window.ethereum) {
+        // First recheck after 2 seconds
         setTimeout(() => {
           const recheckInfo = detectMobileWallet();
           setMobileInfo(recheckInfo);
         }, 2000);
+        
+        // Second recheck after 5 seconds for slow loading wallets
+        setTimeout(() => {
+          const recheckInfo = detectMobileWallet();
+          setMobileInfo(recheckInfo);
+        }, 5000);
       }
     }
   }, []);

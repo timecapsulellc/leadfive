@@ -53,7 +53,7 @@ const WALLET_CONFIGS = {
   }
 };
 
-// BSC Network configuration
+// BSC Network configuration with backup RPC endpoints
 const BSC_CONFIG = {
   chainId: '0x38',
   chainName: 'BNB Smart Chain',
@@ -62,7 +62,15 @@ const BSC_CONFIG = {
     symbol: 'BNB',
     decimals: 18,
   },
-  rpcUrls: ['https://bsc-dataseed.binance.org/'],
+  rpcUrls: [
+    'https://bsc-dataseed.binance.org/',
+    'https://bsc-dataseed1.binance.org/',
+    'https://bsc-dataseed2.binance.org/',
+    'https://bsc-dataseed3.binance.org/',
+    'https://bsc-dataseed4.binance.org/',
+    'https://rpc.ankr.com/bsc',
+    'https://bscrpc.com'
+  ],
   blockExplorerUrls: ['https://bscscan.com/'],
 };
 
@@ -245,14 +253,40 @@ const SuperWalletConnect = ({
 
     } catch (error) {
       console.error('Wallet connection failed:', error);
-      setError(error.message);
+      
+      // Enhanced error reporting with detailed context
+      const errorContext = {
+        walletId,
+        isMobile: effectiveMode === 'mobile',
+        hasEthereum: !!window.ethereum,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent,
+        retryAttempt: retryCount
+      };
+      
+      console.error('Wallet connection error details:', errorContext);
+      
+      // User-friendly error messages
+      let userError = error.message;
+      if (error.message.includes('User rejected')) {
+        userError = 'Connection was cancelled. Please try again.';
+      } else if (error.message.includes('No accounts')) {
+        userError = 'No wallet accounts found. Please unlock your wallet.';
+      } else if (error.message.includes('network')) {
+        userError = 'Network connection failed. Please check your internet and try again.';
+      } else if (error.message.includes('provider')) {
+        userError = 'Wallet not detected. Please install MetaMask or another Web3 wallet.';
+      }
+      
+      setError(userError);
 
-      // Retry logic
+      // Retry logic with exponential backoff
       if (enableRetry && retryCount < maxRetries && !error.message.includes('rejected')) {
+        const retryDelay = Math.min(2000 * Math.pow(1.5, retryCount), 10000); // Max 10 second delay
         setTimeout(() => {
           setRetryCount(prev => prev + 1);
           handleConnect(walletId);
-        }, 2000);
+        }, retryDelay);
       }
     } finally {
       setIsConnecting(false);
