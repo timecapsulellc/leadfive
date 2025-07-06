@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import MobileWalletConnect from './MobileWalletConnect';
+import SuperWalletConnect from './unified/SuperWalletConnect';
 import './Header.css';
 
 export default function Header({ account, onConnect, onDisconnect }) {
@@ -86,10 +86,14 @@ export default function Header({ account, onConnect, onDisconnect }) {
       </nav>
       
       <div className="wallet-section">
-        <MobileWalletConnect 
+        <SuperWalletConnect 
           account={account}
           onConnect={onConnect}
           onDisconnect={onDisconnect}
+          mode="auto"
+          compact={true}
+          buttonText="Connect"
+          showNetworkStatus={true}
         />
       </div>
     </header>
