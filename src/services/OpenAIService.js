@@ -1,92 +1,44 @@
-import OpenAI from 'openai';
+import secureProxy from './api/secureProxy';
 
 class OpenAIService {
   constructor() {
-    this.openai = null;
-    this.isInitialized = false;
-    this.apiKey = null;
+    this.isInitialized = true; // Always initialized with secure proxy
     this.model = import.meta.env.VITE_OPENAI_MODEL || 'gpt-4-turbo-preview';
     this.maxTokens = parseInt(import.meta.env.VITE_OPENAI_MAX_TOKENS) || 500;
-
-    // Auto-initialize if environment variable is available
-    this.autoInitialize();
-  }
-
-  // Auto-initialize from environment variables
-  autoInitialize() {
-    const envApiKey = import.meta.env.VITE_OPENAI_API_KEY;
-    if (envApiKey && envApiKey !== 'sk-your-openai-key-here' && envApiKey !== 'YOUR_OPENAI_API_KEY_HERE') {
-      this.initialize(envApiKey);
-      console.log('✅ OpenAI initialized from environment variables');
-    } else {
-      console.warn('⚠️ OpenAI API key not found in environment variables. Using fallback responses.');
-      console.info('💡 To enable real API: Set VITE_OPENAI_API_KEY in your .env file');
-    }
-  }
-
-  // Initialize OpenAI with API key
-  initialize(apiKey) {
-    if (!apiKey) {
-      console.warn('OpenAI API key not provided');
-      return false;
-    }
-
-    try {
-      this.openai = new OpenAI({
-        apiKey: apiKey,
-        dangerouslyAllowBrowser: true, // For client-side usage
-      });
-      this.apiKey = apiKey;
-      this.isInitialized = true;
-      console.log('✅ OpenAI service initialized successfully');
-      return true;
-    } catch (error) {
-      console.error('❌ Failed to initialize OpenAI:', error);
-      return false;
-    }
+    this.useSecureProxy = true;
   }
 
   // Generate response with context
   async generateResponse(prompt, context = {}) {
-    if (!this.isInitialized) {
-      return this.getFallbackResponse(prompt);
-    }
-
     try {
       const systemPrompt = this.buildSystemPrompt(context);
 
-      const response = await this.openai.chat.completions.create({
-        model: this.model,
-        messages: [
+      const response = await secureProxy.getChatCompletion(
+        [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: prompt },
         ],
-        temperature: context.temperature || 0.8,
-        max_tokens: this.maxTokens,
-        presence_penalty: 0.6,
-        frequency_penalty: 0.3,
-      });
+        {
+          model: this.model,
+          temperature: context.temperature || 0.8,
+          max_tokens: this.maxTokens,
+        }
+      );
 
-      return response.choices[0].message.content;
+      return response.content || this.getFallbackResponse(prompt);
     } catch (error) {
-      console.error('OpenAI API error:', error);
+      console.error('Secure API error:', error);
       return this.getFallbackResponse(prompt);
     }
   }
 
   // Get AI response for chat assistant
   async getChatResponse(userMessage, userContext = {}) {
-    if (!this.isInitialized) {
-      return this.getFallbackResponse(userMessage);
-    }
-
     try {
       const systemPrompt = this.buildSystemPrompt(userContext);
-      const fullPrompt = `${systemPrompt}\n\nUser: ${userMessage}\nAssistant:`;
 
-      const response = await this.openai.chat.completions.create({
-        model: 'gpt-4o-mini',
-        messages: [
+      const response = await secureProxy.getChatCompletion(
+        [
           {
             role: 'system',
             content: systemPrompt,
@@ -96,15 +48,16 @@ class OpenAIService {
             content: userMessage,
           },
         ],
-        temperature: 0.8,
-        max_tokens: 200,
-        presence_penalty: 0.6,
-        frequency_penalty: 0.3,
-      });
+        {
+          model: 'gpt-4o-mini',
+          temperature: 0.8,
+          max_tokens: 200,
+        }
+      );
 
-      return response.choices[0].message.content;
+      return response.content || this.getFallbackResponse(userMessage);
     } catch (error) {
-      console.error('OpenAI API error:', error);
+      console.error('Secure API error:', error);
       return this.getFallbackResponse(userMessage);
     }
   }
@@ -190,9 +143,8 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
     };
 
     try {
-      const response = await this.openai.chat.completions.create({
-        model: 'gpt-4o-mini',
-        messages: [
+      const response = await secureProxy.getChatCompletion(
+        [
           {
             role: 'system',
             content:
@@ -203,11 +155,14 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
             content: prompts[type] || prompts.marketInsight,
           },
         ],
-        temperature: 0.9,
-        max_tokens: 250,
-      });
+        {
+          model: 'gpt-4o-mini',
+          temperature: 0.9,
+          max_tokens: 250,
+        }
+      );
 
-      return response.choices[0].message.content;
+      return response.content || this.getFallbackContent(type);
     } catch (error) {
       console.error('Content generation error:', error);
       return this.getFallbackContent(type);
@@ -228,9 +183,8 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
     }
 
     try {
-      const response = await this.openai.chat.completions.create({
-        model: 'gpt-4-turbo-preview',
-        messages: [
+      const response = await secureProxy.getChatCompletion(
+        [
           {
             role: 'system',
             content: `You are an expert compensation plan analyzer for LeadFive. Analyze the provided compensation plan and return a JSON response with:
@@ -245,12 +199,24 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
             content: `Analyze this compensation plan:\n\n${pdfText.slice(0, 4000)}`,
           },
         ],
-        temperature: 0.3,
-        max_tokens: 500,
-      });
+        {
+          model: 'gpt-4-turbo-preview',
+          temperature: 0.3,
+          max_tokens: 500,
+        }
+      );
 
-      const analysis = JSON.parse(response.choices[0].message.content);
-      return analysis;
+      try {
+        const analysis = JSON.parse(response.content);
+        return analysis;
+      } catch (parseError) {
+        return {
+          summary: response.content || 'Analysis completed.',
+          keyPoints: ['Commission structure analyzed'],
+          recommendations: ['Review with team'],
+          complianceNotes: ['Ensure compliance']
+        };
+      }
     } catch (error) {
       console.error('Compensation plan analysis error:', error);
       return {
@@ -283,9 +249,8 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
     }
 
     try {
-      const response = await this.openai.chat.completions.create({
-        model: 'gpt-3.5-turbo',
-        messages: [
+      const response = await secureProxy.getChatCompletion(
+        [
           {
             role: 'system',
             content:
@@ -296,11 +261,14 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
             content: 'Tell me a crypto joke',
           },
         ],
-        temperature: 1.0,
-        max_tokens: 100,
-      });
+        {
+          model: 'gpt-3.5-turbo',
+          temperature: 1.0,
+          max_tokens: 100,
+        }
+      );
 
-      return response.choices[0].message.content;
+      return response.content || this.getFallbackJoke();
     } catch (error) {
       return this.getFallbackJoke();
     }
@@ -353,15 +321,16 @@ Remember: Be helpful, motivational, and always encourage action while maintainin
 
   // Check if service is ready
   isReady() {
-    return this.isInitialized;
+    return true; // Always ready with secure proxy
   }
 
   // Get service status
   getStatus() {
     return {
-      initialized: this.isInitialized,
-      hasApiKey: !!this.apiKey,
-      model: this.isInitialized ? 'gpt-4-turbo-preview' : 'fallback',
+      initialized: true,
+      hasApiKey: false, // No API key in frontend
+      model: 'secure-proxy',
+      mode: 'secure',
     };
   }
 }
