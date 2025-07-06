@@ -11,6 +11,10 @@ SentryService.init();
 // Initialize Production Reset Utility (makes global functions available)
 import './utils/ProductionReset.js';
 
+// Initialize PWA functionality
+import PWAManager from './services/PWAManager';
+PWAManager.init();
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <App />

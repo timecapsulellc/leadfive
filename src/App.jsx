@@ -8,6 +8,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import MobileNav from './components/MobileNav';
 import MobileOptimizer from './components/MobileOptimizer';
+import OfflineIndicator from './components/OfflineIndicator';
 // MobileWalletConnect migrated to SuperWalletConnect
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from './config/contracts';
 import { contractService } from './services/ContractService';
@@ -529,6 +530,9 @@ function App() {
             />
             </Routes>
           </Suspense>
+          
+          {/* PWA Offline Indicator */}
+          <OfflineIndicator />
         </Router>
       </ErrorBoundary>
     </MobileOptimizer>
