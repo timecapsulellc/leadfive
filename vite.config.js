@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import removeConsoleSafe from './vite-plugin-remove-console-safe'
 
 // Clear cache plugin for development
 const clearCachePlugin = () => {
@@ -43,6 +44,8 @@ const clearCachePlugin = () => {
 export default defineConfig({
   plugins: [
     react(),
+    // Remove console statements in production (safe version)
+    removeConsoleSafe(),
     // Only apply clearCache plugin in development when needed
     ...(process.env.NODE_ENV === 'development' ? [] : [])
   ],
@@ -84,7 +87,7 @@ export default defineConfig({
           icons: ['react-icons'],
           web3: ['ethers'],
           charts: ['chart.js', 'react-chartjs-2'],
-          ai: ['openai']
+          // ai: ['openai'] // Removed as we're using secure proxy
         }
       }
     }
